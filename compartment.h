@@ -5,7 +5,7 @@
 #include <vector>
 #include "conductance.h"
 #include "synapse.h"
-#include "mex.h"
+// #include "mex.h"
 
 using namespace std;
 
