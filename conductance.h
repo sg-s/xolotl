@@ -23,31 +23,10 @@ public:
     
     ~conductance() {}
     
-    double getGBar(void);
-    double getG(void);
-    double getGE(void); 
-    
     virtual void integrate(double, double, double) = 0;
     virtual void connect(compartment*) = 0; // null points for safety
 
 };
-
-
-double conductance::getGBar(void)
-{
-    return gbar;
-}
-
-
-double conductance::getG(void)
-{
-    return g;
-}
-
-double conductance::getGE(void)
-{
-    return g*E;
-}
 
 
 

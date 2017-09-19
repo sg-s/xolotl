@@ -1,7 +1,7 @@
 // Slow Calcium conductance
 #ifndef KCA
 #define KCA
-#include "conductance.h"
+#include "../../conductance.h"
 
 //inherit conductance class spec
 class KCa: public conductance {
@@ -25,13 +25,10 @@ public:
         h = 1;
     }
     
-
-    double getCurrent(void);
     void integrate(double V, double Ca, double dt);
     void connect(compartment *pcomp_);
     double m_inf(double V, double Ca);
     double tau_m(double V);
-
 };
 
 void KCa::connect(compartment *pcomp_) {container = pcomp_; }

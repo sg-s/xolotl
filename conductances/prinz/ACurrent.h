@@ -4,7 +4,7 @@
 // so we'll have to live with this awkward name
 #ifndef ACURRENT
 #define ACURRENT
-#include "conductance.h"
+#include "../../conductance.h"
 
 //inherit conductance class spec
 class ACurrent: public conductance {
@@ -39,8 +39,8 @@ void ACurrent::integrate(double V, double Ca, double dt)
 
 double ACurrent::m_inf(double V) {return 1.0/(1.0+exp((V+27.2)/-8.7)); }
 double ACurrent::h_inf(double V) {return 1.0/(1.0+exp((V+56.9)/4.9)); }
-double ACurrent::tau_m(double V) {return 11.6 - 10.4/(1.0+exp((V+32.9)/-15.2));}
-double ACurrent::tau_h(double V) {return 38.6 - 29.2/(1.0+exp((V+38.9)/-26.5));}
+double ACurrent::tau_m(double V) {return 23.2 - 20.8/(1.0+exp((V+32.9)/-15.2));}
+double ACurrent::tau_h(double V) {return 77.2 - 58.4/(1.0+exp((V+38.9)/-26.5));}
 
 
 #endif

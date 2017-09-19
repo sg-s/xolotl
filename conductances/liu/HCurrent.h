@@ -2,7 +2,7 @@
 // won't let me call this class "H"
 #ifndef HCURRENT
 #define HCURRENT
-#include "conductance.h"
+#include "../../conductance.h"
 
 //inherit conductance class spec
 class HCurrent: public conductance {
@@ -25,8 +25,7 @@ public:
         m = m_;
         h = 1;
     }
-    
-    double getCurrent(void);
+
     void integrate(double V, double Ca, double dt);
     void connect(compartment *pcomp_);
     double m_inf(double V);

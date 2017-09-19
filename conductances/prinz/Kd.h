@@ -1,7 +1,7 @@
 // inward rectifying potassium conductance 
 #ifndef KD
 #define KD
-#include "conductance.h"
+#include "../../conductance.h"
 
 //inherit conductance class spec
 class Kd: public conductance {
@@ -43,7 +43,7 @@ void Kd::integrate(double V, double Ca, double dt)
 
 
 double Kd::m_inf(double V) {return 1.0/(1.0+exp((V+12.3)/-11.8));}
-double Kd::tau_m(double V) {return 7.2 - 6.4/(1.0+exp((V+28.3)/-19.2));}
+double Kd::tau_m(double V) {return 14.4 - 12.8/(1.0+exp((V+28.3)/-19.2));}
 
 
 #endif

@@ -9,14 +9,16 @@
 #include <typeinfo>
 #include "mex.h"
 #include "compartment.h"
-#include "NaV.h"
-#include "CaT.h"
-#include "CaS.h"
-#include "ACurrent.h"
-#include "KCa.h"
-#include "Kd.h"
-#include "HCurrent.h"
-#include "Leak.h"
+
+// use the Liu conductances
+#include "conductances/liu/NaV.h"
+#include "conductances/liu/CaT.h"
+#include "conductances/liu/CaS.h"
+#include "conductances/liu/ACurrent.h"
+#include "conductances/liu/KCa.h"
+#include "conductances/liu/Kd.h"
+#include "conductances/liu/HCurrent.h"
+#include "conductances/Leak.h"
 
 
 using namespace std;
@@ -123,20 +125,15 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     
     nits = (int) floor(tstop/dt);
 
-    
     plhs[0] = mxCreateDoubleMatrix(1, nits, mxREAL); // V
     plhs[1] = mxCreateDoubleMatrix(1, nits, mxREAL); // Ca
     output_V = mxGetPr(plhs[0]);
     output_Ca = mxGetPr(plhs[1]);
 
     for(int i = 0; i < nits; i++)
-
     {
-        (void) cell.integrate(dt);
-
+        cell.integrate(dt);
         output_V[i] = cell.V;
         output_Ca[i] = cell.Ca;
-
     }
-
 }
