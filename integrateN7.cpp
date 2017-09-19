@@ -29,7 +29,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double *output_V;
     double *output_Ca;
     // double *simparams, *gmax, *initial_conditions, *neuron_params;
-    int nits = 10, res = 1;
+    int nits = 10;
     double dt, tstop;
     dt  = 50e-3;
     tstop = 5000;
@@ -124,8 +124,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     nits = (int) floor(tstop/dt);
 
     
-    plhs[0] = mxCreateDoubleMatrix(1, ((int)nits)/((int)res), mxREAL); // V
-    plhs[1] = mxCreateDoubleMatrix(1, ((int)nits)/((int)res), mxREAL); // Ca
+    plhs[0] = mxCreateDoubleMatrix(1, nits, mxREAL); // V
+    plhs[1] = mxCreateDoubleMatrix(1, nits, mxREAL); // Ca
     output_V = mxGetPr(plhs[0]);
     output_Ca = mxGetPr(plhs[1]);
 
