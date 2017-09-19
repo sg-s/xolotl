@@ -31,12 +31,19 @@ Compile from within MATLAB using:
 mex integrateN7.cpp;
 ```
 
+I've also written a small standalone wrapper that you can run on any computer, without MATLAB:
+
+```bash
+g++ integrateN7_standalone.cpp 
+```
+
 
 ## Benchmarks
 
 5-second simulation of a 7-conductance neuron, as in Prinz et al. 2003:
 
-~83X on a single thread on a Mac Pro (Late 2013)
+~83X on a single thread on a Mac Pro (Late 2013), running from within MATLAB
+~50X on a single thread on a Mac Pro (Late 2013), compiled with g++ 
 
 
 ## Roadmap

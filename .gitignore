@@ -4,3 +4,4 @@
 *.mexw64
 *.mexa64
 *.sublime-workspace
+*.a.out

@@ -4,7 +4,7 @@
 #include <cmath>
 #include <vector>
 #include "conductance.h"
-#include "mex.h"
+//#include "mex.h"
 
 using namespace std;
 
