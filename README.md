@@ -42,15 +42,15 @@ g++ integrateN7_standalone.cpp
 
 5-second simulation of a 7-conductance neuron, as in Prinz et al. 2003:
 
-~83X on a single thread on a Mac Pro (Late 2013), running from within MATLAB
-~50X on a single thread on a Mac Pro (Late 2013), compiled with g++ 
+* ~83X on a single thread on a Mac Pro (Late 2013), running from within MATLAB
+* ~50X on a single thread on a Mac Pro (Late 2013), compiled with g++ 
 
 
 ## Roadmap
 
 - [ ] Support for custom parameters
 - [ ] Support for custom initial conditions
-- [ ] Compataibility with neuron, and control from MATLAB using [puppeteer](https://github.com/sg-s/puppeteer)
+- [ ] Compatibility with neuron, and control from MATLAB using [puppeteer](https://github.com/sg-s/puppeteer)
 - [ ] Electrical Synapses 
 - [ ] Chemical Synapses
 - [ ] Support for integrating networks
