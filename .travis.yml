@@ -1,1 +1,3 @@
-g++ examples/g++/integrateN7_standalone.cpp
+language: cpp
+compiler: g++
+script: g++ examples/g++/integrateN7_standalone.cpp
