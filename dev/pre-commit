@@ -1,0 +1,45 @@
+#!/bin/sh
+#
+# this hooks makes sure that all the C++ code you write or 
+# modify can compile without errors this does not check 
+# that the code is correct; but if you get an error here, 
+# it prevents you from committing, which is a good thing 
+
+RED='\033[0;31m'
+GREEN='\033[1;32m'
+NC='\033[0m' # No Color
+
+
+echo "Trying to compile C++ code using MEX..."
+
+mex integrateN7.cpp
+if [ $? -eq 0 ]; then
+    printf "${GREEN}[OK]${NC} integrateN7 compiled with mex\n"
+else
+    printf "${GREEN}[FAIL]${NC} integrateN7\n"
+    exit 1
+fi
+
+mex integrateSTG.cpp
+if [ $? -eq 0 ]; then
+    printf "${GREEN}[OK]${NC} integrateSTG compiled with mex\n"
+else
+    printf "${GREEN}[FAIL]${NC} integrateSTG\n"
+    exit 1
+fi
+
+
+g++ integrateN7_standalone.cpp 
+if [ $? -eq 0 ]; then
+    printf "${GREEN}[OK]${NC} integrateN7_standalone compiled with mex\n"
+else
+    printf "${GREEN}[FAIL]${NC} integrateN7_standalone\n"
+    exit 1
+fi
+
+# copy this file into the repository so that others can use it
+cp .git/hooks/pre-commit dev/pre-commit
+
+# automatic build number
+git log master --pretty=oneline | wc -l > build_number
+git add build_number

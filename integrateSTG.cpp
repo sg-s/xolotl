@@ -36,7 +36,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int nits = 10;
     double dt, tstop;
     dt  = 50e-3;
-    tstop = 5000;
+    tstop = 20000;
     // default conductances
     double gbar_na = 1830.0, gbar_cat = 23.0, gbar_cas = 27.0, gbar_a = 246.0, gbar_kca = 980.0, gbar_kd = 610.0, gbar_h = 10.1, gbar_leak = .99;
     // default reversal potentials
@@ -118,7 +118,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     Leak gleak_AB(0,e_leak);
     
     // make AB and add all the conductances
-    compartment AB(-65, .03, Cm, A, f, Ca_out, Ca_in, tau_Ca);
+    compartment AB(-70, .01, Cm, A, f, Ca_out, Ca_in, tau_Ca);
     AB.addConductance(&gna_AB);
     AB.addConductance(&gcat_AB);
     AB.addConductance(&gcas_AB);
@@ -139,7 +139,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     Leak gleak_LP(.3,e_leak);
 
     // make LP neuron
-    compartment LP(-46, .01, Cm, A, f, Ca_out, Ca_in, tau_Ca);
+    compartment LP(-70, .01, Cm, A, f, Ca_out, Ca_in, tau_Ca);
     LP.addConductance(&gna_LP);
     LP.addConductance(&gcat_LP);
     LP.addConductance(&gcas_LP);
@@ -160,7 +160,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     Leak gleak_PY(.1,e_leak);
 
     // make PY neuron 
-    compartment PY(-41, .03, Cm, A, f, Ca_out, Ca_in, tau_Ca);
+    compartment PY(-70, .03, Cm, A, f, Ca_out, Ca_in, tau_Ca);
     PY.addConductance(&gna_PY);
     PY.addConductance(&gcat_PY);
     PY.addConductance(&gcas_PY);
@@ -171,14 +171,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     PY.addConductance(&gleak_PY);
 
     // make some synapses 
-    Cholinergic PD2LP(900.0); PD2LP.connect(&AB,&LP);
-    Cholinergic PD2PY(90.0); PD2PY.connect(&AB,&PY);
-    Glutamatergic AB2LP(900.0); AB2LP.connect(&AB,&LP);
-    Glutamatergic AB2PY(900.0); AB2PY.connect(&AB,&PY);
+    Cholinergic PD2LP(30.0); PD2LP.connect(&AB,&LP);
+    Cholinergic PD2PY(3.0); PD2PY.connect(&AB,&PY);
+    Glutamatergic AB2LP(30.0); AB2LP.connect(&AB,&LP);
+    Glutamatergic AB2PY(10.0); AB2PY.connect(&AB,&PY);
     Glutamatergic LP2PY(1.0); LP2PY.connect(&LP,&PY);
     Glutamatergic PY2LP(30.0); PY2LP.connect(&PY,&LP);
-    // Glutamatergic LP2AB(30.0); LP2AB.connect(&LP,&AB);
-    
+    Glutamatergic LP2AB(30.0); LP2AB.connect(&LP,&AB);
+
     // add neurons to the network
     STG.addCompartment(&AB);
     STG.addCompartment(&LP);

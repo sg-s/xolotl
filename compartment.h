@@ -117,14 +117,15 @@ void compartment::integrateSynapses(double V_prev, double dt)
     for (int i=0; i<n_syn; i++)
     {
         syn[i]->integrate(dt);
-        I_ext += (syn[i]->getCurrent(V_prev));
+        I_ext -= (syn[i]->getCurrent(V_prev));
     }
 }
 
 void compartment::integrateVC(double V_prev, double Ca_prev, double dt)
 {
     // compute infinity values for V and Ca
-    
+    //mexPrintf("sigma_gE =  %f\n",sigma_gE);
+    //mexPrintf("I_ext/A =  %f\n",I_ext/A);
     V_inf = (sigma_gE + (I_ext/A))/sigma_g;
     Ca_inf = Ca_in - f*A*I_Ca; // microM 
 
