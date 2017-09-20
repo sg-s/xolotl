@@ -30,7 +30,7 @@ HH.integrate(50e-3);
 
 ```
 
-`xolotl` also makes it easy to set up networks of neurons, or even multi-compartment neurons (the same code works for both). For an example of a three neuron network with two types of chemical synapses, see [/examples/mex/integrateSTG.cpp](integrateSTG.cpp)
+`xolotl` also makes it easy to set up networks of neurons, or even multi-compartment neurons (the same code works for both). For an example of a three neuron network with two types of chemical synapses, see [integrateSTG.cpp](/examples/mex/integrateSTG.cpp)
 
 ## Installation
 
