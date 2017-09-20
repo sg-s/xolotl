@@ -30,7 +30,7 @@ HH.integrate(50e-3);
 
 ```
 
-`xolotl` also makes it easy to set up networks of neurons, or even multi-compartment neurons (the same code works for both). For an example of a three neuron network with two types of chemical synapses, see [integrateSTG.cpp](integrateSTG.cpp)
+`xolotl` also makes it easy to set up networks of neurons, or even multi-compartment neurons (the same code works for both). For an example of a three neuron network with two types of chemical synapses, see [/examples/mex/integrateSTG.cpp](integrateSTG.cpp)
 
 ## Installation
 
@@ -53,13 +53,13 @@ git clone https://github.com/sg-s/xolotl
 Compile from within MATLAB using:
 
 ```matlab
-mex integrateN7.cpp;
+mex examples/mex/integrateN7.cpp;
 ```
 
 I've also written a small standalone wrapper that you can run on any computer, without MATLAB:
 
 ```bash
-g++ integrateN7_standalone.cpp 
+g++ examples/g++/integrateN7_standalone.cpp 
 ```
 
 
