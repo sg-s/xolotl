@@ -5,23 +5,22 @@
 #include <vector>
 #include <typeinfo>
 #include "mex.h"
-#include "network.h"
-#include "compartment.h"
-#include "synapse.h"
+#include "../../network.h"
+#include "../../compartment.h"
+#include "../../synapse.h"
 
 // use Prinz conductances
-#include "conductances/prinz/NaV.h"
-#include "conductances/prinz/CaT.h"
-#include "conductances/prinz/CaS.h"
-#include "conductances/prinz/ACurrent.h"
-#include "conductances/prinz/KCa.h"
-#include "conductances/prinz/Kd.h"
-#include "conductances/prinz/HCurrent.h"
-#include "conductances/Leak.h"
+#include "../../conductances/prinz/NaV.h"
+#include "../../conductances/prinz/CaT.h"
+#include "../../conductances/prinz/CaS.h"
+#include "../../conductances/prinz/ACurrent.h"
+#include "../../conductances/prinz/KCa.h"
+#include "../../conductances/prinz/Kd.h"
+#include "../../conductances/prinz/HCurrent.h"
+#include "../../conductances/Leak.h"
 
-// use Prinz synapses 
-#include "conductances/prinz/Cholinergic.h"
-#include "conductances/prinz/Glutamatergic.h"
+// use electrical synapses 
+#include "../../conductances/Electrical.h"
 
 using namespace std;
 
@@ -36,7 +35,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int nits = 10;
     double dt, tstop;
     dt  = 50e-3;
-    tstop = 20000;
+    tstop = 5000;
     // default conductances
     double gbar_na = 1830.0, gbar_cat = 23.0, gbar_cas = 27.0, gbar_a = 246.0, gbar_kca = 980.0, gbar_kd = 610.0, gbar_h = 10.1, gbar_leak = .99;
     // default reversal potentials
@@ -149,40 +148,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     LP.addConductance(&gh_LP);
     LP.addConductance(&gleak_LP);
 
-    // make conductances for PY
-    NaV gna_PY(1000,e_na, .04, .1);
-    CaT gcat_PY(25,120.0, .27 ,.14); 
-    CaS gcas_PY(20,120.0, .23, .07); 
-    ACurrent gka_PY(500,e_k, .0018 ,.2);
-    KCa gkca_PY(0,e_k, .8);
-    Kd gkd_PY(1250,e_k, .06);
-    HCurrent gh_PY(.5,e_h, .06);
-    Leak gleak_PY(.1,e_leak);
-
-    // make PY neuron 
-    compartment PY(-70, .03, Cm, A, f, Ca_out, Ca_in, tau_Ca);
-    PY.addConductance(&gna_PY);
-    PY.addConductance(&gcat_PY);
-    PY.addConductance(&gcas_PY);
-    PY.addConductance(&gka_PY);
-    PY.addConductance(&gkca_PY);
-    PY.addConductance(&gkd_PY);
-    PY.addConductance(&gh_PY);
-    PY.addConductance(&gleak_PY);
-
-    // make some synapses 
-    Cholinergic PD2LP(30.0); PD2LP.connect(&AB,&LP);
-    Cholinergic PD2PY(3.0); PD2PY.connect(&AB,&PY);
-    Glutamatergic AB2LP(30.0); AB2LP.connect(&AB,&LP);
-    Glutamatergic AB2PY(10.0); AB2PY.connect(&AB,&PY);
-    Glutamatergic LP2PY(1.0); LP2PY.connect(&LP,&PY);
-    Glutamatergic PY2LP(30.0); PY2LP.connect(&PY,&LP);
-    Glutamatergic LP2AB(30.0); LP2AB.connect(&LP,&AB);
+    // make some electrical synapses 
+    Electrical AB2LP(10.0); AB2LP.connect(&AB,&LP);
+    Electrical LP2AB(10.0); LP2AB.connect(&LP,&AB);
 
     // add neurons to the network
     STG.addCompartment(&AB);
     STG.addCompartment(&LP);
-    STG.addCompartment(&PY);
 
     nits = (int) floor(tstop/dt);
     int n_comp = (int) (STG.comp).size(); // these many compartments

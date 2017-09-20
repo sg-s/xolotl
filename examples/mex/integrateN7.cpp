@@ -8,17 +8,17 @@
 #include <vector>
 #include <typeinfo>
 #include "mex.h"
-#include "compartment.h"
+#include "../../compartment.h"
 
 // use the Liu conductances
-#include "conductances/liu/NaV.h"
-#include "conductances/liu/CaT.h"
-#include "conductances/liu/CaS.h"
-#include "conductances/liu/ACurrent.h"
-#include "conductances/liu/KCa.h"
-#include "conductances/liu/Kd.h"
-#include "conductances/liu/HCurrent.h"
-#include "conductances/Leak.h"
+#include "../../conductances/liu/NaV.h"
+#include "../../conductances/liu/CaT.h"
+#include "../../conductances/liu/CaS.h"
+#include "../../conductances/liu/ACurrent.h"
+#include "../../conductances/liu/KCa.h"
+#include "../../conductances/liu/Kd.h"
+#include "../../conductances/liu/HCurrent.h"
+#include "../../conductances/Leak.h"
 
 
 using namespace std;

@@ -12,30 +12,34 @@ NC='\033[0m' # No Color
 
 echo "Trying to compile C++ code using MEX..."
 
-mex integrateN7.cpp
-if [ $? -eq 0 ]; then
-    printf "${GREEN}[OK]${NC} integrateN7 compiled with mex\n"
-else
-    printf "${GREEN}[FAIL]${NC} integrateN7\n"
-    exit 1
-fi
+for a in examples/mex/*.cpp
+do 
+	printf "Compiling $a with mex..."
+	mex -silent $a
+	if [ $? -eq 0 ]; then
+	    printf "${GREEN}[OK]${NC}\n"
+	else
+	    printf "${GREEN}[FAIL]${NC}\n"
+	    exit 1
+	fi
+done
 
-mex integrateSTG.cpp
-if [ $? -eq 0 ]; then
-    printf "${GREEN}[OK]${NC} integrateSTG compiled with mex\n"
-else
-    printf "${GREEN}[FAIL]${NC} integrateSTG\n"
-    exit 1
-fi
+echo "Trying to compile C++ code using gcc..."
 
+for a in examples/g++/*.cpp
+do 
+	printf "Compiling $a with g++..."
+	g++  $a
+	if [ $? -eq 0 ]; then
+	    printf "${GREEN}[OK]${NC}\n"
+	else
+	    printf "${GREEN}[FAIL]${NC}\n"
+	    exit 1
+	fi
+done
 
-g++ integrateN7_standalone.cpp 
-if [ $? -eq 0 ]; then
-    printf "${GREEN}[OK]${NC} integrateN7_standalone compiled with mex\n"
-else
-    printf "${GREEN}[FAIL]${NC} integrateN7_standalone\n"
-    exit 1
-fi
+echo "All code successfully compiled!"
+
 
 # copy this file into the repository so that others can use it
 cp .git/hooks/pre-commit dev/pre-commit

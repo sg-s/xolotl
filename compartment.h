@@ -41,6 +41,7 @@ public:
     double E_Ca;
     double I_Ca;
     double I_ext; // all external currents are summed here
+    double I_clamp; // this is the current required to clamp it 
 
     // constructor with all parameters 
     compartment(double V_, double Ca_, double Cm_, double A_, double f_, double Ca_out_, double Ca_in_, double tau_Ca_)
@@ -68,21 +69,25 @@ public:
 
     }
     // begin function declarations 
-    void integrate(double);
-    void integrateChannels(double, double, double);
-    void integrateVC(double, double, double);
     void addConductance(conductance*);
     void addSynapse(synapse*);
+    void integrate(double);
+    void integrateChannels(double, double, double);
     void integrateSynapses(double, double);
+    void integrateVC(double, double, double);
+    void integrateC_V_clamp(double, double, double);
 
 };
 
+// simple integrate; use this only for 
+// single-compartment non-clamped neurons
 void compartment::integrate(double dt)
 {
     double V_prev = V;
     double Ca_prev = Ca;
     I_Ca = 0;
     I_ext = 0;
+    I_clamp = 0;
 
     integrateChannels(V_prev, Ca_prev, dt);
     integrateVC(V_prev, Ca_prev, dt);
@@ -131,6 +136,21 @@ void compartment::integrateVC(double V_prev, double Ca_prev, double dt)
 
     // integrate V and Ca
     V = V_inf + (V_prev - V_inf)*exp(-dt/(Cm/(sigma_g)));
+    Ca = Ca_inf + (Ca_prev - Ca_inf)*exp(-dt/tau_Ca);
+}
+
+
+// integrates calcium, but not voltage
+// assumes cell is voltage clamped, and 
+// returns the current required to clamp it
+void compartment::integrateC_V_clamp(double V_clamp, double Ca_prev, double dt)
+{
+    // compute infinity values for Ca
+    Ca_inf = Ca_in - f*A*I_Ca; // microM 
+
+    // integrate V and Ca
+    I_clamp = -I_ext + A*(V_clamp*sigma_g - sigma_gE);
+    V = V_clamp;
     Ca = Ca_inf + (Ca_prev - Ca_inf)*exp(-dt/tau_Ca);
 }
 
