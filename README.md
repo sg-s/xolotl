@@ -83,7 +83,7 @@ This code could be a lot faster if optimized correctly.
 - [ ] Support for custom parameters
 - [ ] Support for custom initial conditions
 - [ ] Compatibility with neuron, and control from MATLAB using [puppeteer](https://github.com/sg-s/puppeteer)
-- [ ] Electrical Synapses 
+- [x] Electrical Synapses 
 - [x] Chemical Synapses
 - [x] Support for integrating networks
 
