@@ -1,6 +1,6 @@
-# xolotl: The Standard Network Simulator (STG Network Simulator)
+# xolotl: The Standard Network Simulator 
 
-`xolotl` is a fast single-compartment simulator written in C++, with MATLAB wrappers. 
+`xolotl` is a fast single-compartment and multi-compartment simulator written in C++, with MATLAB wrappers. 
 
 ## Usage
 
@@ -44,7 +44,6 @@ or use git
 
 ```
 git clone https://github.com/sg-s/xolotl
-
 ```
 
 ### Compiling 
@@ -64,12 +63,12 @@ g++ integrateN7_standalone.cpp
 
 ## Benchmarks
 
-| Model          | Paper reference | Hardware  | Speed | 
-| -------          | ------- | ----------- | ------ 
-| 7-conductance point neuron  | [Prinz 2003](http://jn.physiology.org/content/90/6/3998)  |  MacBook Pro (Late 2013) 2.3 GHz Core i7     | 83X | 
-| 7-conductance point neuron  | [Prinz 2003](http://jn.physiology.org/content/90/6/3998)  |  Mac Pro (Late 2013) 3.5 GHz Xeon     | 83X | 
-| 3-neuron STG network | [Prinz 2004](https://www.nature.com/neuro/journal/v7/n12/full/nn1352.html)  |  MacBook Pro (Late 2013) 2.3 GHz Core i7     | 22X | 
-| 3-neuron STG network  | [Prinz 2004](https://www.nature.com/neuro/journal/v7/n12/full/nn1352.html)  |  Mac Pro (Late 2013) 3.5 GHz Xeon     | 23X | 
+| Model          | Paper reference | Hardware  | OS | Speed | 
+| -------          | ------- | ----------- | ------ | -- |
+| 7-conductance point neuron  | [Prinz 2003](http://jn.physiology.org/content/90/6/3998)  |  MacBook Pro (Late 2013) 2.3 GHz Core i7    | macOS 10.12.6 | 83X | 
+| 7-conductance point neuron  | [Prinz 2003](http://jn.physiology.org/content/90/6/3998)  |  Mac Pro (Late 2013) 3.5 GHz Xeon  | macOS 10.12.6   | 83X | 
+| 3-neuron STG network | [Prinz 2004](https://www.nature.com/neuro/journal/v7/n12/full/nn1352.html)  |  MacBook Pro (Late 2013) 2.3 GHz Core i7  | macOS 10.12.6   | 22X | 
+| 3-neuron STG network  | [Prinz 2004](https://www.nature.com/neuro/journal/v7/n12/full/nn1352.html)  |  Mac Pro (Late 2013) 3.5 GHz Xeon  | macOS 10.12.6   | 23X | 
 
 Why are these metrics similar even on apparently different hardware? Maybe the Mac Pro just sucks. 
 
