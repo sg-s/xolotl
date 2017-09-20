@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/sg-s/xolotl.svg?branch=master)](https://travis-ci.org/sg-s/xolotl)
+
 # xolotl: The Standard Network Simulator 
 
 `xolotl` is a fast single-compartment and multi-compartment simulator written in C++, with MATLAB wrappers. 
