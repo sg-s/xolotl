@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/sg-s/xolotl.svg?branch=master)](https://travis-ci.org/sg-s/xolotl)
 
+![](https://user-images.githubusercontent.com/6005346/30719217-a1e8d54a-9ef0-11e7-8889-c284ac13163e.png)
+
 # xolotl: The Standard Network Simulator 
 
 `xolotl` is a fast single-compartment and multi-compartment simulator written in C++, with MATLAB wrappers. `xolotl` is written with a focus on flexibility and speed. It can simulate single-compartment conductance-based neuron models, networks of these, and detailed multi-compartment models. Because it's written in C++, it's really fast (see [benchmarks](##Benchmarks)). 
