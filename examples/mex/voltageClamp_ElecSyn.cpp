@@ -14,7 +14,7 @@
 #include "../../conductances/liu/Kd.h"
 #include "../../conductances/Leak.h"
 
-#include "../../conductances/Electrical.h"
+#include "../../synapses/Electrical.h"
 
 using namespace std;
 

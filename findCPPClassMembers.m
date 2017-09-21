@@ -32,17 +32,27 @@ function class_members = findCPPClassMembers(cppfilename)
 	input_types = {};
 
 	a = strfind(constructor_line,'(');
-	z = strfind(constructor_line(a+1:end),','); z = z(1);
+	z = strfind(constructor_line(a:end),',');
+
 	while length(z) > 0
 		z = z(1);
-		this_input = strtrim(constructor_line(a+1:a+z-1));
+		this_input = strtrim(constructor_line(a+1:a+z-2));
 		space_loc = strfind(this_input,' ');
 		assert(length(space_loc)==1,'Expected exactly one space in this input')
 		input_types = [input_types; strtrim(this_input(1:space_loc))];
 		input_variables = [input_variables; strtrim(this_input(space_loc:end))];
 		a = a+z;
-		z = strfind(constructor_line(a+1:end),','); 
+		z = strfind(constructor_line(a:end),','); 
 	end
+
+	% get the last one too
+	z = strfind(constructor_line(a:end),')'); z = z(1);
+	this_input = strtrim(constructor_line(a+1:a+z-2));
+	space_loc = strfind(this_input,' ');
+	assert(length(space_loc)==1,'Expected exactly one space in this input')
+	input_types = [input_types; strtrim(this_input(1:space_loc))];
+	input_variables = [input_variables; strtrim(this_input(space_loc:end))];
+
 
 	% read the actual constructor and figure out the mapping from the input variables to something
 	% that something is assumed to be members of this class. 
@@ -77,7 +87,7 @@ function class_members = findCPPClassMembers(cppfilename)
 			if any(strfind(this_line,['=' input_variables{i} ';']))
 				this_member = this_line(1:strfind(this_line,'=')-1);
 				member_variables{i} = this_member;
-			end
+			else
 		end
 	end
 

@@ -20,8 +20,8 @@
 #include "../../conductances/Leak.h"
 
 // use Prinz synapses 
-#include "../../conductances/prinz/Cholinergic.h"
-#include "../../conductances/prinz/Glutamatergic.h"
+#include "../../synapses/prinz/Cholinergic.h"
+#include "../../synapses/prinz/Glutamatergic.h"
 
 using namespace std;
 

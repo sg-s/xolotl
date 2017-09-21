@@ -20,7 +20,7 @@
 #include "../../conductances/Leak.h"
 
 // use electrical synapses 
-#include "../../conductances/Electrical.h"
+#include "../../synapses/Electrical.h"
 
 using namespace std;
 

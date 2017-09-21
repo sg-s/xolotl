@@ -5,3 +5,4 @@
 *.mexa64
 *.sublime-workspace
 *a.out
+*mexBridge.cpp
