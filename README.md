@@ -2,7 +2,7 @@
 
 # xolotl: The Standard Network Simulator 
 
-`xolotl` is a fast single-compartment and multi-compartment simulator written in C++, with MATLAB wrappers. `xolotl` is written with a focus on flexibility and speed. It can simulate single-compartment conductance-based neuron models, networks of these, and detailed multi-compartment models. Because it's written in C++, it's really fast (see #Benchmarks). 
+`xolotl` is a fast single-compartment and multi-compartment simulator written in C++, with MATLAB wrappers. `xolotl` is written with a focus on flexibility and speed. It can simulate single-compartment conductance-based neuron models, networks of these, and detailed multi-compartment models. Because it's written in C++, it's really fast (see [benchmarks](#Benchmarks)). 
 
 ## Usage (C++)
 
@@ -14,14 +14,15 @@ Set up a simple single-compartment neuron:
 // Set up some conductances 
 NaV gna(1000,e_na, mNa, hNa);
 Kd gkd(1000,e_k, mKd);
-Leak gleak(0,e_leak);
+Leak gleak(1,e_leak);
 
 // create a compartment 
 compartment HH(-70, .01, Cm, A, f, Ca_out, Ca_in, tau_Ca);
 
 // add the conductances to the compartment 
 HH.addConductance(&gna);
-HH.addConductance(&gcat);
+HH.addConductance(&gkd);
+HH.addConductance(&gleak);
 ```
 
 Integrate this using a time step of `50 us`:
@@ -129,6 +130,8 @@ git clone https://github.com/sg-s/xolotl
 
 
 ## Benchmarks
+
+These benchmarks were computed from within MATLAB, running the simulation at a time resolution of `50 us`. Speed is reported in multiples of real-time performance (so 10X = 10 seconds of simulation takes 1 s of real time).
 
 | Model          | Paper reference | Hardware  | OS | Speed | 
 | -------          | ------- | ----------- | ------ | -- |
