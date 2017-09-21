@@ -36,7 +36,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int nits = 10;
     double dt, tstop;
     dt  = 50e-3;
-    tstop = 5000;
+    tstop = 20000;
     // default conductances
     double gbar_na = 1830.0, gbar_cat = 23.0, gbar_cas = 27.0, gbar_a = 246.0, gbar_kca = 980.0, gbar_kd = 610.0, gbar_h = 10.1, gbar_leak = .99;
     // default reversal potentials
