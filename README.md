@@ -2,9 +2,11 @@
 
 # xolotl: The Standard Network Simulator 
 
-`xolotl` is a fast single-compartment and multi-compartment simulator written in C++, with MATLAB wrappers. 
+`xolotl` is a fast single-compartment and multi-compartment simulator written in C++, with MATLAB wrappers. `xolotl` is written with a focus on flexibility and speed. It can simulate single-compartment conductance-based neuron models, networks of these, and detailed multi-compartment models. Because it's written in C++, it's really fast (see #Benchmarks). 
 
-## Usage
+## Usage (C++)
+
+The simplest way to use `xolotl` is from C++. 
 
 Set up a simple single-compartment neuron:
 
@@ -20,17 +22,92 @@ compartment HH(-70, .01, Cm, A, f, Ca_out, Ca_in, tau_Ca);
 // add the conductances to the compartment 
 HH.addConductance(&gna);
 HH.addConductance(&gcat);
-
 ```
 
 Integrate this using a time step of `50 us`:
 
 ```c++
 HH.integrate(50e-3);
-
 ```
 
 `xolotl` also makes it easy to set up networks of neurons, or even multi-compartment neurons (the same code works for both). For an example of a three neuron network with two types of chemical synapses, see [integrateSTG.cpp](/examples/mex/integrateSTG.cpp)
+
+## Usage (MATLAB)
+
+`xolotl.m` is a MATLAB class that generates and compiles C++ wrapper code on the fly, and uses that to run simulations, while presenting a pseudo-object oriented interface within MATLAB. 
+
+Set up a `xolotl` instance:
+
+```matlab
+x = xolotl;
+```
+
+Set up a basic neuron and add some conductances:
+
+```
+x.addCompartment('AB',-70,0.05,10,0.0628,1.496,3000,0.05,200);
+x.addConductance('AB','liu/NaV',1830,30);
+x.addConductance('AB','liu/CaT',23,30);
+x.addConductance('AB','liu/CaS',27,30);
+x.addConductance('AB','liu/ACurrent',246,-80);
+x.addConductance('AB','liu/KCa',980,-80);
+x.addConductance('AB','liu/Kd',610,-80);
+x.addConductance('AB','liu/HCurrent',10.1,-20);
+x.addConductance('AB','Leak',.99,-50);
+```
+
+Inspect the neuron:
+
+```
+x.AB
+
+ans = 
+
+  struct with fields:
+
+           V: -70
+          Ca: 0.0500
+          Cm: 10
+           A: 0.0628
+           f: 1.4960
+      Ca_out: 3000
+       Ca_in: 0.0500
+      tau_Ca: 200
+         NaV: [1×1 struct]
+         CaT: [1×1 struct]
+         CaS: [1×1 struct]
+    ACurrent: [1×1 struct]
+         KCa: [1×1 struct]
+          Kd: [1×1 struct]
+    HCurrent: [1×1 struct]
+        Leak: [1×1 struct]
+
+```
+
+You can drill as deep as you want into the structure, and modify values if you want to. In this example, we're setting the reversal potential of the `NaV` channel on neuron `AB` to 50mV;
+
+```
+x.AB.NaV.E = 50; % mV
+```
+
+Now, we can compile to generate C++ code with a `mexFunction` interface:
+
+```
+x.compile;
+```
+
+Integrate and plot the voltage:
+
+```
+
+x.dt = 50e-3;
+x.t_end = 5000;
+[V,Ca] = x.integrate;
+figure, plot(V)
+```
+
+![](https://user-images.githubusercontent.com/6005346/30713658-ff96faf4-9edd-11e7-9db1-a2ca4f2f0567.png)
+
 
 ## Installation
 
@@ -39,27 +116,15 @@ Get this repo from within `MATLAB` using my package manager:
 ```
 % copy and paste this code in your MATLAB prompt
 urlwrite('http://srinivas.gs/install.m','install.m'); 
+install sg-s/srinivas.gs_mtools % you'll need this
 install sg-s/xolotl
 ```
 
 or use git
 
 ```
+git clone https://github.com/sg-s/srinivas.gs_mtools
 git clone https://github.com/sg-s/xolotl
-```
-
-### Compiling 
-
-Compile from within MATLAB using:
-
-```matlab
-mex examples/mex/integrateN7.cpp;
-```
-
-I've also written a small standalone wrapper that you can run on any computer, without MATLAB:
-
-```bash
-g++ examples/g++/integrateN7_standalone.cpp 
 ```
 
 
@@ -80,12 +145,14 @@ This code could be a lot faster if optimized correctly.
 
 ### Roadmap
 
-- [ ] Support for custom parameters
-- [ ] Support for custom initial conditions
+- [x] Support for custom parameters
+- [x] Support for custom initial conditions
 - [ ] Compatibility with neuron, and control from MATLAB using [puppeteer](https://github.com/sg-s/puppeteer)
 - [x] Electrical Synapses 
 - [x] Chemical Synapses
 - [x] Support for integrating networks
+- [ ] Support for Synapses from within MATLAB
+- [ ] Simulation updating MATLAB structure
 
 ### Tests
 
