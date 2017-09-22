@@ -41,10 +41,12 @@ x.addSynapse('Glut','LP','PY',1);
 x.addSynapse('Glut','PY','LP',30);
 x.addSynapse('Glut','LP','AB',30);
 
+x.manipulate;
 
-x.compile;
-x.dt = 50e-3;
-x.t_end = 5000;
-[V,Ca] = x.integrate;
 
-figure, plot(V)
+% x.compile;
+% x.dt = 50e-3;
+% x.t_end = 5000;
+% [V,Ca] = x.integrate;
+
+% figure, plot(V)

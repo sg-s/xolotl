@@ -152,11 +152,11 @@ This code could be a lot faster if optimized correctly.
 
 - [x] Support for custom parameters
 - [x] Support for custom initial conditions
-- [ ] Compatibility with neuron, and control from MATLAB using [puppeteer](https://github.com/sg-s/puppeteer)
+- [x] Interactive manipulation from MATLAB using [puppeteer](https://github.com/sg-s/puppeteer)
 - [x] Electrical Synapses 
 - [x] Chemical Synapses
 - [x] Support for integrating networks
-- [ ] Support for Synapses from within MATLAB
+- [x] Support for Synapses from within MATLAB
 - [ ] Simulation updating MATLAB structure
 
 ### Tests

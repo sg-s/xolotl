@@ -31,6 +31,7 @@ properties
 	dt = 50e-3;
 	t_end = 5000;
 	synapses
+	handles
 end % end general props
 
 methods 
@@ -143,6 +144,97 @@ methods
 
 		% add this to synapse_headers, if it's not already there
 		self.synapse_headers = [self.synapse_headers; self.available_synapses{syn_file}];
+	end
+
+
+	function manipulate(self)
+		% create a window to show all the traces
+
+		[V,Ca] = self.integrate;
+		time = self.dt:self.dt:self.t_end;
+
+		self.handles.fig = figure('outerposition',[0 0 1000 900],'PaperUnits','points','PaperSize',[1000 500]); hold on
+		n = length(self.compartment_names);
+		for i = 1:n
+			self.handles.ax(i) = subplot(n,1,i);
+			self.handles.V_trace(i) = plot(self.handles.ax(i),time,V(:,i),'k');
+		end
+
+		% figure out the parameters
+		for i = 1:n
+			[v,names] = struct2vec(self.(self.compartment_names{i}));
+			% delete all E_, m_, and h_ parameters
+			rm_this = false(length(v),1);
+			for j = 1:length(v)
+				if strcmp(names{j}(1:2),'m_') || strcmp(names{j}(1:2),'h_') || strcmp(names{j}(1:2),'E_') || strcmp(names{j}(1:2),'V_') 
+					rm_this(j) = true;
+				end
+				if strcmp(names{j},'Ca_')
+					rm_this(j) = true;
+				end
+			end
+			v(rm_this) = []; names(rm_this) = [];
+
+			% remove terminal underscores from names
+			for j = 1:length(names)
+				if strcmp(names{j}(end),'_')
+					names{j}(end) = [];
+				end
+			end
+
+			% reconstitute into a structure
+			S = struct; U = struct; L = struct;
+			for j = 1:length(v)
+				S.(names{j}) = v(j);
+				L.(names{j}) = v(j)/10;
+				U.(names{j}) = v(j)*10;
+			end 
+			params{i} = S; lb{i} = L; ub{i} = U;
+		end
+
+		% create a puppeteer instance and configure
+		p = puppeteer(params,lb,ub);
+		p.attachFigure(self.handles.fig);
+
+		p.callback_function = @self.manipulateEvaluate;
+
+		self.handles.puppeteer_object = p;
+
+		 
+	end % end manipulate 
+
+	function manipulateEvaluate(self,parameters)
+		% unpack parameters and update locally
+		p = self.handles.puppeteer_object.parameters;
+		assert(iscell(p),'Does not work for only one compartment because im lazy')
+		for i = 1:length(p)
+			S = p{i};
+			f = fieldnames(S);
+			ff = self.(self.compartment_names{i});
+			% match everything we can in this compartment 
+			for j = 1:length(f)
+				if isfield(self.(self.compartment_names{i}),f{j})
+					self.(self.compartment_names{i}).(f{j}) = S.(f{j});
+				else
+					% maybe one level deeper? 
+					cond_name = f{j}(strfind(f{j},'_')+1:end);
+					if isfield(self.(self.compartment_names{i}),cond_name)
+						self.(self.compartment_names{i}).(cond_name).gbar = S.(f{j});
+					end
+				end
+			end
+		end
+
+		% evaluate 
+
+		[V, Ca] = self.integrate;
+
+		% update plots
+		for i = 1:size(V,2)
+			self.handles.V_trace(i).YData = V(:,i);
+		end
+
+
 	end
 
 	function compile(self)
