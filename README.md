@@ -4,7 +4,7 @@
 
 # xolotl: The Standard Network Simulator 
 
-`xolotl` is a fast single-compartment and multi-compartment simulator written in C++, with MATLAB wrappers. `xolotl` is written with a focus on flexibility and speed. It can simulate single-compartment conductance-based neuron models, networks of these, and detailed multi-compartment models. Because it's written in C++, it's really fast (see [benchmarks](##Benchmarks)). 
+`xolotl` is a fast single-compartment and multi-compartment simulator written in C++, with MATLAB wrappers. `xolotl` is written with a focus on flexibility and speed. It can simulate single-compartment conductance-based neuron models, networks of these, and detailed multi-compartment models. Because it's written in C++, it's really fast (see [benchmarks](#benchmarks)). 
 
 ## Usage (C++)
 
@@ -33,7 +33,7 @@ Integrate this using a time step of `50 us`:
 HH.integrate(50e-3);
 ```
 
-`xolotl` also makes it easy to set up networks of neurons, or even multi-compartment neurons (the same code works for both). For an example of a three neuron network with two types of chemical synapses, see [integrateSTG.cpp](/examples/mex/integrateSTG.cpp)
+`xolotl` also makes it easy to set up networks of neurons, or even multi-compartment neurons (the same code works for both). For an example of a three neuron network with two types of chemical synapses, see [test_stg.cpp](tests/test_stg.cpp)
 
 ## Usage (MATLAB)
 
@@ -129,6 +129,7 @@ Get this repo from within `MATLAB` using my package manager:
 % copy and paste this code in your MATLAB prompt
 urlwrite('http://srinivas.gs/install.m','install.m'); 
 install sg-s/srinivas.gs_mtools % you'll need this
+install sg-s/puppeteer % for manipulation
 install sg-s/xolotl
 ```
 
@@ -136,6 +137,7 @@ or use git
 
 ```
 git clone https://github.com/sg-s/srinivas.gs_mtools
+git clone https://github.com/sg-s/puppeteer
 git clone https://github.com/sg-s/xolotl
 ```
 
@@ -164,8 +166,6 @@ You are strongly encouraged to use [git hooks](https://git-scm.com/docs/githooks
 
 
 ## License 
-
-`xolotl` is loosely based on Tim O'Leary's C++ code, which you can see [here](https://github.com/marderlab/oleary_et_al_2014)
 
 GPL v3
 
