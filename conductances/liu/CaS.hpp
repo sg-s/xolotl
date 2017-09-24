@@ -1,15 +1,15 @@
-// Fast Calcium CONDUCTANCE
-#ifndef CAT
-#define CAT
-#include "../../conductance.h"
+// Slow Calcium conductance
+#ifndef CAS
+#define CAS
+#include "../../conductance.hpp"
 
 //inherit conductance class spec
-class CaT: public conductance {
+class CaS: public conductance {
 
 public:
 
     // specify parameters + initial conditions 
-    CaT(double g_, double E_, double m_, double h_)
+    CaS(double g_, double E_, double m_, double h_)
     {
         gbar = g_;
         E = E_;
@@ -25,9 +25,9 @@ public:
     double tau_h(double V); 
 };
 
-void CaT::connect(compartment *pcomp_) { container = pcomp_; }
+void CaS::connect(compartment *pcomp_) {container = pcomp_; }
 
-void CaT::integrate(double V, double Ca, double dt)
+void CaS::integrate(double V, double Ca, double dt)
 {
     // update E by copying E_Ca from the cell 
     E = container->E_Ca;
@@ -38,12 +38,12 @@ void CaT::integrate(double V, double Ca, double dt)
     // compute the specific calcium current and update it in the cell 
     double this_I = g*(V-E);
     container->I_Ca += this_I;
+
 }
 
-
-double CaT::m_inf(double V) {return 1.0/(1.0 + exp((V+27.1)/-7.2));}
-double CaT::h_inf(double V) {return 1.0/(1.0 + exp((V+32.1)/5.5));}
-double CaT::tau_m(double V) {return 21.7 - 21.3/(1.0 + exp((V+68.1)/-20.5));}
-double CaT::tau_h(double V) {return 105.0 - 89.8/(1.0 + exp((V+55.0)/-16.9));}
+double CaS::m_inf(double V) {return 1.0/(1.0+exp((V+33.0)/-8.1));}
+double CaS::h_inf(double V) {return 1.0/(1.0+exp((V+60.0)/6.2));}
+double CaS::tau_m(double V) {return 1.4 + 7.0/(exp((V+27.0)/10.0) + exp((V+70.0)/-13.0));}
+double CaS::tau_h(double V) {return 60.0 + 150.0/(exp((V+55.0)/9.0) + exp((V+65.0)/-16.0));}
 
 #endif

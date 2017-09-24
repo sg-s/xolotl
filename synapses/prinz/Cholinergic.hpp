@@ -1,7 +1,7 @@
 // Cholingeric Synapse 
 #ifndef CHOLINERGIC
 #define CHOLINERGIC
-#include "../../synapse.h"
+#include "../../synapse.hpp"
 
 class Cholinergic: public synapse {
 
@@ -51,7 +51,7 @@ void Cholinergic::integrate(double dt)
 
 double Cholinergic::getCurrent(double V_post)
 {   
-    double I_out = gbar*s*(V_post-E)/1000.0;
+    double I_out = -gbar*s*(V_post-E)/1000.0;
     // mexPrintf("I_out = %f\n",I_out);
     return I_out;// in units of nA
 }

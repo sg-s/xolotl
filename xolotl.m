@@ -32,12 +32,13 @@ properties
 	t_end = 5000;
 	synapses
 	handles
+	V_clamp
 end % end general props
 
 methods 
 	function self = xolotl()
 		% read props from compartment.h
-		cppfilename = joinPath(fileparts(which(mfilename)),'compartment.h');
+		cppfilename = joinPath(fileparts(which(mfilename)),'compartment.hpp');
 		self.compartment_props = findCPPClassMembers(cppfilename);
 
 		% make a list of the available conductances
@@ -45,7 +46,7 @@ methods
 		rm_this = true(length(available_conductances),1);
 		for i = 1:length(available_conductances)
 			[~,~,ext] = fileparts(available_conductances{i});
-			if strcmp(ext,'.h')
+			if strcmp(ext,'.hpp')
 				rm_this(i) = false;
 			end
 		end
@@ -56,12 +57,19 @@ methods
 		rm_this = true(length(available_synapses),1);
 		for i = 1:length(available_synapses)
 			[~,~,ext] = fileparts(available_synapses{i});
-			if strcmp(ext,'.h')
+			if strcmp(ext,'.hpp')
 				rm_this(i) = false;
 			end
 		end
 		self.available_synapses = available_synapses(~rm_this);
 
+	end
+
+	function set.V_clamp(self,value)
+		assert(isvector(value),'V_clamp must be a vector');
+		value = value(:);
+		assert(length(value) == self.t_end/self.dt,'V_clamp has the wrong length')
+		self.V_clamp = value;
 	end
 
 	function addCompartment(self,label, varargin)
@@ -272,12 +280,16 @@ methods
 		end
 
 		% read lines from mexTemplate
-		cppfilename = joinPath(fileparts(which(mfilename)),'mexTemplate.cpp');
+		if isempty(self.V_clamp)
+			cppfilename = joinPath(fileparts(which(mfilename)),'mexTemplate.cpp');
+		else
+			cppfilename = joinPath(fileparts(which(mfilename)),'mexTemplate_clamp.cpp');
+		end
 		lines = lineRead(cppfilename);
 
 		% insert header files ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		header_files{1} = '#include "network.h"';
-		header_files{2} = '#include "compartment.h"';
+		header_files{1} = '#include "network.hpp"';
+		header_files{2} = '#include "compartment.hpp"';
 
 
 
@@ -421,15 +433,26 @@ methods
 		lines = [lines(1:insert_here); network_add_lines(:); lines(insert_here+1:end)];
 
 		% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		% if something is clamped, link up the clamping potentials   ~~~~~~~~~
+		if ~isempty(self.V_clamp)
+			V_clamp_idx = length(self.compartment_names) + 2;
+			insert_this = ['v_drive_idx = ' mat2str((V_clamp_idx)) ';'];
+			insert_here = lineFind(lines,'//xolotl:define_v_drive_idx');
+			assert(length(insert_here)==1,'Could not find insertion point for telling C++ which input is V_clamp')
+			lines = [lines(1:insert_here); insert_this; lines(insert_here+1:end)];
+		end
+
+
+		% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		% write lines into mexBridge.cpp 
 		lineWrite(joinPath(fileparts(which(mfilename)),'mexBridge.cpp'),lines);
 
-		mex(joinPath(fileparts(which(mfilename)),'mexBridge.cpp'),'-outdir',fileparts(which(mfilename)))
+		mex('-silent',joinPath(fileparts(which(mfilename)),'mexBridge.cpp'),'-outdir',fileparts(which(mfilename)))
 
 
 	end % end compile
 
-	function [V, Ca] = integrate(self)
+	function [V, Ca,I_clamp] = integrate(self)
 
 		arguments = {};
 		arguments{1} = [self.dt; self.t_end];
@@ -440,24 +463,43 @@ methods
 			arguments{i+1} = struct2vec(self.(this_comp_name));
 		end
 
-		% the last argument is the synapses
+		% the next argument is the synapses
 		if length(self.synapses)
 			arguments{end+1} = [self.synapses.gbar];
 		end
 
 		% we need to give mexBridge the right number of arguments. 
 		% so there's no way around constructing a string and running eval on it
-		eval_str = '[V,Ca] =  mexBridge(';
-		for i = 1:length(arguments)
-			eval_str = [eval_str 'arguments{' mat2str(i) '},'];
-		end
-		
-		eval_str(end) = ')';
-		eval_str = [eval_str ';'];
-		eval(eval_str)
+		if isempty(self.V_clamp)
+			I_clamp = [];
+			eval_str = '[V,Ca] =  mexBridge(';
+			for i = 1:length(arguments)
+				eval_str = [eval_str 'arguments{' mat2str(i) '},'];
+			end
+			
+			eval_str(end) = ')';
+			eval_str = [eval_str ';'];
+			eval(eval_str)
 
-		V = V';
-		Ca = Ca';
+			V = V';
+			Ca = Ca';
+		else
+			% add on an extra argument -- the V_clamp
+			arguments{end+1} = self.V_clamp;
+
+			eval_str = '[V,Ca,I_clamp] =  mexBridge(';
+			for i = 1:length(arguments)
+				eval_str = [eval_str 'arguments{' mat2str(i) '},'];
+			end
+			
+			eval_str(end) = ')';
+			eval_str = [eval_str ';'];
+			eval(eval_str)
+
+			V = V';
+			Ca = Ca';
+			I_clamp = I_clamp(:);
+		end
 
 	end
 

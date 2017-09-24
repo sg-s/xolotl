@@ -1,8 +1,7 @@
 // GLUTAMATERGIC Synapse 
 #ifndef GLUTAMATERGIC
 #define GLUTAMATERGIC
-#include "../../synapse.h"
-#include "mex.h"
+#include "../../synapse.hpp"
 
 class Glutamatergic: public synapse {
 
@@ -45,7 +44,7 @@ void Glutamatergic::integrate(double dt)
 
 double Glutamatergic::getCurrent(double V_post)
 {   
-    double I_out = gbar*s*(V_post-E)/1000.0; // in units of nA
+    double I_out = -gbar*s*(V_post-E)/1000.0; // in units of nA
     return I_out;
 
 }

@@ -2,7 +2,7 @@
 // won't let me call this class "H"
 #ifndef HCURRENT
 #define HCURRENT
-#include "../../conductance.h"
+#include "../../conductance.hpp"
 
 //inherit conductance class spec
 class HCurrent: public conductance {

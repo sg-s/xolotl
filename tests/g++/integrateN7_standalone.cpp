@@ -6,16 +6,16 @@
 #include <cmath>
 #include <vector>
 #include <typeinfo>
-#include "../../compartment.h"
+#include "../../compartment.hpp"
 
-#include "../../conductances/liu/NaV.h"
-#include "../../conductances/liu/CaT.h"
-#include "../../conductances/liu/CaS.h"
-#include "../../conductances/liu/ACurrent.h"
-#include "../../conductances/liu/KCa.h"
-#include "../../conductances/liu/Kd.h"
-#include "../../conductances/liu/HCurrent.h"
-#include "../../conductances/Leak.h"
+#include "../../conductances/liu/NaV.hpp"
+#include "../../conductances/liu/CaT.hpp"
+#include "../../conductances/liu/CaS.hpp"
+#include "../../conductances/liu/ACurrent.hpp"
+#include "../../conductances/liu/KCa.hpp"
+#include "../../conductances/liu/Kd.hpp"
+#include "../../conductances/liu/HCurrent.hpp"
+#include "../../conductances/Leak.hpp"
 
 
 using namespace std;

@@ -3,8 +3,8 @@
 #define COMPARTMENT
 #include <cmath>
 #include <vector>
-#include "conductance.h"
-#include "synapse.h"
+#include "conductance.hpp"
+#include "synapse.hpp"
 // #include "mex.h"
 
 using namespace std;
@@ -122,7 +122,7 @@ void compartment::integrateSynapses(double V_prev, double dt)
     for (int i=0; i<n_syn; i++)
     {
         syn[i]->integrate(dt);
-        I_ext -= (syn[i]->getCurrent(V_prev));
+        I_ext += (syn[i]->getCurrent(V_prev));
     }
 }
 

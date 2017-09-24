@@ -1,7 +1,7 @@
 // Slow Calcium conductance
 #ifndef KCA
 #define KCA
-#include "../../conductance.h"
+#include "../../conductance.hpp"
 
 //inherit conductance class spec
 class KCa: public conductance {

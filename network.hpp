@@ -3,7 +3,7 @@
 #define NETWORK
 #include <cmath>
 #include <vector>
-#include "compartment.h"
+#include "compartment.hpp"
 #include "mex.h"
 
 using namespace std;
@@ -30,7 +30,6 @@ public:
 void network::addCompartment(compartment *comp_)
 {
     comp.push_back(comp_);
-    //cond_->connect(this);
 }
 
 // this integrate method works for networks

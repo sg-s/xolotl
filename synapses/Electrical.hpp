@@ -3,7 +3,7 @@
 // of this in opposite polarities 
 #ifndef ELECTRICAL
 #define ELECTRICAL
-#include "../synapse.h"
+#include "../synapse.hpp"
 
 class Electrical: public synapse {
 
@@ -28,7 +28,7 @@ void Electrical::integrate(double dt)
 double Electrical::getCurrent(double V_post)
 {   
     double V_pre = pre_syn->V;
-    double I_out = gbar*(V_post-V_pre)/1000.0; // in units of nA
+    double I_out = gbar*(V_pre-V_post)/1000.0; // in units of nA
     return I_out;
 
 }

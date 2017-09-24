@@ -1,7 +1,7 @@
 // inward rectifying potassium conductance 
 #ifndef KD
 #define KD
-#include "../../conductance.h"
+#include "../../conductance.hpp"
 
 //inherit conductance class spec
 class Kd: public conductance {

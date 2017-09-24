@@ -41,12 +41,17 @@ x.addSynapse('Glut','LP','PY',1);
 x.addSynapse('Glut','PY','LP',30);
 x.addSynapse('Glut','LP','AB',30);
 
-x.manipulate;
 
+x.compile;
+x.dt = 50e-3;
+x.t_end = 5000;
+[V,Ca] = x.integrate;
 
-% x.compile;
-% x.dt = 50e-3;
-% x.t_end = 5000;
-% [V,Ca] = x.integrate;
+assert(~any(isnan(V(:))),'V contains NaNs. Something is wrong')
+assert(~any(isnan(Ca(:))),'Ca contains NaNs. Something is wrong')
 
-% figure, plot(V)
+if usejava('jvm')
+	x.manipulate;
+else
+	disp('STG test passed!')
+end
