@@ -9,24 +9,26 @@ RED='\033[0;31m'
 GREEN='\033[1;32m'
 NC='\033[0m' # No Color
 
+echo "Running MEX/MATLAB tests..."
+matlab -nojvm -nosplash -nodisplay -nodesktop -r "run('tests/test_stg.m'); run('tests/test_clamp.m'); exit;"
 
-echo "Trying to compile C++ code using MEX..."
+# echo "Trying to compile C++ code using MEX..."
 
-for a in examples/mex/*.cpp
-do 
-	printf "Compiling $a with mex..."
-	mex -silent $a
-	if [ $? -eq 0 ]; then
-	    printf "${GREEN}[OK]${NC}\n"
-	else
-	    printf "${GREEN}[FAIL]${NC}\n"
-	    exit 1
-	fi
-done
+# for a in examples/mex/*.cpp
+# do 
+# 	printf "Compiling $a with mex..."
+# 	mex -silent $a
+# 	if [ $? -eq 0 ]; then
+# 	    printf "${GREEN}[OK]${NC}\n"
+# 	else
+# 	    printf "${GREEN}[FAIL]${NC}\n"
+# 	    exit 1
+# 	fi
+# done
 
 echo "Trying to compile C++ code using gcc..."
 
-for a in examples/g++/*.cpp
+for a in tests/g++/*.cpp
 do 
 	printf "Compiling $a with g++..."
 	g++  $a
