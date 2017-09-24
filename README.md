@@ -111,6 +111,15 @@ figure, plot(V)
 
 ![](https://user-images.githubusercontent.com/6005346/30713658-ff96faf4-9edd-11e7-9db1-a2ca4f2f0567.png)
 
+One of the advantages of the MATLAB interface is that you can manipulate all parameters of your neuron/network model, and see what the effect of that is live. This makes it much easier to get an intuition of how your model behaves. 
+
+This is as simple as:
+
+```matlab
+x.manipulate;
+```
+
+![](https://user-images.githubusercontent.com/6005346/30785272-aef9fb44-a132-11e7-84a6-25fd8e58470a.gif)
 
 ## Installation
 
@@ -147,17 +156,6 @@ Why are these metrics similar even on apparently different hardware? Maybe the M
 This code could be a lot faster if optimized correctly. 
 
 ## Developing 
-
-### Roadmap
-
-- [x] Support for custom parameters
-- [x] Support for custom initial conditions
-- [x] Interactive manipulation from MATLAB using [puppeteer](https://github.com/sg-s/puppeteer)
-- [x] Electrical Synapses 
-- [x] Chemical Synapses
-- [x] Support for integrating networks
-- [x] Support for Synapses from within MATLAB
-- [ ] Simulation updating MATLAB structure
 
 ### Tests
 
