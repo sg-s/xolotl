@@ -158,9 +158,11 @@ methods
 		for i = 1:n
 			self.handles.ax(i) = subplot(n,1,i);
 			self.handles.V_trace(i) = plot(self.handles.ax(i),time,V(:,i),'k');
+			ylabel(self.handles.ax(i),['V_{' self.compartment_names{i} '} (mV)'] )
 		end
-
-		% figure out the parameters
+		prettyFig('plw',1.5,'lw',1);
+		
+		% figure out the parameters -- one for each compartment 
 		for i = 1:n
 			[v,names] = struct2vec(self.(self.compartment_names{i}));
 			% delete all E_, m_, and h_ parameters
@@ -192,11 +194,25 @@ methods
 			params{i} = S; lb{i} = L; ub{i} = U;
 		end
 
+		% and one more for the synapses 
+		S = struct; U = struct; L = struct;
+		for i = 1:length(self.synapses)
+			this_name = [self.synapses(i).pre '_2_' self.synapses(i).post '_' self.synapses(i).type(1:4)];
+			S.(this_name) = self.synapses(i).gbar;
+			U.(this_name) = self.synapses(i).gbar*5;
+			L.(this_name) = 0;
+		end
+		params{end+1} = S;
+		lb{end+1} = L;
+		ub{end+1} = U;
+
 		% create a puppeteer instance and configure
 		p = puppeteer(params,lb,ub);
 		p.attachFigure(self.handles.fig);
 
 		p.callback_function = @self.manipulateEvaluate;
+		p.group_names = [self.compartment_names; 'synapses'];
+
 
 		self.handles.puppeteer_object = p;
 
@@ -207,20 +223,32 @@ methods
 		% unpack parameters and update locally
 		p = self.handles.puppeteer_object.parameters;
 		assert(iscell(p),'Does not work for only one compartment because im lazy')
+
 		for i = 1:length(p)
 			S = p{i};
 			f = fieldnames(S);
-			ff = self.(self.compartment_names{i});
-			% match everything we can in this compartment 
-			for j = 1:length(f)
-				if isfield(self.(self.compartment_names{i}),f{j})
-					self.(self.compartment_names{i}).(f{j}) = S.(f{j});
-				else
-					% maybe one level deeper? 
-					cond_name = f{j}(strfind(f{j},'_')+1:end);
-					if isfield(self.(self.compartment_names{i}),cond_name)
-						self.(self.compartment_names{i}).(cond_name).gbar = S.(f{j});
+			
+			if i <= length(self.compartment_names)
+				ff = self.(self.compartment_names{i});
+				% match everything we can in this compartment 
+				for j = 1:length(f)
+					if isfield(self.(self.compartment_names{i}),f{j})
+						self.(self.compartment_names{i}).(f{j}) = S.(f{j});
+					else
+						% maybe one level deeper? 
+						cond_name = f{j}(strfind(f{j},'_')+1:end);
+						if isfield(self.(self.compartment_names{i}),cond_name)
+							self.(self.compartment_names{i}).(cond_name).gbar = S.(f{j});
+						end
 					end
+				end
+			else
+				% synapses?
+				% blindly assume that the order we get them back is the order we have stored locally. dangerous, but it should work 
+				v = struct2vec(p{i});
+				assert(length(v) == length(self.synapses),'Expected this parameter set to be synapse strengths, but this does not have the same length as the synapses I have on list')
+				for j = 1:length(self.synapses)
+					self.synapses(j).gbar = v(j);
 				end
 			end
 		end
