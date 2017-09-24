@@ -1,6 +1,6 @@
 language: cpp
 compiler: g++
-script: g++ examples/g++/integrateN7_standalone.cpp
+script: g++ tests/g++/integrateN7_standalone.cpp
 notifications:
   email:
     on_success: never # default: change
