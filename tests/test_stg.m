@@ -8,6 +8,7 @@
 
 x = xolotl;
 x.addCompartment('AB',-70,0.05,10,0.0628,14.96,3000,0.05,200);
+
 x.addConductance('AB','prinz/NaV',1000,50);
 x.addConductance('AB','prinz/CaT',25,30);
 x.addConductance('AB','prinz/CaS',60,30);
@@ -45,6 +46,7 @@ x.addSynapse('Glut','LP','AB',30);
 x.compile;
 x.dt = 50e-3;
 x.t_end = 5000;
+
 [V,Ca] = x.integrate;
 
 assert(~any(isnan(V(:))),'V contains NaNs. Something is wrong')

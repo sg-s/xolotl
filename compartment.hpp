@@ -42,6 +42,7 @@ public:
     double I_Ca;
     double I_ext; // all external currents are summed here
     double I_clamp; // this is the current required to clamp it 
+    int n_cond; // this keep tracks of the # channels
 
     // constructor with all parameters 
     compartment(double V_, double Ca_, double Cm_, double A_, double f_, double Ca_out_, double Ca_in_, double tau_Ca_)
@@ -66,6 +67,7 @@ public:
         // housekeeping
         E_Ca = 0;
         I_Ca = 0; // this is the current density (nA/mm^2)
+        n_cond = 0;
 
     }
     // begin function declarations 
@@ -76,6 +78,7 @@ public:
     void integrateSynapses(double, double);
     void integrateVC(double, double, double);
     void integrateC_V_clamp(double, double, double);
+    void get_cond_state(double*);
 
 };
 
@@ -160,6 +163,7 @@ void compartment::addConductance(conductance *cond_)
 {
     cond.push_back(cond_);
     cond_->connect(this);
+    n_cond += 1;
 }
 
 // add synapse to this compartment (this compartment is after synapse)
@@ -167,6 +171,17 @@ void compartment::addSynapse(synapse *syn_)
 {
     syn.push_back(syn_);
 }
+
+void compartment::get_cond_state(double *cond_state)
+{
+    for (int i = 0; i < n_cond; i ++) 
+    {
+        cond_state[i*2] = cond[i]->m;
+        cond_state[(i*2)+1] = cond[i]->h;
+    }
+}
+
+
 
 #endif
 

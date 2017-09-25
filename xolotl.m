@@ -33,6 +33,7 @@ properties
 	synapses
 	handles
 	V_clamp
+	closed_loop = false;
 end % end general props
 
 methods 
@@ -203,23 +204,36 @@ methods
 		end
 
 		% and one more for the synapses 
-		S = struct; U = struct; L = struct;
-		for i = 1:length(self.synapses)
-			this_name = [self.synapses(i).pre '_2_' self.synapses(i).post '_' self.synapses(i).type(1:4)];
-			S.(this_name) = self.synapses(i).gbar;
-			U.(this_name) = self.synapses(i).gbar*5;
-			L.(this_name) = 0;
+		if length(self.synapses) > 0
+			S = struct; U = struct; L = struct;
+			for i = 1:length(self.synapses)
+				this_name = [self.synapses(i).pre '_2_' self.synapses(i).post '_' self.synapses(i).type(1:4)];
+				S.(this_name) = self.synapses(i).gbar;
+				U.(this_name) = self.synapses(i).gbar*5;
+				L.(this_name) = 0;
+			end
+
+			params{end+1} = S;
+			lb{end+1} = L;
+			ub{end+1} = U;
 		end
-		params{end+1} = S;
-		lb{end+1} = L;
-		ub{end+1} = U;
+
+		if length(params) == 1
+			params = params{1};
+			lb = lb{1};
+			ub = ub{1};
+		end
 
 		% create a puppeteer instance and configure
 		p = puppeteer(params,lb,ub);
 		p.attachFigure(self.handles.fig);
 
 		p.callback_function = @self.manipulateEvaluate;
-		p.group_names = [self.compartment_names; 'synapses'];
+		if length(self.synapses) > 0
+			p.group_names = [self.compartment_names; 'synapses'];
+		else
+			p.group_names = self.compartment_names;
+		end
 
 
 		self.handles.puppeteer_object = p;
@@ -387,7 +401,17 @@ methods
 		conductance_add_lines = {}; c = 1;
 		for i = 1:length(self.compartment_names)
 			this_comp_name = self.compartment_names{i};
-			these_channels = setdiff(fieldnames(self.(self.compartment_names{i})),self.compartment_props);
+			% these_channels = setdiff(fieldnames(self.(self.compartment_names{i})),self.compartment_props);
+			% this (above) doesn't work because it reorders the channel names-- 
+			% we want to add the channels in C++ in the order they were added here
+			these_channels = fieldnames(self.(self.compartment_names{i}));
+			rm_this = false(length(these_channels),1);
+			for j = 1:length(these_channels)
+				if any(strcmp(these_channels{j},self.compartment_props))
+					rm_this(j) = true;
+				end
+			end
+			these_channels(rm_this) = [];
 			for j = 1:length(these_channels)
 				this_cond_name  = [these_channels{j} '_' this_comp_name];
 				conductance_add_lines{c} = [this_comp_name '.addConductance(&' this_cond_name ');'];
@@ -447,13 +471,13 @@ methods
 		% write lines into mexBridge.cpp 
 		lineWrite(joinPath(fileparts(which(mfilename)),'mexBridge.cpp'),lines);
 
-		mex('-silent',joinPath(fileparts(which(mfilename)),'mexBridge.cpp'),'-outdir',fileparts(which(mfilename)))
+		self.recompile;
 
 
 	end % end compile
 
-	function [V, Ca,I_clamp] = integrate(self)
-
+	function [V, Ca,I_clamp, cond_state] = integrate(self)
+		cond_state = [];
 		arguments = {};
 		arguments{1} = [self.dt; self.t_end];
 
@@ -472,7 +496,7 @@ methods
 		% so there's no way around constructing a string and running eval on it
 		if isempty(self.V_clamp)
 			I_clamp = [];
-			eval_str = '[V,Ca] =  mexBridge(';
+			eval_str = '[V,Ca, I_clamp, cond_state] =  mexBridge(';
 			for i = 1:length(arguments)
 				eval_str = [eval_str 'arguments{' mat2str(i) '},'];
 			end
@@ -483,6 +507,7 @@ methods
 
 			V = V';
 			Ca = Ca';
+			cond_state = cond_state';
 		else
 			% add on an extra argument -- the V_clamp
 			arguments{end+1} = self.V_clamp;
@@ -499,8 +524,14 @@ methods
 			V = V';
 			Ca = Ca';
 			I_clamp = I_clamp(:);
-		end
 
+		end
+		
+
+	end
+
+	function [] = recompile(self)
+		mex('-silent',joinPath(fileparts(which(mfilename)),'mexBridge.cpp'),'-outdir',fileparts(which(mfilename)))
 	end
 
 
