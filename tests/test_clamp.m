@@ -25,7 +25,7 @@ x.addSynapse('Elec','C1','C2',20); % one-way electrical syanpse from 1->2
 x.compile;
 
 
-[V,Ca,I_clamp] = x.integrate;
+[V,Ca,I_clamp,C] = x.integrate;
 
 assert(~any(isnan(V(:))),'V contains NaNs, probably something wrong')
 
