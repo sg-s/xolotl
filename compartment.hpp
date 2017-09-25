@@ -5,7 +5,6 @@
 #include <vector>
 #include "conductance.hpp"
 #include "synapse.hpp"
-// #include "mex.h"
 
 using namespace std;
 
@@ -124,8 +123,10 @@ void compartment::integrateSynapses(double V_prev, double dt)
     // integrate all synapses
     for (int i=0; i<n_syn; i++)
     {
+        // mexPrintf("integrating synapse in comp: =  %i\n",&(syn[i]));
         syn[i]->integrate(dt);
         I_ext += (syn[i]->getCurrent(V_prev));
+
     }
 }
 

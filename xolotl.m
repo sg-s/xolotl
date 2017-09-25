@@ -155,6 +155,9 @@ methods
 		self.synapse_headers = [self.synapse_headers; self.available_synapses{syn_file}];
 	end
 
+	function viewCode(self)
+		edit(joinPath(fileparts(which(mfilename)),'mexBridge.cpp'));
+	end
 
 	function manipulate(self)
 		% create a window to show all the traces
@@ -168,7 +171,9 @@ methods
 			self.handles.ax(i) = subplot(n,1,i);
 			self.handles.V_trace(i) = plot(self.handles.ax(i),time,V(:,i),'k');
 			ylabel(self.handles.ax(i),['V_{' self.compartment_names{i} '} (mV)'] )
+			set(self.handles.ax(i),'YLim',[-80 80])
 		end
+		linkaxes(self.handles.ax,'x');
 		prettyFig('plw',1.5,'lw',1);
 		
 		% figure out the parameters -- one for each compartment 
@@ -489,7 +494,7 @@ methods
 
 		% the next argument is the synapses
 		if length(self.synapses)
-			arguments{end+1} = self.synapses.gbar;
+			arguments{end+1} = [self.synapses.gbar];
 		end
 
 		% we need to give mexBridge the right number of arguments. 
