@@ -1,5 +1,6 @@
 // H current. again, for mysterious reasons, the compiler
 // won't let me call this class "H"
+// http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
 #ifndef HCURRENT
 #define HCURRENT
 #include "../../conductance.hpp"

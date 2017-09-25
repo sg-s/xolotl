@@ -2,6 +2,7 @@
 // for some reason I don't understand, I get compiler 
 // errors when I name this "A" or "Ka"
 // so we'll have to live with this awkward name
+// http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
 #ifndef ACURRENT
 #define ACURRENT
 #include "../../conductance.hpp"

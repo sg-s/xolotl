@@ -1,4 +1,5 @@
 // inward rectifying potassium conductance 
+// http://jn.physiology.org/content/jn/90/6/3998.full.pdf
 #ifndef KD
 #define KD
 #include "../../conductance.hpp"

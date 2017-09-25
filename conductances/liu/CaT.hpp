@@ -1,4 +1,5 @@
 // Fast Calcium CONDUCTANCE
+// http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
 #ifndef CAT
 #define CAT
 #include "../../conductance.hpp"
