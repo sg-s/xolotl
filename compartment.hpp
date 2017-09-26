@@ -135,7 +135,10 @@ void compartment::integrateVC(double V_prev, double Ca_prev, double dt)
     // compute infinity values for V and Ca
     //mexPrintf("sigma_gE =  %f\n",sigma_gE);
     //mexPrintf("I_ext/A =  %f\n",I_ext/A);
-    V_inf = (sigma_gE + (I_ext/A))/sigma_g;
+    if (sigma_g == 0)
+        V_inf = V_prev;
+    else
+        V_inf = (sigma_gE + (I_ext/A))/sigma_g;
     Ca_inf = Ca_in - f*A*I_Ca; // microM 
 
     // integrate V and Ca
