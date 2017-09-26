@@ -76,6 +76,7 @@ methods
 
 	end
 
+
 	function set.V_clamp(self,value)
 		assert(isvector(value),'V_clamp must be a vector');
 		value = value(:);
@@ -95,6 +96,10 @@ methods
 		for i = 1:length(varargin)
 			self.(label).(self.compartment_props{i}) = varargin{i};
 		end
+
+		% temp = self.findprop(label);
+		% temp.SetObservable = true;
+		% addlistener(self,label,'PreSet',@self.preSet);
 
 		self.compartment_names = [self.compartment_names; label];
 	end
@@ -570,6 +575,7 @@ methods
 	function [] = compile(self)
 		h = self.hash;
 		mexBridge_name = [joinPath(fileparts(which(mfilename)),'mexBridge') h(1:6) '.cpp'];
+		assert(exist(mexBridge_name,'file')==2,'C++ file to compile does not exist. Use "transpile" before compiling')
 		mex('-silent',mexBridge_name,'-outdir',fileparts(which(mfilename)))
 		% update linked_binary
 
@@ -596,10 +602,9 @@ methods
 	end
 
 
-
-
-
 end % end methods 
+
+
 
 
 end % end classdef 
