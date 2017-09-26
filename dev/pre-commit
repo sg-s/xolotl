@@ -9,6 +9,9 @@ RED='\033[0;31m'
 GREEN='\033[1;32m'
 NC='\033[0m' # No Color
 
+echo "Cleaning up old mexBridge files and binaries"
+rm *mexBridge*
+
 echo "Running MEX/MATLAB tests..."
 matlab -nojvm -nosplash -nodisplay -nodesktop -r "run('tests/test_stg.m'); run('tests/test_clamp.m'); exit;"
 

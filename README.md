@@ -93,12 +93,10 @@ You can drill as deep as you want into the structure, and modify values if you w
 x.AB.NaV.E = 50; % mV
 ```
 
-```
 
 Integrate and plot the voltage:
 
 ```
-
 x.dt = 50e-3;
 x.t_end = 5000;
 [V,Ca] = x.integrate;
