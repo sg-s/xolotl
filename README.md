@@ -93,10 +93,6 @@ You can drill as deep as you want into the structure, and modify values if you w
 x.AB.NaV.E = 50; % mV
 ```
 
-Now, we can compile to generate C++ code with a `mexFunction` interface:
-
-```
-x.compile;
 ```
 
 Integrate and plot the voltage:
@@ -111,7 +107,7 @@ figure, plot(V)
 
 ![](https://user-images.githubusercontent.com/6005346/30713658-ff96faf4-9edd-11e7-9db1-a2ca4f2f0567.png)
 
-One of the advantages of the MATLAB interface is that you can manipulate all parameters of your neuron/network model, and see what the effect of that is live. This makes it much easier to get an intuition of how your model behaves. 
+Behind the scene, MATLAB transpiles MATLAB code describing your network into C++, and compiles it using `mex` for your architecture. One of the advantages of the MATLAB interface is that you can manipulate all parameters of your neuron/network model, and see what the effect of that is live. This makes it much easier to get an intuition of how your model behaves. 
 
 This is as simple as:
 
@@ -133,7 +129,7 @@ install sg-s/puppeteer % for manipulation
 install sg-s/xolotl
 ```
 
-or use git
+or use git if you plan to develop this further: 
 
 ```
 git clone https://github.com/sg-s/srinivas.gs_mtools

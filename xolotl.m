@@ -25,6 +25,7 @@ properties (Access = protected)
 	conductance_headers = {};
 	compartment_names = {};
 	synapse_headers = {};
+	OS_binary_ext
 	
 end  % end protected props
 
@@ -65,6 +66,14 @@ methods
 		end
 		self.available_synapses = available_synapses(~rm_this);
 
+		if ismac
+			self.OS_binary_ext = 'mexmaci64';
+		elseif ispc 
+			self.OS_binary_ext = 'mexw64';
+		else
+			self.OS_binary_ext = 'mexa64';
+		end
+
 	end
 
 	function set.V_clamp(self,value)
@@ -88,7 +97,6 @@ methods
 		end
 
 		self.compartment_names = [self.compartment_names; label];
-
 	end
 
 	function addConductance(self,compartment,cond_id,gbar,E,m,h)
@@ -157,7 +165,15 @@ methods
 	end
 
 	function viewCode(self)
-		edit(joinPath(fileparts(which(mfilename)),'mexBridge.cpp'));
+		h = self.hash;
+		h = h(1:6);
+		c = ['mexBridge' h '.cpp'];
+		c = joinPath(fileparts(which(mfilename)),c);
+		if exist(c,'file') == 2
+			edit(c);
+		else
+			error('No C++ file matching this configuration. Use "transpile"')
+		end
 	end
 
 	function manipulate(self)
@@ -479,12 +495,35 @@ methods
 		mexBridge_name = [joinPath(fileparts(which(mfilename)),'mexBridge') h(1:6) '.cpp'];
 		lineWrite(mexBridge_name,lines);
 
-		self.compile;
-
-
 	end % end transpile
 
 	function [V, Ca,I_clamp, cond_state] = integrate(self)
+
+		% check if we need to transpile or compile 
+		h = self.hash;
+		if isempty(self.linked_binary)
+			% doesn't exist -- check if we need to compile 
+			
+			if exist(joinPath(fileparts(which(mfilename)),['mexBridge' h(1:6) '.cpp']),'file') == 2
+				% Ok, we have the C++ file. should we compile?
+				if exist(joinPath(fileparts(which(mfilename)),['mexBridge' h(1:6) '.' self.OS_binary_ext]),'file') == 3
+				else
+					x.compile;
+				end
+			else
+				% transpile and compile
+				self.transpile;
+				self.compile;
+			end
+		else
+			% disp('check that it exists')
+			if exist(joinPath(fileparts(which(mfilename)),['mexBridge' h(1:6) '.' self.OS_binary_ext]),'file') == 3
+			else
+				x.compile;
+			end
+		end
+		
+
 		cond_state = [];
 		arguments = {};
 		arguments{1} = [self.dt; self.t_end];
@@ -533,13 +572,9 @@ methods
 		mexBridge_name = [joinPath(fileparts(which(mfilename)),'mexBridge') h(1:6) '.cpp'];
 		mex('-silent',mexBridge_name,'-outdir',fileparts(which(mfilename)))
 		% update linked_binary
-		if ismac
-			self.linked_binary = [pathEnd(mexBridge_name) '.mexmaci64'];
-		elseif ispc
-			self.linked_binary = [pathEnd(mexBridge_name) '.mexw64'];
-		else
-			self.linked_binary = [pathEnd(mexBridge_name) '.mexa64'];
-		end
+
+		self.linked_binary = [pathEnd(mexBridge_name) '.' self.OS_binary_ext];
+
 	end
 
 	function [h] = hash(self)
@@ -554,7 +589,9 @@ methods
 			[~,names] = struct2vec(self.(self.compartment_names{i}));
 			h{i} = dataHash(names);
 		end
-		h{end+1} = dataHash([{self.synapses.type} {self.synapses.pre} {self.synapses.post}]);
+		if ~isempty(self.synapses)
+			h{end+1} = dataHash([{self.synapses.type} {self.synapses.pre} {self.synapses.post}]);
+		end
 		h = dataHash(h);
 	end
 
