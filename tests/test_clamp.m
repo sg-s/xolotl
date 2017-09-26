@@ -29,6 +29,7 @@ x.addConductance('C3','prinz/Kd',250,-80);
 x.addSynapse('Elec','C1','C2',20); % one-way electrical syanpse from 1->2
 x.addSynapse('Elec','C1','C3',20); % one-way electrical syanpse from 1->3
 
+x.transpile;
 x.compile;
 
 if usejava('jvm')

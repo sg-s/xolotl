@@ -14,6 +14,7 @@ properties (SetAccess = protected)
 	compartment_props 
 	available_conductances
 	available_synapses
+	linked_binary
 
 end  % end protected props
 
@@ -292,7 +293,7 @@ methods
 
 	end
 
-	function compile(self)
+	function transpile(self)
 		% delete old mexBridge files
 		if exist(joinPath(fileparts(which(mfilename)),'mexBridge.cpp'),'file') 
 			delete(joinPath(fileparts(which(mfilename)),'mexBridge.cpp'))
@@ -473,13 +474,15 @@ methods
 
 
 		% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		% write lines into mexBridge.cpp 
-		lineWrite(joinPath(fileparts(which(mfilename)),'mexBridge.cpp'),lines);
+		% write lines into a C++ file that we can identify by hash
+		h = self.hash;
+		mexBridge_name = [joinPath(fileparts(which(mfilename)),'mexBridge') h(1:6) '.cpp'];
+		lineWrite(mexBridge_name,lines);
 
-		self.recompile;
+		self.compile;
 
 
-	end % end compile
+	end % end transpile
 
 	function [V, Ca,I_clamp, cond_state] = integrate(self)
 		cond_state = [];
@@ -507,7 +510,9 @@ methods
 			I_clamp = [];
 		end
 
-		eval_str = '[V,Ca,I_clamp,cond_state] =  mexBridge(';
+		h = self.hash;
+
+		eval_str = ['[V,Ca,I_clamp,cond_state] =  mexBridge' h(1:6) '('];
 		for i = 1:length(arguments)
 			eval_str = [eval_str 'arguments{' mat2str(i) '},'];
 		end
@@ -523,8 +528,34 @@ methods
 
 	end
 
-	function [] = recompile(self)
-		mex('-silent',joinPath(fileparts(which(mfilename)),'mexBridge.cpp'),'-outdir',fileparts(which(mfilename)))
+	function [] = compile(self)
+		h = self.hash;
+		mexBridge_name = [joinPath(fileparts(which(mfilename)),'mexBridge') h(1:6) '.cpp'];
+		mex('-silent',mexBridge_name,'-outdir',fileparts(which(mfilename)))
+		% update linked_binary
+		if ismac
+			self.linked_binary = [pathEnd(mexBridge_name) '.mexmaci64'];
+		elseif ispc
+			self.linked_binary = [pathEnd(mexBridge_name) '.mexw64'];
+		else
+			self.linked_binary = [pathEnd(mexBridge_name) '.mexa64'];
+		end
+	end
+
+	function [h] = hash(self)
+		% hash all compartments 
+		if ~usejava('jvm')
+			warning('No JVM detected. Hashing not supported. ')
+			h = '_no_jvm';
+			return
+		end
+		h = {};
+		for i = 1:length(self.compartment_names)
+			[~,names] = struct2vec(self.(self.compartment_names{i}));
+			h{i} = dataHash(names);
+		end
+		h{end+1} = dataHash([{self.synapses.type} {self.synapses.pre} {self.synapses.post}]);
+		h = dataHash(h);
 	end
 
 
