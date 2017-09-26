@@ -508,7 +508,7 @@ methods
 				% Ok, we have the C++ file. should we compile?
 				if exist(joinPath(fileparts(which(mfilename)),['mexBridge' h(1:6) '.' self.OS_binary_ext]),'file') == 3
 				else
-					x.compile;
+					self.compile;
 				end
 			else
 				% transpile and compile
@@ -519,7 +519,7 @@ methods
 			% disp('check that it exists')
 			if exist(joinPath(fileparts(which(mfilename)),['mexBridge' h(1:6) '.' self.OS_binary_ext]),'file') == 3
 			else
-				x.compile;
+				self.compile;
 			end
 		end
 		
