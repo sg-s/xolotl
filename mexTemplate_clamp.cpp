@@ -58,7 +58,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     plhs[0] = mxCreateDoubleMatrix(n_comp, nsteps, mxREAL); // V
-    plhs[1] = mxCreateDoubleMatrix(n_comp, nsteps, mxREAL); // Ca
+    plhs[1] = mxCreateDoubleMatrix(2*n_comp, nsteps, mxREAL); // Ca + E_Ca
     plhs[2] = mxCreateDoubleMatrix(1, nsteps, mxREAL); // I_clamp
     plhs[3] = mxCreateDoubleMatrix(cond_state_dim, nsteps, mxREAL); // cond_state
     output_V = mxGetPr(plhs[0]);
@@ -78,7 +78,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         for (int j = 0; j < n_comp; j++)
         {
             output_V[i*n_comp + j] = STG.comp[j]->V;
-            output_Ca[i*n_comp + j] = STG.comp[j]->Ca;
+            output_Ca[i*2*n_comp + j] = STG.comp[j]->Ca;
+            output_Ca[i*2*n_comp + n_comp + j] = STG.comp[j]->E_Ca;
 
             STG.comp[j]->get_cond_state(full_cond_state);
             
