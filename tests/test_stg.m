@@ -34,14 +34,14 @@ x.addConductance('PY','prinz/Kd',1250,-80);
 x.addConductance('PY','prinz/HCurrent',.5,-20);
 x.addConductance('PY','Leak',.1,-50);
 
-% 2a
-x.addSynapse('Chol','AB','LP',30);
-x.addSynapse('Chol','AB','PY',10);
-x.addSynapse('Glut','AB','LP',100);
-x.addSynapse('Glut','AB','PY',30);
-x.addSynapse('Glut','LP','PY',1);
-x.addSynapse('Glut','PY','LP',10);
-x.addSynapse('Glut','LP','AB',30);
+% % 2a
+% x.addSynapse('Chol','AB','LP',30);
+% x.addSynapse('Chol','AB','PY',10);
+% x.addSynapse('Glut','AB','LP',100);
+% x.addSynapse('Glut','AB','PY',30);
+% x.addSynapse('Glut','LP','PY',1);
+% x.addSynapse('Glut','PY','LP',10);
+% x.addSynapse('Glut','LP','AB',30);
 
 % fig 2c
 % x.addSynapse('Chol','AB','LP',100);
@@ -61,25 +61,25 @@ x.addSynapse('Glut','LP','AB',30);
 
 
 % 2e
-% x.addSynapse('Chol','AB','LP',30);
-% x.addSynapse('Chol','AB','PY',3);
-% x.addSynapse('Glut','AB','LP',30);
-% x.addSynapse('Glut','AB','PY',10);
-% x.addSynapse('Glut','LP','PY',1);
-% x.addSynapse('Glut','PY','LP',30);
-% x.addSynapse('Glut','LP','AB',30);
+x.addSynapse('Chol','AB','LP',30);
+x.addSynapse('Chol','AB','PY',3);
+x.addSynapse('Glut','AB','LP',30);
+x.addSynapse('Glut','AB','PY',10);
+x.addSynapse('Glut','LP','PY',1);
+x.addSynapse('Glut','PY','LP',30);
+x.addSynapse('Glut','LP','AB',30);
 
 
 % x.transpile;
 % x.compile;
 
-x.dt = 100e-3;
-x.t_end = 15000;
+x.dt = 50e-3;
+x.t_end = 5000;
 
-[V,Ca] = x.integrate;
+% [V,Ca] = x.integrate;
 
-assert(~any(isnan(V(:))),'V contains NaNs. Something is wrong')
-assert(~any(isnan(Ca(:))),'Ca contains NaNs. Something is wrong')
+% assert(~any(isnan(V(:))),'V contains NaNs. Something is wrong')
+% assert(~any(isnan(Ca(:))),'Ca contains NaNs. Something is wrong')
 
 if usejava('jvm')
 	x.manipulate;

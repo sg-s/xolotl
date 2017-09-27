@@ -22,7 +22,9 @@ public:
 
 void Electrical::integrate(double dt)
 {       
-    // do nothing
+    // set E to V_pre
+    E = (pre_syn->V);
+    s = 1; // always active
 }
 
 double Electrical::getCurrent(double V_post)

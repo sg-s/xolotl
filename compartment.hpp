@@ -120,12 +120,16 @@ void compartment::integrateSynapses(double V_prev, double dt)
 
     int n_syn = (int) syn.size(); //these many synapses
     
+    // we treat synapses identically to any other conductance 
+
     // integrate all synapses
     for (int i=0; i<n_syn; i++)
     {
         // mexPrintf("integrating synapse in comp: =  %i\n",&(syn[i]));
         syn[i]->integrate(dt);
-        I_ext += (syn[i]->getCurrent(V_prev));
+        // I_ext += (syn[i]->getCurrent(V_prev));
+        sigma_g += abs((syn[i]->gbar)*(syn[i]->s)/(1000*A)); // now uS/mm^2
+        sigma_gE += ((syn[i]->gbar)*(syn[i]->s)*(syn[i]->E)/(1000*A));
 
     }
 }
@@ -134,11 +138,13 @@ void compartment::integrateVC(double V_prev, double Ca_prev, double dt)
 {
     // compute infinity values for V and Ca
     //mexPrintf("sigma_gE =  %f\n",sigma_gE);
-    //mexPrintf("I_ext/A =  %f\n",I_ext/A);
     if (sigma_g == 0)
         V_inf = V_prev;
     else
         V_inf = (sigma_gE + (I_ext/A))/sigma_g;
+
+    // mexPrintf("V_inf =  %f\n",V_inf);
+
     Ca_inf = Ca_in - f*A*I_Ca; // microM 
 
     // integrate V and Ca

@@ -236,8 +236,13 @@ methods
 			for i = 1:length(self.synapses)
 				this_name = [self.synapses(i).pre '_2_' self.synapses(i).post '_' self.synapses(i).type(1:4)];
 				S.(this_name) = self.synapses(i).gbar;
-				U.(this_name) = self.synapses(i).gbar*5;
-				L.(this_name) = 0;
+				if self.synapses(i).gbar > 0
+					U.(this_name) = self.synapses(i).gbar*5;
+					L.(this_name) = 0;
+				else
+					L.(this_name) = -2*abs(self.synapses(i).gbar);
+					U.(this_name) = 2*abs(self.synapses(i).gbar);
+				end
 			end
 
 			params{end+1} = S;

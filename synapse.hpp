@@ -7,18 +7,19 @@ class compartment;
 class synapse {
 protected:
     // parameters
-    double gbar;
     double Delta;
-    double E;
+    
     double k_;
     double Vth;
 
-    // dynamic variables
-    double s;
 
     compartment *pre_syn; // pointer to pre-synaptic compartment 
     compartment *post_syn; // pointer to pre-synaptic compartment 
 public:
+
+    double s;
+    double gbar;
+    double E;
     
 
     synapse()
