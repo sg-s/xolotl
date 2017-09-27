@@ -12,19 +12,21 @@
 x = xolotl;
 x.dt = 50e-3;
 x.t_end = 1e3;
-V_clamp = 0*(x.dt:x.dt:x.t_end) - 70;
+V_clamp = 0*(x.dt:x.dt:x.t_end) - 50;
 V_clamp(5e3:5.1e3) = 70;
 x.addCompartment('C1',-70,0.05,10,0.0628,14.96,3000,0.05,200);
 x.V_clamp = V_clamp; % only the first compartment can be clamped 
+x.addConductance('C1','prinz/NaV',100,50);
+% x.addConductance('C1','prinz/Kd',2,-80);
 
-x.addCompartment('C2',-70,0.01,10,0.0628,14.96,3000,0.05,200);
+% x.addCompartment('C2',-70,0.01,10,0.0628,14.96,3000,0.05,200);
 % x.addConductance('C2','prinz/NaV',1000,50);
 % x.addConductance('C2','prinz/Kd',250,-80);
 
-x.addConductance('C2','lin/NaT',1000,45);
-x.addConductance('C2','lin/Kslow',250,-80);
+% x.addConductance('C2','lin/NaT',1000,45);
+% x.addConductance('C2','lin/Kslow',250,-80);
 
-x.addSynapse('Elec','C1','C2',20); % one-way electrical syanpse from 1->2
+% x.addSynapse('Elec','C1','C2',20); % one-way electrical syanpse from 1->2
 
 
 x.transpile;

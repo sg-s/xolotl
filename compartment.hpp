@@ -143,7 +143,7 @@ void compartment::integrateVC(double V_prev, double Ca_prev, double dt)
     else
         V_inf = (sigma_gE + (I_ext/A))/sigma_g;
 
-    // mexPrintf("V_inf =  %f\n",V_inf);
+    
 
     Ca_inf = Ca_in - f*A*I_Ca; // microM 
 
@@ -160,6 +160,8 @@ void compartment::integrateC_V_clamp(double V_clamp, double Ca_prev, double dt)
 {
     // compute infinity values for Ca
     Ca_inf = Ca_in - f*A*I_Ca; // microM 
+
+    // mexPrintf("V_clamp =  %f\n",V_clamp);
 
     // integrate V and Ca
     I_clamp = -I_ext + A*(V_clamp*sigma_g - sigma_gE);
