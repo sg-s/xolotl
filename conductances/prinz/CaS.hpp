@@ -38,7 +38,7 @@ void CaS::integrate(double V, double Ca, double dt)
 
     // compute the specific calcium current and update it in the cell 
     double this_I = g*(V-E);
-    container->I_Ca += this_I;
+    container->i_Ca += this_I;
 
 }
 

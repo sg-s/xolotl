@@ -35,7 +35,7 @@ int main()
     // default initial conditions
     double V0 = -60.0, Ca0 = 0.05, mNa = 0, mCaT = 0, mCaS = 0, mA = 0, mKCa = 0 , mKd = 0, mH = 0, hNa = 0, hCaT = 0, hCaS = 0, hA = 0;
     // default parameters
-    double Ca_in = 0.05, Ca_out = 3000.0, tau_Ca = 200.0, Cm = 10.0, A = .0628, f = 1.496;
+    double Ca_in = 0.05, Ca_out = 3000.0, tau_Ca = 200.0, Cm = 10.0, A = .0628,  vol = 1, phi = 1443;
 
     
     // make conductances
@@ -49,7 +49,7 @@ int main()
     HCurrent gh(gbar_h,e_h, mH);
     
     // make compartment and add all the conductances
-    compartment cell(V0, Ca0, Cm, A, f, Ca_out, Ca_in, tau_Ca);
+    compartment cell(V0, Ca0, Cm, A, vol, phi, Ca_out, Ca_in, tau_Ca);
     cell.addConductance(&gna);
     cell.addConductance(&gcat);
     cell.addConductance(&gcas);

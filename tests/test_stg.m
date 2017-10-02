@@ -6,8 +6,15 @@
 % http://www.nature.com/neuro/journal/v7/n12/abs/nn1352.html
 
 
+% conversion from Prinz to phi
+vol = 1; % this can be anything, doesn't matter
+f = 14.96; % uM/nA
+tau_Ca = 200;
+F = 96485; % Faraday constant in SI units
+phi = (2*f*F*vol)/tau_Ca;
+
 x = xolotl;
-x.addCompartment('AB',-65,0.02,10,0.0628,14.96,3000,0.05,200);
+x.addCompartment('AB',-65,0.02,10,0.0628,vol,phi,3000,0.05,tau_Ca);
 
 x.addConductance('AB','prinz/NaV',1000,50);
 x.addConductance('AB','prinz/CaT',25,30);
@@ -17,7 +24,7 @@ x.addConductance('AB','prinz/KCa',50,-80);
 x.addConductance('AB','prinz/Kd',1000,-80);
 x.addConductance('AB','prinz/HCurrent',.1,-20);
 
-x.addCompartment('LP',-47,0.01,10,0.0628,14.96,3000,0.05,200);
+x.addCompartment('LP',-47,0.01,10,0.0628,vol,phi,3000,0.05,tau_Ca);
 x.addConductance('LP','prinz/NaV',1000,50);
 x.addConductance('LP','prinz/CaS',40,30);
 x.addConductance('LP','prinz/ACurrent',200,-80);
@@ -25,7 +32,7 @@ x.addConductance('LP','prinz/Kd',250,-80);
 x.addConductance('LP','prinz/HCurrent',.5,-20);
 x.addConductance('LP','Leak',.3,-50);
 
-x.addCompartment('PY',-41,0.03,10,0.0628,14.96,3000,0.05,200);
+x.addCompartment('PY',-41,0.03,10,0.0628,vol,phi,3000,0.05,tau_Ca);
 x.addConductance('PY','prinz/NaV',1000,50);
 x.addConductance('PY','prinz/CaT',25,30);
 x.addConductance('PY','prinz/CaS',20,30);

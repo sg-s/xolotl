@@ -76,6 +76,18 @@ methods
 
 	end
 
+	function cleanup(self)
+		f = fileparts(which(mfilename));
+		allfiles = dir([f oss '*mexBridge*']);
+		for i = 1:length(allfiles)
+			delete([f oss allfiles(i).name]);
+		end
+	end
+
+
+	function n = getCompartmentNames(self)
+		n = self.compartment_names;
+	end
 
 	function set.V_clamp(self,value)
 		assert(isvector(value),'V_clamp must be a vector');
@@ -204,21 +216,17 @@ methods
 			% delete all E_, m_, and h_ parameters
 			rm_this = false(length(v),1);
 			for j = 1:length(v)
-				if strcmp(names{j}(1:2),'m_') || strcmp(names{j}(1:2),'h_') || strcmp(names{j}(1:2),'E_') || strcmp(names{j}(1:2),'V_') 
+				if strcmp(names{j}(end-1:end),'_m') || strcmp(names{j}(end-1:end),'_h') || strcmp(names{j}(end-1:end),'_E') || strcmp(names{j}(end-1:end),'_V') 
 					rm_this(j) = true;
 				end
-				if strcmp(names{j},'Ca_')
+				if strcmp(names{j},'_Ca')
 					rm_this(j) = true;
 				end
 			end
 			v(rm_this) = []; names(rm_this) = [];
 
-			% remove terminal underscores from names
-			for j = 1:length(names)
-				if strcmp(names{j}(end),'_')
-					names{j}(end) = [];
-				end
-			end
+			% remove initial underscores from names
+			names = cellfun(@(x) x(2:end),names,'UniformOutput',false);
 
 			% reconstitute into a structure
 			S = struct; U = struct; L = struct;
@@ -366,39 +374,8 @@ methods
 	end
 
 	function manipulateEvaluate(self,parameters)
-		% unpack parameters and update locally
-		p = self.handles.puppeteer_object.parameters;
-		assert(iscell(p),'Does not work for only one compartment because im lazy')
 
-		for i = 1:length(p)
-			S = p{i};
-			f = fieldnames(S);
-			
-			if i <= length(self.compartment_names)
-				ff = self.(self.compartment_names{i});
-				% match everything we can in this compartment 
-				for j = 1:length(f)
-					if isfield(self.(self.compartment_names{i}),f{j})
-						self.(self.compartment_names{i}).(f{j}) = S.(f{j});
-					else
-						% maybe one level deeper? 
-						cond_name = f{j}(strfind(f{j},'_')+1:end);
-						if isfield(self.(self.compartment_names{i}),cond_name)
-							self.(self.compartment_names{i}).(cond_name).gbar = S.(f{j});
-						end
-					end
-				end
-			else
-				% synapses?
-				% blindly assume that the order we get them back is the order we have stored locally. dangerous, but it should work 
-				v = struct2vec(p{i});
-				assert(length(v) == length(self.synapses),'Expected this parameter set to be synapse strengths, but this does not have the same length as the synapses I have on list')
-				for j = 1:length(self.synapses)
-					self.synapses(j).gbar = v(j);
-				end
-			end
-		end
-
+		self.updateLocalParameters(parameters);
 		% evaluate 
 
 		[V, Ca] = self.integrate;
@@ -408,6 +385,43 @@ methods
 			self.handles.V_trace(i).YData = V(:,i);
 		end
 
+	end
+
+	function updateLocalParameters(self,parameters)
+		% unpack parameters and update locally
+		for i = 1:length(parameters)
+			if iscell(parameters)
+				S = parameters{i};
+			else
+				S = parameters;
+			end
+			f = fieldnames(S);
+			
+			if i <= length(self.compartment_names)
+
+				ff = self.(self.compartment_names{i});
+				% match everything we can in this compartment 
+				for j = 1:length(f)
+					if isfield(self.(self.compartment_names{i}),f{j})
+						self.(self.compartment_names{i}).(f{j}) = S.(f{j});
+					else
+						% maybe one level deeper? 
+						cond_name = f{j}(1:strfind(f{j},'_')-1);
+						if isfield(self.(self.compartment_names{i}),cond_name)
+							self.(self.compartment_names{i}).(cond_name).gbar = S.(f{j});
+						end
+					end
+				end
+			else
+				% synapses?
+				% blindly assume that the order we get them back is the order we have stored locally. dangerous, but it should work 
+				v = struct2vec(parameters{i});
+				assert(length(v) == length(self.synapses),'Expected this parameter set to be synapse strengths, but this does not have the same length as the synapses I have on list')
+				for j = 1:length(self.synapses)
+					self.synapses(j).gbar = v(j);
+				end
+			end
+		end
 
 	end
 
@@ -458,9 +472,8 @@ methods
 
 			[v, names] = struct2vec(self.(this_comp_name));
 			% append compartment name to names
-			for j = 1:length(names)
-				names{j} = [names{j} this_comp_name];
-			end
+			names = cellfun(@(x) [self.compartment_names{i} x],names,'UniformOutput',false);
+
 			for j = 1:length(names)
 				comp_param_hookups{c} = ['double ' names{j} '= ' this_comp_name '_params[' mat2str(j-1) '];'];
 				c = c + 1;
@@ -491,7 +504,7 @@ methods
 		for i = 1:length(self.compartment_names)
 			this_string = ['compartment ' self.compartment_names{i} '('];
 			for j = 1:length(self.compartment_props)
-				this_string = [this_string self.compartment_props{j} '_' self.compartment_names{i} ','];
+				this_string = [this_string  self.compartment_names{i} '_' self.compartment_props{j}  ','];
 			end
 			this_string(end) = ')';
 			this_string = [this_string ';'];
@@ -511,7 +524,8 @@ methods
 			this_comp_name = self.compartment_names{i};
 			for j = 1:length(these_channels)
 				tc = these_channels{j};
-				this_channel_dec = [tc ' ' tc '_' this_comp_name '(gbar_' tc '_' this_comp_name,', E_' tc '_' this_comp_name,', m_' tc '_' this_comp_name,', h_' tc '_' this_comp_name,');'];
+				
+				this_channel_dec = [tc ' ' this_comp_name '_' tc '(' this_comp_name '_' tc '_gbar,' this_comp_name '_' tc '_E,' this_comp_name '_' tc '_m,' this_comp_name '_' tc '_h);'];
 				conductance_lines{cc} = this_channel_dec; cc = cc + 1;
 			end
 		end
@@ -537,7 +551,7 @@ methods
 			end
 			these_channels(rm_this) = [];
 			for j = 1:length(these_channels)
-				this_cond_name  = [these_channels{j} '_' this_comp_name];
+				this_cond_name  = [this_comp_name  '_' these_channels{j}];
 				conductance_add_lines{c} = [this_comp_name '.addConductance(&' this_cond_name ');'];
 				c = c+1;
 			end
@@ -565,8 +579,7 @@ methods
 		lines = [lines(1:insert_here); syanpse_add_lines(:); lines(insert_here+1:end)];
 
 
-		
-
+	
 
 		% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		% add the neurons to the network  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -692,6 +705,8 @@ methods
 		h = {};
 		for i = 1:length(self.compartment_names)
 			[~,names] = struct2vec(self.(self.compartment_names{i}));
+			% prepend compartment name to names 
+			names = cellfun(@(x) [self.compartment_names{i} x],names,'UniformOutput',false);
 			h{i} = dataHash(names);
 		end
 		if ~isempty(self.synapses)

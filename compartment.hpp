@@ -6,6 +6,8 @@
 #include "conductance.hpp"
 #include "synapse.hpp"
 
+#define F 96485
+
 using namespace std;
 
 /* single compartment class (unit capacitance)
@@ -28,25 +30,27 @@ protected:
     // neuron parameters
     double Cm; // specific capacitance 
     double A; 
-    double f; 
+    double phi; 
     double Ca_in;
     double Ca_out; 
     double tau_Ca;
     double RT_by_nF;
+    double vol;
 
 public:
     double V;          
     double Ca; 
     double E_Ca;
-    double I_Ca;
+    double i_Ca; // specific calcium current (current/area. nA/mm^2)
     double I_ext; // all external currents are summed here
     double I_clamp; // this is the current required to clamp it 
     int n_cond; // this keep tracks of the # channels
 
     // constructor with all parameters 
-    compartment(double V_, double Ca_, double Cm_, double A_, double f_, double Ca_out_, double Ca_in_, double tau_Ca_)
+    compartment(double V_, double Ca_, double Cm_, double A_, double vol_, double phi_, double Ca_out_, double Ca_in_, double tau_Ca_)
     {
         V = V_;
+        vol = vol_;
         Ca = Ca_;
 
         sigma_g = 0;
@@ -56,7 +60,7 @@ public:
 
         Cm = Cm_;
         A = A_; 
-        f = f_; 
+        phi = phi_; 
         Ca_in = Ca_in_; 
         Ca_out = Ca_out_;
         tau_Ca = tau_Ca_;
@@ -65,7 +69,7 @@ public:
 
         // housekeeping
         E_Ca = 0;
-        I_Ca = 0; // this is the current density (nA/mm^2)
+        i_Ca = 0; // this is the current density (nA/mm^2)
         n_cond = 0;
 
     }
@@ -87,7 +91,7 @@ void compartment::integrate(double dt)
 {
     double V_prev = V;
     double Ca_prev = Ca;
-    I_Ca = 0;
+    i_Ca = 0;
     I_ext = 0;
     I_clamp = 0;
 
@@ -145,7 +149,9 @@ void compartment::integrateVC(double V_prev, double Ca_prev, double dt)
 
     
 
-    Ca_inf = Ca_in - f*A*I_Ca; // microM 
+    // Ca_inf = Ca_in - f*A*I_Ca; // microM 
+    Ca_inf = Ca_in - (tau_Ca*phi*i_Ca*A*.5)/(F*vol); // microM
+
 
     // integrate V and Ca
     V = V_inf + (V_prev - V_inf)*exp(-dt/(Cm/(sigma_g)));
@@ -159,7 +165,7 @@ void compartment::integrateVC(double V_prev, double Ca_prev, double dt)
 void compartment::integrateC_V_clamp(double V_clamp, double Ca_prev, double dt)
 {
     // compute infinity values for Ca
-    Ca_inf = Ca_in - f*A*I_Ca; // microM 
+    Ca_inf = Ca_in - (tau_Ca*phi*i_Ca*A*500)/(F*vol);
 
     // mexPrintf("V_clamp =  %f\n",V_clamp);
 

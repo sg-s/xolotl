@@ -45,7 +45,7 @@ void network::integrate(double dt)
     for (int i = 0; i < n_comp; i++)
     { 
         double V_prev, Ca_prev;
-        comp[i]->I_Ca = 0;
+        comp[i]->i_Ca = 0;
         comp[i]->I_ext = 0;
 
         V_prev = comp[i]->V;
@@ -76,7 +76,7 @@ void network::integrateClamp(double V_clamp, double dt)
     for (int i = 0; i < n_comp; i++)
     { 
         double V_prev, Ca_prev;
-        comp[i]->I_Ca = 0;
+        comp[i]->i_Ca = 0;
         comp[i]->I_ext = 0;
         comp[i]->I_clamp = 0;
 
