@@ -35,7 +35,7 @@ properties
 	synapses
 	handles
 	V_clamp
-	closed_loop = false;
+	closed_loop@logical = true;
 end % end general props
 
 methods 
@@ -542,14 +542,8 @@ methods
 			% these_channels = setdiff(fieldnames(self.(self.compartment_names{i})),self.compartment_props);
 			% this (above) doesn't work because it reorders the channel names-- 
 			% we want to add the channels in C++ in the order they were added here
-			these_channels = fieldnames(self.(self.compartment_names{i}));
-			rm_this = false(length(these_channels),1);
-			for j = 1:length(these_channels)
-				if any(strcmp(these_channels{j},self.compartment_props))
-					rm_this(j) = true;
-				end
-			end
-			these_channels(rm_this) = [];
+			these_channels = self.getChannelsInCompartment(i);
+
 			for j = 1:length(these_channels)
 				this_cond_name  = [this_comp_name  '_' these_channels{j}];
 				conductance_add_lines{c} = [this_comp_name '.addConductance(&' this_cond_name ');'];
@@ -612,6 +606,17 @@ methods
 
 	end % end transpile
 
+	function these_channels = getChannelsInCompartment(self,i)
+		these_channels = fieldnames(self.(self.compartment_names{i}));
+		rm_this = false(length(these_channels),1);
+		for j = 1:length(these_channels)
+			if any(strcmp(these_channels{j},self.compartment_props))
+				rm_this(j) = true;
+			end
+		end
+		these_channels(rm_this) = [];
+	end
+
 	function [V, Ca,I_clamp, cond_state] = integrate(self)
 
 		% check if we need to transpile or compile 
@@ -652,7 +657,7 @@ methods
 		% the next argument is the synapses
 		if length(self.synapses)
 			arguments{end+1} = [self.synapses.gbar];
-		else
+		else 
 			arguments{end+1} = [];
 		end
 
@@ -682,6 +687,25 @@ methods
 		cond_state = cond_state';
 		I_clamp = I_clamp(:);
 
+		% update xolotl properties based on the integration
+		idx = 1;
+		if self.closed_loop
+			for i = 1:length(self.compartment_names)
+				% update voltage and calcium
+				self.(self.compartment_names{i}).V = V(end,i);
+				self.(self.compartment_names{i}).Ca = Ca(end,i);
+
+				% update the conductances 
+				these_channels = self.getChannelsInCompartment(i);
+				for j = 1:length(these_channels)
+					self.(self.compartment_names{i}).(these_channels{j}).m = cond_state(end,idx);
+					idx = idx + 1;
+					self.(self.compartment_names{i}).(these_channels{j}).h = cond_state(end,idx);
+					idx = idx + 1;
+				end
+			end
+		end
+
 	end
 
 	function [] = compile(self)
@@ -697,22 +721,23 @@ methods
 
 	function [h] = hash(self)
 		% hash all compartments 
-		if ~usejava('jvm')
-			warning('No JVM detected. Hashing not supported. ')
-			h = '_no_jvm';
-			return
-		end
-		h = {};
+		h = {}; idx = 1;
 		for i = 1:length(self.compartment_names)
-			[~,names] = struct2vec(self.(self.compartment_names{i}));
-			% prepend compartment name to names 
-			names = cellfun(@(x) [self.compartment_names{i} x],names,'UniformOutput',false);
-			h{i} = dataHash(names);
+			these_channels = self.getChannelsInCompartment(i);
+			for j = 1:length(these_channels)
+				h{j} = self.(self.compartment_names{i}).(these_channels{j}).full_path; idx = idx + 1;
+			end
 		end
 		if ~isempty(self.synapses)
-			h{end+1} = dataHash([{self.synapses.type} {self.synapses.pre} {self.synapses.post}]);
+			h{end+1} = ([{self.synapses.type} {self.synapses.pre} {self.synapses.post}]);
 		end
-		h = dataHash(h);
+		if usejava('jvm')
+			h = dataHash(h);
+		else
+			save('temp.mat','h');
+			h = md5('temp.mat');
+			delete('temp.mat');
+		end
 	end
 
 
