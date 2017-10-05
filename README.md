@@ -115,7 +115,19 @@ x.manipulate;
 
 ![](https://user-images.githubusercontent.com/6005346/30785272-aef9fb44-a132-11e7-84a6-25fd8e58470a.gif)
 
-## Installation
+## Get this
+
+### Requirements
+
+| OS          | Support | Comments | 
+| -------          | ------- | ----------- 
+| macOS 10.12.6 | ✓ | no known issues |
+| Ubuntu 16.04.3 LTS | ✓ |   `mex` complains about incompatible compilers, but everything works | 
+| Windows | ❌ | Not supported because paths in C++ files include "/", not "\"|
+
+`xolotl` has been tested on MATLAB 9.3.0.713579 (R2017b), but other versions should work too. 
+
+### Installation 
 
 Get this repo from within `MATLAB` using my package manager:
 

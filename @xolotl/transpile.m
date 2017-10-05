@@ -15,16 +15,15 @@ function transpile(self)
 
 	% read lines from mexTemplate
 	if isempty(self.V_clamp)
-		cppfilename = joinPath(self.xolotl_folder,'mexTemplate.cpp');
+		cppfilename = joinPath(self.cpp_folder,'mexTemplate.cpp');
 	else
-		cppfilename = joinPath(self.xolotl_folder,'mexTemplate_clamp.cpp');
+		cppfilename = joinPath(self.cpp_folder,'mexTemplate_clamp.cpp');
 	end
 	lines = lineRead(cppfilename);
 
 	% insert header files ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	header_files{1} = '#include "network.hpp"';
-	header_files{2} = '#include "compartment.hpp"';
-
+	header_files{1} = '#include "c++/network.hpp"';
+	header_files{2} = '#include "c++/compartment.hpp"';
 
 
 	h = unique(self.conductance_headers);

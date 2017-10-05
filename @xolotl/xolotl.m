@@ -30,6 +30,7 @@ properties (Access = protected)
 	synapse_headers = {};
 	OS_binary_ext
 	xolotl_folder
+	cpp_folder
 end  % end protected props
 
 properties
@@ -43,13 +44,14 @@ end % end general props
 methods 
 	function self = xolotl()
 		self.xolotl_folder = fileparts(fileparts(which(mfilename)));
+		self.cpp_folder = joinPath(self.xolotl_folder,'c++');
 
 		% read props from compartment.h
-		cppfilename = joinPath(self.xolotl_folder,'compartment.hpp');
+		cppfilename = joinPath(self.cpp_folder,'compartment.hpp');
 		self.compartment_props = findCPPClassMembers(cppfilename);
 
 		% make a list of the available conductances
-		available_conductances = getAllFiles(joinPath(self.xolotl_folder,'conductances'));
+		available_conductances = getAllFiles(joinPath(self.cpp_folder,'conductances'));
 		rm_this = true(length(available_conductances),1);
 		for i = 1:length(available_conductances)
 			[~,~,ext] = fileparts(available_conductances{i});
@@ -60,7 +62,7 @@ methods
 		self.available_conductances = available_conductances(~rm_this);
 
 		% make a list of the available synapses
-		available_synapses = getAllFiles(joinPath(self.xolotl_folder,'synapses'));
+		available_synapses = getAllFiles(joinPath(self.cpp_folder,'synapses'));
 		rm_this = true(length(available_synapses),1);
 		for i = 1:length(available_synapses)
 			[~,~,ext] = fileparts(available_synapses{i});
