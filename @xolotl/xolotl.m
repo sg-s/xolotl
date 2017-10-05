@@ -33,8 +33,8 @@ properties (Access = protected)
 end  % end protected props
 
 properties
-	dt@double = 50e-3;
-	t_end@double = 5000;
+	dt@double = 50e-3; % ms
+	t_end@double = 5000; % ms
 	handles
 	V_clamp
 	closed_loop@logical = true;
@@ -97,6 +97,8 @@ methods
 			if exist(joinPath(self.xolotl_folder,['mexBridge' h(1:6) '.cpp']),'file') == 2
 				% Ok, we have the C++ file. should we compile?
 				if exist(joinPath(self.xolotl_folder,['mexBridge' h(1:6) '.' self.OS_binary_ext]),'file') == 3
+					% update the linked_binary
+					self.linked_binary = ['mexBridge' h(1:6) '.' self.OS_binary_ext];
 				else
 					self.compile;
 				end
@@ -134,28 +136,36 @@ methods
 		% we need to give mexBridge the right number of arguments. 
 		% so there's no way around constructing a string and running eval on it
 
-		if ~isempty(self.V_clamp)
-			% add on an extra argument -- the V_clamp
-			arguments{end+1} = self.V_clamp;
-		else
-			I_clamp = [];
-		end
+		% if ~isempty(self.V_clamp)
+		% 	% add on an extra argument -- the V_clamp
+		% 	arguments{end+1} = self.V_clamp;
+		% else
+		% 	I_clamp = [];
+		% end
 
-		h = self.hash;
 
-		eval_str = ['[V,Ca,I_clamp,cond_state] =  mexBridge' h(1:6) '('];
-		for i = 1:length(arguments)
-			eval_str = [eval_str 'arguments{' mat2str(i) '},'];
-		end
+		% eval_str = ['[V,Ca,I_clamp,cond_state] =  mexBridge' h(1:6) '('];
+		% for i = 1:length(arguments)
+		% 	eval_str = [eval_str 'arguments{' mat2str(i) '},'];
+		% end
 		
-		eval_str(end) = ')';
-		eval_str = [eval_str ';'];
-		eval(eval_str)
+		% eval_str(end) = ')';
+		% eval_str = [eval_str ';'];
+		% eval(eval_str)
 
-		V = V';
-		Ca = Ca';
-		cond_state = cond_state';
-		I_clamp = I_clamp(:);
+		% V = V';
+		% Ca = Ca';
+		% cond_state = cond_state';
+		% I_clamp = I_clamp(:);
+
+		[~,f]=fileparts(self.linked_binary);
+		f = str2func(f);
+		[results{1:4}] = f(arguments{:});
+
+		V = (results{1})';
+		Ca = (results{2})';
+		I_clamp = (results{3})';
+		cond_state = (results{4})';
 
 		% update xolotl properties based on the integration
 		idx = 1;
