@@ -123,9 +123,9 @@ x.manipulate;
 | -------          | ------- | ----------- 
 | macOS 10.12.6 | ✓ | no known issues |
 | Ubuntu 16.04.3 LTS | ✓ |   `mex` complains about incompatible compilers, but everything works | 
-| Windows | ❌ | Not supported because paths in C++ files include "/", not "\"|
+| Windows | ❌ | Not supported because paths in C++ files include "/" |
 
-`xolotl` has been tested on MATLAB 9.3.0.713579 (R2017b), but other versions should work too. 
+`xolotl` has been tested on `MATLAB 9.3.0.713579 (R2017b)`, but other versions should work too. 
 
 ### Installation 
 
