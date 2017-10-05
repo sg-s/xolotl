@@ -1,3 +1,12 @@
+%              _       _   _ 
+%   __  _____ | | ___ | |_| |
+%   \ \/ / _ \| |/ _ \| __| |
+%    >  < (_) | | (_) | |_| |
+%   /_/\_\___/|_|\___/ \__|_|
+%
+% updates parameters in xolotl object using the argument
+% 
+
 function updateLocalParameters(self,parameters)
 	% unpack parameters and update locally
 	for i = 1:length(parameters)

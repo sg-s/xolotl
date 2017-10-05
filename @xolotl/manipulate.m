@@ -1,3 +1,11 @@
+%              _       _   _ 
+%   __  _____ | | ___ | |_| |
+%   \ \/ / _ \| |/ _ \| __| |
+%    >  < (_) | | (_) | |_| |
+%   /_/\_\___/|_|\___/ \__|_|
+%
+% calls puppeteer, and creates a simulation you can manipulate live
+
 function manipulate(self)
 	% create a window to show all the traces
 

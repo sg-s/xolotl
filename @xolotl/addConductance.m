@@ -1,3 +1,13 @@
+%              _       _   _ 
+%   __  _____ | | ___ | |_| |
+%   \ \/ / _ \| |/ _ \| __| |
+%    >  < (_) | | (_) | |_| |
+%   /_/\_\___/|_|\___/ \__|_|
+%
+% add conductances to a compartment 
+% cond_id should be a string that matches some
+% conductance header file in conductances/
+
 function addConductance(self,compartment,cond_id,gbar,E,m,h)
 	assert(any(strcmp(compartment,properties(self))),'Unknown compartment')
 

@@ -1,3 +1,14 @@
+%              _       _   _ 
+%   __  _____ | | ___ | |_| |
+%   \ \/ / _ \| |/ _ \| __| |
+%    >  < (_) | | (_) | |_| |
+%   /_/\_\___/|_|\___/ \__|_|
+%
+% hash function for xolotl. requires Java;
+% but falls back to system md5 without Java
+% if you have neither (running headless on Windows)
+% you're shit out of luck
+
 function [h] = hash(self)
 	% hash all compartments 
 	h = {}; idx = 1;

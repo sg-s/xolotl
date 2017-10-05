@@ -1,3 +1,11 @@
+%              _       _   _ 
+%   __  _____ | | ___ | |_| |
+%   \ \/ / _ \| |/ _ \| __| |
+%    >  < (_) | | (_) | |_| |
+%   /_/\_\___/|_|\___/ \__|_|
+%
+% plots the activation functions of some conductance 
+
 function ax = plot(self,cond_id,ax)
 	% search for cond_id
 	cond_file = [];

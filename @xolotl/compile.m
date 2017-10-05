@@ -1,3 +1,11 @@
+%              _       _   _ 
+%   __  _____ | | ___ | |_| |
+%   \ \/ / _ \| |/ _ \| __| |
+%    >  < (_) | | (_) | |_| |
+%   /_/\_\___/|_|\___/ \__|_|
+%
+% compiles the mexBridge using mex.
+% 
 
 function [] = compile(self)
 	h = self.hash;

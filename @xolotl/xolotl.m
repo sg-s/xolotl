@@ -1,5 +1,12 @@
 % xolotl.m
+%              _       _   _ 
+%   __  _____ | | ___ | |_| |
+%   \ \/ / _ \| |/ _ \| __| |
+%    >  < (_) | | (_) | |_| |
+%   /_/\_\___/|_|\___/ \__|_|
+%
 % a MATLAB class that wraps C++ code
+% that runs mulit-compartment neuron/networks
 % it generates C++ files, compiles them, and runs them
 % based on pseudo-objects that you can define within it
 % 

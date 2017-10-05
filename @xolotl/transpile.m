@@ -1,3 +1,12 @@
+%              _       _   _ 
+%   __  _____ | | ___ | |_| |
+%   \ \/ / _ \| |/ _ \| __| |
+%    >  < (_) | | (_) | |_| |
+%   /_/\_\___/|_|\___/ \__|_|
+%
+% MATLAB -> C++ transpiler 
+% creates a C++ file that can be compiled with mex
+
 function transpile(self)
 	% delete old mexBridge files
 	if exist(joinPath(self.xolotl_folder,'mexBridge.cpp'),'file') 

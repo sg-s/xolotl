@@ -1,3 +1,13 @@
+%              _       _   _ 
+%   __  _____ | | ___ | |_| |
+%   \ \/ / _ \| |/ _ \| __| |
+%    >  < (_) | | (_) | |_| |
+%   /_/\_\___/|_|\___/ \__|_|
+%
+% add a synapse between two compartments
+% syn_id should be a string that matches some synapse
+% comp1 and comp2 should be strings that match existing compartments 
+
 function addSynapse(self,syn_id,comp1,comp2,gbar)
 
 	% fail early 

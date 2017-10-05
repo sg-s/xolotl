@@ -1,3 +1,11 @@
+%              _       _   _ 
+%   __  _____ | | ___ | |_| |
+%   \ \/ / _ \| |/ _ \| __| |
+%    >  < (_) | | (_) | |_| |
+%   /_/\_\___/|_|\___/ \__|_|
+%
+% add compartment to model 
+
 function addCompartment(self,label, varargin)
 	assert(nargin > 1,'No label! You have to label every compartment')
 

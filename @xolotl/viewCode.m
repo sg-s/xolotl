@@ -1,3 +1,11 @@
+%              _       _   _ 
+%   __  _____ | | ___ | |_| |
+%   \ \/ / _ \| |/ _ \| __| |
+%    >  < (_) | | (_) | |_| |
+%   /_/\_\___/|_|\___/ \__|_|
+%
+% view the C++ mexBridge code in your default editor
+
 function viewCode(self)
 	h = self.hash;
 	h = h(1:6);
