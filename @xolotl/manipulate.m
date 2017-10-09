@@ -9,10 +9,18 @@
 function manipulate(self)
 	% create a window to show all the traces
 
-	[V,Ca] = self.integrate;
+	V = self.integrate;
 	time = self.dt:self.dt:self.t_end;
 
-	self.handles.fig = figure('outerposition',[0 0 1000 900],'PaperUnits','points','PaperSize',[1000 500]); hold on
+	% if it's in closed loop, update it continuously
+	t_end = self.t_end;
+	buffer_size = 50; % ms
+	buffer_chunk_size = floor(buffer_size/self.dt);
+	if self.closed_loop
+		self.t_end = buffer_size;
+	end
+
+	self.handles.fig = figure('outerposition',[0 0 1000 900],'PaperUnits','points','PaperSize',[1000 500],'CloseRequestFcn',@self.deleteManipulateFig); hold on
 	n = length(self.compartment_names);
 	for i = 1:n
 		self.handles.ax(i) = subplot(n,1,i);
@@ -79,9 +87,22 @@ function manipulate(self)
 
 	% create a puppeteer instance and configure
 	p = puppeteer(params,lb,ub);
-	p.attachFigure(self.handles.fig);
 
-	p.callback_function = @self.manipulateEvaluate;
+	if self.closed_loop
+		% add the puppeteer figures to xolotl's handles
+		% and reconfigure their closerequests to point to xolotl's
+		self.handles.pfigs = [p.handles.fig];
+		for i = 1:length(self.handles.pfigs)
+			self.handles.pfigs(i).CloseRequestFcn = @self.deleteManipulateFig;
+		end
+	else
+		p.attachFigure(self.handles.fig);
+	end
+
+	if ~self.closed_loop
+		p.callback_function = @self.manipulateEvaluate;
+	end
+
 	if length(self.synapses) > 0
 		p.group_names = [self.compartment_names; 'synapses'];
 	else
@@ -90,6 +111,38 @@ function manipulate(self)
 
 
 	self.handles.puppeteer_object = p;
+
+
+	if self.closed_loop
+        % make sure it runs realtime 
+        if isfield(self.handles,'fig')
+            while isvalid(self.handles.fig)
+                tic
+
+                self.updateLocalParameters(p.parameters);
+
+                this_V = self.integrate;
+
+                % throw out the first bit 
+                V(1:buffer_chunk_size,:) = [];
+                
+                % append the new data to the end
+                V = [V; this_V];
+
+                for i = 1:n
+                	self.handles.V_trace(i).YData = V(:,i);
+                end
+
+
+                drawnow limitrate
+                % t = toc;
+                % pause_time = (buffer_size/1e3) - t; 
+                % if pause_time > 0
+                %     pause(pause_time)
+                % end
+            end
+        end
+	end
 
 	 
 end % end manipulate 

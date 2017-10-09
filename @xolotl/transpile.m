@@ -25,7 +25,6 @@ function transpile(self)
 	header_files{1} = '#include "c++/network.hpp"';
 	header_files{2} = '#include "c++/compartment.hpp"';
 
-
 	h = unique(self.conductance_headers);
 	c = length(header_files)+1;
 	for i = 1:length(h)

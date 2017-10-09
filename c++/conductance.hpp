@@ -1,13 +1,17 @@
+// _  _ ____ _    ____ ___ _    
+//  \/  |  | |    |  |  |  |    
+// _/\_ |__| |___ |__|  |  |___ 
+//
 //Abstract class for defining conductances
 #ifndef CONDUCTANCE
 #define CONDUCTANCE
 #include <cmath>
 class compartment;
+class controller; 
 
 class conductance {
 protected:
     double gbar;
-
     compartment *container; // pointer to compartment that contains this
 public:
 

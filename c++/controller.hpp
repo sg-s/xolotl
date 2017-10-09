@@ -7,24 +7,32 @@
 #ifndef CONTROLLER
 #define CONTROLLER
 #include <cmath>
-class compartment;
 class conductance;
 
 class controller {
 protected:
-    conductance *channel; // pointer to conductance that this regulates 
-    compartment *container; // pointer to compartment that contains this
+    conductance* channel; // pointer to conductance that this regulates 
+    double tau_m; 
+    double tau_g; 
+    double G; 
+    
 public:
+
+    double m; 
 
     controller()
     {
-        container = 0; //null pointer for safety
-        conductance = 0; // null pointer 
+        channel = 0; // null pointer 
     }
     
     ~controller() {}
     
     virtual void integrate(double) = 0;
-    virtual void connect(conductance*, compartment*) = 0; 
+
 };
+
+
+
+
+
 #endif

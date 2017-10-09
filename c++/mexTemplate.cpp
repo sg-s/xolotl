@@ -1,3 +1,9 @@
+// xolotl
+// this template file is used by xolotl.transpile() to convert
+// the xolotl pseudo-object in MATLAB into a C++
+// file that can be compiled from mex
+// DON'T TOUCH ANYTHING HERE! 
+
 #include <cmath>
 #include <vector>
 #include <typeinfo>

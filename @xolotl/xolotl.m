@@ -6,7 +6,7 @@
 %   /_/\_\___/|_|\___/ \__|_|
 %
 % a MATLAB class that wraps C++ code
-% that runs mulit-compartment neuron/networks
+% that runs multi-compartment neuron/networks
 % it generates C++ files, compiles them, and runs them
 % based on pseudo-objects that you can define within it
 % 

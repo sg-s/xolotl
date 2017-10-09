@@ -1,25 +1,28 @@
-//single compartment class
+// _  _ ____ _    ____ ___ _    
+//  \/  |  | |    |  |  |  |    
+// _/\_ |__| |___ |__|  |  |___ 
+//
+// class defining one compartment
+
 #ifndef COMPARTMENT
 #define COMPARTMENT
 #include <cmath>
 #include <vector>
 #include "conductance.hpp"
 #include "synapse.hpp"
+#include "controller.hpp"
 
 #define F 96485
 
 using namespace std;
 
-/* single compartment class (unit capacitance)
- * contains vector of conductances
- * integrates membrane equation after
- * integrating each conductance state equation */
 class compartment
 {
 protected:
     
     vector<conductance*> cond; // pointers to all conductances in compartment
     vector<synapse*> syn; // pointers to synapses onto this neuron. 
+    vector<controller*> con; // pointers to controllers 
     
     // voltage and other state variables (calcium, ..
     double sigma_g;
@@ -36,6 +39,7 @@ protected:
     double tau_Ca;
     double RT_by_nF;
     double vol;
+    double Ca_target; // for homeostatic control 
 
 public:
     double V;          
@@ -47,7 +51,7 @@ public:
     int n_cond; // this keep tracks of the # channels
 
     // constructor with all parameters 
-    compartment(double V_, double Ca_, double Cm_, double A_, double vol_, double phi_, double Ca_out_, double Ca_in_, double tau_Ca_)
+    compartment(double V_, double Ca_, double Cm_, double A_, double vol_, double phi_, double Ca_out_, double Ca_in_, double tau_Ca_, double Ca_target_)
     {
         V = V_;
         vol = vol_;
@@ -64,6 +68,7 @@ public:
         Ca_in = Ca_in_; 
         Ca_out = Ca_out_;
         tau_Ca = tau_Ca_;
+        Ca_target = Ca_target_;
 
         RT_by_nF = 500.0*(8.6174e-5)*(10 + 273.15);
 
@@ -76,6 +81,8 @@ public:
     // begin function declarations 
     void addConductance(conductance*);
     void addSynapse(synapse*);
+    void addController(controller*);
+
     void integrate(double);
     void integrateChannels(double, double, double);
     void integrateSynapses(double, double);
@@ -97,7 +104,6 @@ void compartment::integrate(double dt)
 
     integrateChannels(V_prev, Ca_prev, dt);
     integrateVC(V_prev, Ca_prev, dt);
-
 }
 
 void compartment::integrateChannels(double V_prev, double Ca_prev, double dt)
@@ -188,6 +194,12 @@ void compartment::addConductance(conductance *cond_)
 void compartment::addSynapse(synapse *syn_)
 {
     syn.push_back(syn_);
+}
+
+// add controller to this compartment 
+void compartment::addController(controller *con_)
+{
+    con.push_back(con_);
 }
 
 void compartment::get_cond_state(double *cond_state)

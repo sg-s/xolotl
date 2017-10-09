@@ -1,4 +1,12 @@
-//network class
+// _  _ ____ _    ____ ___ _    
+//  \/  |  | |    |  |  |  |    
+// _/\_ |__| |___ |__|  |  |___ 
+//
+// class that defines a network
+// a network can either be a network of
+// single compartment neurons, or a 
+// multi-compartment neuron
+
 #ifndef NETWORK
 #define NETWORK
 #include <cmath>

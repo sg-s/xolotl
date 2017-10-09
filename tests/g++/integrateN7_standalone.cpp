@@ -48,7 +48,7 @@ int main()
     HCurrent gh(gbar_h,e_h, mH);
     
     // make compartment and add all the conductances
-    compartment cell(V0, Ca0, Cm, A, vol, phi, Ca_out, Ca_in, tau_Ca);
+    compartment cell(V0, Ca0, Cm, A, vol, phi, Ca_out, Ca_in, tau_Ca, 0);
     cell.addConductance(&gna);
     cell.addConductance(&gcat);
     cell.addConductance(&gcas);

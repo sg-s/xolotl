@@ -5,9 +5,10 @@ f = 1.496; % uM/nA
 tau_Ca = 200;
 F = 96485; % Faraday constant in SI units
 phi = (2*f*F*vol)/tau_Ca;
+Ca_target = 0; % used only when we add in homeostatic control 
 
 x = xolotl;
-x.addCompartment('AB',-60,0.02,10,0.0628,vol,phi,3000,0.05,tau_Ca);
+x.addCompartment('AB',-60,0.02,10,0.0628,vol,phi,3000,0.05,tau_Ca,Ca_target);
 
 x.addConductance('AB','liu/NaV',1830,30);
 x.addConductance('AB','liu/CaT',23,30);
