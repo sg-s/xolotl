@@ -22,7 +22,7 @@ properties (SetAccess = protected)
 	available_synapses
 	linked_binary@char
 	compartment_names = {};
-	synapses
+	
 end  % end set protected props
 
 properties (Access = protected)
@@ -34,6 +34,7 @@ properties (Access = protected)
 end  % end protected props
 
 properties
+	synapses
 	dt@double = 50e-3; % ms
 	t_end@double = 5000; % ms
 	handles
