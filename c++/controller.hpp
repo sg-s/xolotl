@@ -27,7 +27,7 @@ public:
     
     ~controller() {}
     
-    virtual void integrate(double) = 0;
+    virtual void integrate(double, double) = 0;
 
 };
 

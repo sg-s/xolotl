@@ -22,7 +22,7 @@ protected:
     
     vector<conductance*> cond; // pointers to all conductances in compartment
     vector<synapse*> syn; // pointers to synapses onto this neuron. 
-    vector<controller*> con; // pointers to controllers 
+    vector<controller*> cont; // pointers to controllers 
     
     // voltage and other state variables (calcium, ..
     double sigma_g;
@@ -49,6 +49,8 @@ public:
     double I_ext; // all external currents are summed here
     double I_clamp; // this is the current required to clamp it 
     int n_cond; // this keep tracks of the # channels
+    int n_cont; // # of controllers 
+    int n_syn; // # of synapses
 
     // constructor with all parameters 
     compartment(double V_, double Ca_, double Cm_, double A_, double vol_, double phi_, double Ca_out_, double Ca_in_, double tau_Ca_, double Ca_target_)
@@ -76,6 +78,8 @@ public:
         E_Ca = 0;
         i_Ca = 0; // this is the current density (nA/mm^2)
         n_cond = 0;
+        n_cont = 0;
+        n_syn = 0; 
 
     }
     // begin function declarations 
@@ -84,6 +88,7 @@ public:
     void addController(controller*);
 
     void integrate(double);
+    void integrateControllers(double, double);
     void integrateChannels(double, double, double);
     void integrateSynapses(double, double);
     void integrateVC(double, double, double);
@@ -106,9 +111,20 @@ void compartment::integrate(double dt)
     integrateVC(V_prev, Ca_prev, dt);
 }
 
+void compartment::integrateControllers(double Ca_prev, double dt)
+{
+
+    // integrate all controllers
+    for (int i=0; i<n_cont; i++)
+    {
+        cont[i]->integrate(Ca_target - Ca_prev, dt);
+    }
+   
+}
+
 void compartment::integrateChannels(double V_prev, double Ca_prev, double dt)
 {
-    int n_cond = (int) cond.size(); //conductances
+
     sigma_g = 0.0;
     sigma_gE = 0.0;
 
@@ -128,8 +144,6 @@ void compartment::integrateChannels(double V_prev, double Ca_prev, double dt)
 void compartment::integrateSynapses(double V_prev, double dt)
 {
 
-    int n_syn = (int) syn.size(); //these many synapses
-    
     // we treat synapses identically to any other conductance 
 
     // integrate all synapses
@@ -153,7 +167,6 @@ void compartment::integrateVC(double V_prev, double Ca_prev, double dt)
     else
         V_inf = (sigma_gE + (I_ext/A))/sigma_g;
 
-    
 
     // Ca_inf = Ca_in - f*A*I_Ca; // microM 
     Ca_inf = Ca_in - (tau_Ca*phi*i_Ca*A*.5)/(F*vol); // microM
@@ -187,19 +200,21 @@ void compartment::addConductance(conductance *cond_)
 {
     cond.push_back(cond_);
     cond_->connect(this);
-    n_cond += 1;
+    n_cond ++; 
 }
 
 // add synapse to this compartment (this compartment is after synapse)
 void compartment::addSynapse(synapse *syn_)
 {
     syn.push_back(syn_);
+    n_syn ++; 
 }
 
 // add controller to this compartment 
-void compartment::addController(controller *con_)
+void compartment::addController(controller *cont_)
 {
-    con.push_back(con_);
+    cont.push_back(cont_);
+    n_cont ++;
 }
 
 // returns a vector of the stat of every conductance 

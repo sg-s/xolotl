@@ -21,9 +21,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double *output_V;
     double *output_Ca;
     double *output_I_clamp;
-    double *output_cond_state;
-    double *output_syn_state; 
-    double *output_cont_state;
+    double *output_cond_state; // conductances
+    double *output_syn_state;  // synapses
+    double *output_cont_state; // controllers 
 
     // make an empty network 
     network STG;
@@ -46,6 +46,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     //xolotl:add_conductances_here
 
     //xolotl:add_synapses_here
+
+    //xolotl:add_controllers_here
 
     //xolotl:add_neurons_to_network
     
@@ -98,7 +100,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             for (int k = 0; k < cond_state_dims[j]; k++)
             {
                 output_cond_state[i*cond_state_dim + cond_idx] = full_cond_state[k];
-                cond_idx += 1;
+                cond_idx ++;
             }
         }
 

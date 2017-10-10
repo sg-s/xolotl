@@ -58,6 +58,10 @@ void network::integrate(double dt)
 
         V_prev = comp[i]->V;
         Ca_prev = comp[i]->Ca;
+
+        // integrate controllers
+        comp[i]->integrateControllers(Ca_prev, dt);
+
         comp[i]->integrateChannels(V_prev,Ca_prev,dt);
 
         // integrate synapses
