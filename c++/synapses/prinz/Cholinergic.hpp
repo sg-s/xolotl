@@ -8,25 +8,14 @@ class Cholinergic: public synapse {
 public:
 
     // specify parameters + initial conditions 
-    Cholinergic(double g_, double E_, double Delta_, double k__, double Vth_)
-    {
-        gbar = g_;
-        E = E_;
-        Delta = Delta_;
-        k_ = k__;
-        Vth = Vth_;
-        s = 0;
-    }
-
-    Cholinergic(double g_)
+    Cholinergic(double g_, double s_)
     {
         gbar = g_;
         E = -80.0;
         Delta = 5.0;
         Vth = -35.0;
         k_ = 0.01;
-        s = 0.0;
-
+        s = s_;
     }
     
     void integrate(double dt);

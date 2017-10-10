@@ -120,35 +120,36 @@ methods
 		
 
 		cond_state = [];
-		arguments = {};
-		arguments{1} = [self.dt; self.t_end];
 
 		% vectorize the current state 
-		for i = 1:length(self.compartment_names)
-			this_comp_name = self.compartment_names{i};
-			arguments{i+1} = struct2vec(self.(this_comp_name));
-		end
+		arguments = self.serialize;
 
-		% the next argument is the synapses
-		if length(self.synapses)
-			arguments{end+1} = [self.synapses.gbar];
-		else 
-			arguments{end+1} = [];
-		end
+		% for i = 1:length(self.compartment_names)
+		% 	this_comp_name = self.compartment_names{i};
+		% 	arguments{i+1} = struct2vec(self.(this_comp_name));
+		% end
 
-		if ~isempty(self.V_clamp)
-			% add on an extra argument -- the V_clamp
-			arguments{end+1} = self.V_clamp;
-		end
+		% % the next argument is the synapses
+		% if length(self.synapses)
+		% 	arguments{end+1} = [self.synapses.gbar];
+		% else 
+		% 	arguments{end+1} = [];
+		% end
+
+		% if ~isempty(self.V_clamp)
+		% 	% add on an extra argument -- the V_clamp
+		% 	arguments{end+1} = self.V_clamp;
+		% end
 
 		[~,f]=fileparts(self.linked_binary);
 		f = str2func(f);
-		[results{1:4}] = f(arguments{:});
+		[results{1:5}] = f(arguments{:});
 
 		V = (results{1})';
 		Ca = (results{2})';
 		I_clamp = (results{3})';
 		cond_state = (results{4})';
+		syn_state = (results{5})';
 
 		% update xolotl properties based on the integration
 		idx = 1;
@@ -166,6 +167,14 @@ methods
 					self.(self.compartment_names{i}).(these_channels{j}).h = cond_state(end,idx);
 					idx = idx + 1;
 				end
+			end
+
+			% update the synapses
+			syn_g = [syn_state(end,1:2:end)];
+			syn_s = [syn_state(end,2:2:end)]; 
+			for i = 1:length(self.synapses)
+				self.synapses(i).gbar = syn_g(i);
+				self.synapses(i).state = syn_s(i);
 			end
 		end
 

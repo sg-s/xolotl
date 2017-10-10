@@ -27,12 +27,15 @@ end
 
 % now do the synapses 
 if length(self.synapses)> 0
-	values{end+1} = [self.synapses.gbar];
-	these_names = cell(length(self.synapses),1);
+	S = {}; SV = [];
 	for i = 1:length(self.synapses)
-		these_names{i} = [self.synapses(i).pre '_2_' self.synapses(i).post '_' self.synapses(i).type(1:4)];
+		S{end+1} = [self.synapses(i).pre '_2_' self.synapses(i).post '_' self.synapses(i).type(1:4) '_gbar'];
+		SV(end+1) = self.synapses(i).gbar;
+		S{end+1} = [self.synapses(i).pre '_2_' self.synapses(i).post '_' self.synapses(i).type(1:4) '_s'];
+		SV(end+1) = self.synapses(i).state;
 	end
-	names{end+1} = these_names;
+	names{end+1} = S;
+	values{end+1} = SV;
 else
 	names{end+1} = '';
 	values{end+1} = [];

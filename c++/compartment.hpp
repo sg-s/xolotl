@@ -202,6 +202,7 @@ void compartment::addController(controller *con_)
     con.push_back(con_);
 }
 
+// returns a vector of the stat of every conductance 
 void compartment::get_cond_state(double *cond_state)
 {
     for (int i = 0; i < n_cond; i ++) 

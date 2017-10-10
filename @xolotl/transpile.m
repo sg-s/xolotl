@@ -43,36 +43,25 @@ function transpile(self)
 
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% input declarations and hookups ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	[~,names] = self.serialize;
+
+	names(1) = []; % we've already accounted for the dt, t_end
+
 	comp_param_declarations = {}; 
-	comp_param_hookups = {}; c = 1;
+	comp_param_hookups = {}; 
 
-	for i = 1:length(self.compartment_names)
-		this_comp_name = self.compartment_names{i};
-		comp_param_declarations{i} = ['double *' this_comp_name '_params  = mxGetPr(prhs[' mat2str(i) ']);'];
-
-		[v, names] = struct2vec(self.(this_comp_name));
-		% append compartment name to names
-		names = cellfun(@(x) [self.compartment_names{i} x],names,'UniformOutput',false);
-
-		for j = 1:length(names)
-			comp_param_hookups{c} = ['double ' names{j} '= ' this_comp_name '_params[' mat2str(j-1) '];'];
-			c = c + 1;
+	 % argument names
+	argin_names = [self.compartment_names; 'synapse'; 'V_clamp' ;'controller'];
+	for i = 1:length(names)
+		comp_param_declarations{i} = ['double *' argin_names{i} '_params  = mxGetPr(prhs[' mat2str(i) ']);'];
+		these_names = names{i};
+		for j = 1:length(these_names)
+			comp_param_hookups{end+1} = ['double ' these_names{j} ' = ' argin_names{i} '_params[' oval(j-1) '];'];
 		end
 	end
 
-	% now also make hooks for synapses 
-	syn_param_declaration = {}; 
-	syn_param_hookups = {}; 
-	idx = length(self.compartment_names) + 1;
-	syn_param_declaration = ['double * syn_params  = mxGetPr(prhs[' mat2str(idx) ']);'];
-
-	for i = 1:length(self.synapses)
-		this_syn_name = ['syn' mat2str(i) '_g'];
-		
-		syn_param_hookups{i} = ['double ' this_syn_name '= syn_params[' mat2str(i-1) '];'];
-	end
-
-	insert_this = [comp_param_declarations(:); syn_param_declaration; comp_param_hookups(:); syn_param_hookups(:)];
+	insert_this = [comp_param_declarations(:); comp_param_hookups(:)];
 
 	insert_here = lineFind(lines,'//xolotl:input_declarations');
 	assert(length(insert_here)==1,'Could not find insertion point for input declarations')
@@ -139,13 +128,19 @@ function transpile(self)
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% add the synapses here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+	[~,names] = self.serialize;
+	names(1) = [];
+	syn_names = names{length(self.compartment_names)+1};
+
 	syanpse_add_lines = {}; 
 	for i = 1:length(self.synapses)
 		this_type = self.synapses(i).type;
 		g = mat2str(self.synapses(i).gbar);
 		pre = self.synapses(i).pre;
 		post = self.synapses(i).post;
-		syanpse_add_lines{i} = [this_type ' syn' mat2str(i) '(syn' mat2str(i) '_g); syn' mat2str(i) '.connect(&' pre ', &' post ');'];
+		idx1 = (i-1)*2 + 1;
+		idx2 = (i-1)*2 + 2;
+		syanpse_add_lines{i} = [this_type ' syn' mat2str(i) '('  syn_names{idx1} ',' syn_names{idx2}  '); syn' mat2str(i) '.connect(&' pre ', &' post '); n_synapses ++;'];
 	end
 
 	insert_here = lineFind(lines,'//xolotl:add_synapses_here');
@@ -153,6 +148,20 @@ function transpile(self)
 	lines = [lines(1:insert_here); syanpse_add_lines(:); lines(insert_here+1:end)];
 
 
+	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	% read synapses here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	syanpse_read_lines = {};
+	for i = 1:length(self.synapses)
+		this_line = ['output_syn_state[i*2*n_synapses +' mat2str((i-1)*2) '] = syn' mat2str(i) '.gbar;'];
+		syanpse_read_lines{end+1} = this_line;
+		this_line = ['output_syn_state[i*2*n_synapses +' mat2str((i-1)*2+1) '] = syn' mat2str(i) '.s;'];
+		syanpse_read_lines{end+1} = this_line;
+	end
+
+	insert_here = lineFind(lines,'//xolotl:read_synapses_here');
+	assert(length(insert_here)==1,'Could not find insertion point for synapse read hookups')
+	lines = [lines(1:insert_here); syanpse_read_lines(:); lines(insert_here+1:end)];
 
 
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
