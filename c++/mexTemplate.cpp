@@ -83,7 +83,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     
     for(int i = 0; i < nsteps; i++)
     {
-        STG.integrate(dt);
+        STG.integrate(dt); //xolotl:disable_when_clamped
+        //STG.integrateClamp(V_drive[i],dt); //xolotl:enable_when_clamped
+        //output_I_clamp[i] = STG.comp[0]->I_clamp; //xolotl:enable_when_clamped
 
         //xolotl:read_synapses_here
 
