@@ -37,6 +37,12 @@ function transpile(self)
 		header_files{c} = ['#include "' h{i} '"']; c = c+1;
 	end
 
+	h = unique(self.controller_headers);
+	c = length(header_files)+1;
+	for i = 1:length(h)
+		header_files{c} = ['#include "' h{i} '"']; c = c+1;
+	end
+
 	insert_here = lineFind(lines,'//xolotl:include_headers_here');
 	assert(length(insert_here)==1,'Could not find insertion point for headers')
 	lines = [lines(1:insert_here); header_files(:); lines(insert_here+1:end)];
@@ -44,8 +50,9 @@ function transpile(self)
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% input declarations and hookups ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	[~,names] = self.serialize;
+	[values,names] = self.serialize;
 
+	values(1) = [];
 	names(1) = []; % we've already accounted for the dt, t_end
 
 	comp_param_declarations = {}; 
@@ -54,10 +61,16 @@ function transpile(self)
 	 % argument names
 	argin_names = [self.compartment_names; 'synapse'; 'V_clamp' ;'controller'];
 	for i = 1:length(names)
-		comp_param_declarations{i} = ['double *' argin_names{i} '_params  = mxGetPr(prhs[' mat2str(i) ']);'];
-		these_names = names{i};
-		for j = 1:length(these_names)
-			comp_param_hookups{end+1} = ['double ' these_names{j} ' = ' argin_names{i} '_params[' oval(j-1) '];'];
+		if ~isempty(values{i})
+
+			comp_param_declarations{end+1} = ['double *' argin_names{i} '_params  = mxGetPr(prhs[' mat2str(i) ']);'];
+			these_names = names{i};
+			if ~iscell(these_names)
+				these_names = {these_names};
+			end
+			for j = 1:length(these_names)
+				comp_param_hookups{end+1} = ['double ' these_names{j} ' = ' argin_names{i} '_params[' oval(j-1) '];'];
+			end
 		end
 	end
 
@@ -132,7 +145,7 @@ function transpile(self)
 	names(1) = [];
 	syn_names = names{length(self.compartment_names)+1};
 
-	syanpse_add_lines = {}; 
+	synapse_add_lines = {}; 
 	for i = 1:length(self.synapses)
 		this_type = self.synapses(i).type;
 		g = mat2str(self.synapses(i).gbar);
@@ -140,12 +153,38 @@ function transpile(self)
 		post = self.synapses(i).post;
 		idx1 = (i-1)*2 + 1;
 		idx2 = (i-1)*2 + 2;
-		syanpse_add_lines{i} = [this_type ' syn' mat2str(i) '('  syn_names{idx1} ',' syn_names{idx2}  '); syn' mat2str(i) '.connect(&' pre ', &' post '); n_synapses ++;'];
+		synapse_add_lines{i} = [this_type ' syn' mat2str(i) '('  syn_names{idx1} ',' syn_names{idx2}  '); syn' mat2str(i) '.connect(&' pre ', &' post '); n_synapses ++;'];
 	end
 
 	insert_here = lineFind(lines,'//xolotl:add_synapses_here');
 	assert(length(insert_here)==1,'Could not find insertion point for synapse->cell hookups')
-	lines = [lines(1:insert_here); syanpse_add_lines(:); lines(insert_here+1:end)];
+	lines = [lines(1:insert_here); synapse_add_lines(:); lines(insert_here+1:end)];
+
+
+	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	% add the controllers here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	[~,names] = self.serialize;
+	names(1) = [];
+	cont_names = names{length(self.compartment_names)+3};
+
+	controller_add_lines = {}; 
+	for i = 1:length(self.controllers)
+		this_type = self.controllers(i).type;
+		this_channel = self.controllers(i).channel;
+		this_compartment = self.controllers(i).compartment;
+		idx1 = (i-1)*4 + 1;
+		idx2 = (i-1)*4 + 2;
+		idx3 = (i-1)*4 + 3;
+		idx4 = (i-1)*4 + 4;
+		controller_add_lines{end+1} = [this_type ' cont' mat2str(i) '(&' this_channel  ',' cont_names{idx1} ',' cont_names{idx2} ','  cont_names{idx3} ',' cont_names{idx4} ');'];
+		controller_add_lines{end+1} = [this_compartment '.addController(&cont' mat2str(i) ');'];
+	end
+	controller_add_lines{end+1} = ['int n_controllers = ' mat2str(length(self.controllers)) ';'];
+
+	insert_here = lineFind(lines,'//xolotl:add_controllers_here');
+	assert(length(insert_here)==1,'Could not find insertion point for controller hookups')
+	lines = [lines(1:insert_here); controller_add_lines(:); lines(insert_here+1:end)];
 
 
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -19,14 +19,17 @@ classdef xolotl < handle & dynamicprops
 properties (SetAccess = protected)
 	compartment_props 
 	available_conductances
+	available_controllers
 	available_synapses
 	linked_binary@char
 	compartment_names = {};
+
 	
 end  % end set protected props
 
 properties (Access = protected)
 	conductance_headers = {};
+	controller_headers = {};
 	synapse_headers = {};
 	OS_binary_ext
 	xolotl_folder
@@ -35,6 +38,7 @@ end  % end protected props
 
 properties
 	synapses
+	controllers
 	dt@double = 50e-3; % ms
 	t_end@double = 5000; % ms
 	handles
@@ -61,6 +65,18 @@ methods
 			end
 		end
 		self.available_conductances = available_conductances(~rm_this);
+
+		% make a list of available controllers
+		available_controllers = getAllFiles(joinPath(self.cpp_folder,'controllers'));
+		rm_this = true(length(available_controllers),1);
+		for i = 1:length(available_controllers)
+			[~,~,ext] = fileparts(available_controllers{i});
+			if strcmp(ext,'.hpp')
+				rm_this(i) = false;
+			end
+		end
+		self.available_controllers = available_controllers(~rm_this);
+
 
 		% make a list of the available synapses
 		available_synapses = getAllFiles(joinPath(self.cpp_folder,'synapses'));
