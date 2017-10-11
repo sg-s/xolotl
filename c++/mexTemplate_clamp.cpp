@@ -1,3 +1,12 @@
+// xolotl
+// this template file is used by xolotl.transpile() to convert
+// the xolotl pseudo-object in MATLAB into a C++
+// file that can be compiled from mex
+// DON'T TOUCH ANYTHING HERE! 
+// this is just like mexTemplate, but is used
+// when the first compartment is being clamped
+
+
 #include <cmath>
 #include <vector>
 #include <typeinfo>
@@ -27,6 +36,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double dt  = simparams[0];
     double tstop = simparams[1];
 
+    int v_drive_idx;
+    //xolotl:define_v_drive_idx
+    double *V_drive = mxGetPr(prhs[v_drive_idx]);
+
     //xolotl:input_declarations 
 
     //xolotl:make_compartments_here 
@@ -39,6 +52,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     //xolotl:add_neurons_to_network
     
+
     nsteps = (int) floor(tstop/dt); 
     int n_comp = (int) (STG.comp).size(); // these many compartments
 
@@ -63,16 +77,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     double * full_cond_state = new double[cond_state_dim];
     int cond_idx = 0;
+
     
     for(int i = 0; i < nsteps; i++)
     {
-        STG.integrate(dt);
         cond_idx = 0;
+        STG.integrateClamp(V_drive[i],dt);
+        output_I_clamp[i] = STG.comp[0]->I_clamp;
         for (int j = 0; j < n_comp; j++)
         {
             output_V[i*n_comp + j] = STG.comp[j]->V;
             output_Ca[i*2*n_comp + j] = STG.comp[j]->Ca;
-            output_Ca[i*2*n_comp + j + n_comp] = STG.comp[j]->E_Ca;
+            output_Ca[i*2*n_comp + n_comp + j] = STG.comp[j]->E_Ca;
 
             STG.comp[j]->get_cond_state(full_cond_state);
             
@@ -82,6 +98,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 cond_idx += 1;
 
             }
+
+
         }
 
     }

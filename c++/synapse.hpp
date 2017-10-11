@@ -1,4 +1,11 @@
-//Abstract class for defining synapses  
+// _  _ ____ _    ____ ___ _    
+//  \/  |  | |    |  |  |  |    
+// _/\_ |__| |___ |__|  |  |___ 
+//
+// abstract class for defining synapses  
+// synapses connect two compartments
+// typically, neurons. 
+
 #ifndef SYNAPSE
 #define SYNAPSE
 #include <cmath>

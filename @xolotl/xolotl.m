@@ -6,7 +6,7 @@
 %   /_/\_\___/|_|\___/ \__|_|
 %
 % a MATLAB class that wraps C++ code
-% that runs mulit-compartment neuron/networks
+% that runs multi-compartment neuron/networks
 % it generates C++ files, compiles them, and runs them
 % based on pseudo-objects that you can define within it
 % 
@@ -19,22 +19,31 @@ classdef xolotl < handle & dynamicprops
 properties (SetAccess = protected)
 	compartment_props 
 	available_conductances
+	available_controllers
 	available_synapses
 	linked_binary@char
 	compartment_names = {};
+<<<<<<< HEAD
+=======
+
+>>>>>>> integral-control
 	
 end  % end set protected props
 
 properties (Access = protected)
 	conductance_headers = {};
+	controller_headers = {};
 	synapse_headers = {};
 	OS_binary_ext
 	xolotl_folder
+	cpp_folder
 end  % end protected props
 
 properties
-	dt@double = 50e-3;
-	t_end@double = 5000;
+	synapses
+	controllers
+	dt@double = 50e-3; % ms
+	t_end@double = 5000; % ms
 	handles
 	V_clamp
 	closed_loop@logical = true;
@@ -44,13 +53,14 @@ end % end general props
 methods 
 	function self = xolotl()
 		self.xolotl_folder = fileparts(fileparts(which(mfilename)));
+		self.cpp_folder = joinPath(self.xolotl_folder,'c++');
 
 		% read props from compartment.h
-		cppfilename = joinPath(self.xolotl_folder,'compartment.hpp');
+		cppfilename = joinPath(self.cpp_folder,'compartment.hpp');
 		self.compartment_props = findCPPClassMembers(cppfilename);
 
 		% make a list of the available conductances
-		available_conductances = getAllFiles(joinPath(self.xolotl_folder,'conductances'));
+		available_conductances = getAllFiles(joinPath(self.cpp_folder,'conductances'));
 		rm_this = true(length(available_conductances),1);
 		for i = 1:length(available_conductances)
 			[~,~,ext] = fileparts(available_conductances{i});
@@ -60,8 +70,20 @@ methods
 		end
 		self.available_conductances = available_conductances(~rm_this);
 
+		% make a list of available controllers
+		available_controllers = getAllFiles(joinPath(self.cpp_folder,'controllers'));
+		rm_this = true(length(available_controllers),1);
+		for i = 1:length(available_controllers)
+			[~,~,ext] = fileparts(available_controllers{i});
+			if strcmp(ext,'.hpp')
+				rm_this(i) = false;
+			end
+		end
+		self.available_controllers = available_controllers(~rm_this);
+
+
 		% make a list of the available synapses
-		available_synapses = getAllFiles(joinPath(self.xolotl_folder,'synapses'));
+		available_synapses = getAllFiles(joinPath(self.cpp_folder,'synapses'));
 		rm_this = true(length(available_synapses),1);
 		for i = 1:length(available_synapses)
 			[~,~,ext] = fileparts(available_synapses{i});
@@ -88,7 +110,7 @@ methods
 	end
 
 
-	function [V, Ca,I_clamp, cond_state] = integrate(self)
+	function [V, Ca,I_clamp, cond_state, syn_state, cont_state] = integrate(self)
 
 		% check if we need to transpile or compile 
 		h = self.hash;
@@ -98,6 +120,8 @@ methods
 			if exist(joinPath(self.xolotl_folder,['mexBridge' h(1:6) '.cpp']),'file') == 2
 				% Ok, we have the C++ file. should we compile?
 				if exist(joinPath(self.xolotl_folder,['mexBridge' h(1:6) '.' self.OS_binary_ext]),'file') == 3
+					% update the linked_binary
+					self.linked_binary = ['mexBridge' h(1:6) '.' self.OS_binary_ext];
 				else
 					self.compile;
 				end
@@ -114,49 +138,26 @@ methods
 			end
 		end
 		
-
+		V = [];
+		Ca = [];
+		I_clamp = [];
 		cond_state = [];
-		arguments = {};
-		arguments{1} = [self.dt; self.t_end];
+		syn_state = [];
+		cont_state = [];
 
 		% vectorize the current state 
-		for i = 1:length(self.compartment_names)
-			this_comp_name = self.compartment_names{i};
-			arguments{i+1} = struct2vec(self.(this_comp_name));
-		end
+		arguments = self.serialize;
 
-		% the next argument is the synapses
-		if length(self.synapses)
-			arguments{end+1} = [self.synapses.gbar];
-		else 
-			arguments{end+1} = [];
-		end
+		[~,f]=fileparts(self.linked_binary);
+		f = str2func(f);
+		[results{1:6}] = f(arguments{:});
 
-		% we need to give mexBridge the right number of arguments. 
-		% so there's no way around constructing a string and running eval on it
-
-		if ~isempty(self.V_clamp)
-			% add on an extra argument -- the V_clamp
-			arguments{end+1} = self.V_clamp;
-		else
-			I_clamp = [];
-		end
-
-		h = self.hash;
-
-		eval_str = ['[V,Ca,I_clamp,cond_state] =  mexBridge' h(1:6) '('];
-		for i = 1:length(arguments)
-			eval_str = [eval_str 'arguments{' mat2str(i) '},'];
-		end
-		
-		eval_str(end) = ')';
-		eval_str = [eval_str ';'];
-		eval(eval_str)
-
-		V = V';
-		Ca = Ca';
-		cond_state = cond_state';
-		I_clamp = I_clamp(:);
+		V = (results{1})';
+		Ca = (results{2})';
+		I_clamp = (results{3})';
+		cond_state = (results{4})';
+		syn_state = (results{5})';
+		cont_state = (results{6})';
 
 		% update xolotl properties based on the integration
 		idx = 1;
@@ -175,6 +176,24 @@ methods
 					idx = idx + 1;
 				end
 			end
+
+			% update the synapses
+			syn_g = [syn_state(end,1:2:end)];
+			syn_s = [syn_state(end,2:2:end)]; 
+			for i = 1:length(self.synapses)
+				self.synapses(i).gbar = syn_g(i);
+				self.synapses(i).state = syn_s(i);
+			end
+
+			% update conductances from controllers 
+			cont_m = [cont_state(end,1:2:end)];
+			cont_g = [cont_state(end,2:2:end)];
+			for i = 1:length(self.controllers)
+				self.controllers(i).m = cont_m(i);
+				this_channel = strrep(self.controllers(i).channel,self.controllers(i).compartment,'');
+				this_channel(1) = [];
+				self.(self.controllers(i).compartment).(this_channel).gbar = cont_g(i);
+			end 
 		end
 
 	end

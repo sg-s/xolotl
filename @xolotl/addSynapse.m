@@ -32,6 +32,7 @@ function addSynapse(self,syn_id,comp1,comp2,gbar)
 	S.pre = comp1;
 	S.post  = comp2;
 	S.gbar = gbar;
+	S.state = 0;
 
 	self.synapses  = [self.synapses; S];
 

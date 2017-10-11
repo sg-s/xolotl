@@ -8,24 +8,14 @@
 % creates a C++ file that can be compiled with mex
 
 function transpile(self)
-	% delete old mexBridge files
-	if exist(joinPath(self.xolotl_folder,'mexBridge.cpp'),'file') 
-		delete(joinPath(self.xolotl_folder,'mexBridge.cpp'))
-	end
-
 	% read lines from mexTemplate
-	if isempty(self.V_clamp)
-		cppfilename = joinPath(self.xolotl_folder,'mexTemplate.cpp');
-	else
-		cppfilename = joinPath(self.xolotl_folder,'mexTemplate_clamp.cpp');
-	end
+
+	cppfilename = joinPath(self.cpp_folder,'mexTemplate.cpp');
 	lines = lineRead(cppfilename);
 
 	% insert header files ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	header_files{1} = '#include "network.hpp"';
-	header_files{2} = '#include "compartment.hpp"';
-
-
+	header_files{1} = '#include "c++/network.hpp"';
+	header_files{2} = '#include "c++/compartment.hpp"';
 
 	h = unique(self.conductance_headers);
 	c = length(header_files)+1;
@@ -39,42 +29,46 @@ function transpile(self)
 		header_files{c} = ['#include "' h{i} '"']; c = c+1;
 	end
 
+	h = unique(self.controller_headers);
+	c = length(header_files)+1;
+	for i = 1:length(h)
+		header_files{c} = ['#include "' h{i} '"']; c = c+1;
+	end
+
 	insert_here = lineFind(lines,'//xolotl:include_headers_here');
 	assert(length(insert_here)==1,'Could not find insertion point for headers')
 	lines = [lines(1:insert_here); header_files(:); lines(insert_here+1:end)];
 
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% input declarations and hookups ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	[values,names] = self.serialize;
+
+	values(1) = [];
+	names(1) = []; % we've already accounted for the dt, t_end
+
 	comp_param_declarations = {}; 
-	comp_param_hookups = {}; c = 1;
+	comp_param_hookups = {}; 
 
-	for i = 1:length(self.compartment_names)
-		this_comp_name = self.compartment_names{i};
-		comp_param_declarations{i} = ['double *' this_comp_name '_params  = mxGetPr(prhs[' mat2str(i) ']);'];
+	 % argument names
+	argin_names = [self.compartment_names; 'synapse'; 'V_clamp' ;'controller'];
+	for i = 1:length(names)
+		if ~isempty(values{i})
 
-		[v, names] = struct2vec(self.(this_comp_name));
-		% append compartment name to names
-		names = cellfun(@(x) [self.compartment_names{i} x],names,'UniformOutput',false);
-
-		for j = 1:length(names)
-			comp_param_hookups{c} = ['double ' names{j} '= ' this_comp_name '_params[' mat2str(j-1) '];'];
-			c = c + 1;
+			comp_param_declarations{end+1} = ['double *' argin_names{i} '_params  = mxGetPr(prhs[' mat2str(i) ']);'];
+			these_names = names{i};
+			if ~iscell(these_names)
+				these_names = {these_names};
+			end
+			for j = 1:length(these_names)
+				if ~strcmp(these_names{j},'V_clamp')
+					comp_param_hookups{end+1} = ['double ' these_names{j} ' = ' argin_names{i} '_params[' oval(j-1) '];'];
+				end
+			end
 		end
 	end
 
-	% now also make hooks for synapses 
-	syn_param_declaration = {}; 
-	syn_param_hookups = {}; 
-	idx = length(self.compartment_names) + 1;
-	syn_param_declaration = ['double * syn_params  = mxGetPr(prhs[' mat2str(idx) ']);'];
-
-	for i = 1:length(self.synapses)
-		this_syn_name = ['syn' mat2str(i) '_g'];
-		
-		syn_param_hookups{i} = ['double ' this_syn_name '= syn_params[' mat2str(i-1) '];'];
-	end
-
-	insert_this = [comp_param_declarations(:); syn_param_declaration; comp_param_hookups(:); syn_param_hookups(:)];
+	insert_this = [comp_param_declarations(:); comp_param_hookups(:)];
 
 	insert_here = lineFind(lines,'//xolotl:input_declarations');
 	assert(length(insert_here)==1,'Could not find insertion point for input declarations')
@@ -141,20 +135,81 @@ function transpile(self)
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% add the synapses here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	syanpse_add_lines = {}; 
+	[~,names] = self.serialize;
+	names(1) = [];
+	syn_names = names{length(self.compartment_names)+1};
+
+	synapse_add_lines = {}; 
 	for i = 1:length(self.synapses)
 		this_type = self.synapses(i).type;
 		g = mat2str(self.synapses(i).gbar);
 		pre = self.synapses(i).pre;
 		post = self.synapses(i).post;
-		syanpse_add_lines{i} = [this_type ' syn' mat2str(i) '(syn' mat2str(i) '_g); syn' mat2str(i) '.connect(&' pre ', &' post ');'];
+		idx1 = (i-1)*2 + 1;
+		idx2 = (i-1)*2 + 2;
+		synapse_add_lines{i} = [this_type ' syn' mat2str(i) '('  syn_names{idx1} ',' syn_names{idx2}  '); syn' mat2str(i) '.connect(&' pre ', &' post '); n_synapses ++;'];
 	end
 
 	insert_here = lineFind(lines,'//xolotl:add_synapses_here');
 	assert(length(insert_here)==1,'Could not find insertion point for synapse->cell hookups')
-	lines = [lines(1:insert_here); syanpse_add_lines(:); lines(insert_here+1:end)];
+	lines = [lines(1:insert_here); synapse_add_lines(:); lines(insert_here+1:end)];
 
 
+	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	% add the controllers here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	[~,names] = self.serialize;
+	names(1) = [];
+	cont_names = names{length(self.compartment_names)+3};
+
+	controller_add_lines = {}; 
+	for i = 1:length(self.controllers)
+		this_type = self.controllers(i).type;
+		this_channel = self.controllers(i).channel;
+		this_compartment = self.controllers(i).compartment;
+		idx1 = (i-1)*4 + 1;
+		idx2 = (i-1)*4 + 2;
+		idx3 = (i-1)*4 + 3;
+		idx4 = (i-1)*4 + 4;
+		controller_add_lines{end+1} = [this_type ' cont' mat2str(i) '(&' this_channel  ',' cont_names{idx1} ',' cont_names{idx2} ','  cont_names{idx3} ',' cont_names{idx4} ');'];
+		controller_add_lines{end+1} = [this_compartment '.addController(&cont' mat2str(i) ');'];
+	end
+	controller_add_lines{end+1} = ['int n_controllers = ' mat2str(length(self.controllers)) ';'];
+
+	insert_here = lineFind(lines,'//xolotl:add_controllers_here');
+	assert(length(insert_here)==1,'Could not find insertion point for controller hookups')
+	lines = [lines(1:insert_here); controller_add_lines(:); lines(insert_here+1:end)];
+
+
+	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	% read synapses here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	syanpse_read_lines = {};
+	for i = 1:length(self.synapses)
+		this_line = ['output_syn_state[i*2*n_synapses +' mat2str((i-1)*2) '] = syn' mat2str(i) '.gbar;'];
+		syanpse_read_lines{end+1} = this_line;
+		this_line = ['output_syn_state[i*2*n_synapses +' mat2str((i-1)*2+1) '] = syn' mat2str(i) '.s;'];
+		syanpse_read_lines{end+1} = this_line;
+	end
+
+	insert_here = lineFind(lines,'//xolotl:read_synapses_here');
+	assert(length(insert_here)==1,'Could not find insertion point for synapse read hookups')
+	lines = [lines(1:insert_here); syanpse_read_lines(:); lines(insert_here+1:end)];
+
+	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	% read controllers here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	controller_read_lines = {};
+	for i = 1:length(self.controllers)
+		this_line = ['output_cont_state[i*2*n_controllers +' mat2str((i-1)*2) '] = cont' mat2str(i) '.m;'];
+		controller_read_lines{end+1} = this_line;
+		this_line = ['output_cont_state[i*2*n_controllers +' mat2str((i-1)*2+1) '] = cont' mat2str(i) '.get_gbar();'];
+		controller_read_lines{end+1} = this_line;
+	end
+
+	insert_here = lineFind(lines,'//xolotl:read_controllers_here');
+	assert(length(insert_here)==1,'Could not find insertion point for controllers read hookups')
+	lines = [lines(1:insert_here); controller_read_lines(:); lines(insert_here+1:end)];
 
 
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -173,11 +228,26 @@ function transpile(self)
 	% if something is clamped, link up the clamping potentials   ~~~~~~~~~
 	if ~isempty(self.V_clamp)
 		V_clamp_idx = length(self.compartment_names) + 2;
-		insert_this = ['v_drive_idx = ' mat2str((V_clamp_idx)) ';'];
-		insert_here = lineFind(lines,'//xolotl:define_v_drive_idx');
+		insert_this = ['double *V_clamp = mxGetPr(prhs[' mat2str(V_clamp_idx) ']);'];
+		insert_here = lineFind(lines,'//xolotl:define_v_clamp_idx');
 		assert(length(insert_here)==1,'Could not find insertion point for telling C++ which input is V_clamp')
 		lines = [lines(1:insert_here); insert_this; lines(insert_here+1:end)];
+
+
+		comment_this = lineFind(lines,'STG.integrate(dt);');
+		assert(length(comment_this)==1,'Could not find line to comment out for voltage clamped case')
+		lines{comment_this} = ['//' lines{comment_this}];
+
+		uncomment_this = lineFind(lines,'//xolotl:enable_when_clamped');
+		assert(length(uncomment_this)==2,'Could not find line to uncomment for voltage clamped case')
+		for i = 1:length(uncomment_this)
+			lines{uncomment_this(i)+1} = strrep(lines{uncomment_this(i)+1},'//','');
+		end
+		
+
 	end
+
+
 
 
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

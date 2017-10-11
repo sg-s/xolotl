@@ -33,7 +33,7 @@ Integrate this using a time step of `50 us`:
 HH.integrate(50e-3);
 ```
 
-`xolotl` also makes it easy to set up networks of neurons, or even multi-compartment neurons (the same code works for both). For an example of a three neuron network with two types of chemical synapses, see [test_stg.cpp](tests/test_stg.cpp)
+`xolotl` also makes it easy to set up networks of neurons, or even multi-compartment neurons (the same code works for both). 
 
 ## Usage (MATLAB)
 
@@ -47,7 +47,7 @@ x = xolotl;
 
 Set up a basic neuron and add some conductances:
 
-```
+```matlab
 x.addCompartment('AB',-70,0.05,10,0.0628,1,1.496,3000,0.05,200);
 x.addConductance('AB','liu/NaV',1830,30);
 x.addConductance('AB','liu/CaT',23,30);
@@ -61,7 +61,7 @@ x.addConductance('AB','Leak',.99,-50);
 
 Inspect the neuron:
 
-```
+```matlab
 x.AB
 
 ans = 
@@ -89,14 +89,14 @@ ans =
 
 You can drill as deep as you want into the structure, and modify values if you want to. In this example, we're setting the reversal potential of the `NaV` channel on neuron `AB` to 50mV;
 
-```
+```matlab
 x.AB.NaV.E = 50; % mV
 ```
 
 
 Integrate and plot the voltage:
 
-```
+```matlab
 x.dt = 50e-3;
 x.t_end = 5000;
 [V,Ca] = x.integrate;
@@ -105,7 +105,7 @@ figure, plot(V)
 
 ![](https://user-images.githubusercontent.com/6005346/30713658-ff96faf4-9edd-11e7-9db1-a2ca4f2f0567.png)
 
-Behind the scene, MATLAB transpiles MATLAB code describing your network into C++, and compiles it using `mex` for your architecture. One of the advantages of the MATLAB interface is that you can manipulate all parameters of your neuron/network model, and see what the effect of that is live. This makes it much easier to get an intuition of how your model behaves. 
+Behind the scene, MATLAB [transpiles](https://en.wikipedia.org/wiki/Source-to-source_compiler) MATLAB code describing your network into C++, and compiles it using `mex` for your architecture. One of the advantages of the MATLAB interface is that you can manipulate all parameters of your neuron/network model, and see what the effect of that is live. This makes it much easier to get an intuition of how your model behaves. 
 
 This is as simple as:
 
@@ -115,7 +115,19 @@ x.manipulate;
 
 ![](https://user-images.githubusercontent.com/6005346/30785272-aef9fb44-a132-11e7-84a6-25fd8e58470a.gif)
 
-## Installation
+## Get this
+
+### Requirements
+
+| OS          | Support | Comments | 
+| -------          | ------- | ----------- 
+| macOS 10.12.6 | ✓ | no known issues |
+| Ubuntu 16.04.3 LTS | ✓ |   `mex` complains about incompatible compilers, but everything works | 
+| Windows | ❌ | Confirmed that it does not work; but probably can be made to work |
+
+`xolotl` has been tested on `MATLAB 9.3.0.713579 (R2017b)`, but other versions should work too. 
+
+### Installation 
 
 Get this repo from within `MATLAB` using my package manager:
 
@@ -149,7 +161,7 @@ These benchmarks were computed from within MATLAB, running the simulation at a t
 
 Why are these metrics similar even on apparently different hardware? Maybe the Mac Pro just sucks. 
 
-This code could be a lot faster if optimized correctly. 
+This code may be a lot faster if optimized correctly. 
 
 ## Developing 
 

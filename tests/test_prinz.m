@@ -12,7 +12,7 @@ G = z.findNeurons('burster');
 idx = randi(length(G));
 
 x = xolotl;
-x.addCompartment('AB',-60,0.02,10,0.0628,vol,phi,3000,0.05,tau_Ca);
+x.addCompartment('AB',-60,0.02,10,0.0628,vol,phi,3000,0.05,tau_Ca,0);
 
 
 x.addConductance('AB','prinz/NaV',G(1,idx),50);

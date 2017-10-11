@@ -1,3 +1,7 @@
+// _  _ ____ _    ____ ___ _    
+//  \/  |  | |    |  |  |  |    
+// _/\_ |__| |___ |__|  |  |___ 
+//
 // Slow Calcium conductance
 // http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
 #ifndef CAS

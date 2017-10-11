@@ -21,6 +21,11 @@ function [h] = hash(self)
 	if ~isempty(self.synapses)
 		h{end+1} = ([{self.synapses.type} {self.synapses.pre} {self.synapses.post}]);
 	end
+
+	% include everything in serialize, just to be safe
+	[~,names] = self.serialize;
+	h = [h names];
+
 	if usejava('jvm')
 		h = dataHash(h);
 	else

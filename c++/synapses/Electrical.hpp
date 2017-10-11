@@ -10,7 +10,7 @@ class Electrical: public synapse {
 public:
 
     // specify parameters + initial conditions 
-    Electrical(double g_)
+    Electrical(double g_, double s_)
     {
         gbar = g_;
     }

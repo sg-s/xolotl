@@ -14,7 +14,7 @@ F = 96485; % Faraday constant in SI units
 phi = (2*f*F*vol)/tau_Ca;
 
 x = xolotl;
-x.addCompartment('AB',-65,0.02,10,0.0628,vol,phi,3000,0.05,tau_Ca);
+x.addCompartment('AB',-65,0.02,10,0.0628,vol,phi,3000,0.05,tau_Ca,0);
 
 x.addConductance('AB','prinz/NaV',1000,50);
 x.addConductance('AB','prinz/CaT',25,30);
@@ -24,7 +24,7 @@ x.addConductance('AB','prinz/KCa',50,-80);
 x.addConductance('AB','prinz/Kd',1000,-80);
 x.addConductance('AB','prinz/HCurrent',.1,-20);
 
-x.addCompartment('LP',-47,0.01,10,0.0628,vol,phi,3000,0.05,tau_Ca);
+x.addCompartment('LP',-47,0.01,10,0.0628,vol,phi,3000,0.05,tau_Ca,0);
 x.addConductance('LP','prinz/NaV',1000,50);
 x.addConductance('LP','prinz/CaS',40,30);
 x.addConductance('LP','prinz/ACurrent',200,-80);
@@ -32,7 +32,7 @@ x.addConductance('LP','prinz/Kd',250,-80);
 x.addConductance('LP','prinz/HCurrent',.5,-20);
 x.addConductance('LP','Leak',.3,-50);
 
-x.addCompartment('PY',-41,0.03,10,0.0628,vol,phi,3000,0.05,tau_Ca);
+x.addCompartment('PY',-41,0.03,10,0.0628,vol,phi,3000,0.05,tau_Ca,0);
 x.addConductance('PY','prinz/NaV',1000,50);
 x.addConductance('PY','prinz/CaT',25,30);
 x.addConductance('PY','prinz/CaS',20,30);
@@ -77,16 +77,9 @@ x.addSynapse('Glut','PY','LP',30);
 x.addSynapse('Glut','LP','AB',30);
 
 
-% x.transpile;
-% x.compile;
-
 x.dt = 50e-3;
 x.t_end = 5000;
 
-% [V,Ca] = x.integrate;
-
-% assert(~any(isnan(V(:))),'V contains NaNs. Something is wrong')
-% assert(~any(isnan(Ca(:))),'Ca contains NaNs. Something is wrong')
 
 if usejava('jvm')
 	x.manipulate;

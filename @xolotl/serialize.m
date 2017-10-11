@@ -27,12 +27,46 @@ end
 
 % now do the synapses 
 if length(self.synapses)> 0
-	values{end+1} = [self.synapses.gbar];
-	these_names = cell(length(self.synapses),1);
+	S = {}; SV = [];
 	for i = 1:length(self.synapses)
-		these_names{i} = [self.synapses(i).pre '_2_' self.synapses(i).post '_' self.synapses(i).type(1:4)];
+		S{end+1} = [self.synapses(i).pre '_2_' self.synapses(i).post '_' self.synapses(i).type(1:4) '_gbar'];
+		SV(end+1) = self.synapses(i).gbar;
+		S{end+1} = [self.synapses(i).pre '_2_' self.synapses(i).post '_' self.synapses(i).type(1:4) '_s'];
+		SV(end+1) = self.synapses(i).state;
 	end
-	names{end+1} = these_names;
+	names{end+1} = S;
+	values{end+1} = SV;
+else
+	names{end+1} = '';
+	values{end+1} = [];
+end
+
+% now do V_clamp
+if ~isempty(self.V_clamp)
+	names{end+1} = 'V_clamp';
+	values{end+1} = self.V_clamp;
+else
+	names{end+1} = '';
+	values{end+1} = [];
+end
+
+
+% now do the controllers
+if length(self.controllers)> 0
+	S = {}; SV = [];
+	for i = 1:length(self.controllers)
+		S{end+1} = [self.controllers(i).channel '_controller_tau_m'];
+		SV(end+1) = self.controllers(i).tau_m;
+		S{end+1} = [self.controllers(i).channel '_controller_tau_g'];
+		SV(end+1) = self.controllers(i).tau_g;
+		S{end+1} = [self.controllers(i).channel '_controller_Alpha'];
+		SV(end+1) = self.controllers(i).Alpha;
+		S{end+1} = [self.controllers(i).channel '_controller_m'];
+		SV(end+1) = self.controllers(i).m;
+		
+	end
+	names{end+1} = S;
+	values{end+1} = SV;
 else
 	names{end+1} = '';
 	values{end+1} = [];

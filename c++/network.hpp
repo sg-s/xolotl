@@ -1,4 +1,12 @@
-//network class
+// _  _ ____ _    ____ ___ _    
+//  \/  |  | |    |  |  |  |    
+// _/\_ |__| |___ |__|  |  |___ 
+//
+// class that defines a network
+// a network can either be a network of
+// single compartment neurons, or a 
+// multi-compartment neuron
+
 #ifndef NETWORK
 #define NETWORK
 #include <cmath>
@@ -50,6 +58,10 @@ void network::integrate(double dt)
 
         V_prev = comp[i]->V;
         Ca_prev = comp[i]->Ca;
+
+        // integrate controllers
+        comp[i]->integrateControllers(Ca_prev, dt);
+
         comp[i]->integrateChannels(V_prev,Ca_prev,dt);
 
         // integrate synapses

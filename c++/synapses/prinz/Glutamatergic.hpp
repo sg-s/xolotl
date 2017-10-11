@@ -8,14 +8,14 @@ class Glutamatergic: public synapse {
 public:
 
     // specify parameters + initial conditions 
-    Glutamatergic(double g_)
+    Glutamatergic(double g_, double s_)
     {
         gbar = g_;
         E = -70.0;
         Delta = 5.0;
         Vth = -35.0;
         k_ = 0.025;
-        s = 0.0;
+        s = s_;
 
     }
     
