@@ -7,6 +7,7 @@
 % finds channels in compartment i
 
 function these_channels = getChannelsInCompartment(self,i)
+	assert(isnumeric(1),'Argument should be the compartment #')
 	these_channels = fieldnames(self.(self.compartment_names{i}));
 	rm_this = false(length(these_channels),1);
 	for j = 1:length(these_channels)

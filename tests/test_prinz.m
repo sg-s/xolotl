@@ -1,18 +1,29 @@
 % tests a neuron that reproduces neurons from the Prinz database 
 
-vol = 1; % this can be anything, doesn't matter
-f = 14.96; % uM/nA
-tau_Ca = 200;
-F = 96485; % Faraday constant in SI units
-phi = (2*f*F*vol)/tau_Ca;
+if ~exist('z','var')
 
-z = zoidberg;
-G = z.findNeurons('burster');
+		
+	r0 = 0.0707; % mm
+	shell_thickness = 55e-3; % mm
+
+	vol = @(r) (4.*pi.*r.*r.*shell_thickness);
+	A = @(r) (4.*pi.*r.*r);
+
+	f = 14.96; % uM/nA
+	tau_Ca = 200;
+	F = 96485; % Faraday constant in SI units
+	phi = @(v) ((2*f*F*v)/tau_Ca);
+	Ca_target = 7; % used only when we add in homeostatic control 
+	
+
+	z = zoidberg;
+	G = z.findNeurons('burster');
+end
 
 idx = randi(length(G));
 
 x = xolotl;
-x.addCompartment('AB',-60,0.02,10,0.0628,vol,phi,3000,0.05,tau_Ca,0);
+x.addCompartment('AB',-60,0.02,10,A(r0),vol(r0),phi(vol(r0)),3000,0.05,tau_Ca,0);
 
 
 x.addConductance('AB','prinz/NaV',G(1,idx),50);
