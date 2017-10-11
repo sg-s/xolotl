@@ -106,7 +106,7 @@ methods
 	end
 
 
-	function [V, Ca,I_clamp, cond_state] = integrate(self)
+	function [V, Ca,I_clamp, cond_state, syn_state, cont_state] = integrate(self)
 
 		% check if we need to transpile or compile 
 		h = self.hash;
@@ -134,38 +134,26 @@ methods
 			end
 		end
 		
-
+		V = [];
+		Ca = [];
+		I_clamp = [];
 		cond_state = [];
+		syn_state = [];
+		cont_state = [];
 
 		% vectorize the current state 
 		arguments = self.serialize;
 
-		% for i = 1:length(self.compartment_names)
-		% 	this_comp_name = self.compartment_names{i};
-		% 	arguments{i+1} = struct2vec(self.(this_comp_name));
-		% end
-
-		% % the next argument is the synapses
-		% if length(self.synapses)
-		% 	arguments{end+1} = [self.synapses.gbar];
-		% else 
-		% 	arguments{end+1} = [];
-		% end
-
-		% if ~isempty(self.V_clamp)
-		% 	% add on an extra argument -- the V_clamp
-		% 	arguments{end+1} = self.V_clamp;
-		% end
-
 		[~,f]=fileparts(self.linked_binary);
 		f = str2func(f);
-		[results{1:5}] = f(arguments{:});
+		[results{1:6}] = f(arguments{:});
 
 		V = (results{1})';
 		Ca = (results{2})';
 		I_clamp = (results{3})';
 		cond_state = (results{4})';
 		syn_state = (results{5})';
+		cont_state = (results{6})';
 
 		% update xolotl properties based on the integration
 		idx = 1;
@@ -192,6 +180,16 @@ methods
 				self.synapses(i).gbar = syn_g(i);
 				self.synapses(i).state = syn_s(i);
 			end
+
+			% update conductances from controllers 
+			cont_m = [cont_state(end,1:2:end)];
+			cont_g = [cont_state(end,2:2:end)];
+			for i = 1:length(self.controllers)
+				self.controllers(i).m = cont_m(i);
+				this_channel = strrep(self.controllers(i).channel,self.controllers(i).compartment,'');
+				this_channel(1) = [];
+				self.(self.controllers(i).compartment).(this_channel).gbar = cont_g(i);
+			end 
 		end
 
 	end

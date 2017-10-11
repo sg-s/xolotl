@@ -69,12 +69,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     plhs[2] = mxCreateDoubleMatrix(1, nsteps, mxREAL); // I_clamp
     plhs[3] = mxCreateDoubleMatrix(cond_state_dim, nsteps, mxREAL); // cond_state
     plhs[4] = mxCreateDoubleMatrix(2*n_synapses, nsteps, mxREAL); // synapse gbar + state
+    plhs[5] = mxCreateDoubleMatrix(2*n_controllers, nsteps, mxREAL); // controllers gbar + mrna
 
     output_V = mxGetPr(plhs[0]);
     output_Ca = mxGetPr(plhs[1]);
     output_I_clamp = mxGetPr(plhs[2]);
     output_cond_state = mxGetPr(plhs[3]);
     output_syn_state = mxGetPr(plhs[4]);
+    output_cont_state = mxGetPr(plhs[5]);
 
     // make arrays which will store the full cond. state 
     double * full_cond_state = new double[cond_state_dim];
@@ -89,6 +91,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
         //xolotl:read_synapses_here
 
+        //xolotl:read_controllers_here
+
+        // here we're getting the state of every compartment -- V, Ca, and all conductances
         cond_idx = 0;
         for (int j = 0; j < n_comp; j++)
         {

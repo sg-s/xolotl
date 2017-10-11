@@ -27,7 +27,8 @@ public:
     
     ~controller() {}
     
-    virtual void integrate(double, double) = 0;
+    virtual void integrate(double, double, double) = 0;
+    virtual double get_gbar(void) = 0;
 
 };
 

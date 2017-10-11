@@ -33,16 +33,8 @@ x.addController('AB','KCa','Int',1250,100,1);
 x.addController('AB','Kd','Int',2000,100,1);
 x.addController('AB','HCurrent','Int',125000,100,1);
 
-x.transpile; 
-
+x.t_end = 50e3;
 x.dt = 100e-3;
-x.t_end = 200e3;
-
 
 [V,Ca] = x.integrate;
-
-figure, hold on
-subplot(2,1,1); hold on
-plot(V)
-subplot(2,1,2); hold on
 plot(Ca(:,1))

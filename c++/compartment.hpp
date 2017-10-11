@@ -117,7 +117,7 @@ void compartment::integrateControllers(double Ca_prev, double dt)
     // integrate all controllers
     for (int i=0; i<n_cont; i++)
     {
-        cont[i]->integrate(Ca_target - Ca_prev, dt);
+        cont[i]->integrate(Ca_target - Ca_prev, A, dt);
     }
    
 }

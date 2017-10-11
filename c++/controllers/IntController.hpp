@@ -22,22 +22,26 @@ public:
         m = m_;
     }
     
-    void integrate(double Ca_error, double dt);
+    void integrate(double Ca_error, double A, double dt);
+    double get_gbar(void);
 
 };
 
-void IntController::integrate(double Ca_error, double dt)
+void IntController::integrate(double Ca_error, double A, double dt)
 {
     // integrate mRNA
     m += (dt/tau_m)*(Ca_error);
 
-    // integrate channels 
-    // mexPrintf("tau_g is =  %f\n",tau_g);
-    // mexPrintf("G is =  %f\n",G);
-    // mexPrintf("m is =  %f\n",m);
-    (channel->gbar) += (dt/tau_g)*(G*m - (channel->gbar));
+    // calculate conductance, not conductance density
+    double g = (channel->gbar)*A;
+    (channel->gbar) += ((dt/tau_g)*(G*m - g))/A;
 
 
+}
+
+double IntController::get_gbar(void)
+{
+    return channel->gbar;
 }
 
 

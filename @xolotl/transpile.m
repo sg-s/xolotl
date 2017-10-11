@@ -202,6 +202,21 @@ function transpile(self)
 	assert(length(insert_here)==1,'Could not find insertion point for synapse read hookups')
 	lines = [lines(1:insert_here); syanpse_read_lines(:); lines(insert_here+1:end)];
 
+	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	% read controllers here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	controller_read_lines = {};
+	for i = 1:length(self.controllers)
+		this_line = ['output_cont_state[i*2*n_controllers +' mat2str((i-1)*2) '] = cont' mat2str(i) '.m;'];
+		controller_read_lines{end+1} = this_line;
+		this_line = ['output_cont_state[i*2*n_controllers +' mat2str((i-1)*2+1) '] = cont' mat2str(i) '.get_gbar();'];
+		controller_read_lines{end+1} = this_line;
+	end
+
+	insert_here = lineFind(lines,'//xolotl:read_controllers_here');
+	assert(length(insert_here)==1,'Could not find insertion point for controllers read hookups')
+	lines = [lines(1:insert_here); controller_read_lines(:); lines(insert_here+1:end)];
+
 
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% add the neurons to the network  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
