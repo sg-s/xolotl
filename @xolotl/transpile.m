@@ -8,17 +8,9 @@
 % creates a C++ file that can be compiled with mex
 
 function transpile(self)
-	% delete old mexBridge files
-	if exist(joinPath(self.xolotl_folder,'mexBridge.cpp'),'file') 
-		delete(joinPath(self.xolotl_folder,'mexBridge.cpp'))
-	end
-
 	% read lines from mexTemplate
-	if isempty(self.V_clamp)
-		cppfilename = joinPath(self.cpp_folder,'mexTemplate.cpp');
-	else
-		cppfilename = joinPath(self.cpp_folder,'mexTemplate_clamp.cpp');
-	end
+
+	cppfilename = joinPath(self.cpp_folder,'mexTemplate.cpp');
 	lines = lineRead(cppfilename);
 
 	% insert header files ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -69,7 +61,9 @@ function transpile(self)
 				these_names = {these_names};
 			end
 			for j = 1:length(these_names)
-				comp_param_hookups{end+1} = ['double ' these_names{j} ' = ' argin_names{i} '_params[' oval(j-1) '];'];
+				if ~strcmp(these_names{j},'V_clamp')
+					comp_param_hookups{end+1} = ['double ' these_names{j} ' = ' argin_names{i} '_params[' oval(j-1) '];'];
+				end
 			end
 		end
 	end
@@ -234,11 +228,26 @@ function transpile(self)
 	% if something is clamped, link up the clamping potentials   ~~~~~~~~~
 	if ~isempty(self.V_clamp)
 		V_clamp_idx = length(self.compartment_names) + 2;
-		insert_this = ['v_drive_idx = ' mat2str((V_clamp_idx)) ';'];
-		insert_here = lineFind(lines,'//xolotl:define_v_drive_idx');
+		insert_this = ['double *V_clamp = mxGetPr(prhs[' mat2str(V_clamp_idx) ']);'];
+		insert_here = lineFind(lines,'//xolotl:define_v_clamp_idx');
 		assert(length(insert_here)==1,'Could not find insertion point for telling C++ which input is V_clamp')
 		lines = [lines(1:insert_here); insert_this; lines(insert_here+1:end)];
+
+
+		comment_this = lineFind(lines,'STG.integrate(dt);');
+		assert(length(comment_this)==1,'Could not find line to comment out for voltage clamped case')
+		lines{comment_this} = ['//' lines{comment_this}];
+
+		uncomment_this = lineFind(lines,'//xolotl:enable_when_clamped');
+		assert(length(uncomment_this)==2,'Could not find line to uncomment for voltage clamped case')
+		for i = 1:length(uncomment_this)
+			lines{uncomment_this(i)+1} = strrep(lines{uncomment_this(i)+1},'//','');
+		end
+		
+
 	end
+
+
 
 
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

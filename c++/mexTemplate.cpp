@@ -25,6 +25,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double *output_syn_state;  // synapses
     double *output_cont_state; // controllers 
 
+
+    //xolotl:define_v_clamp_idx
+
     // make an empty network 
     network STG;
 
@@ -85,9 +88,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     
     for(int i = 0; i < nsteps; i++)
     {
-        STG.integrate(dt); //xolotl:disable_when_clamped
-        //STG.integrateClamp(V_drive[i],dt); //xolotl:enable_when_clamped
-        //output_I_clamp[i] = STG.comp[0]->I_clamp; //xolotl:enable_when_clamped
+        STG.integrate(dt);
+        //xolotl:enable_when_clamped
+        //STG.integrateClamp(V_clamp[i],dt); 
+        //xolotl:enable_when_clamped
+        //output_I_clamp[i] = STG.comp[0]->I_clamp; 
 
         //xolotl:read_synapses_here
 
