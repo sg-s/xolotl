@@ -7,7 +7,6 @@
 % add external current to model
 
 function addCurrent(self,compartment,ext_current)
-	assert(nargin > 2,'No label! You have to label every current.')
 	% does the compartment exist?
 	assert(any(strcmp(compartment,properties(self))),'Unknown compartment')
 
