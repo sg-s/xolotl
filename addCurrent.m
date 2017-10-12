@@ -13,5 +13,5 @@ function addCurrent(self,compartment,ext_current)
 	assert(length(ext_current) == self.t_end/self.dt,'external current is the wrong length')
 
 	% add the current to the chosen compartment
-	self.(compartment).I_ext;
+	self.(compartment).I_ext = ext_current;
 end
