@@ -48,7 +48,7 @@ x = xolotl;
 Set up a basic neuron and add some conductances:
 
 ```matlab
-x.addCompartment('AB',-70,0.05,10,0.0628,1,1.496,3000,0.05,200);
+x.addCompartment('AB',-60,0.02,10,0.0628,1,1443,3000,0.05,200,0);
 x.addConductance('AB','liu/NaV',1830,30);
 x.addConductance('AB','liu/CaT',23,30);
 x.addConductance('AB','liu/CaS',27,30);
