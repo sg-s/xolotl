@@ -1,3 +1,7 @@
+// _  _ ____ _    ____ ___ _    
+//  \/  |  | |    |  |  |  |    
+// _/\_ |__| |___ |__|  |  |___ 
+//
 // Slow Calcium conductance
 #ifndef LEAK
 #define LEAK

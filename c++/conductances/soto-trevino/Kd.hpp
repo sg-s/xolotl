@@ -2,8 +2,8 @@
 //  \/  |  | |    |  |  |  |    
 // _/\_ |__| |___ |__|  |  |___ 
 //
-// inward rectifying potassium conductance 
-// http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
+// Delayed Potassium
+// http://jn.physiology.org/content/94/1/590.short
 #ifndef KD
 #define KD
 #include "../../conductance.hpp"
@@ -47,8 +47,8 @@ void Kd::integrate(double V, double Ca, double dt)
 
 
 
-double Kd::m_inf(double V) {return 1.0/(1.0+exp((V+12.3)/-11.8));}
-double Kd::tau_m(double V) {return 7.2 - 6.4/(1.0+exp((V+28.3)/-19.2));}
+double Kd::m_inf(double V) {return 1.0/(1.0+exp(-(V+14.2)/11.8));}
+double Kd::tau_m(double V) {return 7.2 - 6.4/(1.0+exp(-(V+28.3)/19.2));}
 
 
 #endif

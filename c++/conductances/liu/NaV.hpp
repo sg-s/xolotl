@@ -1,3 +1,7 @@
+// _  _ ____ _    ____ ___ _    
+//  \/  |  | |    |  |  |  |    
+// _/\_ |__| |___ |__|  |  |___ 
+//
 // Sodium CONDUCTANCE
 // http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
 #ifndef NAV

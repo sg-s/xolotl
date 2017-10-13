@@ -1,3 +1,7 @@
+// _  _ ____ _    ____ ___ _    
+//  \/  |  | |    |  |  |  |    
+// _/\_ |__| |___ |__|  |  |___ 
+//
 // Modulatory Input Conductance
 // http://www.jneurosci.org/content/34/14/4963/tab-figures-data
 // based on RPCH/proctolin recordings

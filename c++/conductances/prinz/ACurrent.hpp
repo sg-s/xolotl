@@ -1,3 +1,7 @@
+// _  _ ____ _    ____ ___ _    
+//  \/  |  | |    |  |  |  |    
+// _/\_ |__| |___ |__|  |  |___ 
+//
 // the A current, a potassium current 
 // for some reason I don't understand, I get compiler 
 // errors when I name this "A" or "Ka"

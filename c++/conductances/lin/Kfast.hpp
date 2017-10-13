@@ -1,3 +1,7 @@
+// _  _ ____ _    ____ ___ _    
+//  \/  |  | |    |  |  |  |    
+// _/\_ |__| |___ |__|  |  |___ 
+//
 // Fast Potassium conductance 
 // http://www.jneurosci.org/content/32/21/7267
 #ifndef KFAST

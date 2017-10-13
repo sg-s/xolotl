@@ -1,3 +1,7 @@
+// _  _ ____ _    ____ ___ _    
+//  \/  |  | |    |  |  |  |    
+// _/\_ |__| |___ |__|  |  |___ 
+//
 // H current. again, for mysterious reasons, the compiler
 // won't let me call this class "H"
 // http://jn.physiology.org/content/jn/90/6/3998.full.pdf

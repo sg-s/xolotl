@@ -1,3 +1,7 @@
+// _  _ ____ _    ____ ___ _    
+//  \/  |  | |    |  |  |  |    
+// _/\_ |__| |___ |__|  |  |___ 
+//
 // EAG channels: K+ channels that are inactivated by Calcium.
 #ifndef EAGWT
 #define EAGWT
