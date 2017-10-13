@@ -1,10 +1,10 @@
-%              _       _   _ 
+%              _       _   _
 %   __  _____ | | ___ | |_| |
 %   \ \/ / _ \| |/ _ \| __| |
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% MATLAB -> C++ transpiler 
+% MATLAB -> C++ transpiler
 % creates a C++ file that can be compiled with mex
 
 function transpile(self)
@@ -47,8 +47,8 @@ function transpile(self)
 	values(1) = [];
 	names(1) = []; % we've already accounted for the dt, t_end
 
-	comp_param_declarations = {}; 
-	comp_param_hookups = {}; 
+	comp_param_declarations = {};
+	comp_param_hookups = {};
 
 	 % argument names
 	argin_names = [self.compartment_names; 'synapse'; 'V_clamp' ;'controller'];
@@ -73,7 +73,7 @@ function transpile(self)
 	insert_here = lineFind(lines,'//xolotl:input_declarations');
 	assert(length(insert_here)==1,'Could not find insertion point for input declarations')
 	lines = [lines(1:insert_here); insert_this(:); lines(insert_here+1:end)];
-	
+
 	%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% make the compartments here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	compartment_lines = {};
@@ -94,13 +94,13 @@ function transpile(self)
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% make the conductances here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	conductance_lines = {}; cc = 1;
-	
+
 	for i = 1:length(self.compartment_names)
 		these_channels = setdiff(fieldnames(self.(self.compartment_names{i})),self.compartment_props);
 		this_comp_name = self.compartment_names{i};
 		for j = 1:length(these_channels)
 			tc = these_channels{j};
-			
+
 			this_channel_dec = [tc ' ' this_comp_name '_' tc '(' this_comp_name '_' tc '_gbar,' this_comp_name '_' tc '_E,' this_comp_name '_' tc '_m,' this_comp_name '_' tc '_h);'];
 			conductance_lines{cc} = this_channel_dec; cc = cc + 1;
 		end
@@ -116,7 +116,7 @@ function transpile(self)
 	for i = 1:length(self.compartment_names)
 		this_comp_name = self.compartment_names{i};
 		% these_channels = setdiff(fieldnames(self.(self.compartment_names{i})),self.compartment_props);
-		% this (above) doesn't work because it reorders the channel names-- 
+		% this (above) doesn't work because it reorders the channel names--
 		% we want to add the channels in C++ in the order they were added here
 		these_channels = self.getChannelsInCompartment(i);
 
@@ -139,7 +139,7 @@ function transpile(self)
 	names(1) = [];
 	syn_names = names{length(self.compartment_names)+1};
 
-	synapse_add_lines = {}; 
+	synapse_add_lines = {};
 	for i = 1:length(self.synapses)
 		this_type = self.synapses(i).type;
 		g = mat2str(self.synapses(i).gbar);
@@ -162,7 +162,7 @@ function transpile(self)
 	names(1) = [];
 	cont_names = names{length(self.compartment_names)+3};
 
-	controller_add_lines = {}; 
+	controller_add_lines = {};
 	for i = 1:length(self.controllers)
 		this_type = self.controllers(i).type;
 		this_channel = self.controllers(i).channel;
@@ -184,17 +184,17 @@ function transpile(self)
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% read synapses here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	syanpse_read_lines = {};
+	synapse_read_lines = {};
 	for i = 1:length(self.synapses)
 		this_line = ['output_syn_state[i*2*n_synapses +' mat2str((i-1)*2) '] = syn' mat2str(i) '.gbar;'];
-		syanpse_read_lines{end+1} = this_line;
+		synapse_read_lines{end+1} = this_line;
 		this_line = ['output_syn_state[i*2*n_synapses +' mat2str((i-1)*2+1) '] = syn' mat2str(i) '.s;'];
-		syanpse_read_lines{end+1} = this_line;
+		synapse_read_lines{end+1} = this_line;
 	end
 
 	insert_here = lineFind(lines,'//xolotl:read_synapses_here');
 	assert(length(insert_here)==1,'Could not find insertion point for synapse read hookups')
-	lines = [lines(1:insert_here); syanpse_read_lines(:); lines(insert_here+1:end)];
+	lines = [lines(1:insert_here); synapse_read_lines(:); lines(insert_here+1:end)];
 
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% read controllers here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -214,7 +214,7 @@ function transpile(self)
 
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% add the neurons to the network  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	network_add_lines = {}; 
+	network_add_lines = {};
 	for i = 1:length(self.compartment_names)
 		this_comp_name = self.compartment_names{i};
 		network_add_lines{i} = ['STG.addCompartment(&' this_comp_name ');'];
@@ -227,6 +227,7 @@ function transpile(self)
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% if something is clamped, link up the clamping potentials   ~~~~~~~~~
 	if ~isempty(self.V_clamp)
+		assert(~self.I_ext_flag,'cannot define both V_clamp and I_ext')
 		V_clamp_idx = length(self.compartment_names) + 2;
 		insert_this = ['double *V_clamp = mxGetPr(prhs[' mat2str(V_clamp_idx) ']);'];
 		insert_here = lineFind(lines,'//xolotl:define_v_clamp_idx');
@@ -243,9 +244,15 @@ function transpile(self)
 		for i = 1:length(uncomment_this)
 			lines{uncomment_this(i)+1} = strrep(lines{uncomment_this(i)+1},'//','');
 		end
-		
+  elseif isempty(self.V_clamp)
+		I_ext_idx = length(self.compartment_names) + 2;
+		insert_this = ['double *I_ext = mxGetPr(prhs[' mat2str(I_ext_idx) ']);'];
+		iinsert_here = lineFind(lines,'//xolotl:define_v_clamp_idx');
+		assert(length(insert_here)==1,'Could not find insertion point for telling C++ which input is I_ext')
+		lines = [lines(1:insert_here); insert_this; lines(insert_here+1:end)];
 
 	end
+
 
 
 
