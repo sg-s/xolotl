@@ -45,7 +45,7 @@ void network::addCompartment(compartment *comp_)
 // multiple compartments under normal
 // conditions. Don't use if something is
 // being voltage clamped!
-void network::integrate(double dt,double *I_ext_now)
+void network::integrate(double dt,double * I_ext_now)
 {
     int n_comp = (int) comp.size(); // these many compartments
 
