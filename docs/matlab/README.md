@@ -92,7 +92,7 @@ Current clamping not currently supported. Look at the [roadmap](https://github.c
 
 ## Injecting current
 
-Documentation not yet written; see [this file](../tests/test_inject.m) for an example. 
+Documentation not yet written; see [this file](../../tests/test_inject.m) for an example. 
 
 # Methods
 
