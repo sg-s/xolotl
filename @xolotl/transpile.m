@@ -61,7 +61,7 @@ function transpile(self)
 				these_names = {these_names};
 			end
 			for j = 1:length(these_names)
-				if ~strcmp(these_names{j},'V_clamp')
+				if ~strcmp(these_names{j},'V_clamp') && ~strcmp(these_names{j},'I_ext')
 					comp_param_hookups{end+1} = ['double ' these_names{j} ' = ' argin_names{i} '_params[' oval(j-1) '];'];
 				end
 			end
@@ -226,17 +226,16 @@ function transpile(self)
 
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% if something is clamped, link up the clamping potentials   ~~~~~~~~~
-	assert(isempty(self.I_ext) || isempty(self.V_clamp),'cannot define both V_clamp and I_ext')
-	V_clamp_idx = length(self.compartment_names) + 2;
-	insert_this = ['double *V_clamp = mxGetPr(prhs[' mat2str(V_clamp_idx) ']);'];
-	insert_here = lineFind(lines,'//xolotl:define_v_clamp_idx');
-	assert(length(insert_here)==1,'Could not find insertion point for telling C++ which input is V_clamp')
-	lines = [lines(1:insert_here); insert_this; lines(insert_here+1:end)];
 	if ~isempty(self.V_clamp)
-
-		comment_this = lineFind(lines,'STG.integrate(dt);');
+		comment_this = lineFind(lines,'STG.integrate(dt,I_ext_now);');
 		assert(length(comment_this)==1,'Could not find line to comment out for voltage clamped case')
 		lines{comment_this} = ['//' lines{comment_this}];
+
+		V_clamp_idx = length(self.compartment_names) + 2;
+		insert_this = ['double *V_clamp = mxGetPr(prhs[' mat2str(V_clamp_idx) ']);'];
+		insert_here = lineFind(lines,'//xolotl:define_v_clamp_idx');
+		assert(length(insert_here)==1,'Could not find insertion point for telling C++ which input is V_clamp')
+		lines = [lines(1:insert_here); insert_this; lines(insert_here+1:end)];
 
 		uncomment_this = lineFind(lines,'//xolotl:enable_when_clamped');
 		assert(length(uncomment_this)==2,'Could not find line to uncomment for voltage clamped case')
@@ -244,10 +243,22 @@ function transpile(self)
 			lines{uncomment_this(i)+1} = strrep(lines{uncomment_this(i)+1},'//','');
 		end
 	end
+	% you can't have both external current and voltage clamp
+	assert(isempty(self.I_ext) || isempty(self.V_clamp),'cannot define both V_clamp and I_ext')
+	% if there is external current, link the current to the compartments
+	if ~isempty(self.I_ext)
+		I_ext_idx = length(self.compartment_names) + 2;
+		insert_this = ['double *I_ext = mxGetPr(prhs[' mat2str(I_ext_idx) ']);'];
+		insert_here = lineFind(lines,'//xolotl:define_v_clamp_idx');
+		assert(length(insert_here)==1,'Could not find insertion point for telling C++ which input is I_ext')
+		lines = [lines(1:insert_here); insert_this; lines(insert_here+1:end)];
 
-
-
-
+		uncomment_this = lineFind(lines,'//xolotl:enable_when_I_ext');
+		assert(length(uncomment_this)==1,'Could not find line to uncomment for I_ext case')
+		for i = 1:length(uncomment_this)
+			lines{uncomment_this(i)+1} = strrep(lines{uncomment_this(i)+1},'//','');
+		end
+	end
 
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% write lines into a C++ file that we can identify by hash

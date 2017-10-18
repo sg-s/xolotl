@@ -18,7 +18,7 @@ x.addConductance('AB','prinz/KCa',323,-80);
 x.addConductance('AB','prinz/Kd',8142,-80);
 x.addConductance('AB','prinz/HCurrent',1,-20);
 x.addConductance('AB','MICurrent',0,0);
-x.addCurrent('AB',0*linspace(x.dt,x.t_end,x.t_end/x.dt)');
+x.addCurrent('AB',0*linspace(x.dt,x.t_end,x.t_end/x.dt));
 
 x.transpile;
 x.compile;

@@ -23,7 +23,6 @@ properties (SetAccess = protected)
 	available_synapses
 	linked_binary@char
 	compartment_names = {};
-	I_ext
 
 end  % end set protected props
 
@@ -42,6 +41,7 @@ properties
 	t_end@double = 5000; % ms
 	handles
 	V_clamp
+	I_ext
 	closed_loop@logical = true;
 	synapses
 end % end general props

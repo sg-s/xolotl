@@ -85,17 +85,23 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double * full_cond_state = new double[cond_state_dim];
     int cond_idx = 0;
     double * I_ext_now = new double[n_comp];
+    // make sure I_ext_now is zero
+    for(int q = 0; q < n_comp; q++)
+    {
+        I_ext_now[q] = 0.0;
+    }
 
+    // do the integration
     for(int i = 0; i < nsteps; i++)
     {
-        for(int q = 0; q < n_comp; q++)
+        for(int j = 0; j < n_comp; j++)
         {
-            //I_ext_now[q] = V_clamp[q*n_comp + i];
-            I_ext_now[q] = 0.0;
+            //xolotl:enable_when_I_ext
+            //I_ext_now[j] = I_ext[i];
         }
         STG.integrate(dt,I_ext_now);
         //xolotl:enable_when_clamped
-        //STG.integrateClamp(synapsemp[i],dt);
+        //STG.integrateClamp(V_clamp[i],dt);
         //xolotl:enable_when_clamped
         //output_I_clamp[i] = STG.comp[0]->I_clamp;
 
