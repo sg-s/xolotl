@@ -28,7 +28,7 @@ public:
     network() {}
 
     // begin function declarations
-    void integrate(double,double*);
+    void integrate(double,double *);
     void integrateClamp(double, double);
     void addCompartment(compartment*);
 
@@ -48,7 +48,6 @@ void network::addCompartment(compartment *comp_)
 void network::integrate(double dt,double * I_ext_now)
 {
     int n_comp = (int) comp.size(); // these many compartments
-
     // integrate all channels in all compartments
     for (int i = 0; i < n_comp; i++)
     {

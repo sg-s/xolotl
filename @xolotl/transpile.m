@@ -226,14 +226,13 @@ function transpile(self)
 
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% if something is clamped, link up the clamping potentials   ~~~~~~~~~
+	assert(isempty(self.I_ext) || isempty(self.V_clamp),'cannot define both V_clamp and I_ext')
+	V_clamp_idx = length(self.compartment_names) + 2;
+	insert_this = ['double *V_clamp = mxGetPr(prhs[' mat2str(V_clamp_idx) ']);'];
+	insert_here = lineFind(lines,'//xolotl:define_v_clamp_idx');
+	assert(length(insert_here)==1,'Could not find insertion point for telling C++ which input is V_clamp')
+	lines = [lines(1:insert_here); insert_this; lines(insert_here+1:end)];
 	if ~isempty(self.V_clamp)
-		assert(~self.I_ext_flag,'cannot define both V_clamp and I_ext')
-		V_clamp_idx = length(self.compartment_names) + 2;
-		insert_this = ['double *V_clamp = mxGetPr(prhs[' mat2str(V_clamp_idx) ']);'];
-		insert_here = lineFind(lines,'//xolotl:define_v_clamp_idx');
-		assert(length(insert_here)==1,'Could not find insertion point for telling C++ which input is V_clamp')
-		lines = [lines(1:insert_here); insert_this; lines(insert_here+1:end)];
-
 
 		comment_this = lineFind(lines,'STG.integrate(dt);');
 		assert(length(comment_this)==1,'Could not find line to comment out for voltage clamped case')
@@ -244,13 +243,6 @@ function transpile(self)
 		for i = 1:length(uncomment_this)
 			lines{uncomment_this(i)+1} = strrep(lines{uncomment_this(i)+1},'//','');
 		end
-  elseif isempty(self.V_clamp)
-		I_ext_idx = length(self.compartment_names) + 2;
-		insert_this = ['double *I_ext = mxGetPr(prhs[' mat2str(I_ext_idx) ']);'];
-		iinsert_here = lineFind(lines,'//xolotl:define_v_clamp_idx');
-		assert(length(insert_here)==1,'Could not find insertion point for telling C++ which input is I_ext')
-		lines = [lines(1:insert_here); insert_this; lines(insert_here+1:end)];
-
 	end
 
 
