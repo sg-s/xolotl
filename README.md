@@ -37,7 +37,7 @@ HH.integrate(50e-3);
 
 ## Usage (MATLAB)
 
-> Read the detailed documentation for MATLAB usage [here](docs/matlab.md)!
+> Read the detailed documentation for MATLAB usage [here](docs/matlab/README.md)!
 
 `xolotl.m` is a MATLAB class that generates and compiles C++ wrapper code on the fly, and uses that to run simulations, while presenting a pseudo-object oriented interface within MATLAB. 
 
