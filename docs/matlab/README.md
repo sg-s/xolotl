@@ -70,21 +70,21 @@ In the rest of this documentation, it will be assumed that you have a fresh (emp
 
 ### Constructing single-compartment neuron with Hodgkin-Huxley conductances 
 
-Documentation not yet written; see [this file](../tests/test_tim.m) for an example. 
+Documentation not yet written; see [this file](../../tests/test_tim.m) for an example. 
 
 ### Constructing multi-compartment neurons
 
-Documentation not yet written; see [this file](../tests/test_clamp.m) for an example. 
+Documentation not yet written; see [this file](../../tests/test_clamp.m) for an example. 
 
 ## Constructing Networks
 
 ### Constructing a three-neuron network of the Stomatogastric Ganglion (STG)
 
-Documentation not yet written; see [this file](../tests/test_stg.m) for an example. 
+Documentation not yet written; see [this file](../../tests/test_stg.m) for an example. 
 
 ## Voltage clamping
 
-Documentation not yet written; see [this file](../tests/test_clamp.m) for an example. 
+Documentation not yet written; see [this file](../../tests/test_clamp.m) for an example. 
 
 ## Current clamping
 
