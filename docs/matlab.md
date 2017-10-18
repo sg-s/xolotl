@@ -1,4 +1,22 @@
-# How to use xolotl from within MATLAB
+# How to use `xolotl` from within MATLAB
+
+# Table of Contents
+
+  * [Interface](#interface)
+	* [Inputs](#inputs)
+	* [Outputs](#outputs)
+  * [Usage](#usage)
+    * [Constructing neurons](#constructing-neurons)
+    * [Constructing networks](#constructing-networks)
+    * [Voltage clamping](#voltage-clamping)
+    * [Current clamping](#current-clamping)
+    * [Injecting current](#injecting-current)
+  * [Methods](#methods)
+
+
+# Interface
+
+This section describes how you pass parameters and data into the C++ layer, and how you get data back. 
 
 ## Inputs
 
@@ -38,7 +56,23 @@ Due to the order in which `xolotl` was developed, there are some non-obvious got
 * `controller_states` is a `[n_steps,2*C]` where `C` is the number of controllers. The `gbar` of the channels they control, and the mRNA level of the controller is stored interleaved. 
 
 
-## Methods
+# Usage
+
+## Constructing Neurons
+
+## Constructing Networks
+
+## Voltage clamping
+
+## Current clamping
+
+Current clamping not currently supported. Look at the [roadmap](https://github.com/sg-s/xolotl/projects/1) to see when (and if) this will be implemented. 
+
+## Injecting current
+
+Injecting currents not currently supported. Look at the [roadmap](https://github.com/sg-s/xolotl/projects/1) to see when (and if) this will be implemented. 
+
+# Methods
 
 To view all the methods of 	`xolotl`, type
 

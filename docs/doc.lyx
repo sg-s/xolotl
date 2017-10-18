@@ -71,70 +71,177 @@
 \begin_body
 
 \begin_layout Title
-xolotl: User's Manual
+xolotl: Documentation
 \end_layout
 
-\begin_layout Standard
+\begin_layout Section
 Installation
 \end_layout
 
-\begin_layout Standard
+\begin_layout Subsection
 For Users
 \end_layout
 
-\begin_layout Standard
+\begin_layout Subsection
 For Developers
 \end_layout
 
+\begin_layout Section
+How to use it
+\end_layout
+
+\begin_layout Subsection
+From C++
+\end_layout
+
+\begin_layout Subsection
+From MATLAB
+\end_layout
+
+\begin_layout Subsection
+Examples
+\end_layout
+
+\begin_layout Subsubsection
+Setting up a simple single-compartment neuron
+\end_layout
+
 \begin_layout Standard
+Setting up a three-neuron STG network
+\end_layout
+
+\begin_layout Section
 How it works
 \end_layout
 
-\begin_layout Standard
+\begin_layout Subsection
 C++ architecture 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Subsection
 The MATLAB transpiler 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Section
 Mathematical Description
 \end_layout
 
-\begin_layout Standard
+\begin_layout Subsection
 Channels and Conductances
 \end_layout
 
-\begin_layout Standard
+\begin_layout Subsubsection
 Calcium Conductances 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Subsection
 Synapses
 \end_layout
 
-\begin_layout Standard
+\begin_layout Subsubsection
 Electrical Synapses
 \end_layout
 
-\begin_layout Standard
+\begin_layout Subsubsection
 Chemical Synapses
 \end_layout
 
-\begin_layout Standard
+\begin_layout Subsection
 Compartments
 \end_layout
 
-\begin_layout Standard
+\begin_layout Subsubsection
 Integrating Voltage
 \end_layout
 
-\begin_layout Standard
+\begin_layout Subsubsection
 Integrating Calcium
 \end_layout
 
 \begin_layout Standard
+The ODE governing Calcium is given by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{d[Ca]}{dt}=-\frac{\phi I_{Ca}}{2Fv}-\left([Ca]-[Ca_{\infty}]\right)/\tau_{Ca}\label{eq:calcium-bucholtz}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\tau_{Ca}$
+\end_inset
+
+ is the timescale of Calcium buffering, 
+\begin_inset Formula $v$
+\end_inset
+
+ is the volume that Calcium enters into (not necessarily the volume of the
+ cell), 
+\begin_inset Formula $F$
+\end_inset
+
+ is the Faraday constant, and 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is a dimensionless parameter.
+ This equation is based on eq 12 in Bucholtz et al (1992), where it has
+ been fit to experimental data.
+ I have introduced the parameter 
+\begin_inset Formula $\phi$
+\end_inset
+
+ both to conform to Bucholtz's observation that 
+\begin_inset Formula $v$
+\end_inset
+
+ is not the volume of the cell, and also so that this equation reduces to
+ the equation used in Prinz et al 2003:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\tau_{Ca}\frac{d[Ca]}{dt}=-fI_{Ca}-[Ca]+[Ca]_{\infty}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If you want to reproduce Prinz 2003, use the following substitution: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\phi=\frac{2fFv}{\tau_{Ca}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+choosing an arbitrary value for 
+\begin_inset Formula $v$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Section
 License 
 \end_layout
 
