@@ -26,7 +26,7 @@ All xolotl objects have the same order of inputs. They are:
 (1)     sim_params
 (2-N+1) compartments
 (N+2)   synapses
-(N+3)   V_clamp
+(N+3)   V_clamp or I_ext
 (N+4)   controllers
 ```
 
@@ -58,11 +58,33 @@ Due to the order in which `xolotl` was developed, there are some non-obvious got
 
 # Usage
 
+To use `xolotl`, you need to set up a `xolotl` object. Every use starts with creating a `xolotl` object:
+
+```matlab
+x = xolotl;
+```
+
+In the rest of this documentation, it will be assumed that you have a fresh (empty) `xolotl` object to work with called `x`. 
+
 ## Constructing Neurons
+
+### Constructing single-compartment neuron with Hodgkin-Huxley conductances 
+
+Documentation not yet written; see [this file](../tests/test_tim.m) for an example. 
+
+### Constructing multi-compartment neurons
+
+Documentation not yet written; see [this file](../tests/test_clamp.m) for an example. 
 
 ## Constructing Networks
 
+### Constructing a three-neuron network of the Stomatogastric Ganglion (STG)
+
+Documentation not yet written; see [this file](../tests/test_stg.m) for an example. 
+
 ## Voltage clamping
+
+Documentation not yet written; see [this file](../tests/test_clamp.m) for an example. 
 
 ## Current clamping
 
@@ -70,7 +92,7 @@ Current clamping not currently supported. Look at the [roadmap](https://github.c
 
 ## Injecting current
 
-Injecting currents not currently supported. Look at the [roadmap](https://github.com/sg-s/xolotl/projects/1) to see when (and if) this will be implemented. 
+Documentation not yet written; see [this file](../tests/test_inject.m) for an example. 
 
 # Methods
 
