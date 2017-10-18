@@ -1,11 +1,11 @@
-%              _       _   _ 
+%              _       _   _
 %   __  _____ | | ___ | |_| |
 %   \ \/ / _ \| |/ _ \| __| |
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
 % serializes a xolotl object so you can run
-% the underlying binary without xolotl 
+% the underlying binary without xolotl
 
 function [values,names] = serialize(self)
 
@@ -16,16 +16,16 @@ names = {};
 names{end+1} = {'dt';'t_end'};
 values{end+1} = [self.dt; self.t_end];
 
-% now do all the compartments 
+% now do all the compartments
 for i = 1:length(self.compartment_names)
 	[v,n] = struct2vec(self.(self.compartment_names{i}));
-	% append compartment name to these 
+	% append compartment name to these
 	n = cellfun(@(x) [self.compartment_names{i} x],n,'UniformOutput',false);
 	names{end+1} = n;
 	values{end+1} = v;
 end
 
-% now do the synapses 
+% now do the synapses
 if length(self.synapses)> 0
 	S = {}; SV = [];
 	for i = 1:length(self.synapses)
@@ -45,6 +45,9 @@ end
 if ~isempty(self.V_clamp)
 	names{end+1} = 'V_clamp';
 	values{end+1} = self.V_clamp;
+elseif ~isempty(self.I_ext)
+	names{end+1} = 'I_ext';
+	values{end+1} = self.I_ext;
 else
 	names{end+1} = '';
 	values{end+1} = [];
@@ -63,7 +66,7 @@ if length(self.controllers)> 0
 		SV(end+1) = self.controllers(i).Alpha;
 		S{end+1} = [self.controllers(i).channel '_controller_m'];
 		SV(end+1) = self.controllers(i).m;
-		
+
 	end
 	names{end+1} = S;
 	values{end+1} = SV;

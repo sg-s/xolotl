@@ -2,7 +2,7 @@
 // this template file is used by xolotl.transpile() to convert
 // the xolotl pseudo-object in MATLAB into a C++
 // file that can be compiled from mex
-// DON'T TOUCH ANYTHING HERE! 
+// DON'T TOUCH ANYTHING HERE! (touched by alec)
 
 #include <cmath>
 #include <vector>
@@ -14,7 +14,7 @@
 
 using namespace std;
 
- 
+
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // declare pointers to outputs
@@ -23,16 +23,16 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double *output_I_clamp;
     double *output_cond_state; // conductances
     double *output_syn_state;  // synapses
-    double *output_cont_state; // controllers 
+    double *output_cont_state; // controllers
 
 
     //xolotl:define_v_clamp_idx
 
-    // make an empty network 
+    // make an empty network
     network STG;
 
     int nsteps;
-    int n_synapses = 0; // keeps track of how many synapses we have 
+    int n_synapses = 0; // keeps track of how many synapses we have
 
     // wire up simulation parameters
     double * simparams = mxGetPr(prhs[0]);
@@ -40,12 +40,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double dt  = simparams[0];
     double tstop = simparams[1];
 
-    //xolotl:input_declarations 
+    //xolotl:input_declarations
 
-    //xolotl:make_compartments_here 
+    //xolotl:make_compartments_here
 
     //xolotl:make_conductances_here
-    
+
     //xolotl:add_conductances_here
 
     //xolotl:add_synapses_here
@@ -53,8 +53,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     //xolotl:add_controllers_here
 
     //xolotl:add_neurons_to_network
-    
-    nsteps = (int) floor(tstop/dt); 
+
+    nsteps = (int) floor(tstop/dt);
     int n_comp = (int) (STG.comp).size(); // these many compartments
 
     // compute cond_state_dim
@@ -81,18 +81,29 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     output_syn_state = mxGetPr(plhs[4]);
     output_cont_state = mxGetPr(plhs[5]);
 
-    // make arrays which will store the full cond. state 
+    // make arrays which will store the full cond. state
     double * full_cond_state = new double[cond_state_dim];
     int cond_idx = 0;
+    double * I_ext_now = new double[n_comp];
+    // make sure I_ext_now is zero
+    for(int q = 0; q < n_comp; q++)
+    {
+        I_ext_now[q] = 0.0;
+    }
 
-    
+    // do the integration
     for(int i = 0; i < nsteps; i++)
     {
-        STG.integrate(dt);
+        for(int j = 0; j < n_comp; j++)
+        {
+            //xolotl:enable_when_I_ext
+            //I_ext_now[j] = I_ext[i];
+        }
+        STG.integrate(dt,I_ext_now);
         //xolotl:enable_when_clamped
-        //STG.integrateClamp(V_clamp[i],dt); 
+        //STG.integrateClamp(V_clamp[i],dt);
         //xolotl:enable_when_clamped
-        //output_I_clamp[i] = STG.comp[0]->I_clamp; 
+        //output_I_clamp[i] = STG.comp[0]->I_clamp;
 
         //xolotl:read_synapses_here
 
@@ -107,8 +118,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             output_Ca[i*2*n_comp + j + n_comp] = STG.comp[j]->E_Ca;
 
             STG.comp[j]->get_cond_state(full_cond_state);
-            
-            // get the states of every conductance 
+
+            // get the states of every conductance
             for (int k = 0; k < cond_state_dims[j]; k++)
             {
                 output_cond_state[i*cond_state_dim + cond_idx] = full_cond_state[k];
