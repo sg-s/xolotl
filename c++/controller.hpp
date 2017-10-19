@@ -2,7 +2,14 @@
 //  \/  |  | |    |  |  |  |    
 // _/\_ |__| |___ |__|  |  |___ 
 //
-//Abstract class for defining controllers 
+// Abstract class for defining controllers 
+// controllers are tied to specific conductances,
+// so when you construct a controller, you specify
+// the conductance it controls
+// in addition, controllers need to be added to 
+// compartments
+// so that the compartment knows they exist and 
+// cand ask them to integrate. 
 
 #ifndef CONTROLLER
 #define CONTROLLER
@@ -11,18 +18,25 @@ class conductance;
 
 class controller {
 protected:
-    conductance* channel; // pointer to conductance that this regulates 
+    conductance* channel; // pointer to conductance that this regulates
+    compartment* upstream_compartment; // pointer to compartment that is closer to the soma
+    compartment* downstream_compartment; // pointer to compartment that is further from the soma along some process
+
     double tau_m; 
     double tau_g; 
     double G; 
-    
+    double A; // downstream transport rate 
+    double B; // upstream transport rate
+    double C; // degradation rate
+
 public:
 
+    int controller_idx;
     double m; 
 
     controller()
     {
-        channel = 0; // null pointer 
+        channel = NULL; // null pointer 
     }
     
     ~controller() {}

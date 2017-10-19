@@ -95,6 +95,8 @@ public:
     void integrateC_V_clamp(double, double, double);
     void get_cond_state(double*);
 
+    controller* getControllerPointer(int);
+
 };
 
 // simple integrate; use this only for 
@@ -215,9 +217,12 @@ void compartment::addController(controller *cont_)
 {
     cont.push_back(cont_);
     n_cont ++;
+    cont_->controller_idx = n_cont; // tell the controller what rank it has
 }
 
-// returns a vector of the stat of every conductance 
+// returns a vector of the state of every conductance 
+// cond_state is a pointer to a matrix that is hopefully of
+// the right size 
 void compartment::get_cond_state(double *cond_state)
 {
     for (int i = 0; i < n_cond; i ++) 
@@ -225,6 +230,12 @@ void compartment::get_cond_state(double *cond_state)
         cond_state[i*2] = cond[i]->m;
         cond_state[(i*2)+1] = cond[i]->h;
     }
+}
+
+// returns a pointer to a controller in this compartment 
+controller * compartment::getControllerPointer(int cont_idx)
+{
+    return cont[cont_idx];
 }
 
 

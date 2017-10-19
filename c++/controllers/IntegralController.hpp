@@ -12,6 +12,8 @@ class IntegralController: public controller {
 
 public:
 
+    int controller_idx; // keeps track of which controller this is in the compartment
+
     // specify parameters + initial conditions 
     IntegralController(conductance* channel_, double tau_m_, double tau_g_, double G_, double m_)
     {
