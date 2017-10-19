@@ -12,7 +12,7 @@ function slice(self,compartment,N,gbar)
 	assert(any(strcmp(compartment,properties(self))),'Unknown compartment')
 	assert(isscalar(N),'the second argument should be the number of slices you want; a scalar')
 	assert(N>1,'the number of slices you want should be > 1')
-
+	assert(nargin == 4,'Wrong number of input arguments')
 
 	% make sure this compartment has no chemical synapses on it
 	if ~isempty(self.synapses)
@@ -31,14 +31,26 @@ function slice(self,compartment,N,gbar)
 	self.(compartment).A = new_area;
 
 	% rename the compartment 
+	self.rename(compartment,[compartment 'S1']);
+	compartment = [compartment 'S1'];
 
 	% copy the compartment n-1 times
 	for i = 2:N
-		new_name = [compartment 'S' mat2str(i)];
+		new_name = [compartment(1:end-2) 'S' mat2str(i)];
 		self.copy(compartment,new_name);
 	end
 
-	% add synapses to wire them together 
+	% add synapses to wire them together
+	for i = 2:N
+		a = [compartment(1:end-2) 'S' mat2str(i-1)];
+		z = [compartment(1:end-2) 'S' mat2str(i)];
+		self.addSynapse('Elec',a,z,gbar);
+		self.addSynapse('Elec',z,a,gbar);
+	end
+	 
+
+	% mark these compartments as being part of a section
+	self.sections = [self.sections compartment(1:end-2)]; 
 	
 
 end
