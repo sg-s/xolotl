@@ -3,17 +3,17 @@
 // _/\_ |__| |___ |__|  |  |___ 
 //
 // Integral controller, as in O'Leary et al 
-#ifndef INTCONTROLLER
-#define INTCONTROLLER
+#ifndef INTEGRALCONTROLLER
+#define INTEGRALCONTROLLER
 #include "../controller.hpp"
 
 //inherit controller class spec
-class IntController: public controller {
+class IntegralController: public controller {
 
 public:
 
     // specify parameters + initial conditions 
-    IntController(conductance* channel_, double tau_m_, double tau_g_, double G_, double m_)
+    IntegralController(conductance* channel_, double tau_m_, double tau_g_, double G_, double m_)
     {
         channel = channel_; 
         tau_m = tau_m_;
@@ -27,7 +27,7 @@ public:
 
 };
 
-void IntController::integrate(double Ca_error, double A, double dt)
+void IntegralController::integrate(double Ca_error, double A, double dt)
 {
     // integrate mRNA
     m += (dt/tau_m)*(Ca_error);
@@ -39,7 +39,7 @@ void IntController::integrate(double Ca_error, double A, double dt)
 
 }
 
-double IntController::get_gbar(void)
+double IntegralController::get_gbar(void)
 {
     return channel->gbar;
 }
