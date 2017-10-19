@@ -26,8 +26,4 @@ function addCompartment(self,label, varargin)
 
 	self.compartment_names = [self.compartment_names; label];
 
-	% by default, a compartment is not part of a process
-	self.process_idx = [self.process_idx; NaN];
-
-
 end

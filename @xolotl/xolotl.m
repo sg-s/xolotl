@@ -44,6 +44,7 @@ properties
 	t_end@double = 5000; % ms
 	handles
 	V_clamp
+	I_ext
 	closed_loop@logical = true;
 	synapses
 end % end general props
