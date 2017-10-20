@@ -17,12 +17,11 @@ public:
     int controller_idx; // keeps track of which controller this is in the compartment
 
     // specify parameters + initial conditions 
-    SushiController(conductance* channel_, double tau_m_, double tau_g_, double G_, double m_, compartment* uc_, compartment* dc_, double A_, double B_, double C_)
+    SushiController(conductance* channel_, double tau_m_, double tau_g_, double m_, compartment* uc_, compartment* dc_, double A_, double B_, double C_)
     {
         channel = channel_; 
         tau_m = tau_m_;
         tau_g = tau_g_;
-        G = G_;
         m = m_;
         upstream_compartment = uc_;
         downstream_compartment = dc_;
@@ -61,7 +60,7 @@ void SushiController::integrate(double Ca_error, double A, double dt)
 
     // calculate conductance, not conductance density
     double g = (channel->gbar)*A;
-    (channel->gbar) += ((dt/tau_g)*(G*m - g))/A;
+    (channel->gbar) += ((dt/tau_g)*(m - g))/A;
 
 
 }

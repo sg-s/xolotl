@@ -27,6 +27,7 @@ x.slice('Neurite',10,10);
 % connect the neurite to the soma 
 x.connect('AB','NeuriteS1',10); 
 
-
+% % add a sushi belt controller  
+% x.addSushiController()
 
 

@@ -25,13 +25,13 @@ x.addConductance('AB','liu/Kd',1,-80);
 x.addConductance('AB','liu/HCurrent',1,-20);
 x.addConductance('AB','Leak',.99,-50);
 
-x.addController('AB','NaV','Int',666,100,1);
-x.addController('AB','CaT','Int',55555,100,1);
-x.addController('AB','CaS','Int',45454,100,1);
-x.addController('AB','ACurrent','Int',5000,100,1);
-x.addController('AB','KCa','Int',1250,100,1);
-x.addController('AB','Kd','Int',2000,100,1);
-x.addController('AB','HCurrent','Int',125000,100,1);
+x.addIntegralController('AB','NaV',666,100,1);
+x.addIntegralController('AB','CaT',55555,100,1);
+x.addIntegralController('AB','CaS',45454,100,1);
+x.addIntegralController('AB','ACurrent',5000,100,1);
+x.addIntegralController('AB','KCa',1250,100,1);
+x.addIntegralController('AB','Kd',2000,100,1);
+x.addIntegralController('AB','HCurrent',125000,100,1);
 
 x.t_end = 50e3;
 x.dt = 100e-3;
