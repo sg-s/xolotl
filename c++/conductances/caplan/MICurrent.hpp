@@ -2,20 +2,20 @@
 //  \/  |  | |    |  |  |  |    
 // _/\_ |__| |___ |__|  |  |___ 
 //
-// H current. again, for mysterious reasons, the compiler
-// won't let me call this class "H"
-// http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
-#ifndef HCURRENT
-#define HCURRENT
+// Modulatory Input Conductance
+// http://www.jneurosci.org/content/34/14/4963/tab-figures-data
+// based on RPCH/proctolin recordings
+#ifndef MICURRENT
+#define MICURRENT
 #include "../../conductance.hpp"
 
 //inherit conductance class spec
-class HCurrent: public conductance {
+class MICurrent: public conductance {
     
 public:
 
     //specify both gbar and erev and initial conditions
-    HCurrent(double g_, double E_, double m_)
+    MICurrent(double g_, double E_, double m_)
     {
         gbar = g_;
         E = E_;
@@ -23,7 +23,7 @@ public:
         h = 1;
     }
 
-    HCurrent(double g_, double E_, double m_, double h_)
+    MICurrent(double g_, double E_, double m_, double h_)
     {
         gbar = g_;
         E = E_;
@@ -38,17 +38,17 @@ public:
 
 };
 
-void HCurrent::connect(compartment *pcomp_) {container = pcomp_;}
+void MICurrent::connect(compartment *pcomp_) {container = pcomp_;}
 
-void HCurrent::integrate(double V, double Ca, double dt)
+void MICurrent::integrate(double V, double Ca, double dt)
 {
     m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
     g = gbar*m;
 }
 
 
-double HCurrent::m_inf(double V) {return 1.0/(1.0+exp((V+70.0)/6.0));}
-double HCurrent::tau_m(double V) {return (272.0 + 1499.0/(1.0+exp((V+42.2)/-8.73)));}
+double MICurrent::m_inf(double V) {return 1.0/(1.0+exp((V+38.0)/-3.05));}
+double MICurrent::tau_m(double V) {return 0.5;}
 
 
 #endif

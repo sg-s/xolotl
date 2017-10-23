@@ -1,3 +1,7 @@
+// _  _ ____ _    ____ ___ _    
+//  \/  |  | |    |  |  |  |    
+// _/\_ |__| |___ |__|  |  |___ 
+//
 // inward rectifying potassium conductance 
 // http://jn.physiology.org/content/jn/90/6/3998.full.pdf
 #ifndef KD

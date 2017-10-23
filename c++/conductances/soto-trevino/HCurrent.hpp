@@ -2,9 +2,8 @@
 //  \/  |  | |    |  |  |  |    
 // _/\_ |__| |___ |__|  |  |___ 
 //
-// H current. again, for mysterious reasons, the compiler
-// won't let me call this class "H"
-// http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
+// HCurrent
+// http://jn.physiology.org/content/94/1/590.short
 #ifndef HCURRENT
 #define HCURRENT
 #include "../../conductance.hpp"

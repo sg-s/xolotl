@@ -2,19 +2,19 @@
 //  \/  |  | |    |  |  |  |    
 // _/\_ |__| |___ |__|  |  |___ 
 //
-// Slow Calcium conductance
-// http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
-#ifndef KCA
-#define KCA
+// Calcium-dep potassium
+// http://jn.physiology.org/content/94/1/590.short
+#ifndef KCA_PD
+#define KCA_PD
 #include "../../conductance.hpp"
 
 //inherit conductance class spec
-class KCa: public conductance {
+class KCa_PD: public conductance {
 
 public:
 
     // specify parameters + initial conditions 
-    KCa(double g_, double E_, double m_, double h_)
+    KCa_PD(double g_, double E_, double m_, double h_)
     {
         gbar = g_;
         E = E_;
@@ -22,7 +22,7 @@ public:
         h = 1;
     }
     
-    KCa(double g_, double E_, double m_)
+    KCa_PD(double g_, double E_, double m_)
     {
         gbar = g_;
         E = E_;
@@ -36,16 +36,16 @@ public:
     double tau_m(double V);
 };
 
-void KCa::connect(compartment *pcomp_) {container = pcomp_; }
+void KCa_PD::connect(compartment *pcomp_) {container = pcomp_; }
 
-void KCa::integrate(double V, double Ca, double dt)
+void KCa_PD::integrate(double V, double Ca, double dt)
 {
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V));
     g = gbar*m*m*m*m;
 }
 
-double KCa::m_inf(double V, double Ca) { return (Ca/(Ca+3.0))/(1.0+exp((V+28.3)/-12.6)); }
-double KCa::tau_m(double V) {return 90.3 - 75.1/(1.0+exp((V+46.0)/-22.7));}
+double KCa_PD::m_inf(double V, double Ca) { return (Ca/(Ca+30))/(1.0+exp(-(V+51.0)/8.0)); }
+double KCa_PD::tau_m(double V) {return 90.3 - 75.09/(1.0+exp(-(V+46.0)/22.7));}
 
 
 #endif
