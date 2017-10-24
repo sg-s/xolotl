@@ -39,7 +39,7 @@ properties (Access = protected)
 end  % end protected props
 
 properties
-	controllers
+	controllers@cell = {}
 	dt@double = 50e-3; % ms
 	t_end@double = 5000; % ms
 	handles
@@ -191,10 +191,10 @@ methods
 			cont_m = [cont_state(end,1:2:end)];
 			cont_g = [cont_state(end,2:2:end)];
 			for i = 1:length(self.controllers)
-				self.controllers(i).m = cont_m(i);
-				this_channel = strrep(self.controllers(i).channel,self.controllers(i).compartment,'');
+				self.controllers{i}.m = cont_m(i);
+				this_channel = strrep(self.controllers{i}.channel,self.controllers{i}.compartment,'');
 				this_channel(1) = [];
-				self.(self.controllers(i).compartment).(this_channel).gbar = cont_g(i);
+				self.(self.controllers{i}.compartment).(this_channel).gbar = cont_g(i);
 			end 
 		end
 

@@ -5,9 +5,10 @@
 %   /_/\_\___/|_|\___/ \__|_|
 %
 % add sushi-belt integral controller 
-% this controller is added globally to the entire
-% xolotl object; copies of the controller are added to 
-% every compartment. 
+% a sushi belt controller only makes sense
+% when added to multiple compartments
+% that are ideally part of a neurite
+% representing a dendrite 
 
 function addSushiController(self,conductance,tau_m,tau_g,Alpha,Beta,Gamma)
 

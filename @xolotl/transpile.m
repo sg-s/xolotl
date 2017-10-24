@@ -157,6 +157,10 @@ function transpile(self)
 
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% add the controllers here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	% controllers work like this: every controller must have a pointer to a 
+	% a conductance, and in addition, must be handed over to the containing
+	% compartment using .addController 
+	% 
 
 	[~,names] = self.serialize;
 	names(1) = [];
@@ -164,15 +168,39 @@ function transpile(self)
 
 	controller_add_lines = {};
 	for i = 1:length(self.controllers)
-		this_type = self.controllers(i).type;
-		this_channel = self.controllers(i).channel;
-		this_compartment = self.controllers(i).compartment;
-		idx1 = (i-1)*4 + 1;
-		idx2 = (i-1)*4 + 2;
-		idx3 = (i-1)*4 + 3;
-		idx4 = (i-1)*4 + 4;
-		controller_add_lines{end+1} = [this_type ' cont' mat2str(i) '(&' this_channel  ',' cont_names{idx1} ',' cont_names{idx2} ','  cont_names{idx3} ',' cont_names{idx4} ');'];
-		controller_add_lines{end+1} = [this_compartment '.addController(&cont' mat2str(i) ');'];
+		this_controller = self.controllers{i};
+		this_type = this_controller.type;
+
+		% figure out the C++ constructor for this type 
+		constructor_args = findCPPClassMembers(self.controllers{i}.cpp_path);
+
+		% figure out constructor args from structure
+		fn = fieldnames(this_controller);
+		for j = 1:length(constructor_args)
+			if any(strcmp(constructor_args{j},fn))
+				if  isnumeric(this_controller.(constructor_args{j}))
+					constructor_args{j} = [this_controller.channel '_' this_controller.type '_' constructor_args{j}];
+				else
+					% it's a pointer, and we need to treat it as such
+					constructor_args{j} = ['&' this_controller.channel];
+				end
+			else
+				% we can't find an argument that needs to be handed into the constructor for this controller, which should be an error
+				error('Cannot find required arguments for constructor of controller')
+			end
+		end
+
+		this_controller_line = [this_controller.type ' cont' mat2str(i) '('];
+		for j = 1:length(constructor_args)
+			this_controller_line = [this_controller_line constructor_args{j} ,','];
+		end
+		this_controller_line(end) = ')';
+		this_controller_line = [this_controller_line ';'];
+
+		controller_add_lines{end+1} = this_controller_line;
+
+		% now add the controller to the compartment 
+		controller_add_lines{end+1} = [this_controller.compartment '.addController(&cont' mat2str(i) ');'];
 	end
 	controller_add_lines{end+1} = ['int n_controllers = ' mat2str(length(self.controllers)) ';'];
 

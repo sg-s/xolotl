@@ -4,11 +4,10 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% add integral controller, as in O'Leary 2014 
-% example:
-% x.addIntegralController('AB','NaV',100,100)
+% add generic controllers 
+% 
 
-function addIntegralController(self,compartment,conductance,tau_m,tau_g)
+function addController(self,compartment,cont_id,conductance,tau_m,tau_g)
 
 assert(any(strcmp(compartment,properties(self))),'Unknown compartment')
 
@@ -17,7 +16,7 @@ assert(any(strcmp(conductance,fieldnames(self.(compartment)))),'Unknown conducta
 % search for cont_id
 cont_file = [];
 for i = 1:length(self.available_controllers)
-	if any(strfind(self.available_controllers{i},'IntegralController'))
+	if any(strfind(self.available_controllers{i},cont_id))
 		cont_file = i;
 		break;
 	end
@@ -27,24 +26,19 @@ assert(~isempty(cont_file),'Which controller do you mean?')
 
 cont_name = pathEnd(self.available_controllers{cont_file});
 
-% required fields
+
+class_members = findCPPClassMembers(self.available_controllers{cont_file});
+
+keyboard
+
 S.type = cont_name;
 S.channel = [compartment '_' conductance];
 S.compartment = compartment;
-S.cpp_path = self.available_controllers{cont_file};
-
-% controller-specfic parameters and variables
 S.tau_m = tau_m;
 S.tau_g = tau_g;
 S.m = 0;
 
-
-if isempty(self.controllers)
-	self.controllers{1} = S;
-else
-	self.controllers  = [self.controllers, S];
-end
-
+self.controllers  = [self.controllers; S];
 
 % add this to controller, if it's not already there
 self.controller_headers = [self.controller_headers; self.available_controllers{cont_file}];

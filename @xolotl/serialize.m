@@ -6,6 +6,8 @@
 %
 % serializes a xolotl object so you can run
 % the underlying binary without xolotl
+% serialize only coverts numerical values
+% strings are discarded 
 
 function [values,names] = serialize(self)
 
@@ -58,15 +60,14 @@ end
 if length(self.controllers)> 0
 	S = {}; SV = [];
 	for i = 1:length(self.controllers)
-		S{end+1} = [self.controllers(i).channel '_controller_tau_m'];
-		SV(end+1) = self.controllers(i).tau_m;
-		S{end+1} = [self.controllers(i).channel '_controller_tau_g'];
-		SV(end+1) = self.controllers(i).tau_g;
-		S{end+1} = [self.controllers(i).channel '_controller_Alpha'];
-		SV(end+1) = self.controllers(i).Alpha;
-		S{end+1} = [self.controllers(i).channel '_controller_m'];
-		SV(end+1) = self.controllers(i).m;
-
+		this_controller = self.controllers{i};
+		fn = fieldnames(this_controller);
+		for j = 1:length(fn)
+			if ~strcmp(fn{j},'type') && isnumeric(this_controller.(fn{j}))
+				S{end+1} = [this_controller.channel '_' this_controller.type '_' fn{j}];
+				SV(end+1) = this_controller.(fn{j});
+			end
+		end
 	end
 	names{end+1} = S;
 	values{end+1} = SV;
