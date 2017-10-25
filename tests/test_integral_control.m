@@ -40,5 +40,12 @@ x.t_end = 100e3;
 x.dt = 100e-3;
 (x.integrate);
 
-x.t_end = 1e3;
-plot(x.integrate)
+x.t_end = 5e3;
+
+if usejava('jvm')
+	plot(x.integrate)
+else
+	st = xolotl.findSpikes(x.integrate);
+	assert(length(st)>0,'Neuron did not spike')
+	disp('Integral control test passed!')
+end

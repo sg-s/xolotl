@@ -61,17 +61,27 @@ x.compile;
 x.dt = 100e-3;
 x.t_end = 100e3;
 V = x.integrate;
-plot(V)
 
 
-% plot mRNA profiles
-xx = 1:length(x.compartment_names);
-figure, hold on
-for i = 1:7
-	a = length(x.compartment_names)*(i-1) + 1;
-	z = a + length(x.compartment_names) - 1;
-	yy = cellfun(@(x) x.m, x.controllers(a:z));
-	plot(xx,yy)
+if usejava('jvm')
+
+	plot(V)
+
+
+	% plot mRNA profiles
+	xx = 1:length(x.compartment_names);
+
+	figure, hold on
+	for i = 1:7
+		a = length(x.compartment_names)*(i-1) + 1;
+		z = a + length(x.compartment_names) - 1;
+		yy = cellfun(@(x) x.m, x.controllers(a:z));
+		plot(xx,yy)
+	end
+else
+	sp = xolotl.findSpikes(V);
+	assert(length(sp) > 100 ,'Not enough spikes!')
+	disp('Sushi controller test passed!')
 end
 
 

@@ -37,11 +37,15 @@ x.addConductance('AB','Leak',G(8,idx),-50);
 
 [V,Ca] = x.integrate;
 
-figure, hold on
-subplot(2,1,1); hold on
-plot(V)
-ylabel('Voltage (mV)')
-subplot(2,1,2)
-plot(Ca(:,1));
-ylabel('[Ca] (\muM)')
-prettyFig();
+if usejava('jvm')
+	figure, hold on
+	subplot(2,1,1); hold on
+	plot(V)
+	ylabel('Voltage (mV)')
+	subplot(2,1,2)
+	plot(Ca(:,1));
+	ylabel('[Ca] (\muM)')
+	prettyFig();
+else
+	disp('Prinz database test passed!')
+end

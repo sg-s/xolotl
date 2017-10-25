@@ -5,6 +5,7 @@ for i = 1:length(all_tests)
 	try
 		run(all_tests(i).name)
 		close all
+		clearvars -except all_tests i 
 	catch
 		disp('Test failed!')
 	end

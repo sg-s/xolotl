@@ -43,11 +43,10 @@ if usejava('jvm')
 
 	prettyFig();
 	
-
 else
 	I_ext(:) = I_steps(1);
 	x.I_ext = I_ext;
 	V = x.integrate;
-	disp('voltage clamp test passed!')
+	disp('Current injection test passed!')
 end
 

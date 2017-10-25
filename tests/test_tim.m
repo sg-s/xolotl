@@ -19,4 +19,10 @@ x.addConductance('AB','liu/Kd',610,-80);
 x.addConductance('AB','liu/HCurrent',10.1,-20);
 x.addConductance('AB','Leak',.99,-50);
 
-x.manipulate;
+if usejava('jvm')
+	x.manipulate;
+else
+	sp = xolotl.findSpikes(x.integrate);
+	assert(length(sp)>10,'Not enough spikes')
+	disp('Test Passed')
+end

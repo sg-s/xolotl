@@ -203,4 +203,10 @@ methods
 
 end % end methods 
 
+methods (Static)
+
+	spiketimes = findSpikes(V)
+
+
+end % end static methods
 end % end classdef 
