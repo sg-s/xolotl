@@ -12,19 +12,30 @@
 //inherit controller class spec
 class SushiController: public controller {
 
+protected:
+    double tau_m;
+    double tau_g;
+    double m;
+
+
 public:
 
     int controller_idx; // keeps track of which controller this is in the compartment
 
     // specify parameters + initial conditions 
-    SushiController(conductance* channel_, double tau_m_, double tau_g_, double m_, compartment* uc_, compartment* dc_, double A_, double B_, double C_)
+    SushiController(conductance* channel_, compartment* uc_, compartment* dc_, double tau_m_, double tau_g_, double m_,  double A_, double B_, double C_)
     {
+        // pointers
         channel = channel_; 
+        upstream_compartment = uc_;
+        downstream_compartment = dc_;
+
+        // inherit from integral control
         tau_m = tau_m_;
         tau_g = tau_g_;
         m = m_;
-        upstream_compartment = uc_;
-        downstream_compartment = dc_;
+
+        // sushi trafficking 
         A = A_;
         B = B_;
         C = C_;

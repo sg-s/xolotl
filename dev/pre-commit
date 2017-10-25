@@ -13,7 +13,7 @@ echo "Cleaning up old mexBridge files and binaries"
 rm *mexBridge*
 
 echo "Running MEX/MATLAB tests..."
-matlab -nojvm -nosplash -nodisplay -nodesktop -r "run('tests/test_stg.m'); run('tests/test_clamp.m'); exit;"
+matlab -nojvm -nosplash -nodisplay -nodesktop -r "run('tests/run_all_tests.m'); exit;"
 
 # echo "Trying to compile C++ code using MEX..."
 

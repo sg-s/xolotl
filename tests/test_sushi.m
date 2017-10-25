@@ -1,4 +1,5 @@
 % tests sushi-bar model of mrna trafficking 
+% also tests slicing a compartment to make a section 
 
 vol = 1; % this can be anything, doesn't matter
 f = 1.496; % uM/nA

@@ -7,7 +7,7 @@
 % removes all controllers from xolotl object
 %
 function removeAllControllers(self)
-	self.controllers = [];
+	self.controllers = {};
 	self.transpile;
 	self.compile;
 end
