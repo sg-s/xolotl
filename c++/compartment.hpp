@@ -215,9 +215,11 @@ void compartment::addSynapse(synapse *syn_)
 // add controller to this compartment 
 void compartment::addController(controller *cont_)
 {
+    // mexPrintf("adding controller @  %p\n",cont_);
     cont.push_back(cont_);
-    n_cont ++;
     cont_->controller_idx = n_cont; // tell the controller what rank it has
+    n_cont ++;
+   
 }
 
 // returns a vector of the state of every conductance 
@@ -235,6 +237,7 @@ void compartment::get_cond_state(double *cond_state)
 // returns a pointer to a controller in this compartment 
 controller * compartment::getControllerPointer(int cont_idx)
 {
+    // mexPrintf("In compartment, the controllers m is  %f\n",(cont[cont_idx])->m);
     return cont[cont_idx];
 }
 

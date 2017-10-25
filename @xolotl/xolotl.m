@@ -33,7 +33,7 @@ properties (Access = protected)
 	OS_binary_ext % OS-specific
 	xolotl_folder
 	cpp_folder
-	sections
+	sections@cell = {};
 	dyn_prop_handles % handles to dynamic properties 
 	illegal_names = {'xolotl_network','compartment','conductance','controller','synapse','network'}; % list of illegal names for compartments, synpases and other objects
 end  % end protected props

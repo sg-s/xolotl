@@ -16,7 +16,7 @@ protected:
 
 public:
 
-    int controller_idx; // keeps track of which controller this is in the compartment
+    //int controller_idx; // keeps track of which controller this is in the compartment
     double m; 
 
     // specify parameters + initial conditions 
@@ -30,6 +30,7 @@ public:
     
     void integrate(double Ca_error, double A, double dt);
     double get_gbar(void);
+    double get_m(void);
 
 };
 
@@ -44,6 +45,12 @@ void IntegralController::integrate(double Ca_error, double A, double dt)
 
 
 }
+
+double IntegralController::get_m(void)
+{
+    return m;
+}
+
 
 double IntegralController::get_gbar(void)
 {

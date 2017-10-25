@@ -25,17 +25,15 @@ x.addConductance('AB','liu/Kd',1,-80);
 x.addConductance('AB','liu/HCurrent',1,-20);
 x.addConductance('AB','Leak',.99,-50);
 
-tau_g = 1000;
+tau_g = 100;
 
-tms = 1;
-
-x.addIntegralController('AB','NaV',tms*666,tau_g);
-x.addIntegralController('AB','CaT',tms*55555,tau_g);
-x.addIntegralController('AB','CaS',tms*45454,tau_g);
-x.addIntegralController('AB','ACurrent',tms*5000,tau_g);
-x.addIntegralController('AB','KCa',tms*1250,tau_g);
-x.addIntegralController('AB','Kd',tms*2000,tau_g);
-x.addIntegralController('AB','HCurrent',tms*125000,tau_g);
+x.addIntegralController('AB','NaV',666,tau_g);
+x.addIntegralController('AB','CaT',55555,tau_g);
+x.addIntegralController('AB','CaS',45454,tau_g);
+x.addIntegralController('AB','ACurrent',5000,tau_g);
+x.addIntegralController('AB','KCa',1250,tau_g);
+x.addIntegralController('AB','Kd',2000,tau_g);
+x.addIntegralController('AB','HCurrent',125000,tau_g);
 
 
 x.t_end = 100e3;

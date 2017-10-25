@@ -64,8 +64,13 @@ function ax = plot(self,cond_id,ax)
 		end
 	end
 	V = linspace(-80,80,1e3);
-	if nargin < 3
+	if nargin < 3 
 
+		figure('outerposition',[100 100 1000 900],'PaperUnits','points','PaperSize',[1000 500]); hold on
+		for i = 1:4
+			ax(i) = subplot(2,2,i); hold on
+		end
+	elseif any(~isvalid(ax))
 		figure('outerposition',[100 100 1000 900],'PaperUnits','points','PaperSize',[1000 500]); hold on
 		for i = 1:4
 			ax(i) = subplot(2,2,i); hold on
@@ -77,6 +82,7 @@ function ax = plot(self,cond_id,ax)
 	try
 		plot(ax(2),V,h_inf(V),'DisplayName',cond_name);
 	catch
+		plot(ax(2),NaN,NaN,'DisplayName',cond_name);
 	end
 	xlabel(ax(2),'V (mV)')
 	ylabel(ax(2),'h_{inf}')
@@ -89,11 +95,19 @@ function ax = plot(self,cond_id,ax)
 	try
 		plot(ax(4),V,tau_h(V),'DisplayName',cond_name);
 	catch
+		plot(ax(4),NaN,NaN,'DisplayName',cond_name);
 	end
 	ylabel(ax(4),'\tau_{h} (ms)')
 	xlabel(ax(4),'V (mV)')
 	set(ax(4),'YScale','log')
 
 	prettyFig();
+	axes(ax(1))
+	legend;
+
+	% turn all YLim modes to auto
+	for i = 1:length(ax)
+		ax(i).YLimMode = 'auto';
+	end
 	
 end % end plot

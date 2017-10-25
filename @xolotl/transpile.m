@@ -41,6 +41,7 @@ function transpile(self)
 
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% input declarations and hookups ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	% this section of transpile generates a list of unique variable names that identifies all parameters and variables in the xolotl object using x.serialize, and then wires up arrays from matlab that correspond to these values to named variables in C++. so you can expect every variable to exist in your C++ workspace, where the names are defined in x.serialize
 
 	[values,names] = self.serialize;
 
@@ -182,7 +183,11 @@ function transpile(self)
 					constructor_args{j} = [this_controller.channel '_' this_controller.type '_' constructor_args{j}];
 				else
 					% it's a pointer, and we need to treat it as such
-					constructor_args{j} = ['&' this_controller.channel];
+					if strcmp(this_controller.(constructor_args{j}),'NULL')
+						constructor_args{j} = 'NULL';
+					else
+						constructor_args{j} = ['&' this_controller.(constructor_args{j})];
+					end
 				end
 			else
 				% we can't find an argument that needs to be handed into the constructor for this controller, which should be an error
@@ -225,7 +230,10 @@ function transpile(self)
 	lines = [lines(1:insert_here); synapse_read_lines(:); lines(insert_here+1:end)];
 
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	% read controllers here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	% read controllers here 
+	% !!! TODO: there is a weakness here -- we assume that every controller
+	% has a m field, and cannot have more than two states (m, gbar). need to generalize 
+	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	controller_read_lines = {};
 	for i = 1:length(self.controllers)

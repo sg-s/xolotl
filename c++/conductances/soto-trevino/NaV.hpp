@@ -37,6 +37,7 @@ void NaV::integrate(double V, double Ca, double dt)
     m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
     h = h_inf(V) + (h - h_inf(V))*exp(-dt/tau_h(V));
     g = gbar*m*m*m*h;
+
 }
 
 double NaV::m_inf(double V) {return 1.0/(1.0+exp(-(V+24.7)/5.29));}

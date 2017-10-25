@@ -15,15 +15,20 @@ class SushiController: public controller {
 protected:
     double tau_m;
     double tau_g;
-    double m;
+    
+    compartment * upstream_compartment;
+    compartment * downstream_compartment;
 
+    double Alpha;
+    double Beta;
+    double Gamma;
 
 public:
 
-    int controller_idx; // keeps track of which controller this is in the compartment
+    double m;
 
     // specify parameters + initial conditions 
-    SushiController(conductance* channel_, compartment* uc_, compartment* dc_, double tau_m_, double tau_g_, double m_,  double A_, double B_, double C_)
+    SushiController(conductance* channel_, compartment* uc_, compartment* dc_, double tau_m_, double tau_g_, double m_,  double Alpha_, double Beta_, double Gamma_)
     {
         // pointers
         channel = channel_; 
@@ -36,33 +41,46 @@ public:
         m = m_;
 
         // sushi trafficking 
-        A = A_;
-        B = B_;
-        C = C_;
+        Alpha = Alpha_;
+        Beta = Beta_;
+        Gamma = Gamma_;
     }
     
     void integrate(double Ca_error, double A, double dt);
     double get_gbar(void);
+    double get_m(void);
 
 };
 
 void SushiController::integrate(double Ca_error, double A, double dt)
 {
+    // mexPrintf("this controller's m =  %f\n",this->m);
+    // mexPrintf("pointer address of current controller =  %p\n",this);
     // figure out the mRNA in the upstream and downstream compartments
-    double mdot;
+    double mdot = 0;
     if (upstream_compartment == NULL && downstream_compartment != NULL) {
         // this is the soma
-        double down_m = (downstream_compartment->getControllerPointer(controler_idx))->m;  
-        mdot = Ca_error/tau_m - A*m + B*down_m; 
-    } elseif (upstream_compartment != NULL && downstream_compartment == NULL) {
+        // mexPrintf("pointer address to what should be S1 =  %p\n",cp);
+        double down_m = (downstream_compartment->getControllerPointer(controller_idx))->get_m(); 
+        // mexPrintf("downstream m of soma =  %f\n",down_m);
+
+        mdot = Ca_error/tau_m - Alpha*m + Beta*down_m - Gamma*m; 
+        //mdot = 1 - Alpha*m + Beta*down_m - Gamma*m;  // 1 is the fixed transcription rate
+    } else if (upstream_compartment != NULL && downstream_compartment == NULL) {
         // this is the process terminal 
-        double up_m = (dupstream_compartment->getControllerPointer(controler_idx))->m;  
-        mdot = A*m_up - B*m - C*m;
-    } else {
+        double up_m = (upstream_compartment->getControllerPointer(controller_idx))->get_m();  
+
+        mdot = Alpha*up_m - Beta*m - Gamma*m;
+    } else if (upstream_compartment != NULL && downstream_compartment != NULL) {
         // this is a generic intermediate section of the neurite.
-        double down_m = (downstream_compartment->getControllerPointer(controler_idx))->m; 
-        double up_m = (dupstream_compartment->getControllerPointer(controler_idx))->m;
-        mdot = A*m_up + B*m_down - (A+B+C)*m;
+        double up_m = (upstream_compartment->getControllerPointer(controller_idx))->get_m(); 
+        double down_m = (downstream_compartment->getControllerPointer(controller_idx))->get_m(); 
+
+        mdot = Alpha*up_m + Beta*down_m - (Alpha+Beta+Gamma)*m;
+    } else {
+        // there are no other compartments, and this should behave like a normal integral controller
+        mexPrintf("falling back to normal integral control");
+        mdot = Ca_error/tau_m;
     }
 
     // integrate mRNA
@@ -74,6 +92,18 @@ void SushiController::integrate(double Ca_error, double A, double dt)
     (channel->gbar) += ((dt/tau_g)*(m - g))/A;
 
 
+}
+
+
+// Why do we need this bizarre construction? Why can't I just
+// directly read m? it doesn't seem to work, which is why
+// I'm doing this crazy bit of foolishness
+// this just puts us deeper in the hole where controllers
+// are forced to be one-dimensional systems with a state
+// variable called m
+double SushiController::get_m(void)
+{
+    return m;
 }
 
 double SushiController::get_gbar(void)
