@@ -14,9 +14,10 @@ phi = (2*f*F*vol)/tau_Ca;
 Ca_target = 7; % used only when we add in homeostatic control 
 
 x = xolotl;
+x.cleanup;
 x.addCompartment('AB',-60,0.02,10,0.0628,vol,phi,3000,0.05,tau_Ca,Ca_target);
 
-g0 = 100*rand(7,1);
+g0 = 1*rand(7,1);
 
 x.addConductance('AB','liu/NaV',g0(1),30);
 x.addConductance('AB','liu/CaT',g0(2),30);
