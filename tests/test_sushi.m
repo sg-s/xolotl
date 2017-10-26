@@ -32,21 +32,11 @@ x.connect('AB','NeuriteS1',gbar_axial);
 
 % add a sushi belt controller  
 Alpha = 1e-4;
-Beta = Alpha*(.5);
+Beta = Alpha*(.9);
 Gamma = Beta/50;
-tau_g = 100;
+tau_g = 5e3;
 
-
-% x.addIntegralController('AB','NaV',666,tau_g);
-% x.addIntegralController('AB','CaT',55555,tau_g);
-% x.addIntegralController('AB','CaS',45454,tau_g);
-% x.addIntegralController('AB','ACurrent',5000,tau_g);
-% x.addIntegralController('AB','KCa',1250,tau_g);
-% x.addIntegralController('AB','Kd',2000,tau_g);
-% x.addIntegralController('AB','HCurrent',125000,tau_g);
-
-
-x.addSushiController('NaV',666,tau_g,Alpha,Beta,Gamma)
+x.addSushiController('NaV',666,tau_g,0,Beta,Gamma)
 x.addSushiController('CaT',55555,tau_g,Alpha,Beta,Gamma)
 x.addSushiController('CaS',45454,tau_g,Alpha,Beta,Gamma)
 x.addSushiController('ACurrent',5000,tau_g,Alpha,Beta,Gamma)
@@ -59,7 +49,7 @@ x.cleanup;
 x.transpile;
 x.compile;
 x.dt = 100e-3;
-x.t_end = 100e3;
+x.t_end = 20e3;
 V = x.integrate;
 
 
