@@ -30,6 +30,8 @@ end
 % resize the compartment 
 new_area = self.(compartment).A/N;
 new_vol = self.(compartment).vol/N;
+
+
 self.(compartment).vol = new_vol;
 self.(compartment).A = new_area;
 

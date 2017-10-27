@@ -9,7 +9,7 @@
 function manipulate(self)
 	% create a window to show all the traces
 
-	V = self.integrate;
+	[V,Ca] = self.integrate;
 	time = self.dt:self.dt:self.t_end;
 
 	% if it's in closed loop, update it continuously
@@ -30,10 +30,24 @@ function manipulate(self)
 	end
 	linkaxes(self.handles.ax,'x');
 	prettyFig('plw',1.5,'lw',1);
-	
-	% figure out the parameters -- one for each compartment 
+
+	% make another figure for the calcium
+	self.handles.fig_cal = figure('outerposition',[0 0 1000 900],'PaperUnits','points','PaperSize',[1000 500],'CloseRequestFcn',@self.deleteManipulateFig); hold on
+	n = length(self.compartment_names);
 	for i = 1:n
-		[v,names] = struct2vec(self.(self.compartment_names{i}));
+		self.handles.ax(i) = subplot(n,1,i);
+		self.handles.Ca_trace(i) = plot(self.handles.ax(i),time,Ca(:,i),'k');
+		ylabel(self.handles.ax(i),['[Ca^2^+]_{' self.compartment_names{i} '} (mV)'] )
+		self.handles.ax(i).YLim(1) = 0;
+	end
+	linkaxes(self.handles.ax,'x');
+	prettyFig('plw',1.5,'lw',1);
+	
+	% figure out the parameters 
+	% we're going to make one figure window/compartment
+	is_relational = {};
+	for i = 1:n
+		[v,names,ir] = struct2vec(self.(self.compartment_names{i}));
 		% delete all E_, m_, and h_ parameters
 		rm_this = false(length(v),1);
 		for j = 1:length(v)
@@ -44,7 +58,8 @@ function manipulate(self)
 				rm_this(j) = true;
 			end
 		end
-		v(rm_this) = []; names(rm_this) = [];
+		v(rm_this) = []; names(rm_this) = []; ir(rm_this) = [];
+
 
 		% remove initial underscores from names
 		names = cellfun(@(x) x(2:end),names,'UniformOutput',false);
@@ -56,7 +71,7 @@ function manipulate(self)
 			L.(names{j}) = v(j)/10;
 			U.(names{j}) = v(j)*10;
 		end 
-		params{i} = S; lb{i} = L; ub{i} = U;
+		params{i} = S; lb{i} = L; ub{i} = U; is_relational{i} = ir;
 	end
 
 	% and one more for the synapses 
@@ -88,15 +103,37 @@ function manipulate(self)
 	% create a puppeteer instance and configure
 	p = puppeteer(params,lb,ub);
 
+	% we're going to override pupeteer's callback functions for sliders that correspond to relational parameters, and disable those sliders
+	for i = 1:length(is_relational)
+		ir = is_relational{i};
+		if length(p.handles) > 1
+			h = p.handles(i);
+		else
+			h = p.handles;
+		end
+		for j = 1:length(h.sliders)
+			if ir(j)
+				h.sliders(j).Enable = 'off';
+				z = strfind(h.controllabel(j).String,'=');
+				h.controllabel(j).String = [h.controllabel(j).String(1:z-1) ' (relative)'] ;
+				% remove the callback functions
+				h.sliders(j).Callback = [];
+			else
+
+			end
+		end
+	end
+
 	if self.closed_loop
 		% add the puppeteer figures to xolotl's handles
 		% and reconfigure their closerequests to point to xolotl's
-		self.handles.pfigs = [p.handles.fig];
+		self.handles.pfigs = p.handles.fig;
 		for i = 1:length(self.handles.pfigs)
 			self.handles.pfigs(i).CloseRequestFcn = @self.deleteManipulateFig;
 		end
 	else
 		p.attachFigure(self.handles.fig);
+		p.attachFigure(self.handles.fig_cal);
 	end
 
 	if ~self.closed_loop
@@ -121,16 +158,19 @@ function manipulate(self)
 
                 self.updateLocalParameters(p.parameters);
 
-                this_V = self.integrate;
+                [this_V, this_Ca] = self.integrate;
 
                 % throw out the first bit 
                 V(1:buffer_chunk_size,:) = [];
+                Ca(1:buffer_chunk_size,:) = [];
                 
                 % append the new data to the end
                 V = [V; this_V];
+                Ca = [Ca; this_Ca];
 
                 for i = 1:n
                 	self.handles.V_trace(i).YData = V(:,i);
+                	self.handles.Ca_trace(i).YData = Ca(:,i);
                 end
 
 

@@ -14,7 +14,7 @@
 % see https://github.com/sg-s/xolotl
 % for more information 
 
-classdef xolotl < handle & dynamicprops
+classdef xolotl < handle & dynamicprops & matlab.mixin.CustomDisplay
 
 properties (SetAccess = protected)
 	compartment_props 
@@ -52,6 +52,42 @@ properties
 	closed_loop@logical = true;
 	synapses
 end % end general props
+
+
+methods (Access = protected)
+    function displayScalarObject(self)
+        url = 'https://github.com/sg-s/xolotl/';
+        fprintf(['<a href="' url '">xolotl</a> object with:\n'])
+        fprintf('---------------------\n')
+        for i = 1:length(self.compartment_names)
+        	compartment = self.compartment_names{i};
+        	url = ['matlab:' inputname(1) '.' compartment];
+        	fprintf(['+ <a href="' url '">' self.compartment_names{i} '</a>  \n'])
+        	% now show the conductances within this channel
+        	C = self.getChannelsInCompartment(i);
+        	for j = 1:length(C)
+        		url = ['matlab:' inputname(1) '.' compartment '.' C{j}];
+        		url_str = ['<a href="' url '">' C{j} '</a>'];
+        		if isa(self.(compartment).(C{j}).gbar,'function_handle')
+        			g = strrep(func2str(self.(compartment).(C{j}).gbar),'@()','');
+        		else
+        			g = oval(self.(compartment).(C{j}).gbar);
+        		end
+        		if isa(self.(compartment).(C{j}).E,'function_handle')
+        			E = strrep(func2str(self.(compartment).(C{j}).E),'@()','');
+        		else
+        			E = oval(self.(compartment).(C{j}).E);
+        		end
+        		info_str = [' (g=' g ', E=' E ')'];
+
+        		fprintf(['  > ' url_str info_str '\n'])
+        	end
+        	fprintf('---------------------\n')
+        end
+
+    end
+
+end % end protected methods
 
 methods 
 	function self = xolotl()

@@ -23,12 +23,18 @@ function updateLocalParameters(self,parameters)
 			% match everything we can in this compartment 
 			for j = 1:length(f)
 				if isfield(self.(self.compartment_names{i}),f{j})
-					self.(self.compartment_names{i}).(f{j}) = S.(f{j});
+					if isa(self.(self.compartment_names{i}).(f{j}),'function_handle')
+						% don't do anything
+					else
+						self.(self.compartment_names{i}).(f{j}) = S.(f{j});
+					end
 				else
 					% maybe one level deeper? 
 					cond_name = f{j}(1:strfind(f{j},'_')-1);
 					if isfield(self.(self.compartment_names{i}),cond_name)
-						self.(self.compartment_names{i}).(cond_name).gbar = S.(f{j});
+						if ~isa(self.(self.compartment_names{i}).(cond_name).gbar,'function_handle')
+							self.(self.compartment_names{i}).(cond_name).gbar = S.(f{j});
+						end
 					end
 				end
 			end

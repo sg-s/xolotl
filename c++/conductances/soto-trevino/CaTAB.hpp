@@ -4,17 +4,17 @@
 //
 // Fast Calcium CONDUCTANCE
 // http://jn.physiology.org/content/94/1/590.short
-#ifndef CAT_AB
-#define CAT_AB
+#ifndef CATAB
+#define CATAB
 #include "../../conductance.hpp"
 
 //inherit conductance class spec
-class CaT_AB: public conductance {
+class CaTAB: public conductance {
 
 public:
 
     // specify parameters + initial conditions 
-    CaT_AB(double g_, double E_, double m_, double h_)
+    CaTAB(double g_, double E_, double m_, double h_)
     {
         gbar = g_;
         E = E_;
@@ -30,9 +30,9 @@ public:
     double tau_h(double V); 
 };
 
-void CaT_AB::connect(compartment *pcomp_) { container = pcomp_; }
+void CaTAB::connect(compartment *pcomp_) { container = pcomp_; }
 
-void CaT_AB::integrate(double V, double Ca, double dt)
+void CaTAB::integrate(double V, double Ca, double dt)
 {
     // update E by copying E_Ca from the cell 
     E = container->E_Ca;
@@ -46,9 +46,9 @@ void CaT_AB::integrate(double V, double Ca, double dt)
 }
 
 
-double CaT_AB::m_inf(double V) {return 1.0/(1.0 + exp((V+25)/-7.2));}
-double CaT_AB::h_inf(double V) {return 1.0/(1.0 + exp((V+36)/7));}
-double CaT_AB::tau_m(double V) {return 55 - 49.5/(1.0 + exp(-(V+58)/17));}
-double CaT_AB::tau_h(double V) {return 87.5 - 75/(1.0 + exp(-(V+50.0)/16.9));}
+double CaTAB::m_inf(double V) {return 1.0/(1.0 + exp((V+25)/-7.2));}
+double CaTAB::h_inf(double V) {return 1.0/(1.0 + exp((V+36)/7));}
+double CaTAB::tau_m(double V) {return 55 - 49.5/(1.0 + exp(-(V+58)/17));}
+double CaTAB::tau_h(double V) {return 87.5 - 75/(1.0 + exp(-(V+50.0)/16.9));}
 
 #endif

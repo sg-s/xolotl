@@ -9,22 +9,27 @@
 % serialize only coverts numerical values
 % strings are discarded 
 
-function [values,names] = serialize(self)
+function [values,names, is_relational] = serialize(self)
+
+% to do -- is-relational not supported for anything except compartment props
 
 values = {};
 names = {};
+is_relational = {};
 
 % first do the sim params
 names{end+1} = {'dt';'t_end'};
 values{end+1} = [self.dt; self.t_end];
+is_relational{end+1} = [false; false];
 
 % now do all the compartments
 for i = 1:length(self.compartment_names)
-	[v,n] = struct2vec(self.(self.compartment_names{i}));
+	[v,n, ir] = struct2vec(self.(self.compartment_names{i}));
 	% append compartment name to these
 	n = cellfun(@(x) [self.compartment_names{i} x],n,'UniformOutput',false);
 	names{end+1} = n;
 	values{end+1} = v;
+	is_relational{end+1} = ir;
 end
 
 % now do the synapses
