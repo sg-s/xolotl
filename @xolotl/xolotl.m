@@ -38,6 +38,10 @@ properties (Access = protected)
 	illegal_names = {'xolotl_network','compartment','conductance','controller','synapse','network'}; % list of illegal names for compartments, synpases and other objects
 end  % end protected props
 
+properties (GetAccess = protected)
+	skip_hash_check@logical = false
+end
+
 properties
 	controllers@cell = {}
 	dt@double = 50e-3; % ms
@@ -115,28 +119,30 @@ methods
 	function [V, Ca,I_clamp, cond_state, syn_state, cont_state] = integrate(self)
 
 		% check if we need to transpile or compile 
-		h = self.hash;
-		if isempty(self.linked_binary)
-			% doesn't exist -- check if we need to compile 
-			
-			if exist(joinPath(self.xolotl_folder,['mexBridge' h(1:6) '.cpp']),'file') == 2
-				% Ok, we have the C++ file. should we compile?
-				if exist(joinPath(self.xolotl_folder,['mexBridge' h(1:6) '.' self.OS_binary_ext]),'file') == 3
-					% update the linked_binary
-					self.linked_binary = ['mexBridge' h(1:6) '.' self.OS_binary_ext];
+		if ~self.skip_hash_check
+			h = self.hash;
+			if isempty(self.linked_binary)
+				% doesn't exist -- check if we need to compile 
+				
+				if exist(joinPath(self.xolotl_folder,['mexBridge' h(1:6) '.cpp']),'file') == 2
+					% Ok, we have the C++ file. should we compile?
+					if exist(joinPath(self.xolotl_folder,['mexBridge' h(1:6) '.' self.OS_binary_ext]),'file') == 3
+						% update the linked_binary
+						self.linked_binary = ['mexBridge' h(1:6) '.' self.OS_binary_ext];
+					else
+						self.compile;
+					end
 				else
+					% transpile and compile
+					self.transpile;
 					self.compile;
 				end
 			else
-				% transpile and compile
-				self.transpile;
-				self.compile;
-			end
-		else
-			% disp('check that it exists')
-			if exist(joinPath(self.xolotl_folder,['mexBridge' h(1:6) '.' self.OS_binary_ext]),'file') == 3
-			else
-				self.compile;
+				% disp('check that it exists')
+				if exist(joinPath(self.xolotl_folder,['mexBridge' h(1:6) '.' self.OS_binary_ext]),'file') == 3
+				else
+					self.compile;
+				end
 			end
 		end
 		

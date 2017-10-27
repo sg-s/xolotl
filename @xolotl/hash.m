@@ -11,6 +11,10 @@
 
 function h = hash(self)
 
+if self.skip_hash_check
+	h = '0000000';
+	return
+end
 
 [~,names] = self.serialize;
 h = {};
