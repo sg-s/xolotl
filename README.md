@@ -8,7 +8,7 @@
 
 ## Usage (C++)
 
-The simplest way to use `xolotl` is from C++. 
+The most basic way to use `xolotl` is from C++. 
 
 Set up a simple single-compartment neuron:
 
@@ -39,7 +39,7 @@ HH.integrate(50e-3);
 
 > Read the detailed documentation for MATLAB usage [here](docs/matlab/README.md)!
 
-`xolotl.m` is a MATLAB class that generates and compiles C++ wrapper code on the fly, and uses that to run simulations, while presenting a pseudo-object oriented interface within MATLAB. 
+`xolotl.m` is a MATLAB class that generates and compiles C++ wrapper code on the fly, and uses that to run simulations, while presenting a pseudo-object-oriented interface within MATLAB. 
 
 Set up a `xolotl` instance:
 
@@ -51,43 +51,38 @@ Set up a basic neuron and add some conductances:
 
 ```matlab
 x.addCompartment('AB',-60,0.02,10,0.0628,1,1443,3000,0.05,200,0);
-x.addConductance('AB','liu/NaV',1830,30);
-x.addConductance('AB','liu/CaT',23,30);
-x.addConductance('AB','liu/CaS',27,30);
-x.addConductance('AB','liu/ACurrent',246,-80);
-x.addConductance('AB','liu/KCa',980,-80);
-x.addConductance('AB','liu/Kd',610,-80);
-x.addConductance('AB','liu/HCurrent',10.1,-20);
-x.addConductance('AB','Leak',.99,-50);
+x.addConductance('AB','liu/NaV',@() 115/x.AB.A,30);
+x.addConductance('AB','liu/CaT',@() 1.44/x.AB.A,30);
+x.addConductance('AB','liu/CaS',@() 1.7/x.AB.A,30);
+x.addConductance('AB','liu/ACurrent',@() 15.45/x.AB.A,-80);
+x.addConductance('AB','liu/KCa',@() 61.54/x.AB.A,-80);
+x.addConductance('AB','liu/Kd',@() 38.31/x.AB.A,-80);
+x.addConductance('AB','liu/HCurrent',@() .6343/x.AB.A,-20);
+x.addConductance('AB','Leak',@() 0.0622/x.AB.A,-50);
+
 ```
 
-Inspect the neuron:
+Inspect the `xolotl` object you have configured:
 
 ```matlab
-x.AB
+x = 
 
-ans = 
-
-  struct with fields:
-
-           V: -70
-          Ca: 0.0500
-          Cm: 10
-           A: 0.0628
-           f: 1.4960
-      Ca_out: 3000
-       Ca_in: 0.0500
-      tau_Ca: 200
-         NaV: [1×1 struct]
-         CaT: [1×1 struct]
-         CaS: [1×1 struct]
-    ACurrent: [1×1 struct]
-         KCa: [1×1 struct]
-          Kd: [1×1 struct]
-    HCurrent: [1×1 struct]
-        Leak: [1×1 struct]
+xolotl object with:
+---------------------
++ AB  
+  > NaV (g=115/x.AB.A, E=30)
+  > CaT (g=1.44/x.AB.A, E=30)
+  > CaS (g=1.7/x.AB.A, E=30)
+  > ACurrent (g=15.45/x.AB.A, E=-80)
+  > KCa (g=61.54/x.AB.A, E=-80)
+  > Kd (g=38.31/x.AB.A, E=-80)
+  > HCurrent (g=.6343/x.AB.A, E=-20)
+  > Leak (g=0.0622/x.AB.A, E=-50)
+---------------------
 
 ```
+
+This tells you that there is one compartment (called `AB`), and that compartment has 8 types of channels in it. The maximum conductances and reversal potentials of each channel type are shown above. Note that the maximum conductances are functions of another parameter of the compartment, the area. Thus, changing the area of the `AB` compartment will also change the specific maxmimum conductances of all channels. 
 
 You can drill as deep as you want into the structure, and modify values if you want to. In this example, we're setting the reversal potential of the `NaV` channel on neuron `AB` to 50mV;
 
@@ -148,6 +143,8 @@ git clone https://github.com/sg-s/srinivas.gs_mtools
 git clone https://github.com/sg-s/puppeteer
 git clone https://github.com/sg-s/xolotl
 ```
+
+Finally, make sure you [configure MATLAB so that it is set up to delete files permanently](https://www.mathworks.com/help/matlab/ref/delete.html). Otherwise you will end up with a very large number of temporary files in your trash!
 
 
 ## Benchmarks
