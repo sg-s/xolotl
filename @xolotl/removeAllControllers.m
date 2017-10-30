@@ -4,7 +4,7 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% removes all controllers from xolotl object
+% help: removes all controllers from xolotl object
 %
 function removeAllControllers(self)
 	self.controllers = {};

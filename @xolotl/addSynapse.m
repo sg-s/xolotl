@@ -4,7 +4,7 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% add a synapse between two compartments
+% help: add a synapse between two compartments
 % syn_id should be a string that matches some synapse
 % comp1 and comp2 should be strings that match existing compartments 
 

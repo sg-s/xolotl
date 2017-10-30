@@ -4,8 +4,7 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% connects two compartments via an electrical
-% synapse
+% help: connects two compartments via an electrical synapse
 
 function connect(self,comp1,comp2,gbar)
 

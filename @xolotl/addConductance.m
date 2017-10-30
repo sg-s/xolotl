@@ -4,7 +4,7 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% add conductances to a compartment 
+% help: add conductances to a compartment 
 % cond_id should be a string that matches some
 % conductance header file in conductances/
 

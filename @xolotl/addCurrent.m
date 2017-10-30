@@ -4,7 +4,8 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% add external current to model
+% help: add external current to model
+% 
 
 function addCurrent(self,compartment,ext_current)
 	% does the compartment exist?

@@ -4,7 +4,7 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% add sushi-belt integral controller 
+% help: add sushi-belt integral controller 
 % a sushi belt controller only makes sense
 % when added to multiple compartments
 % that are ideally part of a neurite

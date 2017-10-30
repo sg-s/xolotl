@@ -4,7 +4,7 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% generate controllers for every conductance
+% help: generate controllers for every conductance
 % in "compartment", picking timescales so that
 % the ratio of conductances is predicted to be
 % maintained

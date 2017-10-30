@@ -8,6 +8,7 @@
 % uses openssl sha1 and writes to
 % the file system temporarily
 % to calcualte the hash
+% help: use OpenSSL SHA1 to compute hash of xolotl configuration
 
 function h = hash(self)
 

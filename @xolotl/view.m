@@ -4,7 +4,7 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% view a xolotl object as a graph
+% help: view a xolotl object as a graph
 % needs the graph toolbox
 % only shows the 
 

@@ -4,7 +4,7 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% gets all conductances of a given compartment, 
+% help: gets all conductances of a given compartment
 % identified by the compartment name 
 
 function gbar = getConductances(self,compartment)

@@ -4,7 +4,7 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% compiles the mexBridge using mex.
+% help: compiles a C++ file using mex
 % 
 
 function [] = compile(self)

@@ -4,7 +4,8 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% plots the activation functions of some conductance 
+% help: plots the activation functions of channel
+% 
 
 function ax = plot(self,cond_id,ax)
 	% search for cond_id

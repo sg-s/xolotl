@@ -4,7 +4,7 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% calls puppeteer, and creates a simulation you can manipulate live
+% help: integrates, and generates UI to manipulate parameters
 
 function manipulate(self)
 	% create a window to show all the traces

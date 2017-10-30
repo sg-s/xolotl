@@ -4,7 +4,7 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% renames a already existing compartment 
+% help: renames a already existing compartment 
 
 function rename(self,old_name,new_name)
 

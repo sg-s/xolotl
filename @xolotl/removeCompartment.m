@@ -4,7 +4,7 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% remove compartment from model 
+% help: remove compartment from xolotl object
 
 function removeCompartment(self,label, force)
 

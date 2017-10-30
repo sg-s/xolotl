@@ -4,7 +4,7 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% add compartment to model 
+% help: add compartment to model 
 % 
 % example usage:
 % x.addCompartment('AB', varargin)

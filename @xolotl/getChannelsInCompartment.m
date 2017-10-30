@@ -4,7 +4,7 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% finds channels in compartment i
+% help: finds channels in compartment i
 
 function these_channels = getChannelsInCompartment(self,i)
 	assert(isnumeric(1),'Argument should be the compartment #')

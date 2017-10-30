@@ -4,7 +4,7 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% add integral controller, as in O'Leary 2014 
+% help: add integral controller to compartment, conductance 
 % example:
 % x.addIntegralController('AB','NaV',100,100)
 

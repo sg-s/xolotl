@@ -1,4 +1,11 @@
-function synaptic_trace = getSynapticTrace(self)
+%              _       _   _ 
+%   __  _____ | | ___ | |_| |
+%   \ \/ / _ \| |/ _ \| __| |
+%    >  < (_) | | (_) | |_| |
+%   /_/\_\___/|_|\___/ \__|_|
+%
+% help: integrate and calcualte synaptic currents
+function synaptic_trace = getSynapticCurrents(self)
   % fetches the synaptic time-traces
   % for a xolotl object
   % as a cell of matrices
@@ -35,5 +42,4 @@ function synaptic_trace = getSynapticTrace(self)
       end
     end
   end
-  synaptic_trace
 end

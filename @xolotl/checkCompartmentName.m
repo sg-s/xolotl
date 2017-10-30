@@ -4,7 +4,8 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% check that compartment name is legal
+% 
+% help: check that compartment name is legal
 
 function ok = checkCompartmentName(self,comp_name)
 

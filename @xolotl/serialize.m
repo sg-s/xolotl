@@ -4,7 +4,8 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% serializes a xolotl object so you can run
+% help: serializes a xolotl object, discards string values
+%  so you can run
 % the underlying binary without xolotl
 % serialize only coverts numerical values
 % strings are discarded 

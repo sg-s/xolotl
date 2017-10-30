@@ -4,7 +4,7 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% delete all mexBridge files and binaries
+% help: delete all mexBridge files and binaries
 
 function cleanup(self)
 	f = self.xolotl_folder;

@@ -4,8 +4,7 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% copies a compartment of xolotl, with all conductances
-% synapses and controllers not copied over
+% help: copy a compartment, with all conductances 
 
 function copy(self,compartment,copy_name)
 	assert(any(strcmp(compartment,properties(self))),'Unknown compartment')

@@ -1,3 +1,11 @@
+%              _       _   _ 
+%   __  _____ | | ___ | |_| |
+%   \ \/ / _ \| |/ _ \| __| |
+%    >  < (_) | | (_) | |_| |
+%   /_/\_\___/|_|\___/ \__|_|
+%
+% help: find spikes in voltage trace(s)
+% 
 function spiketimes = findSpikes(V)
 	n = size(V,2);
 	spiketimes = NaN(1e3,n);

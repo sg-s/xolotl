@@ -1,3 +1,11 @@
+%              _       _   _ 
+%   __  _____ | | ___ | |_| |
+%   \ \/ / _ \| |/ _ \| __| |
+%    >  < (_) | | (_) | |_| |
+%   /_/\_\___/|_|\___/ \__|_|
+%
+% help: integrate and calculate currents
+% 
 function current_trace = getCurrentTrace(self)
   % produces traces of the currents over time
   % for each compartment of a xolotl object

@@ -4,7 +4,7 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% view the C++ mexBridge code in your default editor
+% help: view the C++ mexBridge code in your default editor
 
 function viewCode(self)
 	h = self.hash;

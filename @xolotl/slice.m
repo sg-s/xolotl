@@ -4,7 +4,7 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% slice an existing compartment into N sections, with
+% help: slice an existing compartment into N sections
 % elctrical synapses b/w them with strength gbar
 % all previously existing conductances are preserved 
 
