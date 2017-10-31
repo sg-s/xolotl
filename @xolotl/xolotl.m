@@ -270,6 +270,8 @@ end % end methods
 methods (Static)
 
 	spiketimes = findSpikes(V)
+	findActivationFunction(varargin)
+	findInactivationFunction(varargin)
 
 
 end % end static methods

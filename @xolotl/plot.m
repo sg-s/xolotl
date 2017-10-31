@@ -88,13 +88,27 @@ function ax = plot(self,cond_id,ax)
 	xlabel(ax(2),'V (mV)')
 	ylabel(ax(2),'h_{inf}')
 
-	plot(ax(3),V,tau_m(V),'DisplayName',cond_name);
+	if length(tau_m(V)) == 1
+		tmV = tau_m(V) + 0*V;
+	else
+		tmV = tau_m(V);
+	end
+
+	plot(ax(3),V,tmV,'DisplayName',cond_name);
 	ylabel(ax(3),'\tau_{m} (ms)')
 	xlabel(ax(3),'V (mV)')
 	set(ax(3),'YScale','log')
 
+
+
 	try
-		plot(ax(4),V,tau_h(V),'DisplayName',cond_name);
+		if length(tau_h(V)) == 1
+			thV = tau_h(V) + 0*V;
+		else
+			thV = tau_h(V);
+		end
+
+		plot(ax(4),V,thV,'DisplayName',cond_name);
 	catch
 		plot(ax(4),NaN,NaN,'DisplayName',cond_name);
 	end
