@@ -44,7 +44,7 @@ void DmNaV::integrate(double V, double Ca, double dt)
 
 double DmNaV::m_inf(double V) {return 1.0/(1.0+exp((V+34.3)/-8.79));}
 double DmNaV::h_inf(double V) {return 1.0/(1.0+exp((V+48)/6));}
-double DmNaV::tau_m(double V) {return 3 - 2.4/(1+exp((V+33.6)/-9.0));}
+double DmNaV::tau_m(double V) {return (3 - 2.4/(1+exp((V+33.6)/-9.0)))/5;}
 double DmNaV::tau_h(double V) {return 3 - 2.53/(1+exp((V+22.8)/-3.5));}
 
 #endif
