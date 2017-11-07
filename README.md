@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/sg-s/xolotl.svg?branch=master)](https://travis-ci.org/sg-s/xolotl)
+[![GitHub last commit](https://img.shields.io/github/last-commit/sg-s/xolotl.svg)]()
 
 ![](https://user-images.githubusercontent.com/6005346/30719217-a1e8d54a-9ef0-11e7-8889-c284ac13163e.png)
 
