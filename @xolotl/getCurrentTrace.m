@@ -1,11 +1,11 @@
-%              _       _   _ 
+%              _       _   _
 %   __  _____ | | ___ | |_| |
 %   \ \/ / _ \| |/ _ \| __| |
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
 % help: integrate and calculate currents
-% 
+%
 function current_trace = getCurrentTrace(self)
   % produces traces of the currents over time
   % for each compartment of a xolotl object
@@ -48,17 +48,32 @@ function current_trace = getCurrentTrace(self)
       % find ionic gating variable product
       cond_path       = self.(self.compartment_names{comp_index}).(fields{curr_index + length(self.compartment_props)}).full_path;
       cond_file       = fileread(cond_path);
+      % activation
       if strfind(cond_file,'gbar*m*m*m*m') ~= []
-        IGVs(:,curr_index) = act .* act .* act .* act .* ict;
+        act_prod = act .* act .* act .* act;
       elseif strfind(cond_file,'gbar*m*m*m') ~= []
-        IGVs(:,curr_index) = act .* act .* act .* ict;
+        act_prod = act .* act .* act;
       elseif strfind(cond_file,'gbar*m*m') ~= []
-        IGVs(:,curr_index) = act .* act .* ict;
+        act_prod = act .* act;
       elseif strfind(cond_file,'gbar*m') ~= []
-        IGVs(:,curr_index) = act .* ict;
+        act_prod = act;
       else
-        IGVs(:,curr_index) = act .* ict;
+        act_prod = act;
       end
+      % inactivation
+      if strfind(cond_file,'m*h*h*h*h') ~= []
+        ict_prod = ict .* ict .* ict .* ict;
+      elseif strfind(cond_file,'m*h*h*h') ~= []
+        ict_prod = ict .* ict .* ict;
+      elseif strfind(cond_file,'m*h*h') ~= []
+        ict_prod = ict .* ict;
+      elseif strfind(cond_file,'m*h') ~= []
+        ict_prod = ict;
+      else
+        ict_prod = ict;
+      end
+      % activation and inactivation
+      IGVs(:,curr_index) = act_prod .* ict_prod;
     end
     % fill with n_steps x n_currents matrices
     comp_currents{comp_index} = IGVs;
