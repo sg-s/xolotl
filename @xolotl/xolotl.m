@@ -143,6 +143,29 @@ methods
 		end
 	end
 
+
+	function set.I_ext(self,value)
+		time = self.dt:self.dt:self.t_end;
+		if isscalar(value)
+			if length(self.compartment_names) > 1
+				error('More than one compartment. Which compartment did you want to inject current into?')
+			end
+			if length(value) == 1
+				value = value + 0*time;
+			else
+				
+				assert(length(time) == length(value),'I_ext has the wrong size')
+			end
+		else
+		
+	
+			assert(size(value,1) == length(time),'I_ext has the wrong size')
+			assert(size(value,2) == length(self.compartment_names),'I_ext has the wrong size')
+
+		end
+		self.I_ext = value;
+	end
+
 	function set.V_clamp(self,value)
 		assert(isvector(value),'V_clamp must be a vector');
 		value = value(:);

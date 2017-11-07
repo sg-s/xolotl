@@ -38,7 +38,7 @@ if length(self.synapses)> 0
 	S = {}; SV = [];
 	for i = 1:length(self.synapses)
 		S{end+1} = [self.synapses(i).pre '_2_' self.synapses(i).post '_' self.synapses(i).type(1:4) '_gbar'];
-		SV(end+1) = self.synapses(i).gbar;
+		SV(end+1) = funeval(self.synapses(i).gbar);
 		S{end+1} = [self.synapses(i).pre '_2_' self.synapses(i).post '_' self.synapses(i).type(1:4) '_s'];
 		SV(end+1) = self.synapses(i).state;
 	end
