@@ -43,6 +43,11 @@ void IntegralController::integrate(double Ca_error, double A, double dt)
     double g = (channel->gbar)*A;
     (channel->gbar) += ((dt/tau_g)*(m - g))/A;
 
+    // make sure it doesn't go below zero
+    if ((channel->gbar) < 0) {
+        (channel->gbar) = 0;
+    }
+
 
 }
 
