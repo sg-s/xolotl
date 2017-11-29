@@ -79,10 +79,30 @@ methods (Access = protected)
         		end
         		info_str = [' (g=' g ', E=' E ')'];
 
+        		% check if there is a controller for this channel
+        		if ~isempty(self.controllers)
+        			tc = [compartment '_' C{j}];
+        			for k = 1:length(self.controllers)
+
+        				if strcmp(self.controllers{k}.channel,tc)
+
+        					url2 = ['matlab:' inputname(1) '.controllers{' oval(k) '}'];
+        					url_str2 = ['<a href="' url2 '">' self.controllers{k}.type '</a>'];
+
+        					info_str = [info_str '  <-- ' url_str2 ];
+        				end
+        			end
+        		end
+
         		fprintf(['  > ' url_str info_str '\n'])
         	end
         	fprintf('---------------------\n')
         end
+
+        % show controllers
+        if length(self.controllers) == 0
+        	fprintf('No contollers configured\n')
+       	end
 
     end
 
@@ -236,8 +256,12 @@ methods
 
 		% vectorize the current state 
 		arguments = self.serialize;
-
 		[~,f]=fileparts(self.linked_binary);
+		if self.closed_loop & nargout == 0
+			% use the NOCL version
+			f = [f 'NOCL'];
+		end
+
 		f = str2func(f);
 		[results{1:6}] = f(arguments{:});
 

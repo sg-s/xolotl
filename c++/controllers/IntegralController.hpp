@@ -39,6 +39,11 @@ void IntegralController::integrate(double Ca_error, double A, double dt)
     // integrate mRNA
     m += (dt/tau_m)*(Ca_error);
 
+    if (m < 0) {
+        m = 0;
+    }
+
+
     // calculate conductance, not conductance density
     double g = (channel->gbar)*A;
     (channel->gbar) += ((dt/tau_g)*(m - g))/A;

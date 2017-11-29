@@ -31,8 +31,8 @@ if usejava('jvm')
 	%
 	figure, hold on
 	for i = 1:length(I_steps)
-		I_ext(:) = I_steps(i);
-		x.I_ext = I_ext;
+		I_ext = I_steps(i);
+		x.I_ext = I_ext(:);
 		V = x.integrate;
 		n_spikes = length(computeOnsOffs(V>0));
 		plot(I_steps(i),n_spikes,'k+')

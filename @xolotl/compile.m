@@ -16,4 +16,9 @@ function [] = compile(self)
 
 	self.linked_binary = [pathEnd(mexBridge_name) '.' self.OS_binary_ext];
 
+	% also compile the NOCL version
+	mexBridge_name = [joinPath(self.xolotl_folder,'mexBridge') h(1:6) 'NOCL.cpp'];
+	assert(exist(mexBridge_name,'file')==2,'NOCL C++ file to compile does not exist. Use "transpile" before compiling')
+	mex('-silent',mexBridge_name,'-outdir',self.xolotl_folder)
+
 end
