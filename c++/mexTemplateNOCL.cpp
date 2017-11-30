@@ -79,7 +79,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     plhs[0] = mxCreateDoubleMatrix(n_comp, 1, mxREAL); // V
     plhs[1] = mxCreateDoubleMatrix(2*n_comp, 1, mxREAL); // Ca + E_Ca
-    plhs[2] = mxCreateDoubleMatrix(1, nsteps, mxREAL); // I_clamp, not used
+    plhs[2] = mxCreateDoubleMatrix(1, 1, mxREAL); // I_clamp, not used
     plhs[3] = mxCreateDoubleMatrix(cond_state_dim, 1, mxREAL); // cond_state
     plhs[4] = mxCreateDoubleMatrix(2*n_synapses, 1, mxREAL); // synapse gbar + state
     plhs[5] = mxCreateDoubleMatrix(2*n_controllers, 1, mxREAL); // controllers gbar + mrna
@@ -115,7 +115,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         //xolotl:enable_when_clamped
         //STG.integrateClamp(V_clamp[i],dt);
         //xolotl:enable_when_clamped
-        //output_I_clamp[i] = STG.comp[0]->I_clamp;
+        //output_I_clamp = STG.comp[0]->I_clamp;
 
 
     }

@@ -194,7 +194,11 @@ methods
 	end
 
 
-	function [V, Ca,I_clamp, cond_state, syn_state, cont_state] = integrate(self)
+	function [V, Ca,I_clamp, cond_state, syn_state, cont_state] = integrate(self, use_nocl)
+
+		if nargin < 2
+			use_nocl = false;
+		end
 
 		% check if we need to transpile or compile 
 		if ~self.skip_hash_check
@@ -259,6 +263,8 @@ methods
 		[~,f]=fileparts(self.linked_binary);
 		if self.closed_loop & nargout == 0
 			% use the NOCL version
+			f = [f 'NOCL'];
+		elseif use_nocl 
 			f = [f 'NOCL'];
 		end
 

@@ -8,7 +8,10 @@
 % 
 
 function [] = compile(self)
+	shc = self.skip_hash_check;
+	self.skip_hash_check = false;
 	h = self.hash;
+	self.skip_hash_check = shc;
 	mexBridge_name = [joinPath(self.xolotl_folder,'mexBridge') h(1:6) '.cpp'];
 	assert(exist(mexBridge_name,'file')==2,'C++ file to compile does not exist. Use "transpile" before compiling')
 	mex('-silent',mexBridge_name,'-outdir',self.xolotl_folder)
