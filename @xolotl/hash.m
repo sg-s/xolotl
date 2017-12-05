@@ -30,6 +30,7 @@ end
 lineWrite('temp.xolotl',h)
 
 [~,h] = system('openssl sha1 temp.xolotl');
-h = strtrim(strrep(h,'SHA1(temp.xolotl)=',''));
+z = strfind(h,'SHA1(temp.xolotl)=');
+h = strtrim(h(z+19:end));
 delete('temp.xolotl');
 
