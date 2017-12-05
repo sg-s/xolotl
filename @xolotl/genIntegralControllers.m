@@ -58,7 +58,7 @@ for i = 1:length(self.compartment_names)
 		self.(compartment).Ca_target = mean(Ca(z:end,i));
 
 		gbar = self.getConductances(compartment);
-		all_tau = (tau_m_ref.*gbar(1))./gbar;
+		all_tau = round((tau_m_ref.*gbar(1))./gbar);
 
 		for j = 1:length(channels)
 			if ~strcmp(channels{j},'Leak')
