@@ -38,5 +38,9 @@ function addConductance(self,compartment,cond_id,gbar,E,m,h)
 	self.(compartment).(cond_name).h = h;
 
 	% add this to conductance_headers, if it's not already there
-	self.conductance_headers = [self.conductance_headers; self.available_conductances{cond_file}];
+	add_this = strrep(self.available_conductances{cond_file},self.xolotl_folder,'');
+	if strcmp(add_this(1),oss)
+		add_this(1) = [];
+	end
+	self.conductance_headers = [self.conductance_headers; add_this];
 end

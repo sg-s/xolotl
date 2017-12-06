@@ -47,4 +47,10 @@ end
 
 
 % add this to controller, if it's not already there
-self.controller_headers = [self.controller_headers; self.available_controllers{cont_file}];
+
+add_this = strrep(self.available_synapses{cont_file},self.xolotl_folder,'');
+if strcmp(add_this(1),oss)
+	add_this(1) = [];
+end
+
+self.controller_headers = [self.controller_headers; add_this];

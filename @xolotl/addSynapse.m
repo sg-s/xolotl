@@ -37,5 +37,10 @@ function addSynapse(self,syn_id,comp1,comp2,gbar)
 	self.synapses  = [self.synapses; S];
 
 	% add this to synapse_headers, if it's not already there
-	self.synapse_headers = [self.synapse_headers; self.available_synapses{syn_file}];
+	add_this = strrep(self.available_synapses{syn_file},self.xolotl_folder,'');
+	if strcmp(add_this(1),oss)
+		add_this(1) = [];
+	end
+
+	self.synapse_headers = [self.synapse_headers; add_this];
 end

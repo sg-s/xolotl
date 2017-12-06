@@ -24,17 +24,20 @@ properties (SetAccess = protected)
 	linked_binary@char
 	compartment_names = {};
 	OS_binary_ext % OS-specific
+
+	conductance_headers = {};
+	controller_headers = {};
+	synapse_headers = {};
+	xolotl_folder
+	cpp_folder
 	
 end  % end set protected props
 
 properties (Access = protected)
-	conductance_headers = {};
-	controller_headers = {};
-	synapse_headers = {};
+	
 	sections@cell = {};
 
-	xolotl_folder
-	cpp_folder
+	
 
 	dyn_prop_handles % handles to dynamic properties 
 	illegal_names = {'xolotl_network','compartment','conductance','controller','synapse','network'}; % list of illegal names for compartments, synpases and other objects
