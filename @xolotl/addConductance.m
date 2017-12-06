@@ -31,16 +31,19 @@ function addConductance(self,compartment,cond_id,gbar,E,m,h)
 
 	cond_name = pathEnd(self.available_conductances{cond_file});
 
-	self.(compartment).(cond_name).full_path = self.available_conductances{cond_file};
+
+	full_path = strrep(self.available_conductances{cond_file},self.xolotl_folder,'');
+	if strcmp(full_path(1),oss)
+		full_path(1) = [];
+	end
+
+	self.(compartment).(cond_name).full_path = full_path;
 	self.(compartment).(cond_name).gbar = gbar;
 	self.(compartment).(cond_name).E = E;
 	self.(compartment).(cond_name).m = m;
 	self.(compartment).(cond_name).h = h;
 
 	% add this to conductance_headers, if it's not already there
-	add_this = strrep(self.available_conductances{cond_file},self.xolotl_folder,'');
-	if strcmp(add_this(1),oss)
-		add_this(1) = [];
-	end
-	self.conductance_headers = [self.conductance_headers; add_this];
+	
+	self.conductance_headers = [self.conductance_headers; full_path];
 end

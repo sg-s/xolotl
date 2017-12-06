@@ -31,7 +31,13 @@ cont_name = pathEnd(self.available_controllers{cont_file});
 S.type = cont_name;
 S.channel = [compartment '_' conductance];
 S.compartment = compartment;
-S.cpp_path = self.available_controllers{cont_file};
+
+cpp_path = strrep(self.available_controllers{cont_file},self.xolotl_folder,'');
+if strcmp(cpp_path(1),oss)
+	cpp_path(1) = [];
+end
+
+S.cpp_path = cpp_path;
 
 % controller-specfic parameters and variables
 S.tau_m = tau_m;
@@ -47,10 +53,4 @@ end
 
 
 % add this to controller, if it's not already there
-
-add_this = strrep(self.available_controllers{cont_file},self.xolotl_folder,'');
-if strcmp(add_this(1),oss)
-	add_this(1) = [];
-end
-
-self.controller_headers = [self.controller_headers; add_this];
+self.controller_headers = [self.controller_headers; S.cpp_path];
