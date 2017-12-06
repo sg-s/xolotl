@@ -48,7 +48,7 @@ end
 
 % add this to controller, if it's not already there
 
-add_this = strrep(self.available_synapses{cont_file},self.xolotl_folder,'');
+add_this = strrep(self.available_controllers{cont_file},self.xolotl_folder,'');
 if strcmp(add_this(1),oss)
 	add_this(1) = [];
 end
