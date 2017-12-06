@@ -23,6 +23,7 @@ properties (SetAccess = protected)
 	available_synapses
 	linked_binary@char
 	compartment_names = {};
+	OS_binary_ext % OS-specific
 	
 end  % end set protected props
 
@@ -30,9 +31,6 @@ properties (Access = protected)
 	conductance_headers = {};
 	controller_headers = {};
 	synapse_headers = {};
-	OS_binary_ext % OS-specific
-	xolotl_folder
-	cpp_folder
 	sections@cell = {};
 	dyn_prop_handles % handles to dynamic properties 
 	illegal_names = {'xolotl_network','compartment','conductance','controller','synapse','network'}; % list of illegal names for compartments, synpases and other objects
@@ -110,15 +108,15 @@ end % end protected methods
 
 methods 
 	function self = xolotl()
-		self.xolotl_folder = fileparts(fileparts(which(mfilename)));
-		self.cpp_folder = joinPath(self.xolotl_folder,'c++');
+		xolotl_folder = fileparts(fileparts(which(mfilename)));
+		cpp_folder = joinPath(xolotl_folder,'c++');
 
 		% read props from compartment.h
-		cppfilename = joinPath(self.cpp_folder,'compartment.hpp');
+		cppfilename = joinPath(cpp_folder,'compartment.hpp');
 		self.compartment_props = findCPPClassMembers(cppfilename);
 
 		% make a list of the available conductances
-		available_conductances = getAllFiles(joinPath(self.cpp_folder,'conductances'));
+		available_conductances = getAllFiles(joinPath(cpp_folder,'conductances'));
 		rm_this = true(length(available_conductances),1);
 		for i = 1:length(available_conductances)
 			[~,cond_name,ext] = fileparts(available_conductances{i});
@@ -130,7 +128,7 @@ methods
 		self.available_conductances = available_conductances(~rm_this);
 
 		% make a list of available controllers
-		available_controllers = getAllFiles(joinPath(self.cpp_folder,'controllers'));
+		available_controllers = getAllFiles(joinPath(cpp_folder,'controllers'));
 		rm_this = true(length(available_controllers),1);
 		for i = 1:length(available_controllers)
 			[~,cont_name,ext] = fileparts(available_controllers{i});
@@ -143,7 +141,7 @@ methods
 
 
 		% make a list of the available synapses
-		available_synapses = getAllFiles(joinPath(self.cpp_folder,'synapses'));
+		available_synapses = getAllFiles(joinPath(cpp_folder,'synapses'));
 		rm_this = true(length(available_synapses),1);
 		for i = 1:length(available_synapses)
 			[~,syn_name,ext] = fileparts(available_synapses{i});
@@ -196,6 +194,9 @@ methods
 
 	function [V, Ca,I_clamp, cond_state, syn_state, cont_state] = integrate(self, use_nocl)
 
+		xolotl_folder = fileparts(fileparts(which(mfilename)));
+		cpp_folder = joinPath(xolotl_folder,'c++');
+
 		if nargin < 2
 			use_nocl = false;
 		end
@@ -208,12 +209,12 @@ methods
 				if self.debug_mode
 					 cprintf('green','[DEBUG] No linked binary\n');
 				end
-				if exist(joinPath(self.xolotl_folder,['mexBridge' h(1:6) '.cpp']),'file') == 2
+				if exist(joinPath(xolotl_folder,['mexBridge' h(1:6) '.cpp']),'file') == 2
 					if self.debug_mode
 						cprintf('green','[DEBUG] C++ file exists\n');
 					end
 					% Ok, we have the C++ file. should we compile?
-					if exist(joinPath(self.xolotl_folder,['mexBridge' h(1:6) '.' self.OS_binary_ext]),'file') == 3
+					if exist(joinPath(xolotl_folder,['mexBridge' h(1:6) '.' self.OS_binary_ext]),'file') == 3
 						% update the linked_binary
 						if self.debug_mode
 							cprintf('green','[DEBUG] Binary exists, linking...\n');
@@ -237,7 +238,7 @@ methods
 				if self.debug_mode
 					cprintf('green','[DEBUG] Checking for linked binary...\n');
 				end
-				if exist(joinPath(self.xolotl_folder,['mexBridge' h(1:6) '.' self.OS_binary_ext]),'file') == 3
+				if exist(joinPath(xolotl_folder,['mexBridge' h(1:6) '.' self.OS_binary_ext]),'file') == 3
 					if self.debug_mode
 						cprintf('green','[DEBUG] Linked binary exists.\n');
 					end

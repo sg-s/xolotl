@@ -7,7 +7,9 @@
 % help: delete all mexBridge files and binaries
 
 function cleanup(self)
-	f = self.xolotl_folder;
+
+	f = fileparts(fileparts(which(mfilename)));
+
 	allfiles = dir([f oss '*mexBridge*']);
 	for i = 1:length(allfiles)
 		delete([f oss allfiles(i).name]);

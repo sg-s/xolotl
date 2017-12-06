@@ -15,6 +15,7 @@ phi = (2*f*F*vol)/tau_Ca;
 
 
 x = xolotl;
+x.cleanup;
 x.closed_loop = false;
 x.dt = 50e-3;
 x.t_end = 1e3;

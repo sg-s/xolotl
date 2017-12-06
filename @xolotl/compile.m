@@ -12,16 +12,20 @@ function [] = compile(self)
 	self.skip_hash_check = false;
 	h = self.hash;
 	self.skip_hash_check = shc;
-	mexBridge_name = [joinPath(self.xolotl_folder,'mexBridge') h(1:6) '.cpp'];
+
+	xolotl_folder = fileparts(fileparts(which(mfilename)));
+	cpp_folder = joinPath(xolotl_folder,'c++');
+
+	mexBridge_name = [joinPath(xolotl_folder,'mexBridge') h(1:6) '.cpp'];
 	assert(exist(mexBridge_name,'file')==2,'C++ file to compile does not exist. Use "transpile" before compiling')
-	mex('-silent',mexBridge_name,'-outdir',self.xolotl_folder)
+	mex('-silent',mexBridge_name,'-outdir',xolotl_folder)
 	% update linked_binary
 
 	self.linked_binary = [pathEnd(mexBridge_name) '.' self.OS_binary_ext];
 
 	% also compile the NOCL version
-	mexBridge_name = [joinPath(self.xolotl_folder,'mexBridge') h(1:6) 'NOCL.cpp'];
+	mexBridge_name = [joinPath(xolotl_folder,'mexBridge') h(1:6) 'NOCL.cpp'];
 	assert(exist(mexBridge_name,'file')==2,'NOCL C++ file to compile does not exist. Use "transpile" before compiling')
-	mex('-silent',mexBridge_name,'-outdir',self.xolotl_folder)
+	mex('-silent',mexBridge_name,'-outdir',xolotl_folder)
 
 end

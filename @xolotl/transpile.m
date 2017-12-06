@@ -10,6 +10,7 @@
 % in transpileCore
 
 function transpile(self)
+
 	shc = self.skip_hash_check;
 	self.skip_hash_check = false;
 	h = self.hash;
