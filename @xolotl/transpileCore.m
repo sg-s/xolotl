@@ -10,11 +10,8 @@
 
 function transpileCore(self,in_file,out_file)
 
-	xolotl_folder = fileparts(fileparts(which(mfilename)));
-	cpp_folder = joinPath(xolotl_folder,'c++');
-
 	% read lines from mexTemplate
-	cppfilename = joinPath(cpp_folder,in_file);
+	cppfilename = joinPath(self.cpp_folder,in_file);
 	lines = lineRead(cppfilename);
 
 	% insert header files ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -303,6 +300,6 @@ function transpileCore(self,in_file,out_file)
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% write lines into a C++ file that we can identify by hash
 	
-	mexBridge_name = joinPath(xolotl_folder, out_file);
+	mexBridge_name = joinPath(self.xolotl_folder, out_file);
 	lineWrite(mexBridge_name,lines);
 end % end transpileCore

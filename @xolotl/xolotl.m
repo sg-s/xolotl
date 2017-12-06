@@ -32,6 +32,10 @@ properties (Access = protected)
 	controller_headers = {};
 	synapse_headers = {};
 	sections@cell = {};
+
+	xolotl_folder
+	cpp_folder
+
 	dyn_prop_handles % handles to dynamic properties 
 	illegal_names = {'xolotl_network','compartment','conductance','controller','synapse','network'}; % list of illegal names for compartments, synpases and other objects
 end  % end protected props
@@ -108,57 +112,7 @@ end % end protected methods
 
 methods 
 	function self = xolotl()
-		xolotl_folder = fileparts(fileparts(which(mfilename)));
-		cpp_folder = joinPath(xolotl_folder,'c++');
-
-		% read props from compartment.h
-		cppfilename = joinPath(cpp_folder,'compartment.hpp');
-		self.compartment_props = findCPPClassMembers(cppfilename);
-
-		% make a list of the available conductances
-		available_conductances = getAllFiles(joinPath(cpp_folder,'conductances'));
-		rm_this = true(length(available_conductances),1);
-		for i = 1:length(available_conductances)
-			[~,cond_name,ext] = fileparts(available_conductances{i});
-			if strcmp(ext,'.hpp')
-				self.illegal_names{end+1} = cond_name;
-				rm_this(i) = false;
-			end
-		end
-		self.available_conductances = available_conductances(~rm_this);
-
-		% make a list of available controllers
-		available_controllers = getAllFiles(joinPath(cpp_folder,'controllers'));
-		rm_this = true(length(available_controllers),1);
-		for i = 1:length(available_controllers)
-			[~,cont_name,ext] = fileparts(available_controllers{i});
-			if strcmp(ext,'.hpp')
-				self.illegal_names{end+1} = cont_name;
-				rm_this(i) = false;
-			end
-		end
-		self.available_controllers = available_controllers(~rm_this);
-
-
-		% make a list of the available synapses
-		available_synapses = getAllFiles(joinPath(cpp_folder,'synapses'));
-		rm_this = true(length(available_synapses),1);
-		for i = 1:length(available_synapses)
-			[~,syn_name,ext] = fileparts(available_synapses{i});
-			if strcmp(ext,'.hpp')
-				self.illegal_names{end+1} = syn_name;
-				rm_this(i) = false;
-			end
-		end
-		self.available_synapses = available_synapses(~rm_this);
-
-		if ismac
-			self.OS_binary_ext = 'mexmaci64';
-		elseif ispc 
-			self.OS_binary_ext = 'mexw64';
-		else
-			self.OS_binary_ext = 'mexa64';
-		end
+		self.rebase;
 	end
 
 
