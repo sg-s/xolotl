@@ -174,7 +174,7 @@ function transpileCore(self,in_file,out_file)
 		this_type = this_controller.type;
 
 		% figure out the C++ constructor for this type 
-		constructor_args = findCPPClassMembers(self.controllers{i}.cpp_path);
+		constructor_args = findCPPClassMembers(joinPath(self.xolotl_folder,self.controllers{i}.cpp_path));
 
 		% figure out constructor args from structure
 		fn = fieldnames(this_controller);
