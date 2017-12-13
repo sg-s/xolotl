@@ -106,7 +106,7 @@ methods (Access = protected)
 
         % show controllers
         if length(self.controllers) == 0
-        	fprintf('No contollers configured\n')
+        	fprintf('No controllers configured\n')
        	end
 
     end
