@@ -13,32 +13,28 @@ class Leak: public conductance {
 public:
 
     // specify parameters + initial conditions 
-    Leak(double g_, double E_, double m_, double h_)
+    Leak(double g_, double E_, double m_, double h_, double Q_g_, double Q_tau_m_, double Q_tau_h_)
     {
         gbar = g_;
         E = E_;
         m = 1;
         h = 1;
-        g = gbar;
+        
+
+        Q_g = Q_g_;
+        Q_tau_m = Q_tau_m_;
+        Q_tau_h = Q_tau_h_;
     }
     
-    // specify parameters + initial conditions 
-    Leak(double g_, double E_)
-    {
-        gbar = g_;
-        E = E_;
-        m = 1;
-        h = 1;
-        g = gbar;
-    }
 
-    void integrate(double V, double Ca, double dt);
+
+    void integrate(double V, double Ca, double dt, double delta_temp);
     void connect(compartment *pcomp_);
 };
 
 void Leak::connect(compartment *pcomp_) {container = pcomp_;}
 
-void Leak::integrate(double V, double Ca, double dt) {
+void Leak::integrate(double V, double Ca, double dt, double delta_temp) {
     // do nothing
 }
 

@@ -55,3 +55,5 @@ x.addSynapse('Glut','LP','AB',30);
 x.dt = 50e-3;
 x.t_end = 5000;
 
+x.transpile;
+x.compile;

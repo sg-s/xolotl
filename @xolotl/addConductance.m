@@ -8,7 +8,9 @@
 % cond_id should be a string that matches some
 % conductance header file in conductances/
 
-function addConductance(self,compartment,cond_id,gbar,E,m,h)
+function addConductance(self,compartment,cond_id,gbar,E,m,h,Q_g, Q_tau_m, Q_tau_h)
+
+
 	assert(any(strcmp(compartment,properties(self))),'Unknown compartment')
 
 	% search for cond_id
@@ -28,6 +30,11 @@ function addConductance(self,compartment,cond_id,gbar,E,m,h)
 	if nargin < 7
 		h = 1;
 	end
+	if nargin < 10
+		Q_g = 1;
+		Q_tau_m = 1;
+		Q_tau_h = 1;
+	end
 
 	cond_name = pathEnd(self.available_conductances{cond_file});
 
@@ -42,6 +49,10 @@ function addConductance(self,compartment,cond_id,gbar,E,m,h)
 	self.(compartment).(cond_name).E = E;
 	self.(compartment).(cond_name).m = m;
 	self.(compartment).(cond_name).h = h;
+
+	self.(compartment).(cond_name).Q_g = Q_g;
+	self.(compartment).(cond_name).Q_tau_m = Q_tau_m;
+	self.(compartment).(cond_name).Q_tau_h = Q_tau_h;
 
 	% add this to conductance_headers, if it's not already there
 	

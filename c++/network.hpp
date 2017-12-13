@@ -28,8 +28,8 @@ public:
     network() {}
 
     // begin function declarations
-    void integrate(double,double *);
-    void integrateClamp(double, double);
+    void integrate(double,double *, double);
+    void integrateClamp(double, double, double);
     void addCompartment(compartment*);
 
 };
@@ -45,7 +45,7 @@ void network::addCompartment(compartment *comp_)
 // multiple compartments under normal
 // conditions. Don't use if something is
 // being voltage clamped!
-void network::integrate(double dt,double * I_ext_now)
+void network::integrate(double dt,double * I_ext_now, double delta_temperature)
 {
     int n_comp = (int) comp.size(); // these many compartments
     // integrate all channels in all compartments
@@ -61,10 +61,10 @@ void network::integrate(double dt,double * I_ext_now)
         // integrate controllers
         comp[i]->integrateControllers(Ca_prev, dt);
 
-        comp[i]->integrateChannels(V_prev,Ca_prev,dt);
+        comp[i]->integrateChannels(V_prev, Ca_prev, dt, delta_temperature);
 
         // integrate synapses
-        comp[i]->integrateSynapses(V_prev,dt);
+        comp[i]->integrateSynapses(V_prev, dt, delta_temperature);
     }
 
     // integrate all voltages and Ca in all compartments
@@ -73,13 +73,13 @@ void network::integrate(double dt,double * I_ext_now)
         double V_prev, Ca_prev;
         V_prev = comp[i]->V;
         Ca_prev = comp[i]->Ca;
-        comp[i]->integrateVC(V_prev,Ca_prev,dt);
+        comp[i]->integrateVC(V_prev, Ca_prev, dt, delta_temperature);
     }
 }
 
 // integrates a network of compartment,
 // and clamps the first compartment to V_clamp
-void network::integrateClamp(double V_clamp, double dt)
+void network::integrateClamp(double V_clamp, double dt, double delta_temperature)
 {
     int n_comp = (int) comp.size(); // these many compartments
 
@@ -93,10 +93,10 @@ void network::integrateClamp(double V_clamp, double dt)
 
         V_prev = comp[i]->V;
         Ca_prev = comp[i]->Ca;
-        comp[i]->integrateChannels(V_prev,Ca_prev,dt);
+        comp[i]->integrateChannels(V_prev,Ca_prev,dt, delta_temperature);
 
         // integrate synapses
-        comp[i]->integrateSynapses(V_prev,dt);
+        comp[i]->integrateSynapses(V_prev,dt, delta_temperature);
     }
 
     // integrate all voltages and Ca in all compartments
@@ -107,9 +107,9 @@ void network::integrateClamp(double V_clamp, double dt)
         Ca_prev = comp[i]->Ca;
 
         if (i == 0)
-            comp[i]->integrateC_V_clamp(V_clamp,Ca_prev,dt);
+            comp[i]->integrateC_V_clamp(V_clamp, Ca_prev, dt, delta_temperature);
         else
-            comp[i]->integrateVC(V_prev,Ca_prev,dt);
+            comp[i]->integrateVC(V_prev, Ca_prev, dt, delta_temperature);
 
 
     }

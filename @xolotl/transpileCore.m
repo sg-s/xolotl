@@ -14,7 +14,7 @@ function transpileCore(self,in_file,out_file)
 	cppfilename = joinPath(self.cpp_folder,in_file);
 	lines = lineRead(cppfilename);
 
-	% insert header files ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	% insert preprocessor directives 
 	header_files{1} = '#include "c++/network.hpp"';
 	header_files{2} = '#include "c++/compartment.hpp"';
 
@@ -102,8 +102,10 @@ function transpileCore(self,in_file,out_file)
 		this_comp_name = self.compartment_names{i};
 		for j = 1:length(these_channels)
 			tc = these_channels{j};
+			tc = [this_comp_name '_' tc];
 
-			this_channel_dec = [tc ' ' this_comp_name '_' tc '(' this_comp_name '_' tc '_gbar,' this_comp_name '_' tc '_E,' this_comp_name '_' tc '_m,' this_comp_name '_' tc '_h);'];
+			this_channel_dec = [these_channels{j} ' ' tc '(' tc '_gbar,' tc '_E,' tc '_m,' tc '_h,' tc '_Q_g,' tc '_Q_tau_m,' tc '_Q_tau_h);'];
+
 			conductance_lines{cc} = this_channel_dec; cc = cc + 1;
 		end
 	end
