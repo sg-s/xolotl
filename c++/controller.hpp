@@ -30,15 +30,7 @@ class conductance;
 class controller {
 protected:
     conductance* channel; // pointer to conductance that this regulates
-    //compartment* upstream_compartment; // pointer to compartment that is closer to the soma
-    //compartment* downstream_compartment; // pointer to compartment that is further from the soma along some process
-
-    //double tau_m; 
-    //double tau_g; 
-    // double G; 
-    // double A; // downstream transport rate 
-    //double B; // upstream transport rate
-    //double C; // degradation rate
+    synapse* syn; // pointer to synapse that this regulates 
 
 public:
 
@@ -47,6 +39,7 @@ public:
     controller()
     {
         channel = NULL; // null pointer 
+        syn = NULL; 
     }
     
     ~controller() {}

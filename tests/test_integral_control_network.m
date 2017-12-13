@@ -1,11 +1,3 @@
-% test script for matlab wrapper 
-
-% this sets up the STG network 
-% as in Fig 2e of this paper:
-% Prinz ... Marder Nat Neuro 2004
-% http://www.nature.com/neuro/journal/v7/n12/abs/nn1352.html
-
-
 % conversion from Prinz to phi
 vol = 1; % this can be anything, doesn't matter
 f = 14.96; % uM/nA
@@ -43,15 +35,36 @@ x.addConductance('PY','prinz/HCurrent',.5,-20);
 x.addConductance('PY','Leak',.1,-50);
 
 % 2e
-x.addSynapse('Chol','AB','LP',30);
-x.addSynapse('Chol','AB','PY',3);
-x.addSynapse('Glut','AB','LP',30);
+x.addSynapse('Glut','AB','LP',0);
 x.addSynapse('Glut','AB','PY',10);
 x.addSynapse('Glut','LP','PY',1);
 x.addSynapse('Glut','PY','LP',30);
-x.addSynapse('Glut','LP','AB',30);
+% x.addSynapse('Glut','LP','AB',30);
 
 
 x.dt = 50e-3;
 x.t_end = 5000;
 
+
+x.addIntegralController('synapse',1,3e3,3e3);
+x.LP.Ca_target = 43.3;
+
+x.transpile;
+x.compile;
+
+x.t_end = 200e3;
+x.integrate;
+
+
+x.t_end = 20e3;
+x.integrate;
+
+figure('outerposition',[30 30 1200 900],'PaperUnits','points','PaperSize',[1200 600]); hold on
+for i = 1:3
+	subplot(2,3,i); hold on
+	plot(V(:,i))
+
+	subplot(2,3,i+3); hold on
+	plot(Ca(:,i))
+
+end

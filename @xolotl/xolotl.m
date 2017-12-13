@@ -266,10 +266,18 @@ methods
 			cont_m = [cont_state(end,1:2:end)];
 			cont_g = [cont_state(end,2:2:end)];
 			for i = 1:length(self.controllers)
+
 				self.controllers{i}.m = cont_m(i);
+
+				if strcmp(self.controllers{i}.channel,'NULL')
+					continue
+				end
+
+			
 				this_channel = strrep(self.controllers{i}.channel,self.controllers{i}.compartment,'');
 				this_channel(1) = [];
 				self.(self.controllers{i}.compartment).(this_channel).gbar = cont_g(i);
+				
 			end 
 		end
 
