@@ -29,21 +29,21 @@ rm *mexBridge*
 # 	fi
 # done
 
-echo "Trying to compile C++ code using gcc..."
+# echo "Trying to compile C++ code using gcc..."
 
-for a in tests/g++/*.cpp
-do 
-	printf "Compiling $a with g++..."
-	g++  $a
-	if [ $? -eq 0 ]; then
-	    printf "${GREEN}[OK]${NC}\n"
-	else
-	    printf "${GREEN}[FAIL]${NC}\n"
-	    exit 1
-	fi
-done
+# for a in tests/g++/*.cpp
+# do 
+# 	printf "Compiling $a with g++..."
+# 	g++  $a
+# 	if [ $? -eq 0 ]; then
+# 	    printf "${GREEN}[OK]${NC}\n"
+# 	else
+# 	    printf "${GREEN}[FAIL]${NC}\n"
+# 	    exit 1
+# 	fi
+# done
 
-echo "All code successfully compiled!"
+# echo "All code successfully compiled!"
 
 
 # copy this file into the repository so that others can use it
