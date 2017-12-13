@@ -5,11 +5,18 @@
 %   /_/\_\___/|_|\___/ \__|_|
 %
 % help: gets all conductances of a given compartment
-% identified by the compartment name 
+% identified by the compartment name or index
 
 function gbar = getConductances(self,compartment)
 
-assert(any(strcmp(compartment,properties(self))),'Unknown compartment')
+if isnumeric(compartment)
+	assert(compartment <= length(self.compartment_names),'Unknown compartment')
+	assert(compartment > 0,'Illegal compartment index')
+	compartment = self.compartment_names{compartment}; 
+elseif ischar(compartment)
+	assert(any(strcmp(compartment,properties(self))),'Unknown compartment')
+end
+
 
 gbar = [];
 

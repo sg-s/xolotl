@@ -14,6 +14,7 @@ F = 96485; % Faraday constant in SI units
 phi = (2*f*F*vol)/tau_Ca;
 
 x = xolotl;
+x.cleanup;
 x.addCompartment('AB',-65,0.02,10,0.0628,vol,phi,3000,0.05,tau_Ca,0);
 
 x.addConductance('AB','prinz/NaV',1000,50);
