@@ -41,13 +41,9 @@ void CaT::integrate(double V, double Ca, double dt, double delta_temp)
 {
     // update E by copying E_Ca from the cell 
     E = container->E_Ca;
-    // m = m_inf(V) + (m - m_inf(V))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V));
-    // h = h_inf(V) + (h - h_inf(V))*exp(-(dt*pow(Q_tau_h, delta_temp))/tau_h(V));
-    // g = pow(Q_g, delta_temp)*gbar*m*m*m*h;
-
-    m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
-    h = h_inf(V) + (h - h_inf(V))*exp(-dt/tau_h(V));
-    g = gbar*m*m*m*h;
+    m = m_inf(V) + (m - m_inf(V))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V));
+    h = h_inf(V) + (h - h_inf(V))*exp(-(dt*pow(Q_tau_h, delta_temp))/tau_h(V));
+    g = pow(Q_g, delta_temp)*gbar*m*m*m*h;
 
     // compute the specific calcium current and update it in the cell 
     double this_I = g*(V-E);
