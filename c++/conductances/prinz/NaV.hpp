@@ -39,9 +39,13 @@ void NaV::connect(compartment *pcomp_) {container = pcomp_; }
 
 void NaV::integrate(double V, double Ca, double dt, double delta_temp)
 {
-    m = m_inf(V) + (m - m_inf(V))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V));
-    h = h_inf(V) + (h - h_inf(V))*exp(-(dt*pow(Q_tau_h, delta_temp))/tau_h(V));
-    g = pow(Q_g, delta_temp)*gbar*m*m*m*h;
+    // m = m_inf(V) + (m - m_inf(V))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V));
+    // h = h_inf(V) + (h - h_inf(V))*exp(-(dt*pow(Q_tau_h, delta_temp))/tau_h(V));
+    // g = pow(Q_g, delta_temp)*gbar*m*m*m*h;
+
+    m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
+    h = h_inf(V) + (h - h_inf(V))*exp(-dt/tau_h(V));
+    g = gbar*m*m*m*h;
 
 }
 
