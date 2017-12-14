@@ -266,8 +266,9 @@ function transpileCore(self,in_file,out_file)
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% if something is clamped, link up the clamping potentials   ~~~~~~~~~
 	if ~isempty(self.V_clamp)
-		comment_this = lineFind(lines,'STG.integrate(dt,I_ext_now);');
+		comment_this = lineFind(lines,'//xolotl:disable_when_clamped');
 		assert(length(comment_this)==1,'Could not find line to comment out for voltage clamped case')
+		comment_this = comment_this + 1;
 		lines{comment_this} = ['//' lines{comment_this}];
 
 		V_clamp_idx = length(self.compartment_names) + 2;
@@ -277,7 +278,7 @@ function transpileCore(self,in_file,out_file)
 		lines = [lines(1:insert_here); insert_this; lines(insert_here+1:end)];
 
 		uncomment_this = lineFind(lines,'//xolotl:enable_when_clamped');
-		assert(length(uncomment_this)==2,'Could not find line to uncomment for voltage clamped case')
+		assert(length(uncomment_this)>0,'Could not find line to uncomment for voltage clamped case')
 		for i = 1:length(uncomment_this)
 			lines{uncomment_this(i)+1} = strrep(lines{uncomment_this(i)+1},'//','');
 		end

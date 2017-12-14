@@ -9,7 +9,13 @@
 function manipulate(self)
 	% create a window to show all the traces
 
-	self.skip_hash_check = true;
+	if ~isempty(self.linked_binary)
+		self.skip_hash_check = true;
+	else
+		self.transpile;
+		self.compile;
+		self.skip_hash_check = true;
+	end
 
 	[V,Ca] = self.integrate;
 	time = self.dt:self.dt:self.t_end;
@@ -97,6 +103,7 @@ function manipulate(self)
 	end
 
 	% prepend temperature slider
+	is_relational = [{false}, is_relational];
 	params = [{struct('temperature',self.temperature)} params];
 	lb = [{struct('temperature',0)},lb];
 	ub = [{struct('temperature',30)},ub];
@@ -142,9 +149,9 @@ function manipulate(self)
 	end
 
 	if length(self.synapses) > 0
-		p.group_names = ['Temperature' self.compartment_names; 'synapses'];
+		p.group_names = ['Temperature'; self.compartment_names; 'synapses'];
 	else
-		p.group_names = ['Temperature' self.compartment_names];
+		p.group_names = ['Temperature'; self.compartment_names];
 	end
 
 

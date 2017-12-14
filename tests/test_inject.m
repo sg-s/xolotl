@@ -41,6 +41,8 @@ if usejava('jvm')
 	xlabel('Injected current (nA)')
 	ylabel('# of spikes')
 
+	set(gca,'XScale','log')
+
 	prettyFig();
 	
 else

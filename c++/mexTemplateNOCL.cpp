@@ -113,11 +113,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             //xolotl:enable_when_I_ext
             //I_ext_now[j] = I_ext[i];
         }
+        //xolotl:disable_when_clamped
         STG.integrate(dt,I_ext_now, delta_temperature);
         //xolotl:enable_when_clamped
         //STG.integrateClamp(V_clamp[i],dt, delta_temperature);
-        //xolotl:enable_when_clamped
-        //output_I_clamp = STG.comp[0]->I_clamp;
+
 
 
     }
