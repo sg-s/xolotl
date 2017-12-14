@@ -53,5 +53,15 @@ x.addSynapse('Glut','LP','AB',30);
 
 
 x.dt = 50e-3;
-x.t_end = 5000;
+x.t_end = 20e3;
 
+x.transpile;
+x.compile;
+
+V = x.integrate;
+
+figure('outerposition',[0 0 1000 900],'PaperUnits','points','PaperSize',[1000 900]); hold on
+for i = 1:3
+	subplot(3,1,i); hold on
+	plot(V(:,i))
+end
