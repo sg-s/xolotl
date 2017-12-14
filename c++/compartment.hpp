@@ -41,6 +41,7 @@ protected:
     double vol;
     double Ca_target; // for homeostatic control 
 
+
 public:
     double V;          
     double Ca; 
@@ -87,12 +88,12 @@ public:
     void addSynapse(synapse*);
     void addController(controller*);
 
-    void integrate(double);
+    void integrate(double, double);
     void integrateControllers(double, double);
-    void integrateChannels(double, double, double);
-    void integrateSynapses(double, double);
-    void integrateVC(double, double, double);
-    void integrateC_V_clamp(double, double, double);
+    void integrateChannels(double, double, double, double);
+    void integrateSynapses(double, double, double);
+    void integrateVC(double, double, double, double);
+    void integrateC_V_clamp(double, double, double, double);
     void get_cond_state(double*);
 
     controller* getControllerPointer(int);
@@ -101,7 +102,7 @@ public:
 
 // simple integrate; use this only for 
 // single-compartment non-clamped neurons
-void compartment::integrate(double dt)
+void compartment::integrate(double dt, double delta_temperature)
 {
     double V_prev = V;
     double Ca_prev = Ca;
@@ -109,8 +110,8 @@ void compartment::integrate(double dt)
     I_ext = 0;
     I_clamp = 0;
 
-    integrateChannels(V_prev, Ca_prev, dt);
-    integrateVC(V_prev, Ca_prev, dt);
+    integrateChannels(V_prev, Ca_prev, dt, delta_temperature);
+    integrateVC(V_prev, Ca_prev, dt, delta_temperature);
 }
 
 void compartment::integrateControllers(double Ca_prev, double dt)
@@ -124,7 +125,7 @@ void compartment::integrateControllers(double Ca_prev, double dt)
    
 }
 
-void compartment::integrateChannels(double V_prev, double Ca_prev, double dt)
+void compartment::integrateChannels(double V_prev, double Ca_prev, double dt, double delta_temperature)
 {
 
     sigma_g = 0.0;
@@ -137,13 +138,13 @@ void compartment::integrateChannels(double V_prev, double Ca_prev, double dt)
     // integrate all channels
     for (int i=0; i<n_cond; i++)
     {
-        cond[i]->integrate(V_prev, Ca_prev, dt);
+        cond[i]->integrate(V_prev, Ca_prev, dt, delta_temperature);
         sigma_g += cond[i]->g;
         sigma_gE += (cond[i]->g)*(cond[i]->E);
     }
 }
 
-void compartment::integrateSynapses(double V_prev, double dt)
+void compartment::integrateSynapses(double V_prev, double dt, double delta_temperature)
 {
 
     // we treat synapses identically to any other conductance 
@@ -153,14 +154,13 @@ void compartment::integrateSynapses(double V_prev, double dt)
     {
         // mexPrintf("integrating synapse in comp: =  %i\n",&(syn[i]));
         syn[i]->integrate(dt);
-        // I_ext += (syn[i]->getCurrent(V_prev));
         sigma_g += abs((syn[i]->gbar)*(syn[i]->s)/(1000*A)); // now uS/mm^2
         sigma_gE += ((syn[i]->gbar)*(syn[i]->s)*(syn[i]->E)/(1000*A));
 
     }
 }
 
-void compartment::integrateVC(double V_prev, double Ca_prev, double dt)
+void compartment::integrateVC(double V_prev, double Ca_prev, double dt, double delta_temperature)
 {
     // compute infinity values for V and Ca
     //mexPrintf("sigma_gE =  %f\n",sigma_gE);
@@ -169,8 +169,6 @@ void compartment::integrateVC(double V_prev, double Ca_prev, double dt)
     else
         V_inf = (sigma_gE + (I_ext/A))/sigma_g;
 
-
-    // Ca_inf = Ca_in - f*A*I_Ca; // microM 
     Ca_inf = Ca_in - (tau_Ca*phi*i_Ca*A*.5)/(F*vol); // microM
 
 
@@ -183,7 +181,7 @@ void compartment::integrateVC(double V_prev, double Ca_prev, double dt)
 // integrates calcium, but not voltage
 // assumes cell is voltage clamped, and 
 // returns the current required to clamp it
-void compartment::integrateC_V_clamp(double V_clamp, double Ca_prev, double dt)
+void compartment::integrateC_V_clamp(double V_clamp, double Ca_prev, double dt, double delta_temperature)
 {
     // compute infinity values for Ca
     Ca_inf = Ca_in - (tau_Ca*phi*i_Ca*A*500)/(F*vol);

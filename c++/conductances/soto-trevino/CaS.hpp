@@ -14,15 +14,19 @@ class CaS: public conductance {
 public:
 
     // specify parameters + initial conditions 
-    CaS(double g_, double E_, double m_, double h_)
+    CaS(double g_, double E_, double m_, double h_, double Q_g_, double Q_tau_m_, double Q_tau_h_)
     {
         gbar = g_;
         E = E_;
         m = m_;
-        h = 1;
+        h = h_;
+        
+        Q_g = Q_g_;
+        Q_tau_m = Q_tau_m_;
+        Q_tau_h = Q_tau_h_;
     }
 
-    void integrate(double V, double Ca, double dt);
+    void integrate(double V, double Ca, double dt, double delta_temp);
     void connect(compartment *pcomp_);
     double m_inf(double V);
     double tau_m(double V);
@@ -31,12 +35,12 @@ public:
 
 void CaS::connect(compartment *pcomp_) {container = pcomp_; }
 
-void CaS::integrate(double V, double Ca, double dt)
+void CaS::integrate(double V, double Ca, double dt, double delta_temp)
 {
     // update E by copying E_Ca from the cell 
     E = container->E_Ca;
-    m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
-    g = gbar*m*m*m;
+    m = m_inf(V) + (m - m_inf(V))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V));
+    g = pow(Q_g, delta_temp)*gbar*m*m*m;
 
     // compute the specific calcium current and update it in the cell 
     double this_I = g*(V-E);

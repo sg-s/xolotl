@@ -20,6 +20,12 @@ public:
     double m;
     double h;
 
+    // temperature compensation parameters
+    double Q_g;
+    double Q_tau_m;
+    double Q_tau_h; 
+    double delta_temp;
+
     conductance()
     {
         container = 0; //null pointer for safety
@@ -27,8 +33,8 @@ public:
     
     ~conductance() {}
     
-    virtual void integrate(double, double, double) = 0;
-    virtual void connect(compartment*) = 0; // null points for safety
+    virtual void integrate(double, double, double, double) = 0;
+    virtual void connect(compartment*) = 0; // null pointer for safety
 
 };
 

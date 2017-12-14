@@ -19,9 +19,9 @@ names = {};
 is_relational = {};
 
 % first do the sim params
-names{end+1} = {'dt';'t_end'};
-values{end+1} = [self.dt; self.t_end];
-is_relational{end+1} = [false; false];
+names{end+1} = {'dt';'t_end';'delta_temperature'};
+values{end+1} = [self.dt; self.t_end; (self.temperature - self.temperature_ref)];
+is_relational{end+1} = [false; false; false];
 
 % now do all the compartments
 for i = 1:length(self.compartment_names)
@@ -81,3 +81,4 @@ else
 	names{end+1} = '';
 	values{end+1} = [];
 end
+

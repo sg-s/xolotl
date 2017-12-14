@@ -22,7 +22,7 @@ public:
         h = 1;
     }
     
-    void integrate(double V, double Ca, double dt);
+    void integrate(double V, double Ca, double dt, double delta_temp);
     void connect(compartment *pcomp_);
     double m_inf(double V);
     double h_inf(double V);
@@ -32,10 +32,10 @@ public:
 
 void NaP::connect(compartment *pcomp_) {container = pcomp_; }
 
-void NaP::integrate(double V, double Ca, double dt)
+void NaP::integrate(double V, double Ca, double dt, double delta_temp)
 {
     m = m_inf(V) + (m - m_inf(V))*exp(-dt);
-    g = gbar*m;
+    g = pow(Q_g, delta_temp)*gbar*m;
 }
 
 double NaP::m_inf(double V) {return 1.0/(1.0+exp((V+48.77)/-3.68));}

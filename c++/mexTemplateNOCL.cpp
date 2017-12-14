@@ -49,6 +49,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     double dt  = simparams[0];
     double tstop = simparams[1];
+    // we're going to divide delta_temperature by 10 so that we don't have to divide it again millions of times.
+    double delta_temperature = simparams[2]/10;
 
     //xolotl:input_declarations
 
@@ -111,11 +113,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             //xolotl:enable_when_I_ext
             //I_ext_now[j] = I_ext[i];
         }
-        STG.integrate(dt,I_ext_now);
+        //xolotl:disable_when_clamped
+        STG.integrate(dt,I_ext_now, delta_temperature);
         //xolotl:enable_when_clamped
-        //STG.integrateClamp(V_clamp[i],dt);
-        //xolotl:enable_when_clamped
-        //output_I_clamp = STG.comp[0]->I_clamp;
+        //STG.integrateClamp(V_clamp[i],dt, delta_temperature);
+
 
 
     }

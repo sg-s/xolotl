@@ -14,7 +14,7 @@ function transpileCore(self,in_file,out_file)
 	cppfilename = joinPath(self.cpp_folder,in_file);
 	lines = lineRead(cppfilename);
 
-	% insert header files ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	% insert preprocessor directives 
 	header_files{1} = '#include "c++/network.hpp"';
 	header_files{2} = '#include "c++/compartment.hpp"';
 
@@ -102,8 +102,10 @@ function transpileCore(self,in_file,out_file)
 		this_comp_name = self.compartment_names{i};
 		for j = 1:length(these_channels)
 			tc = these_channels{j};
+			tc = [this_comp_name '_' tc];
 
-			this_channel_dec = [tc ' ' this_comp_name '_' tc '(' this_comp_name '_' tc '_gbar,' this_comp_name '_' tc '_E,' this_comp_name '_' tc '_m,' this_comp_name '_' tc '_h);'];
+			this_channel_dec = [these_channels{j} ' ' tc '(' tc '_gbar,' tc '_E,' tc '_m,' tc '_h,' tc '_Q_g,' tc '_Q_tau_m,' tc '_Q_tau_h);'];
+
 			conductance_lines{cc} = this_channel_dec; cc = cc + 1;
 		end
 	end
@@ -264,8 +266,9 @@ function transpileCore(self,in_file,out_file)
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% if something is clamped, link up the clamping potentials   ~~~~~~~~~
 	if ~isempty(self.V_clamp)
-		comment_this = lineFind(lines,'STG.integrate(dt,I_ext_now);');
+		comment_this = lineFind(lines,'//xolotl:disable_when_clamped');
 		assert(length(comment_this)==1,'Could not find line to comment out for voltage clamped case')
+		comment_this = comment_this + 1;
 		lines{comment_this} = ['//' lines{comment_this}];
 
 		V_clamp_idx = length(self.compartment_names) + 2;
@@ -275,7 +278,7 @@ function transpileCore(self,in_file,out_file)
 		lines = [lines(1:insert_here); insert_this; lines(insert_here+1:end)];
 
 		uncomment_this = lineFind(lines,'//xolotl:enable_when_clamped');
-		assert(length(uncomment_this)==2,'Could not find line to uncomment for voltage clamped case')
+		assert(length(uncomment_this)>0,'Could not find line to uncomment for voltage clamped case')
 		for i = 1:length(uncomment_this)
 			lines{uncomment_this(i)+1} = strrep(lines{uncomment_this(i)+1},'//','');
 		end

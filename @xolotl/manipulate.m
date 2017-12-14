@@ -9,6 +9,14 @@
 function manipulate(self)
 	% create a window to show all the traces
 
+	if ~isempty(self.linked_binary)
+		self.skip_hash_check = true;
+	else
+		self.transpile;
+		self.compile;
+		self.skip_hash_check = true;
+	end
+
 	[V,Ca] = self.integrate;
 	time = self.dt:self.dt:self.t_end;
 
@@ -51,7 +59,7 @@ function manipulate(self)
 		% delete all E_, m_, and h_ parameters
 		rm_this = false(length(v),1);
 		for j = 1:length(v)
-			if strcmp(names{j}(end-1:end),'_m') || strcmp(names{j}(end-1:end),'_h') || strcmp(names{j}(end-1:end),'_E') || strcmp(names{j}(end-1:end),'_V') 
+			if strcmp(names{j}(end-1:end),'_m') || strcmp(names{j}(end-1:end),'_h') || strcmp(names{j}(end-1:end),'_E') || strcmp(names{j}(end-1:end),'_V') || any(strfind(names{j},'_Q_'))
 				rm_this(j) = true;
 			end
 			if strcmp(names{j},'_Ca')
@@ -94,11 +102,11 @@ function manipulate(self)
 		ub{end+1} = U;
 	end
 
-	if length(params) == 1
-		params = params{1};
-		lb = lb{1};
-		ub = ub{1};
-	end
+	% prepend temperature slider
+	is_relational = [{false}, is_relational];
+	params = [{struct('temperature',self.temperature)} params];
+	lb = [{struct('temperature',0)},lb];
+	ub = [{struct('temperature',30)},ub];
 
 	% create a puppeteer instance and configure
 	p = puppeteer(params,lb,ub);
@@ -141,9 +149,9 @@ function manipulate(self)
 	end
 
 	if length(self.synapses) > 0
-		p.group_names = [self.compartment_names; 'synapses'];
+		p.group_names = ['Temperature'; self.compartment_names; 'synapses'];
 	else
-		p.group_names = self.compartment_names;
+		p.group_names = ['Temperature'; self.compartment_names];
 	end
 
 

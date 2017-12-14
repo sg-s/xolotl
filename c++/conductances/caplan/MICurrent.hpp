@@ -31,7 +31,7 @@ public:
         h = 1;
     }
 
-    void integrate(double V, double Ca, double dt);
+    void integrate(double V, double Ca, double dt, double delta_temp);
     void connect(compartment *pcomp_);
     double m_inf(double V);
     double tau_m(double V);
@@ -40,10 +40,10 @@ public:
 
 void MICurrent::connect(compartment *pcomp_) {container = pcomp_;}
 
-void MICurrent::integrate(double V, double Ca, double dt)
+void MICurrent::integrate(double V, double Ca, double dt, double delta_temp)
 {
-    m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
-    g = gbar*m;
+    m = m_inf(V) + (m - m_inf(V))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V));
+    g = pow(Q_g, delta_temp)*gbar*m;
 }
 
 

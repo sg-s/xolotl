@@ -55,13 +55,15 @@ properties
 	I_ext
 	closed_loop@logical = true;
 	synapses
+	temperature@double = 11; % centigrade 
+	temperature_ref@double = 11; % centigrade 
 end % end general props
 
 
 methods (Access = protected)
     function displayScalarObject(self)
         url = 'https://github.com/sg-s/xolotl/';
-        fprintf(['<a href="' url '">xolotl</a> object with:\n'])
+        fprintf(['\b\b\b\b\b\b\b\b\b<a href="' url '">xolotl</a> object with:\n'])
         fprintf('---------------------\n')
         for i = 1:length(self.compartment_names)
         	compartment = self.compartment_names{i};

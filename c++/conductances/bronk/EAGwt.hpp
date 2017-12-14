@@ -22,7 +22,7 @@ public:
     }
     
 
-    void integrate(double V, double Ca, double dt);
+    void integrate(double V, double Ca, double dt, double delta_temp);
     void connect(compartment *pcomp_);
     double m_inf(double V, double Ca);
     double tau_m(double V);
@@ -30,10 +30,10 @@ public:
 
 void EAGwt::connect(compartment *pcomp_) {container = pcomp_; }
 
-void EAGwt::integrate(double V, double Ca, double dt)
+void EAGwt::integrate(double V, double Ca, double dt, double delta_temp)
 {
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V));
-    g = gbar*m*m;
+    g = pow(Q_g, delta_temp)*gbar*m*m;
 }
 
 double EAGwt::m_inf(double V, double Ca) { return (9.29e-2/(Ca+9.29e-2))/(1.0+exp((V+23.12)/-16.94)); }

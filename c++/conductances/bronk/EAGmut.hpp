@@ -23,7 +23,7 @@ public:
     }
     
 
-    void integrate(double V, double Ca, double dt);
+    void integrate(double V, double Ca, double dt, double delta_temp);
     void connect(compartment *pcomp_);
     double m_inf(double V, double Ca);
     double tau_m(double V);
@@ -31,10 +31,10 @@ public:
 
 void EAGmut::connect(compartment *pcomp_) {container = pcomp_; }
 
-void EAGmut::integrate(double V, double Ca, double dt)
+void EAGmut::integrate(double V, double Ca, double dt, double delta_temp)
 {
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V));
-    g = gbar*m*m;
+    g = pow(Q_g, delta_temp)*gbar*m*m;
 }
 
 double EAGmut::m_inf(double V, double Ca) { return (.92*(1-.05)/(Ca+.92) + .05)/(1.0+exp((V+23.12)/-16.94)); }

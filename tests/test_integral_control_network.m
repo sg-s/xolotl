@@ -52,12 +52,9 @@ x.LP.Ca_target = 43.3;
 x.transpile;
 x.compile;
 
-x.t_end = 200e3;
-x.integrate;
-
 
 x.t_end = 20e3;
-x.integrate;
+[V, Ca] = x.integrate;
 
 figure('outerposition',[30 30 1200 900],'PaperUnits','points','PaperSize',[1200 600]); hold on
 for i = 1:3
