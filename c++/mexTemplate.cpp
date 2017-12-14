@@ -39,7 +39,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     double dt  = simparams[0];
     double tstop = simparams[1];
-    double delta_temperature = simparams[2];
+
+    // we're going to divide delta_temperature by 10 so that we don't have to divide it again millions of times.
+    double delta_temperature = simparams[2]/10;
 
     //xolotl:input_declarations
 

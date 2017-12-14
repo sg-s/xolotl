@@ -17,9 +17,9 @@ x = xolotl;
 x.cleanup;
 x.addCompartment('AB',-65,0.02,10,0.0628,vol,phi,3000,0.05,tau_Ca,0);
 
-qg = 1.02;
-qm = 1.02;
-qh = 1.02;
+qg = 2;
+qm = 2;
+qh = 2;
 
 x.addConductance('AB','prinz/NaV',1000,50,0,1,qg,qm,qh);
 x.addConductance('AB','prinz/CaT',25,30,0,1,qg,qm,qh);
@@ -28,32 +28,6 @@ x.addConductance('AB','prinz/ACurrent',500,-80,0,1,qg,qm,qh);
 x.addConductance('AB','prinz/KCa',50,-80,0,1,qg,qm,qh);
 x.addConductance('AB','prinz/Kd',1000,-80,0,1,qg,qm,qh);
 x.addConductance('AB','prinz/HCurrent',.1,-20,0,1,qg,qm,qh);
-
-x.addCompartment('LP',-47,0.01,10,0.0628,vol,phi,3000,0.05,tau_Ca,0);
-x.addConductance('LP','prinz/NaV',1000,50,0,1,qg,qm,qh);
-x.addConductance('LP','prinz/CaS',40,30,0,1,qg,qm,qh);
-x.addConductance('LP','prinz/ACurrent',200,-80,0,1,qg,qm,qh);
-x.addConductance('LP','prinz/Kd',250,-80,0,1,qg,qm,qh);
-x.addConductance('LP','prinz/HCurrent',.5,-20,0,1,qg,qm,qh);
-x.addConductance('LP','Leak',.3,-50,0,1,qg,qm,qh);
-
-x.addCompartment('PY',-41,0.03,10,0.0628,vol,phi,3000,0.05,tau_Ca,0);
-x.addConductance('PY','prinz/NaV',1000,50,0,1,qg,qm,qh);
-x.addConductance('PY','prinz/CaT',25,30,0,1,qg,qm,qh);
-x.addConductance('PY','prinz/CaS',20,30,0,1,qg,qm,qh);
-x.addConductance('PY','prinz/ACurrent',500,-80,0,1,qg,qm,qh);
-x.addConductance('PY','prinz/Kd',1250,-80,0,1,qg,qm,qh);
-x.addConductance('PY','prinz/HCurrent',.5,-20,0,1,qg,qm,qh);
-x.addConductance('PY','Leak',.1,-50,0,1,qg,qm,qh);
-
-% 2e
-x.addSynapse('Chol','AB','LP',30);
-x.addSynapse('Chol','AB','PY',3);
-x.addSynapse('Glut','AB','LP',30);
-x.addSynapse('Glut','AB','PY',10);
-x.addSynapse('Glut','LP','PY',1);
-x.addSynapse('Glut','PY','LP',30);
-x.addSynapse('Glut','LP','AB',30);
 
 
 x.dt = 50e-3;
@@ -66,13 +40,12 @@ x.closed_loop = false;
 
 V = x.integrate;
 
-x.temperature = 294;
+x.temperature = 22;
 V2 = x.integrate;
 
-figure('outerposition',[0 0 1000 900],'PaperUnits','points','PaperSize',[1000 900]); hold on
-for i = 1:3
-	subplot(3,1,i); hold on
-	plot(V(:,i),'k')
-	plot(V2(:,i),'r')
-end
+figure('outerposition',[0 0 1000 500],'PaperUnits','points','PaperSize',[1000 500]); hold on
+
+plot(V,'k')
+plot(V2,'r')
+
 

@@ -9,6 +9,11 @@
 
 function updateLocalParameters(self,parameters)
 	% unpack parameters and update locally
+
+	% this first parameter is temperature
+	self.temperature = parameters{1}.temperature;
+	parameters(1) = [];
+
 	for i = 1:length(parameters)
 		if iscell(parameters)
 			S = parameters{i};
@@ -39,6 +44,7 @@ function updateLocalParameters(self,parameters)
 				end
 			end
 		else
+
 			% synapses?
 			% blindly assume that the order we get them back is the order we have stored locally. dangerous, but it should work 
 			v = struct2vec(parameters{i});

@@ -55,8 +55,8 @@ properties
 	I_ext
 	closed_loop@logical = true;
 	synapses
-	temperature@double = 284.15; % Kelvin 
-	temperature_ref@double = 284.15; % Kelvin 
+	temperature@double = 11; % centigrade 
+	temperature_ref@double = 11; % centigrade 
 end % end general props
 
 
