@@ -10,6 +10,10 @@
 
 function addSynapse(self,syn_id,comp1,comp2,gbar)
 
+	% dumb windows backslashes
+	syn_id = strrep(syn_id,'/',oss);
+	syn_id = strrep(syn_id,'\',oss);
+
 	% fail early 
 	assert(any(strcmp(comp1,self.compartment_names)),'Unknown compartment')
 	assert(any(strcmp(comp2,self.compartment_names)),'Unknown compartment')

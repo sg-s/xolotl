@@ -10,6 +10,9 @@
 
 function addConductance(self,compartment,cond_id,gbar,E,m,h,Q_g, Q_tau_m, Q_tau_h)
 
+	% dumb windows backslashes
+	cond_id = strrep(cond_id,'/',oss);
+	cond_id = strrep(cond_id,'\',oss);
 
 	assert(any(strcmp(compartment,properties(self))),'Unknown compartment')
 
