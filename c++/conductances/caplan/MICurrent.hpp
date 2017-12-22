@@ -1,6 +1,6 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
 // Modulatory Input Conductance
 // http://www.jneurosci.org/content/34/14/4963/tab-figures-data
@@ -11,24 +11,38 @@
 
 //inherit conductance class spec
 class MICurrent: public conductance {
-    
+
 public:
 
-    //specify both gbar and erev and initial conditions
-    MICurrent(double g_, double E_, double m_)
-    {
-        gbar = g_;
-        E = E_;
-        m = m_;
-        h = 1;
-    }
+    // //specify both gbar and erev and initial conditions
+    // MICurrent(double g_, double E_, double m_)
+    // {
+    //     gbar = g_;
+    //     E = E_;
+    //     m = m_;
+    //     h = 1;
+    // }
+    //
+    // MICurrent(double g_, double E_, double m_, double h_)
+    // {
+    //     gbar = g_;
+    //     E = E_;
+    //     m = m_;
+    //     h = 1;
+    // }
 
-    MICurrent(double g_, double E_, double m_, double h_)
+    //specify both gbar and erev and initial conditions
+    MICurrent(double g_, double E_, double m_, double h_, double Q_g_, double Q_tau_m_, double Q_tau_h_)
     {
         gbar = g_;
         E = E_;
         m = m_;
         h = 1;
+
+
+        Q_g = Q_g_;
+        Q_tau_m = Q_tau_m_;
+        Q_tau_h = Q_tau_h_;
     }
 
     void integrate(double V, double Ca, double dt, double delta_temp);
