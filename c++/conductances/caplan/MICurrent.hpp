@@ -61,7 +61,7 @@ void MICurrent::integrate(double V, double Ca, double dt, double delta_temp)
 }
 
 
-double MICurrent::m_inf(double V) {return 1.0/(1.0+exp((V+38.0)/-3.05));}
+double MICurrent::m_inf(double V) {return 1.0/(1.0+exp((V+12.0)/-3.05));}
 double MICurrent::tau_m(double V) {return 0.5;}
 
 
