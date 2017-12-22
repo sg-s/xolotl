@@ -12,6 +12,11 @@
 
 function h = hash(self)
 
+if ispc
+	h = 'windows_hashing_not_supported';
+	return
+end
+
 if self.skip_hash_check
 	h = '0000000';
 	return
