@@ -7,12 +7,21 @@
 % help: sets all gbars of compartment's conductances to a vector of gbars
 % identified by the compartment index
 
-function setConductances(self,comp_index,gbars)
+function setConductances(self,compartment,gbars)
 
-assert(length(self.getChannelsInCompartment(comp_index)) == length(gbars),'gbars must be the same length as the number of conductances in compartment')
+	if isnumeric(compartment)
+		assert(compartment <= length(self.compartment_names),'Unknown compartment')
+		assert(compartment > 0,'Illegal compartment index')
+		compartment = self.compartment_names{compartment};
+	elseif ischar(compartment)
+		assert(any(strcmp(compartment,properties(self))),'Unknown compartment')
+	end
 
-channels 		= self.getChannelsInCompartment(comp_index);
+	assert(length(self.getChannelsInCompartment(compartment)) == length(gbars),'gbars must be the same length as the number of conductances in compartment')
 
-for ii = 1:length(channels)
-	self.(self.compartment_names{comp_index}).(channels{ii}).gbar = gbars(ii);
+	channels 		= self.getChannelsInCompartment(compartment);
+
+	for ii = 1:length(channels)
+		self.(compartment).(channels{ii}).gbar = gbars(ii);
+	end
 end
