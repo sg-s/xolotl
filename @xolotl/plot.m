@@ -21,6 +21,9 @@ function ax = plot(self,cond_id,ax)
 	lines = lineRead(self.available_conductances{cond_file});
 	cond_name = pathEnd(self.available_conductances{cond_file});
 
+	% hard code an internal calcium level 
+	Ca = 0.05;
+
 	% find m_inf 
 	for i = 1:length(lines)
 		if strfind(lines{i},[cond_name '::m_inf'])
