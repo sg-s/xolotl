@@ -3,7 +3,7 @@
 // _/\_ |__| |___ |__|  |  |___
 //
 // Modulatory Input Conductance
-// http://www.jneurosci.org/content/34/14/4963/tab-figures-data
+// http://www.physiology.org/doi/abs/10.1152/jn.1993.69.3.992?url_ver=Z39.88-2003&rfr_id=ori:rid:crossref.org&rfr_dat=cr_pub%3dpubmed
 // based on RPCH/proctolin recordings
 #ifndef MICURRENT
 #define MICURRENT
@@ -61,8 +61,8 @@ void MICurrent::integrate(double V, double Ca, double dt, double delta_temp)
 }
 
 
-double MICurrent::m_inf(double V) {return 1.0/(1.0+exp((V+38.0)/-3.05));}
-double MICurrent::tau_m(double V) {return 5.0;}
+double MICurrent::m_inf(double V) {return 1.0/(1.0+exp((V+55.0)/-3.05));}
+double MICurrent::tau_m(double V) {return 6.0;}
 
 
 #endif
