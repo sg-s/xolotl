@@ -7,7 +7,7 @@ function plotIV(self,cond_id,E)
   figure('outerposition',[100 100 1000 900],'PaperUnits','points','PaperSize',[1000 500]);
   plot(V,I);
   xlabel('membrane potential (mV)')
-  ylabel('normalized curent (nA / \muS)')
+  ylabel('normalized current (nA / \muS)')
   title([cond name ' IV Curve'])
   prettyFig();
 
