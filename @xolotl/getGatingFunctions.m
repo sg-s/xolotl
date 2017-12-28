@@ -1,4 +1,4 @@
-function [act, ict, tc_act, tc_ict, cond_name] =  getGatingFunctions(self,cond_id)
+function [act, ict, tc_act, tc_ict, mphq, cond_name] =  getGatingFunctions(self,cond_id)
   % search for cond_id
   cond_file = [];
   for i = 1:length(self.available_conductances)
@@ -35,6 +35,7 @@ function [act, ict, tc_act, tc_ict, cond_name] =  getGatingFunctions(self,cond_i
       this_fragment = strrep(this_fragment,'*','.*');
       eval(['m_inf = @(V)' this_fragment ' ;'])
     end
+    % find h_inf
     if strfind(lines{i},[cond_name '::h_inf'])
       a = strfind(lines{i},'{');
       z = strfind(lines{i},'}');
@@ -45,6 +46,7 @@ function [act, ict, tc_act, tc_ict, cond_name] =  getGatingFunctions(self,cond_i
       this_fragment = strrep(this_fragment,'*','.*');
       eval(['h_inf = @(V)' this_fragment ' ;'])
     end
+    % find tau_m
     if strfind(lines{i},[cond_name '::tau_m'])
       a = strfind(lines{i},'{');
       z = strfind(lines{i},'}');
@@ -55,6 +57,7 @@ function [act, ict, tc_act, tc_ict, cond_name] =  getGatingFunctions(self,cond_i
       this_fragment = strrep(this_fragment,'*','.*');
       eval(['tau_m = @(V)' this_fragment ' ;'])
     end
+    % find tau_h
     if strfind(lines{i},[cond_name '::tau_h'])
       a = strfind(lines{i},'{');
       z = strfind(lines{i},'}');
@@ -65,6 +68,13 @@ function [act, ict, tc_act, tc_ict, cond_name] =  getGatingFunctions(self,cond_i
       this_fragment = strrep(this_fragment,'*','.*');
       eval(['tau_h = @(V)' this_fragment ' ;'])
     end
+    if strfind(lines{i},['gbar*'])
+      a = strfind(lines{i},'gbar*');
+      z = strfind(lines{i},';');
+      this_fragment = lines{i}(a+5:z-1);
+      this_fragment = strrep(this_fragment,'*','.*');
+      eval(['mphq_func = @(m,h)' this_fragment ';'])
+    end
   end
 
   % outputs
@@ -74,4 +84,6 @@ function [act, ict, tc_act, tc_ict, cond_name] =  getGatingFunctions(self,cond_i
     ict         = h_inf(V);
     tc_ict      = tau_h(V);
   end
+  mphq        = mphq_func(act,ict);
+
 end
