@@ -81,7 +81,7 @@ function [act, ict, tc_act, tc_ict, mphq, cond_name] =  getGatingFunctions(self,
   act         = m_inf(V);
   tc_act      = tau_m(V);
   if exist('h_inf') & exist('tau_h')
-    ict         = h_inf(V);
+    ict         = h_inf(V);icant
     tc_ict      = tau_h(V);
   end
   mphq        = mphq_func(act,ict);
