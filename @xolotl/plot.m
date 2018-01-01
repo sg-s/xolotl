@@ -47,9 +47,9 @@ function ax = plot(self,cond_id,ax)
 
 	try
 		if length(tau_h == 1)
-			thV = tau_h(V) + 0*V;
+			thV = tau_h + 0*V;
 		else
-			thV = tau_h(V);
+			thV = tau_h;
 		end
 
 		plot(ax(4),V,thV,'DisplayName',cond_name);
