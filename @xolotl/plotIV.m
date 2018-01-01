@@ -8,7 +8,7 @@ function plotIV(self,cond_id,E)
   plot(V,I);
   xlabel('membrane potential (mV)')
   ylabel('normalized current (nA / \muS)')
-  title([cond name ' IV Curve'])
+  title([cond_name ' IV Curve'])
   prettyFig();
 
 end
