@@ -47,7 +47,7 @@ function current_trace = getCurrentTrace(self)
       ict             = comp_currents{comp_index}(:,act_index+1);
       % find ionic gating variable product
       cond_path       = self.(self.compartment_names{comp_index}).(fields{curr_index + length(self.compartment_props)}).full_path;
-      cond_file       = fileread(cond_path);
+      cond_file       = fileread(['~/code/xolotl/' cond_path]);
       % activation
       if strfind(cond_file,'gbar*m*m*m*m') ~= []
         act_prod = act .* act .* act .* act;

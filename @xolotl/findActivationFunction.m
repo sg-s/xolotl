@@ -1,11 +1,11 @@
-%              _       _   _ 
+%              _       _   _
 %   __  _____ | | ___ | |_| |
 %   \ \/ / _ \| |/ _ \| __| |
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
 % help: estimates activation function given Voltage, Current or conductances
-% 
+%
 
 function [] = findActivationFunction(varargin)
 
@@ -17,7 +17,7 @@ options.p = 1:5;
 options.E_rev = NaN;
 
 
-if nargout && ~nargin 
+if nargout && ~nargin
 	varargout{1} = options;
 	return
 end
@@ -48,7 +48,7 @@ end
 
 % check if conductances exist
 if isempty(options.g)
-	disp('need to convert currents to condutcanes ')
+	disp('need to convert currents to conductances')
 	keyboard
 end
 
@@ -75,6 +75,3 @@ for i = 1:length(options.p)
 end
 
 prettyFig();
-
-
-
