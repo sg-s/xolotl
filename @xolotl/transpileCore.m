@@ -21,19 +21,19 @@ function transpileCore(self,in_file,out_file)
 	h = unique(self.conductance_headers);
 	c = length(header_files)+1;
 	for i = 1:length(h)
-		header_files{c} = ['#include "' h{i} '"']; c = c+1;
+		header_files{c} = strcat('#include "',h{i}, '"'); c = c+1;
 	end
 
 	h = unique(self.synapse_headers);
 	c = length(header_files)+1;
 	for i = 1:length(h)
-		header_files{c} = ['#include "' h{i} '"']; c = c+1;
+		header_files{c} = strcat('#include "', h{i}, '"'); c = c+1;
 	end
 
 	h = unique(self.controller_headers);
 	c = length(header_files)+1;
 	for i = 1:length(h)
-		header_files{c} = ['#include "' h{i} '"']; c = c+1;
+		header_files{c} = strcat('#include "', h{i}, '"'); c = c+1;
 	end
 
 	insert_here = lineFind(lines,'//xolotl:include_headers_here');
