@@ -14,7 +14,7 @@ class EAGmut: public conductance {
 public:
 
     // specify parameters + initial conditions 
-    EAGwt(double g_, double E_, double m_, double h_, double Q_g_, double Q_tau_m_, double Q_tau_h_)
+    EAGmut(double g_, double E_, double m_, double h_, double Q_g_, double Q_tau_m_, double Q_tau_h_)
     {
         gbar = g_;
         E = E_;
