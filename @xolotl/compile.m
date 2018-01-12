@@ -16,6 +16,9 @@ function [] = compile(self)
 
 	mexBridge_name = [joinPath(self.xolotl_folder,'mexBridge') h(1:6) '.cpp'];
 	assert(exist(mexBridge_name,'file')==2,'C++ file to compile does not exist. Use "transpile" before compiling')
+	if (isunix && ~ismac)
+		warning('off')
+	end
 	mex('-silent',mexBridge_name,'-outdir',self.xolotl_folder)
 	% update linked_binary
 
@@ -25,5 +28,9 @@ function [] = compile(self)
 	mexBridge_name = [joinPath(self.xolotl_folder,'mexBridge') h(1:6) 'NOCL.cpp'];
 	assert(exist(mexBridge_name,'file')==2,'NOCL C++ file to compile does not exist. Use "transpile" before compiling')
 	mex('-silent',mexBridge_name,'-outdir',self.xolotl_folder)
+
+	if (isunix && ~ismac)
+		warning('on')
+	end
 
 end
