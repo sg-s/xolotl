@@ -3,6 +3,7 @@
 // _/\_ |__| |___ |__|  |  |___ 
 //
 // Slow Calcium conductance
+// this version does not support temperature dependence
 // http://jn.physiology.org/content/jn/90/6/3998.full.pdf
 #ifndef KCA
 #define KCA
@@ -37,8 +38,8 @@ void KCa::connect(compartment *pcomp_) {container = pcomp_; }
 
 void KCa::integrate(double V, double Ca, double dt, double delta_temp)
 {
-    m = m_inf(V) + (m - m_inf(V))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V));
-    g = pow(Q_g, delta_temp)*gbar*m*m*m*m;
+    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V));
+    g = gbar*m*m*m*m;
 
 }
 
