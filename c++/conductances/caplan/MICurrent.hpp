@@ -14,22 +14,6 @@ class MICurrent: public conductance {
 
 public:
 
-    // //specify both gbar and erev and initial conditions
-    // MICurrent(double g_, double E_, double m_)
-    // {
-    //     gbar = g_;
-    //     E = E_;
-    //     m = m_;
-    //     h = 1;
-    // }
-    //
-    // MICurrent(double g_, double E_, double m_, double h_)
-    // {
-    //     gbar = g_;
-    //     E = E_;
-    //     m = m_;
-    //     h = 1;
-    // }
 
     //specify both gbar and erev and initial conditions
     MICurrent(double g_, double E_, double m_, double h_, double Q_g_, double Q_tau_m_, double Q_tau_h_)
@@ -61,7 +45,7 @@ void MICurrent::integrate(double V, double Ca, double dt, double delta_temp)
 }
 
 
-double MICurrent::m_inf(double V) {return 1.0/(1.0+exp((V+12.0)/-3.05));}
+double MICurrent::m_inf(double V) {return 1.0/(1.0+exp((V+12.0)/-5));}
 double MICurrent::tau_m(double V) {return 0.5;}
 
 
