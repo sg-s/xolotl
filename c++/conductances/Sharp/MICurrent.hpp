@@ -3,8 +3,8 @@
 // _/\_ |__| |___ |__|  |  |___
 //
 // Modulatory Input Conductance
-// http://www.physiology.org/doi/abs/10.1152/jn.1993.69.3.992?url_ver=Z39.88-2003&rfr_id=ori:rid:crossref.org&rfr_dat=cr_pub%3dpubmed
-// based on RPCH/proctolin recordings
+// https://www.ncbi.nlm.nih.gov/pubmed/8463821
+// based on dynamic clamp in Sharp et al 1993, Bucholtz et al 1993, Golowasch et al 1992
 #ifndef MICURRENT
 #define MICURRENT
 #include "../../conductance.hpp"
