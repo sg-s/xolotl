@@ -6,12 +6,12 @@
 %
 % help: integrate and calculate currents
 %
-function current_trace = getCurrentTrace(self)
+function [current_trace, V, Ca, I_clamp, cond_state, syn_state, cont_state] = getCurrentTrace(self)
   % produces traces of the currents over time
   % for each compartment of a xolotl object
 
   % perform integration using pre-set parameters
-  [V,Ca,~,cond_states,~]    = self.integrate;
+  [V, Ca, I_clamp, cond_state, syn_state, cont_state]    = self.integrate;
 
   % number of time steps
   n_steps     = length(V(:,1));
@@ -31,7 +31,7 @@ function current_trace = getCurrentTrace(self)
     % count up to twice the number of currents in a compartment
     curr_index_stop   = curr_index_start + 2*n_currents(comp_index)-1;
     % fill with n_steps x 2*n_currents matrices
-    comp_currents{comp_index} = cond_states(:,curr_index_start:curr_index_stop);
+    comp_currents{comp_index} = cond_state(:,curr_index_start:curr_index_stop);
     curr_index_start  = curr_index_stop + 1;
   end
   % reduce activation and inactivation variables to a single product
