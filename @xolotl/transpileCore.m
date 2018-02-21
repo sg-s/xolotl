@@ -303,6 +303,13 @@ function transpileCore(self,in_file,out_file)
 	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% write lines into a C++ file that we can identify by hash
 	
+	if ispc
+		% covert all \ to /
+		for i = 1:length(lines)
+			lines{i} = strrep(lines{i},'\','/');
+		end
+	end
+
 	mexBridge_name = joinPath(self.xolotl_folder, out_file);
 	lineWrite(mexBridge_name,lines);
 end % end transpileCore
