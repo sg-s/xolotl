@@ -120,7 +120,7 @@ x.manipulate;
 | -------          | ------- | ----------- 
 | macOS 10.12.6 | ✓ | no known issues |
 | Ubuntu 16.04.3 LTS | ✓ |   `mex` complains about incompatible compilers, but everything works | 
-| Windows | ❌ | Confirmed that it does not work; but probably can be made to work |
+| Windows | ✓ | Confirmed to work on Windows 7. You may have to install additional compilers |
 
 `xolotl` has been tested on `MATLAB 9.3.0.713579 (R2017b)`, but other versions should work too. 
 
