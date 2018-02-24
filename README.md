@@ -153,10 +153,12 @@ These benchmarks were computed from within MATLAB, running the simulation at a t
 
 | Model          | Paper reference | Hardware  | OS | Speed | 
 | -------          | ------- | ----------- | ------ | -- |
-| 7-conductance point neuron  | [Prinz 2003](http://jn.physiology.org/content/90/6/3998)  |  MacBook Pro (Late 2013) 2.3 GHz Core i7    | macOS 10.12.6 | 83X | 
-| 7-conductance point neuron  | [Prinz 2003](http://jn.physiology.org/content/90/6/3998)  |  Mac Pro (Late 2013) 3.5 GHz Xeon  | macOS 10.12.6   | 83X | 
-| 3-neuron STG network | [Prinz 2004](https://www.nature.com/neuro/journal/v7/n12/full/nn1352.html)  |  MacBook Pro (Late 2013) 2.3 GHz Core i7  | macOS 10.12.6   | 22X | 
+| 7-conductance point neuron  | [Liu 1998](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)  |  MacBook Pro (Late 2013) 2.3 GHz Core i7    | macOS 10.12.6 | 83X | 
+| 7-conductance point neuron  | [Liu 1998](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)   |  Mac Pro (Late 2013) 3.5 GHz Xeon  | macOS 10.12.6   | 83X | 
+| 7-conductance point neuron; approximate gating functions  | [Liu 1998](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)   |  MacBook Pro (Late 2013) 2.3 GHz Core i7    | macOS 10.12.6 | 114X |  
+| 3-neuron STG network | [Prinz 2004](https://www.nature.com/neuro/journal/v7/n12/full/nn1352.html)  |  MacBook Pro (Late 2013) 2.3 GHz Core i7  | macOS 10.12.6   | 20X | 
 | 3-neuron STG network  | [Prinz 2004](https://www.nature.com/neuro/journal/v7/n12/full/nn1352.html)  |  Mac Pro (Late 2013) 3.5 GHz Xeon  | macOS 10.12.6   | 23X | 
+| 3-neuron STG network; approximate gating functions | [Prinz 2004](https://www.nature.com/neuro/journal/v7/n12/full/nn1352.html) | MacBook Pro (Late 103) 2.3 GHz Core i7 | macOS 10.12.6   | 37X | 
 
 Why are these metrics similar even on apparently different hardware? Maybe the Mac Pro just sucks. 
 
