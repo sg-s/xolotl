@@ -92,7 +92,7 @@ if ~nargout
 	yyaxis right
 	plot(all_dt,(self.t_end/1e3)./all_speed)
 	ylabel('Speed (X realtime)')
-	set(gca,'YScale','log')
+	set(gca,'YScale','log','XScale','log')
 
 	prettyFig();
 

@@ -7,13 +7,13 @@
 #include <vector>
 #include <typeinfo>
 #include "../../c++/compartment.hpp"
-#include "../../c++/conductances/liu/NaV.hpp"
-#include "../../c++/conductances/liu/CaT.hpp"
-#include "../../c++/conductances/liu/CaS.hpp"
-#include "../../c++/conductances/liu/ACurrent.hpp"
-#include "../../c++/conductances/liu/KCa.hpp"
-#include "../../c++/conductances/liu/Kd.hpp"
-#include "../../c++/conductances/liu/HCurrent.hpp"
+#include "../../c++/conductances/liu-approx/NaV.hpp"
+#include "../../c++/conductances/liu-approx/CaT.hpp"
+#include "../../c++/conductances/liu-approx/CaS.hpp"
+#include "../../c++/conductances/liu-approx/ACurrent.hpp"
+#include "../../c++/conductances/liu-approx/KCa.hpp"
+#include "../../c++/conductances/liu-approx/Kd.hpp"
+#include "../../c++/conductances/liu-approx/HCurrent.hpp"
 #include "../../c++/conductances/Leak.hpp"
 
 
@@ -38,14 +38,14 @@ int main()
 
     
     // make conductances
-    Leak gleak(gbar_leak,e_leak);
-    NaV gna(gbar_na,e_na, mNa, hNa);
-    CaT gcat(gbar_cat,120.0, mCaT ,hCaT); // this needs to be replaced..
-    CaS gcas(gbar_cas,120.0, mCaS, hCaS); // with the actual Ca rev potential
-    ACurrent gka(gbar_a,e_k, mA ,hA);
-    KCa gkca(gbar_kca,e_k, mKCa);
-    Kd gkd(gbar_kd,e_k, mKd);
-    HCurrent gh(gbar_h,e_h, mH);
+    Leak gleak(gbar_leak,e_leak,0,1,1,1,1);
+    NaV gna(gbar_na,e_na, mNa, hNa,1,1,1);
+    CaT gcat(gbar_cat,120.0, mCaT ,hCaT,1,1,1); // this needs to be replaced..
+    CaS gcas(gbar_cas,120.0, mCaS, hCaS,1,1,1); // with the actual Ca rev potential
+    ACurrent gka(gbar_a,e_k, mA ,hA,1,1,1);
+    KCa gkca(gbar_kca,e_k, mKCa,1,1,1,1);
+    Kd gkd(gbar_kd,e_k, mKd,1,1,1,1);
+    HCurrent gh(gbar_h,e_h, mH,1,1,1,1);
     
     // make compartment and add all the conductances
     compartment cell(V0, Ca0, Cm, A, vol, phi, Ca_out, Ca_in, tau_Ca, 0);
@@ -62,7 +62,7 @@ int main()
 
     for(int i = 0; i < nits; i++)
     {
-        (void) cell.integrate(dt);
+        (void) cell.integrate(dt, 0);
 
         //output_V[i] = cell.V;
         //output_Ca[i] = cell.Ca;
