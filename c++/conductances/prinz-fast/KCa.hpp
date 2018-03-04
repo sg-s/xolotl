@@ -50,11 +50,10 @@ void KCa::integrate(double V, double Ca, double dt, double delta_temp)
 {
     taum = tau_m_cache[(int) round(V+99)];
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/taum);
-    g = pow(Q_g, delta_temp)*gbar*m*m*m*m;
+    g = gbar*m*m*m*m;
 }
 
 double KCa::m_inf(double V, double Ca) { return (Ca/(Ca+3.0))/(1.0+exp((V+28.3)/-12.6)); }
-double KCa::tau_m(double V) {return 90.3 - 75.1/(1.0+exp((V+46.0)/-22.7));}
-
+double KCa::tau_m(double V) {return 180.6 - 150.2/(1.0+exp((V+46.0)/-22.7));}
 
 #endif
