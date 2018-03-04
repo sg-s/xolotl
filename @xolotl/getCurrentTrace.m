@@ -6,11 +6,9 @@
 %
 % help: integrate and calculate currents
 %
-<<<<<<< HEAD
+
 function [current_trace, V, Ca,I_clamp, cond_state, syn_state, cont_state] = getCurrentTrace(self)
-=======
-function [current_trace, V, Ca, I_clamp, cond_state, syn_state, cont_state] = getCurrentTrace(self)
->>>>>>> e0200ce1d28f827515b4fe2b7945f3f1b5e23d89
+
   % produces traces of the currents over time
   % for each compartment of a xolotl object
 
