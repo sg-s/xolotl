@@ -8,9 +8,7 @@
 
 function cleanup(self)
 
-
-	allfiles = dir([self.xolotl_folder oss '*mexBridge*']);
-	for i = 1:length(allfiles)
-		delete([self.xolotl_folder oss allfiles(i).name]);
-	end
+allfiles = dir([self.xolotl_folder filesep '*mexBridge*']);
+for i = 1:length(allfiles)
+	delete([self.xolotl_folder filesep allfiles(i).name]);
 end

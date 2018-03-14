@@ -48,7 +48,7 @@ end
 S.compartment = compartment;
 
 cpp_path = strrep(self.available_controllers{cont_file},self.xolotl_folder,'');
-if strcmp(cpp_path(1),oss)
+if strcmp(cpp_path(1),filesep)
 	cpp_path(1) = [];
 end
 

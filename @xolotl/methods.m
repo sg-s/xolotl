@@ -16,9 +16,9 @@ fprintf(['Methods of xolotl:' '\n'])
 fprintf(['================================================= \n'])
 
 for i = 1:length(m)
-	if exist([self.xolotl_folder,oss,'@xolotl',oss,m{i},'.m']) == 2
+	if exist([self.xolotl_folder,filesep,'@xolotl',filesep,m{i},'.m']) == 2
 		% read the file and see if there is a help line 
-		l = lineRead([self.xolotl_folder,oss,'@xolotl',oss,m{i},'.m']);
+		l = lineRead([self.xolotl_folder,filesep,'@xolotl',filesep,m{i},'.m']);
 		if any(lineFind(l,'help:'))
 			idx = (lineFind(l,'help:'));
 			idx = idx(1);

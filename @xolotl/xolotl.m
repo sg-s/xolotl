@@ -14,7 +14,7 @@
 % see https://github.com/sg-s/xolotl
 % for more information 
 
-classdef xolotl < handle & dynamicprops & matlab.mixin.CustomDisplay
+classdef xolotl <  dynamicprops & matlab.mixin.CustomDisplay
 
 properties (SetAccess = protected)
 	compartment_props 
