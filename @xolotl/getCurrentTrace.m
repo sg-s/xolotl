@@ -51,27 +51,27 @@ for comp_index = 1:n_comps
         cond_file       = fileread([self.xolotl_folder filesep cond_path]);
         % activation
         if strfind(cond_file,'gbar*m*m*m*m') ~= []
-        act_prod = act .* act .* act .* act;
+            act_prod = act .* act .* act .* act;
         elseif strfind(cond_file,'gbar*m*m*m') ~= []
-        act_prod = act .* act .* act;
+            act_prod = act .* act .* act;
         elseif strfind(cond_file,'gbar*m*m') ~= []
-        act_prod = act .* act;
+            act_prod = act .* act;
         elseif strfind(cond_file,'gbar*m') ~= []
-        act_prod = act;
+            act_prod = act;
         else
-        act_prod = act;
+            act_prod = act;
         end
         % inactivation
         if strfind(cond_file,'m*h*h*h*h') ~= []
-        ict_prod = ict .* ict .* ict .* ict;
+            ict_prod = ict .* ict .* ict .* ict;
         elseif strfind(cond_file,'m*h*h*h') ~= []
-        ict_prod = ict .* ict .* ict;
+            ict_prod = ict .* ict .* ict;
         elseif strfind(cond_file,'m*h*h') ~= []
-        ict_prod = ict .* ict;
+            ict_prod = ict .* ict;
         elseif strfind(cond_file,'m*h') ~= []
-        ict_prod = ict;
+            ict_prod = ict;
         else
-        ict_prod = ict;
+            ict_prod = ict;
         end
         % activation and inactivation
         IGVs(:,curr_index) = act_prod .* ict_prod;
@@ -79,28 +79,34 @@ for comp_index = 1:n_comps
 % fill with n_steps x n_currents matrices
 comp_currents{comp_index} = IGVs;
 end
+
+
 % scale by maximal conductances
 for comp_index      = 1:n_comps
     % identify conductances in each compartment
     fields            = fieldnames(self.(self.compartment_names{comp_index}));
     % index by field index
     for curr_index    = length(self.compartment_props)+1:length(fields)
-      % keep track of current by field index
-      counter         = curr_index - length(self.compartment_props);
-      % keep track of electrochemical potential
-      emf             = zeros(n_steps,1);
-      % get maximal conductance
-      gbar            = self.(self.compartment_names{comp_index}).(fields{curr_index}).gbar;
-      % scale by maximal conductance
-      comp_currents{comp_index}(:,counter) = comp_currents{comp_index}(:,counter)*gbar;
-      % check to see if the current is calcium
-      if fields{curr_index}(1:2) == 'Ca'
-        emf(:) = V(:,comp_index) - Ca(:,2*comp_index);
-      else
-        emf(:) = V(:,comp_index) - self.(self.compartment_names{comp_index}).(fields{curr_index}).E;
-      end
-      % scale by electrochemical potential
-      comp_currents{comp_index}(:,counter) = comp_currents{comp_index}(:,counter) .* emf;
+        % keep track of current by field index
+        counter         = curr_index - length(self.compartment_props);
+        % keep track of electrochemical potential
+        emf             = zeros(n_steps,1);
+        % get maximal conductance
+        gbar            = self.(self.compartment_names{comp_index}).(fields{curr_index}).gbar;
+        if isa(gbar,'function_handle')
+            gbar = gbar();
+        end
+
+        % scale by maximal conductance
+        comp_currents{comp_index}(:,counter) = comp_currents{comp_index}(:,counter)*gbar;
+        % check to see if the current is calcium
+        if fields{curr_index}(1:2) == 'Ca'
+            emf(:) = V(:,comp_index) - Ca(:,2*comp_index);
+        else
+            emf(:) = V(:,comp_index) - self.(self.compartment_names{comp_index}).(fields{curr_index}).E;
+        end
+        % scale by electrochemical potential
+        comp_currents{comp_index}(:,counter) = comp_currents{comp_index}(:,counter) .* emf;
     end
 end
 current_trace = comp_currents;
