@@ -32,7 +32,7 @@ function transpileCore(self,in_file,out_file)
 	% this section of transpile generates a list of unique variable names that identifies all parameters and variables in the xolotl object using x.serialize, and then wires up arrays from matlab that correspond to these values to named variables in C++. so you can expect every variable to exist in your C++ workspace, where the names are defined in x.serialize
 
 	[values,names] = self.serialize;
-	input_hookups{1} = ['double * params  = mxGetPr(prhs[1]);'];
+	input_hookups{1} = ['double * params  = mxGetPr(prhs[0]);'];
 
 	for j = 1:length(names)
 		input_hookups{end+1} = ['double ' names{j} ' = params[' oval(j-1) '];'];
@@ -42,67 +42,29 @@ function transpileCore(self,in_file,out_file)
 	assert(length(insert_here)==1,'Could not find insertion point for input declarations')
 	lines = [lines(1:insert_here); input_hookups(:); lines(insert_here+1:end)];
 
+	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% make all the C++ objects 
+	[constructors, class_parents, names] = self.generateConstructors;
+
+	insert_here = lineFind(lines,'//xolotl:insert_constructors');
+	assert(length(insert_here)==1,'Could not find insertion point for object constructors')
+	lines = [lines(1:insert_here); constructors(:); lines(insert_here+1:end)];
 
 
-	% %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	% % make the compartments here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	% compartment_lines = {};
-	% for i = 1:length(self.compartment_names)
-	% 	this_string = ['compartment ' self.compartment_names{i} '('];
-	% 	for j = 1:length(self.compartment_props)
-	% 		this_string = [this_string  self.compartment_names{i} '_' self.compartment_props{j}  ','];
-	% 	end
-	% 	this_string(end) = ')';
-	% 	this_string = [this_string ';'];
-	% 	compartment_lines{i} = this_string;
-	% end
+	%% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	% here we hook up the channels to the compartments they
+	% should be in
+	channel_hookups = {};
+	for i = 1:length(class_parents)
+		if strcmp(class_parents{i},'conductance')
+			channel_hookups{end+1} = [names{i}(1:max(strfind(names{i},'_')-1)) '.addConductance(&' names{i} ');'];
+		end
+	end
 
-	% insert_here = lineFind(lines,'//xolotl:make_compartments_here');
-	% assert(length(insert_here)==1,'Could not find insertion point for compartment declarations')
-	% lines = [lines(1:insert_here); compartment_lines(:); lines(insert_here+1:end)];
 
-	% % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	% % make the conductances here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	% conductance_lines = {}; cc = 1;
-
-	% for i = 1:length(self.compartment_names)
-	% 	these_channels = setdiff(fieldnames(self.(self.compartment_names{i})),self.compartment_props);
-	% 	this_comp_name = self.compartment_names{i};
-	% 	for j = 1:length(these_channels)
-	% 		tc = these_channels{j};
-	% 		tc = [this_comp_name '_' tc];
-
-	% 		this_channel_dec = [these_channels{j} ' ' tc '(' tc '_gbar,' tc '_E,' tc '_m,' tc '_h,' tc '_Q_g,' tc '_Q_tau_m,' tc '_Q_tau_h);'];
-
-	% 		conductance_lines{cc} = this_channel_dec; cc = cc + 1;
-	% 	end
-	% end
-
-	% insert_here = lineFind(lines,'//xolotl:make_conductances_here');
-	% assert(length(insert_here)==1,'Could not find insertion point for conductance declarations')
-	% lines = [lines(1:insert_here); conductance_lines(:); lines(insert_here+1:end)];
-
-	% % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	% % add the conductances here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	% conductance_add_lines = {}; c = 1;
-	% for i = 1:length(self.compartment_names)
-	% 	this_comp_name = self.compartment_names{i};
-	% 	% these_channels = setdiff(fieldnames(self.(self.compartment_names{i})),self.compartment_props);
-	% 	% this (above) doesn't work because it reorders the channel names--
-	% 	% we want to add the channels in C++ in the order they were added here
-	% 	these_channels = self.getChannelsInCompartment(i);
-
-	% 	for j = 1:length(these_channels)
-	% 		this_cond_name  = [this_comp_name  '_' these_channels{j}];
-	% 		conductance_add_lines{c} = [this_comp_name '.addConductance(&' this_cond_name ');'];
-	% 		c = c+1;
-	% 	end
-	% end
-
-	% insert_here = lineFind(lines,'//xolotl:add_conductances_here');
-	% assert(length(insert_here)==1,'Could not find insertion point for conductance->cell hookups')
-	% lines = [lines(1:insert_here); conductance_add_lines(:); lines(insert_here+1:end)];
+	insert_here = lineFind(lines,'//xolotl:add_conductances_here');
+	assert(length(insert_here)==1,'Could not find insertion point for conductance->cell hookups')
+	lines = [lines(1:insert_here); channel_hookups(:); lines(insert_here+1:end)];
 
 
 	% % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -220,17 +182,18 @@ function transpileCore(self,in_file,out_file)
 	% lines = [lines(1:insert_here); controller_read_lines(:); lines(insert_here+1:end)];
 
 
-	% % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	% % add the neurons to the network  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	% network_add_lines = {};
-	% for i = 1:length(self.compartment_names)
-	% 	this_comp_name = self.compartment_names{i};
-	% 	network_add_lines{i} = ['STG.addCompartment(&' this_comp_name ');'];
-	% end
+	% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	% add the neurons to the network  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	network_add_lines = {};
+	compartment_names = self.Children;
+	for i = 1:length(compartment_names)
+		this_comp_name = compartment_names{i};
+		network_add_lines{i} = ['xolotl_network.addCompartment(&' this_comp_name ');'];
+	end
 
-	% insert_here = lineFind(lines,'//xolotl:add_neurons_to_network');
-	% assert(length(insert_here)==1,'Could not find insertion point for cell->network hookup')
-	% lines = [lines(1:insert_here); network_add_lines(:); lines(insert_here+1:end)];
+	insert_here = lineFind(lines,'//xolotl:add_neurons_to_network');
+	assert(length(insert_here)==1,'Could not find insertion point for cell->network hookup')
+	lines = [lines(1:insert_here); network_add_lines(:); lines(insert_here+1:end)];
 
 	% % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	% % if something is clamped, link up the clamping potentials   ~~~~~~~~~

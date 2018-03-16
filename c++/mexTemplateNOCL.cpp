@@ -54,7 +54,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     //xolotl:input_declarations
 
-    //xolotl:make_compartments_here
+    //xolotl:insert_constructors
 
     //xolotl:make_conductances_here
 

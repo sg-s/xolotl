@@ -214,7 +214,7 @@ methods
 		end
 
 		f = str2func(f);
-		[results{1:6}] = f(arguments{:});
+		[results{1:6}] = f(arguments);
 
 		V = (results{1})';
 		Ca = (results{2})';
@@ -224,49 +224,7 @@ methods
 		cont_state = (results{6})';
 
 		% update xolotl properties based on the integration
-		idx = 1;
-		if self.closed_loop
-			for i = 1:length(self.compartment_names)
-				% update voltage and calcium
-				self.(self.compartment_names{i}).V = V(end,i);
-				self.(self.compartment_names{i}).Ca = Ca(end,i);
-
-				% update the conductances 
-				these_channels = self.getChannelsInCompartment(i);
-				for j = 1:length(these_channels)
-					self.(self.compartment_names{i}).(these_channels{j}).m = cond_state(end,idx);
-					idx = idx + 1;
-					self.(self.compartment_names{i}).(these_channels{j}).h = cond_state(end,idx);
-					idx = idx + 1;
-				end
-			end
-
-			% update the synapses
-			syn_g = [syn_state(end,1:2:end)];
-			syn_s = [syn_state(end,2:2:end)]; 
-			for i = 1:length(self.synapses)
-				self.synapses(i).gbar = syn_g(i);
-				self.synapses(i).state = syn_s(i);
-			end
-
-			% update conductances from controllers 
-			cont_m = [cont_state(end,1:2:end)];
-			cont_g = [cont_state(end,2:2:end)];
-			for i = 1:length(self.controllers)
-
-				self.controllers{i}.m = cont_m(i);
-
-				if strcmp(self.controllers{i}.channel,'NULL')
-					continue
-				end
-
-			
-				this_channel = strrep(self.controllers{i}.channel,self.controllers{i}.compartment,'');
-				this_channel(1) = [];
-				self.(self.controllers{i}.compartment).(this_channel).gbar = cont_g(i);
-				
-			end 
-		end
+		
 
 	end
 

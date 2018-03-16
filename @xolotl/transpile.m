@@ -18,7 +18,7 @@ function transpile(self)
 	out_file = ['mexBridge' h(1:6) '.cpp'];
 	self.transpileCore('mexTemplate.cpp',out_file)
 
-	out_file = ['mexBridge' h(1:6) 'NOCL.cpp'];
-	self.transpileCore('mexTemplateNOCL.cpp',out_file)
+	% out_file = ['mexBridge' h(1:6) 'NOCL.cpp'];
+	% self.transpileCore('mexTemplateNOCL.cpp',out_file)
 	
 end % end transpile
