@@ -24,8 +24,8 @@ x.AB.add('Leak',cpplab('Leak','gbar',@() 1.7/x.AB.A,'E',30));
 
 
 
-x.transpile;
-x.compile;
+% x.transpile;
+% x.compile;
 
-V = x.integrate;
-plot(V)
+% V = x.integrate;
+% plot(V)

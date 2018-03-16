@@ -14,27 +14,16 @@
 % see https://github.com/sg-s/xolotl
 % for more information 
 
-classdef xolotl <  dynamicprops & matlab.mixin.CustomDisplay
+classdef xolotl <  cpplab & matlab.mixin.CustomDisplay
 
 properties (SetAccess = protected)
-	compartment_props 
-	available_conductances
-	available_controllers
-	available_synapses
 	linked_binary@char
-	compartment_names = {};
-	OS_binary_ext % OS-specific
-
-	conductance_headers = {};
-	controller_headers = {};
-	synapse_headers = {};
-	xolotl_folder
-	cpp_folder
-	
 end  % end set protected props
 
 properties (Access = protected)
-	
+	xolotl_folder
+	cpp_folder
+	OS_binary_ext % OS-specific
 	dyn_prop_handles % handles to dynamic properties 
 	illegal_names = {'xolotl_network','compartment','conductance','controller','synapse','network','x','self'}; % list of illegal names for compartments, synpases and other objects
 end  % end protected props
