@@ -17,17 +17,18 @@ class ACurrent: public conductance {
 public:
 
     // specify parameters + initial conditions 
-    ACurrent(double g_, double E_, double m_, double h_, double Q_g_, double Q_tau_m_, double Q_tau_h_)
+    ACurrent(double g_, double E_, double m_, double h_)
     {
         gbar = g_;
         E = E_;
         m = m_;
         h = h_;
-        
 
-        Q_g = Q_g_;
-        Q_tau_m = Q_tau_m_;
-        Q_tau_h = Q_tau_h_;
+
+        // defaults
+        if (isnan (m)) { m = 0; }
+        if (isnan (h)) { h = 1; }
+        if (isnan (E)) { E = -80; }
 
 
         // cache values for m_inf and h_inf

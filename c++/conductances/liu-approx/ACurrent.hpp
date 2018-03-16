@@ -10,6 +10,7 @@
 #ifndef ACURRENT
 #define ACURRENT
 #include "../../conductance.hpp"
+#include "math.h"
 
 //inherit conductance class spec
 class ACurrent: public conductance {
@@ -23,11 +24,18 @@ public:
         E = E_;
         m = m_;
         h = h_;
-        
 
         Q_g = Q_g_;
         Q_tau_m = Q_tau_m_;
         Q_tau_h = Q_tau_h_;
+
+        // defaults
+        if (isnan (m)) { m = 0; }
+        if (isnan (h)) { h = 1; }
+        if (isnan (Q_g)) { Q_g = 1; }
+        if (isnan (Q_tau_m)) { Q_tau_m = 1; }
+        if (isnan (Q_tau_h)) { Q_tau_h = 1; }
+        if (isnan (E)) { E = -80; }
 
 
         // cache values for m_inf and h_inf
