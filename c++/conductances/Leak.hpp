@@ -18,6 +18,8 @@ public:
         gbar = g_;
         g = gbar; // this is important as integrate doesn't do anything in the leak channels 
         E = E_;
+        m = m_;
+        h = h_;
         m = 1;
         h = 1;
         

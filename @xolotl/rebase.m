@@ -14,10 +14,8 @@ function [] = rebase(self)
 	self.xolotl_folder = fileparts(fileparts(which(mfilename)));
 	self.cpp_folder = joinPath(self.xolotl_folder,'c++');
 
-
-	% read props from compartment.h
-	cppfilename = joinPath(self.cpp_folder,'compartment.hpp');
-	self.compartment_props = findCPPClassMembers(cppfilename);
+	% make sure cpplab knows where the code is
+	cpplab.addPath(joinPath(fileparts(fileparts(which(mfilename))),'c++'))
 
 	% make a list of the available conductances
 	available_conductances = getAllFiles(joinPath(self.cpp_folder,'conductances'));

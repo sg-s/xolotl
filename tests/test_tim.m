@@ -8,19 +8,21 @@ phi = (2*f*F*vol)/tau_Ca;
 Ca_target = 0; % used only when we add in homeostatic control 
 
 x = xolotl;
-x.addCompartment('AB',-60,0.02,10,0.0628,vol,phi,3000,0.05,tau_Ca,Ca_target);
+x.add('AB',cpplab('compartment','V',-60,'Ca',0.02,'Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca,'Ca_target',Ca_target));
 
 % set up a relational parameter
 x.AB.vol = @() x.AB.A;
 
-x.addConductance('AB','liu-approx/NaV',@() 115/x.AB.A,30);
-x.addConductance('AB','liu-approx/CaT',@() 1.44/x.AB.A,30);
-x.addConductance('AB','liu-approx/CaS',@() 1.7/x.AB.A,30);
-x.addConductance('AB','liu-approx/ACurrent',@() 15.45/x.AB.A,-80);
-x.addConductance('AB','liu-approx/KCa',@() 61.54/x.AB.A,-80);
-x.addConductance('AB','liu-approx/Kd',@() 38.31/x.AB.A,-80);
-x.addConductance('AB','liu-approx/HCurrent',@() .6343/x.AB.A,-20);
-x.addConductance('AB','Leak',@() 0.0622/x.AB.A,-50);
+x.AB.add('NaV',cpplab('liu-approx/NaV','gbar',@() 115/x.AB.A,'E',30));
+x.AB.add('CaT',cpplab('liu-approx/CaT','gbar',@() 1.7/x.AB.A,'E',30));
+x.AB.add('CaS',cpplab('liu-approx/CaS','gbar',@() 1.7/x.AB.A,'E',30));
+x.AB.add('ACurrent',cpplab('liu-approx/ACurrent','gbar',@() 1.7/x.AB.A,'E',30));
+x.AB.add('KCa',cpplab('liu-approx/KCa','gbar',@() 1.7/x.AB.A,'E',30));
+x.AB.add('Kd',cpplab('liu-approx/Kd','gbar',@() 1.7/x.AB.A,'E',30));
+x.AB.add('HCurrent',cpplab('liu-approx/HCurrent','gbar',@() 1.7/x.AB.A,'E',30));
+x.AB.add('Leak',cpplab('Leak','gbar',@() 1.7/x.AB.A,'E',30));
+
+
 
 x.transpile;
 x.compile;

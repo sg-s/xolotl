@@ -35,12 +35,8 @@ end  % end set protected props
 
 properties (Access = protected)
 	
-	sections@cell = {};
-
-	
-
 	dyn_prop_handles % handles to dynamic properties 
-	illegal_names = {'xolotl_network','compartment','conductance','controller','synapse','network'}; % list of illegal names for compartments, synpases and other objects
+	illegal_names = {'xolotl_network','compartment','conductance','controller','synapse','network','x','self'}; % list of illegal names for compartments, synpases and other objects
 end  % end protected props
 
 

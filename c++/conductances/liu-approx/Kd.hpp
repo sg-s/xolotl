@@ -19,6 +19,7 @@ public:
         gbar = g_;
         E = E_;
         m = m_;
+        h = h_;
         h = 1;
         
 
