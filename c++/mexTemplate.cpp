@@ -18,6 +18,7 @@ using namespace std;
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
     // declare pointers to outputs
+    double *output_state;
     double *output_V;
     double *output_Ca;
     double *output_I_clamp;
@@ -63,12 +64,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         cond_state_dim += 2*n_cond;
     }
 
-    plhs[0] = mxCreateDoubleMatrix(n_comp, nsteps, mxREAL); // V
-    plhs[1] = mxCreateDoubleMatrix(2*n_comp, nsteps, mxREAL); // Ca + E_Ca
-    plhs[2] = mxCreateDoubleMatrix(1, nsteps, mxREAL); // I_clamp
-    plhs[3] = mxCreateDoubleMatrix(cond_state_dim, nsteps, mxREAL); // cond_state
-    plhs[4] = mxCreateDoubleMatrix(2*n_synapses, nsteps, mxREAL); // synapse gbar + state
-    plhs[5] = mxCreateDoubleMatrix(2*n_controllers, nsteps, mxREAL); // controllers gbar + mrna
+    plhs[0] = mxCreateDoubleMatrix(1, param_size, mxREAL); //output state
+    plhs[1] = mxCreateDoubleMatrix(n_comp, nsteps, mxREAL); // V
+    plhs[2] = mxCreateDoubleMatrix(2*n_comp, nsteps, mxREAL); // Ca + E_Ca
+    plhs[3] = mxCreateDoubleMatrix(1, nsteps, mxREAL); // I_clamp
+    plhs[4] = mxCreateDoubleMatrix(cond_state_dim, nsteps, mxREAL); // cond_state
+    plhs[5] = mxCreateDoubleMatrix(2*n_synapses, nsteps, mxREAL); // synapse gbar + state
+    plhs[6] = mxCreateDoubleMatrix(2*n_controllers, nsteps, mxREAL); // controllers gbar + mrna
 
     output_V = mxGetPr(plhs[0]);
     output_Ca = mxGetPr(plhs[1]);
@@ -125,4 +127,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         }
 
     }
+
+    // here, we are reading the full state back, so we 
+    // can easily update the xolotl object in the MATLAB wrapper
+    //xolotl:read_state_back
+
+
 }

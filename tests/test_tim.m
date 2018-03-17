@@ -32,7 +32,7 @@ for i = 1:length(channels)
 end
 
 x.transpile;
-x.compile;
+% x.compile;
 
-V = x.integrate;
-plot(V)
+% V = x.integrate;
+% plot(V)
