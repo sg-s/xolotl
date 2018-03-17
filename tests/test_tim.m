@@ -15,6 +15,7 @@ x.add('AB',cpplab('compartment','V',-60,'Ca',0.02,'Cm',10,'A',0.0628,'vol',vol,'
 x.AB.vol = @() x.AB.A;
 
 x.AB.add('NaV',cpplab('liu-approx/NaV','gbar',@() 115/x.AB.A,'E',30));
+
 x.AB.add('CaT',cpplab('liu-approx/CaT','gbar',@() 1.44/x.AB.A,'E',30));
 x.AB.add('CaS',cpplab('liu-approx/CaS','gbar',@() 1.7/x.AB.A,'E',30));
 x.AB.add('ACurrent',cpplab('liu-approx/ACurrent','gbar',@() 15.45/x.AB.A,'E',-80));
@@ -27,5 +28,5 @@ x.AB.add('Leak',cpplab('Leak','gbar',@() 0.0622/x.AB.A,'E',-50));
 x.transpile;
 x.compile;
 
-% V = x.integrate;
-% plot(V)
+V = x.integrate;
+plot(V)

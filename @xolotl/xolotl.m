@@ -198,7 +198,7 @@ methods
 
 		% vectorize the current state 
 		arguments = self.serialize;
-		[~,f]=fileparts(self.linked_binary);
+		[~,f] = fileparts(self.linked_binary);
 		if self.closed_loop & nargout == 0
 			% use the NOCL version
 			f = [f 'NOCL'];
@@ -207,7 +207,9 @@ methods
 		f = str2func(f);
 		[results{1:7}] = f(arguments);
 
-		output_state = results{1};
+		if self.closed_loop
+			self.deserialize(results{1});
+		end
 
 		V = (results{2})';
 		Ca = (results{3})';
@@ -215,8 +217,6 @@ methods
 		cond_state = (results{5})';
 		syn_state = (results{6})';
 		cont_state = (results{7})';
-
-		% update xolotl properties based on the integration
 		
 
 	end
