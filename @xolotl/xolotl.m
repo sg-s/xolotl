@@ -136,14 +136,7 @@ methods
 	end
 
 
-	function [V, Ca,I_clamp, cond_state, syn_state, cont_state] = integrate(self, use_nocl)
-
-		xolotl_folder = fileparts(fileparts(which(mfilename)));
-		cpp_folder = joinPath(xolotl_folder,'c++');
-
-		if nargin < 2
-			use_nocl = false;
-		end
+	function [V, Ca,I_clamp, cond_state, syn_state, cont_state] = integrate(self)
 
 		% check if we need to transpile or compile 
 		if ~self.skip_hash_check
@@ -153,12 +146,12 @@ methods
 				if self.debug_mode
 					 cprintf('green','[DEBUG] No linked binary\n');
 				end
-				if exist(joinPath(xolotl_folder,['mexBridge' h(1:6) '.cpp']),'file') == 2
+				if exist(joinPath(self.xolotl_folder,['mexBridge' h(1:6) '.cpp']),'file') == 2
 					if self.debug_mode
 						cprintf('green','[DEBUG] C++ file exists\n');
 					end
 					% Ok, we have the C++ file. should we compile?
-					if exist(joinPath(xolotl_folder,['mexBridge' h(1:6) '.' self.OS_binary_ext]),'file') == 3
+					if exist(joinPath(self.xolotl_folder,['mexBridge' h(1:6) '.' self.OS_binary_ext]),'file') == 3
 						% update the linked_binary
 						if self.debug_mode
 							cprintf('green','[DEBUG] Binary exists, linking...\n');
@@ -182,7 +175,7 @@ methods
 				if self.debug_mode
 					cprintf('green','[DEBUG] Checking for linked binary...\n');
 				end
-				if exist(joinPath(xolotl_folder,['mexBridge' h(1:6) '.' self.OS_binary_ext]),'file') == 3
+				if exist(joinPath(self.xolotl_folder,['mexBridge' h(1:6) '.' self.OS_binary_ext]),'file') == 3
 					if self.debug_mode
 						cprintf('green','[DEBUG] Linked binary exists.\n');
 					end
@@ -209,19 +202,19 @@ methods
 		if self.closed_loop & nargout == 0
 			% use the NOCL version
 			f = [f 'NOCL'];
-		elseif use_nocl 
-			f = [f 'NOCL'];
 		end
 
 		f = str2func(f);
-		[results{1:6}] = f(arguments);
+		[results{1:7}] = f(arguments);
 
-		V = (results{1})';
-		Ca = (results{2})';
-		I_clamp = (results{3})';
-		cond_state = (results{4})';
-		syn_state = (results{5})';
-		cont_state = (results{6})';
+		output_state = results{1};
+
+		V = (results{2})';
+		Ca = (results{3})';
+		I_clamp = (results{4})';
+		cond_state = (results{5})';
+		syn_state = (results{6})';
+		cont_state = (results{7})';
 
 		% update xolotl properties based on the integration
 		

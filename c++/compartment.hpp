@@ -30,6 +30,11 @@ protected:
     double V_inf;         
     double Ca_inf; 
 
+
+    double RT_by_nF;
+
+public:
+
     // neuron parameters
     double Cm; // specific capacitance 
     double A; 
@@ -37,12 +42,10 @@ protected:
     double Ca_in;
     double Ca_out; 
     double tau_Ca;
-    double RT_by_nF;
     double vol;
     double Ca_target; // for homeostatic control 
 
 
-public:
     double V;          
     double Ca; 
     double E_Ca;

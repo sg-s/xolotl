@@ -21,10 +21,17 @@ public:
         m = m_;
         h = h_;
         
-
         Q_g = Q_g_;
         Q_tau_m = Q_tau_m_;
         Q_tau_h = Q_tau_h_;
+
+        // defaults
+        if (isnan (m)) { m = 0; }
+        if (isnan (h)) { h = 1; }
+        if (isnan (Q_g)) { Q_g = 1; }
+        if (isnan (Q_tau_m)) { Q_tau_m = 1; }
+        if (isnan (Q_tau_h)) { Q_tau_h = 1; }
+        if (isnan (E)) { E = 30; }
     
         // cache values for m_inf and h_inf
         for (double V = -99; V < 101; V++) {

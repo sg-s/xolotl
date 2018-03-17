@@ -72,12 +72,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     plhs[5] = mxCreateDoubleMatrix(2*n_synapses, nsteps, mxREAL); // synapse gbar + state
     plhs[6] = mxCreateDoubleMatrix(2*n_controllers, nsteps, mxREAL); // controllers gbar + mrna
 
-    output_V = mxGetPr(plhs[0]);
-    output_Ca = mxGetPr(plhs[1]);
-    output_I_clamp = mxGetPr(plhs[2]);
-    output_cond_state = mxGetPr(plhs[3]);
-    output_syn_state = mxGetPr(plhs[4]);
-    output_cont_state = mxGetPr(plhs[5]);
+    output_state = mxGetPr(plhs[0]);
+    output_V = mxGetPr(plhs[1]);
+    output_Ca = mxGetPr(plhs[2]);
+    output_I_clamp = mxGetPr(plhs[3]);
+    output_cond_state = mxGetPr(plhs[4]);
+    output_syn_state = mxGetPr(plhs[5]);
+    output_cont_state = mxGetPr(plhs[6]);
 
     // make arrays which will store the full cond. state
     double * full_cond_state = new double[cond_state_dim];

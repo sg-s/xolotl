@@ -43,27 +43,48 @@ assert(length(insert_here)==1,'Could not find insertion point for input declarat
 lines = [lines(1:insert_here); input_hookups(:); lines(insert_here+1:end)];
 
 
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-% ~~ output declarations and hookups ~~
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-output_hookups = {};
-for j = length(names):-1:1
-	idx = max(strfind(names{j},'_'));
-	output_hookups{j} = ['output_state[' mat2str(j-1) '] = ' names{j}(1:idx-1) '.' names{j}(idx+1:end) ';'];
-end
-insert_here = lineFind(lines,'//xolotl:read_state_back');
-assert(length(insert_here)==1,'Could not find insertion point for input declarations')
-lines = [lines(1:insert_here); output_hookups(:); lines(insert_here+1:end)];
-
 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % make all the C++ objects 
-[constructors, class_parents, names] = self.generateConstructors;
+[constructors, class_parents, obj_names] = self.generateConstructors;
 
 insert_here = lineFind(lines,'//xolotl:insert_constructors');
 assert(length(insert_here)==1,'Could not find insertion point for object constructors')
 lines = [lines(1:insert_here); constructors(:); lines(insert_here+1:end)];
+
+
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% ~~ output declarations and hookups ~~
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+% sort all objects by length of object name
+% this is to make sure we find the longest object
+% string in names later on 
+[~,sort_idx] = sort(cellfun(@(x) length(x), obj_names));
+obj_names = obj_names(sort_idx);
+
+output_hookups = {};
+for j = length(names):-1:1
+	% try to figure out what the object is
+	obj_idx = [];
+	for i = 1:length(obj_names)
+		if ~isempty(strfind(names{j},obj_names{i}))
+			obj_idx = i;
+		end
+	end
+
+	if isempty(obj_idx)
+		output_hookups{j} = ['output_state[' mat2str(j-1) '] = params[' mat2str(j-1) '];'];
+	else
+		output_hookups{j} = ['output_state[' mat2str(j-1) '] = ' obj_names{obj_idx} strrep(names{j},[obj_names{obj_idx} '_'],'.') ';'];
+	end
+end
+
+
+insert_here = lineFind(lines,'//xolotl:read_state_back');
+assert(length(insert_here)==1,'Could not find insertion point for input declarations')
+lines = [lines(1:insert_here); output_hookups(:); lines(insert_here+1:end)];
+
 
 
 %% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -72,7 +93,7 @@ lines = [lines(1:insert_here); constructors(:); lines(insert_here+1:end)];
 channel_hookups = {};
 for i = 1:length(class_parents)
 	if strcmp(class_parents{i},'conductance')
-		channel_hookups{end+1} = [names{i}(1:max(strfind(names{i},'_')-1)) '.addConductance(&' names{i} ');'];
+		channel_hookups{end+1} = [obj_names{i}(1:max(strfind(obj_names{i},'_')-1)) '.addConductance(&' obj_names{i} ');'];
 	end
 end
 

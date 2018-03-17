@@ -8,6 +8,7 @@ phi = (2*f*F*vol)/tau_Ca;
 Ca_target = 0; % used only when we add in homeostatic control 
 
 x = xolotl;
+x.cleanup;
 x.add('AB',cpplab('compartment','V',-60,'Ca',0.02,'Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca,'Ca_target',Ca_target));
 
 % set up a relational parameter
@@ -22,17 +23,9 @@ x.AB.add('Kd',cpplab('liu-approx/Kd','gbar',@() 38.31/x.AB.A,'E',-80));
 x.AB.add('HCurrent',cpplab('liu-approx/HCurrent','gbar',@() .6343/x.AB.A,'E',-20));
 x.AB.add('Leak',cpplab('Leak','gbar',@() 0.0622/x.AB.A,'E',-50));
 
-channels = x.AB.Children;
-for i = 1:length(channels)
-	x.AB.(channels{i}).m = 0;
-	x.AB.(channels{i}).h = 1;
-	x.AB.(channels{i}).Q_tau_m = 1;
-	x.AB.(channels{i}).Q_tau_h = 1;
-	x.AB.(channels{i}).Q_g = 1;
-end
 
 x.transpile;
-% x.compile;
+x.compile;
 
 % V = x.integrate;
 % plot(V)
