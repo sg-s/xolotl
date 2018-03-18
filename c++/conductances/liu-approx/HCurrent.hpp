@@ -15,26 +15,15 @@ class HCurrent: public conductance {
 public:
 
     //specify both gbar and erev and initial conditions
-    HCurrent(double g_, double E_, double m_, double h_, double Q_g_, double Q_tau_m_, double Q_tau_h_)
+    HCurrent(double g_, double E_, double m_)
     {
         gbar = g_;
         E = E_;
         m = m_;
-        h = h_;
-        h = 1;
-        
 
-        Q_g = Q_g_;
-        Q_tau_m = Q_tau_m_;
-        Q_tau_h = Q_tau_h_;
-    
         // defaults
         if (isnan (m)) { m = 0; }
-        if (isnan (h)) { h = 1; }
-        if (isnan (Q_g)) { Q_g = 1; }
-        if (isnan (Q_tau_m)) { Q_tau_m = 1; }
-        if (isnan (Q_tau_h)) { Q_tau_h = 1; }
-        if (isnan (E)) { E =  -20; }
+        if (isnan (E)) { E = -20; }
 
         // cache values for m_inf and h_inf
         for (double V = -99; V < 101; V++) {
@@ -65,10 +54,9 @@ void HCurrent::integrate(double V, double Ca, double dt, double delta_temp)
     minf = m_inf_cache[(int) round(V+99)];
     taum = tau_m_cache[(int) round(V+99)];
 
-    m = minf + (m - minf)*exp(-(dt*pow(Q_tau_m, delta_temp))/taum);
+    m = minf + (m - minf)*exp(-dt/taum);
 
-
-    g = pow(Q_g, delta_temp)*gbar*m;
+    g = gbar*m;
 }
 
 

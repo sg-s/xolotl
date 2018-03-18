@@ -15,15 +15,15 @@ phi = (2*f*F*vol)/tau_Ca;
 
 x = xolotl;
 x.cleanup;
-x.addCompartment('AB',-65,0.02,10,0.0628,vol,phi,3000,0.05,tau_Ca,0);
+x.add('AB',cpplab('compartment','V',-65,'Ca',0.02,'Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca));
 
-x.addConductance('AB','prinz-fast/NaV',1000,50);
-x.addConductance('AB','prinz-fast/CaT',25,30);
-x.addConductance('AB','prinz-fast/CaS',60,30);
-x.addConductance('AB','prinz-fast/ACurrent',500,-80);
-x.addConductance('AB','prinz-fast/KCa',50,-80);
-x.addConductance('AB','prinz-fast/Kd',1000,-80);
-x.addConductance('AB','prinz-fast/HCurrent',.1,-20);
+x.AB.add('NaV',cpplab('prinz-fast/NaV','gbar',1000,'E',50));
+x.AB.add('CaT','prinz-fast/CaT',25,30);
+x.AB.add('CaS','prinz-fast/CaS',60,30);
+x.AB.add('ACurrent','prinz-fast/ACurrent',500,-80);
+x.AB.add('KCa','prinz-fast/KCa',50,-80);
+x.AB.add('Kd','prinz-fast/Kd',1000,-80);
+x.AB.add('HCurrent','prinz-fast/HCurrent',.1,-20);
 
 x.addCompartment('LP',-47,0.01,10,0.0628,vol,phi,3000,0.05,tau_Ca,0);
 x.addConductance('LP','prinz-fast/NaV',1000,50);

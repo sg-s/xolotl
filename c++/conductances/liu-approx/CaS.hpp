@@ -14,23 +14,16 @@ class CaS: public conductance {
 public:
 
     // specify parameters + initial conditions 
-    CaS(double g_, double E_, double m_, double h_, double Q_g_, double Q_tau_m_, double Q_tau_h_)
+    CaS(double g_, double E_, double m_, double h_)
     {
         gbar = g_;
         E = E_;
         m = m_;
         h = h_;
         
-        Q_g = Q_g_;
-        Q_tau_m = Q_tau_m_;
-        Q_tau_h = Q_tau_h_;
-
         // defaults
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
-        if (isnan (Q_g)) { Q_g = 1; }
-        if (isnan (Q_tau_m)) { Q_tau_m = 1; }
-        if (isnan (Q_tau_h)) { Q_tau_h = 1; }
         if (isnan (E)) { E = 30; }
     
         // cache values for m_inf and h_inf
@@ -73,10 +66,10 @@ void CaS::integrate(double V, double Ca, double dt, double delta_temp)
     taum = tau_m_cache[(int) round(V+99)];
     tauh = tau_h_cache[(int) round(V+99)];
 
-    m = minf + (m - minf)*exp(-(dt*pow(Q_tau_m, delta_temp))/taum);
-    h = hinf + (h - hinf)*exp(-(dt*pow(Q_tau_h, delta_temp))/tauh);
+    m = minf + (m - minf)*exp(-dt/taum);
+    h = hinf + (h - hinf)*exp(-dt/tauh);
 
-    g = pow(Q_g, delta_temp)*gbar*m*m*m*h;
+    g = gbar*m*m*m*h;
 
     // compute the specific calcium current and update it in the cell 
     double this_I = g*(V-E);

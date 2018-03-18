@@ -9,10 +9,9 @@
 % example usage:
 % x.add('compartment',AB', varargin)
 
-function add(self,obj_name,obj)
+function add(self,obj_name,varargin)
 
 assert(nargin > 2,'No label! You have to label every compartment')
 assert(self.checkCompartmentName(obj_name),'Illegal compartment name')
 
-self.addprop(obj_name);
-self.(obj_name) = obj;
+add@cpplab(self,obj_name,varargin{:});
