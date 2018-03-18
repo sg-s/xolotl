@@ -15,32 +15,42 @@ phi = (2*f*F*vol)/tau_Ca;
 
 x = xolotl;
 x.cleanup;
-x.add('AB',cpplab('compartment','V',-65,'Ca',0.02,'Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca));
+x.add('AB','compartment','V',-65,'Ca',0.02,'Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
 
-x.AB.add('NaV',cpplab('prinz-fast/NaV','gbar',1000,'E',50));
-x.AB.add('CaT','prinz-fast/CaT',25,30);
-x.AB.add('CaS','prinz-fast/CaS',60,30);
-x.AB.add('ACurrent','prinz-fast/ACurrent',500,-80);
-x.AB.add('KCa','prinz-fast/KCa',50,-80);
-x.AB.add('Kd','prinz-fast/Kd',1000,-80);
-x.AB.add('HCurrent','prinz-fast/HCurrent',.1,-20);
+x.AB.add('prinz-fast/NaV','gbar',1000,'E',50);
 
-x.addCompartment('LP',-47,0.01,10,0.0628,vol,phi,3000,0.05,tau_Ca,0);
-x.addConductance('LP','prinz-fast/NaV',1000,50);
-x.addConductance('LP','prinz-fast/CaS',40,30);
-x.addConductance('LP','prinz-fast/ACurrent',200,-80);
-x.addConductance('LP','prinz-fast/Kd',250,-80);
-x.addConductance('LP','prinz-fast/HCurrent',.5,-20);
-x.addConductance('LP','Leak',.3,-50);
+x.AB.add('prinz-fast/CaT','gbar',25,'E',30);
+x.AB.add('prinz-fast/CaS','gbar',60,'E',30);
+x.AB.add('prinz-fast/ACurrent','gbar',500,'E',-80);
+x.AB.add('prinz-fast/KCa','gbar',50,'E',-80);
+x.AB.add('prinz-fast/Kd','gbar',1000,'E',-80);
+x.AB.add('prinz-fast/HCurrent','gbar',.1,'E',-20);
 
-x.addCompartment('PY',-41,0.03,10,0.0628,vol,phi,3000,0.05,tau_Ca,0);
-x.addConductance('PY','prinz-fast/NaV',1000,50);
-x.addConductance('PY','prinz-fast/CaT',25,30);
-x.addConductance('PY','prinz-fast/CaS',20,30);
-x.addConductance('PY','prinz-fast/ACurrent',500,-80);
-x.addConductance('PY','prinz-fast/Kd',1250,-80);
-x.addConductance('PY','prinz-fast/HCurrent',.5,-20);
-x.addConductance('PY','Leak',.1,-50);
+x.add('LP','compartment','V',-47,'Ca',0.02,'Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
+
+x.LP.add('prinz-fast/NaV','gbar',1000,'E',50);
+x.LP.add('prinz-fast/CaS','gbar',40,'E',30);
+x.LP.add('prinz-fast/ACurrent','gbar',200,'E',-80);
+x.LP.add('prinz-fast/Kd','gbar',250,'E',-80);
+x.LP.add('prinz-fast/HCurrent','gbar',.5,'E',-20);
+x.LP.add('Leak','gbar',.3,'E',-50);
+
+x.add('PY','compartment','V',-47,'Ca',0.02,'Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
+
+x.PY.add('prinz-fast/NaV','gbar',1000,'E',50);
+x.PY.add('prinz-fast/CaT','gbar',25,'E',30);
+x.PY.add('prinz-fast/CaS','gbar',20,'E',30);
+x.PY.add('prinz-fast/ACurrent','gbar',500,'E',-80);
+x.PY.add('prinz-fast/Kd','gbar',1250,'E',-80);
+x.PY.add('prinz-fast/HCurrent','gbar',.5,'E',-20);
+x.PY.add('Leak','gbar',.1,'E',-50);
+
+x.transpile;
+x.compile;
+V = x.integrate;
+plot(V)
+
+return
 
 % 2e
 x.addSynapse('Chol','AB','LP',30);

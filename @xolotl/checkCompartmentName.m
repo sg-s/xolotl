@@ -16,5 +16,10 @@ if any(strcmp(comp_name,self.illegal_names))
 	return
 end
 
+% no underscores allowed 
+if strfind(comp_name,'_')
+	return
+end
+
 ok = true;
 

@@ -62,6 +62,7 @@ lines = [lines(1:insert_here); constructors(:); lines(insert_here+1:end)];
 % string in names later on 
 [~,sort_idx] = sort(cellfun(@(x) length(x), obj_names));
 obj_names = obj_names(sort_idx);
+class_parents = class_parents(sort_idx);
 
 output_hookups = {};
 for j = length(names):-1:1
@@ -91,6 +92,7 @@ lines = [lines(1:insert_here); output_hookups(:); lines(insert_here+1:end)];
 % here we hook up the channels to the compartments they
 % should be in
 channel_hookups = {};
+
 for i = 1:length(class_parents)
 	if strcmp(class_parents{i},'conductance')
 		channel_hookups{end+1} = [obj_names{i}(1:max(strfind(obj_names{i},'_')-1)) '.addConductance(&' obj_names{i} ');'];

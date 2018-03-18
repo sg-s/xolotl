@@ -7,7 +7,7 @@
 % help: add thing to model  
 %
 % example usage:
-% x.add('compartment',AB', varargin)
+% x.add('AB',AB)
 
 function add(self,obj_name,varargin)
 
