@@ -105,27 +105,19 @@ assert(length(insert_here)==1,'Could not find insertion point for conductance->c
 lines = [lines(1:insert_here); channel_hookups(:); lines(insert_here+1:end)];
 
 
-% % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-% % add the synapses here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% ~~~~~~~~~~~~~~ add the synapses here  ~~~~~~~~~~~~~~~~~
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-% [~,names] = self.serialize;
-% names(1) = [];
-% syn_names = names{length(self.compartment_names)+1};
 
-% synapse_add_lines = {};
-% for i = 1:length(self.synapses)
-% 	this_type = self.synapses(i).type;
-% 	g = mat2str(self.synapses(i).gbar);
-% 	pre = self.synapses(i).pre;
-% 	post = self.synapses(i).post;
-% 	idx1 = (i-1)*2 + 1;
-% 	idx2 = (i-1)*2 + 2;
-% 	synapse_add_lines{i} = [this_type ' syn' mat2str(i) '('  syn_names{idx1} ',' syn_names{idx2}  '); syn' mat2str(i) '.connect(&' pre ', &' post '); n_synapses ++;'];
-% end
+synapse_add_lines = {};
+for i = 1:length(self.synapses)
+	synapse_add_lines{i} = ['synapses' mat2str(i) '.connect(&' self.synapse_pre{i} ', &' self.synapse_post{i} '); n_synapses ++;'];
+end
 
-% insert_here = lineFind(lines,'//xolotl:add_synapses_here');
-% assert(length(insert_here)==1,'Could not find insertion point for synapse->cell hookups')
-% lines = [lines(1:insert_here); synapse_add_lines(:); lines(insert_here+1:end)];
+insert_here = lineFind(lines,'//xolotl:add_synapses_here');
+assert(length(insert_here)==1,'Could not find insertion point for synapse->cell hookups')
+lines = [lines(1:insert_here); synapse_add_lines(:); lines(insert_here+1:end)];
 
 
 % % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -223,10 +215,9 @@ lines = [lines(1:insert_here); channel_hookups(:); lines(insert_here+1:end)];
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % add the neurons to the network  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 network_add_lines = {};
-compartment_names = self.Children;
+compartment_names = sort(self.find('compartment'));
 for i = 1:length(compartment_names)
-	this_comp_name = compartment_names{i};
-	network_add_lines{i} = ['xolotl_network.addCompartment(&' this_comp_name ');'];
+	network_add_lines{i} = ['xolotl_network.addCompartment(&' compartment_names{i} ');'];
 end
 
 insert_here = lineFind(lines,'//xolotl:add_neurons_to_network');

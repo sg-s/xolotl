@@ -18,5 +18,12 @@ synapse = cpplab(varargin{:});
 
 self.synapses = [self.synapses; synapse];
 
-self.synapse_pre = {self.synapse_pre; comp1};
-self.synapse_post = {self.synapse_post; comp2};
+if isempty(self.synapse_pre)
+	self.synapse_pre = {};
+end
+if isempty(self.synapse_post)
+	self.synapse_post = {};
+end
+
+self.synapse_pre = [self.synapse_pre; comp1];
+self.synapse_post = [self.synapse_post; comp2];
