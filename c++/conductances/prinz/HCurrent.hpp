@@ -15,17 +15,22 @@ class HCurrent: public conductance {
 public:
 
     //specify both gbar and erev and initial conditions
-    HCurrent(double g_, double E_, double m_, double h_, double Q_g_, double Q_tau_m_, double Q_tau_h_)
+    HCurrent(double g_, double E_, double m_, double Q_g_, double Q_tau_m_)
     {
         gbar = g_;
         E = E_;
         m = m_;
-        h = 1;
         
 
         Q_g = Q_g_;
         Q_tau_m = Q_tau_m_;
-        Q_tau_h = Q_tau_h_;
+
+        // defaults
+        if (isnan (m)) { m = 0; }
+        if (isnan (h)) { h = 1; }
+        if (isnan (Q_g)) { Q_g = 1; }
+        if (isnan (Q_tau_m)) { Q_tau_m = 1; }
+        if (isnan (E)) { E = -20; }
     }
 
     void integrate(double V, double Ca, double dt, double delta_temp);
