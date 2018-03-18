@@ -9,7 +9,7 @@
 // in addition, controllers need to be added to 
 // compartments
 // so that the compartment knows they exist and 
-// cand ask them to integrate. 
+// can ask them to integrate. 
 //
 // this abstract class the following elements, which
 // all controllers will always have:

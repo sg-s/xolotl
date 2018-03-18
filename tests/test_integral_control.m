@@ -15,18 +15,18 @@ Ca_target = 7; % used only when we add in homeostatic control
 
 x = xolotl;
 x.cleanup;
-x.addCompartment('AB',-60,0.02,10,0.0628,vol,phi,3000,0.05,tau_Ca,Ca_target);
+x.add('AB','compartment','Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca,'Ca_target',Ca_target);
 
 g0 = 1*rand(7,1);
 
-x.addConductance('AB','liu/NaV',g0(1),30);
-x.addConductance('AB','liu/CaT',g0(2),30);
-x.addConductance('AB','liu/CaS',g0(3),30);
-x.addConductance('AB','liu/ACurrent',g0(4),-80);
-x.addConductance('AB','liu/KCa',g0(5),-80);
-x.addConductance('AB','liu/Kd',g0(6),-80);
-x.addConductance('AB','liu/HCurrent',g0(7),-20);
-x.addConductance('AB','Leak',.99,-50);
+x.AB.add('AB','liu/NaV','gbar',g0(1),'E',30);
+x.AB.add('AB','liu/CaT','gbar',g0(2),'E',30);
+x.AB.add('AB','liu/CaS','gbar',g0(3),'E',30);
+x.AB.add('AB','liu/ACurrent','gbar',g0(4),'E',-80);
+x.AB.add('AB','liu/KCa','gbar',g0(5),'E',-80);
+x.AB.add('AB','liu/Kd','gbar',g0(6),'E',-80);
+x.AB.add('AB','liu/HCurrent','gbar',g0(7),'E',-20);
+x.AB.add('AB','Leak','gbar',.99,'E',-50);
 
 tau_g = 5e3;
 

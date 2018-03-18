@@ -204,21 +204,27 @@ methods
 		if self.closed_loop & nargout == 0
 			% use the NOCL version
 			f = [f 'NOCL'];
+			f = str2func(f);
+			[results{1}] = f(arguments);
+		else
+			% use the standard version
+			f = str2func(f);
+			[results{1:7}] = f(arguments);
 		end
-
-		f = str2func(f);
-		[results{1:7}] = f(arguments);
 
 		if self.closed_loop
 			self.deserialize(results{1});
 		end
 
-		V = (results{2})';
-		Ca = (results{3})';
-		I_clamp = (results{4})';
-		cond_state = (results{5})';
-		syn_state = (results{6})';
-		cont_state = (results{7})';
+		if nargout > 0
+
+			V = (results{2})';
+			Ca = (results{3})';
+			I_clamp = (results{4})';
+			cond_state = (results{5})';
+			syn_state = (results{6})';
+			cont_state = (results{7})';
+		end
 		
 
 	end
