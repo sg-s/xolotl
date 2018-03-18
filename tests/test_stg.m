@@ -45,24 +45,19 @@ x.PY.add('prinz-fast/Kd','gbar',1250,'E',-80);
 x.PY.add('prinz-fast/HCurrent','gbar',.5,'E',-20);
 x.PY.add('Leak','gbar',.1,'E',-50);
 
-x.transpile;
-x.compile;
-V = x.integrate;
-plot(V)
+
+% set up synapses as in Fig. 2e
+x.connect('AB','LP','Chol','gbar',30);
+x.connect('AB','PY','Chol','gbar',3);
+x.connect('AB','LP','Glut','gbar',30);
+x.connect('AB','PY','Glut','gbar',10);
+x.connect('LP','PY','Glut','gbar',1);
+x.connect('PY','LP','Glut','gbar',30);
+x.connect('LP','AB','Glut','gbar',30);
 
 return
 
-% 2e
-x.addSynapse('Chol','AB','LP',30);
-x.addSynapse('Chol','AB','PY',3);
-x.addSynapse('Glut','AB','LP',30);
-x.addSynapse('Glut','AB','PY',10);
-x.addSynapse('Glut','LP','PY',1);
-x.addSynapse('Glut','PY','LP',30);
-x.addSynapse('Glut','LP','AB',30);
 
-
-x.dt = 50e-3;
 x.t_end = 20e3;
 
 x.transpile;

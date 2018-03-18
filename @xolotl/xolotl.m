@@ -18,6 +18,7 @@ classdef xolotl <  cpplab % & matlab.mixin.CustomDisplay
 
 properties (SetAccess = protected)
 	linked_binary@char
+	synapses
 end  % end set protected props
 
 properties (Access = protected)
@@ -26,6 +27,8 @@ properties (Access = protected)
 	OS_binary_ext % OS-specific
 	dyn_prop_handles % handles to dynamic properties 
 	illegal_names = {'xolotl_network','compartment','conductance','controller','synapse','network','x','self'}; % list of illegal names for compartments, synpases and other objects
+	synapse_pre
+	synapse_post
 end  % end protected props
 
 
@@ -39,7 +42,6 @@ properties
 	V_clamp
 	I_ext
 	closed_loop@logical = true;
-	synapses
 	temperature@double = 11; % centigrade 
 	temperature_ref@double = 11; % centigrade 
 end % end general props

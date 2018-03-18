@@ -78,6 +78,11 @@ public:
 
         RT_by_nF = 500.0*(8.6174e-5)*(10 + 273.15);
 
+        // defaults
+        if (isnan (V)) { V = -60; }
+        if (isnan (Ca)) { Ca = Ca_in; }
+        if (isnan (Ca_target)) { Ca_target = Ca_in; }        
+
         // housekeeping
         E_Ca = 0;
         i_Ca = 0; // this is the current density (nA/mm^2)

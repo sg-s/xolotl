@@ -9,7 +9,7 @@ Ca_target = 0; % used only when we add in homeostatic control
 
 x = xolotl;
 x.cleanup;
-x.add('AB','compartment','V',-60,'Ca',0.02,'Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca,'Ca_target',Ca_target);
+x.add('AB','compartment','Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca,'Ca_target',Ca_target);
 
 % set up a relational parameter
 x.AB.vol = @() x.AB.A;

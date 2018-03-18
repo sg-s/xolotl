@@ -17,6 +17,10 @@ public:
         k_ = 0.025;
         s = s_;
 
+        // defaults
+        if (isnan (s)) { s = 0; }
+        if (isnan (gbar)) { gbar = 0; }
+
     }
     
     void integrate(double dt);

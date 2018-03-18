@@ -16,6 +16,10 @@ public:
         Vth = -35.0;
         k_ = 0.01;
         s = s_;
+
+        // defaults
+        if (isnan (s)) { s = 0; }
+        if (isnan (gbar)) { gbar = 0; }
     }
     
     void integrate(double dt);
