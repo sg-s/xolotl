@@ -1,11 +1,5 @@
 % tests a neuron that reproduces Fig 3 in Tim's paper
 
-try
-	x.cleanup;
-	clear x
-catch
-end
-
 vol = 1; % this can be anything, doesn't matter
 f = 1.496; % uM/nA
 tau_Ca = 200;
@@ -17,7 +11,7 @@ x = xolotl;
 x.cleanup;
 x.add('AB','compartment','Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca,'Ca_target',Ca_target);
 
-g0 = 1*rand(7,1);
+g0 = 10*rand(7,1);
 
 x.AB.add('liu/NaV','gbar',g0(1),'E',30);
 x.AB.add('liu/CaT','gbar',g0(2),'E',30);
@@ -26,7 +20,7 @@ x.AB.add('liu/ACurrent','gbar',g0(4),'E',-80);
 x.AB.add('liu/KCa','gbar',g0(5),'E',-80);
 x.AB.add('liu/Kd','gbar',g0(6),'E',-80);
 x.AB.add('liu/HCurrent','gbar',g0(7),'E',-20);
-x.AB.add('Leak','gbar',.99,'E',-50);
+x.AB.add('Leak','gbar',.099,'E',-50);
 
 tau_g = 5e3;
 
