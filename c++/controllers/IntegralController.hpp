@@ -14,10 +14,10 @@
 class IntegralController: public controller {
 
 protected:
+public:
+    // timescales
     double tau_m;
     double tau_g; 
-
-public:
 
     // mRNA concentration 
     double m; 
@@ -30,14 +30,31 @@ public:
         tau_m = tau_m_;
         tau_g = tau_g_;
         m = m_;
+
+        if (isnan (m)) { m = 0; }
     }
 
     
     void integrate(double Ca_error, double A, double dt);
+    void connect(conductance * channel_, synapse * syn_);
     double get_gbar(void);
     double get_m(void);
 
 };
+
+void IntegralController::connect(conductance * channel_, synapse * syn_)
+{
+    if (channel_)
+    {
+        // connect to a channel
+        channel = channel_;
+    }
+    if (syn_)
+    {
+        // connect to a synapse 
+        syn = syn_;
+    }
+}
 
 void IntegralController::integrate(double Ca_error, double A, double dt)
 {
@@ -50,8 +67,6 @@ void IntegralController::integrate(double Ca_error, double A, double dt)
     if (m < 0) {
         m = 0;
     }
-
-
 
 
     if (channel) {

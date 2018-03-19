@@ -90,13 +90,17 @@ lines = [lines(1:insert_here); output_hookups(:); lines(insert_here+1:end)];
 
 %% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % here we hook up the channels to the compartments they
-% should be in
+% should be in. we need to add them in the order they occur in serialize
+% so let's make sure we do that
 channel_hookups = {};
+all_channels = self.find('conductance');
 
-for i = 1:length(class_parents)
-	if strcmp(class_parents{i},'conductance')
-		channel_hookups{end+1} = [obj_names{i}(1:max(strfind(obj_names{i},'_')-1)) '.addConductance(&' obj_names{i} ');'];
-	end
+for i = 1:length(all_channels)
+	idx = strfind(all_channels{i},'.');
+	comp_name = all_channels{i}(1:idx-1);
+	channel_name = strrep(all_channels{i},'.','_');
+	channel_hookups{end+1} = [comp_name '.addConductance(&' channel_name ');'];
+
 end
 
 
@@ -120,18 +124,51 @@ assert(length(insert_here)==1,'Could not find insertion point for synapse->cell 
 lines = [lines(1:insert_here); synapse_add_lines(:); lines(insert_here+1:end)];
 
 
-% % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-% % add the controllers here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-% % controllers work like this: every controller must have a pointer to a 
-% % a conductance, and in addition, must be handed over to the containing
-% % compartment using .addController 
-% % 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% add the controllers here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% controllers work like this: every controller must have a pointer to a 
+% a conductance, and in addition, must be handed over to the containing
+% compartment using .addController 
+% 
 
-% [~,names] = self.serialize;
-% names(1) = [];
-% cont_names = names{length(self.compartment_names)+3};
+controller_add_lines = {};
 
-% controller_add_lines = {};
+% first, we need to add controller to the 
+% channels/synapses they control and then
+% we need to add them to the compartment they are in
+all_controllers = self.find('controller');
+
+for i = 1:length(all_controllers)
+	% connect to synapse/conductance
+	idx = max(strfind(all_controllers{i},'.'));
+	cond_name = 'NULL';
+	syn_name = 'NULL'; 
+	if strcmp(self.get([all_controllers{i}(1:idx-1) '.cpp_class_parent']),'conductance')
+		cond_name = strrep(all_controllers{i}(1:idx-1),'.','_');
+	elseif strcmp(self.get([all_controllers{i}(1:idx-1) '.cpp_class_parent']),'synapse')
+		syn_name = strrep(all_controllers{i}(1:idx-1),'.','_');
+	else
+	 	error('Controller connected to unrecognised type')
+	 end 
+
+	thing_name = strrep(all_controllers{i}(1:idx-1),'.','_');
+	controller_name = strrep(all_controllers{i},'.','_');
+	controller_add_lines{end+1} = [controller_name '.connect(&' cond_name ',' syn_name,');'];
+
+	% add to compartment
+	idx = min(strfind(all_controllers{i},'.'));
+	comp_name = all_controllers{i}(1:idx-1);
+	controller_name = strrep(all_controllers{i},'.','_');
+	controller_add_lines{end+1} = [comp_name '.addController(&' controller_name ');'];
+end
+
+controller_add_lines{end+1} = ['int n_controllers = ' mat2str(length(all_controllers)) ';'];
+
+insert_here = lineFind(lines,'//xolotl:add_controllers_here');
+assert(length(insert_here)==1,'Could not find insertion point for controller hookups')
+lines = [lines(1:insert_here); controller_add_lines(:); lines(insert_here+1:end)];
+
+
 % for i = 1:length(self.controllers)
 % 	this_controller = self.controllers{i};
 % 	this_type = this_controller.type;
@@ -171,11 +208,6 @@ lines = [lines(1:insert_here); synapse_add_lines(:); lines(insert_here+1:end)];
 % 	% now add the controller to the compartment 
 % 	controller_add_lines{end+1} = [this_controller.compartment '.addController(&cont' mat2str(i) ');'];
 % end
-% controller_add_lines{end+1} = ['int n_controllers = ' mat2str(length(self.controllers)) ';'];
-
-% insert_here = lineFind(lines,'//xolotl:add_controllers_here');
-% assert(length(insert_here)==1,'Could not find insertion point for controller hookups')
-% lines = [lines(1:insert_here); controller_add_lines(:); lines(insert_here+1:end)];
 
 
 % % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

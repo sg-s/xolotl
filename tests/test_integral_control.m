@@ -31,31 +31,20 @@ x.AB.add('Leak','gbar',.99,'E',-50);
 tau_g = 5e3;
 
 x.AB.NaV.add('IntegralController','tau_m',666,'tau_g',tau_g);
+x.AB.CaT.add('IntegralController','tau_m',55555,'tau_g',tau_g);
+x.AB.CaS.add('IntegralController','tau_m',45454,'tau_g',tau_g);
+x.AB.ACurrent.add('IntegralController','tau_m',5000,'tau_g',tau_g);
+x.AB.KCa.add('IntegralController','tau_m',1250,'tau_g',tau_g);
+x.AB.Kd.add('IntegralController','tau_m',2000,'tau_g',tau_g);
+x.AB.HCurrent.add('IntegralController','tau_m',125000,'tau_g',tau_g);
 
-return
-
-
-
-x.addIntegralController('AB','CaT',55555,tau_g);
-x.addIntegralController('AB','CaS',45454,tau_g);
-x.addIntegralController('AB','ACurrent',5000,tau_g);
-x.addIntegralController('AB','KCa',1250,tau_g);
-x.addIntegralController('AB','Kd',2000,tau_g);
-x.addIntegralController('AB','HCurrent',125000,tau_g);
-
+x.transpile;
+x.compile;
 
 x.t_end = 100e3;
 x.dt = 100e-3;
 x.integrate;
 
 x.t_end = 5e3;
-
-if usejava('jvm')
-	round(x.getConductances('AB'))'
-	figure, hold on
-	plot(x.integrate)
-else
-	st = xolotl.findSpikes(x.integrate);
-	assert(length(st)>0,'Neuron did not spike')
-	disp('Integral control test passed!')
-end
+V = x.integrate;
+plot(V)

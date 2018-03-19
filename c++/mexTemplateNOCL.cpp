@@ -41,7 +41,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     //xolotl:add_synapses_here
 
     //xolotl:add_controllers_here
-    int n_controllers = 0;
 
     //xolotl:add_neurons_to_network
 
