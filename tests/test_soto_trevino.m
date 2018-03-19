@@ -15,7 +15,6 @@ F = 96485; % Faraday constant in SI units
 
 
 c_m = 10; % nF/mm^2
-Ca_target = 0; % used only when we add in homeostatic control 
 A_soma = .0628; % using Prinz's value
 vol_soma = A_soma;
 A_axon = .01; % make the axon a little smaller
@@ -24,11 +23,10 @@ phi_soma = (2*f*F*vol_soma)/tau_Ca;
 phi_axon = (2*f*F*vol_axon)/tau_Ca;
 
 x = xolotl;
-x.addCompartment('AB',-60,.1,c_m,A_soma,A_soma,24,Ca_ext,Ca_int,tau_Ca,Ca_target);
-x.AB.vol = @() x.AB.A;
+x.add('AB','compartment','V',-65,'Ca',0.02,'Cm',c_m,'A',0.0628,'vol',vol_soma,'phi',phi_soma,'Ca_out',Ca_ext,'Ca_in',Ca_int,'tau_Ca',tau_Ca);
 
 
-x.addCompartment('Axon',-60,0.02,c_m,A_axon,1,1,1,1,1,0);
+x.add('Axon',,-60,0.02,c_m,A_axon,1,1,1,1,1,0);
 
 % add axon conductances 
 x.addConductance('Axon','soto-trevino/NaV',2000,50);
