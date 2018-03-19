@@ -19,18 +19,23 @@ x.add('AB','compartment','Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'C
 
 g0 = 1*rand(7,1);
 
-x.AB.add('AB','liu/NaV','gbar',g0(1),'E',30);
-x.AB.add('AB','liu/CaT','gbar',g0(2),'E',30);
-x.AB.add('AB','liu/CaS','gbar',g0(3),'E',30);
-x.AB.add('AB','liu/ACurrent','gbar',g0(4),'E',-80);
-x.AB.add('AB','liu/KCa','gbar',g0(5),'E',-80);
-x.AB.add('AB','liu/Kd','gbar',g0(6),'E',-80);
-x.AB.add('AB','liu/HCurrent','gbar',g0(7),'E',-20);
-x.AB.add('AB','Leak','gbar',.99,'E',-50);
+x.AB.add('liu/NaV','gbar',g0(1),'E',30);
+x.AB.add('liu/CaT','gbar',g0(2),'E',30);
+x.AB.add('liu/CaS','gbar',g0(3),'E',30);
+x.AB.add('liu/ACurrent','gbar',g0(4),'E',-80);
+x.AB.add('liu/KCa','gbar',g0(5),'E',-80);
+x.AB.add('liu/Kd','gbar',g0(6),'E',-80);
+x.AB.add('liu/HCurrent','gbar',g0(7),'E',-20);
+x.AB.add('Leak','gbar',.99,'E',-50);
 
 tau_g = 5e3;
 
-x.addIntegralController('AB','NaV',666,tau_g);
+x.AB.NaV.add('IntegralController','tau_m',666,'tau_g',tau_g);
+
+return
+
+
+
 x.addIntegralController('AB','CaT',55555,tau_g);
 x.addIntegralController('AB','CaS',45454,tau_g);
 x.addIntegralController('AB','ACurrent',5000,tau_g);

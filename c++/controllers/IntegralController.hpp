@@ -24,10 +24,9 @@ public:
 
     // specify parameters + initial conditions for 
     // controller that controls a conductance 
-    IntegralController(conductance* channel_, synapse* syn_, double tau_m_, double tau_g_, double m_)
+    IntegralController(double tau_m_, double tau_g_, double m_)
     {
-        channel = channel_; 
-        syn = syn_;
+
         tau_m = tau_m_;
         tau_g = tau_g_;
         m = m_;
