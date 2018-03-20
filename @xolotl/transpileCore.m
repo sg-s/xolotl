@@ -158,7 +158,10 @@ for i = 1:length(all_controllers)
 	% add to compartment -- this is generally the comprtment
 	% that contains the conductance that this controller points to
 	% but it may be overridden by self.custom_owner
-	idx = find(strcmp(self.custom_owner(:,1),all_controllers{i}));
+	idx = [];
+	if ~isempty(self.custom_owner)
+		idx = find(strcmp(self.custom_owner(:,1),all_controllers{i}));
+	end
 	if isempty(idx)
 
 		idx = min(strfind(all_controllers{i},'.'));
