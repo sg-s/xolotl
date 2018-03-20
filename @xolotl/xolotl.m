@@ -29,6 +29,10 @@ properties (Access = protected)
 	illegal_names = {'xolotl_network','compartment','conductance','controller','synapse','network','x','self'}; % list of illegal names for compartments, synpases and other objects
 	synapse_pre
 	synapse_post
+
+	% this stores custom owners of some objects
+	% specified by put
+	custom_owner
 end  % end protected props
 
 

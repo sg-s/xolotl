@@ -15,19 +15,19 @@ phi = (2*f*F*vol)/tau_Ca;
 
 x = xolotl;
 x.cleanup;
-x.addCompartment('AB',-65,0.02,10,0.0628,vol,phi,3000,0.05,tau_Ca,0);
+x.add('AB','compartment','V',-65,'Ca',0.02,'Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
 
 qg = 2;
 qm = 2;
 qh = 2;
 
-x.addConductance('AB','prinz/NaV',1000,50,0,1,qg,qm,qh);
-x.addConductance('AB','prinz/CaT',25,30,0,1,qg,qm,qh);
-x.addConductance('AB','prinz/CaS',60,30,0,1,qg,qm,qh);
-x.addConductance('AB','prinz/ACurrent',500,-80,0,1,qg,qm,qh);
-x.addConductance('AB','prinz/KCa',50,-80,0,1,qg,qm,qh);
-x.addConductance('AB','prinz/Kd',1000,-80,0,1,qg,qm,qh);
-x.addConductance('AB','prinz/HCurrent',.1,-20,0,1,qg,qm,qh);
+x.AB.add('prinz-temperature/NaV','gbar',1000,'E',50,'Q_g',qg,'Q_tau_m',qm,'Q_tau_h',qh);
+x.AB.add('prinz-temperature/CaT','gbar',25,'E',30,'Q_g',qg,'Q_tau_m',qm,'Q_tau_h',qh);
+x.AB.add('prinz-temperature/CaS','gbar',60,'E',30,'Q_g',qg,'Q_tau_m',qm,'Q_tau_h',qh);
+x.AB.add('prinz-temperature/ACurrent','gbar',500,'E',-80,'Q_g',qg,'Q_tau_m',qm,'Q_tau_h',qh);
+x.AB.add('prinz-temperature/KCa','gbar',50,'E',-80,'Q_g',qg,'Q_tau_m',qm);
+x.AB.add('prinz-temperature/Kd','gbar',1000,'E',-80,'Q_g',qg,'Q_tau_m',qm);
+x.AB.add('prinz-temperature/HCurrent','gbar',.1,'E',-20,'Q_g',qg,'Q_tau_m',qm);
 
 
 x.dt = 50e-3;

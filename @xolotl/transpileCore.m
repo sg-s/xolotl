@@ -155,10 +155,18 @@ for i = 1:length(all_controllers)
 	controller_name = strrep(all_controllers{i},'.','_');
 	controller_add_lines{end+1} = [controller_name '.connect(&' cond_name ',' syn_name,');'];
 
-	% add to compartment
-	idx = min(strfind(all_controllers{i},'.'));
-	comp_name = all_controllers{i}(1:idx-1);
-	controller_name = strrep(all_controllers{i},'.','_');
+	% add to compartment -- this is generally the comprtment
+	% that contains the conductance that this controller points to
+	% but it may be overridden by self.custom_owner
+	idx = find(strcmp(self.custom_owner(:,1),all_controllers{i}));
+	if isempty(idx)
+
+		idx = min(strfind(all_controllers{i},'.'));
+		comp_name = all_controllers{i}(1:idx-1);
+	else
+		comp_name = self.custom_owner{idx,2};
+	end
+
 	controller_add_lines{end+1} = [comp_name '.addController(&' controller_name ');'];
 end
 
