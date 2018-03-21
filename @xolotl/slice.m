@@ -25,15 +25,24 @@ end
 
 new_vol = self.(compartment).vol/N_slices;
 new_A = self.(compartment).A/N_slices;
+new_phi = self.(compartment).phi/N_slices;
+
+self.(compartment).vol = new_vol;
+self.(compartment).A = new_A;
+self.(compartment).phi = new_phi;
 
 all_comps = {compartment};
 
+n_digits = length(mat2str(N_slices));
+
 for i = 2:N_slices
 	root_comp = copy(self.(compartment));
-	self.add([compartment mat2str(i)],root_comp);
-	self.([compartment mat2str(i)]).vol = new_vol;
-	self.([compartment mat2str(i)]).A = new_A;
-	all_comps = [all_comps; [compartment mat2str(i)]];
+
+	padding_length = n_digits - length(mat2str(i));
+	new_comp_name = [compartment repmat('0',1,padding_length) mat2str(i)];
+
+	self.add(new_comp_name,root_comp);
+	all_comps = [all_comps; new_comp_name];
 end
 
 % wire them up with electrical synapses 

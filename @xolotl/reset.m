@@ -24,7 +24,10 @@ end
 
 % reset all synapses 
 for i = 1:length(self.synapses)
-	self.synapses(i).s = 0;
+	try
+		self.synapses(i).s = 0;
+	catch
+	end
 end
 
 % reset all controllers

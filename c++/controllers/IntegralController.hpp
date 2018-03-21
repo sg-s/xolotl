@@ -22,6 +22,11 @@ public:
     // mRNA concentration 
     double m; 
 
+    // area of the container this is in
+    // this is NOT necessarily the area of the compartment
+    // that contains it
+    double container_A;
+
     // specify parameters + initial conditions for 
     // controller that controls a conductance 
     IntegralController(double tau_m_, double tau_g_, double m_)
@@ -35,7 +40,7 @@ public:
     }
 
     
-    void integrate(double Ca_error, double A, double dt);
+    void integrate(double Ca_error, double dt);
     void connect(conductance * channel_, synapse * syn_);
     double get_gbar(void);
     double get_m(void);
@@ -48,6 +53,13 @@ void IntegralController::connect(conductance * channel_, synapse * syn_)
     {
         // connect to a channel
         channel = channel_;
+
+        // attempt to read the area of the container that this
+        // controller should be in. note that this is not necessarily the
+        // container that contains this controller. rather, it is 
+        // the compartment that contains the conductnace/synapse 
+        // that this controller controls
+        container_A  = (channel->container)->A;
     }
     if (syn_)
     {
@@ -56,7 +68,7 @@ void IntegralController::connect(conductance * channel_, synapse * syn_)
     }
 }
 
-void IntegralController::integrate(double Ca_error, double A, double dt)
+void IntegralController::integrate(double Ca_error, double dt)
 {
     // integrate mRNA
     m += (dt/tau_m)*(Ca_error);
@@ -69,13 +81,16 @@ void IntegralController::integrate(double Ca_error, double A, double dt)
     }
 
 
+
+
     if (channel) {
         // channel is a non-NULL pointer, so
         // this controller must be controlling a 
         // channel
         // calculate conductance, not conductance density
-        double g = (channel->gbar)*A;
-        (channel->gbar) += ((dt/tau_g)*(m - g))/A;
+        
+        double g = (channel->gbar)*container_A;
+        (channel->gbar) += ((dt/tau_g)*(m - g))/container_A;
 
         // make sure it doesn't go below zero
         if ((channel->gbar) < 0) {

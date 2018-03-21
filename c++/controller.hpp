@@ -36,6 +36,9 @@ public:
 
     int controller_idx;
 
+    // also store the area of the container it is in
+    double container_A;
+
     controller()
     {
         channel = NULL; // null pointer 
@@ -44,7 +47,7 @@ public:
     
     ~controller() {}
     
-    virtual void integrate(double, double, double) = 0;
+    virtual void integrate(double, double) = 0;
     virtual double get_gbar(void) = 0;
     virtual double get_m(void) = 0;
 
