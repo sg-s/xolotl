@@ -29,7 +29,7 @@ public:
 
     // specify parameters + initial conditions for 
     // controller that controls a conductance 
-    IntegralController(double tau_m_, double tau_g_, double m_)
+    DistributedController(double tau_m_, double tau_g_, double m_)
     {
 
         tau_m = tau_m_;
@@ -47,7 +47,7 @@ public:
 
 };
 
-void IntegralController::connect(conductance * channel_, synapse * syn_)
+void DistributedController::connect(conductance * channel_, synapse * syn_)
 {
     if (channel_)
     {
@@ -69,7 +69,7 @@ void IntegralController::connect(conductance * channel_, synapse * syn_)
     }
 }
 
-void IntegralController::integrate(double Ca_error, double dt)
+void DistributedController::integrate(double Ca_error, double dt)
 {
     // integrate mRNA
     m += (dt/tau_m)*(Ca_error);
@@ -123,7 +123,7 @@ void IntegralController::integrate(double Ca_error, double dt)
 
 // return the mRNA level, because this is a protected
 // member 
-double IntegralController::get_m(void)
+double DistributedController::get_m(void)
 {
     return m;
 }
@@ -131,7 +131,7 @@ double IntegralController::get_m(void)
 // return the conductance of either the 
 // channel or the synapse that this 
 // controller is controlling 
-double IntegralController::get_gbar(void)
+double DistributedController::get_gbar(void)
 {
 
     double gbar;
