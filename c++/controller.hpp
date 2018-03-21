@@ -36,8 +36,10 @@ public:
 
     int controller_idx;
 
-    // also store the area of the container it is in
+    // also store the parameters of the 
+    // compartment that it is physically located in
     double container_A;
+    double container_vol;
 
     controller()
     {
