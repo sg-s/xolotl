@@ -25,11 +25,9 @@ end
 
 new_vol = self.(compartment).vol/N_slices;
 new_A = self.(compartment).A/N_slices;
-new_phi = self.(compartment).phi/N_slices;
 
 self.(compartment).vol = new_vol;
 self.(compartment).A = new_A;
-self.(compartment).phi = new_phi;
 
 all_comps = {compartment};
 

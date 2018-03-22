@@ -46,6 +46,12 @@ public:
     double Ca_target; // for homeostatic control 
 
 
+    // stores the average Ca over the integration
+    // window. useful for quickly determining 
+    // if integral control has worked without 
+    // pulling out the full trace 
+    double Ca_average;
+
     double V;          
     double Ca; 
     double E_Ca;
@@ -57,7 +63,7 @@ public:
     int n_syn; // # of synapses
 
     // constructor with all parameters 
-    compartment(double V_, double Ca_, double Cm_, double A_, double vol_, double phi_, double Ca_out_, double Ca_in_, double tau_Ca_, double Ca_target_)
+    compartment(double V_, double Ca_, double Cm_, double A_, double vol_, double phi_, double Ca_out_, double Ca_in_, double tau_Ca_, double Ca_target_, double Ca_average_)
     {
         V = V_;
         vol = vol_;
@@ -75,6 +81,9 @@ public:
         Ca_out = Ca_out_;
         tau_Ca = tau_Ca_;
         Ca_target = Ca_target_;
+
+        Ca_average = Ca_average_;
+        Ca_average = 0; // reset it every time
 
         RT_by_nF = 500.0*(8.6174e-5)*(10 + 273.15);
 
@@ -150,6 +159,9 @@ void compartment::integrateChannels(double V_prev, double Ca_prev, double dt, do
         sigma_g += cond[i]->g;
         sigma_gE += (cond[i]->g)*(cond[i]->E);
     }
+
+    // update the running total Ca
+    Ca_average += Ca;
 }
 
 void compartment::integrateSynapses(double V_prev, double dt, double delta_temperature)

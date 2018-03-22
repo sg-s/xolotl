@@ -93,6 +93,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     }
 
+    // now measure the mean Ca in every compartment
+    for(int j = 0; j < n_comp; j++)
+    {
+        (xolotl_network.comp[j]->Ca_average) = (xolotl_network.comp[j]->Ca_average)/nsteps;
+    }
+
     // here, we are reading the full state back, so we 
     // can easily update the xolotl object in the MATLAB wrapper
     //xolotl:read_state_back
