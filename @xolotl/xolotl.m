@@ -207,6 +207,10 @@ methods
 		end
 		assert(isint(self.dt/self.sim_dt),'Simulation & output dt are not compatible')
 
+		if nargout == 0 & self.closed_loop == false
+			error('Are you sure you want to integrate this with no outputs and with closed_loop set to FALSE?')
+		end
+
 		V = [];
 		Ca = [];
 		I_clamp = [];
