@@ -40,7 +40,13 @@ properties
 	debug_mode@logical = false
 	skip_hash_check@logical = false
 	controllers@cell = {}
+
+	% output delta t
 	dt@double = 50e-3; % ms
+
+	% simulation deltat t
+	sim_dt@double = NaN;
+
 	t_end@double = 5000; % ms
 	handles
 	V_clamp
@@ -195,6 +201,12 @@ methods
 			end
 		end
 		
+		% check that sim_dt and output_dt make sense
+		if isnan(self.sim_dt) || isempty(self.sim_dt)
+			self.sim_dt = self.dt;
+		end
+		assert(isint(self.dt/self.sim_dt),'Simulation & output dt are not compatible')
+
 		V = [];
 		Ca = [];
 		I_clamp = [];
