@@ -155,7 +155,7 @@ These benchmarks were computed from within MATLAB, running the simulation at a t
 | -------          | ------- | ----------- | ------ | -- |
 | 7-conductance point neuron  | [Liu 1998](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)  |  MacBook Pro (Late 2013) 2.3 GHz Core i7    | macOS 10.12.6 | 66X | 
 | 7-conductance point neuron  | [Liu 1998](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)   |  Mac Pro (Late 2013) 3.5 GHz Xeon  | macOS 10.12.6   | 83X | 
-| 7-conductance point neuron; approximate gating functions  | [Liu 1998](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)   |  MacBook Pro (Late 2013) 2.3 GHz Core i7    | macOS 10.12.6 | 130X |  
+| 7-conductance point neuron; approximate gating functions  | [Liu 1998](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)   |  Mac Pro (Late 2013) 3.5 GHz Xeon    | macOS 10.12.6 | 170X |  
 | 3-neuron STG network | [Prinz 2004](https://www.nature.com/neuro/journal/v7/n12/full/nn1352.html)  |  MacBook Pro (Late 2013) 2.3 GHz Core i7  | macOS 10.12.6   | 20X | 
 | 3-neuron STG network  | [Prinz 2004](https://www.nature.com/neuro/journal/v7/n12/full/nn1352.html)  |  Mac Pro (Late 2013) 3.5 GHz Xeon  | macOS 10.12.6   | 23X | 
 | 3-neuron STG network; approximate gating functions | [Prinz 2004](https://www.nature.com/neuro/journal/v7/n12/full/nn1352.html) | MacBook Pro (Late 103) 2.3 GHz Core i7 | macOS 10.12.6   | 39X | 
