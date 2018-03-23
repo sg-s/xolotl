@@ -14,7 +14,7 @@
 % see https://github.com/sg-s/xolotl
 % for more information 
 
-classdef xolotl <  cpplab % & matlab.mixin.CustomDisplay
+classdef xolotl <  cpplab & matlab.mixin.CustomDisplay
 
 properties (SetAccess = protected)
 	linked_binary@char
@@ -58,57 +58,41 @@ end % end general props
 
 
 methods (Access = protected)
-    % function displayScalarObject(self)
-    %     url = 'https://github.com/sg-s/xolotl/';
-    %     fprintf(['\b\b\b\b\b\b\b\b\b<a href="' url '">xolotl</a> object with:\n'])
-    %     fprintf('---------------------\n')
-    %     for i = 1:length(self.compartment_names)
-    %     	compartment = self.compartment_names{i};
-    %     	url = ['matlab:' inputname(1) '.' compartment];
-    %     	fprintf(['+ <a href="' url '">' self.compartment_names{i} '</a>  \n'])
-    %     	% now show the conductances within this channel
-    %     	C = self.getChannelsInCompartment(i);
-    %     	for j = 1:length(C)
-    %     		url = ['matlab:' inputname(1) '.' compartment '.' C{j}];
-    %     		url_str = ['<a href="' url '">' C{j} '</a>'];
-    %     		if isa(self.(compartment).(C{j}).gbar,'function_handle')
-    %     			g = strrep(func2str(self.(compartment).(C{j}).gbar),'@()','');
-    %     		else
-    %     			g = oval(self.(compartment).(C{j}).gbar);
-    %     		end
-    %     		if isa(self.(compartment).(C{j}).E,'function_handle')
-    %     			E = strrep(func2str(self.(compartment).(C{j}).E),'@()','');
-    %     		else
-    %     			E = oval(self.(compartment).(C{j}).E);
-    %     		end
-    %     		info_str = [' (g=' g ', E=' E ')'];
+    function displayScalarObject(self)
+        url = 'https://github.com/sg-s/xolotl/';
+        fprintf(['\b\b\b\b\b\b\b\b\b<a href="' url '">xolotl</a> object with:\n'])
+        fprintf('---------------------\n')
+        compartment_names = self.find('compartment');
+        for i = 1:length(compartment_names)
+        	compartment = compartment_names{i};
+        	url = ['matlab:' inputname(1) '.' compartment];
+        	fprintf(['+ <a href="' url '">' compartment_names{i} '</a>  \n'])
+        	% now show the conductances within this channel
+        	C = self.(compartment).find('conductance');
+        	for j = 1:length(C)
+        		url = ['matlab:' inputname(1) '.' compartment '.' C{j}];
+        		url_str = ['<a href="' url '">' C{j} '</a>'];
+        		if isa(self.(compartment).(C{j}).gbar,'function_handle')
+        			g = strrep(func2str(self.(compartment).(C{j}).gbar),'@()','');
+        		else
+        			g = oval(self.(compartment).(C{j}).gbar);
+        		end
+        		if isa(self.(compartment).(C{j}).E,'function_handle')
+        			E = strrep(func2str(self.(compartment).(C{j}).E),'@()','');
+        		else
+        			E = oval(self.(compartment).(C{j}).E);
+        		end
+        		info_str = [' (g=' g ', E=' E ')'];
 
-    %     		% check if there is a controller for this channel
-    %     		if ~isempty(self.controllers)
-    %     			tc = [compartment '_' C{j}];
-    %     			for k = 1:length(self.controllers)
 
-    %     				if strcmp(self.controllers{k}.channel,tc)
 
-    %     					url2 = ['matlab:' inputname(1) '.controllers{' oval(k) '}'];
-    %     					url_str2 = ['<a href="' url2 '">' self.controllers{k}.type '</a>'];
+        		fprintf(['  > ' url_str info_str '\n'])
+        	end
+        	fprintf('---------------------\n')
+        end
 
-    %     					info_str = [info_str '  <-- ' url_str2 ];
-    %     				end
-    %     			end
-    %     		end
 
-    %     		fprintf(['  > ' url_str info_str '\n'])
-    %     	end
-    %     	fprintf('---------------------\n')
-    %     end
-
-    %     % show controllers
-    %     if length(self.controllers) == 0
-    %     	fprintf('No controllers configured\n')
-    %    	end
-
-    % end
+    end
 
 end % end protected methods
 

@@ -69,8 +69,8 @@ void ACurrent::integrate(double V, double Ca, double dt, double delta_temp)
     taum = tau_m_cache[(int) round(V+99)];
     tauh = tau_h_cache[(int) round(V+99)];
 
-    m = minf + (m - minf)*exp(-dt/taum);
-    h = hinf + (h - hinf)*exp(-dt/tauh);
+    m = minf + (m - minf)*exp(-(dt/taum));
+    h = hinf + (h - hinf)*exp(-(dt/tauh));
     
     g = gbar*m*m*m*h;
 }

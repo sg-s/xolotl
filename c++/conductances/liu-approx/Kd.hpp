@@ -55,7 +55,7 @@ void Kd::integrate(double V, double Ca, double dt, double delta_temp)
     minf = m_inf_cache[(int) round(V+99)];
     taum = tau_m_cache[(int) round(V+99)];
 
-    m = minf + (m - minf)*exp(-dt/taum);
+    m = minf + (m - minf)*exp(-(dt/taum));
 
     g = gbar*m*m*m*m;
 }
