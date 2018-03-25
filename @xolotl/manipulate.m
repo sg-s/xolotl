@@ -28,12 +28,14 @@ function manipulate(self)
 		self.t_end = buffer_size;
 	end
 
+	compartment_names = self.find('compartment');
+
 	self.handles.fig = figure('outerposition',[0 0 1000 900],'PaperUnits','points','PaperSize',[1000 500],'CloseRequestFcn',@self.deleteManipulateFig); hold on
-	n = length(self.compartment_names);
+	n = length(compartment_names);
 	for i = 1:n
 		self.handles.ax(i) = subplot(n,1,i);
 		self.handles.V_trace(i) = plot(self.handles.ax(i),time,V(:,i),'k');
-		ylabel(self.handles.ax(i),['V_{' self.compartment_names{i} '} (mV)'] )
+		ylabel(self.handles.ax(i),['V_{' compartment_names{i} '} (mV)'] )
 		set(self.handles.ax(i),'YLim',[-80 80])
 	end
 	linkaxes(self.handles.ax,'x');
@@ -41,11 +43,10 @@ function manipulate(self)
 
 	% make another figure for the calcium
 	self.handles.fig_cal = figure('outerposition',[0 0 1000 900],'PaperUnits','points','PaperSize',[1000 500],'CloseRequestFcn',@self.deleteManipulateFig); hold on
-	n = length(self.compartment_names);
 	for i = 1:n
 		self.handles.ax(i) = subplot(n,1,i);
 		self.handles.Ca_trace(i) = plot(self.handles.ax(i),time,Ca(:,i),'k');
-		ylabel(self.handles.ax(i),['[Ca^2^+]_{' self.compartment_names{i} '} (mV)'] )
+		ylabel(self.handles.ax(i),['[Ca^2^+]_{' compartment_names{i} '} (mV)'] )
 		self.handles.ax(i).YLim(1) = 0;
 	end
 	linkaxes(self.handles.ax,'x');
@@ -55,22 +56,11 @@ function manipulate(self)
 	% we're going to make one figure window/compartment
 	is_relational = {};
 	for i = 1:n
-		[v,names,ir] = struct2vec(self.(self.compartment_names{i}));
-		% delete all E_, m_, and h_ parameters
-		rm_this = false(length(v),1);
-		for j = 1:length(v)
-			if strcmp(names{j}(end-1:end),'_m') || strcmp(names{j}(end-1:end),'_h') || strcmp(names{j}(end-1:end),'_E') || strcmp(names{j}(end-1:end),'_V') || any(strfind(names{j},'_Q_'))
-				rm_this(j) = true;
-			end
-			if strcmp(names{j},'_Ca')
-				rm_this(j) = true;
-			end
-		end
-		v(rm_this) = []; names(rm_this) = []; ir(rm_this) = [];
 
-
-		% remove initial underscores from names
-		names = cellfun(@(x) x(2:end),names,'UniformOutput',false);
+		[v,names,ir] = self.(compartment_names{i}).serialize;
+		
+		names = self.(compartment_names{i}).find('*gbar');
+		v = self.(compartment_names{i}).get(names);
 
 		% reconstitute into a structure
 		S = struct; U = struct; L = struct;
@@ -79,7 +69,7 @@ function manipulate(self)
 			L.(names{j}) = v(j)/10;
 			U.(names{j}) = v(j)*10;
 		end 
-		params{i} = S; lb{i} = L; ub{i} = U; is_relational{i} = ir;
+		params{i} = S; lb{i} = L; ub{i} = U;
 	end
 
 	% and one more for the synapses 
@@ -149,9 +139,9 @@ function manipulate(self)
 	end
 
 	if length(self.synapses) > 0
-		p.group_names = ['Temperature'; self.compartment_names; 'synapses'];
+		p.group_names = ['Temperature'; compartment_names; 'synapses'];
 	else
-		p.group_names = ['Temperature'; self.compartment_names];
+		p.group_names = ['Temperature'; compartment_names];
 	end
 
 
