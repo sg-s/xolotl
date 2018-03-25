@@ -49,8 +49,6 @@ properties
 
 	t_end@double = 5000; % ms
 	handles
-	V_clamp
-	I_ext
 	closed_loop@logical = true;
 	temperature@double = 11; % centigrade 
 	temperature_ref@double = 11; % centigrade 
@@ -102,37 +100,11 @@ methods
 	end
 
 
-	function set.I_ext(self,value)
-		time = self.dt:self.dt:self.t_end;
-		if isscalar(value)
-			if length(self.compartment_names) > 1
-				error('More than one compartment. Which compartment did you want to inject current into?')
-			end
-			if length(value) == 1
-				value = value + 0*time;
-			else
-				
-				assert(length(time) == length(value),'I_ext has the wrong size')
-			end
-		else
-		
-	
-			assert(size(value,1) == length(time),'I_ext has the wrong size')
-			assert(size(value,2) == length(self.compartment_names),'I_ext has the wrong size')
+	function [V, Ca,I_clamp, cond_state, syn_state, cont_state] = integrate(self,I_ext)
 
+		if nargin == 2
+			assert(length(I_ext) == length(self.find('compartment')),'I_ext should be a vector with an element for each compartment')
 		end
-		self.I_ext = value;
-	end
-
-	function set.V_clamp(self,value)
-		assert(isvector(value),'V_clamp must be a vector');
-		value = value(:);
-		assert(length(value) == self.t_end/self.dt,'V_clamp has the wrong length')
-		self.V_clamp = value;
-	end
-
-
-	function [V, Ca,I_clamp, cond_state, syn_state, cont_state] = integrate(self)
 
 		% check if we need to transpile or compile 
 		if ~self.skip_hash_check
@@ -204,16 +176,21 @@ methods
 
 		% vectorize the current state 
 		arguments = self.serialize;
+
+		if nargin == 1
+			I_ext = zeros(length(self.find('compartment')),1);
+		end
+
 		[~,f] = fileparts(self.linked_binary);
 		if self.closed_loop & nargout == 0
 			% use the NOCL version
 			f = [f 'NOCL'];
 			f = str2func(f);
-			[results{1}] = f(arguments);
+			[results{1}] = f(arguments,I_ext);
 		else
 			% use the standard version
 			f = str2func(f);
-			[results{1:7}] = f(arguments);
+			[results{1:7}] = f(arguments,I_ext);
 		end
 
 		if self.closed_loop

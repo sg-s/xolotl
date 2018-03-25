@@ -24,6 +24,8 @@ protected:
 public:
     vector<compartment*> comp; // pointers to all compartments in network
 
+    int n_comp = 0; 
+
     // constructor
     network() {}
 
@@ -38,6 +40,7 @@ public:
 void network::addCompartment(compartment *comp_)
 {
     comp.push_back(comp_);
+    n_comp++;
 }
 
 // this integrate method works for networks
@@ -47,7 +50,6 @@ void network::addCompartment(compartment *comp_)
 // being voltage clamped!
 void network::integrate(double dt,double * I_ext_now, double delta_temperature)
 {
-    int n_comp = (int) comp.size(); // these many compartments
     // integrate all channels in all compartments
     for (int i = 0; i < n_comp; i++)
     {
@@ -81,7 +83,6 @@ void network::integrate(double dt,double * I_ext_now, double delta_temperature)
 // and clamps the first compartment to V_clamp
 void network::integrateClamp(double V_clamp, double dt, double delta_temperature)
 {
-    int n_comp = (int) comp.size(); // these many compartments
 
     // integrate all channels in all compartments
     for (int i = 0; i < n_comp; i++)

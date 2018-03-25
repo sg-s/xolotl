@@ -73,27 +73,22 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     plhs[4] = mxCreateDoubleMatrix(cond_state_dim, nsteps_out, mxREAL); // cond_state
     plhs[5] = mxCreateDoubleMatrix(2*n_synapses, nsteps_out, mxREAL); // synapse gbar + state
     plhs[6] = mxCreateDoubleMatrix(2*n_controllers, nsteps_out, mxREAL); // controllers gbar + mrna
-    //xolotl:disable_for_NOCL_end
 
     output_state = mxGetPr(plhs[0]);
-    //xolotl:disable_for_NOCL_start
     output_V = mxGetPr(plhs[1]);
     output_Ca = mxGetPr(plhs[2]);
     output_I_clamp = mxGetPr(plhs[3]);
     output_cond_state = mxGetPr(plhs[4]);
     output_syn_state = mxGetPr(plhs[5]);
     output_cont_state = mxGetPr(plhs[6]);
-    //xolotl:disable_for_NOCL_end
 
     // make arrays which will store the full cond. state
     double * full_cond_state = new double[cond_state_dim];
     int cond_idx = 0;
-    double * I_ext_now = new double[n_comp];
-    // make sure I_ext_now is zero
-    for(int q = 0; q < n_comp; q++)
-    {
-        I_ext_now[q] = 0.0;
-    }
+
+
+    // get the external currents
+    double * I_ext  = mxGetPr(prhs[1]);
 
     // do the integration
     int output_i = 0;
@@ -105,7 +100,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             //I_ext_now[j] = I_ext[i];
         }
         //xolotl:disable_when_clamped
-        xolotl_network.integrate(sim_dt,I_ext_now, delta_temperature);
+        xolotl_network.integrate(sim_dt,I_ext, delta_temperature);
         //xolotl:enable_when_clamped
         //xolotl_network.integrateClamp(V_clamp[i],dt, delta_temperature);
         //xolotl:enable_when_clamped
@@ -137,7 +132,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 }
             }
         }
-        //xolotl:disable_for_NOCL_end
+
 
     }
 

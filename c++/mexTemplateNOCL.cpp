@@ -53,12 +53,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     output_state = mxGetPr(plhs[0]);
 
 
-    double * I_ext_now = new double[n_comp];
-    // make sure I_ext_now is zero
-    for(int q = 0; q < n_comp; q++)
-    {
-        I_ext_now[q] = 0.0;
-    }
+    // get the external currents
+    double * I_ext  = mxGetPr(prhs[1]);
 
     // do the integration
     for(int i = 0; i < nsteps; i++)
@@ -69,7 +65,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             //I_ext_now[j] = I_ext[i];
         }
         //xolotl:disable_when_clamped
-        xolotl_network.integrate(sim_dt,I_ext_now, delta_temperature);
+        xolotl_network.integrate(sim_dt,I_ext, delta_temperature);
         //xolotl:enable_when_clamped
         //xolotl_network.integrateClamp(V_clamp[i],dt, delta_temperature);
 
