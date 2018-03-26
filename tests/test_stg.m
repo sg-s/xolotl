@@ -62,3 +62,4 @@ for i = 1:3
 	subplot(3,1,i); hold on
 	plot(V(:,i))
 end
+drawnow

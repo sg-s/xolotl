@@ -22,9 +22,12 @@ x.AB.add('Leak','gbar',@() 0.0622/x.AB.A,'E',-50);
 x.transpile;
 x.compile;
 
+x.t_end = 10e3;
+x.integrate;
+x.t_end = 1e3;
+V = x.integrate;
 
-% time it
-x.t_end = 100e3;
-tic; x.integrate; t = toc; x.t_end/t/1e3
-tic; x.integrate; t = toc; x.t_end/t/1e3
-tic; x.integrate; t = toc; x.t_end/t/1e3
+
+figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
+plot(V)
+drawnow

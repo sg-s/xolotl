@@ -49,3 +49,4 @@ plot(V,'k')
 plot(V2,'r')
 
 
+drawnow

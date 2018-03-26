@@ -56,6 +56,7 @@ if usejava('jvm')
 	plot(Ca(:,1));
 	ylabel('[Ca] (\muM)')
 	prettyFig();
+	drawnow
 else
 	disp('Prinz database test passed!')
 end

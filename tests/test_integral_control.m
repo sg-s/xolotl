@@ -41,4 +41,6 @@ x.integrate;
 
 x.t_end = 5e3;
 V = x.integrate;
+figure('outerposition',[300 300 900 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
 plot(V)
+drawnow

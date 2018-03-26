@@ -51,3 +51,4 @@ xlabel('Voltage step (mV)')
 ylabel('Current (nA)')
 
 prettyFig();
+drawnow
