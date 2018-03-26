@@ -56,20 +56,37 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // get the external currents
     double * I_ext  = mxGetPr(prhs[1]);
 
-    // do the integration
-    for(int i = 0; i < nsteps; i++)
-    {
-        for(int j = 0; j < n_comp; j++)
-        {
-            //xolotl:enable_when_I_ext
-            //I_ext_now[j] = I_ext[i];
-        }
-        //xolotl:disable_when_clamped
-        xolotl_network.integrate(sim_dt,I_ext, delta_temperature);
-        //xolotl:enable_when_clamped
-        //xolotl_network.integrateClamp(V_clamp[i],dt, delta_temperature);
+    // get the voltage clamps
+    double * V_clamp  = mxGetPr(prhs[2]);
 
+    // figure out if we're voltage clamping
+    bool is_voltage_clamped = false;
+    for (int j = 0; j < n_comp; j++)
+    {
+        if (!isnan(V_clamp[j]))
+        {
+            is_voltage_clamped = true;
+        }
     }
+
+    if (is_voltage_clamped)
+    {
+        // do the integration
+        for(int i = 0; i < nsteps; i++)
+        {
+            xolotl_network.integrateClamp(sim_dt,V_clamp, delta_temperature);
+        }
+    }
+    else // not being voltage clamped 
+    {
+        // do the integration
+        for(int i = 0; i < nsteps; i++)
+        {
+            xolotl_network.integrate(sim_dt,I_ext, delta_temperature);
+        }
+    }
+
+    
 
     // now measure the mean Ca in every compartment
     for(int j = 0; j < n_comp; j++)

@@ -133,6 +133,7 @@ lines = [lines(1:insert_here); synapse_add_lines(:); lines(insert_here+1:end)];
 
 controller_add_lines = {};
 
+
 % first, we need to add controller to the 
 % channels/synapses they control and then
 % we need to add them to the compartment they are in
@@ -143,13 +144,13 @@ for i = 1:length(all_controllers)
 	idx = max(strfind(all_controllers{i},'.'));
 	cond_name = 'NULL';
 	syn_name = 'NULL'; 
-	if strcmp(self.get([all_controllers{i}(1:idx-1) '.cpp_class_parent']),'conductance')
+	if strcmp(self.get(all_controllers{i}(1:idx-1)).cpp_class_parent,'conductance')
 		cond_name = strrep(all_controllers{i}(1:idx-1),'.','_');
-	elseif strcmp(self.get([all_controllers{i}(1:idx-1) '.cpp_class_parent']),'synapse')
+	elseif strcmp(self.get(all_controllers{i}(1:idx-1)).cpp_class_parent,'synapse')
 		syn_name = strrep(all_controllers{i}(1:idx-1),'.','_');
 	else
 	 	error('Controller connected to unrecognised type')
-	 end 
+	end 
 
 	thing_name = strrep(all_controllers{i}(1:idx-1),'.','_');
 	controller_name = strrep(all_controllers{i},'.','_');
@@ -176,7 +177,7 @@ end
 controller_add_lines{end+1} = ['int n_controllers = ' mat2str(length(all_controllers)) ';'];
 
 insert_here = lineFind(lines,'//xolotl:add_controllers_here');
-assert(length(insert_here)==1,'Could not find insertion point for controller hookups')
+assert(length(insert_here)==1,'Could not find insertion point for controller hookups');
 lines = [lines(1:insert_here); controller_add_lines(:); lines(insert_here+1:end)];
 
 

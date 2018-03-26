@@ -1,43 +1,53 @@
-% test script for matlab wrapper 
-% this tests sets up a two-compartment network
-% where the first compartment is voltage clamped,
-% and has no channels, and the second compartment 
-% has just a sodium and a potassium channel
-% the two compartments are electrically coupled 
-% the goal is to evoke a spike by driving the 
-% first compartment with a short pulse
 
-vol = 1; % this can be anything, doesn't matter
-f = 14.96; % uM/nA
+vol = 0.0628; % this can be anything, doesn't matter
+f = 1.496; % uM/nA
 tau_Ca = 200;
 F = 96485; % Faraday constant in SI units
 phi = (2*f*F*vol)/tau_Ca;
-
+Ca_target = 0; % used only when we add in homeostatic control 
 
 x = xolotl;
-x.cleanup;
+x.add('AB','compartment','Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca,'Ca_target',Ca_target);
+
+x.AB.add('liu-approx/NaV','gbar',@() 115/x.AB.A,'E',30);
+x.AB.add('liu-approx/CaT','gbar',@() 1.44/x.AB.A,'E',30);
+x.AB.add('liu-approx/Kd','gbar',@() 38.31/x.AB.A,'E',-80);
+x.AB.add('Leak','gbar',@() 0.0622/x.AB.A,'E',-50);
+
+x.transpile;
+x.compile;
+
+holding_V = -60;
+all_V_step = linspace(-80,50,30);
+
+x.t_end = 5e2;
+x.sim_dt = .1;
+x.dt = .1;
+
+all_I = NaN(x.t_end/x.dt,length(all_V_step));
+
+x.integrate([],holding_V);
 x.closed_loop = false;
-x.dt = 50e-3;
-x.t_end = 1e3;
-V_clamp = 0*(x.dt:x.dt:x.t_end) - 50;
-V_clamp(5e3:5.1e3) = 70;
-x.addCompartment('C1',-70,0.05,10,0.0628,vol, phi, 3000,0.05,tau_Ca,0);
-x.V_clamp = V_clamp; % only the first compartment can be clamped 
 
-
-x.addCompartment('C2',-70,0.01,10,0.0628,vol, phi,3000,0.05,tau_Ca,0);
-x.addConductance('C2','prinz/NaV',1000,50);
-x.addConductance('C2','prinz/Kd',250,-80);
-
-
-x.addSynapse('Elec','C1','C2',20); % one-way electrical syanpse from 1->2
-
-if usejava('jvm')
-	% plot(V)
-	x.manipulate;
-else
-	disp('voltage clamp test passed!')
+for i = 1:length(all_V_step)
+	all_I(:,i) = x.integrate([],all_V_step(i));
 end
 
+time = (1:length(all_I))*x.dt;
 
+figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
+subplot(1,2,1); hold on
+c = parula(length(all_V_step));
+for i = 1:length(all_V_step)
+	plot(time,all_I(:,i),'Color',c(i,:))
+end
+xlabel('Time (ms)')
+ylabel('Current (nA)')
+set(gca,'XScale','log')
 
+subplot(1,2,2); hold on
+plot(all_V_step,all_I(end,:),'r')
+xlabel('Voltage step (mV)')
+ylabel('Current (nA)')
+
+prettyFig();

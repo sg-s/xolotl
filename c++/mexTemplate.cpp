@@ -90,51 +90,110 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // get the external currents
     double * I_ext  = mxGetPr(prhs[1]);
 
-    // do the integration
-    int output_i = 0;
-    for(int i = 0; i < nsteps; i++)
+    // get the voltage clamps
+    double * V_clamp  = mxGetPr(prhs[2]);
+
+
+    // figure out if we're voltage clamping
+    bool is_voltage_clamped = false;
+    for (int j = 0; j < n_comp; j++)
     {
-        for(int j = 0; j < n_comp; j++)
+        if (!isnan(V_clamp[j]))
         {
-            //xolotl:enable_when_I_ext
-            //I_ext_now[j] = I_ext[i];
+            is_voltage_clamped = true;
         }
-        //xolotl:disable_when_clamped
-        xolotl_network.integrate(sim_dt,I_ext, delta_temperature);
-        //xolotl:enable_when_clamped
-        //xolotl_network.integrateClamp(V_clamp[i],dt, delta_temperature);
-        //xolotl:enable_when_clamped
-        //output_I_clamp[i] = xolotl_network.comp[0]->I_clamp;
+    }
 
-        //xolotl:read_synapses_here
 
-        //xolotl:read_controllers_here
 
-        // here we're getting the state of every compartment -- V, Ca, and all conductances
-        //xolotl:disable_for_NOCL_start
-        if (i%res == 0)
+    if (is_voltage_clamped)
+    {
+        // do the integration respecting V_clamp
+        int output_idx = 0;
+        for(int i = 0; i < nsteps; i++)
         {
-            output_i ++;
-            cond_idx = 0;
-            for (int j = 0; j < n_comp; j++)
+
+            xolotl_network.integrateClamp(sim_dt, V_clamp, delta_temperature);
+
+            //xolotl:read_synapses_here
+            //xolotl:read_controllers_here
+
+            // here we're getting the state of every compartment -- V, Ca, and all conductances
+            if (i%res == 0)
             {
-                output_V[output_i*n_comp + j] = xolotl_network.comp[j]->V;
-                output_Ca[output_i*2*n_comp + j] = xolotl_network.comp[j]->Ca;
-                output_Ca[output_i*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
-
-                xolotl_network.comp[j]->get_cond_state(full_cond_state);
-
-                // get the states of every conductance
-                for (int k = 0; k < cond_state_dims[j]; k++)
+                output_idx ++;
+                cond_idx = 0;
+                for (int j = 0; j < n_comp; j++)
                 {
-                    output_cond_state[output_i*cond_state_dim + cond_idx] = full_cond_state[k];
-                    cond_idx ++;
+                    if (isnan(V_clamp[j]))
+                    {
+                        output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
+                    }
+                    else {
+                        output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->I_clamp;
+                    }
+                    
+                    output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
+                    output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
+
+                    xolotl_network.comp[j]->get_cond_state(full_cond_state);
+
+                    // get the states of every conductance
+                    for (int k = 0; k < cond_state_dims[j]; k++)
+                    {
+                        output_cond_state[output_idx*cond_state_dim + cond_idx] = full_cond_state[k];
+                        cond_idx ++;
+                    }
                 }
             }
-        }
-
-
+        } // end for loop over nsteps
     }
+    else 
+        // voltage is not clamped
+    {
+        // do the integration
+        int output_idx = 0;
+        for(int i = 0; i < nsteps; i++)
+        {
+            //xolotl:disable_when_clamped
+            xolotl_network.integrate(sim_dt,I_ext, delta_temperature);
+
+            //xolotl:enable_when_clamped
+            //xolotl_network.integrateClamp(sim_dt, V_clamp, delta_temperature);
+            //xolotl:enable_when_clamped
+            //output_Idx_clamp[i] = xolotl_network.comp[0]->I_clamp;
+
+            //xolotl:read_synapses_here
+
+            //xolotl:read_controllers_here
+
+            // here we're getting the state of every compartment -- V, Ca, and all conductances
+            if (i%res == 0)
+            {
+                output_idx ++;
+                cond_idx = 0;
+                for (int j = 0; j < n_comp; j++)
+                {
+                    output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
+
+                    output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
+                    output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
+
+                    xolotl_network.comp[j]->get_cond_state(full_cond_state);
+
+                    // get the states of every conductance
+                    for (int k = 0; k < cond_state_dims[j]; k++)
+                    {
+                        output_cond_state[output_idx*cond_state_dim + cond_idx] = full_cond_state[k];
+                        cond_idx ++;
+                    }
+                }
+            }
+        } // end for loop over nsteps
+    }
+
+
+
 
     // now measure the mean Ca in every compartment
     for(int j = 0; j < n_comp; j++)

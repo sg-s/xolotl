@@ -100,7 +100,7 @@ methods
 	end
 
 
-	function [V, Ca,I_clamp, cond_state, syn_state, cont_state] = integrate(self,I_ext)
+	function [V, Ca,I_clamp, cond_state, syn_state, cont_state] = integrate(self,I_ext, V_clamp)
 
 		if nargin == 2
 			assert(length(I_ext) == length(self.find('compartment')),'I_ext should be a vector with an element for each compartment')
@@ -177,20 +177,33 @@ methods
 		% vectorize the current state 
 		arguments = self.serialize;
 
-		if nargin == 1
-			I_ext = zeros(length(self.find('compartment')),1);
+		n_comp = length(self.find('compartment'));
+
+		switch nargin 
+		case 1
+			I_ext = zeros(n_comp,1);
+			V_clamp = NaN(n_comp,1);
+		case 2
+			% only I_ext
+			V_clamp = NaN(n_comp,1);
+		case 3
+			% ignore I_ext, since it's being clamped
+			I_ext = zeros(n_comp,1);			
 		end
+
+		assert(length(I_ext) == n_comp,'Size of I_ext is incorrect')
+		assert(length(V_clamp) == n_comp,'Size of V_clamp is incorrect')
 
 		[~,f] = fileparts(self.linked_binary);
 		if self.closed_loop & nargout == 0
 			% use the NOCL version
 			f = [f 'NOCL'];
 			f = str2func(f);
-			[results{1}] = f(arguments,I_ext);
+			[results{1}] = f(arguments,I_ext,V_clamp);
 		else
 			% use the standard version
 			f = str2func(f);
-			[results{1:7}] = f(arguments,I_ext);
+			[results{1:7}] = f(arguments,I_ext,V_clamp);
 		end
 
 		if self.closed_loop
