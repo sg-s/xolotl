@@ -106,55 +106,17 @@ methods
 			assert(length(I_ext) == length(self.find('compartment')),'I_ext should be a vector with an element for each compartment')
 		end
 
-		% check if we need to transpile or compile 
-		if ~self.skip_hash_check
+		if isempty(self.linked_binary)
 			h = self.hash;
-			if isempty(self.linked_binary)
-				% doesn't exist -- check if we need to compile 
-				if self.debug_mode
-					 cprintf('green','[DEBUG] No linked binary\n');
-				end
-				if exist(joinPath(self.xolotl_folder,['mexBridge' h(1:6) '.cpp']),'file') == 2
-					if self.debug_mode
-						cprintf('green','[DEBUG] C++ file exists\n');
-					end
-					% Ok, we have the C++ file. should we compile?
-					if exist(joinPath(self.xolotl_folder,['mexBridge' h(1:6) '.' self.OS_binary_ext]),'file') == 3
-						% update the linked_binary
-						if self.debug_mode
-							cprintf('green','[DEBUG] Binary exists, linking...\n');
-						end
-						self.linked_binary = ['mexBridge' h(1:6) '.' self.OS_binary_ext];
-					else
-						if self.debug_mode
-							cprintf('green','[DEBUG] Compiling...\n');
-						end
-						self.compile;
-					end
-				else
-					if self.debug_mode
-						cprintf('green','[DEBUG] No C++ file. Transpiling and compiling...\n');
-					end
-					% transpile and compile
-					self.transpile;
-					self.compile;
-				end
-			else
-				if self.debug_mode
-					cprintf('green','[DEBUG] Checking for linked binary...\n');
-				end
-				if exist(joinPath(self.xolotl_folder,['mexBridge' h(1:6) '.' self.OS_binary_ext]),'file') == 3
-					if self.debug_mode
-						cprintf('green','[DEBUG] Linked binary exists.\n');
-					end
-				else
-					if self.debug_mode
-						cprintf('green','[DEBUG] Linked binary missing. Compiling...\n');
-					end
-					self.transpile;
-					self.compile;
-				end
-			end
+			mexBridge_name = [joinPath(self.xolotl_folder,'mexBridge') h(1:6) '.cpp'];
+			self.linked_binary = ['mexBridge' h(1:6) '.' self.OS_binary_ext];
+		end
+
+		% does the binary exist? 
+		if exist(joinPath(self.xolotl_folder,self.linked_binary),'file') == 3
+		else
+			self.transpile;
+			self.compile;
 		end
 		
 		% check that sim_dt and output_dt make sense
