@@ -53,6 +53,25 @@ assert(length(insert_here)==1,'Could not find insertion point for object constru
 lines = [lines(1:insert_here); constructors(:); lines(insert_here+1:end)];
 
 
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% ~~~~ here we call methods of the objects we made ~~~~~~~
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+call_method_lines = {};
+if ~isempty(self.call_method_data)
+	for i = 1:length(self.call_method_data)
+		S = self.call_method_data(i);
+		call_method_lines{end+1} = [S.object '.' S.method_name '(' S.method_values ');'];
+	end
+
+	insert_here = lineFind(lines,'//xolotl:call_methods_here');
+	assert(length(insert_here)==1,'Could not find insertion point for calling object methods')
+	lines = [lines(1:insert_here); call_method_lines(:); lines(insert_here+1:end)];
+
+
+	
+end
+
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % ~~ output declarations and hookups ~~
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -180,46 +199,6 @@ insert_here = lineFind(lines,'//xolotl:add_controllers_here');
 assert(length(insert_here)==1,'Could not find insertion point for controller hookups');
 lines = [lines(1:insert_here); controller_add_lines(:); lines(insert_here+1:end)];
 
-
-% for i = 1:length(self.controllers)
-% 	this_controller = self.controllers{i};
-% 	this_type = this_controller.type;
-
-% 	% figure out the C++ constructor for this type 
-% 	constructor_args = findCPPClassMembers(joinPath(self.xolotl_folder,self.controllers{i}.cpp_path));
-
-% 	% figure out constructor args from structure
-% 	fn = fieldnames(this_controller);
-% 	for j = 1:length(constructor_args)
-% 		if any(strcmp(constructor_args{j},fn))
-% 			if  isnumeric(this_controller.(constructor_args{j}))
-% 				constructor_args{j} = [this_controller.channel '_' this_controller.type '_' constructor_args{j}];
-% 			else
-% 				% it's a pointer, and we need to treat it as such
-% 				if strcmp(this_controller.(constructor_args{j}),'NULL')
-% 					constructor_args{j} = 'NULL';
-% 				else
-% 					constructor_args{j} = ['&' this_controller.(constructor_args{j})];
-% 				end
-% 			end
-% 		else
-% 			% we can't find an argument that needs to be handed into the constructor for this controller, which should be an error
-% 			error('Cannot find required arguments for constructor of controller')
-% 		end
-% 	end
-
-% 	this_controller_line = [this_controller.type ' cont' mat2str(i) '('];
-% 	for j = 1:length(constructor_args)
-% 		this_controller_line = [this_controller_line constructor_args{j} ,','];
-% 	end
-% 	this_controller_line(end) = ')';
-% 	this_controller_line = [this_controller_line ';'];
-
-% 	controller_add_lines{end+1} = this_controller_line;
-
-% 	% now add the controller to the compartment 
-% 	controller_add_lines{end+1} = [this_controller.compartment '.addController(&cont' mat2str(i) ');'];
-% end
 
 
 % % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

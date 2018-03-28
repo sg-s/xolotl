@@ -33,6 +33,11 @@ properties (Access = protected)
 	% this stores custom owners of some objects
 	% specified by put
 	custom_owner
+
+	% this stores information about calling methods
+	% of some objects after they have been created 
+	call_method_data
+
 end  % end protected props
 
 

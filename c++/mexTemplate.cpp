@@ -41,6 +41,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     //xolotl:insert_constructors
 
+    //xolotl:call_methods_here
+
     //xolotl:add_conductances_here
 
     //xolotl:add_synapses_here
