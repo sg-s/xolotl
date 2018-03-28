@@ -18,8 +18,12 @@ end
 % reset all conductances
 all_channels = self.find('conductance');
 for i = 1:length(all_channels)
-	self.set([all_channels{i} '.m'],0)
-	self.set([all_channels{i} '.h'],1)
+	if self.exist([all_channels{i} '.m'])
+		self.set([all_channels{i} '.m'],0)
+	end
+	if self.exist([all_channels{i} '.h'])
+		self.set([all_channels{i} '.h'],1)
+	end
 end
 
 % reset all synapses 
