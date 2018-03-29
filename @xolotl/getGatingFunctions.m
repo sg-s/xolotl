@@ -1,89 +1,31 @@
-function [act, ict, tc_act, tc_ict, mphq, cond_name] =  getGatingFunctions(self,cond_id)
-  % search for cond_id
-  cond_file = [];
-  for i = 1:length(self.available_conductances)
-    if any(strfind(self.available_conductances{i},cond_id))
-      cond_file = i;
-      break;
-    end
-  end
-  assert(~isempty(cond_file),'Which conductance do you mean?')
+%              _       _   _
+%   __  _____ | | ___ | |_| |
+%   \ \/ / _ \| |/ _ \| __| |
+%    >  < (_) | | (_) | |_| |
+%   /_/\_\___/|_|\___/ \__|_|
+%
+% help: recover gating functions from CPP file
+%
 
-  lines = lineRead(self.available_conductances{cond_file});
-  cond_name = pathEnd(self.available_conductances{cond_file});
+function [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(self,conductance)
 
-  % hard code an internal calcium level
-  Ca = 0.05;
+assert(self.exist(conductance),'Conductance you specified does not exist in the C++ object tree')
 
-  % initialize outputs
-  % outputs
-  V           = linspace(-80,80,1e3);
-  act         = ones(length(V),1);
-  ict         = ones(length(V),1);
-  tc_act      = ones(length(V),1);
-  tc_ict      = ones(length(V),1);
+C = self.get(conductance);
 
-  % find m_inf
-  for i = 1:length(lines)
-    if strfind(lines{i},[cond_name '::m_inf'])
-      a = strfind(lines{i},'{');
-      z = strfind(lines{i},'}');
-      this_fragment = lines{i}(a+1:z-1);
-      this_fragment = strrep(this_fragment,';','');
-      this_fragment = strrep(this_fragment,'return','');
-      this_fragment = strrep(this_fragment,'/','./');
-      this_fragment = strrep(this_fragment,'*','.*');
-      eval(['m_inf = @(V)' this_fragment ' ;'])
-    end
-    % find h_inf
-    if strfind(lines{i},[cond_name '::h_inf'])
-      a = strfind(lines{i},'{');
-      z = strfind(lines{i},'}');
-      this_fragment = lines{i}(a+1:z-1);
-      this_fragment = strrep(this_fragment,';','');
-      this_fragment = strrep(this_fragment,'return','');
-      this_fragment = strrep(this_fragment,'/','./');
-      this_fragment = strrep(this_fragment,'*','.*');
-      eval(['h_inf = @(V)' this_fragment ' ;'])
-    end
-    % find tau_m
-    if strfind(lines{i},[cond_name '::tau_m'])
-      a = strfind(lines{i},'{');
-      z = strfind(lines{i},'}');
-      this_fragment = lines{i}(a+1:z-1);
-      this_fragment = strrep(this_fragment,';','');
-      this_fragment = strrep(this_fragment,'return','');
-      this_fragment = strrep(this_fragment,'/','./');
-      this_fragment = strrep(this_fragment,'*','.*');
-      eval(['tau_m = @(V)' this_fragment ' ;'])
-    end
-    % find tau_h
-    if strfind(lines{i},[cond_name '::tau_h'])
-      a = strfind(lines{i},'{');
-      z = strfind(lines{i},'}');
-      this_fragment = lines{i}(a+1:z-1);
-      this_fragment = strrep(this_fragment,';','');
-      this_fragment = strrep(this_fragment,'return','');
-      this_fragment = strrep(this_fragment,'/','./');
-      this_fragment = strrep(this_fragment,'*','.*');
-      eval(['tau_h = @(V)' this_fragment ' ;'])
-    end
-    if strfind(lines{i},['gbar*'])
-      a = strfind(lines{i},'gbar*');
-      z = strfind(lines{i},';');
-      this_fragment = lines{i}(a+5:z-1);
-      this_fragment = strrep(this_fragment,'*','.*');
-      eval(['mphq_func = @(m,h)' this_fragment ';'])
-    end
-  end
+m_inf = @(V) 0;
+h_inf = @(V) 1;
+tau_m = @(V) NaN;
+tau_h = @(V) NaN;
 
-  % outputs
-  act         = m_inf(V);
-  tc_act      = tau_m(V);
-  if exist('h_inf') & exist('tau_h')
-    ict         = h_inf(V);
-    tc_ict      = tau_h(V);
-  end
-  mphq        = mphq_func(act,ict);
-
+for i = 1:length(C.cpp_child_functions)
+    if strcmp(C.cpp_child_functions(i).fun_name,'m_inf')
+        m_inf = C.cpp_child_functions(i).fun_handle;
+    elseif strcmp(C.cpp_child_functions(i).fun_name,'h_inf')
+        h_inf = C.cpp_child_functions(i).fun_handle;
+    elseif strcmp(C.cpp_child_functions(i).fun_name,'tau_m')
+        tau_m = C.cpp_child_functions(i).fun_handle;
+    elseif strcmp(C.cpp_child_functions(i).fun_name,'tau_h')
+        tau_h = C.cpp_child_functions(i).fun_handle;
+    end
 end
