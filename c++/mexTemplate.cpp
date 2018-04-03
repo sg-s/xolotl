@@ -67,7 +67,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
 
     int res = dt/sim_dt;
-    plhs[0] = mxCreateDoubleMatrix(1, param_size, mxREAL); //output state
+    plhs[0] = mxCreateDoubleMatrix(param_size, 1, mxREAL); //output state
     //xolotl:disable_for_NOCL_start
     plhs[1] = mxCreateDoubleMatrix(n_comp, nsteps_out, mxREAL); // V
     plhs[2] = mxCreateDoubleMatrix(2*n_comp, nsteps_out, mxREAL); // Ca + E_Ca
