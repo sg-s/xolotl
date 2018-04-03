@@ -55,11 +55,23 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     output_state = mxGetPr(plhs[0]);
 
 
-    // get the external currents
-    double * I_ext  = mxGetPr(prhs[1]);
+    // we now copy over the I_ext and V_clamp
+    // it's super important that we make a new
+    // array instead of using whatever matlab gives us
+    // if you don't, your code will break in ways you
+    // can't even imagine
+    double * I_ext = new double[n_comp];
+    double * V_clamp = new double[n_comp];
+    double * I_ext_in = mxGetPr(prhs[1]);
+    double * V_clamp_in = mxGetPr(prhs[2]);
 
-    // get the voltage clamps
-    double * V_clamp  = mxGetPr(prhs[2]);
+    // copy I_ext so we can use it
+    for(int q = 0; q < n_comp; q++)
+    {
+        I_ext[q] = I_ext_in[q];
+        V_clamp[q] = V_clamp_in[q];
+        // mexPrintf("I_ext =  %f ", I_ext_in[q]);
+    }
 
     // figure out if we're voltage clamping
     bool is_voltage_clamped = false;
