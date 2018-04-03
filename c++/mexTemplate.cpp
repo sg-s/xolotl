@@ -135,7 +135,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             // here we're getting the state of every compartment -- V, Ca, and all conductances
             if (i%res == 0)
             {
-                output_idx ++;
                 cond_idx = 0;
                 for (int j = 0; j < n_comp; j++)
                 {
@@ -159,6 +158,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                         cond_idx ++;
                     }
                 }
+                output_idx ++;
             }
         } // end for loop over nsteps
     }
@@ -179,7 +179,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             // here we're getting the state of every compartment -- V, Ca, and all conductances
             if (i%res == 0)
             {
-                output_idx ++;
                 cond_idx = 0;
                 for (int j = 0; j < n_comp; j++)
                 {
@@ -197,6 +196,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                         cond_idx ++;
                     }
                 }
+                output_idx ++;
             }
         } // end for loop over nsteps
     }
