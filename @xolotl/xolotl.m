@@ -162,29 +162,23 @@ methods
 		assert(length(V_clamp) == n_comp,'Size of V_clamp is incorrect')
 
 		[~,f] = fileparts(self.linked_binary);
-		if self.closed_loop & nargout == 0
-			% use the NOCL version
-			f = [f 'NOCL'];
-			f = str2func(f);
-			[results{1}] = f(arguments,I_ext,V_clamp);
-		else
-			% use the standard version
-			f = str2func(f);
-			[results{1:7}] = f(arguments,I_ext,V_clamp);
-		end
+
+		f = str2func(f);
+		[results{1:nargout+1}] = f(arguments,I_ext,V_clamp);
+	
 
 		if self.closed_loop
 			self.deserialize(results{1});
 		end
 
 		if nargout > 0
-
 			V = (results{2})';
+		end
+		if nargout > 1
 			Ca = (results{3})';
-			I_clamp = (results{4})';
-			cond_state = (results{5})';
-			syn_state = (results{6})';
-			cont_state = (results{7})';
+			% cond_state = (results{5})';
+			% syn_state = (results{6})';
+			% cont_state = (results{7})';
 		end
 		
 

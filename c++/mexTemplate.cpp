@@ -67,33 +67,34 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
 
     int res = dt/sim_dt;
-    plhs[0] = mxCreateDoubleMatrix(param_size, 1, mxREAL); //output state
-    //xolotl:disable_for_NOCL_start
-    plhs[1] = mxCreateDoubleMatrix(n_comp, nsteps_out, mxREAL); // V
-    plhs[2] = mxCreateDoubleMatrix(2*n_comp, nsteps_out, mxREAL); // Ca + E_Ca
-    plhs[3] = mxCreateDoubleMatrix(1, nsteps_out, mxREAL); // I_clamp
-    plhs[4] = mxCreateDoubleMatrix(cond_state_dim, nsteps_out, mxREAL); // cond_state
-    plhs[5] = mxCreateDoubleMatrix(2*n_synapses, nsteps_out, mxREAL); // synapse gbar + state
-    plhs[6] = mxCreateDoubleMatrix(2*n_controllers, nsteps_out, mxREAL); // controllers gbar + mrna
-
+    plhs[0] = mxCreateDoubleMatrix(param_size, 1, mxREAL); 
     output_state = mxGetPr(plhs[0]);
-    output_V = mxGetPr(plhs[1]);
-    output_Ca = mxGetPr(plhs[2]);
-    output_I_clamp = mxGetPr(plhs[3]);
-    output_cond_state = mxGetPr(plhs[4]);
-    output_syn_state = mxGetPr(plhs[5]);
-    output_cont_state = mxGetPr(plhs[6]);
+
+    if (nlhs > 1) {
+        plhs[1] = mxCreateDoubleMatrix(n_comp, nsteps_out, mxREAL);
+        output_V = mxGetPr(plhs[1]);
+    }
+    if (nlhs > 2) {
+        plhs[2] = mxCreateDoubleMatrix(2*n_comp, nsteps_out, mxREAL);
+        output_Ca = mxGetPr(plhs[2]);
+    }
+
+    if (nlhs > 3) {
+        plhs[3] = mxCreateDoubleMatrix(cond_state_dim, nsteps_out, mxREAL); 
+        output_cond_state = mxGetPr(plhs[3]);
+    }
+
+    // plhs[5] = mxCreateDoubleMatrix(2*n_synapses, nsteps_out, mxREAL); // synapse gbar + state
+    // plhs[6] = mxCreateDoubleMatrix(2*n_controllers, nsteps_out, mxREAL); // controllers gbar + mrna    
+    // output_syn_state = mxGetPr(plhs[5]);
+    // output_cont_state = mxGetPr(plhs[6]);
 
     // make arrays which will store the full cond. state
-    double * full_cond_state = new double[cond_state_dim];
-    int cond_idx = 0;
+    // double * full_cond_state = new double[cond_state_dim];
+    // int cond_idx = 0;
 
 
-    // we now copy over the I_ext and V_clamp
-    // it's super important that we make a new
-    // array instead of using whatever matlab gives us
-    // if you don't, your code will break in ways you
-    // can't even imagine
+    // link up I_ext and V_clamp
     double * I_ext = new double[n_comp];
     double * V_clamp = new double[n_comp];
     double * I_ext_in = mxGetPr(prhs[1]);
@@ -135,36 +136,43 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             // here we're getting the state of every compartment -- V, Ca, and all conductances
             if (i%res == 0)
             {
-                cond_idx = 0;
+                
                 for (int j = 0; j < n_comp; j++)
                 {
-                    if (isnan(V_clamp[j]))
-                    {
-                        output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
-                    }
-                    else {
-                        output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->I_clamp;
+
+                    if (nlhs > 1) {
+                        if (isnan(V_clamp[j]))
+                        {
+                            output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
+                        }
+                        else {
+                            output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->I_clamp;
+                        }
                     }
                     
-                    output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
-                    output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
+                    if (nlhs > 2) {
+                        output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
+                        output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
+                    }
 
-                    xolotl_network.comp[j]->get_cond_state(full_cond_state);
+                    // cond_idx = 0;
+                    // xolotl_network.comp[j]->get_cond_state(full_cond_state);
 
                     // get the states of every conductance
-                    for (int k = 0; k < cond_state_dims[j]; k++)
-                    {
-                        output_cond_state[output_idx*cond_state_dim + cond_idx] = full_cond_state[k];
-                        cond_idx ++;
-                    }
+                    // for (int k = 0; k < cond_state_dims[j]; k++)
+                    // {
+                    //     output_cond_state[output_idx*cond_state_dim + cond_idx] = full_cond_state[k];
+                    //     cond_idx ++;
+                    // }
                 }
                 output_idx ++;
             }
         } // end for loop over nsteps
     }
     else 
-        // voltage is not clamped
+        
     {
+        // voltage is not clamped
         // do the integration
         int output_idx = 0;
         for(int i = 0; i < nsteps; i++)
@@ -179,22 +187,28 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             // here we're getting the state of every compartment -- V, Ca, and all conductances
             if (i%res == 0)
             {
-                cond_idx = 0;
+                
                 for (int j = 0; j < n_comp; j++)
                 {
-                    output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
+                    if (nlhs > 1) {
+                        output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
+                    }
 
-                    output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
-                    output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
+                    if (nlhs > 2) {
+                        output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
+                        output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
+                    }
 
-                    xolotl_network.comp[j]->get_cond_state(full_cond_state);
+
+                    // cond_idx = 0;
+                    // xolotl_network.comp[j]->get_cond_state(full_cond_state);
 
                     // get the states of every conductance
-                    for (int k = 0; k < cond_state_dims[j]; k++)
-                    {
-                        output_cond_state[output_idx*cond_state_dim + cond_idx] = full_cond_state[k];
-                        cond_idx ++;
-                    }
+                    // for (int k = 0; k < cond_state_dims[j]; k++)
+                    // {
+                    //     output_cond_state[output_idx*cond_state_dim + cond_idx] = full_cond_state[k];
+                    //     cond_idx ++;
+                    // }
                 }
                 output_idx ++;
             }
