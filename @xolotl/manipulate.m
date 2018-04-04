@@ -21,7 +21,7 @@ end
 self.closed_loop = false;
 
 [V,Ca] = self.integrate;
-time = (1:length(V))*self.dt;
+time = (1:length(V))*self.dt*1e-3;
 
 t_end = self.t_end;
 
@@ -38,6 +38,7 @@ for i = 1:n
 	yyaxis(self.handles.ax(i),'left')
 	self.handles.V_trace(i) = plot(self.handles.ax(i),time,V(:,i),'k');
 	ylabel(self.handles.ax(i),['V_{' compartment_names{i} '} (mV)'] )
+	xlabel(self.handles.ax(i),'Time (s)')
 	set(self.handles.ax(i),'YLim',[-80 80])
 
 	% and now show calcium

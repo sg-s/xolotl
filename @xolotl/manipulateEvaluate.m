@@ -12,7 +12,7 @@ function manipulateEvaluate(self,names,values)
 	self.set(names,values)
 	
 	[V, Ca] = self.integrate;
-	time = self.dt*(1:length(V));
+	time = 1e-3*self.dt*(1:length(V));
 
 	max_Ca = max(max(Ca(:,1:size(V,2))));
 
@@ -21,11 +21,13 @@ function manipulateEvaluate(self,names,values)
 		yyaxis(self.handles.ax(i),'left')
 		self.handles.V_trace(i).YData = V(:,i);
 		self.handles.V_trace(i).XData = time;
+		self.handles.ax(i).XLim(2) = max(time);
 
 		yyaxis(self.handles.ax(i),'right')
 		self.handles.Ca_trace(i).YData = Ca(:,i);
 		self.handles.Ca_trace(i).XData = time;
 		self.handles.ax(i).YLim(2) = max_Ca;
+		self.handles.ax(i).XLim(2) = max(time);
 	end
 
 
