@@ -22,6 +22,9 @@ public:
     // mRNA concentration 
     double m; 
 
+    // fudge factor
+    double phi;
+
     // area of the container this is in
     // this is NOT necessarily the area of the compartment
     // that contains it
@@ -29,14 +32,16 @@ public:
 
     // specify parameters + initial conditions for 
     // controller that controls a conductance 
-    DistributedController(double tau_m_, double tau_g_, double m_)
+    DistributedController(double tau_m_, double tau_g_, double m_, double phi_)
     {
 
         tau_m = tau_m_;
         tau_g = tau_g_;
         m = m_;
+        phi = phi_;
 
         if (isnan (m)) { m = 0; }
+        if (isnan (phi)) { phi = 1; }
     }
 
     
@@ -91,7 +96,7 @@ void DistributedController::integrate(double Ca_error, double dt)
         // calculate conductance, not conductance density
         
         double g = (channel->gbar)*container_A;
-        (channel->gbar) += ((dt/tau_g)*(m*container_vol - g))/container_A;
+        (channel->gbar) += ((dt/tau_g)*(m*container_vol*phi - g))/container_A;
 
         // make sure it doesn't go below zero
         if ((channel->gbar) < 0) {

@@ -1,6 +1,7 @@
 % tests a neuron that reproduces Fig 3 in Tim's paper
 
-vol = 1; % this can be anything, doesn't matter
+A = 0.0628; % mm^2
+vol = A; % mm^3
 f = 1.496; % uM/nA
 tau_Ca = 200;
 F = 96485; % Faraday constant in SI units
@@ -9,7 +10,7 @@ Ca_target = 7; % used only when we add in homeostatic control
 
 x = xolotl;
 x.cleanup;
-x.add('AB','compartment','Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca,'Ca_target',Ca_target);
+x.add('AB','compartment','Cm',10,'A',A,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca,'Ca_target',Ca_target);
 
 g0 = 10*rand(7,1);
 

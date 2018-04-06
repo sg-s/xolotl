@@ -6,7 +6,7 @@
 %
 % help: integrates, and generates UI to manipulate parameters
 
-function manipulate(self)
+function manipulate(self, manipulate_these)
 
 
 if ~isempty(self.linked_binary)
@@ -52,28 +52,38 @@ end
 linkaxes(self.handles.ax,'x');
 prettyFig('plw',1.5,'lw',1);
 
+if nargin < 2
 
+	[values, ~, ~, real_names] = self.serialize;
 
-[values, ~, is_relational, real_names] = self.serialize;
+	% skip some dynamical values
+	rm_this = [lineFind(real_names,'*dt'); lineFind(real_names,'*.m'); lineFind(real_names,'*.h'); lineFind(real_names,'synapses*.s')];
 
-% skip some dynamical values
-rm_this = [lineFind(real_names,'*dt'); lineFind(real_names,'*.m'); lineFind(real_names,'*.h'); lineFind(real_names,'synapses*.s')];
-
-% manually remove all the V, Ca for each neuron 
-for i = 1:length(real_names)
-	for j = 1:n
-		if strcmp(real_names{i}, [compartment_names{j} '.Ca'])
-			rm_this = [rm_this; i];
+	% manually remove all the V, Ca for each neuron 
+	for i = 1:length(real_names)
+		for j = 1:n
+			if strcmp(real_names{i}, [compartment_names{j} '.Ca'])
+				rm_this = [rm_this; i];
+			end
+			if strcmp(real_names{i}, [compartment_names{j} '.V'])
+				rm_this = [rm_this; i];
+			end
 		end
-		if strcmp(real_names{i}, [compartment_names{j} '.V'])
-			rm_this = [rm_this; i];
-		end
+	end
+
+	values(rm_this) = [];
+	real_names(rm_this) = [];
+
+else
+	real_names = manipulate_these;
+	values = NaN*ones(length(real_names),1);
+	% check that these exist
+	for i = 1:length(real_names)
+		assert(self.exist(real_names{i}),'Unknown parameter to manipualte')
+		values(i) = self.get(real_names{i});
 	end
 end
 
-values(rm_this) = [];
-is_relational(rm_this) = [];
-real_names(rm_this) = [];
 
 
 % semi-intelligently make the upper and lower bounds
@@ -83,27 +93,6 @@ ub = values*3;
 
 % create a puppeteer instance and configure
 p = puppeteer(real_names,values,lb,ub,[],true);
-
-% we're going to override pupeteer's callback functions for sliders that correspond to relational parameters, and disable those sliders
-% for i = 1:length(is_relational)
-% 	ir = is_relational{i};
-% 	if length(p.handles) > 1
-% 		h = p.handles(i);
-% 	else
-% 		h = p.handles;
-% 	end
-% 	for j = 1:length(h.sliders)
-% 		if ir(j)
-% 			h.sliders(j).Enable = 'off';
-% 			z = strfind(h.controllabel(j).String,'=');
-% 			h.controllabel(j).String = [h.controllabel(j).String(1:z-1) ' (relative)'] ;
-% 			% remove the callback functions
-% 			h.sliders(j).Callback = [];
-% 		else
-
-% 		end
-% 	end
-% end
 
 
 p.attachFigure(self.handles.fig);

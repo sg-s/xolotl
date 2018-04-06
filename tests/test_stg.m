@@ -7,38 +7,32 @@
 
 
 % conversion from Prinz to phi
-vol = 1; % this can be anything, doesn't matter
+A = 0.0628;
+vol = A; % this can be anything, doesn't matter
 f = 14.96; % uM/nA
 tau_Ca = 200;
-F = 96485; % Faraday constant in SI units
-phi = (2*f*F*vol)/tau_Ca;
+phi = (2*f*96485*vol)/tau_Ca;
+
+channels = {'NaV','CaT','CaS','ACurrent','KCa','Kd','HCurrent'};
+prefix = 'prinz-approx/';
+gbar(:,1) = [1000 25  60 500  50  1000 .1];
+gbar(:,2) = [1000 0   40 200  0   250  .5];
+gbar(:,3) = [1000 24  20 500  0   1250 .5];
+E =         [50   30  30 -80 -80 -80   -20];
 
 x = xolotl;
-x.cleanup;
-x.add('AB','compartment','V',-65,'Ca',0.02,'Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
-x.AB.add('prinz-approx/NaV','gbar',1000,'E',50);
-x.AB.add('prinz-approx/CaT','gbar',25,'E',30);
-x.AB.add('prinz-approx/CaS','gbar',60,'E',30);
-x.AB.add('prinz-approx/ACurrent','gbar',500,'E',-80);
-x.AB.add('prinz-approx/KCa','gbar',50,'E',-80);
-x.AB.add('prinz-approx/Kd','gbar',1000,'E',-80);
-x.AB.add('prinz-approx/HCurrent','gbar',.1,'E',-20);
+x.add('AB','compartment','Cm',10,'A',A,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
+x.add('LP','compartment','Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
+x.add('PY','compartment','Cm',10,'A',A,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
 
-x.add('LP','compartment','V',-47,'Ca',0.02,'Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
-x.LP.add('prinz-approx/NaV','gbar',1000,'E',50);
-x.LP.add('prinz-approx/CaS','gbar',40,'E',30);
-x.LP.add('prinz-approx/ACurrent','gbar',200,'E',-80);
-x.LP.add('prinz-approx/Kd','gbar',250,'E',-80);
-x.LP.add('prinz-approx/HCurrent','gbar',.5,'E',-20);
+compartments = x.find('compartment');
+for j = 1:length(compartments)
+	for i = 1:length(channels)
+		x.(compartments{j}).add([prefix channels{i}],'gbar',gbar(i,j),'E',E(i));
+	end
+end
+
 x.LP.add('Leak','gbar',.3,'E',-50);
-
-x.add('PY','compartment','V',-47,'Ca',0.02,'Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
-x.PY.add('prinz-approx/NaV','gbar',1000,'E',50);
-x.PY.add('prinz-approx/CaT','gbar',25,'E',30);
-x.PY.add('prinz-approx/CaS','gbar',20,'E',30);
-x.PY.add('prinz-approx/ACurrent','gbar',500,'E',-80);
-x.PY.add('prinz-approx/Kd','gbar',1250,'E',-80);
-x.PY.add('prinz-approx/HCurrent','gbar',.5,'E',-20);
 x.PY.add('Leak','gbar',.1,'E',-50);
 
 % set up synapses as in Fig. 2e
@@ -52,10 +46,8 @@ x.connect('LP','AB','Glut','gbar',30);
 
 x.t_end = 5e3;
 
-x.transpile;
-x.compile;
-
-V = x.integrate;
+x.transpile; x.compile;
+x.integrate; V = x.integrate;
 
 figure('outerposition',[0 0 1000 900],'PaperUnits','points','PaperSize',[1000 900]); hold on
 for i = 1:3
