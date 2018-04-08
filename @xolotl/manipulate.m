@@ -28,7 +28,7 @@ t_end = self.t_end;
 compartment_names = self.find('compartment');
 
 % create a window to show all the traces
-self.handles.fig = figure('outerposition',[0 0 1000 900],'PaperUnits','points','PaperSize',[1000 500],'CloseRequestFcn',@self.deleteManipulateFig); hold on
+self.handles.fig = figure('outerposition',[0 0 1000 900],'PaperUnits','points','PaperSize',[1000 500]); hold on
 n = length(compartment_names);
 max_Ca = max(max(Ca(:,1:n)));
 for i = 1:n
