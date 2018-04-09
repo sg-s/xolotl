@@ -119,6 +119,12 @@ methods
 
 		% does the binary exist? 
 		if exist(joinPath(self.xolotl_folder,self.linked_binary),'file') == 3
+			% does the hash match up? 
+			h = self.hash;
+			if ~strcmp(self.linked_binary(10:15),h(1:6))
+				self.transpile;
+				self.compile;
+			end
 		else
 			self.transpile;
 			self.compile;
