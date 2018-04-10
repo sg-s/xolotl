@@ -24,7 +24,6 @@ all_dt = all_dt/1e3;
 all_Q = NaN*all_dt;
 all_speed = NaN*all_dt;
 
-self.skip_hash_check = true;
 
 self.sim_dt = all_dt(1);
 self.dt = max_dt*1e-3;

@@ -14,7 +14,6 @@ if ~exist('z','var')
 	G = z.findNeurons('burster');
 
 	x = xolotl;
-	x.cleanup;
 
 	x.add('AB','compartment','V',-65,'Ca',0.02,'Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
 

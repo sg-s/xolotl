@@ -43,7 +43,6 @@ end  % end protected props
 
 properties
 	debug_mode@logical = false
-	skip_hash_check@logical = false
 	controllers@cell = {}
 
 	% output delta t
@@ -120,13 +119,12 @@ methods
 		% does the binary exist? 
 		if exist(joinPath(self.xolotl_folder,self.linked_binary),'file') == 3
 			% does the hash match up? 
-			if ~self.skip_hash_check
-				h = self.hash;
-				if ~strcmp(self.linked_binary(10:15),h(1:6))
-					self.transpile;
-					self.compile;
-				end
+			h = self.hash;
+			if ~strcmp(self.linked_binary(10:15),h(1:6))
+				self.transpile;
+				self.compile;
 			end
+
 		else
 			self.transpile;
 			self.compile;

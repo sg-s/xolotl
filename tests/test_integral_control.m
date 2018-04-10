@@ -9,7 +9,6 @@ phi = (2*f*F*vol)/tau_Ca;
 Ca_target = 7; % used only when we add in homeostatic control 
 
 x = xolotl;
-x.cleanup;
 x.add('AB','compartment','Cm',10,'A',A,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca,'Ca_target',Ca_target);
 
 g0 = 10*rand(7,1);
@@ -32,9 +31,6 @@ x.AB.ACurrent.add('IntegralController','tau_m',5000,'tau_g',tau_g);
 x.AB.KCa.add('IntegralController','tau_m',1250,'tau_g',tau_g);
 x.AB.Kd.add('IntegralController','tau_m',2000,'tau_g',tau_g);
 x.AB.HCurrent.add('IntegralController','tau_m',125000,'tau_g',tau_g);
-
-x.transpile;
-x.compile;
 
 x.t_end = 100e3;
 x.dt = 100e-3;

@@ -18,9 +18,6 @@ x.AB.add('liu-approx/CaT','gbar',@() 1.44/x.AB.A,'E',30);
 x.AB.add('liu-approx/Kd','gbar',@() 38.31/x.AB.A,'E',-80);
 x.AB.add('Leak','gbar',@() 0.0622/x.AB.A,'E',-50);
 
-x.transpile;
-x.compile;
-
 all_I_ext = linspace(-1,3,50);
 x.t_end = 5e3;
 x.sim_dt = .1;

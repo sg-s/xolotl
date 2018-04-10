@@ -9,12 +9,9 @@
 function manipulate(self, manipulate_these)
 
 
-if ~isempty(self.linked_binary)
-	self.skip_hash_check = true;
-else
+if isempty(self.linked_binary)
 	self.transpile;
 	self.compile;
-	self.skip_hash_check = true;
 end
 
 % disable closed loop
