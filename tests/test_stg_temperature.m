@@ -32,9 +32,6 @@ x.AB.add('prinz-temperature/HCurrent','gbar',.1,'E',-20,'Q_g',qg,'Q_tau_m',qm);
 x.dt = 50e-3;
 x.t_end = 20e3;
 
-x.transpile;
-x.compile;
-
 x.closed_loop = false;
 
 V = x.integrate;
