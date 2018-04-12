@@ -47,7 +47,7 @@ for i = 1:n
 
 end
 linkaxes(self.handles.ax,'x');
-prettyFig('plw',1.5,'lw',1);
+prettyFig('plw',1,'lw',1);
 
 if nargin < 2
 
