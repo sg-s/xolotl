@@ -204,12 +204,12 @@ void compartment::integrateVC(double V_prev, double Ca_prev, double dt, double d
 void compartment::integrateC_V_clamp(double V_clamp, double Ca_prev, double dt, double delta_temperature)
 {
     // compute infinity values for Ca
-    Ca_inf = Ca_in - (tau_Ca*phi*i_Ca*A*500)/(F*vol);
+    Ca_inf = Ca_in - (tau_Ca*phi*i_Ca*A*.5)/(F*vol); // microM
 
     // mexPrintf("V_clamp =  %f\n",V_clamp);
 
     // integrate V and Ca
-    I_clamp = -I_ext + A*(V_clamp*sigma_g - sigma_gE);
+    I_clamp =  A*(V_clamp*sigma_g - sigma_gE);
     V = V_clamp;
     Ca = Ca_inf + (Ca_prev - Ca_inf)*exp(-dt/tau_Ca);
 }
@@ -262,6 +262,3 @@ controller * compartment::getControllerPointer(int cont_idx)
 
 
 #endif
-
-
-

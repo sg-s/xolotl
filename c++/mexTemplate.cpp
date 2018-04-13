@@ -128,6 +128,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         for(int i = 0; i < nsteps; i++)
         {
 
+
+            for(int q = 0; q < n_comp; q++)
+            {
+                V_clamp[q] = V_clamp_in[i*n_comp + q];
+            }
+
             xolotl_network.integrateClamp(sim_dt, V_clamp, delta_temperature);
 
             //xolotl:read_synapses_here

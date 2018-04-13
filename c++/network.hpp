@@ -102,11 +102,11 @@ void network::integrateClamp(double dt, double *V_clamp, double delta_temperatur
     // integrate all voltages and Ca in all compartments
     for (int i = 0; i < n_comp; i++)
     {
-        V_prev = comp[i]->V;
+        
         Ca_prev = comp[i]->Ca;
-
         if (isnan(V_clamp[i]))
         {
+            V_prev = comp[i]->V;
             comp[i]->integrateVC(V_prev, Ca_prev, dt, delta_temperature);
         }
         else 
