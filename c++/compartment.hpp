@@ -208,10 +208,16 @@ void compartment::integrateC_V_clamp(double V_clamp, double Ca_prev, double dt, 
 
     // mexPrintf("V_clamp =  %f\n",V_clamp);
 
-    // integrate V and Ca
-    I_clamp =  A*(V_clamp*sigma_g - sigma_gE);
-    V = V_clamp;
+    // integrate Ca
     Ca = Ca_inf + (Ca_prev - Ca_inf)*exp(-dt/tau_Ca);
+
+    // calculate I_clamp, and set voltage to the clamped
+    // voltage 
+    double E = exp(-dt/(Cm/(sigma_g)));
+    V_inf = (V_clamp - V*E)/(1 - E);
+    I_clamp =  A*(V_inf*sigma_g - sigma_gE);
+    V = V_clamp;
+    
 }
 
 
