@@ -51,10 +51,39 @@ public:
     
     void integrate(double Ca_error, double dt);
     void connect(conductance * channel_, synapse * syn_);
-    double get_gbar(void);
-    double get_m(void);
+    int getFullStateSize(void);
+    int getFullState(double * cont_state, int idx);
 
 };
+
+
+int DistributedController::getFullStateSize()
+{
+    return 2; 
+}
+
+
+int DistributedController::getFullState(double *cont_state, int idx)
+{
+    // give it the current mRNA level
+    cont_state[idx] = m;
+
+    idx++;
+
+    // and also output the current gbar of the thing
+    // being controller
+    if (channel)
+    {
+      cont_state[idx] = channel->gbar;  
+    }
+    else if (syn)
+    {
+        cont_state[idx] = syn->gbar;  
+    }
+    idx++;
+    return idx;
+}
+
 
 void DistributedController::connect(conductance * channel_, synapse * syn_)
 {
@@ -130,28 +159,6 @@ void DistributedController::integrate(double Ca_error, double dt)
 
 }
 
-// return the mRNA level, because this is a protected
-// member 
-double DistributedController::get_m(void)
-{
-    return m;
-}
-
-// return the conductance of either the 
-// channel or the synapse that this 
-// controller is controlling 
-double DistributedController::get_gbar(void)
-{
-
-    double gbar;
-    if (channel) {
-        gbar = channel->gbar;
-    }
-    if (syn) {
-        gbar = syn->gbar;
-    }
-    return gbar;
-}
 
 
 #endif

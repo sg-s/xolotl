@@ -55,12 +55,39 @@ public:
     
     void integrate(double Ca_error, double dt);
     void connect(conductance * channel_, synapse * syn_);
-    double get_gbar(void);
-    double get_m(void);
-
     void setMaster(controller * master_controller_);
+    int getFullStateSize(void);
+    int getFullState(double * cont_state, int idx);
 
 };
+
+int SlaveController::getFullStateSize()
+{
+    return 2; 
+}
+
+
+int SlaveController::getFullState(double *cont_state, int idx)
+{
+    // give it the current mRNA level
+    cont_state[idx] = m;
+
+    idx++;
+
+    // and also output the current gbar of the thing
+    // being controller
+    if (channel)
+    {
+      cont_state[idx] = channel->gbar;  
+    }
+    else if (syn)
+    {
+        cont_state[idx] = syn->gbar;  
+    }
+    idx++;
+    return idx;
+}
+
 
 void SlaveController::setMaster(controller * master_controller_)
 {
@@ -92,7 +119,7 @@ void SlaveController::connect(conductance * channel_, synapse * syn_)
 void SlaveController::integrate(double Ca_error, double dt)
 {
     // integrate mRNA
-    m += (dt/tau_m)*((master_controller->get_m()) - m);
+    m += (dt/tau_m)*((master_controller->m) - m);
 
     // double master_m = master_controller->get_m();
     // // mexPrintf("master_m =  %f\n",master_m);
@@ -143,28 +170,7 @@ void SlaveController::integrate(double Ca_error, double dt)
 
 }
 
-// return the mRNA level, because this is a protected
-// member 
-double SlaveController::get_m(void)
-{
-    return m;
-}
 
-// return the conductance of either the 
-// channel or the synapse that this 
-// controller is controlling 
-double SlaveController::get_gbar(void)
-{
-
-    double gbar;
-    if (channel) {
-        gbar = channel->gbar;
-    }
-    if (syn) {
-        gbar = syn->gbar;
-    }
-    return gbar;
-}
 
 
 #endif

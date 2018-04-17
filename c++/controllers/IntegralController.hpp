@@ -42,8 +42,6 @@ public:
     
     void integrate(double Ca_error, double dt);
     void connect(conductance * channel_, synapse * syn_);
-    double get_gbar(void);
-    double get_m(void);
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
 
@@ -150,28 +148,6 @@ void IntegralController::integrate(double Ca_error, double dt)
 
 }
 
-// return the mRNA level, because this is a protected
-// member 
-double IntegralController::get_m(void)
-{
-    return m;
-}
-
-// return the conductance of either the 
-// channel or the synapse that this 
-// controller is controlling 
-double IntegralController::get_gbar(void)
-{
-
-    double gbar;
-    if (channel) {
-        gbar = channel->gbar;
-    }
-    if (syn) {
-        gbar = syn->gbar;
-    }
-    return gbar;
-}
 
 
 #endif
