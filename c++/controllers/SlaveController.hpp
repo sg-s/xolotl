@@ -121,10 +121,6 @@ void SlaveController::integrate(double Ca_error, double dt)
     // integrate mRNA
     m += (dt/tau_m)*((master_controller->m) - m);
 
-    // double master_m = master_controller->get_m();
-    // // mexPrintf("master_m =  %f\n",master_m);
-    // m += (dt/tau_m)*(master_m - m);
-
     // mRNA levels below zero don't make any sense
     if (m < 0) {
         m = 0;

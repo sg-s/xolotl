@@ -67,6 +67,34 @@ public:
 
 };
 
+int SlaveLocalController::getFullStateSize()
+{
+    return 2; 
+}
+
+
+int SlaveLocalController::getFullState(double *cont_state, int idx)
+{
+    // give it the current mRNA level
+    cont_state[idx] = m;
+
+    idx++;
+
+    // and also output the current gbar of the thing
+    // being controller
+    if (channel)
+    {
+      cont_state[idx] = channel->gbar;  
+    }
+    else if (syn)
+    {
+        cont_state[idx] = syn->gbar;  
+    }
+    idx++;
+    return idx;
+}
+
+
 void SlaveLocalController::setMaster(controller * master_controller_)
 {
     master_controller = master_controller_;
@@ -152,29 +180,6 @@ void SlaveLocalController::integrate(double Ca_error, double dt)
     }
 
 
-}
-
-// return the mRNA level, because this is a protected
-// member 
-double SlaveLocalController::get_m(void)
-{
-    return m;
-}
-
-// return the conductance of either the 
-// channel or the synapse that this 
-// controller is controlling 
-double SlaveLocalController::get_gbar(void)
-{
-
-    double gbar;
-    if (channel) {
-        gbar = channel->gbar;
-    }
-    if (syn) {
-        gbar = syn->gbar;
-    }
-    return gbar;
 }
 
 

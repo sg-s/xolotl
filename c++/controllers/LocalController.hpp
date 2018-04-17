@@ -196,28 +196,5 @@ void LocalController::integrate(double Ca_error, double dt)
 
 }
 
-// return the mRNA level, because this is a protected
-// member 
-double LocalController::get_m(void)
-{
-    return m;
-}
-
-// return the conductance of either the 
-// channel or the synapse that this 
-// controller is controlling 
-double LocalController::get_gbar(void)
-{
-
-    double gbar;
-    if (channel) {
-        gbar = channel->gbar;
-    }
-    if (syn) {
-        gbar = syn->gbar;
-    }
-    return gbar;
-}
-
 
 #endif
