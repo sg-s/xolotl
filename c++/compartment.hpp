@@ -206,7 +206,7 @@ void compartment::integrateC_V_clamp(double V_clamp, double Ca_prev, double dt, 
     // compute infinity values for Ca
     Ca_inf = Ca_in - (tau_Ca*phi*i_Ca*A*.5)/(F*vol); // microM
 
-    // mexPrintf("V_clamp =  %f\n",V_clamp);
+    // 
 
     // integrate Ca
     Ca = Ca_inf + (Ca_prev - Ca_inf)*exp(-dt/tau_Ca);
@@ -215,7 +215,12 @@ void compartment::integrateC_V_clamp(double V_clamp, double Ca_prev, double dt, 
     // voltage 
     double E = exp(-dt/(Cm/(sigma_g)));
     V_inf = (V_clamp - V*E)/(1 - E);
+    //mexPrintf("sigma_g=  %f\n",sigma_g);
     I_clamp =  A*(V_inf*sigma_g - sigma_gE);
+
+    // normalize by conductance
+    // I_clamp =  (V_inf*sigma_g - sigma_gE)/sigma_gE;
+
     V = V_clamp;
     
 }

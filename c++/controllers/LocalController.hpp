@@ -2,20 +2,27 @@
 //  \/  |  | |    |  |  |  |    
 // _/\_ |__| |___ |__|  |  |___ 
 //
-// Distributed Integral Controller
+// Local Integral Controller
 // modification of the Integral controller
 // as in O'Leary 2014 
-// the differnece here is that the 
-// rate of protein production 
-// scales with the volume of the compartment
-// it is in. 
+// in this controller, the rates of insertion
+// and degradation of proteins are 
+// Hill functions of the local Calcium conc. 
+// this controller supports both Hill functions
+// that increase and decrease with local calcium
+// using a sign trick: 
+//
+// to use Hill functions that increase with
+// local calcium, specify a +ve K_d
+// to use Hill functions that decrease with 
+// local calcium, specify a -ve K_d
 
-#ifndef DISTRIBUTEDCONTROLLER
-#define DISTRIBUTEDCONTROLLER
+#ifndef LOCALCONTROLLER
+#define LOCALCONTROLLER
 #include "../controller.hpp"
 
 //inherit controller class spec
-class DistributedController: public controller {
+class LocalController: public controller {
 
 protected:
 public:
@@ -26,17 +33,31 @@ public:
     // mRNA concentration 
     double m; 
 
+    // synthesis parameters 
+    double K_syn;
+    double n_syn;
+
+    // degradation parameters
+    double K_deg;
+    double n_deg;
+
     // fudge factor
     double phi;
+
 
     // area of the container this is in
     // this is NOT necessarily the area of the compartment
     // that contains it
     double container_A;
 
+
+    // housekeeping
+    double Alpha;
+    double Gamma;
+
     // specify parameters + initial conditions for 
     // controller that controls a conductance 
-    DistributedController(double tau_m_, double tau_g_, double m_, double phi_)
+    LocalController(double tau_m_, double tau_g_, double m_, double phi_, double K_syn_, double K_deg_, double n_syn_, double n_deg_)
     {
 
         tau_m = tau_m_;
@@ -44,8 +65,17 @@ public:
         m = m_;
         phi = phi_;
 
+        K_syn = K_syn_;
+        K_deg = K_deg_;
+        n_syn = n_syn_;
+        n_deg = n_deg_;
+
+        // defaults
         if (isnan (m)) { m = 0; }
         if (isnan (phi)) { phi = 1; }
+        if (isnan (n_syn)) { n_syn = 1; }
+        if (isnan (n_deg)) { n_deg = 1; }
+
     }
 
     
@@ -56,7 +86,7 @@ public:
 
 };
 
-void DistributedController::connect(conductance * channel_, synapse * syn_)
+void LocalController::connect(conductance * channel_, synapse * syn_)
 {
     if (channel_)
     {
@@ -78,7 +108,7 @@ void DistributedController::connect(conductance * channel_, synapse * syn_)
     }
 }
 
-void DistributedController::integrate(double Ca_error, double dt)
+void LocalController::integrate(double Ca_error, double dt)
 {
     // integrate mRNA
     m += (dt/tau_m)*(Ca_error);
@@ -91,16 +121,24 @@ void DistributedController::integrate(double Ca_error, double dt)
     }
 
 
-
-
     if (channel) {
         // channel is a non-NULL pointer, so
         // this controller must be controlling a 
         // channel
         // calculate conductance, not conductance density
         
+        // measure the local calcium concentration 
+        double Ca = (channel->container)->Ca;
+
+        if (K_syn < 0) {Alpha = 1/(1+pow(Ca/(-K_syn),n_syn));}
+        else { Alpha = 1/(1+pow(K_syn/Ca,n_syn)); }
+
+        if (K_deg < 0) {Gamma = 1/(1+pow(Ca/(-K_deg),n_deg));}
+        else { Gamma = 1/(1+pow(K_deg/Ca,n_deg)); }
+
+
         double g = (channel->gbar)*container_A;
-        (channel->gbar) += ((dt/tau_g)*(m*container_vol*phi - g))/container_A;
+        (channel->gbar) += ((dt/tau_g)*(m*container_vol*Alpha*phi - Gamma*g))/container_A;
 
         // make sure it doesn't go below zero
         if ((channel->gbar) < 0) {
@@ -132,7 +170,7 @@ void DistributedController::integrate(double Ca_error, double dt)
 
 // return the mRNA level, because this is a protected
 // member 
-double DistributedController::get_m(void)
+double LocalController::get_m(void)
 {
     return m;
 }
@@ -140,7 +178,7 @@ double DistributedController::get_m(void)
 // return the conductance of either the 
 // channel or the synapse that this 
 // controller is controlling 
-double DistributedController::get_gbar(void)
+double LocalController::get_gbar(void)
 {
 
     double gbar;
