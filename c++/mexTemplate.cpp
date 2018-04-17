@@ -56,20 +56,22 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int n_comp = (int) (xolotl_network.comp).size(); // these many compartments
 
 
-    // ask each compartment (nicely) what their max
+    // ask each controller (nicely) what their 
     // full state size is
     
+    // mexPrintf("noutputs =  %i ", nlhs);
 
     // compute cond_state_dim
-    int full_state_sizes[n_comp];
-    int full_state_size = 0;
+    int full_controller_sizes[n_comp];
+    int full_controller_size = 0;
     for (int i = 0; i < n_comp; i ++)
     {
-        int n_cond = (xolotl_network.comp[i])->n_cond;
-        mexPrintf("state dim =  %i ", n_cond);
-        full_state_sizes[i] = n_cond;
-        full_state_size += n_cond;
+        int n_cont = (xolotl_network.comp[i])->n_cont;
+        
+        full_controller_sizes[n_comp] = xolotl_network.comp[i]->getFullControllerSize();
+        full_controller_size +=  full_controller_sizes[n_comp];
     }
+    // mexPrintf("full controller state size =  %i ", full_controller_size);
 
 
     int res = dt/sim_dt;
@@ -85,10 +87,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         output_Ca = mxGetPr(plhs[2]);
     }
 
-    // if (nlhs > 3) {
-    //     plhs[3] = mxCreateDoubleMatrix(cond_state_dim, nsteps_out, mxREAL); 
-    //     output_cond_state = mxGetPr(plhs[3]);
-    // }
+    if (nlhs > 3) {
+        plhs[3] = mxCreateDoubleMatrix(full_controller_size, nsteps_out, mxREAL); 
+        output_cont_state = mxGetPr(plhs[3]);
+    }
 
     // plhs[5] = mxCreateDoubleMatrix(2*n_synapses, nsteps_out, mxREAL); // synapse gbar + state
     // plhs[6] = mxCreateDoubleMatrix(2*n_controllers, nsteps_out, mxREAL); // controllers gbar + mrna    
@@ -186,6 +188,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         // voltage is not clamped
         // do the integration
         int output_idx = 0;
+        int cont_idx = 0;
         for(int i = 0; i < nsteps; i++)
         {
 
@@ -201,13 +204,21 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 
                 for (int j = 0; j < n_comp; j++)
                 {
+                    // read out voltages
                     if (nlhs > 1) {
                         output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
                     }
 
+
+                    // read out calcium + E_Ca
                     if (nlhs > 2) {
                         output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
                         output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
+                    }
+
+                    // read out controllers
+                    if (nlhs > 3) {
+                        cont_idx = (xolotl_network.comp[j]->getFullControllerState(output_cont_state,cont_idx));
                     }
 
 

@@ -23,6 +23,7 @@ protected:
     vector<conductance*> cond; // pointers to all conductances in compartment
     vector<synapse*> syn; // pointers to synapses onto this neuron. 
     vector<controller*> cont; // pointers to controllers 
+    vector<int> controller_sizes; // stores sizes of each controller's full state
     
     // voltage and other state variables (calcium, ..
     double sigma_g;
@@ -112,13 +113,25 @@ public:
     void integrateVC(double, double, double, double);
     void integrateC_V_clamp(double, double, double, double);
     void get_cond_state(double*);
+    int getFullControllerState(double*, int);
 
 
-    int getFullStateSize();
+    int getFullControllerSize(void);
 
     controller* getControllerPointer(int);
 
 };
+
+
+int compartment::getFullControllerSize(void)
+{
+    int full_size = 0;
+    for (int i=0; i<n_cont; i++)
+    {
+        full_size += cont[i]->getFullStateSize();
+    }
+    return full_size;
+}
 
 // simple integrate; use this only for 
 // single-compartment non-clamped neurons
@@ -251,27 +264,14 @@ void compartment::addController(controller *cont_)
     cont.push_back(cont_);
     cont_->controller_idx = n_cont; // tell the controller what rank it has
     n_cont ++;
+
+    // also store the controller's full state size
+    controller_sizes.push_back(cont_->getFullStateSize());
+
+    // mexPrintf("this controller has size =  %i ", cont_->getFullStateSize());
    
 }
 
-
-// returns the dimensions of the full state size
-// this works by asking all the conductances,
-// synapses and controllers in this compartment
-// for their full sizes, and adding them all up
-int compartment::getFullStateSize()
-{
-    int sz = 0;
-
-
-    for (int i=0; i<n_cond; i++)
-    {
-        sz += 2; // blindly assume that each conductance has 2 dims
-
-    }
-
-    return sz;
-}
 
 // returns a vector of the state of every conductance 
 // cond_state is a pointer to a matrix that is hopefully of
@@ -283,6 +283,21 @@ void compartment::get_cond_state(double *cond_state)
         cond_state[i*2] = cond[i]->m;
         cond_state[(i*2)+1] = cond[i]->h;
     }
+}
+
+// returns a vector of the state of every controller 
+// cont_state is a pointer to a matrix that is hopefully of
+// the right size 
+int compartment::getFullControllerState(double *cont_state, int idx)
+{
+    for (int i = 0; i < n_cont; i ++) 
+    {
+
+        cont[i]->getFullState(cont_state, idx);
+        idx += controller_sizes[i];
+
+    }
+    return idx;
 }
 
 // returns a pointer to a controller in this compartment 

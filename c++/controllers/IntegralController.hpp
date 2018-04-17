@@ -44,8 +44,38 @@ public:
     void connect(conductance * channel_, synapse * syn_);
     double get_gbar(void);
     double get_m(void);
+    int getFullStateSize(void);
+    int getFullState(double * cont_state, int idx);
 
 };
+
+int IntegralController::getFullStateSize()
+{
+    return 2; 
+}
+
+
+int IntegralController::getFullState(double *cont_state, int idx)
+{
+    // give it the current mRNA level
+    cont_state[idx] = m;
+
+    idx++;
+
+    // and also output the current gbar of the thing
+    // being controller
+    if (channel)
+    {
+      cont_state[idx] = channel->gbar;  
+    }
+    else if (syn)
+    {
+        cont_state[idx] = syn->gbar;  
+    }
+    idx++;
+    return idx;
+}
+
 
 void IntegralController::connect(conductance * channel_, synapse * syn_)
 {

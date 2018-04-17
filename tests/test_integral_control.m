@@ -32,9 +32,15 @@ x.AB.KCa.add('IntegralController','tau_m',1250,'tau_g',tau_g);
 x.AB.Kd.add('IntegralController','tau_m',2000,'tau_g',tau_g);
 x.AB.HCurrent.add('IntegralController','tau_m',125000,'tau_g',tau_g);
 
-x.t_end = 100e3;
-x.dt = 100e-3;
-x.integrate;
+
+
+x.t_end = 200e3;
+x.sim_dt = .1;
+x.dt = 100;
+[~,~,C] = x.integrate;
+
+return
+
 
 x.t_end = 5e3;
 V = x.integrate;
