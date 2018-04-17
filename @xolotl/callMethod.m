@@ -33,3 +33,19 @@ else
 	self.call_method_data = [self.call_method_data; S];
 end
 
+% update the hash to include information about call_method_data 
+if isnumeric(method_values)
+	method_values = num2str(method_values);
+end
+
+[e,o] = system(['echo "' cpp_object, method_name, method_values self.hash '" | openssl sha1']);
+H = strrep(o,' ','');
+H = strtrim(H);
+
+if length(H) > 40
+	H = H(end-39:end);
+elseif length(H) < 40
+	error('Error determining hash!')
+end
+
+self.hash = H;

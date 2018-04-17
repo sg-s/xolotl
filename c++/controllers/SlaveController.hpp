@@ -58,8 +58,10 @@ public:
     void setMaster(controller * master_controller_);
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
-
+    double get_m(void);
 };
+
+double SlaveController::get_m(){ return m;}
 
 int SlaveController::getFullStateSize()
 {

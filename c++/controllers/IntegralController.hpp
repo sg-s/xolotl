@@ -45,7 +45,11 @@ public:
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
 
+    double get_m(void);
+
 };
+
+double IntegralController::get_m() {return m;}
 
 int IntegralController::getFullStateSize()
 {

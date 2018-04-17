@@ -52,6 +52,7 @@ public:
     virtual void integrate(double, double) = 0;
     virtual int getFullStateSize(void) = 0;
     virtual int getFullState(double*, int) = 0;
+    virtual double get_m(void) = 0;
 
 };
 

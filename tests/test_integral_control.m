@@ -45,7 +45,9 @@ subplot(2,1,1); hold on
 
 time = x.dt*(1:length(C))*1e-3;
 plot(time,C(:,2:2:end));
-set(gca,'XScale','log','YScale','log')
+set(gca,'XScale','log','YScale','log','YTick',[1e-2 1e0 1e2 1e4])
+xlabel('Time (s)')
+ylabel('g (uS/mm^2')
 
 subplot(2,1,2); hold on
 x.dt = .1;
@@ -53,6 +55,9 @@ x.t_end = 1e3;
 V = x.integrate;
 time = x.dt*(1:length(V))*1e-3;
 plot(time,V,'k')
+set(gca,'YLim',[-80 50])
+ylabel('V_m (mV)')
+xlabel('Time (s)')
 drawnow
 
 prettyFig('plw',1.5,'lw',1.5)

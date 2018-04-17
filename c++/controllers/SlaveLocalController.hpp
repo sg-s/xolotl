@@ -26,8 +26,20 @@ public:
     // mRNA concentration 
     double m; 
 
+    // synthesis parameters 
+    double K_syn;
+    double n_syn;
+
+    // degradation parameters
+    double K_deg;
+    double n_deg;
+
     // fudge factor
     double phi;
+
+    // housekeeping
+    double Alpha;
+    double Gamma;
 
 
     // area of the container this is in
@@ -37,7 +49,7 @@ public:
 
     // specify parameters + initial conditions for 
     // controller that controls a conductance 
-    SlaveLocalController(double tau_m_, double tau_g_, double m_, double phi_, double K_syn_, double K_deg_)
+    SlaveLocalController(double tau_m_, double tau_g_, double m_, double phi_, double K_syn_, double K_deg_,double n_syn_, double n_deg_)
     {
 
         tau_m = tau_m_;
@@ -47,6 +59,8 @@ public:
 
         K_syn = K_syn_;
         K_deg = K_deg_;
+        n_syn = n_syn_;
+        n_deg = n_deg_;
 
         // Null pointers for safety
         master_controller = NULL;
@@ -55,17 +69,21 @@ public:
 
         if (isnan (m)) { m = 0; }
         if (isnan (phi)) { phi = 1; }
+        if (isnan (n_syn)) { n_syn = 1; }
+        if (isnan (n_deg)) { n_deg = 1; }
     }
 
     
     void integrate(double Ca_error, double dt);
     void connect(conductance * channel_, synapse * syn_);
-    double get_gbar(void);
+    int getFullStateSize(void);
+    int getFullState(double * cont_state, int idx);
+    void setMaster(controller * master_controller_);
     double get_m(void);
 
-    void setMaster(controller * master_controller_);
-
 };
+
+double SlaveLocalController::get_m() {return m;}
 
 int SlaveLocalController::getFullStateSize()
 {
@@ -127,17 +145,8 @@ void SlaveLocalController::integrate(double Ca_error, double dt)
     // integrate mRNA
     m += (dt/tau_m)*((master_controller->get_m()) - m);
 
-    // double master_m = master_controller->get_m();
-    // // mexPrintf("master_m =  %f\n",master_m);
-    // m += (dt/tau_m)*(master_m - m);
-
     // mRNA levels below zero don't make any sense
-    if (m < 0) {
-        m = 0;
-    }
-
-
-
+    if (m < 0) {m = 0;}
 
     if (channel) {
         // channel is a non-NULL pointer, so
@@ -148,11 +157,15 @@ void SlaveLocalController::integrate(double Ca_error, double dt)
         // measure the local calcium concentration 
         double Ca = (channel->container)->Ca;
 
-        double Alpha  = Ca/(Ca+K_syn);
-        double Gamma  = Ca/(Ca+K_deg);
+        if (K_syn < 0) {Alpha = 1/(1+pow(Ca/(-K_syn),n_syn));}
+        else { Alpha = 1/(1+pow(K_syn/Ca,n_syn)); }
+
+        if (K_deg < 0) {Gamma = 1/(1+pow(Ca/(-K_deg),n_deg));}
+        else { Gamma = 1/(1+pow(K_deg/Ca,n_deg)); }
+
 
         double g = (channel->gbar)*container_A;
-        (channel->gbar) += ((dt/tau_g)*(m*container_vol*Alpha - Gamma*g))/container_A;
+        (channel->gbar) += ((dt/tau_g)*(m*container_vol*Alpha*phi - Gamma*g))/container_A;
 
         // make sure it doesn't go below zero
         if ((channel->gbar) < 0) {
