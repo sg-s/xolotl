@@ -113,6 +113,9 @@ public:
     void integrateC_V_clamp(double, double, double, double);
     void get_cond_state(double*);
 
+
+    int getFullStateSize();
+
     controller* getControllerPointer(int);
 
 };
@@ -249,6 +252,25 @@ void compartment::addController(controller *cont_)
     cont_->controller_idx = n_cont; // tell the controller what rank it has
     n_cont ++;
    
+}
+
+
+// returns the dimensions of the full state size
+// this works by asking all the conductances,
+// synapses and controllers in this compartment
+// for their full sizes, and adding them all up
+int compartment::getFullStateSize()
+{
+    int sz = 0;
+
+
+    for (int i=0; i<n_cond; i++)
+    {
+        sz += 2; // blindly assume that each conductance has 2 dims
+
+    }
+
+    return sz;
 }
 
 // returns a vector of the state of every conductance 

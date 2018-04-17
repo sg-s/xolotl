@@ -55,14 +55,20 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int nsteps_out = (int) floor(t_end/dt);
     int n_comp = (int) (xolotl_network.comp).size(); // these many compartments
 
+
+    // ask each compartment (nicely) what their max
+    // full state size is
+    
+
     // compute cond_state_dim
-    int cond_state_dims[n_comp];
-    int cond_state_dim = 0;
+    int full_state_sizes[n_comp];
+    int full_state_size = 0;
     for (int i = 0; i < n_comp; i ++)
     {
-        int n_cond = ((xolotl_network.comp[i])->n_cond);
-        cond_state_dims[i] = 2*n_cond; // only m, h -- gbar will be returned with controllers, if any
-        cond_state_dim += 2*n_cond;
+        int n_cond = (xolotl_network.comp[i])->n_cond;
+        mexPrintf("state dim =  %i ", n_cond);
+        full_state_sizes[i] = n_cond;
+        full_state_size += n_cond;
     }
 
 
@@ -79,10 +85,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         output_Ca = mxGetPr(plhs[2]);
     }
 
-    if (nlhs > 3) {
-        plhs[3] = mxCreateDoubleMatrix(cond_state_dim, nsteps_out, mxREAL); 
-        output_cond_state = mxGetPr(plhs[3]);
-    }
+    // if (nlhs > 3) {
+    //     plhs[3] = mxCreateDoubleMatrix(cond_state_dim, nsteps_out, mxREAL); 
+    //     output_cond_state = mxGetPr(plhs[3]);
+    // }
 
     // plhs[5] = mxCreateDoubleMatrix(2*n_synapses, nsteps_out, mxREAL); // synapse gbar + state
     // plhs[6] = mxCreateDoubleMatrix(2*n_controllers, nsteps_out, mxREAL); // controllers gbar + mrna    
@@ -92,7 +98,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // make arrays which will store the full cond. state
     // double * full_cond_state = new double[cond_state_dim];
     // int cond_idx = 0;
-
 
     // link up I_ext and V_clamp
     double * I_ext = new double[n_comp];
