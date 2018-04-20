@@ -53,8 +53,11 @@ public:
     void connect(conductance * channel_, synapse * syn_);
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
+    double get_m(void); 
 
 };
+
+double DistributedController::get_m(){ return m;}
 
 
 int DistributedController::getFullStateSize()

@@ -92,6 +92,11 @@ methods (Access = protected)
         	end
         	fprintf('---------------------\n')
         end
+        if ~isempty(self.call_method_data)
+        	for i = 1:length(self.call_method_data)
+                disp([self.call_method_data(i).object, '.' , self.call_method_data(i).method_name ,'(', self.call_method_data(i).method_values , ')'])
+            end
+        end
 
 
     end

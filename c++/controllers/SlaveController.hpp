@@ -121,7 +121,7 @@ void SlaveController::connect(conductance * channel_, synapse * syn_)
 void SlaveController::integrate(double Ca_error, double dt)
 {
     // integrate mRNA
-    m += (dt/tau_m)*((master_controller->m) - m);
+    m += (dt/tau_m)*((master_controller->get_m()) - m);
 
     // mRNA levels below zero don't make any sense
     if (m < 0) {
