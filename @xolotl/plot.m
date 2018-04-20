@@ -6,67 +6,80 @@
 %
 % help: plots the activation functions of channel
 %
+function ax = plot(self,conductance,ax)
 
-function ax = plot(self,cond_id,ax)
-	[m_inf, h_inf, tau_m, tau_h, ~, cond_name] = getGatingFunctions(self,cond_id);
-	V = linspace(-80,80,1e3);
+[m_inf, h_inf, tau_m, tau_h] = getGatingFunctions(self,conductance);
 
-	if nargin < 3
+V = linspace(-80,80,1e3);
 
-		figure('outerposition',[100 100 1000 900],'PaperUnits','points','PaperSize',[1000 500]); hold on
-		for i = 1:4
-			ax(i) = subplot(2,2,i); hold on
-		end
-	elseif any(~isvalid(ax))
-		figure('outerposition',[100 100 1000 900],'PaperUnits','points','PaperSize',[1000 500]); hold on
-		for i = 1:4
-			ax(i) = subplot(2,2,i); hold on
-		end
-	end
-	plot(ax(1),V,m_inf,'DisplayName',cond_name);
-	ylabel(ax(1),'m_{inf}')
-	xlabel(ax(1),'V (mV)')
-	try
-		plot(ax(2),V,h_inf,'DisplayName',cond_name);
-	catch
-		plot(ax(2),NaN,NaN,'DisplayName',cond_name);
-	end
-	xlabel(ax(2),'V (mV)')
-	ylabel(ax(2),'h_{inf} (ms)')
+% evaluate these functions 
+minf = NaN*V;
+hinf = NaN*V;
+taum = NaN*V;
+tauh = NaN*V;
 
-	if length(tau_m == 1)
-		tmV = tau_m + 0*V;
+this_compartment = strsplit(conductance,'.');
+this_compartment = this_compartment{1};
+Ca = self.(this_compartment).Ca_out;
+
+for i = 1:length(V)
+	if nargin(m_inf) == 1
+		minf(i) = m_inf(V(i));
 	else
-		tmV = tau_m;
+		minf(i) = m_inf(V(i),Ca);
 	end
-
-	plot(ax(3),V,tmV,'DisplayName',cond_name);
-	ylabel(ax(3),'\tau_{m} (ms)')
-	xlabel(ax(3),'V (mV)')
-	set(ax(3),'YScale','log')
-
-	try
-		if length(tau_h == 1)
-			thV = tau_h + 0*V;
-		else
-			thV = tau_h;
-		end
-
-		plot(ax(4),V,thV,'DisplayName',cond_name);
-	catch
-		plot(ax(4),NaN,NaN,'DisplayName',cond_name);
+	if nargin(h_inf) == 1
+		hinf(i) = h_inf(V(i));
+	else
+		hinf(i) = h_inf(V(i),Ca);
 	end
-	ylabel(ax(4),'\tau_{h} (ms)')
-	xlabel(ax(4),'V (mV)')
-	set(ax(4),'YScale','log')
+	
+	taum(i) = tau_m(V(i));
+	tauh(i) = tau_h(V(i));
+end
 
-	prettyFig();
-	axes(ax(1))
-	legend;
+if nargin < 3
 
-	% turn all YLim modes to auto
-	for i = 1:length(ax)
-		ax(i).YLimMode = 'auto';
+	figure('outerposition',[100 100 1000 900],'PaperUnits','points','PaperSize',[1000 500]); hold on
+	for i = 1:4
+		ax(i) = subplot(2,2,i); hold on
 	end
+elseif any(~isvalid(ax))
+	figure('outerposition',[100 100 1000 900],'PaperUnits','points','PaperSize',[1000 500]); hold on
+	for i = 1:4
+		ax(i) = subplot(2,2,i); hold on
+	end
+end
 
-end % end plot
+
+plot(ax(1),V,minf,'DisplayName',conductance);
+ylabel(ax(1),'m_{inf}')
+xlabel(ax(1),'V (mV)')
+
+plot(ax(2),V,hinf,'DisplayName',conductance);
+xlabel(ax(2),'V (mV)')
+ylabel(ax(2),'h_{inf} (ms)')
+
+
+
+plot(ax(3),V,taum,'DisplayName',conductance);
+ylabel(ax(3),'\tau_{m} (ms)')
+xlabel(ax(3),'V (mV)')
+set(ax(3),'YScale','log')
+
+
+plot(ax(4),V,tauh,'DisplayName',conductance);
+ylabel(ax(4),'\tau_{h} (ms)')
+xlabel(ax(4),'V (mV)')
+set(ax(4),'YScale','log')
+
+prettyFig();
+axes(ax(1))
+legend;
+
+% turn all YLim modes to auto
+for i = 1:length(ax)
+	ax(i).YLimMode = 'auto';
+end
+
+

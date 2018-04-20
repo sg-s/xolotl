@@ -10,9 +10,10 @@ class Electrical: public synapse {
 public:
 
     // specify parameters + initial conditions 
-    Electrical(double g_, double s_)
+    Electrical(double g_)
     {
         gbar = g_;
+        s = 1; // always active
     }
     
     void integrate(double dt);
@@ -24,7 +25,6 @@ void Electrical::integrate(double dt)
 {       
     // set E to V_pre
     E = (pre_syn->V);
-    s = 1; // always active
 }
 
 double Electrical::getCurrent(double V_post)

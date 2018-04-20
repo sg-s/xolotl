@@ -14,18 +14,17 @@ class NaV: public conductance {
 public:
 
     // specify parameters + initial conditions 
-    NaV(double g_, double E_, double m_, double h_, double Q_g_, double Q_tau_m_, double Q_tau_h_)
+    NaV(double g_, double E_, double m_, double h_)
     {
         gbar = g_;
         E = E_;
         m = m_;
         h = h_;
         
-
-        Q_g = Q_g_;
-        Q_tau_m = Q_tau_m_;
-        Q_tau_h = Q_tau_h_;
-
+        // defaults
+        if (isnan (m)) { m = 0; }
+        if (isnan (h)) { h = 1; }
+        if (isnan (E)) { E = 30; }
 
         // cache values for m_inf and h_inf
         for (double V = -99; V < 101; V++) {
@@ -64,9 +63,9 @@ void NaV::integrate(double V, double Ca, double dt, double delta_temp)
     taum = tau_m_cache[(int) round(V+99)];
     tauh = tau_h_cache[(int) round(V+99)];
 
-    m = minf + (m - minf)*exp(-(dt*pow(Q_tau_m, delta_temp))/taum);
-    h = hinf + (h - hinf)*exp(-(dt*pow(Q_tau_h, delta_temp))/tauh);
-    g = pow(Q_g, delta_temp)*gbar*m*m*m*h;
+    m = minf + (m - minf)*exp(-(dt/taum));
+    h = hinf + (h - hinf)*exp(-(dt/tauh));
+    g = gbar*m*m*m*h;
 }
 
 double NaV::m_inf(double V) {return 1.0/(1.0+exp((V+25.5)/-5.29));}

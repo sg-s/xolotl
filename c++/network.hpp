@@ -24,12 +24,17 @@ protected:
 public:
     vector<compartment*> comp; // pointers to all compartments in network
 
+    // housekeeping
+    int n_comp = 0;
+    double V_prev;
+    double Ca_prev;
+
     // constructor
     network() {}
 
     // begin function declarations
     void integrate(double,double *, double);
-    void integrateClamp(double, double, double);
+    void integrateClamp(double, double *, double);
     void addCompartment(compartment*);
 
 };
@@ -38,6 +43,7 @@ public:
 void network::addCompartment(compartment *comp_)
 {
     comp.push_back(comp_);
+    n_comp++;
 }
 
 // this integrate method works for networks
@@ -47,11 +53,9 @@ void network::addCompartment(compartment *comp_)
 // being voltage clamped!
 void network::integrate(double dt,double * I_ext_now, double delta_temperature)
 {
-    int n_comp = (int) comp.size(); // these many compartments
     // integrate all channels in all compartments
     for (int i = 0; i < n_comp; i++)
     {
-        double V_prev, Ca_prev;
         comp[i]->i_Ca = 0;
         comp[i]->I_ext = I_ext_now[i];
 
@@ -70,23 +74,19 @@ void network::integrate(double dt,double * I_ext_now, double delta_temperature)
     // integrate all voltages and Ca in all compartments
     for (int i = 0; i < n_comp; i++)
     {
-        double V_prev, Ca_prev;
         V_prev = comp[i]->V;
         Ca_prev = comp[i]->Ca;
         comp[i]->integrateVC(V_prev, Ca_prev, dt, delta_temperature);
     }
 }
 
-// integrates a network of compartment,
-// and clamps the first compartment to V_clamp
-void network::integrateClamp(double V_clamp, double dt, double delta_temperature)
+// integrate while clamping some compartments 
+void network::integrateClamp(double dt, double *V_clamp, double delta_temperature)
 {
-    int n_comp = (int) comp.size(); // these many compartments
 
     // integrate all channels in all compartments
     for (int i = 0; i < n_comp; i++)
     {
-        double V_prev, Ca_prev;
         comp[i]->i_Ca = 0;
         comp[i]->I_ext = 0;
         comp[i]->I_clamp = 0;
@@ -102,17 +102,20 @@ void network::integrateClamp(double V_clamp, double dt, double delta_temperature
     // integrate all voltages and Ca in all compartments
     for (int i = 0; i < n_comp; i++)
     {
-        double V_prev, Ca_prev;
-        V_prev = comp[i]->V;
+        
         Ca_prev = comp[i]->Ca;
-
-        if (i == 0)
-            comp[i]->integrateC_V_clamp(V_clamp, Ca_prev, dt, delta_temperature);
-        else
+        if (isnan(V_clamp[i]))
+        {
+            V_prev = comp[i]->V;
             comp[i]->integrateVC(V_prev, Ca_prev, dt, delta_temperature);
-
+        }
+        else 
+        {
+            comp[i]->integrateC_V_clamp(V_clamp[i], Ca_prev, dt, delta_temperature);
+        }
 
     }
+        
 }
 
 

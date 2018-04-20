@@ -23,12 +23,18 @@ protected:
     vector<conductance*> cond; // pointers to all conductances in compartment
     vector<synapse*> syn; // pointers to synapses onto this neuron. 
     vector<controller*> cont; // pointers to controllers 
+    vector<int> controller_sizes; // stores sizes of each controller's full state
     
     // voltage and other state variables (calcium, ..
     double sigma_g;
     double sigma_gE;
     double V_inf;         
     double Ca_inf; 
+
+
+    double RT_by_nF;
+
+public:
 
     // neuron parameters
     double Cm; // specific capacitance 
@@ -37,12 +43,16 @@ protected:
     double Ca_in;
     double Ca_out; 
     double tau_Ca;
-    double RT_by_nF;
     double vol;
     double Ca_target; // for homeostatic control 
 
 
-public:
+    // stores the average Ca over the integration
+    // window. useful for quickly determining 
+    // if integral control has worked without 
+    // pulling out the full trace 
+    double Ca_average;
+
     double V;          
     double Ca; 
     double E_Ca;
@@ -54,7 +64,7 @@ public:
     int n_syn; // # of synapses
 
     // constructor with all parameters 
-    compartment(double V_, double Ca_, double Cm_, double A_, double vol_, double phi_, double Ca_out_, double Ca_in_, double tau_Ca_, double Ca_target_)
+    compartment(double V_, double Ca_, double Cm_, double A_, double vol_, double phi_, double Ca_out_, double Ca_in_, double tau_Ca_, double Ca_target_, double Ca_average_)
     {
         V = V_;
         vol = vol_;
@@ -73,7 +83,15 @@ public:
         tau_Ca = tau_Ca_;
         Ca_target = Ca_target_;
 
+        Ca_average = Ca_average_;
+        Ca_average = 0; // reset it every time
+
         RT_by_nF = 500.0*(8.6174e-5)*(10 + 273.15);
+
+        // defaults
+        if (isnan (V)) { V = -60; }
+        if (isnan (Ca)) { Ca = Ca_in; }
+        if (isnan (Ca_target)) { Ca_target = Ca_in; }        
 
         // housekeeping
         E_Ca = 0;
@@ -95,10 +113,25 @@ public:
     void integrateVC(double, double, double, double);
     void integrateC_V_clamp(double, double, double, double);
     void get_cond_state(double*);
+    int getFullControllerState(double*, int);
+
+
+    int getFullControllerSize(void);
 
     controller* getControllerPointer(int);
 
 };
+
+
+int compartment::getFullControllerSize(void)
+{
+    int full_size = 0;
+    for (int i=0; i<n_cont; i++)
+    {
+        full_size += cont[i]->getFullStateSize();
+    }
+    return full_size;
+}
 
 // simple integrate; use this only for 
 // single-compartment non-clamped neurons
@@ -120,7 +153,7 @@ void compartment::integrateControllers(double Ca_prev, double dt)
     // integrate all controllers
     for (int i=0; i<n_cont; i++)
     {
-        cont[i]->integrate(Ca_target - Ca_prev, A, dt);
+        cont[i]->integrate(Ca_target - Ca_prev, dt);
     }
    
 }
@@ -142,6 +175,9 @@ void compartment::integrateChannels(double V_prev, double Ca_prev, double dt, do
         sigma_g += cond[i]->g;
         sigma_gE += (cond[i]->g)*(cond[i]->E);
     }
+
+    // update the running total Ca
+    Ca_average += Ca;
 }
 
 void compartment::integrateSynapses(double V_prev, double dt, double delta_temperature)
@@ -184,14 +220,25 @@ void compartment::integrateVC(double V_prev, double Ca_prev, double dt, double d
 void compartment::integrateC_V_clamp(double V_clamp, double Ca_prev, double dt, double delta_temperature)
 {
     // compute infinity values for Ca
-    Ca_inf = Ca_in - (tau_Ca*phi*i_Ca*A*500)/(F*vol);
+    Ca_inf = Ca_in - (tau_Ca*phi*i_Ca*A*.5)/(F*vol); // microM
 
-    // mexPrintf("V_clamp =  %f\n",V_clamp);
+    // 
 
-    // integrate V and Ca
-    I_clamp = -I_ext + A*(V_clamp*sigma_g - sigma_gE);
-    V = V_clamp;
+    // integrate Ca
     Ca = Ca_inf + (Ca_prev - Ca_inf)*exp(-dt/tau_Ca);
+
+    // calculate I_clamp, and set voltage to the clamped
+    // voltage 
+    double E = exp(-dt/(Cm/(sigma_g)));
+    V_inf = (V_clamp - V*E)/(1 - E);
+    //mexPrintf("sigma_g=  %f\n",sigma_g);
+    I_clamp =  A*(V_inf*sigma_g - sigma_gE);
+
+    // normalize by conductance
+    // I_clamp =  (V_inf*sigma_g - sigma_gE)/sigma_gE;
+
+    V = V_clamp;
+    
 }
 
 
@@ -217,8 +264,14 @@ void compartment::addController(controller *cont_)
     cont.push_back(cont_);
     cont_->controller_idx = n_cont; // tell the controller what rank it has
     n_cont ++;
+
+    // also store the controller's full state size
+    controller_sizes.push_back(cont_->getFullStateSize());
+
+    // mexPrintf("this controller has size =  %i ", cont_->getFullStateSize());
    
 }
+
 
 // returns a vector of the state of every conductance 
 // cond_state is a pointer to a matrix that is hopefully of
@@ -232,6 +285,21 @@ void compartment::get_cond_state(double *cond_state)
     }
 }
 
+// returns a vector of the state of every controller 
+// cont_state is a pointer to a matrix that is hopefully of
+// the right size 
+int compartment::getFullControllerState(double *cont_state, int idx)
+{
+    for (int i = 0; i < n_cont; i ++) 
+    {
+
+        cont[i]->getFullState(cont_state, idx);
+        idx += controller_sizes[i];
+
+    }
+    return idx;
+}
+
 // returns a pointer to a controller in this compartment 
 controller * compartment::getControllerPointer(int cont_idx)
 {
@@ -242,6 +310,3 @@ controller * compartment::getControllerPointer(int cont_idx)
 
 
 #endif
-
-
-

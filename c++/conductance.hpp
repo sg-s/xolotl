@@ -12,8 +12,9 @@ class controller;
 class conductance {
 protected:
     
-    compartment *container; // pointer to compartment that contains this
+    
 public:
+    compartment *container; // pointer to compartment that contains this
     double gbar;
     double g;
     double E;

@@ -9,7 +9,7 @@
 // in addition, controllers need to be added to 
 // compartments
 // so that the compartment knows they exist and 
-// cand ask them to integrate. 
+// can ask them to integrate. 
 //
 // this abstract class the following elements, which
 // all controllers will always have:
@@ -36,6 +36,11 @@ public:
 
     int controller_idx;
 
+    // also store the parameters of the 
+    // compartment that it is physically located in
+    double container_A;
+    double container_vol;
+
     controller()
     {
         channel = NULL; // null pointer 
@@ -44,8 +49,9 @@ public:
     
     ~controller() {}
     
-    virtual void integrate(double, double, double) = 0;
-    virtual double get_gbar(void) = 0;
+    virtual void integrate(double, double) = 0;
+    virtual int getFullStateSize(void) = 0;
+    virtual int getFullState(double*, int) = 0;
     virtual double get_m(void) = 0;
 
 };

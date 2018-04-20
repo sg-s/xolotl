@@ -6,25 +6,36 @@
 %
 % help: resets all conductances, compartments & synapses
 % 
-function [] = reset(self)
+function reset(self)
 
 % reset all compartments 
-for i = 1:length(self.compartment_names)
-	% reset the voltage and the calcium
-	self.(self.compartment_names{i}).V = -60;
-	self.(self.compartment_names{i}).Ca = self.(self.compartment_names{i}).Ca_in;
+all_compartments = self.find('compartment');
+for i = 1:length(all_compartments)
+	self.(all_compartments{i}).V = -60;
+	self.(all_compartments{i}).Ca = self.(all_compartments{i}).Ca_in;
+end
 
-	% reset every conductance in this compartment 
-	channels = self.getChannelsInCompartment(i);
-
-	for j = 1:length(channels)
-		self.(self.compartment_names{i}).(channels{j}).m = 0;
-		self.(self.compartment_names{i}).(channels{j}).h = 1;
+% reset all conductances
+all_channels = self.find('conductance');
+for i = 1:length(all_channels)
+	if self.exist([all_channels{i} '.m'])
+		self.set([all_channels{i} '.m'],0)
+	end
+	if self.exist([all_channels{i} '.h'])
+		self.set([all_channels{i} '.h'],1)
 	end
 end
 
-
-% reset all synapses
+% reset all synapses 
 for i = 1:length(self.synapses)
-	self.synapses(i).state = 0;
+	try
+		self.synapses(i).s = 0;
+	catch
+	end
+end
+
+% reset all controllers
+all_controllers = self.find('controller');
+for i = 1:length(all_controllers)
+	self.set([all_controllers{i} '.m'],0)
 end

@@ -17,17 +17,15 @@ class KCa: public conductance {
 public:
 
     // specify parameters + initial conditions 
-    KCa(double g_, double E_, double m_, double h_, double Q_g_, double Q_tau_m_, double Q_tau_h_)
+    KCa(double g_, double E_, double m_)
     {
         gbar = g_;
         E = E_;
-        m = m_;
-        h = 1;
-        
+        m = m_;  
 
-        Q_g = Q_g_;
-        Q_tau_m = Q_tau_m_;
-        Q_tau_h = Q_tau_h_;
+        // defaults
+        if (isnan (m)) { m = 0; }
+        if (isnan (E)) { E = 30; }
 
         // cache values for m_inf and h_inf
         for (double V = -99; V < 101; V++) {
@@ -50,7 +48,7 @@ void KCa::integrate(double V, double Ca, double dt, double delta_temp)
 {
     taum = tau_m_cache[(int) round(V+99)];
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/taum);
-    g = pow(Q_g, delta_temp)*gbar*m*m*m*m;
+    g = gbar*m*m*m*m;
 }
 
 double KCa::m_inf(double V, double Ca) { return (Ca/(Ca+3.0))/(1.0+exp((V+28.3)/-12.6)); }

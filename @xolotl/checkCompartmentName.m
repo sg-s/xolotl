@@ -16,8 +16,8 @@ if any(strcmp(comp_name,self.illegal_names))
 	return
 end
 
-% check that the name doesn't conflict with a previously added compartment 
-if any(strcmp(comp_name,self.compartment_names))
+% no underscores allowed 
+if strfind(comp_name,'_')
 	return
 end
 

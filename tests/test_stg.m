@@ -7,61 +7,51 @@
 
 
 % conversion from Prinz to phi
-vol = 1; % this can be anything, doesn't matter
+A = 0.0628;
+vol = A; % this can be anything, doesn't matter
 f = 14.96; % uM/nA
 tau_Ca = 200;
-F = 96485; % Faraday constant in SI units
-phi = (2*f*F*vol)/tau_Ca;
+phi = (2*f*96485*vol)/tau_Ca;
+
+channels = {'NaV','CaT','CaS','ACurrent','KCa','Kd','HCurrent'};
+prefix = 'prinz-approx/';
+gbar(:,1) = [1000 25  60 500  50  1000 .1];
+gbar(:,2) = [1000 0   40 200  0   250  .5];
+gbar(:,3) = [1000 24  20 500  0   1250 .5];
+E =         [50   30  30 -80 -80 -80   -20];
 
 x = xolotl;
-x.cleanup;
-x.addCompartment('AB',-65,0.02,10,0.0628,vol,phi,3000,0.05,tau_Ca,0);
+x.add('AB','compartment','Cm',10,'A',A,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
+x.add('LP','compartment','Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
+x.add('PY','compartment','Cm',10,'A',A,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
 
-x.addConductance('AB','prinz-fast/NaV',1000,50);
-x.addConductance('AB','prinz-fast/CaT',25,30);
-x.addConductance('AB','prinz-fast/CaS',60,30);
-x.addConductance('AB','prinz-fast/ACurrent',500,-80);
-x.addConductance('AB','prinz-fast/KCa',50,-80);
-x.addConductance('AB','prinz-fast/Kd',1000,-80);
-x.addConductance('AB','prinz-fast/HCurrent',.1,-20);
+compartments = x.find('compartment');
+for j = 1:length(compartments)
+	for i = 1:length(channels)
+		x.(compartments{j}).add([prefix channels{i}],'gbar',gbar(i,j),'E',E(i));
+	end
+end
 
-x.addCompartment('LP',-47,0.01,10,0.0628,vol,phi,3000,0.05,tau_Ca,0);
-x.addConductance('LP','prinz-fast/NaV',1000,50);
-x.addConductance('LP','prinz-fast/CaS',40,30);
-x.addConductance('LP','prinz-fast/ACurrent',200,-80);
-x.addConductance('LP','prinz-fast/Kd',250,-80);
-x.addConductance('LP','prinz-fast/HCurrent',.5,-20);
-x.addConductance('LP','Leak',.3,-50);
+x.LP.add('Leak','gbar',.3,'E',-50);
+x.PY.add('Leak','gbar',.1,'E',-50);
 
-x.addCompartment('PY',-41,0.03,10,0.0628,vol,phi,3000,0.05,tau_Ca,0);
-x.addConductance('PY','prinz-fast/NaV',1000,50);
-x.addConductance('PY','prinz-fast/CaT',25,30);
-x.addConductance('PY','prinz-fast/CaS',20,30);
-x.addConductance('PY','prinz-fast/ACurrent',500,-80);
-x.addConductance('PY','prinz-fast/Kd',1250,-80);
-x.addConductance('PY','prinz-fast/HCurrent',.5,-20);
-x.addConductance('PY','Leak',.1,-50);
+% set up synapses as in Fig. 2e
+x.connect('AB','LP','Chol','gbar',30);
+x.connect('AB','PY','Chol','gbar',3);
+x.connect('AB','LP','Glut','gbar',30);
+x.connect('AB','PY','Glut','gbar',10);
+x.connect('LP','PY','Glut','gbar',1);
+x.connect('PY','LP','Glut','gbar',30);
+x.connect('LP','AB','Glut','gbar',30);
 
-% 2e
-x.addSynapse('Chol','AB','LP',30);
-x.addSynapse('Chol','AB','PY',3);
-x.addSynapse('Glut','AB','LP',30);
-x.addSynapse('Glut','AB','PY',10);
-x.addSynapse('Glut','LP','PY',1);
-x.addSynapse('Glut','PY','LP',30);
-x.addSynapse('Glut','LP','AB',30);
+x.t_end = 5e3;
 
-
-x.dt = 50e-3;
-x.t_end = 20e3;
-
-x.transpile;
-x.compile;
-
-V = x.integrate;
+x.transpile; x.compile;
+x.integrate; V = x.integrate;
 
 figure('outerposition',[0 0 1000 900],'PaperUnits','points','PaperSize',[1000 900]); hold on
 for i = 1:3
 	subplot(3,1,i); hold on
 	plot(V(:,i))
 end
+drawnow

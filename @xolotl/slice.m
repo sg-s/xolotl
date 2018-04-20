@@ -4,55 +4,49 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% help: slice an existing compartment into N sections
-% elctrical synapses b/w them with strength gbar
-% all previously existing conductances are preserved 
+% help: divides a compartment into slices
+function slice(self, compartment, N_slices, g_axial)
 
-function slice(self,compartment,N,gbar)
+assert(any(strcmp(self.find('compartment'),compartment)),'Unknown compartment')
+assert(isint(N_slices),'N_slices must be an integer > 1')
+assert(isscalar(N_slices),'N_slices must be an integer > 1')
+assert(N_slices > 1,'N_slices must be an integer > 1')
+assert(isscalar(g_axial),'g_axial must be a real +ve number')
+assert(g_axial > 0,'g_axial must be a real +ve number')
 
-assert(any(strcmp(compartment,properties(self))),'Unknown compartment')
-assert(isscalar(N),'the second argument should be the number of slices you want; a scalar')
-assert(N>1,'the number of slices you want should be > 1')
-assert(nargin == 4,'Wrong number of input arguments')
-assert(isscalar(gbar),'gbar should be a scalar')
-assert(gbar>0,'gbar should be positive')
+% TODO check that there are no incident synapses
 
-% make sure this compartment has no chemical synapses on it
-if ~isempty(self.synapses)
-	assert(any(strcmp(compartment,{self.synapses.pre}) & ~strcmp('Electrical',{self.synapses.type})),'At least one non-electrical synapse on this compartment. Cannot be sliced')
-	assert(any(strcmp(compartment,{self.synapses.post}) & ~strcmp('Electrical',{self.synapses.type})),'At least one non-electrical synapse on this compartment. Cannot be sliced')
+if iscell(compartment)
+	for i = 1:length(compartment)
+		self.slice(compartment{i},N_slices,g_axial)
+	end
 end
 
-% to do -- 1 electrical synapse
 
-% to do -- 2 electrical synapses 
-
-% resize the compartment 
-new_area = self.(compartment).A/N;
-new_vol = self.(compartment).vol/N;
-
+new_vol = self.(compartment).vol/N_slices;
+new_A = self.(compartment).A/N_slices;
 
 self.(compartment).vol = new_vol;
-self.(compartment).A = new_area;
+self.(compartment).A = new_A;
 
-% rename the compartment 
-self.rename(compartment,[compartment 'S1']);
-compartment = [compartment 'S1'];
+all_comps = {compartment};
 
-% copy the compartment n-1 times
-for i = 2:N
-	new_name = [compartment(1:end-2) 'S' mat2str(i)];
-	self.copy(compartment,new_name);
+n_digits = length(mat2str(N_slices));
+
+compartment_root_name = strrep(compartment,strjoin(regexp(compartment,'[0-9]','match'),''),'');
+
+for i = 2:N_slices
+	root_comp = copy(self.(compartment));
+
+	padding_length = n_digits - length(mat2str(i));
+	new_comp_name = [compartment_root_name repmat('0',1,padding_length) mat2str(i)];
+
+	self.add(new_comp_name,root_comp);
+	all_comps = [all_comps; new_comp_name];
 end
 
-% add synapses to wire them together
-for i = 2:N
-	a = [compartment(1:end-2) 'S' mat2str(i-1)];
-	z = [compartment(1:end-2) 'S' mat2str(i)];
-	self.connect(a,z,gbar);
+% wire them up with electrical synapses 
+for i = 2:N_slices
+	self.connect(all_comps{i-1},all_comps{i},g_axial);
 end
- 
-
-% mark these compartments as being part of a section
-self.sections = [self.sections compartment(1:end-2)]; 
 

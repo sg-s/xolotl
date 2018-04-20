@@ -14,33 +14,93 @@
 class IntegralController: public controller {
 
 protected:
+public:
+    // timescales
     double tau_m;
     double tau_g; 
-
-public:
 
     // mRNA concentration 
     double m; 
 
+    // area of the container this is in
+    // this is NOT necessarily the area of the compartment
+    // that contains it
+    double container_A;
+
     // specify parameters + initial conditions for 
     // controller that controls a conductance 
-    IntegralController(conductance* channel_, synapse* syn_, double tau_m_, double tau_g_, double m_)
+    IntegralController(double tau_m_, double tau_g_, double m_)
     {
-        channel = channel_; 
-        syn = syn_;
+
         tau_m = tau_m_;
         tau_g = tau_g_;
         m = m_;
+
+        if (isnan (m)) { m = 0; }
     }
 
     
-    void integrate(double Ca_error, double A, double dt);
-    double get_gbar(void);
+    void integrate(double Ca_error, double dt);
+    void connect(conductance * channel_, synapse * syn_);
+    int getFullStateSize(void);
+    int getFullState(double * cont_state, int idx);
+
     double get_m(void);
 
 };
 
-void IntegralController::integrate(double Ca_error, double A, double dt)
+double IntegralController::get_m() {return m;}
+
+int IntegralController::getFullStateSize()
+{
+    return 2; 
+}
+
+
+int IntegralController::getFullState(double *cont_state, int idx)
+{
+    // give it the current mRNA level
+    cont_state[idx] = m;
+
+    idx++;
+
+    // and also output the current gbar of the thing
+    // being controller
+    if (channel)
+    {
+      cont_state[idx] = channel->gbar;  
+    }
+    else if (syn)
+    {
+        cont_state[idx] = syn->gbar;  
+    }
+    idx++;
+    return idx;
+}
+
+
+void IntegralController::connect(conductance * channel_, synapse * syn_)
+{
+    if (channel_)
+    {
+        // connect to a channel
+        channel = channel_;
+
+        // attempt to read the area of the container that this
+        // controller should be in. note that this is not necessarily the
+        // container that contains this controller. rather, it is 
+        // the compartment that contains the conductnace/synapse 
+        // that this controller controls
+        container_A  = (channel->container)->A;
+    }
+    if (syn_)
+    {
+        // connect to a synapse 
+        syn = syn_;
+    }
+}
+
+void IntegralController::integrate(double Ca_error, double dt)
 {
     // integrate mRNA
     m += (dt/tau_m)*(Ca_error);
@@ -60,8 +120,9 @@ void IntegralController::integrate(double Ca_error, double A, double dt)
         // this controller must be controlling a 
         // channel
         // calculate conductance, not conductance density
-        double g = (channel->gbar)*A;
-        (channel->gbar) += ((dt/tau_g)*(m - g))/A;
+        
+        double g = (channel->gbar)*container_A;
+        (channel->gbar) += ((dt/tau_g)*(m - g))/container_A;
 
         // make sure it doesn't go below zero
         if ((channel->gbar) < 0) {
@@ -91,28 +152,6 @@ void IntegralController::integrate(double Ca_error, double A, double dt)
 
 }
 
-// return the mRNA level, because this is a protected
-// member 
-double IntegralController::get_m(void)
-{
-    return m;
-}
-
-// return the conductance of either the 
-// channel or the synapse that this 
-// controller is controlling 
-double IntegralController::get_gbar(void)
-{
-
-    double gbar;
-    if (channel) {
-        gbar = channel->gbar;
-    }
-    if (syn) {
-        gbar = syn->gbar;
-    }
-    return gbar;
-}
 
 
 #endif
