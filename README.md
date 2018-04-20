@@ -43,7 +43,7 @@ V = x.integrate;
 
 ### 4. Optimize neuron models really quickly
 
-`xolotl` comes with a powerful optimization toolbox called [procrustes]https://github.com/sg-s/procrustes). 
+`xolotl` comes with a powerful optimization toolbox called [procrustes](https://github.com/sg-s/procrustes). 
 
 
 ## Get this
