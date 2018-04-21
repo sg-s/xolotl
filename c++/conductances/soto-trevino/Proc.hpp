@@ -20,30 +20,25 @@ public:
         gbar = g_;
         E = E_;
         m = m_;
-        h = 1;
     }
 
-    Proc(double g_, double E_, double m_, double h_)
-    {
-        gbar = g_;
-        E = E_;
-        m = m_;
-        h = 1;
-    }
 
     void integrate(double V, double Ca, double dt, double delta_temp);
     void connect(compartment *pcomp_);
     double m_inf(double V);
     double tau_m(double V);
+    string getClass(void);
 
 };
+
+string Proc::getClass(){return "Proc";}
 
 void Proc::connect(compartment *pcomp_) {container = pcomp_;}
 
 void Proc::integrate(double V, double Ca, double dt, double delta_temp)
 {
     m = m_inf(V) + (m - m_inf(V))*exp(-dt/0.5);
-    g = pow(Q_g, delta_temp)*gbar*m;
+    g = gbar*m;
 }
 
 

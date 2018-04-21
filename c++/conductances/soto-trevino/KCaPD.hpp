@@ -4,48 +4,43 @@
 //
 // Calcium-dep potassium
 // http://jn.physiology.org/content/94/1/590.short
-#ifndef KCA_PD
-#define KCA_PD
+#ifndef KCAPD
+#define KCAPD
 #include "../../conductance.hpp"
 
 //inherit conductance class spec
-class KCa_PD: public conductance {
+class KCaPD: public conductance {
 
 public:
 
     // specify parameters + initial conditions 
-    KCa_PD(double g_, double E_, double m_, double h_)
+    KCaPD(double g_, double E_, double m_)
     {
         gbar = g_;
         E = E_;
         m = m_;
-        h = 1;
     }
     
-    KCa_PD(double g_, double E_, double m_)
-    {
-        gbar = g_;
-        E = E_;
-        m = m_;
-        h = 1;
-    }
     
     void integrate(double V, double Ca, double dt, double delta_temp);
     void connect(compartment *pcomp_);
     double m_inf(double V, double Ca);
     double tau_m(double V);
+    string getClass(void);
 };
 
-void KCa_PD::connect(compartment *pcomp_) {container = pcomp_; }
+string KCaPD::getClass(){return "KCaPD";}
 
-void KCa_PD::integrate(double V, double Ca, double dt, double delta_temp)
+void KCaPD::connect(compartment *pcomp_) {container = pcomp_; }
+
+void KCaPD::integrate(double V, double Ca, double dt, double delta_temp)
 {
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V));
-    g = pow(Q_g, delta_temp)*gbar*m*m*m*m;
+    g = gbar*m*m*m*m;
 }
 
-double KCa_PD::m_inf(double V, double Ca) { return (Ca/(Ca+30))/(1.0+exp(-(V+51.0)/8.0)); }
-double KCa_PD::tau_m(double V) {return 90.3 - 75.09/(1.0+exp(-(V+46.0)/22.7));}
+double KCaPD::m_inf(double V, double Ca) { return (Ca/(Ca+30))/(1.0+exp(-(V+51.0)/8.0)); }
+double KCaPD::tau_m(double V) {return 90.3 - 75.09/(1.0+exp(-(V+46.0)/22.7));}
 
 
 #endif

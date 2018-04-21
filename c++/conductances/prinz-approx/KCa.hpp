@@ -42,7 +42,10 @@ public:
     void connect(compartment *pcomp_);
     double m_inf(double V, double Ca);
     double tau_m(double V);
+    string getClass(void);
 };
+
+string KCa::getClass(){return "KCa";}
 
 void KCa::connect(compartment *pcomp_) {container = pcomp_; }
 

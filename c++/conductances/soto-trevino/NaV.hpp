@@ -14,18 +14,14 @@ class NaV: public conductance {
 public:
 
     // specify parameters + initial conditions 
-    NaV(double g_, double E_, double m_, double h_, double Q_g_, double Q_tau_m_, double Q_tau_h_)
-{
-    gbar = g_;
-    E = E_;
-    m = m_;
-    h = h_;
-    
-
-    Q_g = Q_g_;
-    Q_tau_m = Q_tau_m_;
-    Q_tau_h = Q_tau_h_;
-}
+    NaV(double g_, double E_, double m_, double h_)
+    {
+        gbar = g_;
+        E = E_;
+        m = m_;
+        h = h_;
+        
+    }
     
     void integrate(double V, double Ca, double dt, double delta_temp);
     void connect(compartment *pcomp_);
@@ -33,15 +29,18 @@ public:
     double h_inf(double V);
     double tau_m(double V);
     double tau_h(double V); 
+    string getClass(void);
 };
+
+string NaV::getClass(){return "NaV";}
 
 void NaV::connect(compartment *pcomp_) {container = pcomp_; }
 
 void NaV::integrate(double V, double Ca, double dt, double delta_temp)
 {
-    m = m_inf(V) + (m - m_inf(V))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V));
-    h = h_inf(V) + (h - h_inf(V))*exp(-(dt*pow(Q_tau_h, delta_temp))/tau_h(V));
-    g = pow(Q_g, delta_temp)*gbar*m*m*m*h;
+    m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
+    h = h_inf(V) + (h - h_inf(V))*exp(-dt/tau_h(V));
+    g = gbar*m*m*m*h;
 
 }
 

@@ -6,6 +6,8 @@
 #ifndef CONDUCTANCE
 #define CONDUCTANCE
 #include <cmath>
+#include <string>
+using std::string;
 class compartment;
 class controller; 
 
@@ -36,6 +38,7 @@ public:
     
     virtual void integrate(double, double, double, double) = 0;
     virtual void connect(compartment*) = 0; // null pointer for safety
+    virtual string getClass(void) = 0;
 
 };
 

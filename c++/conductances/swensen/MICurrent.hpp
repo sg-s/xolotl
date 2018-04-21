@@ -30,8 +30,11 @@ public:
     void connect(compartment *pcomp_);
     double m_inf(double V);
     double tau_m(double V);
+    string getClass(void);
 
 };
+
+string MICurrent::getClass(){return "MICurrent";}
 
 void MICurrent::connect(compartment *pcomp_) {container = pcomp_;}
 

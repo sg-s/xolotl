@@ -25,7 +25,10 @@ public:
 
     void integrate(double V, double Ca, double dt, double delta_temp);
     void connect(compartment *pcomp_);
+    string getClass(void);
 };
+
+string Leak::getClass(){return "Leak";}
 
 void Leak::connect(compartment *pcomp_) {container = pcomp_;}
 

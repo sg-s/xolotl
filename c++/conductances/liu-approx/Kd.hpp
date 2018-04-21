@@ -43,10 +43,12 @@ public:
     void connect(compartment *pcomp_);
     double m_inf(double V);
     double tau_m(double V);
-
+    string getClass(void);
 
 
 };
+
+string Kd::getClass(){return "Kd";}
 
 void Kd::connect(compartment *pcomp_) { container = pcomp_; }
 

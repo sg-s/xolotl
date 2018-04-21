@@ -52,7 +52,10 @@ public:
     double h_inf(double V);
     double tau_m(double V);
     double tau_h(double V); 
+    string getClass(void);
 };
+
+string CaT::getClass(){return "CaT";}
 
 void CaT::connect(compartment *pcomp_) { container = pcomp_; }
 

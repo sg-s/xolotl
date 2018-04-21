@@ -42,7 +42,10 @@ public:
     double h_inf(double V);
     double tau_m(double V);
     double tau_h(double V); 
+    string getClass(void);
 };
+
+string CaS::getClass(){return "CaS";}
 
 void CaS::connect(compartment *pcomp_) {container = pcomp_; }
 

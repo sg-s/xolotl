@@ -52,7 +52,10 @@ public:
     double h_inf(double V);
     double tau_m(double V);
     double tau_h(double V); 
+    string getClass(void);
 };
+
+string NaV::getClass(){return "NaV";}
 
 void NaV::connect(compartment *pcomp_) {container = pcomp_; }
 

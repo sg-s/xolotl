@@ -14,27 +14,29 @@ class Kslow: public conductance {
 public:
 
     // specify parameters + initial conditions 
-    Kslow(double g_, double E_, double m_, double h_)
+    Kslow(double g_, double E_, double m_)
     {
         gbar = g_;
         E = E_;
         m = m_;
-        h = 1;
     }
     
     void integrate(double V, double Ca, double dt, double delta_temp);
     void connect(compartment *pcomp_);
     double m_inf(double V);
     double tau_m(double V);
+    string getClass(void);
 
 };
+
+string Kslow::getClass(){return "Kslow";}
 
 void Kslow::connect(compartment *pcomp_) {container = pcomp_; }
 
 void Kslow::integrate(double V, double Ca, double dt, double delta_temp)
 {
-    m = m_inf(V) + (m - m_inf(V))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V));
-    g = pow(Q_g, delta_temp)*gbar*m*m*m*m;
+    m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
+    g = gbar*m*m*m*m;
 }
 
 double Kslow::m_inf(double V) {return 1.0/(1.0+exp((V+12.85)/-19.91));}

@@ -4,6 +4,9 @@
 //
 // EAG channels: K+ channels that are inactivated by Calcium.
 // mutant, less sensitive to Ca 
+// paper source:
+// https://www.physiology.org/doi/10.1152/jn.00820.2017
+
 #ifndef EAGMUT
 #define EAGMUT
 #include "../../conductance.hpp"
@@ -14,16 +17,11 @@ class EAGmut: public conductance {
 public:
 
     // specify parameters + initial conditions 
-    EAGmut(double g_, double E_, double m_, double h_, double Q_g_, double Q_tau_m_, double Q_tau_h_)
+    EAGmut(double g_, double E_, double m_)
     {
         gbar = g_;
         E = E_;
         m = m_;
-        h = 1;
-
-        Q_g = Q_g_;
-        Q_tau_m = Q_tau_m_;
-        Q_tau_h = Q_tau_h_;
     }
     
 
@@ -31,7 +29,10 @@ public:
     void connect(compartment *pcomp_);
     double m_inf(double V, double Ca);
     double tau_m(double V);
+    string getClass(void);
 };
+
+string EAGmut::getClass(){return "EAG";}
 
 void EAGmut::connect(compartment *pcomp_) {container = pcomp_; }
 

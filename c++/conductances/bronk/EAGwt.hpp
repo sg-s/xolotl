@@ -3,6 +3,8 @@
 // _/\_ |__| |___ |__|  |  |___ 
 //
 // EAG channels: K+ channels that are inactivated by Calcium.
+// paper source:
+// https://www.physiology.org/doi/10.1152/jn.00820.2017
 #ifndef EAGWT
 #define EAGWT
 #include "../../conductance.hpp"
@@ -13,16 +15,12 @@ class EAGwt: public conductance {
 public:
 
     // specify parameters + initial conditions 
-    EAGwt(double g_, double E_, double m_, double h_, double Q_g_, double Q_tau_m_, double Q_tau_h_)
+    EAGwt(double g_, double E_, double m_)
     {
         gbar = g_;
         E = E_;
         m = m_;
-        h = 1;
 
-        Q_g = Q_g_;
-        Q_tau_m = Q_tau_m_;
-        Q_tau_h = Q_tau_h_;
     }
     
 
@@ -30,14 +28,17 @@ public:
     void connect(compartment *pcomp_);
     double m_inf(double V, double Ca);
     double tau_m(double V);
+    string getClass(void);
 };
+
+string EAGwt::getClass(){return "EAG";}
 
 void EAGwt::connect(compartment *pcomp_) {container = pcomp_; }
 
 void EAGwt::integrate(double V, double Ca, double dt, double delta_temp)
 {
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V));
-    g = pow(Q_g, delta_temp)*gbar*m*m;
+    g = gbar*m*m;
 }
 
 double EAGwt::m_inf(double V, double Ca) { return (9.29e-2/(Ca+9.29e-2))/(1.0+exp((V+23.12)/-16.94)); }
