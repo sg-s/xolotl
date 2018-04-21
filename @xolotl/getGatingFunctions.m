@@ -7,11 +7,9 @@
 % help: recover gating functions from CPP file
 %
 
-function [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(self,conductance)
+function [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance)
 
-assert(self.exist(conductance),'Conductance you specified does not exist in the C++ object tree')
-
-C = self.get(conductance);
+C = cpplab(conductance);
 
 m_inf = @(V) 0;
 h_inf = @(V) 1;

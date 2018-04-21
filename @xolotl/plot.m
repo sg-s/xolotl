@@ -6,9 +6,9 @@
 %
 % help: plots the activation functions of channel
 %
-function ax = plot(self,conductance,ax)
+function ax = plot(conductance,ax)
 
-[m_inf, h_inf, tau_m, tau_h] = getGatingFunctions(self,conductance);
+[m_inf, h_inf, tau_m, tau_h] = xolotl.getGatingFunctions(conductance);
 
 V = linspace(-80,80,1e3);
 
@@ -18,9 +18,7 @@ hinf = NaN*V;
 taum = NaN*V;
 tauh = NaN*V;
 
-this_compartment = strsplit(conductance,'.');
-this_compartment = this_compartment{1};
-Ca = self.(this_compartment).Ca_out;
+Ca = 3e3;
 
 for i = 1:length(V)
 	if nargin(m_inf) == 1
@@ -38,7 +36,7 @@ for i = 1:length(V)
 	tauh(i) = tau_h(V(i));
 end
 
-if nargin < 3
+if nargin < 2
 
 	figure('outerposition',[100 100 1000 900],'PaperUnits','points','PaperSize',[1000 500]); hold on
 	for i = 1:4
@@ -58,8 +56,7 @@ xlabel(ax(1),'V (mV)')
 
 plot(ax(2),V,hinf,'DisplayName',conductance);
 xlabel(ax(2),'V (mV)')
-ylabel(ax(2),'h_{inf} (ms)')
-
+ylabel(ax(2),'h_{inf}')
 
 
 plot(ax(3),V,taum,'DisplayName',conductance);

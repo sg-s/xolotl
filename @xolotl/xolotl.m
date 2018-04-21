@@ -126,9 +126,8 @@ end % end methods
 
 methods (Static)
 
-	spiketimes = findSpikes(V)
-	findActivationFunction(varargin)
-	findInactivationFunction(varargin)
+    ax = plot(conductance,ax);
+    [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance);
 
 
 end % end static methods
