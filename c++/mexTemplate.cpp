@@ -41,8 +41,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     //xolotl:insert_constructors
 
-    //xolotl:call_methods_here
-
     //xolotl:add_conductances_here
 
     //xolotl:add_synapses_here
@@ -50,6 +48,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     //xolotl:add_controllers_here
 
     //xolotl:add_neurons_to_network
+
+    //xolotl:call_methods_here
 
     int nsteps = (int) floor(t_end/sim_dt);
     int nsteps_out = (int) floor(t_end/dt);

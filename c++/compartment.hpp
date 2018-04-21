@@ -11,6 +11,7 @@
 #include "conductance.hpp"
 #include "synapse.hpp"
 #include "controller.hpp"
+class network;
 
 #define F 96485
 
@@ -35,6 +36,15 @@ protected:
     double RT_by_nF;
 
 public:
+
+    // pointer to network that contains this
+    network * container;
+
+    // this int stores an integer that indicates 
+    // the hierarchy of this compartment in a multi-comp
+    // neuron tree. tree_idx of 0 means it is a soma
+    // compartment
+    double tree_idx; 
 
     // neuron parameters
     double Cm; // specific capacitance 
@@ -64,7 +74,7 @@ public:
     int n_syn; // # of synapses
 
     // constructor with all parameters 
-    compartment(double V_, double Ca_, double Cm_, double A_, double vol_, double phi_, double Ca_out_, double Ca_in_, double tau_Ca_, double Ca_target_, double Ca_average_)
+    compartment(double V_, double Ca_, double Cm_, double A_, double vol_, double phi_, double Ca_out_, double Ca_in_, double tau_Ca_, double Ca_target_, double Ca_average_, double tree_idx_)
     {
         V = V_;
         vol = vol_;
@@ -88,6 +98,8 @@ public:
 
         RT_by_nF = 500.0*(8.6174e-5)*(10 + 273.15);
 
+        tree_idx = tree_idx_;
+
         // defaults
         if (isnan (V)) { V = -60; }
         if (isnan (Ca)) { Ca = Ca_in; }
@@ -99,6 +111,7 @@ public:
         n_cond = 0;
         n_cont = 0;
         n_syn = 0; 
+        container = NULL;
 
     }
     // begin function declarations 
@@ -119,8 +132,11 @@ public:
     int getFullControllerSize(void);
 
     controller* getControllerPointer(int);
+    void connect(network*);
 
 };
+
+void compartment::connect(network *pnetwork_) {container = pnetwork_; }
 
 
 int compartment::getFullControllerSize(void)

@@ -7,9 +7,10 @@
 #define CONDUCTANCE
 #include <cmath>
 #include <string>
+#include "controller.hpp"
 using std::string;
 class compartment;
-class controller; 
+// class controller; 
 
 class conductance {
 protected:

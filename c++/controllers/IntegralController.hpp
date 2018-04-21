@@ -86,12 +86,12 @@ void IntegralController::connect(conductance * channel_, synapse * syn_)
         // connect to a channel
         channel = channel_;
 
-        // mexPrintf("connecting to : %s\n", (channel_->getClass()).c_str());
+        controlling_class = (channel_->getClass()).c_str();
 
         // attempt to read the area of the container that this
         // controller should be in. note that this is not necessarily the
         // container that contains this controller. rather, it is 
-        // the compartment that contains the conductnace/synapse 
+        // the compartment that contains the conductance/synapse 
         // that this controller controls
         container_A  = (channel->container)->A;
     }

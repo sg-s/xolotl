@@ -9,6 +9,7 @@
 #ifndef SLAVECONTROLLER
 #define SLAVECONTROLLER
 #include "../controller.hpp"
+#include <stdexcept>
 
 //inherit controller class spec
 class SlaveController: public controller {
@@ -103,6 +104,9 @@ void SlaveController::connect(conductance * channel_, synapse * syn_)
         // connect to a channel
         channel = channel_;
 
+        controlling_class = channel_->getClass();
+        // mexPrintf("this controller controls a %s type channel\n", controlling_class.c_str());
+
         // attempt to read the area of the container that this
         // controller should be in. note that this is not necessarily the
         // container that contains this controller. rather, it is 
@@ -120,6 +124,20 @@ void SlaveController::connect(conductance * channel_, synapse * syn_)
 
 void SlaveController::integrate(double Ca_error, double dt)
 {
+
+    if (!master_controller){
+       
+
+        // attempt to ask the network for the right one
+        // int n_comp = ((channel->container)->container)->n_comp;
+        // mexPrintf("master controller not defined; n_comp = %i\n",n_comp);
+
+        return;
+    }
+
+    // get type of the thing being controlled
+
+
     // integrate mRNA
     m += (dt/tau_m)*((master_controller->get_m()) - m);
 

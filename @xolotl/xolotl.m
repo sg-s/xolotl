@@ -106,6 +106,18 @@ end % end protected methods
 methods 
 	function self = xolotl()
 		self.rebase;
+
+        % append all classnames to illegal names
+        [~,hpp_files] = self.resolvePath('');
+        for i = 1:length(hpp_files)
+            try
+                hpp_files{i} = pathEnd(hpp_files{i});
+            catch
+                hpp_files{i} = '';
+            end
+        end
+        hpp_files = unique(hpp_files);
+        self.illegal_names = [self.illegal_names(:); hpp_files];
 	end
 
 

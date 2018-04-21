@@ -76,7 +76,7 @@ else
 	values = NaN*ones(length(real_names),1);
 	% check that these exist
 	for i = 1:length(real_names)
-		assert(self.exist(real_names{i}),'Unknown parameter to manipualte')
+		assert(self.exist(real_names{i}),'Unknown parameter to manipulate')
 		values(i) = self.get(real_names{i});
 	end
 end

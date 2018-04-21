@@ -25,12 +25,20 @@
 #ifndef CONTROLLER
 #define CONTROLLER
 #include <cmath>
+#include <string>
+using std::string;
 class conductance;
+class synapse;
+
 
 class controller {
 protected:
     conductance* channel; // pointer to conductance that this regulates
     synapse* syn; // pointer to synapse that this regulates 
+
+    // store the type of the thing being controlled
+    // as a string 
+    string controlling_class;
 
 public:
 

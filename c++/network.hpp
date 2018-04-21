@@ -36,14 +36,32 @@ public:
     void integrate(double,double *, double);
     void integrateClamp(double, double *, double);
     void addCompartment(compartment*);
+    compartment* findSoma(void);
 
 };
+
+compartment* network::findSoma(void)
+{
+    compartment * c = NULL;
+
+    // first, find compartments that are soma 
+    for (int i = 0; i < n_comp; i++)
+    {
+        if ((comp[i]->tree_idx) == 0)
+        {
+            c = comp[i];
+        }
+    }
+    return c;
+
+}
 
 // add a compartment to the network -- network is simply an array of pointers to compartments
 void network::addCompartment(compartment *comp_)
 {
     comp.push_back(comp_);
     n_comp++;
+    comp_->connect(this);
 }
 
 // this integrate method works for networks
