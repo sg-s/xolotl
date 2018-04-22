@@ -19,6 +19,8 @@ public:
         g = gbar; // this is important as integrate doesn't do anything in the leak channels 
         E = E_;
 
+        if (isnan (E)) { E = -55; }
+
     }
     
 

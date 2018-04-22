@@ -20,6 +20,10 @@ public:
         gbar = g_;
         E = E_;
         m = m_;
+
+         // defaults
+        if (isnan (m)) { m = 0; }
+        if (isnan (E)) { E = 0; }
     }
 
 

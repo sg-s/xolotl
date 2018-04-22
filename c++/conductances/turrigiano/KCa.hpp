@@ -2,20 +2,19 @@
 //  \/  |  | |    |  |  |  |    
 // _/\_ |__| |___ |__|  |  |___ 
 //
-// EAG channels: K+ channels that are inactivated by Calcium.
-// paper source:
-// https://www.physiology.org/doi/10.1152/jn.00820.2017
-#ifndef EAGWT
-#define EAGWT
+// Slow Calcium conductance
+// http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
+#ifndef KCA
+#define KCA
 #include "../../conductance.hpp"
 
 //inherit conductance class spec
-class EAGwt: public conductance {
+class KCa: public conductance {
 
 public:
 
     // specify parameters + initial conditions 
-    EAGwt(double g_, double E_, double m_)
+    KCa(double g_, double E_, double m_)
     {
         gbar = g_;
         E = E_;
@@ -24,10 +23,8 @@ public:
         // defaults
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = -80; }
-
     }
     
-
     void integrate(double V, double Ca, double dt, double delta_temp);
     void connect(compartment *pcomp_);
     double m_inf(double V, double Ca);
@@ -35,18 +32,20 @@ public:
     string getClass(void);
 };
 
-string EAGwt::getClass(){return "EAG";}
-
-void EAGwt::connect(compartment *pcomp_) {container = pcomp_; }
-
-void EAGwt::integrate(double V, double Ca, double dt, double delta_temp)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V));
-    g = gbar*m*m;
+string KCa::getClass(){
+    return "KCa";
 }
 
-double EAGwt::m_inf(double V, double Ca) { return (9.29e-2/(Ca+9.29e-2))/(1.0+exp((V+23.12)/-16.94)); }
-double EAGwt::tau_m(double V) {return 5497 - 5500/(1.0+exp((V+251.5 )/-51.5));}
+void KCa::connect(compartment *pcomp_) {container = pcomp_; }
+
+void KCa::integrate(double V, double Ca, double dt, double delta_temp)
+{
+    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V));
+    g = gbar*m*m*m*m;
+}
+
+double KCa::m_inf(double V, double Ca) { return (Ca/(Ca+3.0))/(1.0+exp((V+28.3)/-12.6)); }
+double KCa::tau_m(double V) {return 90.3 - 75.1/(1.0+exp((V+46.0)/-22.7));}
 
 
 #endif

@@ -11,8 +11,8 @@ function [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance)
 
 C = cpplab(conductance);
 
-m_inf = @(V) 0;
-h_inf = @(V) 1;
+m_inf = @(V) NaN;
+h_inf = @(V) NaN;
 tau_m = @(V) NaN;
 tau_h = @(V) NaN;
 

@@ -17,13 +17,18 @@ public:
 
     // specify parameters + initial conditions 
     Shaker(double g_, double E_, double m_, double h_)
-{
-    gbar = g_;
-    E = E_;
-    m = m_;
-    h = h_;
-    
-}
+    {
+        gbar = g_;
+        E = E_;
+        m = m_;
+        h = h_;
+
+        // defaults
+        if (isnan (m)) { m = 0; }
+        if (isnan (h)) { h = 1; }
+        if (isnan (E)) { E = -80; }
+        
+    }
     
     void integrate(double V, double Ca, double dt, double delta_temp);
     void connect(compartment *pcomp_);

@@ -17,6 +17,11 @@ public:
         m = m_;
         h = h_;
 
+        // defaults
+        if (isnan (m)) { m = 0; }
+        if (isnan (h)) { h = 1; }
+        if (isnan (E)) { E = 50; }
+
     }
 
     void integrate(double V, double Ca, double dt, double delta_temp);

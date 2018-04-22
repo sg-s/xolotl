@@ -19,6 +19,10 @@ public:
         gbar = g_;
         E = E_;
         m = m_;
+
+         // defaults
+        if (isnan (m)) { m = 0; }
+        if (isnan (E)) { E = -80; }
     }
     
     void integrate(double V, double Ca, double dt, double delta_temp);

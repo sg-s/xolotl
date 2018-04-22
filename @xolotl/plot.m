@@ -10,7 +10,7 @@ function ax = plot(conductance,ax)
 
 [m_inf, h_inf, tau_m, tau_h] = xolotl.getGatingFunctions(conductance);
 
-V = linspace(-80,80,1e3);
+V = linspace(-100,100,1e3);
 
 % evaluate these functions 
 minf = NaN*V;

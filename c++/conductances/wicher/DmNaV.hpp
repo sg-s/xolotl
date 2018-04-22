@@ -20,6 +20,11 @@ public:
         E = E_;
         m = m_;
         h = h_;
+
+         // defaults
+        if (isnan (m)) { m = 0; }
+        if (isnan (h)) { h = 1; }
+        if (isnan (E)) { E = 50; }
         
     }
     

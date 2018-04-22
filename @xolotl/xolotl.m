@@ -38,6 +38,8 @@ properties (Access = protected)
 	% of some objects after they have been created 
 	call_method_data
 
+    hpp_files
+
 end  % end protected props
 
 
@@ -109,6 +111,7 @@ methods
 
         % append all classnames to illegal names
         [~,hpp_files] = self.resolvePath('');
+        self.hpp_files = hpp_files;
         for i = 1:length(hpp_files)
             try
                 hpp_files{i} = pathEnd(hpp_files{i});
@@ -120,6 +123,11 @@ methods
         self.illegal_names = [self.illegal_names(:); hpp_files];
 	end
 
+
+    function search(self,str)
+        idx = lineFind(self.hpp_files,str);
+        disp(unique(self.hpp_files(idx)))
+    end
 
 
 end % end methods 
