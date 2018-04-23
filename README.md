@@ -53,16 +53,14 @@ V = x.integrate;
 | OS          | Support | Comments | 
 | -------          | ------- | ----------- 
 | macOS 10.12.6 | ✓ | no known issues |
-| Ubuntu 16.04.3 LTS | ✓ |   no known issues | 
-| Windows 7 | ❌ | Windows not supported currently. ~~You will have the [MinGW](https://www.mathworks.com/matlabcentral/fileexchange/52848-matlab-support-for-mingw-w64-c-c++-compiler) compiler. Hashing not supported; make sure you run `x.cleanup` before every `transpile`.~~ |
+| Ubuntu 16.04.3 LTS | ✓ |   you may need a specific compiler, see [this](docs/compilers.md) for details | 
+| Windows 7 | ✓ | You will need the [MinGW](https://www.mathworks.com/matlabcentral/fileexchange/52848-matlab-support-for-mingw-w64-c-c++-compiler) compiler. Hashing may not be supported; use with caution.|
 
 `xolotl` has been tested on `MATLAB 9.3.0.713579 (R2017b)`, but other versions should work too. 
 
 ### Installation 
 
 [Click here](docs/INSTALLING.md)
-
-[Make sure you have the right compilers](docs/compilers.md)
 
 
 ## Benchmarks
