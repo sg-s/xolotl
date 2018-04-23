@@ -60,25 +60,9 @@ V = x.integrate;
 
 ### Installation 
 
-Get this repo from within `MATLAB` using my package manager:
+[Click here](docs/INSTALLING.md)
 
-```
-% copy and paste this code in your MATLAB prompt
-urlwrite('http://srinivas.gs/install.m','install.m'); 
-install sg-s/srinivas.gs_mtools % you'll need this
-install sg-s/puppeteer % for manipulation
-install sg-s/xolotl
-```
-
-or use git if you plan to develop this further: 
-
-```
-git clone https://github.com/sg-s/srinivas.gs_mtools
-git clone https://github.com/sg-s/puppeteer
-git clone https://github.com/sg-s/xolotl
-```
-
-Finally, make sure you [configure MATLAB so that it is set up to delete files permanently](https://www.mathworks.com/help/matlab/ref/delete.html). Otherwise you will end up with a very large number of temporary files in your trash!
+[Make sure you have the right compilers](docs/compilers.md)
 
 
 ## Benchmarks
