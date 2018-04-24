@@ -30,7 +30,7 @@ elseif length(varargin) == 1
 	
 	% need to add it twice because each electrical
 	% synapse is actually one way
-	self.synapses = [self.synapses; synapse; synapse];
+	self.synapses = [self.synapses; synapse; copy(synapse)];
 
 	self.synapse_pre = [self.synapse_pre; comp1];
 	self.synapse_post = [self.synapse_post; comp2];

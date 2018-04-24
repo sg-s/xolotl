@@ -46,6 +46,11 @@ public:
     // compartment
     double tree_idx; 
 
+    // pointers to upstream and downstream compartments
+    // (will be generated on initialization)
+    compartment * upstream;
+    compartment * downstream;
+
     // neuron parameters
     double Cm; // specific capacitance 
     double A; 
@@ -103,7 +108,7 @@ public:
         // defaults
         if (isnan (V)) { V = -60; }
         if (isnan (Ca)) { Ca = Ca_in; }
-        if (isnan (Ca_target)) { Ca_target = Ca_in; }        
+        if (isnan (Ca_target)) { Ca_target = Ca_in; }     
 
         // housekeeping
         E_Ca = 0;
@@ -112,6 +117,8 @@ public:
         n_cont = 0;
         n_syn = 0; 
         container = NULL;
+        upstream = NULL;
+        downstream = NULL;
 
     }
     // begin function declarations 
@@ -134,7 +141,23 @@ public:
     controller* getControllerPointer(int);
     void connect(network*);
 
+    compartment* getConnectedCompartment(int);
+
 };
+
+
+// returns a list of connected compartments.
+// this function returns only one pointer at a time
+// to get them all, iterative over the integer argument
+compartment* compartment::getConnectedCompartment(int idx)
+{
+    compartment* neighbour = NULL;
+    for (int i = 0; i < n_syn; i ++)
+    {
+        neighbour = syn[i]->pre_syn;
+    }
+    return neighbour;
+}
 
 void compartment::connect(network *pnetwork_) {container = pnetwork_; }
 

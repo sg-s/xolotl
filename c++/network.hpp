@@ -37,8 +37,39 @@ public:
     void integrateClamp(double, double *, double);
     void addCompartment(compartment*);
     compartment* findSoma(void);
+    void resolveTree(void);
 
 };
+
+void network::resolveTree(void)
+{
+    compartment * dummy_var = NULL;
+    // ttl =  this_tree_level
+    for (int ttl = 0; ttl < n_comp; ttl++)
+    {
+        // find all compartments with this_tree_level
+        for (int i = 0; i < n_comp; i++)
+        {
+            if (isnan(comp[i]->tree_idx)) {continue;}
+            if ((comp[i]->tree_idx) != ttl) {continue;}
+
+            // OK, this compartment has the tree level we 
+            // are currently interested in 
+
+            dummy_var = comp[i]->getConnectedCompartment(1);
+            if (isnan(dummy_var->tree_idx))
+            {
+                double child_tree_idx = ttl+1;
+                mexPrintf("Setting this to  =  %f \n", child_tree_idx);
+                // set it 
+                (dummy_var->tree_idx) = child_tree_idx;
+            }
+            
+        }
+    }
+    
+
+}
 
 compartment* network::findSoma(void)
 {

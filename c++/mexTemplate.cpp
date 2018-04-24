@@ -126,7 +126,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         }
     }
 
-
+    // resolve the tree (for multi-compartment models)
+    xolotl_network.resolveTree();
 
     if (is_voltage_clamped)
     {

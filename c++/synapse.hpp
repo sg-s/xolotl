@@ -20,10 +20,11 @@ protected:
     double Vth;
 
 
-    compartment *pre_syn; // pointer to pre-synaptic compartment 
+    
     compartment *post_syn; // pointer to pre-synaptic compartment 
 public:
 
+    compartment *pre_syn; // pointer to pre-synaptic compartment 
     double s;
     double gbar;
     double E;

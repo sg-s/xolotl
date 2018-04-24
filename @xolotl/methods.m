@@ -8,9 +8,14 @@
 %
 % overloaded method called methods that shows the methods
 % in xolotl 
-function [] = methods(self)
+function m = methods(self)
 
 m = builtin('methods',self);
+
+if nargout 
+	return
+end
+
 
 fprintf(['Methods of xolotl:' '\n'])
 fprintf(['================================================= \n'])
