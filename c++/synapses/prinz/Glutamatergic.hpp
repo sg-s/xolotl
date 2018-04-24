@@ -20,6 +20,7 @@ public:
         // defaults
         if (isnan (s)) { s = 0; }
         if (isnan (gbar)) { gbar = 0; }
+        is_electrical = false;
 
     }
     

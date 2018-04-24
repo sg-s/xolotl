@@ -36,14 +36,13 @@ public:
     void integrate(double,double *, double);
     void integrateClamp(double, double *, double);
     void addCompartment(compartment*);
-    compartment* findSoma(void);
     void resolveTree(void);
 
 };
 
 void network::resolveTree(void)
 {
-    compartment * dummy_var = NULL;
+    compartment * connected_comp = NULL;
     // ttl =  this_tree_level
     for (int ttl = 0; ttl < n_comp; ttl++)
     {
@@ -56,43 +55,50 @@ void network::resolveTree(void)
             // OK, this compartment has the tree level we 
             // are currently interested in 
 
-            dummy_var = comp[i]->getConnectedCompartment(1);
-            if (isnan(dummy_var->tree_idx))
+            // now go over every synapse that impinges on 
+            // this compartment and check if they're electrical
+            // and if so get pointers to those presyn compartments
+
+            for (int j = 0; j < comp[i]->n_syn; j ++ )
             {
-                double child_tree_idx = ttl+1;
-                mexPrintf("Setting this to  =  %f \n", child_tree_idx);
-                // set it 
-                (dummy_var->tree_idx) = child_tree_idx;
+                connected_comp = comp[i]->getConnectedCompartment(j);
+                if (connected_comp){}
+                else
+                {
+                    mexPrintf("NULL pointer\n");
+                    continue;
+                }
+                if (isnan(connected_comp->tree_idx))
+                {
+                    double child_tree_idx = ttl+1;
+                    // mexPrintf("Setting this to  =  %f \n", child_tree_idx);
+                    // set it 
+                    (connected_comp->tree_idx) = child_tree_idx;
+
+                    // wire up stream pointers
+                    (comp[i]->downstream) = connected_comp;
+                    (connected_comp->upstream) = comp[i];
+                }
+                else if ((connected_comp->tree_idx) == (ttl+1)) {
+                    // connected_comp already has a tree_idx
+                    // possibly manually entered, or from a previous
+                    // integrate. if compatible, wire up stream
+                    // pointers
+                    (comp[i]->downstream) = connected_comp;
+                    (connected_comp->upstream) = comp[i];
+
+                }
             }
-            
         }
     }
-    
-
 }
 
-compartment* network::findSoma(void)
-{
-    compartment * c = NULL;
-
-    // first, find compartments that are soma 
-    for (int i = 0; i < n_comp; i++)
-    {
-        if ((comp[i]->tree_idx) == 0)
-        {
-            c = comp[i];
-        }
-    }
-    return c;
-
-}
 
 // add a compartment to the network -- network is simply an array of pointers to compartments
 void network::addCompartment(compartment *comp_)
 {
     comp.push_back(comp_);
     n_comp++;
-    comp_->connect(this);
 }
 
 // this integrate method works for networks

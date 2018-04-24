@@ -135,7 +135,7 @@ void IntegralController::integrate(double Ca_error, double dt)
     if (syn) {
         // syn is a non-NULL pointer, so
         // this controller must be controlling a 
-        // synpase that is presynaptic to this compartment 
+        // synapse that is presynaptic to this compartment 
         // calculate conductance, not conductance density
         double g = (syn->gbar); 
 

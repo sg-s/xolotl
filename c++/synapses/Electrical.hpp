@@ -14,6 +14,7 @@ public:
     {
         gbar = g_;
         s = 1; // always active
+        is_electrical = true;
     }
     
     void integrate(double dt);

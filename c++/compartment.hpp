@@ -37,8 +37,6 @@ protected:
 
 public:
 
-    // pointer to network that contains this
-    network * container;
 
     // this int stores an integer that indicates 
     // the hierarchy of this compartment in a multi-comp
@@ -116,7 +114,6 @@ public:
         n_cond = 0;
         n_cont = 0;
         n_syn = 0; 
-        container = NULL;
         upstream = NULL;
         downstream = NULL;
 
@@ -139,11 +136,44 @@ public:
     int getFullControllerSize(void);
 
     controller* getControllerPointer(int);
-    void connect(network*);
 
     compartment* getConnectedCompartment(int);
 
+    conductance* getConductancePointer(const char*);
+    controller* getControllerPointer(const char*);
+
 };
+
+conductance* compartment::getConductancePointer(const char* cond_class)
+{
+    conductance* req_cond = NULL;
+
+    for (int i = 0; i < n_cond; i ++)
+    {
+        if ((cond[i]->getClass()) == cond_class)
+        {
+            req_cond = cond[i];
+        }
+    }
+
+    return req_cond;
+}
+
+controller* compartment::getControllerPointer(const char* cond_class)
+{
+    controller* req_cont = NULL;
+
+    for (int i = 0; i < n_cont; i ++)
+    {
+        // mexPrintf("this class = %s\n", (cont[i]->controlling_class).c_str());
+        if ((cont[i]->controlling_class) == cond_class)
+        {
+            req_cont = cont[i];
+        }
+    }
+
+    return req_cont;
+}
 
 
 // returns a list of connected compartments.
@@ -152,14 +182,14 @@ public:
 compartment* compartment::getConnectedCompartment(int idx)
 {
     compartment* neighbour = NULL;
-    for (int i = 0; i < n_syn; i ++)
-    {
-        neighbour = syn[i]->pre_syn;
+    if (idx > n_syn) {return neighbour;}
+    if (syn[idx]->is_electrical) {
+        neighbour = syn[idx]->pre_syn;
     }
+    
+
     return neighbour;
 }
-
-void compartment::connect(network *pnetwork_) {container = pnetwork_; }
 
 
 int compartment::getFullControllerSize(void)
@@ -172,19 +202,6 @@ int compartment::getFullControllerSize(void)
     return full_size;
 }
 
-// simple integrate; use this only for 
-// single-compartment non-clamped neurons
-void compartment::integrate(double dt, double delta_temperature)
-{
-    double V_prev = V;
-    double Ca_prev = Ca;
-    i_Ca = 0;
-    I_ext = 0;
-    I_clamp = 0;
-
-    integrateChannels(V_prev, Ca_prev, dt, delta_temperature);
-    integrateVC(V_prev, Ca_prev, dt, delta_temperature);
-}
 
 void compartment::integrateControllers(double Ca_prev, double dt)
 {
@@ -245,7 +262,6 @@ void compartment::integrateVC(double V_prev, double Ca_prev, double dt, double d
         V_inf = (sigma_gE + (I_ext/A))/sigma_g;
 
     Ca_inf = Ca_in - (tau_Ca*phi*i_Ca*A*.5)/(F*vol); // microM
-
 
     // integrate V and Ca
     V = V_inf + (V_prev - V_inf)*exp(-dt/(Cm/(sigma_g)));

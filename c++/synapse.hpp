@@ -28,6 +28,7 @@ public:
     double s;
     double gbar;
     double E;
+    bool is_electrical;
     
 
     synapse()

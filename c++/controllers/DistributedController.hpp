@@ -95,6 +95,8 @@ void DistributedController::connect(conductance * channel_, synapse * syn_)
         // connect to a channel
         channel = channel_;
 
+
+        controlling_class = channel_->getClass();
         // attempt to read the area of the container that this
         // controller should be in. note that this is not necessarily the
         // container that contains this controller. rather, it is 

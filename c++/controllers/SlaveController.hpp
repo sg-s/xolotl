@@ -9,7 +9,6 @@
 #ifndef SLAVECONTROLLER
 #define SLAVECONTROLLER
 #include "../controller.hpp"
-#include <stdexcept>
 
 //inherit controller class spec
 class SlaveController: public controller {
@@ -31,7 +30,7 @@ public:
 
     // area of the container this is in
     // this is NOT necessarily the area of the compartment
-    // that contains it
+    // that owns it
     double container_A;
 
     // specify parameters + initial conditions for 
@@ -51,6 +50,7 @@ public:
 
         if (isnan (m)) { m = 0; }
         if (isnan (phi)) { phi = 1; }
+        controlling_class = "unset";
     }
 
     
@@ -127,16 +127,30 @@ void SlaveController::integrate(double Ca_error, double dt)
 
     if (!master_controller){
        
-
+        // mexPrintf("master controller not defined\n");
         // attempt to ask the network for the right one
         // int n_comp = ((channel->container)->container)->n_comp;
-        // mexPrintf("master controller not defined; n_comp = %i\n",n_comp);
+        compartment * upstream_comp = (channel->container)->upstream;
+
+        if (!upstream_comp)
+        {
+            // give up. there is no upstream, and masters havent
+            // been configured. 
+            mexPrintf("NO resolvable master for this SlaveController. You must fix this issue.\n");
+            return;
+        }
+
+
+        master_controller = upstream_comp->getControllerPointer(controlling_class.c_str());
+
+        if (!master_controller){
+            mexPrintf("failed to find upstream\n");
+        }
 
         return;
     }
 
-    // get type of the thing being controlled
-
+    // mexPrintf("wow!\n");
 
     // integrate mRNA
     m += (dt/tau_m)*((master_controller->get_m()) - m);

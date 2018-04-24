@@ -36,11 +36,12 @@ protected:
     conductance* channel; // pointer to conductance that this regulates
     synapse* syn; // pointer to synapse that this regulates 
 
+
+public:
+
     // store the type of the thing being controlled
     // as a string 
     string controlling_class;
-
-public:
 
     int controller_idx;
 
