@@ -4,16 +4,17 @@
 //
 // Abstract class for defining controllers 
 // controllers are tied to specific conductances,
-// so when you construct a controller, you specify
-// the conductance it controls
-// in addition, controllers need to be added to 
-// compartments
-// so that the compartment knows they exist and 
-// can ask them to integrate. 
+// or synapses. You can't have "naked" controllers
+// that have nothing to control. 
+// 
+// controllers are stored in compartments, and are
+// asked to integrate by the compartment they are in
+// which provides them the calcium error signal
+// and the timestep
 //
 // this abstract class the following elements, which
 // all controllers will always have:
-// channel     (a pointer to the conductance it controls)
+// channel        (a pointer to the conductance it controls)
 // controller_idx (an integer identifying the controller 
 //                 within the compartment it is in)
 // 
@@ -61,7 +62,7 @@ public:
     virtual void integrate(double, double) = 0;
     virtual int getFullStateSize(void) = 0;
     virtual int getFullState(double*, int) = 0;
-    virtual double get_m(void) = 0;
+    virtual double getState(int) = 0;
 
 };
 

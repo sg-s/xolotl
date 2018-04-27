@@ -44,12 +44,19 @@ public:
     void connect(conductance * channel_, synapse * syn_);
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
-
-    double get_m(void);
+    double getState(int);
 
 };
 
-double IntegralController::get_m() {return m;}
+
+double IntegralController::getState(int idx)
+{
+    if (idx == 1) {return m;}
+    else if (idx == 2) {return channel->gbar;}
+    else {return std::numeric_limits<double>::quiet_NaN();}
+
+}
+
 
 int IntegralController::getFullStateSize()
 {
