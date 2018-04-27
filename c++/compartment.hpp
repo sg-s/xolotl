@@ -44,6 +44,11 @@ public:
     // compartment
     double tree_idx; 
 
+    // this number stores a numeric value
+    // that corresponds to the neuron # of this compartment
+    // in the whole network. automatically assigned
+    double neuron_idx;
+
     // pointers to upstream and downstream compartments
     // (will be generated on initialization)
     compartment * upstream;
@@ -77,7 +82,7 @@ public:
     int n_syn; // # of synapses
 
     // constructor with all parameters 
-    compartment(double V_, double Ca_, double Cm_, double A_, double vol_, double phi_, double Ca_out_, double Ca_in_, double tau_Ca_, double Ca_target_, double Ca_average_, double tree_idx_)
+    compartment(double V_, double Ca_, double Cm_, double A_, double vol_, double phi_, double Ca_out_, double Ca_in_, double tau_Ca_, double Ca_target_, double Ca_average_, double tree_idx_, double neuron_idx_)
     {
         V = V_;
         vol = vol_;
@@ -102,6 +107,7 @@ public:
         RT_by_nF = 500.0*(8.6174e-5)*(10 + 273.15);
 
         tree_idx = tree_idx_;
+        neuron_idx = neuron_idx_;
 
         // defaults
         if (isnan (V)) { V = -60; }

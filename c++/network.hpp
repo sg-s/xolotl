@@ -43,6 +43,9 @@ public:
 void network::resolveTree(void)
 {
     compartment * connected_comp = NULL;
+
+    int n_soma = 0;
+
     // ttl =  this_tree_level
     for (int ttl = 0; ttl < n_comp; ttl++)
     {
@@ -55,6 +58,12 @@ void network::resolveTree(void)
             // OK, this compartment has the tree level we 
             // are currently interested in 
 
+            if (comp[i]->tree_idx == 0)
+            {
+                n_soma++;
+                comp[i]->neuron_idx = n_soma;
+            }
+
             // now go over every synapse that impinges on 
             // this compartment and check if they're electrical
             // and if so get pointers to those presyn compartments
@@ -62,12 +71,7 @@ void network::resolveTree(void)
             for (int j = 0; j < comp[i]->n_syn; j ++ )
             {
                 connected_comp = comp[i]->getConnectedCompartment(j);
-                if (connected_comp){}
-                else
-                {
-                    mexPrintf("NULL pointer\n");
-                    continue;
-                }
+                if (!connected_comp){continue;}
                 if (isnan(connected_comp->tree_idx))
                 {
                     double child_tree_idx = ttl+1;
@@ -78,6 +82,8 @@ void network::resolveTree(void)
                     // wire up stream pointers
                     (comp[i]->downstream) = connected_comp;
                     (connected_comp->upstream) = comp[i];
+
+                    connected_comp->neuron_idx = comp[i]->neuron_idx;
                 }
                 else if ((connected_comp->tree_idx) == (ttl+1)) {
                     // connected_comp already has a tree_idx
@@ -87,10 +93,14 @@ void network::resolveTree(void)
                     (comp[i]->downstream) = connected_comp;
                     (connected_comp->upstream) = comp[i];
 
+                    connected_comp->neuron_idx = comp[i]->neuron_idx;
+
                 }
             }
         }
     }
+
+    mexPrintf("found %i soma\n", n_soma);
 }
 
 

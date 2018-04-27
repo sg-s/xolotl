@@ -10,11 +10,14 @@ F = 96485; % Faraday constant in SI units
 phi = (2*f*F*vol)/tau_Ca;
 
 x = xolotl;
-x.cleanup;
-x.add('Soma','compartment','Cm',10,'A',A,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
+% make 2 neurons
+x.add('ABSoma','compartment','Cm',10,'A',A,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
 
-x.add('Axon','compartment','Cm',10,'A',A/10,'vol',vol/10,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
-x.add('Dendrite','compartment','Cm',10,'A',A/10,'vol',vol/10,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
+x.add('ABDendrite','compartment','Cm',10,'A',A/10,'vol',vol/10,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
+
+x.add('LPSoma','compartment','Cm',10,'A',A,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
+
+x.add('LPDendrite','compartment','Cm',10,'A',A/10,'vol',vol/10,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
 
 
 prefix = 'prinz-approx/';
@@ -29,19 +32,14 @@ for i = 1:length(channels)
 	end
 end
 
-x.Soma.NaV.gbar = 0;
-x.Dendrite.NaV.gbar = 0;
+x.ABSoma.NaV.gbar = 0;
+x.LPSoma.NaV.gbar = 0;
 
-x.Axon.CaS.gbar = 0;
-x.Axon.CaT.gbar = 0;
-x.Axon.HCurrent.gbar = 0;
-x.Axon.KCa.gbar = 0;
-x.Axon.ACurrent.gbar = 0;
+x.slice('ABDendrite',5,g_axial);
+x.slice('LPDendrite',5,g_axial);
 
-% add some controllers
-
-x.connect('Axon','Soma',g_axial);
-x.connect('Dendrite','Soma',g_axial);
+x.connect('ABDendrite','ABSoma',g_axial);
+x.connect('LPDendrite','LPSoma',g_axial);
 
 
 x.dt = .1;
@@ -49,34 +47,12 @@ x.sim_dt = .1;
 x.t_end = 5e3;
 
 % mark the soma as the soma
-x.Soma.tree_idx = 0;
-
-% set the calcium target in the soma
-x.integrate;
-x.Soma.Ca_target = x.Soma.Ca_average;
-
-
-tau_g = 5e3;
-
-% add controllers to the soma 
-tau_m = 1e2*(g(end)./g);
-
-for i = 1:length(channels)
-	x.Soma.(channels{i}).add('DistributedController','tau_m',tau_m(i),'tau_g',tau_g);
-	x.Dendrite.(channels{i}).add('SlaveController','tau_m',tau_m(i),'tau_g',tau_g);
-end
-
-x.set(x.find('*Dendrite*gbar'),.1);
-x.set(x.find('*Soma*gbar'),.1);
+x.LPSoma.tree_idx = 0;
+x.ABSoma.tree_idx = 0;
 
 
 compartments = x.find('compartment');
 N = length(compartments);
 
 V = x.integrate;
-for i = 1:N
-	subplot(N,1,i); hold on
-	plot(V(:,i),'k')
-	title(compartments{i})
-end
 
