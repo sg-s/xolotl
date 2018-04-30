@@ -14,6 +14,7 @@
 class network;
 
 #define F 96485
+#define pi 3.1416
 
 using namespace std;
 
@@ -25,6 +26,9 @@ protected:
     vector<synapse*> syn; // pointers to synapses onto this neuron. 
     vector<controller*> cont; // pointers to controllers 
     vector<int> controller_sizes; // stores sizes of each controller's full state
+
+    // vector that will store the axial synapses
+    vector <synapse*> axial_syn;
     
     // voltage and other state variables (calcium, ..
     double sigma_g;
@@ -34,6 +38,16 @@ protected:
 
 
     double RT_by_nF;
+
+    // a bunch of housekeeping parameters
+    // that will be useful in the 
+    // Crank-Nicholson integration scheme
+    double c;
+    double f;
+    double b;
+    double d;
+    double c_;
+    double f_;
 
 public:
 
@@ -54,14 +68,32 @@ public:
     compartment * upstream;
     compartment * downstream;
 
+    // conductances downstream and upstream
+    // will be generated on initialization 
+    double downstream_g;
+    double upstream_g;
+
+
+
+
     // neuron parameters
-    double Cm; // specific capacitance 
+
+    // size 
+    // gemoetry is assumed to be a cylinder.
+    // if not, you must specify the area and 
+    // volume
     double A; 
+    double vol;
+    double radius;
+    double len; 
+
+
+    double Cm; // specific capacitance 
+    
     double phi; 
     double Ca_in;
     double Ca_out; 
     double tau_Ca;
-    double vol;
     double Ca_target; // for homeostatic control 
 
 
@@ -80,12 +112,12 @@ public:
     int n_cond; // this keep tracks of the # channels
     int n_cont; // # of controllers 
     int n_syn; // # of synapses
+    int n_axial_syn;
 
     // constructor with all parameters 
-    compartment(double V_, double Ca_, double Cm_, double A_, double vol_, double phi_, double Ca_out_, double Ca_in_, double tau_Ca_, double Ca_target_, double Ca_average_, double tree_idx_, double neuron_idx_)
+    compartment(double V_, double Ca_, double Cm_, double A_, double vol_, double phi_, double Ca_out_, double Ca_in_, double tau_Ca_, double Ca_target_, double Ca_average_, double tree_idx_, double neuron_idx_, double radius_, double len_)
     {
         V = V_;
-        vol = vol_;
         Ca = Ca_;
 
         sigma_g = 0;
@@ -93,8 +125,14 @@ public:
         V_inf = 0;
         Ca_inf = 0;
 
-        Cm = Cm_;
+        // geometry
+        vol = vol_;
         A = A_; 
+        radius = radius_;
+        len = len_;
+
+        Cm = Cm_;
+        
         phi = phi_; 
         Ca_in = Ca_in_; 
         Ca_out = Ca_out_;
@@ -104,15 +142,28 @@ public:
         Ca_average = Ca_average_;
         Ca_average = 0; // reset it every time
 
-        RT_by_nF = 500.0*(8.6174e-5)*(10 + 273.15);
+        RT_by_nF = 500.0*(8.6174e-5)*(11 + 273.15);
 
         tree_idx = tree_idx_;
         neuron_idx = neuron_idx_;
 
         // defaults
-        if (isnan (V)) { V = -60; }
+        if (isnan (Cm)) { Cm = 10;}
+        if (isnan (tau_Ca)) { tau_Ca = 200;} // ms
+        if (isnan (V)) { V = -60; } // mV
         if (isnan (Ca)) { Ca = Ca_in; }
         if (isnan (Ca_target)) { Ca_target = Ca_in; }     
+
+        // 
+        if (!isnan(len) && !isnan(radius))
+        {
+            //  radius and length
+            // are provided, and use 
+            // cylindrical geometry 
+            // override defaults if need be
+            A = 2*pi*radius*len + 2*pi*radius*radius;
+            vol = pi*radius*radius*len;
+        }
 
         // housekeeping
         E_Ca = 0;
@@ -120,35 +171,79 @@ public:
         n_cond = 0;
         n_cont = 0;
         n_syn = 0; 
+        n_axial_syn = 0;
         upstream = NULL;
         downstream = NULL;
+        upstream_g = 0;
+        downstream_g = 0;
 
     }
+
     // begin function declarations 
     void addConductance(conductance*);
     void addSynapse(synapse*);
+    void addAxial(synapse*);
     void addController(controller*);
 
-    void integrate(double, double);
+    // integration methods 
     void integrateControllers(double, double);
     void integrateChannels(double, double, double, double);
     void integrateSynapses(double, double, double);
     void integrateVC(double, double, double, double);
     void integrateC_V_clamp(double, double, double, double);
+    void integrateCalcium(double, double);
+
+    // methods to retrieve information from compartment
     void get_cond_state(double*);
     int getFullControllerState(double*, int);
-
-
     int getFullControllerSize(void);
-
     controller* getControllerPointer(int);
-
     compartment* getConnectedCompartment(int);
-
     conductance* getConductancePointer(const char*);
     controller* getControllerPointer(const char*);
 
+    // methods for integrating using Crank-Nicholson 
+    double getBCDF(int);
+
 };
+
+// methods are arranged alphabetically 
+
+// add axial to this compartment 
+void compartment::addAxial(synapse *syn_)
+{
+    axial_syn.push_back(syn_);
+    n_axial_syn ++; 
+}
+
+// add conductance and provide pointer back to compartment 
+void compartment::addConductance(conductance *cond_)
+{
+    cond.push_back(cond_);
+    cond_->connect(this);
+    n_cond ++; 
+}
+
+// add controller to this compartment 
+void compartment::addController(controller *cont_)
+{
+    // mexPrintf("adding controller @  %p\n",cont_);
+    cont.push_back(cont_);
+    cont_->controller_idx = n_cont; // tell the controller what rank it has
+    n_cont++;
+
+    // also store the controller's full state size
+    controller_sizes.push_back(cont_->getFullStateSize());
+   
+}
+
+// add synapse to this compartment (this compartment is after synapse)
+void compartment::addSynapse(synapse *syn_)
+{
+    syn.push_back(syn_);
+    n_syn ++; 
+}
+
 
 conductance* compartment::getConductancePointer(const char* cond_class)
 {
@@ -188,15 +283,10 @@ controller* compartment::getControllerPointer(const char* cond_class)
 compartment* compartment::getConnectedCompartment(int idx)
 {
     compartment* neighbour = NULL;
-    if (idx > n_syn) {return neighbour;}
-    if (syn[idx]->is_electrical) {
-        neighbour = syn[idx]->pre_syn;
-    }
-    
-
+    if (idx > n_axial_syn) {return neighbour;}
+    neighbour = axial_syn[idx]->pre_syn;
     return neighbour;
 }
-
 
 int compartment::getFullControllerSize(void)
 {
@@ -209,16 +299,49 @@ int compartment::getFullControllerSize(void)
 }
 
 
-void compartment::integrateControllers(double Ca_prev, double dt)
+// helper function used in the Crank-Nicholson scheme
+// and returns B, C, D and F values as defined in eq. 
+// 6.45 of Dayan and Abbott
+double compartment::getBCDF(int idx)
 {
+    if (idx == 0) {
+        return 0;
+    } else if (idx == 1) {
+        // return B 
+        if (downstream){
+            // mexPrintf("V = %f\n",V)
+            // mexPrintf("downstream_g = %f\n",downstream->)
 
-    // integrate all controllers
-    for (int i=0; i<n_cont; i++)
-    {
-        cont[i]->integrate(Ca_target - Ca_prev, dt);
+        } else {
+            // no downstream, 1st compartment,
+            // return 0
+            return 0;
+        }
+
+    } else if (idx == 2) {
+        // return C
+        
+    } else if (idx == 3) {
+        // return D
+        
+    } else if (idx == 4) {
+        // return F
+        
+    } else  {
+        return 0;
     }
-   
+    return 0;
+
 }
+
+void compartment::integrateCalcium(double Ca_prev, double dt)
+{
+    Ca_inf = Ca_in - (tau_Ca*phi*i_Ca*A*.5)/(F*vol); // microM
+    Ca = Ca_inf + (Ca_prev - Ca_inf)*exp(-dt/tau_Ca);
+}
+
+
+
 
 void compartment::integrateChannels(double V_prev, double Ca_prev, double dt, double delta_temperature)
 {
@@ -242,26 +365,33 @@ void compartment::integrateChannels(double V_prev, double Ca_prev, double dt, do
     Ca_average += Ca;
 }
 
+
+
+void compartment::integrateControllers(double Ca_prev, double dt)
+{
+    for (int i=0; i<n_cont; i++)
+    {
+        cont[i]->integrate(Ca_target - Ca_prev, dt);
+    }
+}
+
+
 void compartment::integrateSynapses(double V_prev, double dt, double delta_temperature)
 {
-
     // we treat synapses identically to any other conductance 
-
-    // integrate all synapses
     for (int i=0; i<n_syn; i++)
     {
         // mexPrintf("integrating synapse in comp: =  %i\n",&(syn[i]));
         syn[i]->integrate(dt);
-        sigma_g += abs((syn[i]->gbar)*(syn[i]->s)/(1000*A)); // now uS/mm^2
+        sigma_g += (syn[i]->gbar)*(syn[i]->s)/(1000*A); // now uS/mm^2
         sigma_gE += ((syn[i]->gbar)*(syn[i]->s)*(syn[i]->E)/(1000*A));
-
     }
 }
+
 
 void compartment::integrateVC(double V_prev, double Ca_prev, double dt, double delta_temperature)
 {
     // compute infinity values for V and Ca
-    //mexPrintf("sigma_gE =  %f\n",sigma_gE);
     if (sigma_g == 0)
         V_inf = V_prev;
     else
@@ -302,36 +432,6 @@ void compartment::integrateC_V_clamp(double V_clamp, double Ca_prev, double dt, 
     
 }
 
-
-// add conductance and provide pointer back to compartment 
-void compartment::addConductance(conductance *cond_)
-{
-    cond.push_back(cond_);
-    cond_->connect(this);
-    n_cond ++; 
-}
-
-// add synapse to this compartment (this compartment is after synapse)
-void compartment::addSynapse(synapse *syn_)
-{
-    syn.push_back(syn_);
-    n_syn ++; 
-}
-
-// add controller to this compartment 
-void compartment::addController(controller *cont_)
-{
-    // mexPrintf("adding controller @  %p\n",cont_);
-    cont.push_back(cont_);
-    cont_->controller_idx = n_cont; // tell the controller what rank it has
-    n_cont ++;
-
-    // also store the controller's full state size
-    controller_sizes.push_back(cont_->getFullStateSize());
-
-    // mexPrintf("this controller has size =  %i ", cont_->getFullStateSize());
-   
-}
 
 
 // returns a vector of the state of every conductance 

@@ -24,7 +24,7 @@ end
 if isempty(varargin)
 	
 	error('Need to specify how to connect these compartments')
-elseif length(varargin) == 1
+elseif length(varargin) == 1 && isdouble(varargin{1})
 	% default to a electrical synapse
 	synapse = cpplab('Electrical','gbar',varargin{1});
 	
@@ -37,6 +37,14 @@ elseif length(varargin) == 1
 
 	self.synapse_pre = [self.synapse_pre; comp2];
 	self.synapse_post = [self.synapse_post; comp1];
+
+elseif length(varargin) == 1 && isa(varargin{1},'cpplab')
+	% we are given an object. blindly use it
+	synapse = varargin{1};
+	self.synapses = [self.synapses; synapse];
+
+	self.synapse_pre = [self.synapse_pre; comp1];
+	self.synapse_post = [self.synapse_post; comp2];
 
 else
 
