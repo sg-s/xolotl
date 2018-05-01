@@ -36,8 +36,8 @@ x.skip_hash = true;
 	x.Soma.NaV.gbar = 0;
 	%x.slice('Neurite',5,axial_resitivity);
 
-	x.connect('Neurite','Soma','Axial','resistivity',axial_resitivity);
-	x.connect('Soma','Neurite','Axial','resistivity',axial_resitivity);
+	x.connect('Neurite','Soma','Axial','resistivity',1e1*axial_resitivity);
+	x.connect('Soma','Neurite','Axial','resistivity',1e1*axial_resitivity);
 	x.Soma.tree_idx = 0;
 
 x.skip_hash = false; x.sha1hash;
