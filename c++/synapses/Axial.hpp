@@ -48,13 +48,13 @@ void Axial::connect(compartment *pcomp1_, compartment *pcomp2_)
     // of the two compartments using 
     // equation 6.30 (Dayan and Abbott)
 
-    double Lmu = post_syn->len;
-    double Lmup = pre_syn->len;
-    double amu = post_syn->radius;
-    double amup = pre_syn->radius;
+    double Lmu_ = post_syn->len;
+    double amu_ = post_syn->radius;
 
-    gbar = (amu*amup*amup);
-    gbar = gbar/((resistivity*Lmu)*(Lmu*amup*amup + Lmup*amu*amu));
+    double amu = pre_syn->radius;
+    double Lmu = pre_syn->len;
+
+    gbar = (amu*amu_*amu_)/((resistivity*Lmu)*(Lmu*amu_*amu_ + Lmu_*amu*amu));
 }
 
 #endif

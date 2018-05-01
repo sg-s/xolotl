@@ -52,9 +52,16 @@ x.t_end = 5e3;
 x.transpile; x.compile;
 x.integrate; V = x.integrate;
 
-figure('outerposition',[0 0 1000 900],'PaperUnits','points','PaperSize',[1000 900]); hold on
+C = x.find('compartment');
+
+figure('outerposition',[100 100 1000 900],'PaperUnits','points','PaperSize',[1000 900]); hold on
 for i = 1:3
 	subplot(3,1,i); hold on
 	plot(V(:,i))
+	ylabel('V_m (mV)')
+	title(C{i})
+	
 end
+
+prettyFig('plw',1.5);
 drawnow

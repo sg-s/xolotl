@@ -36,20 +36,17 @@ protected:
     double V_inf;         
     double Ca_inf; 
 
-
     double RT_by_nF;
 
-    // a bunch of housekeeping parameters
+public:
+
+    // some housekeeping parameters
     // that will be useful in the 
     // Crank-Nicholson integration scheme
-    double c;
-    double f;
-    double b;
-    double d;
     double c_;
     double f_;
+    double delta_V;
 
-public:
 
 
     // this int stores an integer that indicates 
@@ -131,19 +128,22 @@ public:
         radius = radius_;
         len = len_;
 
+        // membrane props
         Cm = Cm_;
         
+
+        // calcium
         phi = phi_; 
         Ca_in = Ca_in_; 
         Ca_out = Ca_out_;
         tau_Ca = tau_Ca_;
         Ca_target = Ca_target_;
-
         Ca_average = Ca_average_;
         Ca_average = 0; // reset it every time
 
-        RT_by_nF = 500.0*(8.6174e-5)*(11 + 273.15);
 
+        // housekeeping 
+        RT_by_nF = 500.0*(8.6174e-5)*(11 + 273.15);
         tree_idx = tree_idx_;
         neuron_idx = neuron_idx_;
 
@@ -154,10 +154,9 @@ public:
         if (isnan (Ca)) { Ca = Ca_in; }
         if (isnan (Ca_target)) { Ca_target = Ca_in; }     
 
-        // 
         if (!isnan(len) && !isnan(radius))
         {
-            //  radius and length
+            // radius and length
             // are provided, and use 
             // cylindrical geometry 
             // override defaults if need be
@@ -177,9 +176,15 @@ public:
         upstream_g = 0;
         downstream_g = 0;
 
+        f_ = 0;
+        c_ = 0;
+        delta_V = 0;
+
     }
 
-    // begin function declarations 
+    // begin function declarations
+
+    // methods to add things to compartment  
     void addConductance(conductance*);
     void addSynapse(synapse*);
     void addAxial(synapse*);
@@ -202,8 +207,12 @@ public:
     conductance* getConductancePointer(const char*);
     controller* getControllerPointer(const char*);
 
+    void resolveAxialConductances(void);
+
     // methods for integrating using Crank-Nicholson 
     double getBCDF(int);
+    void integrateCNFirstPass(double);
+    void integrateCNSecondPass(double);
 
 };
 
@@ -309,8 +318,7 @@ double compartment::getBCDF(int idx)
     } else if (idx == 1) {
         // return B 
         if (downstream){
-            // mexPrintf("V = %f\n",V)
-            // mexPrintf("downstream_g = %f\n",downstream->)
+            return (downstream_g/Cm);
 
         } else {
             // no downstream, 1st compartment,
@@ -320,17 +328,30 @@ double compartment::getBCDF(int idx)
 
     } else if (idx == 2) {
         // return C
-        
+        double C = sigma_g;
+        if (downstream) {C += downstream_g;}
+        if (upstream) {C += upstream_g;}
+        C = -C/Cm;
+        return C;
+
     } else if (idx == 3) {
         // return D
+        if (upstream) {
+            return (upstream_g/Cm);
+        } else {
+            // no upstream, this is the soma 
+            // by definition, 
+            return 0;
+        }
         
     } else if (idx == 4) {
         // return F
+       return (sigma_gE/Cm);
+       // TODO; allow for current injection (see eq. 6.45 Dayan & Abbott)
         
     } else  {
         return 0;
     }
-    return 0;
 
 }
 
@@ -425,14 +446,79 @@ void compartment::integrateC_V_clamp(double V_clamp, double Ca_prev, double dt, 
     //mexPrintf("sigma_g=  %f\n",sigma_g);
     I_clamp =  A*(V_inf*sigma_g - sigma_gE);
 
-    // normalize by conductance
-    // I_clamp =  (V_inf*sigma_g - sigma_gE)/sigma_gE;
-
     V = V_clamp;
     
 }
 
 
+void compartment::integrateCNFirstPass(double dt)
+{
+
+    // intermiediate variables
+    double b; // b is b for this compartment
+    double d; // d is d for the prev compartment
+
+    b = getBCDF(1)*.5*dt;
+
+
+    // compute c_
+    c_ = .5*dt*getBCDF(2);
+    if (downstream) 
+    {
+        
+        d = (downstream->getBCDF(3))*dt*.5;
+
+        // full expression for c_ (eq. 6.54)
+        c_ += b*d/(1 - downstream->c_);
+        
+    }
+
+    // compute f_
+    // first compute f
+    double f = getBCDF(4) + getBCDF(2)*V;
+    if (downstream)
+    {
+        f += getBCDF(1)*(downstream->V);
+    }
+    if (upstream)
+    {
+        f += getBCDF(3)*(upstream->V);
+    }
+    f = f*dt;
+
+    f_ = f;
+
+    if (downstream)
+    {
+        // downstream exists. append terms
+        // (eq. 6.55 in Dayan & Abbott)
+        f_ += (b*(downstream->f_))/(1 - downstream->c_);
+    }
+
+    // debug
+    // mexPrintf("------------------\n");
+    // mexPrintf("c_ is %f\n", c_);
+    // mexPrintf("f_ is %f\n", f_);
+
+
+
+}
+
+void compartment::integrateCNSecondPass(double dt)
+{
+    delta_V = f_;
+    if (upstream)
+    {
+        // upstream exists, use full eq (6.53)
+        delta_V += getBCDF(3)*.5*dt*(upstream->delta_V);
+    }
+
+    // divide by common denominator
+    delta_V = delta_V/(1 - c_);
+
+
+    V += delta_V;
+}
 
 // returns a vector of the state of every conductance 
 // cond_state is a pointer to a matrix that is hopefully of
@@ -468,6 +554,33 @@ controller * compartment::getControllerPointer(int cont_idx)
     return cont[cont_idx];
 }
 
+
+void compartment::resolveAxialConductances(void)
+{
+
+    if (n_axial_syn == 0) {return;}
+
+    for (int i = 0; i < n_axial_syn; i++)
+    {
+        if (isnan((axial_syn[i]->pre_syn)->tree_idx)) { continue;}
+
+        if ((axial_syn[i]->pre_syn)->tree_idx > tree_idx)
+        {
+            // pre_syn of this axial synapse is downstream
+            downstream_g = axial_syn[i]->gbar;
+        } else {
+            // pre_syn of this axial synapse is upstream
+            upstream_g = axial_syn[i]->gbar;
+        }
+    }
+
+    // debug info
+    // mexPrintf("===========\n");
+    // mexPrintf("tree_idx of this compartment: %f\n",tree_idx);
+    // mexPrintf("downstream_g = %f\n",downstream_g);
+    // mexPrintf("upstream_g = %f\n",upstream_g);
+
+}
 
 
 #endif
