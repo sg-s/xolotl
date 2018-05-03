@@ -317,11 +317,11 @@ double compartment::getBCDF(int idx)
         return 0;
     } else if (idx == 1) {
         // return B 
-        if (downstream){
-            return (downstream_g/Cm);
+        if (upstream){
+            return (upstream_g/Cm);
 
         } else {
-            // no downstream, 1st compartment,
+            // no upstream, 1st compartment,
             // return 0
             return 0;
         }
@@ -336,11 +336,10 @@ double compartment::getBCDF(int idx)
 
     } else if (idx == 3) {
         // return D
-        if (upstream) {
-            return (upstream_g/Cm);
+        if (downstream) {
+            return (downstream_g/Cm);
         } else {
-            // no upstream, this is the soma 
-            // by definition, 
+            // no downstream
             return 0;
         }
         
@@ -460,39 +459,51 @@ void compartment::integrateCNFirstPass(double dt)
 
     b = getBCDF(1)*.5*dt;
 
+    // mexPrintf("-------------------\n");
+    // mexPrintf("tree_idx = %f\n", tree_idx);
+    // if (upstream) {
+    //     mexPrintf("upstream exists, g = %f\n", upstream_g);
+    // }
+    // if (downstream) {
+    //     mexPrintf("downstream exists, g = %f\n", downstream_g);
+    // }
+    // mexPrintf("B = %f\n",getBCDF(1));
+    // mexPrintf("C = %f\n",getBCDF(2));
+    // mexPrintf("D = %f\n",getBCDF(3));
+    // mexPrintf("F = %f\n",getBCDF(4));
 
     // compute c_
     c_ = .5*dt*getBCDF(2);
-    if (downstream) 
+    if (upstream) 
     {
         
-        d = (downstream->getBCDF(3))*dt*.5;
+        d = (upstream->getBCDF(3))*dt*.5;
 
         // full expression for c_ (eq. 6.54)
-        c_ += b*d/(1 - downstream->c_);
+        c_ += b*d/(1 - upstream->c_);
         
     }
 
     // compute f_
     // first compute f
     double f = getBCDF(4) + getBCDF(2)*V;
-    if (downstream)
-    {
-        f += getBCDF(1)*(downstream->V);
-    }
     if (upstream)
     {
-        f += getBCDF(3)*(upstream->V);
+        f += getBCDF(1)*(upstream->V);
+    }
+    if (downstream)
+    {
+        f += getBCDF(3)*(downstream->V);
     }
     f = f*dt;
 
     f_ = f;
 
-    if (downstream)
+    if (upstream)
     {
         // downstream exists. append terms
         // (eq. 6.55 in Dayan & Abbott)
-        f_ += (b*(downstream->f_))/(1 - downstream->c_);
+        f_ += (b*(upstream->f_))/(1 - upstream->c_);
     }
 
     // debug
@@ -507,10 +518,10 @@ void compartment::integrateCNFirstPass(double dt)
 void compartment::integrateCNSecondPass(double dt)
 {
     delta_V = f_;
-    if (upstream)
+    if (downstream)
     {
-        // upstream exists, use full eq (6.53)
-        delta_V += getBCDF(3)*.5*dt*(upstream->delta_V);
+        // downstream exists, use full eq (6.53)
+        delta_V += getBCDF(3)*.5*dt*(downstream->delta_V);
     }
 
     // divide by common denominator

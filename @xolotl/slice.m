@@ -34,6 +34,9 @@ end
 assert(~isnan(self.(compartment).radius),'Radius of compartment must be specified')
 assert(~isnan(self.(compartment).len),'Length of compartment must be specified')
 
+skip_hash_state = self.skip_hash;
+self.skip_hash = true;
+
 new_len = self.(compartment).len/N_slices;
 
 self.(compartment).len = new_len;
@@ -78,3 +81,6 @@ for i = 2:N_slices
 
 end
 
+self.skip_hash = false;
+self.sha1hash;
+self.skip_hash = skip_hash_state;

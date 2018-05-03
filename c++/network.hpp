@@ -24,10 +24,8 @@ protected:
     compartment* temp_comp;
     compartment* last_valid_comp;
 
-    // store pointers to all cable terminals 
-    // each cable gets one terminal
-    // from which we will start integration
-    vector<compartment*> terminal_comp;
+    // store pointers to all soma
+    vector<compartment*> soma_comp;
 
     // keeps track of the # of terminals in terminal_comp
     int n_terminals; 
@@ -76,6 +74,7 @@ void network::resolveTree(void)
                 // mexPrintf("found a soma, calling it = %i\n",n_soma);
                 comp[i]->neuron_idx = n_soma;
                 n_soma++;
+                soma_comp.push_back(comp[i]);
                 
             }
 
@@ -115,70 +114,44 @@ void network::resolveTree(void)
         }
     }
 
-    // now we make a list of terminals of all cables
-    // we only keep track of one terminal -- which will
-    // be arbitrarily chosen 
-    int i = 0;
-    while (i < n_soma)
-    {
-        // go over all compartments 
-        for (int j = 0; j < n_comp; j ++)
-        {
-            if (isnan(comp[j]->neuron_idx)) {continue;}
-            if ((comp[j]->neuron_idx) != i) {continue;}
-
-
-            // it's possible to have a cable with 
-            // terminals that have no downstream,
-            // but at least one terminal of a cable 
-            // will always have an upstream
-            if (((comp[j]->n_axial_syn) == 1) && (comp[j]->upstream))
-            {
-                i++;
-                terminal_comp.push_back(comp[j]);
-            }
-
-        }
-    }
 
 
     // OK, now we have resolved the tree. 
     // now, we need to mark the downstream_g and 
     // upstream_g for every compartment
-    connected_comp = NULL;
-    int this_tree_level;
+
     for (int i = 0; i < n_comp; i ++)
     {
         comp[i]->resolveAxialConductances();
     }
 
-    n_terminals = terminal_comp.size();
+
 
     // go over every compartment, and check that stream
     // pointers and gs match up
     
-    for (int i = 0; i < n_comp; i++)
-    {
-        mexPrintf("---------------\n");
-        mexPrintf("this comp tree_idx = %f\n",comp[i]->tree_idx);
-        if (comp[i]->downstream)
-        {
-            mexPrintf("downstream pointer exists\n");
+    // for (int i = 0; i < n_comp; i++)
+    // {
+    //     mexPrintf("---------------\n");
+    //     mexPrintf("this comp tree_idx = %f\n",comp[i]->tree_idx);
+    //     if (comp[i]->downstream)
+    //     {
+    //         mexPrintf("downstream pointer exists\n");
             
-        } else {
-            mexPrintf("NO downstream pointer\n");
-        }   
-        mexPrintf("downstream_g =  %f\n", comp[i]->downstream_g);
-        if (comp[i]->upstream)
-        {
-            mexPrintf("upstream pointer exists\n");
+    //     } else {
+    //         mexPrintf("NO downstream pointer\n");
+    //     }   
+    //     mexPrintf("downstream_g =  %f\n", comp[i]->downstream_g);
+    //     if (comp[i]->upstream)
+    //     {
+    //         mexPrintf("upstream pointer exists\n");
 
-        } else {
-            mexPrintf("No upstream pointer\n");
-        }
-        mexPrintf("upstream_g =  %f\n", comp[i]->upstream_g);
+    //     } else {
+    //         mexPrintf("No upstream pointer\n");
+    //     }
+    //     mexPrintf("upstream_g =  %f\n", comp[i]->upstream_g);
 
-    }
+    // }
 
 }
 
@@ -257,22 +230,24 @@ void network::integrate(double dt, double * I_ext_now, double delta_temperature)
     // (Chapter 6 Appendix B)
     // Convention will be the same, primes in the text will 
     // be replaced with _
+    // integration starts at the soma (mu = 0), and proceeds
+    // down the cable
 
     // for each cable 
-    for (int nidx = 0; nidx < n_terminals; nidx++)
+    for (int nidx = 0; nidx < n_soma; nidx++)
     {
 
         
-        temp_comp = terminal_comp[nidx];
+        temp_comp = soma_comp[nidx];
 
 
-        // go up the cable -- this means towards the soma
-        // or dowb tree_idx indices
+        // go down the cable -- away from soma
+        // to terminal, increasing in tree_idx
         while (temp_comp)
         {
             temp_comp->integrateCNFirstPass(dt);
             last_valid_comp = temp_comp;
-            temp_comp = temp_comp->upstream;
+            temp_comp = temp_comp->downstream;
             // nothing after this--temp_comp may be NULL
         }
         
@@ -280,12 +255,12 @@ void network::integrate(double dt, double * I_ext_now, double delta_temperature)
         temp_comp = last_valid_comp;
 
 
-        // go down the cable -- away from soma
-        // to terminal, increasing in tree_idx
+        // go up the cable -- towards soma
+        // away from terminal, decreasing in tree_idx
         while (temp_comp)
         {
             temp_comp->integrateCNSecondPass(dt);
-            temp_comp = temp_comp->downstream;
+            temp_comp = temp_comp->upstream;
             // nothing after this, becaue temp_comp may be NULL
         }
     }
