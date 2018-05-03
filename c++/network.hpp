@@ -157,28 +157,28 @@ void network::resolveTree(void)
     // go over every compartment, and check that stream
     // pointers and gs match up
     
-    // for (int i = 0; i < n_comp; i++)
-    // {
-    //     mexPrintf("---------------\n");
-    //     mexPrintf("this comp tree_idx = %f\n",comp[i]->tree_idx);
-    //     if (comp[i]->downstream)
-    //     {
-    //         mexPrintf("downstream pointer exists\n");
+    for (int i = 0; i < n_comp; i++)
+    {
+        mexPrintf("---------------\n");
+        mexPrintf("this comp tree_idx = %f\n",comp[i]->tree_idx);
+        if (comp[i]->downstream)
+        {
+            mexPrintf("downstream pointer exists\n");
             
-    //     } else {
-    //         mexPrintf("NO downstream pointer\n");
-    //     }   
-    //     mexPrintf("downstream_g =  %f\n", comp[i]->downstream_g);
-    //     if (comp[i]->upstream)
-    //     {
-    //         mexPrintf("upstream pointer exists\n");
+        } else {
+            mexPrintf("NO downstream pointer\n");
+        }   
+        mexPrintf("downstream_g =  %f\n", comp[i]->downstream_g);
+        if (comp[i]->upstream)
+        {
+            mexPrintf("upstream pointer exists\n");
 
-    //     } else {
-    //         mexPrintf("No upstream pointer\n");
-    //     }
-    //     mexPrintf("upstream_g =  %f\n", comp[i]->upstream_g);
+        } else {
+            mexPrintf("No upstream pointer\n");
+        }
+        mexPrintf("upstream_g =  %f\n", comp[i]->upstream_g);
 
-    // }
+    }
 
 }
 

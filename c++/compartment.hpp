@@ -160,7 +160,7 @@ public:
             // are provided, and use 
             // cylindrical geometry 
             // override defaults if need be
-            A = 2*pi*radius*len + 2*pi*radius*radius;
+            A = 2*pi*radius*len; // + 2*pi*radius*radius;
             vol = pi*radius*radius*len;
         }
 

@@ -8,7 +8,7 @@ phi = (2*f*F*vol)/tau_Ca;
 Ca_target = 0; % used only when we add in homeostatic control 
 
 x = xolotl;
-x.add('AB','compartment','Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca,'Ca_target',Ca_target);
+x.add('AB','Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca,'Ca_target',Ca_target);
 
 x.AB.add('liu-approx/NaV','gbar',@() 115/x.AB.A,'E',30);
 x.AB.add('liu-approx/CaT','gbar',@() 1.44/x.AB.A,'E',30);

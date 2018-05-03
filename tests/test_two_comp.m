@@ -5,7 +5,7 @@
 %
 % all neurons have similar parameters for comparison. 
 
-axial_resitivity = .1; % MOhm mm; 
+axial_resitivity = .001; % MOhm mm; 
 
 % geometry is a cylinder
 r_neurite = .01;
@@ -34,7 +34,7 @@ x.skip_hash = true;
 	end
 
 	x.Soma.NaV.gbar = 0;
-	%x.slice('Neurite',5,axial_resitivity);
+	x.slice('Neurite',5,axial_resitivity);
 
 	x.connect('Neurite','Soma','Axial','resistivity',axial_resitivity);
 	x.connect('Soma','Neurite','Axial','resistivity',axial_resitivity);
@@ -42,12 +42,11 @@ x.skip_hash = true;
 
 x.skip_hash = false; x.sha1hash;
 
+return
 
 x.dt = .1;
 x.sim_dt = .1;
 x.t_end = 5e3;
-
-x.integrate;
 
 
 V = x.integrate;

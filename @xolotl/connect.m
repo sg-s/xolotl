@@ -24,9 +24,16 @@ end
 if isempty(varargin)
 	
 	error('Need to specify how to connect these compartments')
-elseif length(varargin) == 1 && isdouble(varargin{1})
-	% default to a electrical synapse
-	synapse = cpplab('Electrical','gbar',varargin{1});
+elseif length(varargin) == 1 && isa(varargin{1},'double')
+	% default to an electrical synapses
+	% if either one of the compartments has a tree_idx,
+	% use Axial instead of Electrical
+
+	if ~isnan(self.(comp1).tree_idx) || ~isnan(self.(comp2).tree_idx)
+		synapse = cpplab('Axial','resistivity',varargin{1});
+	else
+		synapse = cpplab('Electrical','gbar',varargin{1});
+	end
 	
 	% need to add it twice because each electrical
 	% synapse is actually one way

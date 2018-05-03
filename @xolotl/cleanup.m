@@ -6,9 +6,12 @@
 %
 % help: delete all mexBridge files and binaries
 
-function cleanup(self)
+function cleanup()
 
-allfiles = dir([self.xolotl_folder filesep '*mexBridge*']);
+this_dir = fileparts(fileparts(which('xolotl.cleanup')));
+
+
+allfiles = dir([this_dir filesep '*mexBridge*']);
 for i = 1:length(allfiles)
-	delete([self.xolotl_folder filesep allfiles(i).name]);
+	delete([this_dir filesep allfiles(i).name]);
 end
