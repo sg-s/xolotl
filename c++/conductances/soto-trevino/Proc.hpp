@@ -7,7 +7,7 @@
 
 #ifndef PROC
 #define PROC
-#include "../../conductance.hpp"
+#include "conductance.hpp"
 
 //inherit conductance class spec
 class Proc: public conductance {

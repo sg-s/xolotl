@@ -6,7 +6,7 @@
 // http://www.jneurosci.org/content/32/21/7267
 #ifndef KSLOW   
 #define KSLOW   
-#include "../../conductance.hpp"
+#include "conductance.hpp"
 
 //inherit conductance class spec
 class Kslow: public conductance {

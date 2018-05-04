@@ -9,7 +9,7 @@
 
 #ifndef DMNAV
 #define DMNAV
-#include "../../conductance.hpp"
+#include "conductance.hpp"
 
 //inherit conductance class spec
 class DmNaV: public conductance {

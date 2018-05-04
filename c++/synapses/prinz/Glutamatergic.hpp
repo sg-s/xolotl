@@ -1,7 +1,7 @@
 // GLUTAMATERGIC Synapse 
 #ifndef GLUTAMATERGIC
 #define GLUTAMATERGIC
-#include "../../synapse.hpp"
+#include "synapse.hpp"
 
 class Glutamatergic: public synapse {
 

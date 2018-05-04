@@ -2,7 +2,7 @@
 // meant to be used for multi-compartment models
 #ifndef AXIAL
 #define AXIAL
-#include "../synapse.hpp"
+#include "synapse.hpp"
 
 class Axial: public synapse {
 

@@ -8,7 +8,7 @@
 
 #ifndef INTEGRALCONTROLLER
 #define INTEGRALCONTROLLER
-#include "../controller.hpp"
+#include "controller.hpp"
 
 //inherit controller class spec
 class IntegralController: public controller {

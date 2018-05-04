@@ -1,4 +1,6 @@
-% tests a neuron that reproduces Fig 3 in Tim's paper
+% this tests generates and integrates
+% a bursting neuron neuron that reproduces Fig 3
+% in Tim O'Leary's 2013 paper
 
 vol = 0.0628; % this can be anything, doesn't matter
 f = 1.496; % uM/nA

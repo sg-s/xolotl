@@ -9,7 +9,7 @@
 // http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
 #ifndef ACURRENT
 #define ACURRENT
-#include "../../conductance.hpp"
+#include "conductance.hpp"
 
 //inherit conductance class spec
 class ACurrent: public conductance {

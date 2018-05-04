@@ -6,7 +6,7 @@
 // https://www.ncbi.nlm.nih.gov/pubmed/26004544
 #ifndef CAC
 #define CAC
-#include "../../conductance.hpp"
+#include "conductance.hpp"
 
 //inherit conductance class spec
 class Cac: public conductance {

@@ -8,7 +8,7 @@
 
 #ifndef SHAKER
 #define SHAKER
-#include "../../conductance.hpp"
+#include "conductance.hpp"
 
 //inherit conductance class spec
 class Shaker: public conductance {

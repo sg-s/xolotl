@@ -35,10 +35,10 @@ x.skip_hash = true;
 
 	x.Soma.NaV.gbar = 0;
 
-	x.slice('Neurite',10);
+	x.slice('Neurite',4);
 
 	comp_names = x.find('compartment');
-	start_axon = 5;
+	start_axon = 2;
 	for i = 1:start_axon
 		x.(comp_names{i}).NaV.gbar = 0;
 	end
