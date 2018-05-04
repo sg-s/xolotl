@@ -15,8 +15,15 @@ assert(any(strcmp(self.find('compartment'),compartment)),'Unknown compartment')
 assert(isint(N_slices),'N_slices must be an integer > 1')
 assert(isscalar(N_slices),'N_slices must be an integer > 1')
 assert(N_slices > 1,'N_slices must be an integer > 1')
+
+if nargin < 4
+	axial_resistivity = NaN;
+end
+
 assert(isscalar(axial_resistivity),'axial_resistivity must be a real +ve number')
-assert(axial_resistivity > 0,'axial_resistivity must be a real +ve number')
+if ~isnan(axial_resistivity)
+	assert(axial_resistivity > 0,'axial_resistivity must be a real +ve number')
+end
 
 % TODO check that there are no incident synapses
 

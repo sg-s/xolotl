@@ -22,8 +22,11 @@ if isempty(self.synapse_post)
 end
 
 if isempty(varargin)
+	% default to an axial synapse with default parameters
 	
-	error('Need to specify how to connect these compartments')
+	self.connect(comp1,comp2,NaN);
+	return
+
 elseif length(varargin) == 1 && isa(varargin{1},'double')
 	% default to an electrical synapses
 	% if either one of the compartments has a tree_idx,
