@@ -58,15 +58,34 @@ x.t_end = 5e3;
 % x.integrate;
 % return
 
+x.integrate;
 V = x.integrate;
 
 figure('outerposition',[300 300 1200 900],'PaperUnits','points','PaperSize',[1200 900]); hold on
-subplot(2,1,1); hold on
+subplot(2,2,1); hold on
 time = 1e-3*(1:length(V))*x.dt;
 plot(time,V(:,end-1),'r')
 set(gca,'YLim',[-80 40])
+title('Axial resitivity = 1 k Ohm mm')
 ylabel('V_{terminal} (mV)')
-subplot(2,1,2); hold on
+subplot(2,2,3); hold on
+plot(time,V(:,end),'r')
+set(gca,'YLim',[-80 40])
+xlabel('Time (s)')
+ylabel('V_{soma} (mV)')
+
+return
+
+x.set(x.find('synapses*resistivity'),1)
+
+V = x.integrate;
+
+subplot(2,2,2); hold on
+plot(time,V(:,end-1),'k')
+set(gca,'YLim',[-80 40])
+ylabel('V_{terminal} (mV)')
+title('Axial resitivity = 1 M Ohm mm')
+subplot(2,2,4); hold on
 plot(time,V(:,end),'k')
 set(gca,'YLim',[-80 40])
 xlabel('Time (s)')
