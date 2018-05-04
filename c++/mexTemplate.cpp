@@ -8,7 +8,6 @@
 #include <vector>
 #include <typeinfo>
 #include "mex.h"
-
 //xolotl:include_headers_here
 
 

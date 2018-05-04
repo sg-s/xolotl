@@ -18,14 +18,8 @@ if (isunix && ~ismac)
 end
 
 % tell mex about where to look for C++ files
-
-
-%ipath = ['-I"'  self.Soma.ACurrent.SushiController.cpp_class_path '"'];
-ipath{1} = ['-I"' self.xolotl_folder '/c++/' '"'];
-ipath{2} = ['-I"' self.xolotl_folder '/c++/conductances/' '"'];
-ipath{3} = ['-I"' self.xolotl_folder '/c++/controllers/' '"'];
-ipath{4} = ['-I"' self.xolotl_folder '/c++/synapses/' '"'];
-mex('-silent',ipath{:},mexBridge_name,'-outdir',self.xolotl_folder)
+ipath = ['-I"' self.xolotl_folder '/c++/' '"'];
+mex('-silent',ipath,mexBridge_name,'-outdir',self.xolotl_folder)
 
 
 % update linked_binary
