@@ -10,7 +10,7 @@
 
 #ifndef SLAVELOCALCONTROLLER
 #define SLAVELOCALCONTROLLER
-#include "../controller.hpp"
+#include "controller.hpp"
 
 //inherit controller class spec
 class SlaveLocalController: public controller {

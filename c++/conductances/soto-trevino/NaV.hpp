@@ -6,7 +6,7 @@
 // http://jn.physiology.org/content/94/1/590.short
 #ifndef NAV
 #define NAV
-#include "../../conductance.hpp"
+#include "conductance.hpp"
 
 //inherit conductance class spec
 class NaV: public conductance {

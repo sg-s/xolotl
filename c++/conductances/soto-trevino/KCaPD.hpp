@@ -6,7 +6,7 @@
 // http://jn.physiology.org/content/94/1/590.short
 #ifndef KCAPD
 #define KCAPD
-#include "../../conductance.hpp"
+#include "conductance.hpp"
 
 //inherit conductance class spec
 class KCaPD: public conductance {

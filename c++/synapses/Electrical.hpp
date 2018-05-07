@@ -3,7 +3,7 @@
 // of this in opposite polarities 
 #ifndef ELECTRICAL
 #define ELECTRICAL
-#include "../synapse.hpp"
+#include "synapse.hpp"
 
 class Electrical: public synapse {
 

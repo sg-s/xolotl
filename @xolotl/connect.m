@@ -22,11 +22,21 @@ if isempty(self.synapse_post)
 end
 
 if isempty(varargin)
+	% default to an axial synapse with default parameters
 	
-	error('Need to specify how to connect these compartments')
-elseif length(varargin) == 1
-	% default to a electrical synapse
-	synapse = cpplab('Electrical','gbar',varargin{1});
+	self.connect(comp1,comp2,NaN);
+	return
+
+elseif length(varargin) == 1 && isa(varargin{1},'double')
+	% default to an electrical synapses
+	% if either one of the compartments has a tree_idx,
+	% use Axial instead of Electrical
+
+	if ~isnan(self.(comp1).tree_idx) || ~isnan(self.(comp2).tree_idx)
+		synapse = cpplab('Axial','resistivity',varargin{1});
+	else
+		synapse = cpplab('Electrical','gbar',varargin{1});
+	end
 	
 	% need to add it twice because each electrical
 	% synapse is actually one way
@@ -37,6 +47,14 @@ elseif length(varargin) == 1
 
 	self.synapse_pre = [self.synapse_pre; comp2];
 	self.synapse_post = [self.synapse_post; comp1];
+
+elseif length(varargin) == 1 && isa(varargin{1},'cpplab')
+	% we are given an object. blindly use it
+	synapse = varargin{1};
+	self.synapses = [self.synapses; synapse];
+
+	self.synapse_pre = [self.synapse_pre; comp1];
+	self.synapse_post = [self.synapse_post; comp2];
 
 else
 

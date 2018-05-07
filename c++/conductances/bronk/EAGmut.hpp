@@ -9,7 +9,7 @@
 
 #ifndef EAGMUT
 #define EAGMUT
-#include "../../conductance.hpp"
+#include "conductance.hpp"
 
 //inherit conductance class spec
 class EAGmut: public conductance {

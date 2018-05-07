@@ -19,6 +19,8 @@ classdef xolotl <  cpplab & matlab.mixin.CustomDisplay
 properties (SetAccess = protected)
 	linked_binary@char
 	synapses
+    synapse_pre
+    synapse_post
 end  % end set protected props
 
 properties (Access = protected)
@@ -27,8 +29,7 @@ properties (Access = protected)
 	OS_binary_ext % OS-specific
 	dyn_prop_handles % handles to dynamic properties 
 	illegal_names = {'xolotl_network','compartment','conductance','controller','synapse','network','x','self'}; % list of illegal names for compartments, synpases and other objects
-	synapse_pre
-	synapse_post
+	
 
 	% this stores custom owners of some objects
 	% specified by put
@@ -103,6 +104,7 @@ methods (Access = protected)
 
     end
 
+
 end % end protected methods
 
 methods 
@@ -134,6 +136,7 @@ end % end methods
 
 methods (Static)
 
+    cleanup;
     ax = plot(conductance,ax);
     [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance);
 

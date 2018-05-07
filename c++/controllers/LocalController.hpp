@@ -19,7 +19,7 @@
 
 #ifndef LOCALCONTROLLER
 #define LOCALCONTROLLER
-#include "../controller.hpp"
+#include "controller.hpp"
 
 //inherit controller class spec
 class LocalController: public controller {

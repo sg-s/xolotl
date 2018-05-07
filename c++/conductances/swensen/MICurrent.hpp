@@ -7,7 +7,7 @@
 // based on RPCH/proctolin recordings in Swensen & Marder 2001
 #ifndef MICURRENT
 #define MICURRENT
-#include "../../conductance.hpp"
+#include "conductance.hpp"
 
 //inherit conductance class spec
 class MICurrent: public conductance {

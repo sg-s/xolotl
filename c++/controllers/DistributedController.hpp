@@ -12,7 +12,7 @@
 
 #ifndef DISTRIBUTEDCONTROLLER
 #define DISTRIBUTEDCONTROLLER
-#include "../controller.hpp"
+#include "controller.hpp"
 
 //inherit controller class spec
 class DistributedController: public controller {

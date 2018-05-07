@@ -14,10 +14,14 @@ function transpileCore(self,in_file,out_file)
 cppfilename = joinPath(self.cpp_folder,in_file);
 lines = lineRead(cppfilename);
 
-% insert network header -- essential for everything
-header_files = self.generateHeaders;
+% insert network header and other critical headers
 header_files{1} = joinPath(self.cpp_folder,'network.hpp');
-header_files = unique(header_files);
+header_files{2} = joinPath(self.cpp_folder,'compartment.hpp');
+header_files{3} = joinPath(self.cpp_folder,'synapse.hpp');
+header_files{4} = joinPath(self.cpp_folder,'conductance.hpp');
+header_files{5} = joinPath(self.cpp_folder,'controller.hpp');
+temp = self.generateHeaders; temp = temp(:);
+header_files = [header_files(:); unique(temp(2:end))];
 
 for i = 1:length(header_files)
 	header_files{i} = strcat('#include "',header_files{i}, '"'); 

@@ -1,7 +1,7 @@
 // Cholingeric Synapse 
 #ifndef CHOLINERGIC
 #define CHOLINERGIC
-#include "../../synapse.hpp"
+#include "synapse.hpp"
 
 class Cholinergic: public synapse {
 

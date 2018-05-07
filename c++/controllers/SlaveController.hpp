@@ -8,7 +8,7 @@
 
 #ifndef SLAVECONTROLLER
 #define SLAVECONTROLLER
-#include "../controller.hpp"
+#include "controller.hpp"
 
 //inherit controller class spec
 class SlaveController: public controller {

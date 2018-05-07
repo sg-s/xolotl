@@ -7,7 +7,7 @@
 // https://www.physiology.org/doi/10.1152/jn.00820.2017
 #ifndef EAGWT
 #define EAGWT
-#include "../../conductance.hpp"
+#include "conductance.hpp"
 
 //inherit conductance class spec
 class EAGwt: public conductance {

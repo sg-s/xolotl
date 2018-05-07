@@ -10,7 +10,7 @@
 // http://jn.physiology.org/content/jn/90/6/3998.full.pdf
 #ifndef ACURRENT
 #define ACURRENT
-#include "../../conductance.hpp"
+#include "conductance.hpp"
 
 //inherit conductance class spec
 class ACurrent: public conductance {

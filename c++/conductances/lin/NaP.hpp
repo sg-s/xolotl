@@ -6,7 +6,7 @@
 // http://www.jneurosci.org/content/32/21/7267
 #ifndef NAP
 #define NAP
-#include "../../conductance.hpp"
+#include "conductance.hpp"
 
 //inherit conductance class spec
 class NaP: public conductance {
