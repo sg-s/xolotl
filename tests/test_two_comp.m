@@ -14,11 +14,13 @@ r_soma = .025;
 L_soma = .05; % mm, Jason's guesstimates
 phi = 100;
 
+shell_thickness = .01; % 10 micrometres
+
 x = xolotl;
 x.skip_hash = true;
 	% make 3 neurons
-	x.add('Soma','compartment','radius',r_soma,'len',L_soma,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tree_idx',0);
-	x.add('Neurite','compartment','radius',r_neurite,'len',L_neurite,'phi',phi,'Ca_out',3000,'Ca_in',0.05);
+	x.add('Soma','compartment','radius',r_soma,'len',L_soma,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tree_idx',0,'shell_thickness',shell_thickness);
+	x.add('Neurite','compartment','radius',r_neurite,'len',L_neurite,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'shell_thickness',shell_thickness);
 
 	prefix = 'prinz/';
 	channels = {'ACurrent','CaS','CaT','HCurrent','KCa','Kd','NaV'};
@@ -35,10 +37,10 @@ x.skip_hash = true;
 
 	x.Soma.NaV.gbar = 0;
 
-	x.slice('Neurite',4);
+	x.slice('Neurite',10);
 
 	comp_names = x.find('compartment');
-	start_axon = 2;
+	start_axon = 5;
 	for i = 1:start_axon
 		x.(comp_names{i}).NaV.gbar = 0;
 	end

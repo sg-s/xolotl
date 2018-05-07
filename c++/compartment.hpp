@@ -81,8 +81,9 @@ public:
     // volume
     double A; 
     double vol;
-    double radius;
-    double len; 
+    double radius; // mm
+    double len; // mm
+    double shell_thickness; // mm
 
 
     double Cm; // specific capacitance 
@@ -112,7 +113,7 @@ public:
     int n_axial_syn;
 
     // constructor with all parameters 
-    compartment(double V_, double Ca_, double Cm_, double A_, double vol_, double phi_, double Ca_out_, double Ca_in_, double tau_Ca_, double Ca_target_, double Ca_average_, double tree_idx_, double neuron_idx_, double radius_, double len_)
+    compartment(double V_, double Ca_, double Cm_, double A_, double vol_, double phi_, double Ca_out_, double Ca_in_, double tau_Ca_, double Ca_target_, double Ca_average_, double tree_idx_, double neuron_idx_, double radius_, double len_, double shell_thickness_)
     {
         V = V_;
         Ca = Ca_;
@@ -126,6 +127,7 @@ public:
         vol = vol_;
         A = A_; 
         radius = radius_;
+        shell_thickness = shell_thickness_;
         len = len_;
 
         // membrane props
@@ -162,7 +164,20 @@ public:
             // override defaults if need be
             A = 2*pi*radius*len; // + 2*pi*radius*radius;
             vol = pi*radius*radius*len;
+
+            if (!isnan(shell_thickness))
+            {
+                double inner_radius = radius - shell_thickness;
+                if (inner_radius > 0)
+                {
+                    vol = pi*len*(radius*radius - inner_radius*inner_radius);
+                }
+            }
+
+
+
         }
+
 
         // housekeeping
         E_Ca = 0;
