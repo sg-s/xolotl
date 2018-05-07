@@ -12,7 +12,7 @@ r_neurite = .01; % default value
 L_neurite = .35*5; % mm, from Otopalik et al
 r_soma = .025;
 L_soma = .05; % mm, Jason's guesstimates
-phi = 100;
+phi = 1;
 
 shell_thickness = .01; % 10 micrometres
 
@@ -24,7 +24,7 @@ x.skip_hash = true;
 
 	prefix = 'prinz/';
 	channels = {'ACurrent','CaS','CaT','HCurrent','KCa','Kd','NaV'};
-	g =           [500;      60;   25 ;   .1;      50;   1e3;  1e3];
+	g =           [500;     100;   25 ;   1;      10;   1e3;  1500];
 	E =           [-80;      30;   30;   -20;     -80;   -80;  50 ];
 
 	compartments = x.find('compartment');
@@ -37,10 +37,10 @@ x.skip_hash = true;
 
 	x.Soma.NaV.gbar = 0;
 
-	x.slice('Neurite',10);
+	x.slice('Neurite',4);
 
 	comp_names = x.find('compartment');
-	start_axon = 5;
+	start_axon = 2;
 	for i = 1:start_axon
 		x.(comp_names{i}).NaV.gbar = 0;
 	end
@@ -55,7 +55,7 @@ x.sim_dt = .01;
 x.t_end = 5e3;
 
 x.integrate;
-V = x.integrate;
+[V,Ca] = x.integrate;
 
 figure('outerposition',[300 300 1200 900],'PaperUnits','points','PaperSize',[1200 900]); hold on
 subplot(2,1,1); hold on
