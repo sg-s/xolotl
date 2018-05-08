@@ -98,6 +98,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         output_cont_state = mxGetPr(plhs[3]);
     }
 
+    if (nlhs > 4) {
+        plhs[4] = mxCreateDoubleMatrix(full_current_size, nsteps_out, mxREAL);
+        output_curr_state = mxGetPr(plhs[4]);
+    }
+
     // plhs[5] = mxCreateDoubleMatrix(2*n_synapses, nsteps_out, mxREAL); // synapse gbar + state
     // plhs[6] = mxCreateDoubleMatrix(2*n_controllers, nsteps_out, mxREAL); // controllers gbar + mrna
     // output_syn_state = mxGetPr(plhs[5]);
