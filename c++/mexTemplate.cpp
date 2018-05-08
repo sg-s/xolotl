@@ -73,6 +73,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     // mexPrintf("full controller state size =  %i ", full_controller_size);
 
+    // compute current state dimensions
+    int full_current_size = 0;
+    for (int i = 0; i < n_comp; i ++)
+    {
+        full_current_size += (xolotl_network.comp[i])->n_cond;
+    }
 
     int res = dt/sim_dt;
     plhs[0] = mxCreateDoubleMatrix(param_size, 1, mxREAL);
