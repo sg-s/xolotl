@@ -214,8 +214,8 @@ public:
     void integrateCalcium(double, double);
 
     // methods to retrieve information from compartment
-    void get_cond_state(double*);
     int getFullControllerState(double*, int);
+    int getFullCurrentState(double*, int);
     int getFullControllerSize(void);
     controller* getControllerPointer(int);
     compartment* getConnectedCompartment(int);
@@ -546,18 +546,6 @@ void compartment::integrateCNSecondPass(double dt)
     V += delta_V;
 }
 
-// returns a vector of the state of every conductance
-// cond_state is a pointer to a matrix that is hopefully of
-// the right size
-void compartment::get_cond_state(double *cond_state)
-{
-    for (int i = 0; i < n_cond; i ++)
-    {
-        cond_state[i*2] = cond[i]->m;
-        cond_state[(i*2)+1] = cond[i]->h;
-    }
-}
-
 // returns a vector of the state of every controller
 // cont_state is a pointer to a matrix that is hopefully of
 // the right size
@@ -569,6 +557,16 @@ int compartment::getFullControllerState(double *cont_state, int idx)
         cont[i]->getFullState(cont_state, idx);
         idx += controller_sizes[i];
 
+    }
+    return idx;
+}
+
+int compartment::getFullCurrentState(double *cond_state, int idx)
+{
+    for (int i = 0; i < n_cond; i ++)
+    {
+        cond_state[idx] = cond[i]->getCurrent(V, Ca);
+        idx ++;
     }
     return idx;
 }

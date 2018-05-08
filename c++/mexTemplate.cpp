@@ -80,6 +80,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         full_current_size += (xolotl_network.comp[i])->n_cond;
     }
 
+    // set up outputs as mex objects
     int res = dt/sim_dt;
     plhs[0] = mxCreateDoubleMatrix(param_size, 1, mxREAL);
     output_state = mxGetPr(plhs[0]);
@@ -201,6 +202,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         // do the integration
         int output_idx = 0;
         int cont_idx = 0;
+        int cond_idx = 0;
         for(int i = 0; i < nsteps; i++)
         {
 
@@ -236,8 +238,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                     // read out currents
                     if (nlhs > 4)
                     {
-                        for (curr_index = 0; curr_index < n_cond)
-                        output_current[output_idx*n_comp +]
+                        cond_idx = (xolotl_network.comp[j]->getFullCurrentState(output_cont_state,cond_idx));
                     }
 
 
