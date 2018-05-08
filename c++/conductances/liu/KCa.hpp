@@ -49,6 +49,6 @@ void KCa::integrate(double V, double Ca, double dt, double delta_temp)
 double KCa::m_inf(double V, double Ca) { return (Ca/(Ca+3.0))/(1.0+exp((V+28.3)/-12.6)); }
 double KCa::tau_m(double V) {return 90.3 - 75.1/(1.0+exp((V+46.0)/-22.7));}
 
-double ACurrent::getCurrent(double V, double Ca) {return gbar*m*m*m*(V-E);}
+double KCa::getCurrent(double V, double Ca) {return gbar*m*m*m*(V-E);}
 
 #endif
