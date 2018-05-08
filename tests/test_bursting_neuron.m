@@ -26,7 +26,28 @@ x.integrate;
 x.t_end = 1e3;
 [V, Ca, ~, currents] = x.integrate;
 
+% process the voltage
+dV = [0; diff(V)];
+Vsign = dV > 0;
+
+curr_index = NaN * Vsign;
+[~, curr_index(Vsign)] = min(currents(Vsign,:)');
+[~, curr_index(~Vsign)] = max(currents(~Vsign,:)');
+unique_currents = unique(curr_index);
+
+cond_names = x.find('conductance');
 
 figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
-plot(V)
+time = 1e-3 * x.dt * (1:length(V));
+plot(time, V,'k');
+for ii = 1:length(unique_currents)
+  Vplot = V;
+  Vplot(curr_index ~= unique_currents(ii)) = NaN;
+  l(ii) = plot(time, Vplot);
+  lgd{ii} = cond_names{unique_currents(ii)};
+end
+legend(l,lgd)
+prettyFig('plw', 4);
+ylabel('V_m (mV)')
+xlabel('time (s)')
 drawnow
