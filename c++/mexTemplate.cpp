@@ -238,7 +238,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                     // read out currents
                     if (nlhs > 4)
                     {
-                        cond_idx = (xolotl_network.comp[j]->getFullCurrentState(output_cont_state,cond_idx));
+                        cond_idx = (xolotl_network.comp[j]->getFullCurrentState(output_curr_state,cond_idx));
                     }
 
 

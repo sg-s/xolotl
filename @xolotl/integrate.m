@@ -46,7 +46,7 @@ end
 V = [];
 Ca = [];
 I_clamp = [];
-cond_state = [];
+curr_state = [];
 syn_state = [];
 cont_state = [];
 
@@ -95,4 +95,7 @@ if nargout > 1
 end
 if nargout > 2
 	cont_state = (results{4})';
+end
+if nargout > 3
+	curr_state = (results{5})';
 end
