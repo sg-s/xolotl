@@ -22,7 +22,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double *output_Ca;
     double *output_I_clamp;
     double *output_curr_state; // currents
-    double *output_cond_state; // conductances
     double *output_syn_state;  // synapses
     double *output_cont_state; // controllers
 
@@ -102,6 +101,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     if (nlhs > 4) {
         plhs[4] = mxCreateDoubleMatrix(full_current_size, nsteps_out, mxREAL);
         output_curr_state = mxGetPr(plhs[4]);
+        // mexPrintf("size of output_curr_state is %i",full_current_size);
+        // mexPrintf("size of nsteps_out is %i",nsteps_out);
     }
 
     // plhs[5] = mxCreateDoubleMatrix(2*n_synapses, nsteps_out, mxREAL); // synapse gbar + state
