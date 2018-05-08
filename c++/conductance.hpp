@@ -40,7 +40,7 @@ public:
     virtual void integrate(double, double, double, double) = 0;
     virtual void connect(compartment*) = 0; // null pointer for safety
     virtual string getClass(void) = 0;
-    virtual double getCurrent(double, double) = 0.0;
+    virtual double getCurrent(double, double) = 0;
 
 };
 
