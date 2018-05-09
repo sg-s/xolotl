@@ -100,5 +100,5 @@ if nargout > 3
 	curr_state = (results{5})';
 end
 if nargout > 4
-	syn_state = (results{5})';
+	syn_state = (results{6})';
 end

@@ -41,7 +41,7 @@ public:
 
 };
 
-string ACurrent::getClass(){
+string HCurrent::getClass(){
     return "HCurrent";
 }
 
