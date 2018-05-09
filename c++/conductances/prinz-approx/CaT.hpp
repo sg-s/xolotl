@@ -62,6 +62,10 @@ void CaT::integrate(double V, double Ca, double dt, double delta_temp)
     // update E by copying E_Ca from the cell
     E = container->E_Ca;
 
+    // clamp the voltage inside of cached range
+    if (V > 101.0) {V = 101.0;}
+    else if (V < -99.0) {V = -99.0;}
+
     minf = m_inf_cache[(int) round(V+99)];
     hinf = h_inf_cache[(int) round(V+99)];
     taum = tau_m_cache[(int) round(V+99)];

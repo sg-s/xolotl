@@ -49,6 +49,11 @@ string KCa::getClass(){return "KCa";}
 
 void KCa::integrate(double V, double Ca, double dt, double delta_temp)
 {
+
+    // clamp the voltage inside of cached range
+    if (V > 101.0) {V = 101.0;}
+    else if (V < -99.0) {V = -99.0;}
+    
     taum = tau_m_cache[(int) round(V+99)];
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/taum);
     g = gbar*m*m*m*m;
