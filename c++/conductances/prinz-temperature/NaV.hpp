@@ -1,6 +1,6 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
 // Sodium CONDUCTANCE
 // http://jn.physiology.org/content/jn/90/6/3998.full.pdf
@@ -13,14 +13,14 @@ class NaV: public conductance {
 
 public:
 
-    // specify parameters + initial conditions 
+    // specify parameters + initial conditions
     NaV(double g_, double E_, double m_, double h_, double Q_g_, double Q_tau_m_, double Q_tau_h_)
     {
         gbar = g_;
         E = E_;
         m = m_;
         h = h_;
-        
+
 
         Q_g = Q_g_;
         Q_tau_m = Q_tau_m_;
@@ -34,19 +34,17 @@ public:
             if (isnan (Q_tau_h)) { Q_tau_h = 1; }
             if (isnan (E)) { E = 30; }
     }
-    
+
     void integrate(double V, double Ca, double dt, double delta_temp);
-    
+
     double m_inf(double V);
     double h_inf(double V);
     double tau_m(double V);
-    double tau_h(double V); 
+    double tau_h(double V);
     string getClass(void);
 };
 
 string NaV::getClass(){return "NaV";}
-
-void NaV::connect(compartment *pcomp_) {container = pcomp_; }
 
 void NaV::integrate(double V, double Ca, double dt, double delta_temp)
 {
