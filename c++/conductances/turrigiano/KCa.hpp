@@ -1,6 +1,6 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
 // Slow Calcium conductance
 // http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
@@ -13,7 +13,7 @@ class KCa: public conductance {
 
 public:
 
-    // specify parameters + initial conditions 
+    // specify parameters + initial conditions
     KCa(double g_, double E_, double m_)
     {
         gbar = g_;
@@ -24,9 +24,9 @@ public:
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = -80; }
     }
-    
+
     void integrate(double V, double Ca, double dt, double delta_temp);
-    
+
     double m_inf(double V, double Ca);
     double tau_m(double V);
     string getClass(void);
@@ -35,8 +35,6 @@ public:
 string KCa::getClass(){
     return "KCa";
 }
-
-void KCa::connect(compartment *pcomp_) {container = pcomp_; }
 
 void KCa::integrate(double V, double Ca, double dt, double delta_temp)
 {
