@@ -50,7 +50,7 @@ x.connect('LP','AB','Glut','gbar',30);
 x.t_end = 5e3;
 
 x.transpile; x.compile;
-x.integrate; V = x.integrate;
+x.integrate; [V, ~, ~, currs, syns] = x.integrate;
 
 C = x.find('compartment');
 
@@ -62,6 +62,36 @@ for i = 1:3
 	title(C{i})
 
 end
+
+prettyFig('plw',1.5);
+drawnow
+
+figure('outerposition',[100 100 1000 900],'PaperUnits','points','PaperSize',[1000 900]); hold on
+
+subplot(3,1,1); hold on
+plot(currs(:,1:7))
+ylabel('I (nA)')
+title(C{1})
+legend(channels)
+
+subplot(3,1,2); hold on
+plot(currs(:,8:15))
+title(C{2})
+ylabel('I (nA)')
+
+subplot(3,1,3); hold on
+plot(currs(:,16:23))
+title(C{3})
+ylabel('I (nA)')
+
+prettyFig('plw',1.5);
+drawnow
+
+figure('outerposition',[100 100 1000 900],'PaperUnits','points','PaperSize',[1000 900]); hold on
+
+plot(syns)
+ylabel('I (nA)')
+title('synaptic currents')
 
 prettyFig('plw',1.5);
 drawnow
