@@ -41,6 +41,8 @@ public:
     double m_inf(double V, double Ca);
     double tau_m(double V);
     string getClass(void);
+    double getCurrent(double V, double Ca);
+
 };
 
 string KCa::getClass(){return "KCa";}
@@ -60,7 +62,7 @@ void KCa::integrate(double V, double Ca, double dt, double delta_temp)
     {
         V = -99.0;
     }
-    
+
     taum = tau_m_cache[(int) round(V+99)];
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/taum);
     g = gbar*m*m*m*m;
@@ -69,5 +71,6 @@ void KCa::integrate(double V, double Ca, double dt, double delta_temp)
 double KCa::m_inf(double V, double Ca) { return (Ca/(Ca+3.0))/(1.0+exp((V+28.3)/-12.6)); }
 double KCa::tau_m(double V) {return 90.3 - 75.1/(1.0+exp((V+46.0)/-22.7));}
 
+double KCa::getCurrent(double V, double Ca) {return gbar*m*m*m*(V-E);}
 
 #endif

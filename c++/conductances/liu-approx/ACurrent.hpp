@@ -59,6 +59,8 @@ public:
     double tau_m(double V);
     double tau_h(double V);
     string getClass(void);
+    double getCurrent(double V, double Ca);
+
 };
 
 string ACurrent::getClass(){return "ACurrent";}
@@ -95,5 +97,6 @@ double ACurrent::h_inf(double V) {return 1.0/(1.0+exp((V+56.9)/4.9)); }
 double ACurrent::tau_m(double V) {return 11.6 - 10.4/(1.0+exp((V+32.9)/-15.2));}
 double ACurrent::tau_h(double V) {return 38.6 - 29.2/(1.0+exp((V+38.9)/-26.5));}
 
+double ACurrent::getCurrent(double V, double Ca) {return gbar*m*m*m*(V-E);}
 
 #endif

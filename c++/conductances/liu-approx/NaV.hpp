@@ -53,6 +53,8 @@ public:
     double tau_m(double V);
     double tau_h(double V);
     string getClass(void);
+    double getCurrent(double V, double Ca);
+
 };
 
 string NaV::getClass(){return "NaV";}
@@ -72,7 +74,7 @@ void NaV::integrate(double V, double Ca, double dt, double delta_temp)
     {
         V = -99.0;
     }
-    
+
     minf = m_inf_cache[(int) round(V+99)];
     hinf = h_inf_cache[(int) round(V+99)];
     taum = tau_m_cache[(int) round(V+99)];
@@ -87,5 +89,7 @@ double NaV::m_inf(double V) {return 1.0/(1.0+exp((V+25.5)/-5.29));}
 double NaV::h_inf(double V) {return 1.0/(1.0+exp((V+48.9)/5.18));}
 double NaV::tau_m(double V) {return 1.32 - 1.26/(1+exp((V+120.0)/-25.0));}
 double NaV::tau_h(double V) {return (0.67/(1.0+exp((V+62.9)/-10.0)))*(1.5+1.0/(1.0+exp((V+34.9)/3.6)));}
+
+double NaV::getCurrent(double V, double Ca) {return gbar*m*m*m*(V-E);}
 
 #endif
