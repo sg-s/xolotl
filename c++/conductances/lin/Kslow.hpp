@@ -28,18 +28,14 @@ public:
     }
 
     void integrate(double V, double Ca, double dt, double delta_temp);
-    
+
     double m_inf(double V);
     double tau_m(double V);
     string getClass(void);
-    
-
 
 };
 
 string Kslow::getClass(){return "Kslow";}
-
-void Kslow::connect(compartment *pcomp_) {container = pcomp_; }
 
 void Kslow::integrate(double V, double Ca, double dt, double delta_temp)
 {
@@ -49,8 +45,5 @@ void Kslow::integrate(double V, double Ca, double dt, double delta_temp)
 
 double Kslow::m_inf(double V) {return 1.0/(1.0+exp((V+12.85)/-19.91));}
 double Kslow::tau_m(double V) {return 2.03 - 1.96/(1+exp((V-29.83)/3.32));}
-
-double Kslow::getCurrent(double V, double Ca) {return gbar*m*m*m*(V-E);}
-
 
 #endif

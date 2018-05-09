@@ -29,19 +29,17 @@ public:
 }
 
     void integrate(double V, double Ca, double dt, double delta_temp);
-    
+
     double m_inf(double V);
     double h_inf(double V);
     double tau_m(double V);
     double tau_h(double V);
     string getClass(void);
-    
+
 
 };
 
 string Cac::getClass(){return "Cac";}
-
-void Cac::connect(compartment *pcomp_) {container = pcomp_; }
 
 void Cac::integrate(double V, double Ca, double dt, double delta_temp)
 {
@@ -61,8 +59,5 @@ double Cac::m_inf(double V) {return 1.0/(1.0+exp((V-3.68)/-6.35));}
 double Cac::h_inf(double V) {return 1.0/(1.0+exp((V+9.17)/8.22));}
 double Cac::tau_m(double V) {return 2.8 + 14.0/(exp((V+27.0)/10.0) + exp((V+70.0)/-13.0));}
 double Cac::tau_h(double V) {return 1400;}
-
-double Cac::getCurrent(double V, double Ca) {return gbar*m*m*m*(V-E);}
-
 
 #endif

@@ -26,19 +26,16 @@ public:
     }
 
     void integrate(double V, double Ca, double dt, double delta_temp);
-    
+
     double m_inf(double V);
     double h_inf(double V);
     double tau_m(double V);
     double tau_h(double V);
     string getClass(void);
-    
 
 };
 
 string NaP::getClass(){return "NaP";}
-
-void NaP::connect(compartment *pcomp_) {container = pcomp_; }
 
 void NaP::integrate(double V, double Ca, double dt, double delta_temp)
 {
@@ -47,8 +44,5 @@ void NaP::integrate(double V, double Ca, double dt, double delta_temp)
 }
 
 double NaP::m_inf(double V) {return 1.0/(1.0+exp((V+48.77)/-3.68));}
-
-double NaP::getCurrent(double V, double Ca) {return gbar*m*m*m*(V-E);}
-
 
 #endif

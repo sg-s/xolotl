@@ -29,19 +29,17 @@ public:
     }
 
     void integrate(double V, double Ca, double dt, double delta_temp);
-    
+
     double m_inf(double V);
     double h_inf(double V);
     double tau_m(double V);
     double tau_h(double V);
     string getClass(void);
-    
+
 
 };
 
 string Kfast::getClass(){return "Kfast";}
-
-void Kfast::connect(compartment *pcomp_) {container = pcomp_; }
 
 void Kfast::integrate(double V, double Ca, double dt, double delta_temp)
 {
@@ -54,8 +52,6 @@ double Kfast::m_inf(double V) {return 1.0/(1.0+exp((V+17.55)/-7.27));}
 double Kfast::h_inf(double V) {return 1.0/(1.0+exp((V+45.0)/6.0));}
 double Kfast::tau_m(double V) {return 1.94 - 2.66/(1+exp((V-8.12)/7.96));}
 double Kfast::tau_h(double V) {return 1.79 - 515.8/(1+exp((V+147.4)/28.66));}
-
-double Kfast::getCurrent(double V, double Ca) {return gbar*m*m*m*(V-E);}
 
 
 #endif

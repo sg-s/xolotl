@@ -28,19 +28,17 @@ public:
     }
 
     void integrate(double V, double Ca, double dt, double delta_temp);
-    
+
     double m_inf(double V);
     double h_inf(double V);
     double tau_m(double V);
     double tau_h(double V);
     string getClass(void);
-    
+
 
 };
 
 string NaT::getClass(){return "NaT";}
-
-void NaT::connect(compartment *pcomp_) {container = pcomp_; }
 
 void NaT::integrate(double V, double Ca, double dt, double delta_temp)
 {
@@ -53,7 +51,5 @@ double NaT::m_inf(double V) {return 1.0/(1.0+exp((V+29.13)/-8.92));}
 double NaT::h_inf(double V) {return 1.0/(1.0+exp((V+40.0)/6.04));}
 double NaT::tau_m(double V) {return 3.86 - 3.43/(1+exp((V+51.350)/-5.98));}
 double NaT::tau_h(double V) {return 2.83 - 2.37/(1+exp((V+21.9)/-2.64));}
-
-double NaT::getCurrent(double V, double Ca) {return gbar*m*m*m*(V-E);}
 
 #endif

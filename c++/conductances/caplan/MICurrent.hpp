@@ -38,8 +38,6 @@ public:
 
 string MICurrent::getClass(){return "MICurrent";}
 
-// void MICurrent::connect(compartment *pcomp_) {container = pcomp_;}
-
 void MICurrent::integrate(double V, double Ca, double dt, double delta_temp)
 {
     m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
@@ -48,8 +46,5 @@ void MICurrent::integrate(double V, double Ca, double dt, double delta_temp)
 
 
 double MICurrent::m_inf(double V) {return 1.0/(1.0+exp((V+12.0)/-5));}
-double MICurrent::tau_m(double V) {return 0.5;}
-
-// double MICurrent::getCurrent(double V, double Ca) {return gbar*m*m*m*(V-E);}
 
 #endif
