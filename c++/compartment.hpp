@@ -216,6 +216,7 @@ public:
     // methods to retrieve information from compartment
     int getFullControllerState(double*, int);
     int getFullCurrentState(double*, int);
+    int getFullSynapseState(double*, int);
     int getFullControllerSize(void);
     controller* getControllerPointer(int);
     compartment* getConnectedCompartment(int);

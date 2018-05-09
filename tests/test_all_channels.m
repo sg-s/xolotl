@@ -23,12 +23,9 @@ for i = 1:length(all_channels)
 
 	cprintf('_w',[oval(i) ') ' this_channel ' '])
 
+try
 	clear x
 	x = xolotl;
-
-	% if i == 20
-	% 	return
-	% end
 
 		x.add('AB','compartment','Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',.05,'tau_Ca',tau_Ca,'Ca_target',0);
 
@@ -36,7 +33,7 @@ for i = 1:length(all_channels)
 
 		% test if voltage and current work
 		[V, Ca, ~, currs] = x.integrate;
-        
+
 		assert(~any(isnan(currs)), 'current is NaN')
 
 		holding_V = -60;
@@ -106,7 +103,7 @@ for i = 1:length(all_channels)
 		end
 
 		cprintf('green', 'OK\n');
-
-% 		cprintf('red', 'FAILED\n');
+catch
+ 		cprintf('red', 'FAILED\n');
 	end
-
+end
