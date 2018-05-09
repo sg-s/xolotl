@@ -76,7 +76,7 @@ public:
     // neuron parameters
 
     // size
-    // gemoetry is assumed to be a cylinder.
+    // geometry is assumed to be a cylinder.
     // if not, you must specify the area and
     // volume
     double A;
