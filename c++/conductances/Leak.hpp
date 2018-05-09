@@ -37,7 +37,5 @@ void Leak::integrate(double V, double Ca, double dt, double delta_temp) {
     // do nothing
 }
 
-double Leak::getCurrent(double V, double Ca) {return gbar*(V-E);}
-
 
 #endif
