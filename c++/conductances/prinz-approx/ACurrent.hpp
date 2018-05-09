@@ -1,9 +1,9 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
-// the A current, a potassium current 
-// for some reason I don't understand, I get compiler 
+// the A current, a potassium current
+// for some reason I don't understand, I get compiler
 // errors when I name this "A" or "Ka"
 // so we'll have to live with this awkward name
 // http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
@@ -16,7 +16,7 @@ class ACurrent: public conductance {
 
 public:
 
-    // specify parameters + initial conditions 
+    // specify parameters + initial conditions
     ACurrent(double g_, double E_, double m_, double h_)
     {
         gbar = g_;
@@ -50,14 +50,16 @@ public:
     double tauh;
     double minf;
     double hinf;
-    
+
     void integrate(double V, double Ca, double dt, double delta_temp);
     void connect(compartment *pcomp_);
     double m_inf(double V);
     double h_inf(double V);
     double tau_m(double V);
-    double tau_h(double V); 
+    double tau_h(double V);
     string getClass(void);
+    double getCurrent(double V, double Ca);
+
 };
 
 string ACurrent::getClass(){return "ACurrent";}
