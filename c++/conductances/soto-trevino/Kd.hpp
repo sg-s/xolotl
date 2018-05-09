@@ -1,6 +1,6 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
 // Delayed Potassium
 // http://jn.physiology.org/content/94/1/590.short
@@ -10,7 +10,7 @@
 
 //inherit conductance class spec
 class Kd: public conductance {
-    
+
 public:
 
     //specify both gbar and erev and initial conditions
@@ -23,19 +23,17 @@ public:
          // defaults
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = -80; }
-        
+
     }
-    
+
     void integrate(double V, double Ca, double dt, double delta_temp);
-    
+
     double m_inf(double V);
     double tau_m(double V);
     string getClass(void);
 };
 
 string Kd::getClass(){return "Kd";}
-
-void Kd::connect(compartment *pcomp_) { container = pcomp_; }
 
 void Kd::integrate(double V, double Ca, double dt, double delta_temp)
 {

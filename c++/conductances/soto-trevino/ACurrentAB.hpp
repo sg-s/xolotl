@@ -1,6 +1,6 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
 // ACurrent in AB
 // http://jn.physiology.org/content/94/1/590.short
@@ -13,7 +13,7 @@ class ACurrentAB: public conductance {
 
 public:
 
-    // specify parameters + initial conditions 
+    // specify parameters + initial conditions
     ACurrentAB(double g_, double E_, double m_, double h_)
     {
         gbar = g_;
@@ -27,19 +27,17 @@ public:
         if (isnan (E)) { E = -20; }
 
     }
-    
+
     void integrate(double V, double Ca, double dt, double delta_temp);
-    
+
     double m_inf(double V);
     double h_inf(double V);
     double tau_m(double V);
-    double tau_h(double V); 
+    double tau_h(double V);
     string getClass(void);
 };
 
 string ACurrentAB::getClass(){return "ACurrentAB";}
-
-void ACurrentAB::connect(compartment *pcomp_) {container = pcomp_;}
 
 void ACurrentAB::integrate(double V, double Ca, double dt, double delta_temp)
 {

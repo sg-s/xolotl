@@ -1,6 +1,6 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
 // Calcium-dep potassium
 // http://jn.physiology.org/content/94/1/590.short
@@ -13,7 +13,7 @@ class KCaPD: public conductance {
 
 public:
 
-    // specify parameters + initial conditions 
+    // specify parameters + initial conditions
     KCaPD(double g_, double E_, double m_)
     {
         gbar = g_;
@@ -24,18 +24,16 @@ public:
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = -80; }
     }
-    
-    
+
+
     void integrate(double V, double Ca, double dt, double delta_temp);
-    
+
     double m_inf(double V, double Ca);
     double tau_m(double V);
     string getClass(void);
 };
 
 string KCaPD::getClass(){return "KCaPD";}
-
-void KCaPD::connect(compartment *pcomp_) {container = pcomp_; }
 
 void KCaPD::integrate(double V, double Ca, double dt, double delta_temp)
 {
