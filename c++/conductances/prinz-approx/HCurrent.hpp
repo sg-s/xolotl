@@ -1,6 +1,6 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
 // H current. again, for mysterious reasons, the compiler
 // won't let me call this class "H"
@@ -11,7 +11,7 @@
 
 //inherit conductance class spec
 class HCurrent: public conductance {
-    
+
 public:
 
     //specify both gbar and erev and initial conditions
@@ -26,7 +26,7 @@ public:
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
         if (isnan (E)) { E = -20; }
-    
+
         // cache values for m_inf and h_inf
         for (double V = -99; V < 101; V++) {
             m_inf_cache[(int) round(V+99)] = m_inf(V);
@@ -34,7 +34,7 @@ public:
         }
 
     }
-    
+
 
     double m_inf_cache[200];
     double tau_m_cache[200];
@@ -43,7 +43,7 @@ public:
     double minf;
 
     void integrate(double V, double Ca, double dt, double delta_temp);
-    
+
     double m_inf(double V);
     double tau_m(double V);
     string getClass(void);
@@ -51,8 +51,6 @@ public:
 };
 
 string HCurrent::getClass(){return "HCurrent";}
-
-void HCurrent::connect(compartment *pcomp_) {container = pcomp_;}
 
 void HCurrent::integrate(double V, double Ca, double dt, double delta_temp)
 {

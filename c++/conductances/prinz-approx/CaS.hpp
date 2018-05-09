@@ -47,19 +47,17 @@ public:
     double hinf;
 
     void integrate(double V, double Ca, double dt, double delta_temp);
-    
+
     double m_inf(double V);
     double h_inf(double V);
     double tau_m(double V);
     double tau_h(double V);
     string getClass(void);
-    
+
 
 };
 
 string CaS::getClass(){return "CaS";}
-
-void CaS::connect(compartment *pcomp_) {container = pcomp_; }
 
 void CaS::integrate(double V, double Ca, double dt, double delta_temp)
 {
