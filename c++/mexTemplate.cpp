@@ -31,7 +31,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // make an empty network
     network xolotl_network;
 
-    int n_synapses = 0; // keeps track of how many synapses we have
+    int n_synapses = 0;
 
     //xolotl:input_declarations
 
@@ -81,7 +81,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // compute synaptic current state dimensions
     int full_synaptic_size = 0;
-    for (int i = 0; i < n_synapses; i ++)
+    for (int i = 0; i < n_comp; i ++)
     {
         full_synaptic_size += (xolotl_network.comp[i])->n_syn;
     }
@@ -205,6 +205,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         int output_idx = 0;
         int cont_idx = 0;
         int cond_idx = 0;
+        int syn_idx = 0;
         for(int i = 0; i < nsteps; i++)
         {
 
@@ -246,7 +247,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                     // read out synaptic currents
                     if (nlhs > 5)
                     {
-                        syn_idx = (xolotl_network.comp[j]->getFullCurrentState(output_syn_state,syn_idx));
+                        syn_idx = (xolotl_network.comp[j]->getFullSynapseState(output_syn_state,syn_idx));
                     }
 
                 }

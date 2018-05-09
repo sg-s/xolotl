@@ -40,10 +40,11 @@ public:
 
     virtual void integrate(double) = 0;
     virtual void connect(compartment*, compartment*) = 0;// tells compiler they will be overridden by derived class
-    double getCurrent(double) = 0;
+    double getCurrent(double);
 
 };
 
 double synapse::getCurrent(double V) { return gbar*s*(V-E); }
+// double synapse::getCurrent(double V) { return 0.0;}
 
 #endif

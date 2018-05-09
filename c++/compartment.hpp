@@ -573,14 +573,14 @@ int compartment::getFullCurrentState(double *cond_state, int idx)
     return idx;
 }
 
-// rfor synaptic currents
-int compartment::getFullCurrentState(double *syn_state, int idx)
+// for synaptic currents
+int compartment::getFullSynapseState(double *syn_state, int idx)
 {
-    for (int i = 0; i < n_syn; i ++)
-    {
-        syn_state[idx] = cond[i]->getCurrent(V);
-        idx ++;
-    }
+    // for (int i = 0; i < n_syn; i ++)
+    // {
+    //     syn_state[idx] = syn[i]->getCurrent(V);
+    //     idx ++;
+    // }
     return idx;
 }
 

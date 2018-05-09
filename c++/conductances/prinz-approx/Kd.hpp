@@ -52,8 +52,6 @@ public:
 
 string Kd::getClass(){return "Kd";}
 
-void Kd::connect(compartment *pcomp_) { container = pcomp_; }
-
 void Kd::integrate(double V, double Ca, double dt, double delta_temp)
 {
 
