@@ -41,6 +41,10 @@ public:
 
 };
 
+string ACurrent::getClass(){
+    return "HCurrent";
+}
+
 void HCurrent::integrate(double V, double Ca, double dt, double delta_temp)
 {
     m = m_inf(V) + (m - m_inf(V))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V));
