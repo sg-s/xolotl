@@ -1,8 +1,8 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
-// inward rectifying potassium conductance 
+// inward rectifying potassium conductance
 // http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
 #ifndef KD
 #define KD
@@ -10,7 +10,7 @@
 
 //inherit conductance class spec
 class Kd: public conductance {
-    
+
 public:
 
     //specify both gbar and erev and initial conditions
@@ -19,7 +19,7 @@ public:
         gbar = g_;
         E = E_;
         m = m_;
-        
+
         // defaults
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = -80; }
@@ -31,7 +31,7 @@ public:
         }
 
     }
-    
+
 
     double m_inf_cache[200];
     double tau_m_cache[200];
@@ -54,6 +54,18 @@ void Kd::connect(compartment *pcomp_) { container = pcomp_; }
 
 void Kd::integrate(double V, double Ca, double dt, double delta_temp)
 {
+
+    // clamp the voltage inside of cached range
+    if (V > 101.0)
+    {
+        V = 101.0;
+    }
+
+    if (V < -99.0)
+    {
+        V = -99.0;
+    }
+    
     minf = m_inf_cache[(int) round(V+99)];
     taum = tau_m_cache[(int) round(V+99)];
 
