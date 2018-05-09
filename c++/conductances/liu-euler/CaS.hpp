@@ -1,6 +1,6 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
 // Slow Calcium conductance
 // http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
@@ -13,7 +13,7 @@ class CaS: public conductance {
 
 public:
 
-    // specify parameters + initial conditions 
+    // specify parameters + initial conditions
     CaS(double g_, double E_, double m_, double h_)
     {
         gbar = g_;
@@ -29,27 +29,27 @@ public:
     }
 
     void integrate(double V, double Ca, double dt, double delta_temp);
-    void connect(compartment *pcomp_);
+
     double m_inf(double V);
     double h_inf(double V);
     double tau_m(double V);
-    double tau_h(double V); 
+    double tau_h(double V);
     string getClass(void);
+
+
 };
 
 string CaS::getClass(){return "CaS";}
 
-void CaS::connect(compartment *pcomp_) {container = pcomp_; }
-
 void CaS::integrate(double V, double Ca, double dt, double delta_temp)
 {
-    // update E by copying E_Ca from the cell 
+    // update E by copying E_Ca from the cell
     E = container->E_Ca;
     m += (m_inf(V) - m)*(dt/tau_m(V));
     h += (h_inf(V) - h)*(dt/tau_h(V));
     g = gbar*m*m*m*h;
 
-    // compute the specific calcium current and update it in the cell 
+    // compute the specific calcium current and update it in the cell
     double this_I = g*(V-E);
     container->i_Ca += this_I;
 

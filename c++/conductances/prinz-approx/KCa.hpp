@@ -1,11 +1,11 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
 // Slow Calcium conductance
 // http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
 // this version uses an approximation of the timescale
-// dependence on V for faster code execution 
+// dependence on V for faster code execution
 
 #ifndef KCA
 #define KCA
@@ -16,14 +16,14 @@ class KCa: public conductance {
 
 public:
 
-    // specify parameters + initial conditions 
+    // specify parameters + initial conditions
     KCa(double g_, double E_, double m_, double h_)
     {
         gbar = g_;
         E = E_;
         m = m_;
         h = h_;
-        
+
         // defaults
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
@@ -37,9 +37,9 @@ public:
 
     double tau_m_cache[200];
     double taum;
-    
+
     void integrate(double V, double Ca, double dt, double delta_temp);
-    void connect(compartment *pcomp_);
+
     double m_inf(double V, double Ca);
     double tau_m(double V);
     string getClass(void);
@@ -47,10 +47,13 @@ public:
 
 string KCa::getClass(){return "KCa";}
 
-void KCa::connect(compartment *pcomp_) {container = pcomp_; }
-
 void KCa::integrate(double V, double Ca, double dt, double delta_temp)
 {
+
+    // clamp the voltage inside of cached range
+    if (V > 101.0) {V = 101.0;}
+    else if (V < -99.0) {V = -99.0;}
+
     taum = tau_m_cache[(int) round(V+99)];
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/taum);
     g = gbar*m*m*m*m;

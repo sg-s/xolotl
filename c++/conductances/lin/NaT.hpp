@@ -1,6 +1,6 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
 // transient Sodium CONDUCTANCE
 // http://www.jneurosci.org/content/32/21/7267
@@ -13,7 +13,7 @@ class NaT: public conductance {
 
 public:
 
-    // specify parameters + initial conditions 
+    // specify parameters + initial conditions
     NaT(double g_, double E_, double m_, double h_)
     {
         gbar = g_;
@@ -26,19 +26,19 @@ public:
         if (isnan (h)) { h = 1; }
         if (isnan (E)) { E = 50; }
     }
-    
+
     void integrate(double V, double Ca, double dt, double delta_temp);
-    void connect(compartment *pcomp_);
+
     double m_inf(double V);
     double h_inf(double V);
     double tau_m(double V);
-    double tau_h(double V); 
+    double tau_h(double V);
     string getClass(void);
+
+
 };
 
 string NaT::getClass(){return "NaT";}
-
-void NaT::connect(compartment *pcomp_) {container = pcomp_; }
 
 void NaT::integrate(double V, double Ca, double dt, double delta_temp)
 {

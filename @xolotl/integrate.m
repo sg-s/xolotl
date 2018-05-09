@@ -1,13 +1,13 @@
-%              _       _   _ 
+%              _       _   _
 %   __  _____ | | ___ | |_| |
 %   \ \/ / _ \| |/ _ \| __| |
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
 % help: integrates the model
-% 
+%
 
-function [V, Ca, cont_state] = integrate(self,I_ext, V_clamp)
+function [V, Ca, cont_state, curr_state, syn_state] = integrate(self,I_ext, V_clamp)
 
 if nargin == 2
 	assert(length(I_ext) == length(self.find('compartment')),'I_ext should be a vector with an element for each compartment')
@@ -19,9 +19,9 @@ if isempty(self.linked_binary)
 	self.linked_binary = ['mexBridge' h(1:6) '.' self.OS_binary_ext];
 end
 
-% does the binary exist? 
+% does the binary exist?
 if exist(joinPath(self.xolotl_folder,self.linked_binary),'file') == 3
-	% does the hash match up? 
+	% does the hash match up?
 	h = self.hash;
 	if ~strcmp(self.linked_binary(10:15),h(1:6))
 		self.transpile;
@@ -46,19 +46,19 @@ end
 V = [];
 Ca = [];
 I_clamp = [];
-cond_state = [];
+curr_state = [];
 syn_state = [];
 cont_state = [];
 
 
 
-% vectorize the current state 
+% vectorize the current state
 arguments = self.serialize;
 
 n_comp = length(self.find('compartment'));
 n_steps = floor(self.t_end/self.sim_dt);
 
-switch nargin 
+switch nargin
 case 1
 	I_ext = zeros(n_comp,1);
 	V_clamp = NaN(n_comp,n_steps);
@@ -67,7 +67,7 @@ case 2
 	V_clamp = NaN(n_comp,n_steps);
 case 3
 	% ignore I_ext, since it's being clamped
-	I_ext = zeros(n_comp,1);	
+	I_ext = zeros(n_comp,1);
 	if length(V_clamp) == n_comp
 		V_clamp = repmat(V_clamp,1,n_steps);
 	end
@@ -96,4 +96,9 @@ end
 if nargout > 2
 	cont_state = (results{4})';
 end
-
+if nargout > 3
+	curr_state = (results{5})';
+end
+if nargout > 4
+	syn_state = (results{6})';
+end

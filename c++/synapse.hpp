@@ -1,10 +1,10 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
-// abstract class for defining synapses  
+// abstract class for defining synapses
 // synapses connect two compartments
-// typically, neurons. 
+// typically, neurons.
 
 #ifndef SYNAPSE
 #define SYNAPSE
@@ -15,21 +15,21 @@ class synapse {
 protected:
     // parameters
     double Delta;
-    
+
     double k_;
     double Vth;
 
 
-    
-    compartment *post_syn; // pointer to pre-synaptic compartment 
+
+    compartment *post_syn; // pointer to pre-synaptic compartment
 public:
 
-    compartment *pre_syn; // pointer to pre-synaptic compartment 
+    compartment *pre_syn; // pointer to pre-synaptic compartment
     double s;
     double gbar;
     double E;
     bool is_electrical;
-    
+
 
     synapse()
     {
@@ -37,10 +37,14 @@ public:
         post_syn = 0;
     }
     ~synapse() {}
-    
+
     virtual void integrate(double) = 0;
     virtual void connect(compartment*, compartment*) = 0;// tells compiler they will be overridden by derived class
-    virtual double getCurrent(double) = 0; 
+    double getCurrent(double);
 
 };
+
+double synapse::getCurrent(double V) { return gbar*s*(V-E); }
+// double synapse::getCurrent(double V) { return 0.0;}
+
 #endif

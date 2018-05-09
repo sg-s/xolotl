@@ -9,7 +9,7 @@ class CaTPD: public conductance {
 
 public:
 
-    // specify parameters + initial conditions 
+    // specify parameters + initial conditions
     CaTPD(double g_, double E_, double m_, double h_)
     {
         gbar = g_;
@@ -25,27 +25,25 @@ public:
     }
 
     void integrate(double V, double Ca, double dt, double delta_temp);
-    void connect(compartment *pcomp_);
+
     double m_inf(double V);
     double h_inf(double V);
     double tau_m(double V);
-    double tau_h(double V); 
+    double tau_h(double V);
     string getClass(void);
 };
 
 string CaTPD::getClass(){return "CaTPD";}
 
-void CaTPD::connect(compartment *pcomp_) { container = pcomp_; }
-
 void CaTPD::integrate(double V, double Ca, double dt, double delta_temp)
 {
-    // update E by copying E_Ca from the cell 
+    // update E by copying E_Ca from the cell
     E = container->E_Ca;
     m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
     h = h_inf(V) + (h - h_inf(V))*exp(-dt/tau_h(V));
     g = gbar*m*m*m*h;
 
-    // compute the specific calcium current and update it in the cell 
+    // compute the specific calcium current and update it in the cell
     double this_I = g*(V-E);
     container->i_Ca += this_I;
 }

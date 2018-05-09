@@ -1,6 +1,6 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
 // Slow Calcium conductance
 // this version does not support temperature dependence
@@ -14,7 +14,7 @@ class KCa: public conductance {
 
 public:
 
-    // specify parameters + initial conditions 
+    // specify parameters + initial conditions
     KCa(double g_, double E_, double m_)
     {
         gbar = g_;
@@ -26,17 +26,17 @@ public:
         if (isnan (h)) { h = 1; }
         if (isnan (E)) { E = -20; }
     }
-    
+
     void integrate(double V, double Ca, double dt, double delta_temp);
-    void connect(compartment *pcomp_);
+
     double m_inf(double V, double Ca);
     double tau_m(double V);
     string getClass(void);
+
+
 };
 
 string KCa::getClass(){return "KCa";}
-
-void KCa::connect(compartment *pcomp_) {container = pcomp_; }
 
 void KCa::integrate(double V, double Ca, double dt, double delta_temp)
 {
@@ -47,6 +47,5 @@ void KCa::integrate(double V, double Ca, double dt, double delta_temp)
 
 double KCa::m_inf(double V, double Ca) { return (Ca/(Ca+3.0))/(1.0+exp((V+28.3)/-12.6)); }
 double KCa::tau_m(double V) {return 180.6 - 150.2/(1.0+exp((V+46.0)/-22.7));}
-
 
 #endif
