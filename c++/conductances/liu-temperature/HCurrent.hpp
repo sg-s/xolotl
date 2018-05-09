@@ -1,6 +1,6 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
 // H current. again, for mysterious reasons, the compiler
 // won't let me call this class "H"
@@ -11,7 +11,7 @@
 
 //inherit conductance class spec
 class HCurrent: public conductance {
-    
+
 public:
 
     //specify both gbar and erev and initial conditions
@@ -21,7 +21,7 @@ public:
         E = E_;
         m = m_;
         h = h_;
-        
+
         Q_g = Q_g_;
         Q_tau_m = Q_tau_m_;
         Q_tau_h = Q_tau_h_;
@@ -41,6 +41,8 @@ public:
     double m_inf(double V);
     double tau_m(double V);
     string getClass(void);
+    double getCurrent(double V, double Ca);
+
 
 };
 
@@ -58,5 +60,6 @@ void HCurrent::integrate(double V, double Ca, double dt, double delta_temp)
 double HCurrent::m_inf(double V) {return 1.0/(1.0+exp((V+70.0)/6.0));}
 double HCurrent::tau_m(double V) {return (272.0 + 1499.0/(1.0+exp((V+42.2)/-8.73)));}
 
+double HCurrent::getCurrent(double V, double Ca) {return gbar*m*m*m*(V-E);}
 
 #endif
