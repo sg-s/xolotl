@@ -1,6 +1,6 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
 // Shaker current
 // an inactivating K current in Drosophila
@@ -15,7 +15,7 @@ class Shaker: public conductance {
 
 public:
 
-    // specify parameters + initial conditions 
+    // specify parameters + initial conditions
     Shaker(double g_, double E_, double m_, double h_)
     {
         gbar = g_;
@@ -27,16 +27,18 @@ public:
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
         if (isnan (E)) { E = -80; }
-        
+
     }
-    
+
     void integrate(double V, double Ca, double dt, double delta_temp);
     void connect(compartment *pcomp_);
     double m_inf(double V);
     double h_inf(double V);
     double tau_m(double V);
-    double tau_h(double V); 
+    double tau_h(double V);
     string getClass(void);
+    double getCurrent(double V, double Ca);
+
 };
 
 string Shaker::getClass(){return "Shaker";}
@@ -55,5 +57,6 @@ double Shaker::h_inf(double V) {return 1.0/(1.0+exp((V+80.0)/5.23)); }
 double Shaker::tau_m(double V) {return 50.0 - 47.88/(1.0+exp((V+92.24)/-8.0));}
 double Shaker::tau_h(double V) {return 50;}
 
+double Shaker::getCurrent(double V, double Ca) {return gbar*m*m*m*(V-E);}
 
 #endif
