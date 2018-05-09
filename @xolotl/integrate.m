@@ -7,7 +7,7 @@
 % help: integrates the model
 %
 
-function [V, Ca, cont_state, curr_state] = integrate(self,I_ext, V_clamp)
+function [V, Ca, cont_state, curr_state, syn_state] = integrate(self,I_ext, V_clamp)
 
 if nargin == 2
 	assert(length(I_ext) == length(self.find('compartment')),'I_ext should be a vector with an element for each compartment')
@@ -98,4 +98,7 @@ if nargout > 2
 end
 if nargout > 3
 	curr_state = (results{5})';
+end
+if nargout > 4
+	syn_state = (results{5})';
 end

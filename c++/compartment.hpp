@@ -562,14 +562,24 @@ int compartment::getFullControllerState(double *cont_state, int idx)
     return idx;
 }
 
+// for ionic currents
 int compartment::getFullCurrentState(double *cond_state, int idx)
 {
     for (int i = 0; i < n_cond; i ++)
     {
         cond_state[idx] = cond[i]->getCurrent(V);
-        // mexPrintf("the current is %f \n",cond[i]->getCurrent(V, Ca));
         idx ++;
-        // mexPrintf("idx = %i \n",idx);
+    }
+    return idx;
+}
+
+// rfor synaptic currents
+int compartment::getFullCurrentState(double *syn_state, int idx)
+{
+    for (int i = 0; i < n_syn; i ++)
+    {
+        syn_state[idx] = cond[i]->getCurrent(V);
+        idx ++;
     }
     return idx;
 }

@@ -72,11 +72,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     // mexPrintf("full controller state size =  %i ", full_controller_size);
 
-    // compute current state dimensions
+    // compute ionic current state dimensions
     int full_current_size = 0;
     for (int i = 0; i < n_comp; i ++)
     {
         full_current_size += (xolotl_network.comp[i])->n_cond;
+    }
+
+    // compute synaptic current state dimensions
+    int full_synaptic_size = 0;
+    for (int i = 0; i < n_synapses; i ++)
+    {
+        full_synaptic_size += (xolotl_network.comp[i])->n_syn;
     }
 
     // set up outputs as mex objects
@@ -101,18 +108,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     if (nlhs > 4) {
         plhs[4] = mxCreateDoubleMatrix(full_current_size, nsteps_out, mxREAL);
         output_curr_state = mxGetPr(plhs[4]);
-        // mexPrintf("size of output_curr_state is %i",full_current_size);
-        // mexPrintf("size of nsteps_out is %i",nsteps_out);
     }
 
-    // plhs[5] = mxCreateDoubleMatrix(2*n_synapses, nsteps_out, mxREAL); // synapse gbar + state
-    // plhs[6] = mxCreateDoubleMatrix(2*n_controllers, nsteps_out, mxREAL); // controllers gbar + mrna
-    // output_syn_state = mxGetPr(plhs[5]);
-    // output_cont_state = mxGetPr(plhs[6]);
-
-    // make arrays which will store the full cond. state
-    // double * full_cond_state = new double[cond_state_dim];
-    // int cond_idx = 0;
+    if (nlhs > 5) {
+        plhs[5] = mxCreateDoubleMatrix(full_synaptic_size, nsteps_out, mxREAL);
+        output_syn_state = mxGetPr(plhs[5]);
+    }
 
     // link up I_ext and V_clamp
     double * I_ext = new double[n_comp];
@@ -236,22 +237,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                         cont_idx = (xolotl_network.comp[j]->getFullControllerState(output_cont_state,cont_idx));
                     }
 
-                    // read out currents
+                    // read out ionic currents
                     if (nlhs > 4)
                     {
                         cond_idx = (xolotl_network.comp[j]->getFullCurrentState(output_curr_state,cond_idx));
                     }
 
+                    // read out synaptic currents
+                    if (nlhs > 5)
+                    {
+                        syn_idx = (xolotl_network.comp[j]->getFullCurrentState(output_syn_state,syn_idx));
+                    }
 
-                    // cond_idx = 0;
-                    // xolotl_network.comp[j]->get_cond_state(full_cond_state);
-
-                    // get the states of every conductance
-                    // for (int k = 0; k < cond_state_dims[j]; k++)
-                    // {
-                    //     output_cond_state[output_idx*cond_state_dim + cond_idx] = full_cond_state[k];
-                    //     cond_idx ++;
-                    // }
                 }
                 output_idx ++;
             }
