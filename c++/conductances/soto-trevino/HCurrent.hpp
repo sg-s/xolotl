@@ -1,6 +1,6 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
 // HCurrent
 // http://jn.physiology.org/content/94/1/590.short
@@ -10,7 +10,7 @@
 
 //inherit conductance class spec
 class HCurrent: public conductance {
-    
+
 public:
 
     //specify both gbar and erev and initial conditions
@@ -26,7 +26,7 @@ public:
     }
 
     void integrate(double V, double Ca, double dt, double delta_temp);
-    void connect(compartment *pcomp_);
+
     double m_inf(double V);
     double tau_m(double V);
     string getClass(void);
@@ -34,8 +34,6 @@ public:
 };
 
 string HCurrent::getClass(){return "HCurrent";}
-
-void HCurrent::connect(compartment *pcomp_) {container = pcomp_;}
 
 void HCurrent::integrate(double V, double Ca, double dt, double delta_temp)
 {

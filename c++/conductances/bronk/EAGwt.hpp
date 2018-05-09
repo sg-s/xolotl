@@ -1,6 +1,6 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
 // EAG channels: K+ channels that are inactivated by Calcium.
 // paper source:
@@ -14,7 +14,7 @@ class EAGwt: public conductance {
 
 public:
 
-    // specify parameters + initial conditions 
+    // specify parameters + initial conditions
     EAGwt(double g_, double E_, double m_)
     {
         gbar = g_;
@@ -26,18 +26,17 @@ public:
         if (isnan (E)) { E = -80; }
 
     }
-    
+
 
     void integrate(double V, double Ca, double dt, double delta_temp);
-    void connect(compartment *pcomp_);
+
     double m_inf(double V, double Ca);
     double tau_m(double V);
     string getClass(void);
+
 };
 
 string EAGwt::getClass(){return "EAG";}
-
-void EAGwt::connect(compartment *pcomp_) {container = pcomp_; }
 
 void EAGwt::integrate(double V, double Ca, double dt, double delta_temp)
 {
@@ -47,6 +46,5 @@ void EAGwt::integrate(double V, double Ca, double dt, double delta_temp)
 
 double EAGwt::m_inf(double V, double Ca) { return (9.29e-2/(Ca+9.29e-2))/(1.0+exp((V+23.12)/-16.94)); }
 double EAGwt::tau_m(double V) {return 5497 - 5500/(1.0+exp((V+251.5 )/-51.5));}
-
 
 #endif

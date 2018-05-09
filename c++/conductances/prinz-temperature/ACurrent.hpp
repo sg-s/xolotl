@@ -1,9 +1,9 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
-// the A current, a potassium current 
-// for some reason I don't understand, I get compiler 
+// the A current, a potassium current
+// for some reason I don't understand, I get compiler
 // errors when I name this "A" or "Ka"
 // so we'll have to live with this awkward name
 // http://jn.physiology.org/content/jn/90/6/3998.full.pdf
@@ -16,14 +16,14 @@ class ACurrent: public conductance {
 
 public:
 
-    // specify parameters + initial conditions 
+    // specify parameters + initial conditions
     ACurrent(double g_, double E_, double m_, double h_, double Q_g_, double Q_tau_m_, double Q_tau_h_)
     {
         gbar = g_;
         E = E_;
         m = m_;
         h = h_;
-        
+
 
         Q_g = Q_g_;
         Q_tau_m = Q_tau_m_;
@@ -37,19 +37,17 @@ public:
         if (isnan (Q_tau_h)) { Q_tau_h = 1; }
         if (isnan (E)) { E = -80; }
     }
-    
+
     void integrate(double V, double Ca, double dt, double delta_temp);
-    void connect(compartment *pcomp_);
+
     double m_inf(double V);
     double h_inf(double V);
     double tau_m(double V);
-    double tau_h(double V); 
+    double tau_h(double V);
     string getClass(void);
 };
 
 string ACurrent::getClass(){return "ACurrent";}
-
-void ACurrent::connect(compartment *pcomp_) {container = pcomp_;}
 
 void ACurrent::integrate(double V, double Ca, double dt, double delta_temp)
 {

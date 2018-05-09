@@ -1,6 +1,6 @@
-% test script for matlab wrapper 
+% test script for matlab wrapper
 
-% this sets up the STG network 
+% this sets up the STG network
 % as in Fig 2e of this paper:
 % Prinz ... Marder Nat Neuro 2004
 % http://www.nature.com/neuro/journal/v7/n12/abs/nn1352.html
@@ -14,7 +14,7 @@ tau_Ca = 200;
 phi = (2*f*96485*vol)/tau_Ca;
 
 channels = {'NaV','CaT','CaS','ACurrent','KCa','Kd','HCurrent'};
-prefix = 'prinz-approx/';
+prefix = 'prinz/';
 gbar(:,1) = [1000 25  60 500  50  1000 .1];
 gbar(:,2) = [1000 0   40 200  0   250  .5];
 gbar(:,3) = [1000 24  20 500  0   1250 .5];
@@ -60,7 +60,7 @@ for i = 1:3
 	plot(V(:,i))
 	ylabel('V_m (mV)')
 	title(C{i})
-	
+
 end
 
 prettyFig('plw',1.5);

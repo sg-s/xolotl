@@ -1,8 +1,8 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
-// inward rectifying potassium conductance 
+// inward rectifying potassium conductance
 // http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
 #ifndef KD
 #define KD
@@ -10,7 +10,7 @@
 
 //inherit conductance class spec
 class Kd: public conductance {
-    
+
 public:
 
     //specify both gbar and erev and initial conditions
@@ -20,7 +20,7 @@ public:
         E = E_;
         m = m_;
         h = h_;
-        
+
         // defaults
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
@@ -33,7 +33,7 @@ public:
         }
 
     }
-    
+
 
     double m_inf_cache[200];
     double tau_m_cache[200];
@@ -42,7 +42,7 @@ public:
     double minf;
 
     void integrate(double V, double Ca, double dt, double delta_temp);
-    void connect(compartment *pcomp_);
+
     double m_inf(double V);
     double tau_m(double V);
     string getClass(void);

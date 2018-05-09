@@ -21,7 +21,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double *output_V;
     double *output_Ca;
     double *output_I_clamp;
-    double *output_cond_state; // conductances
+    double *output_curr_state; // currents
     double *output_syn_state;  // synapses
     double *output_cont_state; // controllers
 
@@ -55,9 +55,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int n_comp = (int) (xolotl_network.comp).size(); // these many compartments
 
 
-    // ask each controller (nicely) what their 
+    // ask each controller (nicely) what their
     // full state size is
-    
+
     // mexPrintf("noutputs =  %i ", nlhs);
 
     // compute cond_state_dim
@@ -66,15 +66,22 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     for (int i = 0; i < n_comp; i ++)
     {
         int n_cont = (xolotl_network.comp[i])->n_cont;
-        
+
         full_controller_sizes[n_comp] = xolotl_network.comp[i]->getFullControllerSize();
         full_controller_size +=  full_controller_sizes[n_comp];
     }
     // mexPrintf("full controller state size =  %i ", full_controller_size);
 
+    // compute current state dimensions
+    int full_current_size = 0;
+    for (int i = 0; i < n_comp; i ++)
+    {
+        full_current_size += (xolotl_network.comp[i])->n_cond;
+    }
 
+    // set up outputs as mex objects
     int res = dt/sim_dt;
-    plhs[0] = mxCreateDoubleMatrix(param_size, 1, mxREAL); 
+    plhs[0] = mxCreateDoubleMatrix(param_size, 1, mxREAL);
     output_state = mxGetPr(plhs[0]);
 
     if (nlhs > 1) {
@@ -87,12 +94,19 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     if (nlhs > 3) {
-        plhs[3] = mxCreateDoubleMatrix(full_controller_size, nsteps_out, mxREAL); 
+        plhs[3] = mxCreateDoubleMatrix(full_controller_size, nsteps_out, mxREAL);
         output_cont_state = mxGetPr(plhs[3]);
     }
 
+    if (nlhs > 4) {
+        plhs[4] = mxCreateDoubleMatrix(full_current_size, nsteps_out, mxREAL);
+        output_curr_state = mxGetPr(plhs[4]);
+        // mexPrintf("size of output_curr_state is %i",full_current_size);
+        // mexPrintf("size of nsteps_out is %i",nsteps_out);
+    }
+
     // plhs[5] = mxCreateDoubleMatrix(2*n_synapses, nsteps_out, mxREAL); // synapse gbar + state
-    // plhs[6] = mxCreateDoubleMatrix(2*n_controllers, nsteps_out, mxREAL); // controllers gbar + mrna    
+    // plhs[6] = mxCreateDoubleMatrix(2*n_controllers, nsteps_out, mxREAL); // controllers gbar + mrna
     // output_syn_state = mxGetPr(plhs[5]);
     // output_cont_state = mxGetPr(plhs[6]);
 
@@ -149,7 +163,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             // here we're getting the state of every compartment -- V, Ca, and all conductances
             if (i%res == 0)
             {
-                
+
                 for (int j = 0; j < n_comp; j++)
                 {
 
@@ -162,7 +176,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                             output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->I_clamp;
                         }
                     }
-                    
+
                     if (nlhs > 2) {
                         output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
                         output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
@@ -182,13 +196,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             }
         } // end for loop over nsteps
     }
-    else 
-        
+    else
+
     {
         // voltage is not clamped
         // do the integration
         int output_idx = 0;
         int cont_idx = 0;
+        int cond_idx = 0;
         for(int i = 0; i < nsteps; i++)
         {
 
@@ -201,7 +216,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             // here we're getting the state of every compartment -- V, Ca, and all conductances
             if (i%res == 0)
             {
-                
+
                 for (int j = 0; j < n_comp; j++)
                 {
                     // read out voltages
@@ -219,6 +234,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                     // read out controllers
                     if (nlhs > 3) {
                         cont_idx = (xolotl_network.comp[j]->getFullControllerState(output_cont_state,cont_idx));
+                    }
+
+                    // read out currents
+                    if (nlhs > 4)
+                    {
+                        cond_idx = (xolotl_network.comp[j]->getFullCurrentState(output_curr_state,cond_idx));
                     }
 
 
@@ -246,7 +267,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         (xolotl_network.comp[j]->Ca_average) = (xolotl_network.comp[j]->Ca_average)/nsteps;
     }
 
-    // here, we are reading the full state back, so we 
+    // here, we are reading the full state back, so we
     // can easily update the xolotl object in the MATLAB wrapper
     //xolotl:read_state_back
 
