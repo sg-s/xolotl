@@ -43,7 +43,7 @@ public:
     double minf;
 
     void integrate(double V, double Ca, double dt, double delta_temp);
-    void connect(compartment *pcomp_);
+    
     double m_inf(double V);
     double tau_m(double V);
     string getClass(void);

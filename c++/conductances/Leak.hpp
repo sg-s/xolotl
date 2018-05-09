@@ -26,9 +26,9 @@ public:
 
 
     void integrate(double V, double Ca, double dt, double delta_temp);
-    void connect(compartment *pcomp_);
+    
     string getClass(void);
-    double getCurrent(double V, double Ca);
+    
 };
 
 string Leak::getClass(){return "Leak";}

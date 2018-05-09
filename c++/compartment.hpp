@@ -565,7 +565,7 @@ int compartment::getFullCurrentState(double *cond_state, int idx)
 {
     for (int i = 0; i < n_cond; i ++)
     {
-        cond_state[idx] = cond[i]->getCurrent(V, Ca);
+        cond_state[idx] = cond[i]->getCurrent(V);
         // mexPrintf("the current is %f \n",cond[i]->getCurrent(V, Ca));
         idx ++;
         // mexPrintf("idx = %i \n",idx);

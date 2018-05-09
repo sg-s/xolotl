@@ -28,17 +28,17 @@ public:
     }
 
     void integrate(double V, double Ca, double dt, double delta_temp);
-    void connect(compartment *pcomp_);
+    //
     double m_inf(double V);
     double tau_m(double V);
     string getClass(void);
-    double getCurrent(double V, double Ca);
+    //
 
 };
 
 string MICurrent::getClass(){return "MICurrent";}
 
-void MICurrent::connect(compartment *pcomp_) {container = pcomp_;}
+// void MICurrent::connect(compartment *pcomp_) {container = pcomp_;}
 
 void MICurrent::integrate(double V, double Ca, double dt, double delta_temp)
 {
@@ -50,6 +50,6 @@ void MICurrent::integrate(double V, double Ca, double dt, double delta_temp)
 double MICurrent::m_inf(double V) {return 1.0/(1.0+exp((V+12.0)/-5));}
 double MICurrent::tau_m(double V) {return 0.5;}
 
-double MICurrent::getCurrent(double V, double Ca) {return gbar*m*m*m*(V-E);}
+// double MICurrent::getCurrent(double V, double Ca) {return gbar*m*m*m*(V-E);}
 
 #endif

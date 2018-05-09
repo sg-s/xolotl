@@ -48,13 +48,13 @@ public:
     double hinf;
 
     void integrate(double V, double Ca, double dt, double delta_temp);
-    void connect(compartment *pcomp_);
+    
     double m_inf(double V);
     double h_inf(double V);
     double tau_m(double V);
     double tau_h(double V);
     string getClass(void);
-    double getCurrent(double V, double Ca);
+    
 
 };
 

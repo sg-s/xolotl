@@ -38,12 +38,14 @@ public:
     ~conductance() {}
 
     virtual void integrate(double, double, double, double) = 0;
-    virtual void connect(compartment*) = 0; // null pointer for safety
+    void connect(compartment*); // null pointer for safety
     virtual string getClass(void) = 0;
-    virtual double getCurrent(double, double) = 0;
+    double getCurrent(double);
 
 };
 
+double conductance::getCurrent(double V) { return g * (V - E); }
 
+void conductance::connect(compartment *pcomp_) {container = pcomp_;}
 
 #endif
