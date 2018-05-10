@@ -1,15 +1,14 @@
 Installing
 ==========
 
-Using a package manager from MATLAB (easy)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Get this repo from within ```MATLAB`` using my package manager
+Using a package manager from MATLAB
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. set up matlab code highlighting
 .. highlight:: matlab
 
-::
+Get this repo from within ``MATLAB`` using my package manager ::
+
   % copy and paste this code in your MATLAB prompt
 
   urlwrite('http://srinivas.gs/install.m','install.m');
@@ -22,12 +21,11 @@ Get this repo from within ```MATLAB`` using my package manager
 
   install sg-s/xolotl
 
-Use git (intermediate)
-^^^^^^^^^^^^^^^^^^^^^^
+Using ``git``
+^^^^^^^^^^^^^
 
-Use git if you plan to develop this further:
+Use git if you plan to develop this further: ::
 
-::
   git clone https://github.com/sg-s/srinivas.gs_mtools
 
   git clone https://github.com/sg-s/puppeteer

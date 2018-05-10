@@ -16,7 +16,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Units" href="units.html" />
+    <link rel="next" title="Compiler Support" href="compilers.html" />
     <link rel="prev" title="xolotl" href="xolotl_documentation.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -34,31 +34,35 @@
             
   <div class="section" id="installing">
 <h1>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="using-a-package-manager-from-matlab-easy">
-<h2>Using a package manager from MATLAB (easy)<a class="headerlink" href="#using-a-package-manager-from-matlab-easy" title="Permalink to this headline">¶</a></h2>
-<p>Get this repo from within <code class="docutils literal notranslate"><span class="pre">`MATLAB</span></code> using my package manager</p>
-<dl class="docutils">
-<dt>::</dt>
-<dd><p class="first">% copy and paste this code in your MATLAB prompt</p>
-<p>urlwrite(‘<a class="reference external" href="http://srinivas.gs/install.m','install.m">http://srinivas.gs/install.m’,’install.m</a>’);</p>
-<p>install sg-s/srinivas.gs_mtools % you’ll need this</p>
-<p>install sg-s/puppeteer % for manipulation</p>
-<p>install sg-s/cpplab</p>
-<p class="last">install sg-s/xolotl</p>
-</dd>
-</dl>
+<div class="section" id="using-a-package-manager-from-matlab">
+<h2>Using a package manager from MATLAB<a class="headerlink" href="#using-a-package-manager-from-matlab" title="Permalink to this headline">¶</a></h2>
+<p>Get this repo from within <code class="docutils literal notranslate"><span class="pre">MATLAB</span></code> using my package manager</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% copy and paste this code in your MATLAB prompt</span>
+
+<span class="n">urlwrite</span><span class="p">(</span><span class="s">&#39;http://srinivas.gs/install.m&#39;</span><span class="p">,</span><span class="s">&#39;install.m&#39;</span><span class="p">);</span>
+
+<span class="n">install</span> <span class="n">sg</span><span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">srinivas</span><span class="p">.</span><span class="n">gs_mtools</span> <span class="c">% you&#39;ll need this</span>
+
+<span class="n">install</span> <span class="n">sg</span><span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">puppeteer</span> <span class="c">% for manipulation</span>
+
+<span class="n">install</span> <span class="n">sg</span><span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">cpplab</span>
+
+<span class="n">install</span> <span class="n">sg</span><span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">xolotl</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="use-git-intermediate">
 <h2>Use git (intermediate)<a class="headerlink" href="#use-git-intermediate" title="Permalink to this headline">¶</a></h2>
 <p>Use git if you plan to develop this further:</p>
-<dl class="docutils">
-<dt>::</dt>
-<dd><p class="first">git clone <a class="reference external" href="https://github.com/sg-s/srinivas.gs_mtools">https://github.com/sg-s/srinivas.gs_mtools</a></p>
-<p>git clone <a class="reference external" href="https://github.com/sg-s/puppeteer">https://github.com/sg-s/puppeteer</a></p>
-<p>git clone <a class="reference external" href="https://github.com/sg-s/xolotl">https://github.com/sg-s/xolotl</a></p>
-<p class="last">git clone <a class="reference external" href="https://github.com/sg-s/cpplab">https://github.com/sg-s/cpplab</a></p>
-</dd>
-</dl>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">sg</span><span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">srinivas</span><span class="p">.</span><span class="n">gs_mtools</span>
+
+<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">sg</span><span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">puppeteer</span>
+
+<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">sg</span><span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">xolotl</span>
+
+<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">sg</span><span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">cpplab</span>
+</pre></div>
+</div>
 <p>Don’t forget to set your <code class="docutils literal notranslate"><span class="pre">MATLAB</span></code> paths if you used git!</p>
 </div>
 <div class="section" id="final-steps">
@@ -77,7 +81,7 @@
   <h3><a href="xolotl_documentation.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Installing</a><ul>
-<li><a class="reference internal" href="#using-a-package-manager-from-matlab-easy">Using a package manager from MATLAB (easy)</a></li>
+<li><a class="reference internal" href="#using-a-package-manager-from-matlab">Using a package manager from MATLAB</a></li>
 <li><a class="reference internal" href="#use-git-intermediate">Use git (intermediate)</a></li>
 <li><a class="reference internal" href="#final-steps">Final Steps</a></li>
 </ul>
@@ -88,7 +92,7 @@
 <ul>
   <li><a href="xolotl_documentation.html">Documentation overview</a><ul>
       <li>Previous: <a href="xolotl_documentation.html" title="previous chapter">xolotl</a></li>
-      <li>Next: <a href="units.html" title="next chapter">Units</a></li>
+      <li>Next: <a href="compilers.html" title="next chapter">Compiler Support</a></li>
   </ul></li>
 </ul>
 </div>
