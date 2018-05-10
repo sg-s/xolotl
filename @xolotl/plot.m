@@ -44,6 +44,14 @@ if isempty(self.handles) || ~isfield(self.handles,'fig') || ~isvalid(self.handle
 		self.handles.Ca_trace(i) = plot(self.handles.ax(i),NaN,NaN,'Color','k');
 		ylabel(self.handles.ax(i),['[Ca^2^+]_{' comp_names{i} '} (uM)'] )
 
+		lh = legend([self.handles.plots(i).ph self.handles.Ca_trace(i)],[cond_names; '[Ca]']);
+		lh.Location = 'eastoutside';
+
+		for j = 1:length(self.handles.plots(i).ph)
+			self.handles.plots(i).ph(j).Marker = 'none';
+			self.handles.plots(i).ph(j).LineStyle = '-';
+		end
+
 	end
 
 
@@ -88,17 +96,12 @@ for i = 1:N
 	self.handles.Ca_trace(i).YData = Ca(:,i);
 	set(self.handles.ax(i),'YLim',[0 max_Ca])
 
-	lh = legend([self.handles.plots(i).ph self.handles.Ca_trace(i)],[cond_names; '[Ca]']);
-	lh.Location = 'eastoutside';
 
 end
 
-set(self.handles.ax(1),'XLim',[0 max(time)]);
-
-for i = 1:N
-	for j = 1:length(self.handles.plots(i).ph)
-		self.handles.plots(i).ph(j).Marker = 'none';
-	end
+if strcmp(self.handles.ax(1).XLimMode,'auto')
+	set(self.handles.ax(1),'XLim',[0 max(time)]);
+	self.handles.ax(1).XLimMode = 'auto';
 end
 
 prettyFig('plw',1,'lw',1);
