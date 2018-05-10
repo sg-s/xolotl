@@ -4,79 +4,101 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% help: plots the activation functions of channel
+% help: plots voltage traces
 %
-function ax = plot(conductance,ax)
+function plot(self)
 
-[m_inf, h_inf, tau_m, tau_h] = xolotl.getGatingFunctions(conductance);
+comp_names = self.find('compartment');
+N = length(comp_names);
+c = lines(100);
 
-V = linspace(-100,100,1e3);
-
-% evaluate these functions 
-minf = NaN*V;
-hinf = NaN*V;
-taum = NaN*V;
-tauh = NaN*V;
-
-Ca = 3e3;
-
-for i = 1:length(V)
-	if nargin(m_inf) == 1
-		minf(i) = m_inf(V(i));
+if isempty(self.handles) || ~isfield(self.handles,'fig') || ~isvalid(self.handles.fig)
+	if N == 1
+		y = 500;
 	else
-		minf(i) = m_inf(V(i),Ca);
+		y = 900;
 	end
-	if nargin(h_inf) == 1
-		hinf(i) = h_inf(V(i));
-	else
-		hinf(i) = h_inf(V(i),Ca);
+	self.handles.fig = figure('outerposition',[0 0 1200 y],'PaperUnits','points','PaperSize',[1200 y]); hold on
+
+	for i = 1:N
+		self.handles.ax(i) = subplot(N,1,i); hold on
 	end
+
+	linkaxes(self.handles.ax,'x');
+
+	% make all dummy plots
 	
-	taum(i) = tau_m(V(i));
-	tauh(i) = tau_h(V(i));
-end
+	for i = 1:N
 
-if nargin < 2
+		yyaxis(self.handles.ax(i),'left')
+		cond_names = self.(comp_names{i}).find('conductance');
+		for j = 1:length(cond_names)
+			self.handles.plots(i).ph(j) = plot(self.handles.ax(i),NaN,NaN, 'Color', c(j,:),'LineWidth',3);
+		end
 
-	figure('outerposition',[100 100 1000 900],'PaperUnits','points','PaperSize',[1000 500]); hold on
-	for i = 1:4
-		ax(i) = subplot(2,2,i); hold on
+		xlabel(self.handles.ax(i),'Time (s)')
+		ylabel(self.handles.ax(i),['V_{ ' comp_names{i} '} (mV)'])
+
+		% make calcium dummy plots
+		yyaxis(self.handles.ax(i),'right')
+		self.handles.Ca_trace(i) = plot(self.handles.ax(i),NaN,NaN,'Color','k');
+		ylabel(self.handles.ax(i),['[Ca^2^+]_{' comp_names{i} '} (uM)'] )
+
 	end
-elseif any(~isvalid(ax))
-	figure('outerposition',[100 100 1000 900],'PaperUnits','points','PaperSize',[1000 500]); hold on
-	for i = 1:4
-		ax(i) = subplot(2,2,i); hold on
+
+
+end
+
+
+[V, Ca, ~, currents] = self.integrate;
+max_Ca = max(max(Ca(:,1:N)));
+
+% process the voltage
+
+time = 1e-3 * self.dt * (1:size(V,1));
+
+a = 1;
+for i = 1:N
+	cond_names = self.(comp_names{i}).find('conductance');
+	this_V = V(:,i);
+	z = a + length(cond_names) - 1;
+	this_I = currents(:,a:z);
+	a = z + 1;
+
+	dV = [0; diff(this_V)];
+	Vsign = dV > 0;
+
+	curr_index = NaN * Vsign;
+	[~, curr_index(Vsign)] = min(this_I(Vsign,:)');
+	[~, curr_index(~Vsign)] = max(this_I(~Vsign,:)');
+
+
+	% show voltage
+	for j = 1:size(this_I,2)
+		Vplot = this_V;
+		Vplot(curr_index ~= j) = NaN;
+		self.handles.plots(i).ph(j).XData = time;
+		self.handles.plots(i).ph(j).YData = Vplot;
+
+	end
+
+
+	% and now show calcium
+	self.handles.Ca_trace(i).XData = time;
+	self.handles.Ca_trace(i).YData = Ca(:,i);
+	set(self.handles.ax(i),'YLim',[0 max_Ca])
+
+	lh = legend([self.handles.plots(i).ph self.handles.Ca_trace(i)],[cond_names; '[Ca]']);
+	lh.Location = 'eastoutside';
+
+end
+
+set(self.handles.ax(1),'XLim',[0 max(time)]);
+
+for i = 1:N
+	for j = 1:length(self.handles.plots(i).ph)
+		self.handles.plots(i).ph(j).Marker = 'none';
 	end
 end
 
-
-plot(ax(1),V,minf,'DisplayName',conductance);
-ylabel(ax(1),'m_{inf}')
-xlabel(ax(1),'V (mV)')
-
-plot(ax(2),V,hinf,'DisplayName',conductance);
-xlabel(ax(2),'V (mV)')
-ylabel(ax(2),'h_{inf}')
-
-
-plot(ax(3),V,taum,'DisplayName',conductance);
-ylabel(ax(3),'\tau_{m} (ms)')
-xlabel(ax(3),'V (mV)')
-set(ax(3),'YScale','log')
-
-
-plot(ax(4),V,tauh,'DisplayName',conductance);
-ylabel(ax(4),'\tau_{h} (ms)')
-xlabel(ax(4),'V (mV)')
-set(ax(4),'YScale','log')
-
-prettyFig();
-axes(ax(1))
-legend;
-
-% turn all YLim modes to auto
-for i = 1:length(ax)
-	ax(i).YLimMode = 'auto';
-end
-
-
+prettyFig('plw',1,'lw',1);

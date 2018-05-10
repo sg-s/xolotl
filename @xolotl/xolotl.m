@@ -137,7 +137,7 @@ end % end methods
 methods (Static)
 
     cleanup;
-    ax = plot(conductance,ax);
+    ax = show(conductance,ax);
     [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance);
 
 
