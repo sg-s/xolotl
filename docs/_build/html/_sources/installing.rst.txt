@@ -2,7 +2,7 @@ Installing
 ==========
 
 Using a package manager from MATLAB
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. set up matlab code highlighting
 .. highlight:: matlab
@@ -21,8 +21,8 @@ Get this repo from within ``MATLAB`` using my package manager ::
 
   install sg-s/xolotl
 
-Use git (intermediate)
-^^^^^^^^^^^^^^^^^^^^^^
+Using ``git``
+^^^^^^^^^^^^^
 
 Use git if you plan to develop this further: ::
 
