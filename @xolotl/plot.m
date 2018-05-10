@@ -75,13 +75,7 @@ for i = 1:N
 	this_I = currents(:,a:z);
 	a = z + 1;
 
-	dV = [0; diff(this_V)];
-	Vsign = dV > 0;
-
-	curr_index = NaN * Vsign;
-	[~, curr_index(Vsign)] = min(this_I(Vsign,:)');
-	[~, curr_index(~Vsign)] = max(this_I(~Vsign,:)');
-
+	curr_index = xolotl.contributingCurrents(this_V, this_I);
 
 	% show voltage
 	for j = 1:size(this_I,2)
