@@ -25,7 +25,8 @@ public:
         Q_g = Q_g_;
         Q_tau_m = Q_tau_m_;
 
-        // defaults
+        // defaults 
+ if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
         if (isnan (Q_g)) { Q_g = 1; }
