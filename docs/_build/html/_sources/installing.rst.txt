@@ -1,3 +1,9 @@
+.. set up matlab code highlighting
+.. highlight:: matlab
+
+.. set up referencing
+.. _installing:
+
 Installing
 ==========
 

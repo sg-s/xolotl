@@ -19,9 +19,9 @@ Why Use ``xolotl``?
 
 1. It's Fast
 ------------
-Because ``xolotl`` is written in ``C++``, it's quite fast. Here are some benchmarks
+Because ``xolotl`` is written in C++, it's quite fast. Here are some benchmarks
 for a single-compartment Hodgkin-Huxley model with 7 conductances.
-Note that you can get speeds up to 300x realtime!
+Note that you can get speeds up to 300X realtime!
 
 .. figure:: https://user-images.githubusercontent.com/6005346/38319588-223ab634-3800-11e8-954c-845c0692d4a0.png
 
@@ -68,6 +68,6 @@ How to Get ```xolotl``
 
 .. warning::
   There are no known issues on macOS (10.12 and 10.13). For Linux distributions,
-  you might need a compiler_ compatible with the ``mex`` ``MATLAB`` executable.
+  you might need a compiler_ :ref:`compilers` compatible with the ``mex`` ``MATLAB`` executable.
 
 .. _compiler: compilers.html
