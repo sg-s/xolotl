@@ -70,6 +70,8 @@ lb = values/3;
 ub = values*3;
 
 
+warning('off','MATLAB:hg:uicontrol:ValueMustBeInRange')
+
 % create a puppeteer instance and configure
 p = puppeteer(real_names,values,lb,ub,[],true);
 
@@ -78,3 +80,4 @@ p = puppeteer(real_names,values,lb,ub,[],true);
 p.attachFigure(self.handles.fig);
 p.callback_function = @self.manipulateEvaluate;
 self.handles.puppeteer_object = p;
+
