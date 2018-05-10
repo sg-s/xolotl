@@ -3,7 +3,6 @@
 
 .. set up referencing
 .. _compilers:
-
 Compiler Support
 ================
 

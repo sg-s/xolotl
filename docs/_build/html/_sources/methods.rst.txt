@@ -61,20 +61,10 @@ compile
 connect
 ^^^^^^^
 
-.. _copy:
-
-copy
-^^^^
-
 .. _get:
 
 get
 ^^^
-
-.. _find:
-
-find
-^^^^
 
 .. _getGatingFunctions:
 
