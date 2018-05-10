@@ -23,32 +23,13 @@ time = (1:length(V))*self.dt*1e-3;
 t_end = self.t_end;
 
 compartment_names = self.find('compartment');
+n = length(compartment_names);
 
 % create a window to show all the traces
-self.handles.fig = figure('outerposition',[0 0 1000 900],'PaperUnits','points','PaperSize',[1000 500]); hold on
-n = length(compartment_names);
-max_Ca = max(max(Ca(:,1:n)));
-for i = 1:n
-	self.handles.ax(i) = subplot(n,1,i);
+self.plot;
 
-	% show voltage
-	yyaxis(self.handles.ax(i),'left')
-	self.handles.V_trace(i) = plot(self.handles.ax(i),time,V(:,i),'k');
-	ylabel(self.handles.ax(i),['V_{' compartment_names{i} '} (mV)'] )
-	xlabel(self.handles.ax(i),'Time (s)')
-	E_vec = self.get(self.find('*.E'));
-	set(self.handles.ax(i),'YLim',[min(E_vec) max(E_vec)])
 
-	% and now show calcium
-	yyaxis(self.handles.ax(i),'right')
-	c = lines(3);
-	self.handles.Ca_trace(i) = plot(self.handles.ax(i),time,Ca(:,i),'Color',c(2,:));
-	ylabel(self.handles.ax(i),['[Ca^2^+]_{' compartment_names{i} '} (uM)'] )
-	set(self.handles.ax(i),'YLim',[0 max_Ca])
 
-end
-linkaxes(self.handles.ax,'x');
-prettyFig('plw',1,'lw',1);
 
 if nargin < 2
 

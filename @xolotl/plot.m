@@ -6,35 +6,57 @@
 %
 % help: plots voltage traces
 %
-function handles = plot(self,varargin)
+function plot(self)
 
 comp_names = self.find('compartment');
 N = length(comp_names);
+c = lines(100);
 
-if length(varargin) == 0
+if isempty(self.handles) || ~isfield(self.handles,'fig') || ~isvalid(self.handles.fig)
 	if N == 1
 		y = 500;
 	else
 		y = 900;
 	end
-	handles.fig = figure('outerposition',[0 0 1200 y],'PaperUnits','points','PaperSize',[1200 y]); hold on
+	self.handles.fig = figure('outerposition',[0 0 1200 y],'PaperUnits','points','PaperSize',[1200 y]); hold on
 
 	for i = 1:N
-		handles.ax(i) = subplot(N,1,i); hold on
+		self.handles.ax(i) = subplot(N,1,i); hold on
 	end
 
-	linkaxes(handles.ax,'x');
+	linkaxes(self.handles.ax,'x');
+
+	% make all dummy plots
+	
+	for i = 1:N
+
+		yyaxis(self.handles.ax(i),'left')
+		cond_names = self.(comp_names{i}).find('conductance');
+		for j = 1:length(cond_names)
+			self.handles.plots(i).ph(j) = plot(self.handles.ax(i),NaN,NaN, 'Color', c(j,:),'LineWidth',3);
+		end
+
+		xlabel(self.handles.ax(i),'Time (s)')
+		ylabel(self.handles.ax(i),['V_{ ' comp_names{i} '} (mV)'])
+
+		% make calcium dummy plots
+		yyaxis(self.handles.ax(i),'right')
+		self.handles.Ca_trace(i) = plot(self.handles.ax(i),NaN,NaN,'Color','k');
+		ylabel(self.handles.ax(i),['[Ca^2^+]_{' comp_names{i} '} (uM)'] )
+
+	end
+
 
 end
 
 
-
 [V, Ca, ~, currents] = self.integrate;
+max_Ca = max(max(Ca(:,1:N)));
 
 % process the voltage
 
 time = 1e-3 * self.dt * (1:size(V,1));
-c = lines(100);
+
 a = 1;
 for i = 1:N
 	cond_names = self.(comp_names{i}).find('conductance');
@@ -51,18 +73,32 @@ for i = 1:N
 	[~, curr_index(~Vsign)] = max(this_I(~Vsign,:)');
 
 
-
-	counter = 0;
+	% show voltage
 	for j = 1:size(this_I,2)
 		Vplot = this_V;
 		Vplot(curr_index ~= j) = NaN;
-		handles.plots(i).ph(j) = plot(handles.ax(i),time, Vplot, 'Color', c(j,:),'LineWidth',3);
+		self.handles.plots(i).ph(j).XData = time;
+		self.handles.plots(i).ph(j).YData = Vplot;
+
 	end
 
-	legend(handles.plots(i).ph,cond_names)
-	xlabel(handles.ax(i),'Time (s)')
-	ylabel(handles.ax(i),['V_{ ' comp_names{i} '} (mV)'])
+
+	% and now show calcium
+	self.handles.Ca_trace(i).XData = time;
+	self.handles.Ca_trace(i).YData = Ca(:,i);
+	set(self.handles.ax(i),'YLim',[0 max_Ca])
+
+	lh = legend([self.handles.plots(i).ph self.handles.Ca_trace(i)],[cond_names; '[Ca]']);
+	lh.Location = 'eastoutside';
 
 end
 
-set(handles.ax(1),'XLim',[0 max(time)]);
+set(self.handles.ax(1),'XLim',[0 max(time)]);
+
+for i = 1:N
+	for j = 1:length(self.handles.plots(i).ph)
+		self.handles.plots(i).ph(j).Marker = 'none';
+	end
+end
+
+prettyFig('plw',1,'lw',1);
