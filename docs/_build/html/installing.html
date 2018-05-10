@@ -35,7 +35,31 @@
 <h1>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="using-a-package-manager-from-matlab-easy">
 <h2>Using a package manager from MATLAB (easy)<a class="headerlink" href="#using-a-package-manager-from-matlab-easy" title="Permalink to this headline">¶</a></h2>
-<p>Get this repo from within <cite>MATLAB</cite> using my package manager:</p>
+<p>Get this repo from within <code class="docutils literal notranslate"><span class="pre">`MATLAB</span></code> using my package manager</p>
+<dl class="docutils">
+<dt>::</dt>
+<dd>% copy and paste this code in your MATLAB prompt
+urlwrite(‘<a class="reference external" href="http://srinivas.gs/install.m','install.m">http://srinivas.gs/install.m’,’install.m</a>’);
+install sg-s/srinivas.gs_mtools % you’ll need this
+install sg-s/puppeteer % for manipulation
+install sg-s/cpplab
+install sg-s/xolotl</dd>
+</dl>
+</div>
+<div class="section" id="use-git-intermediate">
+<h2>Use git (intermediate)<a class="headerlink" href="#use-git-intermediate" title="Permalink to this headline">¶</a></h2>
+<p>Use git if you plan to develop this further:</p>
+<dl class="docutils">
+<dt>::</dt>
+<dd>git clone <a class="reference external" href="https://github.com/sg-s/srinivas.gs_mtools">https://github.com/sg-s/srinivas.gs_mtools</a>
+git clone <a class="reference external" href="https://github.com/sg-s/puppeteer">https://github.com/sg-s/puppeteer</a>
+git clone <a class="reference external" href="https://github.com/sg-s/xolotl">https://github.com/sg-s/xolotl</a>
+git clone <a class="reference external" href="https://github.com/sg-s/cpplab">https://github.com/sg-s/cpplab</a></dd>
+</dl>
+<p>Don’t forget to set your <code class="docutils literal notranslate"><span class="pre">MATLAB</span></code> paths if you used git!</p>
+<p>### Final Steps</p>
+<p>Finally, make sure you <a class="reference external" href="https://www.mathworks.com/help/matlab/ref/delete.html">configure MATLAB so that it is set up to delete files permanently</a>.</p>
+<p>Otherwise you will end up with a very large number of temporary files in your trash!</p>
 </div>
 </div>
 
@@ -49,6 +73,7 @@
   <ul>
 <li><a class="reference internal" href="#">Installing</a><ul>
 <li><a class="reference internal" href="#using-a-package-manager-from-matlab-easy">Using a package manager from MATLAB (easy)</a></li>
+<li><a class="reference internal" href="#use-git-intermediate">Use git (intermediate)</a></li>
 </ul>
 </li>
 </ul>
