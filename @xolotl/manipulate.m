@@ -1,4 +1,4 @@
-%              _       _   _ 
+%              _       _   _
 %   __  _____ | | ___ | |_| |
 %   \ \/ / _ \| |/ _ \| __| |
 %    >  < (_) | | (_) | |_| |
@@ -36,7 +36,8 @@ for i = 1:n
 	self.handles.V_trace(i) = plot(self.handles.ax(i),time,V(:,i),'k');
 	ylabel(self.handles.ax(i),['V_{' compartment_names{i} '} (mV)'] )
 	xlabel(self.handles.ax(i),'Time (s)')
-	set(self.handles.ax(i),'YLim',[-80 80])
+	E_vec = self.get(self.find('*.E'));
+	set(self.handles.ax(i),'YLim',[min(E_vec) max(E_vec)])
 
 	% and now show calcium
 	yyaxis(self.handles.ax(i),'right')
@@ -56,7 +57,7 @@ if nargin < 2
 	% skip some dynamical values
 	rm_this = [lineFind(real_names,'*dt'); lineFind(real_names,'*.m'); lineFind(real_names,'*.h'); lineFind(real_names,'synapses*.s')];
 
-	% manually remove all the V, Ca for each neuron 
+	% manually remove all the V, Ca for each neuron
 	for i = 1:length(real_names)
 		for j = 1:n
 			if strcmp(real_names{i}, [compartment_names{j} '.Ca'])
@@ -96,5 +97,3 @@ p = puppeteer(real_names,values,lb,ub,[],true);
 p.attachFigure(self.handles.fig);
 p.callback_function = @self.manipulateEvaluate;
 self.handles.puppeteer_object = p;
-
-
