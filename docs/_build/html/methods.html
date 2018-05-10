@@ -63,45 +63,182 @@ Children are also <code class="docutils literal notranslate"><span class="pre">c
 </div>
 <div class="section" id="add">
 <span id="id3"></span><h2>add<a class="headerlink" href="#add" title="Permalink to this headline">¶</a></h2>
+<p>Adds a compartment, conductance, or synapse to the <code class="docutils literal notranslate"><span class="pre">xolotl</span></code> object. To add
+a compartment:</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;compartmentName&#39;</span><span class="p">,</span><span class="s">&#39;compartment&#39;</span><span class="p">,</span><span class="s">&#39;PropertyName&#39;</span><span class="p">,</span><span class="s">&#39;PropertyValue&#39;</span><span class="p">,</span> <span class="c">...)</span>
+</pre></div>
+</div>
+<p>Valid compartment properties are</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="55%" />
+<col width="45%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Name</td>
+<td><code class="docutils literal notranslate"><span class="pre">PropertyName</span></code></td>
+</tr>
+<tr class="row-even"><td>Volume</td>
+<td><code class="docutils literal notranslate"><span class="pre">vol</span></code></td>
+</tr>
+<tr class="row-odd"><td>Surface area</td>
+<td><code class="docutils literal notranslate"><span class="pre">A</span></code></td>
+</tr>
+<tr class="row-even"><td>Extra. calcium steady.</td>
+<td><code class="docutils literal notranslate"><span class="pre">Ca_out</span></code></td>
+</tr>
+<tr class="row-odd"><td>Buffer shell thickness</td>
+<td><code class="docutils literal notranslate"><span class="pre">shell_thickness</span></code></td>
+</tr>
+<tr class="row-even"><td>Intra. calcium steady.</td>
+<td><code class="docutils literal notranslate"><span class="pre">Ca_in</span></code></td>
+</tr>
+<tr class="row-odd"><td>Ca++ curr. to conc.</td>
+<td><code class="docutils literal notranslate"><span class="pre">phi</span></code></td>
+</tr>
+<tr class="row-even"><td>Average Ca++ conc.</td>
+<td><code class="docutils literal notranslate"><span class="pre">Ca_average</span></code></td>
+</tr>
+<tr class="row-odd"><td>Radius of compartment</td>
+<td><code class="docutils literal notranslate"><span class="pre">radius</span></code></td>
+</tr>
+<tr class="row-even"><td>Target Ca++ conc.</td>
+<td><code class="docutils literal notranslate"><span class="pre">Ca_target</span></code></td>
+</tr>
+<tr class="row-odd"><td>Index in <cite>xolotl</cite> tree</td>
+<td><code class="docutils literal notranslate"><span class="pre">tree_idx</span></code></td>
+</tr>
+<tr class="row-even"><td>Index of neuron</td>
+<td><code class="docutils literal notranslate"><span class="pre">neuron_idx</span></code></td>
+</tr>
+<tr class="row-odd"><td>Length of compartment</td>
+<td><code class="docutils literal notranslate"><span class="pre">len</span></code></td>
+</tr>
+<tr class="row-even"><td>Ca++ buff. time const.</td>
+<td><code class="docutils literal notranslate"><span class="pre">tau_Ca</span></code></td>
+</tr>
+<tr class="row-odd"><td>Membrane capacitance</td>
+<td><code class="docutils literal notranslate"><span class="pre">Cm</span></code></td>
+</tr>
+<tr class="row-even"><td>Intra. calcium conc.</td>
+<td><code class="docutils literal notranslate"><span class="pre">Ca</span></code></td>
+</tr>
+<tr class="row-odd"><td>Membrane potential</td>
+<td><code class="docutils literal notranslate"><span class="pre">V</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>To add a compartment named <code class="docutils literal notranslate"><span class="pre">HH</span></code> with a membrane capacitance <code class="docutils literal notranslate"><span class="pre">Cm</span> <span class="pre">=</span> <span class="pre">10</span></code></p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;HH&#39;</span><span class="p">,</span> <span class="s">&#39;compartment&#39;</span><span class="p">,</span> <span class="s">&#39;Cm&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>To access properties of that compartment, use the syntax <code class="docutils literal notranslate"><span class="pre">x.HH</span></code>. To add a conductance to that compartment</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">HH</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;ConductancePath&#39;</span><span class="p">,</span> <span class="s">&#39;PropertyName&#39;</span><span class="p">,</span> <span class="s">&#39;PropertyValue&#39;</span><span class="p">,</span> <span class="c">...);</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ConductancePath</span></code> is the path to the <code class="docutils literal notranslate"><span class="pre">.hpp</span></code> file inside <code class="docutils literal notranslate"><span class="pre">xolotl/c++/conductances/</span></code>. For example, the conductance path to add the slow calcium conductance from Prinz <em>et al.</em> 2003 is <code class="docutils literal notranslate"><span class="pre">prinz/CaS</span></code> since the conductance is specified in <code class="docutils literal notranslate"><span class="pre">xolotl/c++/conductances/prinz/CaS.hpp</span></code>.</p>
+<p>The following properties can be specified</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="59%" />
+<col width="41%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Name</td>
+<td><code class="docutils literal notranslate"><span class="pre">PropertyName</span></code></td>
+</tr>
+<tr class="row-even"><td>Maximal conductance</td>
+<td><code class="docutils literal notranslate"><span class="pre">gbar</span></code></td>
+</tr>
+<tr class="row-odd"><td>Reversal potential</td>
+<td><code class="docutils literal notranslate"><span class="pre">E</span></code></td>
+</tr>
+<tr class="row-even"><td>Inactivation variable</td>
+<td><code class="docutils literal notranslate"><span class="pre">h</span></code></td>
+</tr>
+<tr class="row-odd"><td>Activation variable</td>
+<td><code class="docutils literal notranslate"><span class="pre">m</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>For example</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">HH</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;prinz/CaS&#39;</span><span class="p">,</span> <span class="s">&#39;gbar&#39;</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="s">&#39;E&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">80</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Synapses can be added this way, but it is better to use the <code class="docutils literal notranslate"><span class="pre">connect</span></code> method.</p>
 </div>
 <div class="section" id="checkcompartmentname">
 <span id="id4"></span><h2>checkCompartmentName<a class="headerlink" href="#checkcompartmentname" title="Permalink to this headline">¶</a></h2>
+<p>Checks whether a given compartment name is on a list of illegal names. Illegal names for a new compartment include <code class="docutils literal notranslate"><span class="pre">compartment</span></code>, <code class="docutils literal notranslate"><span class="pre">synapses</span></code>, and any compartment name already specified in the <code class="docutils literal notranslate"><span class="pre">xolotl</span></code> object.</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">BOOL</span> <span class="p">=</span> <span class="n">x</span><span class="p">.</span><span class="n">checkCompartmentName</span><span class="p">(</span><span class="s">&#39;CompartmentName&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="cleanup">
 <span id="id5"></span><h2>cleanup<a class="headerlink" href="#cleanup" title="Permalink to this headline">¶</a></h2>
+<p>When the <code class="docutils literal notranslate"><span class="pre">C++</span></code> code compiles, it produces a binary <code class="docutils literal notranslate"><span class="pre">.mexa64</span></code> file and a <code class="docutils literal notranslate"><span class="pre">.cpp</span></code> file in your <code class="docutils literal notranslate"><span class="pre">xolotl</span></code> directory. These files are hashed so that repeated simulation does not require recompilation. If these files are too numerous or broken, you can erase them all by calling either</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">xolotl</span><span class="p">.</span><span class="n">cleanup</span>
+
+<span class="n">x</span><span class="p">.</span><span class="n">cleanup</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="compile">
 <span id="id6"></span><h2>compile<a class="headerlink" href="#compile" title="Permalink to this headline">¶</a></h2>
+<p>Hashes and compiles the files needed to run a simulation. These are stored in your <code class="docutils literal notranslate"><span class="pre">xolotl</span></code> directory. <code class="docutils literal notranslate"><span class="pre">xolotl</span></code> automatically compiles when it needs to. You can turn this functionally off by setting</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">skip_hash</span> <span class="p">=</span> <span class="n">true</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>In addition, creating a <code class="docutils literal notranslate"><span class="pre">xolotl</span></code> object through a function call does not automatically hash and compile. In this case, you should use <code class="docutils literal notranslate"><span class="pre">x.sha1hash</span></code>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>Always transpile before you compile!</p>
+<div class="last highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">transpile</span><span class="p">;</span>
+
+<span class="n">x</span><span class="p">.</span><span class="n">compile</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="connect">
 <span id="id7"></span><h2>connect<a class="headerlink" href="#connect" title="Permalink to this headline">¶</a></h2>
+<p>Connects two compartments with a synapse. This defaults to an electrical synapse with axial conductance of <code class="docutils literal notranslate"><span class="pre">NaN</span></code>.</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="n">_copy</span><span class="p">:</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="copy">
+<h2>copy<a class="headerlink" href="#copy" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="get">
 <span id="id8"></span><h2>get<a class="headerlink" href="#get" title="Permalink to this headline">¶</a></h2>
 </div>
+<div class="section" id="find">
+<span id="id9"></span><h2>find<a class="headerlink" href="#find" title="Permalink to this headline">¶</a></h2>
+</div>
 <div class="section" id="getgatingfunctions">
-<span id="id9"></span><h2>getGatingFunctions<a class="headerlink" href="#getgatingfunctions" title="Permalink to this headline">¶</a></h2>
+<span id="id10"></span><h2>getGatingFunctions<a class="headerlink" href="#getgatingfunctions" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="integrate">
-<span id="id10"></span><h2>integrate<a class="headerlink" href="#integrate" title="Permalink to this headline">¶</a></h2>
+<span id="id11"></span><h2>integrate<a class="headerlink" href="#integrate" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="manipulate">
-<span id="id11"></span><h2>manipulate<a class="headerlink" href="#manipulate" title="Permalink to this headline">¶</a></h2>
+<span id="id12"></span><h2>manipulate<a class="headerlink" href="#manipulate" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="plot">
-<span id="id12"></span><h2>plot<a class="headerlink" href="#plot" title="Permalink to this headline">¶</a></h2>
+<span id="id13"></span><h2>plot<a class="headerlink" href="#plot" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="reset">
-<span id="id13"></span><h2>reset<a class="headerlink" href="#reset" title="Permalink to this headline">¶</a></h2>
+<span id="id14"></span><h2>reset<a class="headerlink" href="#reset" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="set">
-<span id="id14"></span><h2>set<a class="headerlink" href="#set" title="Permalink to this headline">¶</a></h2>
+<span id="id15"></span><h2>set<a class="headerlink" href="#set" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="slice">
-<span id="id15"></span><h2>slice<a class="headerlink" href="#slice" title="Permalink to this headline">¶</a></h2>
+<span id="id16"></span><h2>slice<a class="headerlink" href="#slice" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="viewcode">
-<span id="id16"></span><h2>viewCode<a class="headerlink" href="#viewcode" title="Permalink to this headline">¶</a></h2>
+<span id="id17"></span><h2>viewCode<a class="headerlink" href="#viewcode" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -120,7 +257,9 @@ Children are also <code class="docutils literal notranslate"><span class="pre">c
 <li><a class="reference internal" href="#cleanup">cleanup</a></li>
 <li><a class="reference internal" href="#compile">compile</a></li>
 <li><a class="reference internal" href="#connect">connect</a></li>
+<li><a class="reference internal" href="#copy">copy</a></li>
 <li><a class="reference internal" href="#get">get</a></li>
+<li><a class="reference internal" href="#find">find</a></li>
 <li><a class="reference internal" href="#getgatingfunctions">getGatingFunctions</a></li>
 <li><a class="reference internal" href="#integrate">integrate</a></li>
 <li><a class="reference internal" href="#manipulate">manipulate</a></li>
