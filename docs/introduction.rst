@@ -5,7 +5,6 @@
 
 .. set up referencing
 .. _introduction:
-
 Introduction
 ============
 
