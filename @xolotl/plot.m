@@ -52,6 +52,8 @@ if isempty(self.handles) || ~isfield(self.handles,'fig') || ~isvalid(self.handle
 			self.handles.plots(i).ph(j).LineStyle = '-';
 		end
 
+		set(self.handles.ax(1),'XLim',[0 max(self.t_end*1e-3)]);
+
 	end
 
 
@@ -94,7 +96,11 @@ for i = 1:N
 	% and now show calcium
 	self.handles.Ca_trace(i).XData = time;
 	self.handles.Ca_trace(i).YData = Ca(:,i);
-	set(self.handles.ax(i),'YLim',[0 max_Ca])
+	if isnan(max_Ca)
+		set(self.handles.ax(i),'YLim',[0 1])
+	else
+		set(self.handles.ax(i),'YLim',[0 max_Ca])
+	end
 
 
 end

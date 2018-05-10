@@ -59,7 +59,11 @@ else
 	% check that these exist
 	for i = 1:length(real_names)
 		assert(self.exist(real_names{i}),'Unknown parameter to manipulate')
-		values(i) = self.get(real_names{i});
+		temp = self.get(real_names{i});
+		if isa(temp,'function_handle')
+			temp = temp();
+		end
+		values(i) = temp;
 	end
 end
 

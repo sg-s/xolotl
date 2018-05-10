@@ -6,8 +6,15 @@
 %
 % help: shows the activation functions of channel
 %
-function ax = show(conductance,ax)
+function show(conductance)
 
+
+if isa(conductance,'cell')
+	for i = 1:length(conductance)
+		xolotl.show(conductance{i});
+	end
+	return
+end
 
 [m_inf, h_inf, tau_m, tau_h] = xolotl.getGatingFunctions(conductance);
 
