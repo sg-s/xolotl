@@ -4,79 +4,65 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% help: plots the activation functions of channel
+% help: plots voltage traces
 %
-function ax = plot(conductance,ax)
+function handles = plot(self,varargin)
 
-[m_inf, h_inf, tau_m, tau_h] = xolotl.getGatingFunctions(conductance);
+comp_names = self.find('compartment');
+N = length(comp_names);
 
-V = linspace(-100,100,1e3);
-
-% evaluate these functions 
-minf = NaN*V;
-hinf = NaN*V;
-taum = NaN*V;
-tauh = NaN*V;
-
-Ca = 3e3;
-
-for i = 1:length(V)
-	if nargin(m_inf) == 1
-		minf(i) = m_inf(V(i));
+if length(varargin) == 0
+	if N == 1
+		y = 500;
 	else
-		minf(i) = m_inf(V(i),Ca);
+		y = 900;
 	end
-	if nargin(h_inf) == 1
-		hinf(i) = h_inf(V(i));
-	else
-		hinf(i) = h_inf(V(i),Ca);
-	end
-	
-	taum(i) = tau_m(V(i));
-	tauh(i) = tau_h(V(i));
-end
+	handles.fig = figure('outerposition',[0 0 1200 y],'PaperUnits','points','PaperSize',[1200 y]); hold on
 
-if nargin < 2
+	for i = 1:N
+		handles.ax(i) = subplot(N,1,i); hold on
+	end
 
-	figure('outerposition',[100 100 1000 900],'PaperUnits','points','PaperSize',[1000 500]); hold on
-	for i = 1:4
-		ax(i) = subplot(2,2,i); hold on
-	end
-elseif any(~isvalid(ax))
-	figure('outerposition',[100 100 1000 900],'PaperUnits','points','PaperSize',[1000 500]); hold on
-	for i = 1:4
-		ax(i) = subplot(2,2,i); hold on
-	end
+	linkaxes(handles.ax,'x');
+
 end
 
 
-plot(ax(1),V,minf,'DisplayName',conductance);
-ylabel(ax(1),'m_{inf}')
-xlabel(ax(1),'V (mV)')
 
-plot(ax(2),V,hinf,'DisplayName',conductance);
-xlabel(ax(2),'V (mV)')
-ylabel(ax(2),'h_{inf}')
+[V, Ca, ~, currents] = self.integrate;
+
+% process the voltage
+
+time = 1e-3 * self.dt * (1:size(V,1));
+c = lines(100);
+a = 1;
+for i = 1:N
+	cond_names = self.(comp_names{i}).find('conductance');
+	this_V = V(:,i);
+	z = a + length(cond_names) - 1;
+	this_I = currents(:,a:z);
+	a = z + 1;
+
+	dV = [0; diff(this_V)];
+	Vsign = dV > 0;
+
+	curr_index = NaN * Vsign;
+	[~, curr_index(Vsign)] = min(this_I(Vsign,:)');
+	[~, curr_index(~Vsign)] = max(this_I(~Vsign,:)');
 
 
-plot(ax(3),V,taum,'DisplayName',conductance);
-ylabel(ax(3),'\tau_{m} (ms)')
-xlabel(ax(3),'V (mV)')
-set(ax(3),'YScale','log')
 
+	counter = 0;
+	for j = 1:size(this_I,2)
+		Vplot = this_V;
+		Vplot(curr_index ~= j) = NaN;
+		handles.plots(i).ph(j) = plot(handles.ax(i),time, Vplot, 'Color', c(j,:),'LineWidth',3);
+	end
 
-plot(ax(4),V,tauh,'DisplayName',conductance);
-ylabel(ax(4),'\tau_{h} (ms)')
-xlabel(ax(4),'V (mV)')
-set(ax(4),'YScale','log')
+	legend(handles.plots(i).ph,cond_names)
+	xlabel(handles.ax(i),'Time (s)')
+	ylabel(handles.ax(i),['V_{ ' comp_names{i} '} (mV)'])
 
-prettyFig();
-axes(ax(1))
-legend;
-
-% turn all YLim modes to auto
-for i = 1:length(ax)
-	ax(i).YLimMode = 'auto';
 end
 
-
+set(handles.ax(1),'XLim',[0 max(time)]);

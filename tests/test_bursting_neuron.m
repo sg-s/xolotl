@@ -24,35 +24,7 @@ x.AB.add('Leak','gbar',@() 0.0622/x.AB.A,'E',-50);
 x.t_end = 10e3;
 x.integrate;
 x.t_end = 1e3;
-[V, Ca, ~, currents] = x.integrate;
 
-% process the voltage
-dV = [0; diff(V)];
-Vsign = dV > 0;
+x.plot;
 
-curr_index = NaN * Vsign;
-[~, curr_index(Vsign)] = min(currents(Vsign,:)');
-[~, curr_index(~Vsign)] = max(currents(~Vsign,:)');
-
-cond_names = x.find('conductance');
-c = lines;
-
-figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
-time = 1e-3 * x.dt * (1:length(V));
-plot(time, V,'k');
-
-counter = 0;
-for ii = 1:size(currents,2)
-  if any(ii == curr_index)
-    counter = counter + 1;
-    Vplot = V;
-    Vplot(curr_index ~= ii) = NaN;
-    l(counter) = plot(time, Vplot, 'Color', c(ii,:));
-    lgd{counter} = cond_names{ii};
-  end
-end
-legend(l,lgd)
-prettyFig('plw', 4);
-ylabel('V_m (mV)')
-xlabel('time (s)')
-drawnow
+prettyFig();
