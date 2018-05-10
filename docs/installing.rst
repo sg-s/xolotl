@@ -15,15 +15,10 @@ Using a package manager from MATLAB
 Get this repo from within ``MATLAB`` using my package manager ::
 
   % copy and paste this code in your MATLAB prompt
-
   urlwrite('http://srinivas.gs/install.m','install.m');
-
   install sg-s/srinivas.gs_mtools % you'll need this
-
   install sg-s/puppeteer % for manipulation
-
   install sg-s/cpplab
-
   install sg-s/xolotl
 
 Using ``git``
@@ -32,11 +27,8 @@ Using ``git``
 Use git if you plan to develop this further: ::
 
   git clone https://github.com/sg-s/srinivas.gs_mtools
-
   git clone https://github.com/sg-s/puppeteer
-
   git clone https://github.com/sg-s/xolotl
-
   git clone https://github.com/sg-s/cpplab
 
 
