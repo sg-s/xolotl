@@ -11,6 +11,8 @@ xolotl
    :caption: Contents:
 
    installing
+   introduction
+   methods
    compilers
    units
    contributing

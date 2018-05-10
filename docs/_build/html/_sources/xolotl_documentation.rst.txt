@@ -6,15 +6,13 @@
 xolotl
 ==================================
 
-
-Guide
-^^^^^
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
    installing
+   introduction
+   methods
    compilers
    units
    contributing
