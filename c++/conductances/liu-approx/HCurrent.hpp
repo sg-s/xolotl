@@ -21,7 +21,8 @@ public:
         E = E_;
         m = m_;
 
-        // defaults
+        // defaults 
+ if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = -20; }
 
