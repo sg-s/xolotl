@@ -70,4 +70,4 @@ end
 % because these objects are added within a function,
 % we need to update the hash
 
-self.sha1hash;
+self.md5hash;

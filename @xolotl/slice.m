@@ -89,5 +89,5 @@ for i = 2:N_slices
 end
 
 self.skip_hash = false;
-self.sha1hash;
+self.md5hash;
 self.skip_hash = skip_hash_state;
