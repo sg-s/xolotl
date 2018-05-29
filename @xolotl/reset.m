@@ -9,10 +9,12 @@
 function reset(self)
 
 % reset all compartments 
+% reset the Ca_average of every compartment 
 all_compartments = self.find('compartment');
 for i = 1:length(all_compartments)
 	self.(all_compartments{i}).V = -60;
 	self.(all_compartments{i}).Ca = self.(all_compartments{i}).Ca_in;
+	self.(all_compartments{i}).Ca_average = NaN;
 end
 
 % reset all conductances
@@ -39,3 +41,5 @@ all_controllers = self.find('controller');
 for i = 1:length(all_controllers)
 	self.set([all_controllers{i} '.m'],0)
 end
+
+
