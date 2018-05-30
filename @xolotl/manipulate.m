@@ -54,6 +54,12 @@ if nargin < 2
 	real_names(rm_this) = [];
 
 else
+
+	if any(strfind(manipulate_these,'*'))
+		% first find objects, then get them
+		manipulate_these = self.find(manipulate_these);
+	end
+
 	real_names = manipulate_these;
 	values = NaN*ones(length(real_names),1);
 	% check that these exist
