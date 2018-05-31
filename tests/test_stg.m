@@ -90,7 +90,7 @@ legend(x.(C{3}).find('conductance'))
 prettyFig('plw',1.5);
 drawnow
 
-figure('outerposition',[100 100 1000 900],'PaperUnits','points','PaperSize',[1000 900]); hold on
+figure('outerposition',[100 100 1000 500],'PaperUnits','points','PaperSize',[1000 500]); hold on
 
 plot(syns)
 ylabel('I (nA)')

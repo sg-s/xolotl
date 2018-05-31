@@ -10,6 +10,7 @@
 
 function transpileCore(self,in_file,out_file)
 
+
 % read lines from mexTemplate
 cppfilename = joinPath(self.cpp_folder,in_file);
 lines = lineRead(cppfilename);
@@ -31,11 +32,12 @@ insert_here = lineFind(lines,'//xolotl:include_headers_here');
 assert(length(insert_here)==1,'Could not find insertion point for headers')
 lines = [lines(1:insert_here); header_files(:); lines(insert_here+1:end)];
 
+
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % input declarations and hookups ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % this section of transpile generates a list of unique variable names that identifies all parameters and variables in the xolotl object using x.serialize, and then wires up arrays from matlab that correspond to these values to named variables in C++. so you can expect every variable to exist in your C++ workspace, where the names are defined in x.serialize
 
-[values,names] = self.serialize;
+[values,names,~,real_names] = self.serialize;
 input_hookups{1} = ['double * params  = mxGetPr(prhs[0]);'];
 
 for j = 1:length(names)
@@ -47,7 +49,6 @@ assert(length(insert_here)==1,'Could not find insertion point for input declarat
 lines = [lines(1:insert_here); input_hookups(:); lines(insert_here+1:end)];
 
 
-
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % make all the C++ objects 
 [constructors, class_parents, obj_names] = self.generateConstructors;
@@ -55,26 +56,6 @@ lines = [lines(1:insert_here); input_hookups(:); lines(insert_here+1:end)];
 insert_here = lineFind(lines,'//xolotl:insert_constructors');
 assert(length(insert_here)==1,'Could not find insertion point for object constructors')
 lines = [lines(1:insert_here); constructors(:); lines(insert_here+1:end)];
-
-
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-% ~~~~ here we call methods of the objects we made ~~~~~~~
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-call_method_lines = {};
-if ~isempty(self.call_method_data)
-	for i = 1:length(self.call_method_data)
-		S = self.call_method_data(i);
-		call_method_lines{end+1} = [S.object '.' S.method_name '(' S.method_values ');'];
-	end
-
-	insert_here = lineFind(lines,'//xolotl:call_methods_here');
-	assert(length(insert_here)==1,'Could not find insertion point for calling object methods')
-	lines = [lines(1:insert_here); call_method_lines(:); lines(insert_here+1:end)];
-
-
-	
-end
 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % ~~ output declarations and hookups ~~
@@ -87,20 +68,23 @@ end
 obj_names = obj_names(sort_idx);
 class_parents = class_parents(sort_idx);
 
-output_hookups = {};
-for j = length(names):-1:1
-	% try to figure out what the object is
-	obj_idx = [];
-	for i = 1:length(obj_names)
-		if ~isempty(strfind(names{j},obj_names{i}))
-			obj_idx = i;
-		end
-	end
 
-	if isempty(obj_idx)
+output_hookups = {};
+for j = length(real_names):-1:1
+	% try to figure out what the object is
+	% that contains this variable 
+
+	last_dot_idx = max(strfind(real_names{j},'.'));
+
+	if isempty(last_dot_idx)
 		output_hookups{j} = ['output_state[' mat2str(j-1) '] = params[' mat2str(j-1) '];'];
 	else
-		output_hookups{j} = ['output_state[' mat2str(j-1) '] = ' obj_names{obj_idx} strrep(names{j},[obj_names{obj_idx} '_'],'.') ';'];
+		containing_obj = real_names{j}(1:last_dot_idx-1);
+		prop_to_read = strrep(real_names{j},containing_obj,'');
+		containing_obj = strrep(containing_obj,'.','_');
+		containing_obj = strrep(containing_obj,'(','');
+		containing_obj = strrep(containing_obj,')','');
+		output_hookups{j} = ['output_state[' mat2str(j-1) '] = ' containing_obj prop_to_read ';'];
 	end
 end
 
@@ -108,7 +92,6 @@ end
 insert_here = lineFind(lines,'//xolotl:read_state_back');
 assert(length(insert_here)==1,'Could not find insertion point for input declarations')
 lines = [lines(1:insert_here); output_hookups(:); lines(insert_here+1:end)];
-
 
 
 %% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -205,40 +188,6 @@ lines = [lines(1:insert_here); controller_add_lines(:); lines(insert_here+1:end)
 
 
 
-% % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-% % read synapses here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-% synapse_read_lines = {};
-% for i = 1:length(self.synapses)
-% 	this_line = ['output_syn_state[i*2*n_synapses +' mat2str((i-1)*2) '] = syn' mat2str(i) '.gbar;'];
-% 	synapse_read_lines{end+1} = this_line;
-% 	this_line = ['output_syn_state[i*2*n_synapses +' mat2str((i-1)*2+1) '] = syn' mat2str(i) '.s;'];
-% 	synapse_read_lines{end+1} = this_line;
-% end
-
-% insert_here = lineFind(lines,'//xolotl:read_synapses_here');
-% assert(length(insert_here)==1,'Could not find insertion point for synapse read hookups')
-% lines = [lines(1:insert_here); synapse_read_lines(:); lines(insert_here+1:end)];
-
-% % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-% % read controllers here 
-% % !!! TODO: there is a weakness here -- we assume that every controller
-% % has a m field, and cannot have more than two states (m, gbar). need to generalize 
-% % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-% controller_read_lines = {};
-% for i = 1:length(self.controllers)
-% 	this_line = ['output_cont_state[i*2*n_controllers +' mat2str((i-1)*2) '] = cont' mat2str(i) '.m;'];
-% 	controller_read_lines{end+1} = this_line;
-% 	this_line = ['output_cont_state[i*2*n_controllers +' mat2str((i-1)*2+1) '] = cont' mat2str(i) '.get_gbar();'];
-% 	controller_read_lines{end+1} = this_line;
-% end
-
-% insert_here = lineFind(lines,'//xolotl:read_controllers_here');
-% assert(length(insert_here)==1,'Could not find insertion point for controllers read hookups')
-% lines = [lines(1:insert_here); controller_read_lines(:); lines(insert_here+1:end)];
-
-
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % add the neurons to the network  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 network_add_lines = {};
@@ -251,45 +200,10 @@ insert_here = lineFind(lines,'//xolotl:add_neurons_to_network');
 assert(length(insert_here)==1,'Could not find insertion point for cell->network hookup')
 lines = [lines(1:insert_here); network_add_lines(:); lines(insert_here+1:end)];
 
-% % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-% % if something is clamped, link up the clamping potentials   ~~~~~~~~~
-% if ~isempty(self.V_clamp)
-% 	comment_this = lineFind(lines,'//xolotl:disable_when_clamped');
-% 	assert(length(comment_this)==1,'Could not find line to comment out for voltage clamped case')
-% 	comment_this = comment_this + 1;
-% 	lines{comment_this} = ['//' lines{comment_this}];
-
-% 	V_clamp_idx = length(self.compartment_names) + 2;
-% 	insert_this = ['double *V_clamp = mxGetPr(prhs[' mat2str(V_clamp_idx) ']);'];
-% 	insert_here = lineFind(lines,'//xolotl:define_v_clamp_idx');
-% 	assert(length(insert_here)==1,'Could not find insertion point for telling C++ which input is V_clamp')
-% 	lines = [lines(1:insert_here); insert_this; lines(insert_here+1:end)];
-
-% 	uncomment_this = lineFind(lines,'//xolotl:enable_when_clamped');
-% 	assert(length(uncomment_this)>0,'Could not find line to uncomment for voltage clamped case')
-% 	for i = 1:length(uncomment_this)
-% 		lines{uncomment_this(i)+1} = strrep(lines{uncomment_this(i)+1},'//','');
-% 	end
-% end
-% % you can't have both external current and voltage clamp
-% assert(isempty(self.I_ext) || isempty(self.V_clamp),'cannot define both V_clamp and I_ext')
-% % if there is external current, link the current to the compartments
-% if ~isempty(self.I_ext)
-% 	I_ext_idx = length(self.compartment_names) + 2;
-% 	insert_this = ['double *I_ext = mxGetPr(prhs[' mat2str(I_ext_idx) ']);'];
-% 	insert_here = lineFind(lines,'//xolotl:define_v_clamp_idx');
-% 	assert(length(insert_here)==1,'Could not find insertion point for telling C++ which input is I_ext')
-% 	lines = [lines(1:insert_here); insert_this; lines(insert_here+1:end)];
-
-% 	uncomment_this = lineFind(lines,'//xolotl:enable_when_I_ext');
-% 	assert(length(uncomment_this)==1,'Could not find line to uncomment for I_ext case')
-% 	for i = 1:length(uncomment_this)
-% 		lines{uncomment_this(i)+1} = strrep(lines{uncomment_this(i)+1},'//','');
-% 	end
-% end
 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % write lines into a C++ file that we can identify by hash
+
 
 if ispc
 	% covert all \ to /
@@ -300,4 +214,3 @@ end
 
 mexBridge_name = joinPath(self.xolotl_folder, out_file);
 lineWrite(mexBridge_name,lines);
-end % end transpileCore
