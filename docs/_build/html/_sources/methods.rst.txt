@@ -267,6 +267,8 @@ Integrates the ``xolotl`` object. Returns the membrane potential, intracellular 
 
 The membrane potential is returned as matrix of ``time steps x compartments`` in the same order as the ``xolotl`` object's scalar representation (i.e. in the command window).
 The intracellular calcium is returned as a matrix of ``time steps x 2*compartments``. The first *n* time series are the intracellular calcium concentrations for each compartment, and the second *n* time series are the instantaneous calcium reversal potentials.
+Controller states are returned as a matrix of ``time steps x 2*controllers`` where the first column in each two-column pair is the controller state and the second is the state of the thing upon which the controller is operating.
+For a controller onto a maximal conductance, for instance, the first column is the controller state and the second is the maximal conductance.
 All other outputs are ``time series x XYZ`` where XYZ is the serialized list of those properties. For example, in a ``xolotl`` object with 2 compartments ``AB`` and ``BC``
 with two conductances each: ``NaV`` and ``Kd``, the intrinsic currents would return in the form of a ``time steps x 4`` matrix where the columns would be ordered:
 Kd current from AB, NaV current from AB, Kd current from BC, NaV current from BC. ::
@@ -283,10 +285,28 @@ If ``integrate`` is passed one argument, it interprets this as a matrix of injec
   % where time is a vector of length x.t_end / x.dt
   x.integrate([0.2*sin(time); zeros(time); zeros(time)])
 
+If ``integrate`` is passed two arguments, the first is ignored, and the second is treated as a matrix of clamped voltage. ::
+
+  % fixes the voltage of all compartments at -50 mV
+  x.integrate([], -50])
+  % clamps the second compartment in a two-compartment network
+  x.integrate([], [NaN -50] )
+
 .. _manipulate:
 
 manipulate
 ^^^^^^^^^^
+
+Opens the GUI to permit real-time visualization of changing network parameters.
+The first argument specifies for which network properties to generate sliders (default is all of them). This takes the form of a call to the find_ function.
+The second argument specifies which visualization function should be used (default is ``plot``). ::
+
+  % minimum usage
+  x.manipulate
+  % specify sliders only for maximal conductances of HH compartment
+  x.manipulate('HH*gbar')
+  % specify the myPlot function for visualization
+  x.manipulate('HH*gbar', @myPlot)
 
 .. _plot:
 
