@@ -98,15 +98,6 @@ The maximal conductance defaults to 0, the reversal potential defaults based on
 the conductance. Activation variables (if any) default to zero. Inactivation variables
 default to one. Synapses can be added this way, but it is better to use the ``connect`` method.
 
-.. _checkCompartmentName:
-
-checkCompartmentName
-^^^^^^^^^^^^^^^^^^^^
-
-Checks whether a given compartment name is on a list of illegal names. Illegal names for a new compartment include ``compartment``, ``synapses``, and any compartment name already specified in the ``xolotl`` object. ::
-
-  BOOL = x.checkCompartmentName('CompartmentName');
-
 .. _cleanup:
 
 cleanup
@@ -131,8 +122,11 @@ You can turn this functionally off by setting ::
 
 In addition, creating a ``xolotl`` object through a function call does not
 automatically hash and compile. In this case, you should use ``x.md5hash``.
+=======
+In addition, creating a ``xolotl`` object through a function call does not automatically hash and compile. In this case, you should use ``x.md5hash``.
+>>>>>>> 2c44bd81aed5d11aac7fb1677a4b462d47822744
 
-.. warning::
+.. hint::
 
   Always transpile before you compile! ::
 
@@ -183,6 +177,21 @@ Maximal conductance     ``gbar``
 Reversal potential      ``E``
 Activation variable     ``s``
 ======================= ================
+=======
+Connects two compartments with a synapse. This defaults to an electrical synapse with axial conductance of ``NaN``.
+
+Connect two compartments ``AB`` and ``PD`` with an axial conductance of ``NaN`` ::
+
+  x.connect('AB', 'PD')
+
+Connect two compartments with an axial conductance of ``gAxial`` ::
+
+  x.connect('AB', 'PD', gAxial)
+
+Connect two compartments with a glutamatergic synapse with maximal conductance ``gGlut`` ::
+
+  x.connect('AB', 'PD', 'Glut', gGlut)
+>>>>>>> 2c44bd81aed5d11aac7fb1677a4b462d47822744
 
 .. _copy:
 
@@ -200,18 +209,29 @@ Copies the entirety of a ``cpplab`` object into a new variable. ::
 
 get
 ^^^
+::
+
+  values = x.get('findString')
 
 Returns a vector of doubles of the values stored in the specified fields. Automatically calls the ``find`` function; the argument is a search query for the ``find`` function. ::
 
   % find all maximal conductances
   gbars = x.get('*gbar')
   % find all maximal conductances in HH compartment
+
+Produces a vector which contains the values of specified properties. ``get`` implicitly calls ``find`` and uses it to identify and order the elements of the vector. For this reason, ``get`` uses wildcard string comprehension. For example, ``'HH*gbar'`` means anything that begins with ``'HH'`` and ends with ``'gbar'``.
+Find all the maximal conductances of the ``HH`` compartment ::
+
   gbars = x.get('HH*gbar')
 
 .. _find:
 
 find
 ^^^^
+
+::
+
+  x.find('findString')
 
 Returns a cell array of character vectors for a search query. This function is a ``cpplab`` method, so what it does is specific to in which scope it is called.
 For example, for a xolotl object ``x`` with a compartment ``HH`` with three conductances ``NaV, Kd, Leak`` ::
@@ -246,6 +266,10 @@ For example, ``x.find('HH*gbar')`` would only fetch paths to maximal conductance
 getGatingFunctions
 ^^^^^^^^^^^^^^^^^^
 
+::
+
+  [act ict tau_act tau_ict] = xolotl.getGatingFunctions('conductancePath')
+
 Returns the gating functions of a conductance as function handles. The function has four outputs.
 The activation steady state equation comes first, followed by the inactivation steady state (if any), then the activation time constant, and finally the inactivation time constant (if any).
 The argument is a string that specifies where in the file directory the conductance is specified.
@@ -263,6 +287,10 @@ For example to find the ``NaV`` conductance from Liu *et al.* 1998, which is det
 integrate
 ^^^^^^^^^
 
+::
+
+  [V, Ca, cont_states, currents, syn_currents] = x.integrate
+
 Integrates the ``xolotl`` object. Returns the membrane potential, intracellular calcium, controller states, intrinsic currents, and synaptic currents as time series.
 
 The membrane potential is returned as matrix of ``time steps x compartments`` in the same order as the ``xolotl`` object's scalar representation (i.e. in the command window).
@@ -271,9 +299,7 @@ Controller states are returned as a matrix of ``time steps x 2*controllers`` whe
 For a controller onto a maximal conductance, for instance, the first column is the controller state and the second is the maximal conductance.
 All other outputs are ``time series x XYZ`` where XYZ is the serialized list of those properties. For example, in a ``xolotl`` object with 2 compartments ``AB`` and ``BC``
 with two conductances each: ``NaV`` and ``Kd``, the intrinsic currents would return in the form of a ``time steps x 4`` matrix where the columns would be ordered:
-Kd current from AB, NaV current from AB, Kd current from BC, NaV current from BC. ::
-
-  [V, Ca, cont_states, currents, syn_currents] = x.integrate
+Kd current from AB, NaV current from AB, Kd current from BC, NaV current from BC.
 
 If ``integrate`` is passed one argument, it interprets this as a matrix of injected currents (in nA). For example ::
 
@@ -313,22 +339,106 @@ The second argument specifies which visualization function should be used (defau
 plot
 ^^^^
 
+Plots voltage and intracellular calcium traces for each compartment.
+The voltage traces are colored based on the dominant current. A current is dominant when
+it is the outward current with the greatest magnitude and dV/dt is negative;
+or it is the inward current with the greatest magnitude and dV/dt is positive. ::
+
+  x.plot
+
+.. hint::
+
+  This is a static method of ``xolotl``.
+
+.. _replicate:
+
+replicate
+^^^^^^^^^
+
+::
+
+  x.replicate('cpplabObject', N)
+
+Replicates a ``cpplab`` object in the tree ``N`` times with all children included.
+This is useful for generating many identical compartments. To generate 100 ``HH`` compartments,
+where ``HH`` is already specified ::
+
+  x.replicate('HH', 100)
+
 .. _reset:
 
 reset
 ^^^^^
+
+Resets all state variables to their initial condition. When the ``xolotl`` object is flagged
+``x.closed_loop = true``, this is done automatically before integrating. ::
+
+  x.reset
 
 .. _set:
 
 set
 ^^^
 
+::
+
+  x.set('findString', values)
+
+Sets network parameters to specified values.
+The first argument is a find_ string that indicates which parameters to set.
+The second argument is a vector that holds the values for setting the parameters.
+This function is useful for setting many parameters at once. For example, to set the maximal conductances of all compartments to a the values of a vector ``gbars`` ::
+
+  x.set('*gbar', gbars)
+
+.. _show:
+
+show
+^^^^
+
+::
+
+  xolotl.show('conductancePath')
+
+Plots the activation and inactivation steady-states and time constants for a conductance.
+The argument is a string that specifies where in the file directory the conductance is specified.
+For example to show the ``NaV`` conductance from Liu *et al.* 1998, which is detailed in
+``.../xolotl/c++/conductances/liu/NaV.hpp`` ::
+
+  x.show('liu/NaV')
+
+.. hint::
+
+  This is a static method of ``xolotl``.
+
 .. _slice:
 
 slice
 ^^^^^
 
+::
+
+  x.slice(compartmentName, nSlices, axialResistivity)
+
+Splits up a single compartment into many compartments connected by axial `synapses.`
+This is only used in multicompartment models to add morphological complexity.
+
+The first argument specifies which compartment to slice, as a character vector.
+The second argument specifies the number of total slices. To make 100 compartments
+connected by axial `synapses,` specify 100.
+The third argument sets the axial resistivity, which must be a real positive number. It defaults to NaN.
+
+.. hint::
+
+  This function assumes cylindrical geometry (i.e. the ``radius`` and ``len`` properties of the compartment must be defined).
+
 .. _viewCode:
 
 viewCode
 ^^^^^^^^
+
+::
+
+  x.viewCode
+
+Displays the ``C++ mexBridge`` code in your default editor.
