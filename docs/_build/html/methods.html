@@ -52,7 +52,7 @@ possible to compile and run the <code class="docutils literal"><span class="pre"
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p>You can list all the methods of <code class="docutils literal"><span class="pre">xolotl</span></code> object <code class="docutils literal"><span class="pre">x</span></code> by</p>
-<div class="last highlight-matlab"><div class="highlight"><pre><span></span>``<span class="n">x</span><span class="p">.</span><span class="k">methods</span>``
+<div class="last highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="k">methods</span>
 </pre></div>
 </div>
 </div>
@@ -173,7 +173,9 @@ a compartment:</p>
 <div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">HH</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;prinz/CaS&#39;</span><span class="p">,</span> <span class="s">&#39;gbar&#39;</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="s">&#39;E&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">80</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Synapses can be added this way, but it is better to use the <code class="docutils literal"><span class="pre">connect</span></code> method.</p>
+<p>The maximal conductance defaults to 0, the reversal potential defaults based on
+the conductance. Activation variables (if any) default to zero. Inactivation variables
+default to one. Synapses can be added this way, but it is better to use the <code class="docutils literal"><span class="pre">connect</span></code> method.</p>
 </div>
 <div class="section" id="checkcompartmentname">
 <span id="id4"></span><h2>checkCompartmentName<a class="headerlink" href="#checkcompartmentname" title="Permalink to this headline">¶</a></h2>
@@ -186,23 +188,24 @@ a compartment:</p>
 <span id="id5"></span><h2>cleanup<a class="headerlink" href="#cleanup" title="Permalink to this headline">¶</a></h2>
 <p>When the <code class="docutils literal"><span class="pre">C++</span></code> code compiles, it produces a binary <code class="docutils literal"><span class="pre">.mexa64</span></code> file and a <code class="docutils literal"><span class="pre">.cpp</span></code> file in your <code class="docutils literal"><span class="pre">xolotl</span></code> directory. These files are hashed so that repeated simulation does not require recompilation. If these files are too numerous or broken, you can erase them all by calling either</p>
 <div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">xolotl</span><span class="p">.</span><span class="n">cleanup</span>
-
 <span class="n">x</span><span class="p">.</span><span class="n">cleanup</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="compile">
 <span id="id6"></span><h2>compile<a class="headerlink" href="#compile" title="Permalink to this headline">¶</a></h2>
-<p>Hashes and compiles the files needed to run a simulation. These are stored in your <code class="docutils literal"><span class="pre">xolotl</span></code> directory. <code class="docutils literal"><span class="pre">xolotl</span></code> automatically compiles when it needs to. You can turn this functionally off by setting</p>
+<p>Hashes and compiles the files needed to run a simulation. These are stored in
+your <code class="docutils literal"><span class="pre">xolotl</span></code> directory. <code class="docutils literal"><span class="pre">xolotl</span></code> automatically compiles when it needs to.
+You can turn this functionally off by setting</p>
 <div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">skip_hash</span> <span class="p">=</span> <span class="n">true</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>In addition, creating a <code class="docutils literal"><span class="pre">xolotl</span></code> object through a function call does not automatically hash and compile. In this case, you should use <code class="docutils literal"><span class="pre">x.sha1hash</span></code>.</p>
+<p>In addition, creating a <code class="docutils literal"><span class="pre">xolotl</span></code> object through a function call does not
+automatically hash and compile. In this case, you should use <code class="docutils literal"><span class="pre">x.md5hash</span></code>.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p>Always transpile before you compile!</p>
 <div class="last highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">transpile</span><span class="p">;</span>
-
 <span class="n">x</span><span class="p">.</span><span class="n">compile</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -210,43 +213,161 @@ a compartment:</p>
 </div>
 <div class="section" id="connect">
 <span id="id7"></span><h2>connect<a class="headerlink" href="#connect" title="Permalink to this headline">¶</a></h2>
-<p>Connects two compartments with a synapse. This defaults to an electrical synapse with axial conductance of <code class="docutils literal"><span class="pre">NaN</span></code>.</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="n">_copy</span><span class="p">:</span>
+<p>Connects two compartments with a synapse. The basic syntax is</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;PreSynaptic&#39;</span><span class="p">,</span> <span class="s">&#39;PostSynaptic&#39;</span><span class="p">,</span> <span class="s">&#39;Type&#39;</span><span class="p">,</span> <span class="n">PropertyName</span><span class="o">&#39;</span><span class="p">,</span> <span class="n">PropertyValue</span><span class="p">,</span> <span class="c">...)</span>
+</pre></div>
+</div>
+<p>The first two arguments are the presynaptic and postsynaptic compartment names.</p>
+<p>In the case of two arguments, or three arguments where the third is a <code class="docutils literal"><span class="pre">double</span></code>,
+an axial or electrical synapse is created between the two compartments. An axial
+synapse is created if either of the compartments is part of a spacially-discretized
+multi-compartment structure (e.g. has a defined <code class="docutils literal"><span class="pre">tree_idx</span></code>). Otherwise, the created
+synapse is electrical. Axial and electrical synapses differ in how they are integrated
+(see Dayan &amp; Abbott 2001, Ch. 5-6).</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="c">% create a synapse between AB and LP with gbar of NaN</span>
+<span class="n">x</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;AB&#39;</span><span class="p">,</span> <span class="s">&#39;LP&#39;</span><span class="p">)</span>
+<span class="c">% create a synapse between AB and LP with gbar of 10</span>
+<span class="n">x</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;AB&#39;</span><span class="p">,</span> <span class="s">&#39;LP&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The most common way to produce a synapse is to pass the synapse type and then any
+properties. For example, to add a glutamatergic synapse between <code class="docutils literal"><span class="pre">AB</span></code> and <code class="docutils literal"><span class="pre">LP</span></code>
+with a maximal conductance of 100:</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;AB&#39;</span><span class="p">,</span> <span class="s">&#39;LP&#39;</span><span class="p">,</span> <span class="s">&#39;Glut&#39;</span><span class="p">,</span> <span class="s">&#39;gbar&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Synapses can also be connected by passing a <code class="docutils literal"><span class="pre">cpplab</span></code> object to the <code class="docutils literal"><span class="pre">connect</span></code>
+function</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="c">% create a synapse using the cpplab object &#39;syn_cpplab&#39;</span>
+<span class="n">x</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;AB&#39;</span><span class="p">,</span> <span class="s">&#39;LP&#39;</span><span class="p">,</span> <span class="n">syn_cpplab</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The following properties can be specified</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="59%" />
+<col width="41%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Name</td>
+<td><code class="docutils literal"><span class="pre">PropertyName</span></code></td>
+</tr>
+<tr class="row-even"><td>Maximal conductance</td>
+<td><code class="docutils literal"><span class="pre">gbar</span></code></td>
+</tr>
+<tr class="row-odd"><td>Reversal potential</td>
+<td><code class="docutils literal"><span class="pre">E</span></code></td>
+</tr>
+<tr class="row-even"><td>Activation variable</td>
+<td><code class="docutils literal"><span class="pre">s</span></code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="copy">
+<span id="id8"></span><h2>copy<a class="headerlink" href="#copy" title="Permalink to this headline">¶</a></h2>
+<p>Copies the entirety of a <code class="docutils literal"><span class="pre">cpplab</span></code> object into a new variable.</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="c">% create a new xolotl object</span>
+<span class="n">N</span> <span class="p">=</span> <span class="n">x</span><span class="p">.</span><span class="n">copy</span>
+<span class="c">% create a new HH object</span>
+<span class="n">N</span> <span class="p">=</span> <span class="n">x</span><span class="p">.</span><span class="n">HH</span><span class="p">.</span><span class="n">copy</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="copy">
-<h2>copy<a class="headerlink" href="#copy" title="Permalink to this headline">¶</a></h2>
-</div>
 <div class="section" id="get">
-<span id="id8"></span><h2>get<a class="headerlink" href="#get" title="Permalink to this headline">¶</a></h2>
+<span id="id9"></span><h2>get<a class="headerlink" href="#get" title="Permalink to this headline">¶</a></h2>
+<p>Returns a vector of doubles of the values stored in the specified fields. Automatically calls the <code class="docutils literal"><span class="pre">find</span></code> function; the argument is a search query for the <code class="docutils literal"><span class="pre">find</span></code> function.</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="c">% find all maximal conductances</span>
+<span class="n">gbars</span> <span class="p">=</span> <span class="n">x</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;*gbar&#39;</span><span class="p">)</span>
+<span class="c">% find all maximal conductances in HH compartment</span>
+<span class="n">gbars</span> <span class="p">=</span> <span class="n">x</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;HH*gbar&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="find">
-<span id="id9"></span><h2>find<a class="headerlink" href="#find" title="Permalink to this headline">¶</a></h2>
+<span id="id10"></span><h2>find<a class="headerlink" href="#find" title="Permalink to this headline">¶</a></h2>
+<p>Returns a cell array of character vectors for a search query. This function is a <code class="docutils literal"><span class="pre">cpplab</span></code> method, so what it does is specific to in which scope it is called.
+For example, for a xolotl object <code class="docutils literal"><span class="pre">x</span></code> with a compartment <code class="docutils literal"><span class="pre">HH</span></code> with three conductances <code class="docutils literal"><span class="pre">NaV,</span> <span class="pre">Kd,</span> <span class="pre">Leak</span></code></p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="nb">find</span><span class="p">(</span><span class="s">&#39;*gbar&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>returns</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s">&#39;HH.Kd.gbar&#39;</span>  <span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;HH.Leak.gbar&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;HH.NaV.gbar&#39;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>whereas, a call within the <code class="docutils literal"><span class="pre">HH</span></code> scope</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">HH</span><span class="p">.</span><span class="nb">find</span><span class="p">(</span><span class="s">&#39;*gbar&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>yields</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s">&#39;Kd.gbar&#39;</span>  <span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;Leak.gbar&#39;</span><span class="p">}</span>
+<span class="p">{</span><span class="s">&#39;NaV.gbar&#39;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">*</span></code> symbol is the wildcard operator. It finds any string that matches that pattern (e.g. <code class="docutils literal"><span class="pre">*gbar</span></code> finds any string in the <code class="docutils literal"><span class="pre">xolotl</span></code> tree that ends with <code class="docutils literal"><span class="pre">'gbar'</span></code>).
+For example, <code class="docutils literal"><span class="pre">x.find('HH*gbar')</span></code> would only fetch paths to maximal conductances in the <code class="docutils literal"><span class="pre">HH</span></code> compartment.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">The <code class="docutils literal"><span class="pre">set</span></code> and <code class="docutils literal"><span class="pre">get</span></code> functions use the same syntax as the <code class="docutils literal"><span class="pre">find</span></code> function. They call it implicitly.</p>
+</div>
 </div>
 <div class="section" id="getgatingfunctions">
-<span id="id10"></span><h2>getGatingFunctions<a class="headerlink" href="#getgatingfunctions" title="Permalink to this headline">¶</a></h2>
+<span id="id11"></span><h2>getGatingFunctions<a class="headerlink" href="#getgatingfunctions" title="Permalink to this headline">¶</a></h2>
+<p>Returns the gating functions of a conductance as function handles. The function has four outputs.
+The activation steady state equation comes first, followed by the inactivation steady state (if any), then the activation time constant, and finally the inactivation time constant (if any).
+The argument is a string that specifies where in the file directory the conductance is specified.
+For example to find the <code class="docutils literal"><span class="pre">NaV</span></code> conductance from Liu <em>et al.</em> 1998, which is detailed in
+<code class="docutils literal"><span class="pre">.../xolotl/c++/conductances/liu/NaV.hpp</span></code></p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">m_inf</span><span class="p">,</span> <span class="n">h_inf</span><span class="p">,</span> <span class="n">tau_m</span><span class="p">,</span> <span class="n">tau_h</span><span class="p">]</span> <span class="p">=</span> <span class="n">x</span><span class="p">.</span><span class="n">getGatingFunctions</span><span class="p">(</span><span class="s">&#39;liu/NaV&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">This is a static method of <code class="docutils literal"><span class="pre">xolotl</span></code> (i.e. <code class="docutils literal"><span class="pre">xolotl.getGatingFunctions(...)</span></code> is valid).</p>
+</div>
 </div>
 <div class="section" id="integrate">
-<span id="id11"></span><h2>integrate<a class="headerlink" href="#integrate" title="Permalink to this headline">¶</a></h2>
+<span id="id12"></span><h2>integrate<a class="headerlink" href="#integrate" title="Permalink to this headline">¶</a></h2>
+<p>Integrates the <code class="docutils literal"><span class="pre">xolotl</span></code> object. Returns the membrane potential, intracellular calcium, controller states, intrinsic currents, and synaptic currents as time series.</p>
+<p>The membrane potential is returned as matrix of <code class="docutils literal"><span class="pre">time</span> <span class="pre">steps</span> <span class="pre">x</span> <span class="pre">compartments</span></code> in the same order as the <code class="docutils literal"><span class="pre">xolotl</span></code> object’s scalar representation (i.e. in the command window).
+The intracellular calcium is returned as a matrix of <code class="docutils literal"><span class="pre">time</span> <span class="pre">steps</span> <span class="pre">x</span> <span class="pre">2*compartments</span></code>. The first <em>n</em> time series are the intracellular calcium concentrations for each compartment, and the second <em>n</em> time series are the instantaneous calcium reversal potentials.
+All other outputs are <code class="docutils literal"><span class="pre">time</span> <span class="pre">series</span> <span class="pre">x</span> <span class="pre">XYZ</span></code> where XYZ is the serialized list of those properties. For example, in a <code class="docutils literal"><span class="pre">xolotl</span></code> object with 2 compartments <code class="docutils literal"><span class="pre">AB</span></code> and <code class="docutils literal"><span class="pre">BC</span></code>
+with two conductances each: <code class="docutils literal"><span class="pre">NaV</span></code> and <code class="docutils literal"><span class="pre">Kd</span></code>, the intrinsic currents would return in the form of a <code class="docutils literal"><span class="pre">time</span> <span class="pre">steps</span> <span class="pre">x</span> <span class="pre">4</span></code> matrix where the columns would be ordered:
+Kd current from AB, NaV current from AB, Kd current from BC, NaV current from BC.</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">V</span><span class="p">,</span> <span class="n">Ca</span><span class="p">,</span> <span class="n">cont_states</span><span class="p">,</span> <span class="n">currents</span><span class="p">,</span> <span class="n">syn_currents</span><span class="p">]</span> <span class="p">=</span> <span class="n">x</span><span class="p">.</span><span class="n">integrate</span>
+</pre></div>
+</div>
+<p>If <code class="docutils literal"><span class="pre">integrate</span></code> is passed one argument, it interprets this as a matrix of injected currents (in nA). For example</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="c">% applies 0.2 nA to each compartment</span>
+<span class="n">x</span><span class="p">.</span><span class="n">integrate</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="c">% applies 0.2 nA to first compartment of three</span>
+<span class="n">x</span><span class="p">.</span><span class="n">integrate</span><span class="p">([</span><span class="mf">0.2</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">])</span>
+<span class="c">% applies a time-varying current to first compartment</span>
+<span class="c">% where time is a vector of length x.t_end / x.dt</span>
+<span class="n">x</span><span class="p">.</span><span class="n">integrate</span><span class="p">([</span><span class="mf">0.2</span><span class="o">*</span><span class="nb">sin</span><span class="p">(</span><span class="n">time</span><span class="p">);</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">time</span><span class="p">);</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">time</span><span class="p">)])</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="manipulate">
-<span id="id12"></span><h2>manipulate<a class="headerlink" href="#manipulate" title="Permalink to this headline">¶</a></h2>
+<span id="id13"></span><h2>manipulate<a class="headerlink" href="#manipulate" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="plot">
-<span id="id13"></span><h2>plot<a class="headerlink" href="#plot" title="Permalink to this headline">¶</a></h2>
+<span id="id14"></span><h2>plot<a class="headerlink" href="#plot" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="reset">
-<span id="id14"></span><h2>reset<a class="headerlink" href="#reset" title="Permalink to this headline">¶</a></h2>
+<span id="id15"></span><h2>reset<a class="headerlink" href="#reset" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="set">
-<span id="id15"></span><h2>set<a class="headerlink" href="#set" title="Permalink to this headline">¶</a></h2>
+<span id="id16"></span><h2>set<a class="headerlink" href="#set" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="slice">
-<span id="id16"></span><h2>slice<a class="headerlink" href="#slice" title="Permalink to this headline">¶</a></h2>
+<span id="id17"></span><h2>slice<a class="headerlink" href="#slice" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="viewcode">
-<span id="id17"></span><h2>viewCode<a class="headerlink" href="#viewcode" title="Permalink to this headline">¶</a></h2>
+<span id="id18"></span><h2>viewCode<a class="headerlink" href="#viewcode" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
