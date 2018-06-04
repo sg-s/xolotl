@@ -154,7 +154,7 @@ public:
         if (isnan (tau_Ca)) { tau_Ca = 200;} // ms
         if (isnan (V)) { V = -60; } // mV
         if (isnan (Ca)) { Ca = Ca_in; }
-        if (isnan (Ca_target)) { Ca_target = Ca_in; }
+        // if (isnan (Ca_target)) { Ca_target = Ca_in; }
 
         if (!isnan(len) && !isnan(radius))
         {
