@@ -9,6 +9,8 @@
 
 function benchmark(self)
 
+Delta = 2; % ms
+
 original_dt = self.sim_dt;
 original_t_end = self.t_end;
 original_state = self.closed_loop;
@@ -29,9 +31,12 @@ self.sim_dt = all_dt(1);
 self.dt = max_dt*1e-3;
 tic
 V0 = self.integrate;
-V0_diff = diff(V0);
 all_speed(1) = toc;
+V0_diff = diff(V0);
 
+S0 = xolotl.findNSpikes(V0,1e3,-30);
+
+all_Q(1) = 1;
 
 for i = 2:length(all_dt)
 
@@ -40,17 +45,22 @@ for i = 2:length(all_dt)
 	V = self.integrate;
 	all_speed(i) = toc;
 
-	% measure distance b/w diff-embedded attractors
-	V_diff = diff(V);
 
-	this_cost = 0;
-	for j = 2:10:length(V0_diff)
-		for k = 1:size(V,2)
-			this_cost = this_cost + min(sqrt((V0_diff(j,k) - V_diff(:,k)).^2 + (V0(2:end,k) - V(2:end,k)).^2));
-		end
-	end
+	% measure quality using coincidence b/w spikes
+	S = xolotl.findNSpikes(V,1e3,-30);
+	all_Q(i) = xolotl.coincidence(S, S0, self.dt, Delta);
 
-	all_r2(i) = this_cost;
+
+	% % measure distance b/w diff-embedded attractors
+	% V_diff = diff(V);
+
+	% this_cost = 0;
+	% for j = 2:10:length(V0_diff)
+	% 	for k = 1:size(V,2)
+	% 		this_cost = this_cost + min(sqrt((V0_diff(j,k) - V_diff(:,k)).^2 + (V0(2:end,k) - V(2:end,k)).^2));
+	% 	end
+	% end
+
 
 end
 
@@ -58,8 +68,8 @@ end
 figure('outerposition',[0 0 1001 500],'PaperUnits','points','PaperSize',[1000 500]); hold on
 subplot(1,2,1); hold on
 yyaxis left
-plot(all_dt,all_r2,'-+')
-set(gca,'YScale','log')
+plot(all_dt,all_Q,'-+')
+set(gca,'YScale','linear','YLim',[0 1])
 xlabel('dt (ms)')
 ylabel('Error (a.u.)')
 
@@ -68,6 +78,7 @@ plot(all_dt,(self.t_end/1e3)./all_speed,'-o')
 ylabel('Speed (X realtime)')
 set(gca,'YScale','log','XScale','log')
 
+drawnow
 
 % now vary t_end to see the overhead costs 
 self.sim_dt = .1;

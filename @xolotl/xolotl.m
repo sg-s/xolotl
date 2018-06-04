@@ -138,6 +138,8 @@ methods (Static)
 
     cleanup;
     curr_index = contributingCurrents(V,I);
+    C = coincidence(model_spiketimes, data_spiketimes, dt, Delta);
+    spiketimes = findNSpikes(V,n_spikes,on_off_thresh);
     ax = show(conductance,ax);
     [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance);
 
