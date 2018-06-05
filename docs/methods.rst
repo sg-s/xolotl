@@ -212,6 +212,7 @@ Returns a vector of doubles of the values stored in the specified fields. Automa
   % find all maximal conductances
   gbars = x.get('*gbar')
   % find all maximal conductances in HH compartment
+  gbars = x.HH.get('*gbar')
 
 Produces a vector which contains the values of specified properties. ``get`` implicitly calls ``find`` and uses it to identify and order the elements of the vector. For this reason, ``get`` uses wildcard string comprehension. For example, ``'HH*gbar'`` means anything that begins with ``'HH'`` and ends with ``'gbar'``.
 Find all the maximal conductances of the ``HH`` compartment ::
