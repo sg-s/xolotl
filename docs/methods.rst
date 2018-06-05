@@ -167,7 +167,7 @@ function ::
 The following properties can be specified
 
 ======================= ================
-Name                    ``PropertyName``
+Name                    PropertyName
 Maximal conductance     ``gbar``
 Reversal potential      ``E``
 Activation variable     ``s``

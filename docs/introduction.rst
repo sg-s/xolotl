@@ -62,7 +62,7 @@ That's it. To integrate it and see the time evolution of the voltage ::
 
 NB: This repository is currently hidden (embargoed).
 
-How to Get ```xolotl``
+How to Get ``xolotl``
 ^^^^^^^^^^^^^^^^^^^^^^
 
 .. warning::

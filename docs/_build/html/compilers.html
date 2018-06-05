@@ -113,9 +113,6 @@ looks something like this:</p>
 <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">g</span><span class="o">++</span>
 <span class="o">&gt;&gt;</span> !<span class="n">g</span><span class="o">++</span> <span class="o">-</span><span class="n">dumpversion</span>
 <span class="mf">8.1</span><span class="p">.</span><span class="mi">0</span>
-<span class="o">&gt;&gt;</span> <span class="n">mex</span> <span class="n">test</span><span class="p">.</span><span class="n">cpp</span>
-<span class="n">Error</span> <span class="n">using</span> <span class="n">mex</span>
-<span class="n">No</span> <span class="n">supported</span> <span class="n">compiler</span> <span class="n">was</span> <span class="n">found</span><span class="p">.</span> <span class="n">For</span> <span class="n">options</span><span class="p">,</span> <span class="n">visit</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">mathworks</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">support</span><span class="o">/</span><span class="n">compilers</span><span class="p">.</span>
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">MATLAB</span></code> cannot find the intended <code class="docutils literal"><span class="pre">C++</span></code> compiler.</p>
@@ -131,11 +128,10 @@ version of <code class="docutils literal"><span class="pre">g++</span></code> do
 <p>There is a relatively simple fix however. Credit goes to <code class="docutils literal"><span class="pre">github</span></code> user <a class="reference external" href="https://gist.github.com/bonanza123/">bonanza123</a>
 for figuring it out.</p>
 <ul class="simple">
-<li>First download the proper version of <code class="docutils literal"><span class="pre">gcc/g++</span></code>. For example, the AUR has versions</li>
+<li>First download the proper version of <code class="docutils literal"><span class="pre">gcc/g++</span></code>. If you use a package manager there are generally legacy versions under <code class="docutils literal"><span class="pre">gcc-VERSION</span></code>. You can also find them <a class="reference external" href="https://gcc.gnu.org/">here</a>.</li>
+<li>Second change the <code class="docutils literal"><span class="pre">mex_LANG_glnxa64.xml</span></code> specification file. This is typically</li>
 </ul>
-<p>4.9, 5.5, and 6.4 as legacy builds.
-* Second change the <code class="docutils literal"><span class="pre">mex_LANG_glnxa64.xml</span></code> specification file. This is typically
-found at <code class="docutils literal"><span class="pre">~/.matlab/R2018a/mex_C_glnxa64.xml</span></code> where <code class="docutils literal"><span class="pre">R2018a</span></code> is the version
+<p>found at <code class="docutils literal"><span class="pre">~/.matlab/R2018a/mex_C_glnxa64.xml</span></code> where <code class="docutils literal"><span class="pre">R2018a</span></code> is the version
 of <code class="docutils literal"><span class="pre">MATLAB</span></code> and <code class="docutils literal"><span class="pre">C</span></code> is the name of the language.
 * Replace all references to <code class="docutils literal"><span class="pre">$GCC</span></code> with the path to the soft link to your <code class="docutils literal"><span class="pre">gcc</span></code>
 compiler (e.g. <code class="docutils literal"><span class="pre">/usr/bin/gcc-6</span></code>).
