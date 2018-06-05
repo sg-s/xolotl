@@ -302,8 +302,8 @@ If ``integrate`` is passed one argument, it interprets this as a matrix of injec
   % applies 0.2 nA to first compartment of three
   x.integrate([0.2 0 0])
   % applies a time-varying current to first compartment
-  % where time is a vector of length x.t_end / x.dt
-  x.integrate([0.2*sin(time); zeros(time); zeros(time)])
+  % where S is a matrix of size time steps × compartments
+  x.integrate(S)
 
 If ``integrate`` is passed two arguments, the first is ignored, and the second is treated as a matrix of clamped voltage. ::
 
@@ -328,6 +328,10 @@ The second argument specifies which visualization function should be used (defau
   % specify the myPlot function for visualization
   x.manipulate('HH*gbar', @myPlot)
 
+.. note::
+
+  The functionality of the second argument has not been implemented yet.
+
 .. _plot:
 
 plot
@@ -339,10 +343,6 @@ it is the outward current with the greatest magnitude and dV/dt is negative;
 or it is the inward current with the greatest magnitude and dV/dt is positive. ::
 
   x.plot
-
-.. hint::
-
-  This is a static method of ``xolotl``.
 
 .. _replicate:
 
@@ -364,8 +364,8 @@ where ``HH`` is already specified ::
 reset
 ^^^^^
 
-Resets all state variables to their initial condition. When the ``xolotl`` object is flagged
-``x.closed_loop = true``, this is done automatically before integrating. ::
+Resets all state variables to their initial condition. State variables are the membrane potential and intracellular calcium concentration of each compartment, and gating variables for each conductance.
+When the ``xolotl`` object is flagged ``x.closed_loop = false``, this is done automatically before integrating. ::
 
   x.reset
 
