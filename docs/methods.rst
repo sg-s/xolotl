@@ -273,6 +273,10 @@ For example to find the ``NaV`` conductance from Liu *et al.* 1998, which is det
 
   [m_inf, h_inf, tau_m, tau_h] = x.getGatingFunctions('liu/NaV')
 
+These functions are also contained in the ``xolotl`` tree, e.g. ::
+
+  x.HH.NaV.cpp_child_functions
+
 .. hint::
 
   This is a static method of ``xolotl`` (i.e. ``xolotl.getGatingFunctions(...)`` is valid).
