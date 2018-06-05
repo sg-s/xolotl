@@ -30,7 +30,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Compiler Support" href="compilers.html" />
-    <link rel="prev" title="Installation" href="installing.html" /> 
+    <link rel="prev" title="Installing" href="installing.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,7 +81,8 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installing</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Methods</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#children">Children</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#add">add</a></li>
@@ -104,7 +105,9 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="compilers.html">Compiler Support</a></li>
-<li class="toctree-l1"><a class="reference internal" href="compilers.html#compiling-on-linux">Compiling on Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units.html">Units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to xolotl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 </ul>
 
             
@@ -273,7 +276,8 @@ a compartment:</p>
 <div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">HH</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;ConductancePath&#39;</span><span class="p">,</span> <span class="s">&#39;PropertyName&#39;</span><span class="p">,</span> <span class="s">&#39;PropertyValue&#39;</span><span class="p">,</span> <span class="c">...);</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">ConductancePath</span></code> is the path to the <code class="docutils literal"><span class="pre">.hpp</span></code> file inside <code class="docutils literal"><span class="pre">xolotl/c++/conductances/</span></code>. For example, the conductance path to add the slow calcium conductance from Prinz <em>et al.</em> 2003 is <code class="docutils literal"><span class="pre">prinz/CaS</span></code> since the conductance is specified in <code class="docutils literal"><span class="pre">xolotl/c++/conductances/prinz/CaS.hpp</span></code>. It doesn’t actually have to be the exact path. Any fragment of the path will be matched.</p>
+<p><code class="docutils literal"><span class="pre">ConductancePath</span></code> is the path to the <code class="docutils literal"><span class="pre">.hpp</span></code> file inside <code class="docutils literal"><span class="pre">xolotl/c++/conductances/</span></code>. For example, the conductance path to add the slow calcium conductance from Prinz <em>et al.</em> 2003 is <code class="docutils literal"><span class="pre">prinz/CaS</span></code> since the conductance is specified in <code class="docutils literal"><span class="pre">xolotl/c++/conductances/prinz/CaS.hpp</span></code>.
+You do not have to specify the entire path. Any fragment of the path will be matched.</p>
 <p>The following properties can be specified</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -339,20 +343,25 @@ You can turn this functionality off by setting</p>
 </pre></div>
 </div>
 <p>The first two arguments are the presynaptic and postsynaptic compartment names.</p>
-<p><code class="docutils literal"><span class="pre">connect</span></code> defaults to an axial synapse in the case of only two arguments (the pre- and postsynaptic compartments) and when either of the compartments is part of a spacially-discretized
-multi-compartment structure (e.g. has a defined <code class="docutils literal"><span class="pre">tree_idx</span></code>). Otherwise, the created
-synapse is electrical. Axial and electrical synapses differ in how they are integrated
-(see Dayan &amp; Abbott 2001, Ch. 5-6).</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="c">% create a synapse between AB and LP with gbar of NaN</span>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="c">% connects two compartments with an electrical or axial synapse</span>
 <span class="n">x</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;AB&#39;</span><span class="p">,</span> <span class="s">&#39;LP&#39;</span><span class="p">)</span>
-<span class="c">% create a synapse between AB and LP with gbar of 10</span>
+</pre></div>
+</div>
+<p>Axial synapses are a special type of electrical synapse that are created between spatially-discrete compartments in a morphological structure.
+Electrical and axial synapses differ in how they are integrated (see Dayan &amp; Abbott 2001, Ch. 5-6).
+<code class="docutils literal"><span class="pre">connect</span></code> defaults to an axial synapse when the type of synapse is not specified and either compartment has a defined <code class="docutils literal"><span class="pre">tree_idx</span></code>.
+Otherwise, the created synapse is electrical.</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="c">% create an (electrical or axial) synapse between AB and LP with gbar of NaN</span>
+<span class="n">x</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;AB&#39;</span><span class="p">,</span> <span class="s">&#39;LP&#39;</span><span class="p">)</span>
+<span class="c">% create an (electrical or axial) synapse between AB and LP with gbar of 10</span>
 <span class="n">x</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;AB&#39;</span><span class="p">,</span> <span class="s">&#39;LP&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The most common way to produce a synapse is to pass the synapse type and then any
-properties. For example, to add a glutamatergic synapse between <code class="docutils literal"><span class="pre">AB</span></code> and <code class="docutils literal"><span class="pre">LP</span></code>
+properties. This is used to create chemical synapses.
+For example, to add a glutamatergic synapse (from Prinz <em>et al.</em> 2004) between <code class="docutils literal"><span class="pre">AB</span></code> and <code class="docutils literal"><span class="pre">LP</span></code>
 with a maximal conductance of 100:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;AB&#39;</span><span class="p">,</span> <span class="s">&#39;LP&#39;</span><span class="p">,</span> <span class="s">&#39;Glut&#39;</span><span class="p">,</span> <span class="s">&#39;gbar&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;AB&#39;</span><span class="p">,</span> <span class="s">&#39;LP&#39;</span><span class="p">,</span> <span class="s">&#39;prinz/Glut&#39;</span><span class="p">,</span> <span class="s">&#39;gbar&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Synapses can also be connected by passing a <code class="docutils literal"><span class="pre">cpplab</span></code> object to the <code class="docutils literal"><span class="pre">connect</span></code>
@@ -382,19 +391,6 @@ function</p>
 </tr>
 </tbody>
 </table>
-<p>Connects two compartments with a synapse. This defaults to an electrical synapse with axial conductance of <code class="docutils literal"><span class="pre">NaN</span></code>.</p>
-<p>Connect two compartments <code class="docutils literal"><span class="pre">AB</span></code> and <code class="docutils literal"><span class="pre">PD</span></code> with an axial conductance of <code class="docutils literal"><span class="pre">NaN</span></code></p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;AB&#39;</span><span class="p">,</span> <span class="s">&#39;PD&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Connect two compartments with an axial conductance of <code class="docutils literal"><span class="pre">gAxial</span></code></p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;AB&#39;</span><span class="p">,</span> <span class="s">&#39;PD&#39;</span><span class="p">,</span> <span class="n">gAxial</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Connect two compartments with a glutamatergic synapse with maximal conductance <code class="docutils literal"><span class="pre">gGlut</span></code></p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;AB&#39;</span><span class="p">,</span> <span class="s">&#39;PD&#39;</span><span class="p">,</span> <span class="s">&#39;Glut&#39;</span><span class="p">,</span> <span class="n">gGlut</span><span class="p">)</span>
-</pre></div>
-</div>
 </div>
 <div class="section" id="copy">
 <span id="id7"></span><h2>copy<a class="headerlink" href="#copy" title="Permalink to this headline">¶</a></h2>
@@ -624,7 +620,7 @@ The third argument sets the axial resistivity, which must be a real positive num
         <a href="compilers.html" class="btn btn-neutral float-right" title="Compiler Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="installing.html" class="btn btn-neutral" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="installing.html" class="btn btn-neutral" title="Installing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

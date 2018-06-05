@@ -44,7 +44,7 @@ These conductances come from Liu *et al.* 1998. ``'gbar'`` is the maximal conduc
 Simulate the Model
 ^^^^^^^^^^^^^^^^^^
 
-We simulate the model using the GUI to manipulate the maximal conductances. ::
+We simulate the model using the GUI to manipulate the leak conductance. ::
 
   x.t_end = 1000; % ms
-  x.manipulate('*gbar')
+  x.manipulate('*Leak*')

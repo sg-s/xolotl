@@ -78,7 +78,8 @@ To access properties of that compartment, use the syntax ``x.HH``. To add a cond
 
   x.HH.add('ConductancePath', 'PropertyName', 'PropertyValue', ...);
 
-``ConductancePath`` is the path to the ``.hpp`` file inside ``xolotl/c++/conductances/``. For example, the conductance path to add the slow calcium conductance from Prinz *et al.* 2003 is ``prinz/CaS`` since the conductance is specified in ``xolotl/c++/conductances/prinz/CaS.hpp``. It doesn't actually have to be the exact path. Any fragment of the path will be matched.
+``ConductancePath`` is the path to the ``.hpp`` file inside ``xolotl/c++/conductances/``. For example, the conductance path to add the slow calcium conductance from Prinz *et al.* 2003 is ``prinz/CaS`` since the conductance is specified in ``xolotl/c++/conductances/prinz/CaS.hpp``.
+You do not have to specify the entire path. Any fragment of the path will be matched.
 
 The following properties can be specified
 
@@ -139,23 +140,27 @@ Connects two compartments with a synapse. The basic syntax is ::
 
   x.connect('PreSynaptic', 'PostSynaptic', 'Type', PropertyName', PropertyValue, ...)
 
-The first two arguments are the presynaptic and postsynaptic compartment names.
+The first two arguments are the presynaptic and postsynaptic compartment names. ::
 
-``connect`` defaults to an axial synapse in the case of only two arguments (the pre- and postsynaptic compartments) and when either of the compartments is part of a spacially-discretized
-multi-compartment structure (e.g. has a defined ``tree_idx``). Otherwise, the created
-synapse is electrical. Axial and electrical synapses differ in how they are integrated
-(see Dayan & Abbott 2001, Ch. 5-6). ::
-
-  % create a synapse between AB and LP with gbar of NaN
+  % connects two compartments with an electrical or axial synapse
   x.connect('AB', 'LP')
-  % create a synapse between AB and LP with gbar of 10
+
+Axial synapses are a special type of electrical synapse that are created between spatially-discrete compartments in a morphological structure.
+Electrical and axial synapses differ in how they are integrated (see Dayan & Abbott 2001, Ch. 5-6).
+``connect`` defaults to an axial synapse when the type of synapse is not specified and either compartment has a defined ``tree_idx``.
+Otherwise, the created synapse is electrical. ::
+
+  % create an (electrical or axial) synapse between AB and LP with gbar of NaN
+  x.connect('AB', 'LP')
+  % create an (electrical or axial) synapse between AB and LP with gbar of 10
   x.connect('AB', 'LP', 10)
 
 The most common way to produce a synapse is to pass the synapse type and then any
-properties. For example, to add a glutamatergic synapse between ``AB`` and ``LP``
+properties. This is used to create chemical synapses.
+For example, to add a glutamatergic synapse (from Prinz *et al.* 2004) between ``AB`` and ``LP``
 with a maximal conductance of 100: ::
 
-  x.connect('AB', 'LP', 'Glut', 'gbar', 100)
+  x.connect('AB', 'LP', 'prinz/Glut', 'gbar', 100)
 
 
 Synapses can also be connected by passing a ``cpplab`` object to the ``connect``
@@ -172,20 +177,6 @@ Maximal conductance     ``gbar``
 Reversal potential      ``E``
 Activation variable     ``s``
 ======================= ================
-
-Connects two compartments with a synapse. This defaults to an electrical synapse with axial conductance of ``NaN``.
-
-Connect two compartments ``AB`` and ``PD`` with an axial conductance of ``NaN`` ::
-
-  x.connect('AB', 'PD')
-
-Connect two compartments with an axial conductance of ``gAxial`` ::
-
-  x.connect('AB', 'PD', gAxial)
-
-Connect two compartments with a glutamatergic synapse with maximal conductance ``gGlut`` ::
-
-  x.connect('AB', 'PD', 'Glut', gGlut)
 
 .. _copy:
 
