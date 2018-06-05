@@ -39,20 +39,12 @@ These conductances come from Liu *et al.* 1998. ``'gbar'`` is the maximal conduc
   % add conductances
   x.HH.add('liu/NaV', 'gbar', 1000, 'E', 50);
   x.HH.add('liu/Kd', 'gbar', 300, 'E', -80);
-  x.HH.add('Leak', 'gbar', 1, 'E', -50);
+  x.HH.add('Leak', 'gbar', 1, 'E', -40);
 
 Simulate the Model
 ^^^^^^^^^^^^^^^^^^
 
-We simulate the model with 0.1 nA of injected current for 1 second. ::
+We simulate the model using the GUI to manipulate the leak conductance. ::
 
   x.t_end = 1000; % ms
-  V = x.integrate(0.1);
-
-And plot the voltage. ::
-
-  figure;
-  t = x.dt * (1:length(V));
-  plot(t,V)
-  xlabel('time (ms)')
-  ylabel('membrane potential (mV)')
+  x.manipulate('*Leak*')

@@ -179,32 +179,24 @@
 <div class="section" id="creating-a-hodgkin-huxley-model">
 <h2>Creating a Hodgkin-Huxley Model<a class="headerlink" href="#creating-a-hodgkin-huxley-model" title="Permalink to this headline">¶</a></h2>
 <p>We will now create a <code class="docutils literal"><span class="pre">xolotl</span></code> object that describes a single-compartment neuron model with a fast sodium conductance, delayed rectifier potassium conductance, and passive leakage.
-The compartment has a membrane capacitance <code class="docutils literal"><span class="pre">'Cm'</span></code> of 10 nF/mm^2 and a surface area of 0.1 mm^2.
+The compartment has a membrane capacitance <code class="docutils literal"><span class="pre">'Cm'</span></code> of 10 nF/mm^2 and a surface area of 0.01 mm^2.
 These conductances come from Liu <em>et al.</em> 1998. <code class="docutils literal"><span class="pre">'gbar'</span></code> is the maximal conductance in uS/mm^2 and <code class="docutils literal"><span class="pre">'E'</span></code> is the reversal potential in mV.</p>
 <div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="c">% create the xolotl object</span>
 <span class="n">x</span> <span class="p">=</span> <span class="n">xolotl</span><span class="p">;</span>
 <span class="c">% add a compartment</span>
-<span class="n">x</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;HH&#39;</span><span class="p">,</span> <span class="s">&#39;compartment&#39;</span><span class="p">,</span> <span class="s">&#39;Cm&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">);</span>
+<span class="n">x</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;HH&#39;</span><span class="p">,</span> <span class="s">&#39;compartment&#39;</span><span class="p">,</span> <span class="s">&#39;Cm&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">);</span>
 <span class="c">% add conductances</span>
 <span class="n">x</span><span class="p">.</span><span class="n">HH</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;liu/NaV&#39;</span><span class="p">,</span> <span class="s">&#39;gbar&#39;</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="s">&#39;E&#39;</span><span class="p">,</span> <span class="mi">50</span><span class="p">);</span>
 <span class="n">x</span><span class="p">.</span><span class="n">HH</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;liu/Kd&#39;</span><span class="p">,</span> <span class="s">&#39;gbar&#39;</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="s">&#39;E&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">80</span><span class="p">);</span>
-<span class="n">x</span><span class="p">.</span><span class="n">HH</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;Leak&#39;</span><span class="p">,</span> <span class="s">&#39;gbar&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;E&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">50</span><span class="p">);</span>
+<span class="n">x</span><span class="p">.</span><span class="n">HH</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;Leak&#39;</span><span class="p">,</span> <span class="s">&#39;gbar&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;E&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">40</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="simulate-the-model">
 <h2>Simulate the Model<a class="headerlink" href="#simulate-the-model" title="Permalink to this headline">¶</a></h2>
-<p>We simulate the model with 0.1 nA of injected current for 1 second.</p>
+<p>We simulate the model using the GUI to manipulate the leak conductance.</p>
 <div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">t_end</span> <span class="p">=</span> <span class="mi">1000</span><span class="p">;</span> <span class="c">% ms</span>
-<span class="n">V</span> <span class="p">=</span> <span class="n">x</span><span class="p">.</span><span class="n">integrate</span><span class="p">(</span><span class="mf">0.1</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>And plot the voltage.</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">figure</span><span class="p">;</span>
-<span class="n">t</span> <span class="p">=</span> <span class="n">x</span><span class="p">.</span><span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">V</span><span class="p">));</span>
-<span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">V</span><span class="p">)</span>
-<span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;time (ms)&#39;</span><span class="p">)</span>
-<span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;membrane potential (mV)&#39;</span><span class="p">)</span>
+<span class="n">x</span><span class="p">.</span><span class="n">manipulate</span><span class="p">(</span><span class="s">&#39;*Leak*&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
