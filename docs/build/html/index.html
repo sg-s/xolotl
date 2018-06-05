@@ -1,0 +1,324 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>XOLOTL: A Fast and Flexible Neuronal Simulator &mdash; xolotl  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Quickstart" href="quickstart.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="#" class="icon icon-home"> xolotl
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods.html">Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compilers.html">Compiler Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units.html">Units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to xolotl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">xolotl</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>XOLOTL: A Fast and Flexible Neuronal Simulator</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="xolotl-a-fast-and-flexible-neuronal-simulator">
+<h1>XOLOTL: A Fast and Flexible Neuronal Simulator<a class="headerlink" href="#xolotl-a-fast-and-flexible-neuronal-simulator" title="Permalink to this headline">¶</a></h1>
+<a class="reference external image-reference" href="http://sphinx-rtd-theme.readthedocs.io/en/latest/?badge=latest"><img alt="Documentation Status" src="https://readthedocs.org/projects/sphinx-rtd-theme/badge/?version=latest" /></a>
+<img alt="https://img.shields.io/github/last-commit/sg-s/xolotl.svg" src="https://img.shields.io/github/last-commit/sg-s/xolotl.svg" /><img alt="https://user-images.githubusercontent.com/6005346/30719217-a1e8d54a-9ef0-11e7-8889-c284ac13163e.png" src="https://user-images.githubusercontent.com/6005346/30719217-a1e8d54a-9ef0-11e7-8889-c284ac13163e.png" />
+<p><code class="docutils literal"><span class="pre">xolotl</span></code> is a fast single-compartment and multi-compartment simulator written in
+<code class="docutils literal"><span class="pre">C++</span></code> with <code class="docutils literal"><span class="pre">MATLAB</span></code> wrappers. Written with a focus on flexibility and speed,
+it can simulate single-compartment conductance-based neuron models, networks of these,
+and detailed multi-compartment models. Because it’s written in <code class="docutils literal"><span class="pre">C++</span></code> it’s really fast.</p>
+<div class="section" id="why-use-xolotl">
+<h2>Why Use <code class="docutils literal"><span class="pre">xolotl</span></code>?<a class="headerlink" href="#why-use-xolotl" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="it-s-fast">
+<h3>1. It’s Fast<a class="headerlink" href="#it-s-fast" title="Permalink to this headline">¶</a></h3>
+<p>Because <code class="docutils literal"><span class="pre">xolotl</span></code> is written in <code class="docutils literal"><span class="pre">C++</span></code>, it’s quite fast. Here are some benchmarks
+for a single-compartment Hodgkin-Huxley model with 7 conductances.
+Note that you can get speeds up to 300x realtime!</p>
+<div class="figure">
+<img alt="https://user-images.githubusercontent.com/6005346/38319588-223ab634-3800-11e8-954c-845c0692d4a0.png" src="https://user-images.githubusercontent.com/6005346/38319588-223ab634-3800-11e8-954c-845c0692d4a0.png" />
+</div>
+</div>
+<div class="section" id="it-s-easy-to-use">
+<h3>2. It’s Easy to Use<a class="headerlink" href="#it-s-easy-to-use" title="Permalink to this headline">¶</a></h3>
+<p>You can set up complex models of neurons and networks very efficently,
+using an intuitive language that is tightly coupled to the object-based
+architecture of the underlying <code class="docutils literal"><span class="pre">`C++</span></code> code. For example, here, we set up a
+compartment with some channels in it:</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="p">=</span> <span class="n">xolotl</span><span class="p">;</span>
+<span class="n">x</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;AB&#39;</span><span class="p">,</span><span class="s">&#39;compartment&#39;</span><span class="p">,</span><span class="s">&#39;Cm&#39;</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="s">&#39;A&#39;</span><span class="p">,</span><span class="mf">0.0628</span><span class="p">,</span><span class="s">&#39;vol&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s">&#39;phi&#39;</span><span class="p">,</span><span class="mi">19</span><span class="p">,</span><span class="s">&#39;Ca_out&#39;</span><span class="p">,</span><span class="mi">3000</span><span class="p">,</span><span class="s">&#39;Ca_in&#39;</span><span class="p">,</span><span class="mf">0.05</span><span class="p">,</span><span class="s">&#39;tau_Ca&#39;</span><span class="p">,</span><span class="mi">200</span><span class="p">);</span>
+<span class="n">x</span><span class="p">.</span><span class="n">AB</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;prinz-approx/NaV&#39;</span><span class="p">,</span><span class="s">&#39;gbar&#39;</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="s">&#39;E&#39;</span><span class="p">,</span><span class="mi">50</span><span class="p">);</span>
+<span class="n">x</span><span class="p">.</span><span class="n">AB</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;prinz-approx/Kd&#39;</span><span class="p">,</span><span class="s">&#39;gbar&#39;</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="s">&#39;E&#39;</span><span class="p">,</span><span class="o">-</span><span class="mi">80</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>That’s it. To integrate it and see the time evolution of the voltage</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">V</span> <span class="p">=</span> <span class="n">x</span><span class="p">.</span><span class="n">integrate</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="figure">
+<img alt="https://user-images.githubusercontent.com/6005346/30713658-ff96faf4-9edd-11e7-9db1-a2ca4f2f0567.png" src="https://user-images.githubusercontent.com/6005346/30713658-ff96faf4-9edd-11e7-9db1-a2ca4f2f0567.png" />
+</div>
+<p><code class="docutils literal"><span class="pre">xolotl</span></code> handles all of the compilation/linking/etc. for you.</p>
+</div>
+<div class="section" id="manipulate-models-in-real-time">
+<h3>3. Manipulate Models in Real-time<a class="headerlink" href="#manipulate-models-in-real-time" title="Permalink to this headline">¶</a></h3>
+<div class="figure">
+<img alt="https://user-images.githubusercontent.com/6005346/30785272-aef9fb44-a132-11e7-84a6-25fd8e58470a.gif" src="https://user-images.githubusercontent.com/6005346/30785272-aef9fb44-a132-11e7-84a6-25fd8e58470a.gif" />
+</div>
+</div>
+<div class="section" id="optimize-models-really-quickly">
+<h3>4. Optimize Models Really Quickly<a class="headerlink" href="#optimize-models-really-quickly" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">xolotl</span></code> comes with a powerful optimization toolbox called <a class="reference external" href="https://github.com/sg-s/procrustes">procrustes</a>.</p>
+<p>NB: This repository is currently hidden (embargoed).</p>
+</div>
+</div>
+<div class="section" id="how-to-get-xolotl">
+<h2>How to Get <code class="docutils literal"><span class="pre">xolotl</span></code><a class="headerlink" href="#how-to-get-xolotl" title="Permalink to this headline">¶</a></h2>
+<p>Get this repo from within <code class="docutils literal"><span class="pre">MATLAB</span></code> using my package manager</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="c">% copy and paste this code in your MATLAB prompt</span>
+<span class="n">urlwrite</span><span class="p">(</span><span class="s">&#39;http://srinivas.gs/install.m&#39;</span><span class="p">,</span><span class="s">&#39;install.m&#39;</span><span class="p">);</span>
+<span class="n">install</span> <span class="n">sg</span><span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">srinivas</span><span class="p">.</span><span class="n">gs_mtools</span> <span class="c">% you&#39;ll need this</span>
+<span class="n">install</span> <span class="n">sg</span><span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">puppeteer</span> <span class="c">% for manipulation</span>
+<span class="n">install</span> <span class="n">sg</span><span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">cpplab</span>
+<span class="n">install</span> <span class="n">sg</span><span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">xolotl</span>
+</pre></div>
+</div>
+<div class="section" id="via-git-or-download">
+<h3>Via Git or Download<a class="headerlink" href="#via-git-or-download" title="Permalink to this headline">¶</a></h3>
+<p>Use git if you plan to develop this further:</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">sg</span><span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">srinivas</span><span class="p">.</span><span class="n">gs_mtools</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">sg</span><span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">puppeteer</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">sg</span><span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">xolotl</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">sg</span><span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">cpplab</span>
+</pre></div>
+</div>
+<p>Don’t forget to set your <code class="docutils literal"><span class="pre">MATLAB</span></code> paths if you used git! You need the main folder
+for <code class="docutils literal"><span class="pre">puppeteer</span></code>, <code class="docutils literal"><span class="pre">cpplab</span></code>, and <code class="docutils literal"><span class="pre">xolotl</span></code>, and all subfolders of <code class="docutils literal"><span class="pre">srinivas.gs_mtools/src</span></code>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">There are no known issues on macOS (10.12 and 10.13). For Linux distributions,
+you might need a <a class="reference external" href="compilers.html">compiler</a> compatible with the <code class="docutils literal"><span class="pre">mex</span></code> <code class="docutils literal"><span class="pre">MATLAB</span></code> executable.</p>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods.html">Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compilers.html">Compiler Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units.html">Units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to xolotl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="quickstart.html" class="btn btn-neutral float-right" title="Quickstart" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Srinivas Gorur-Shandilya and Alec Hoyland.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
