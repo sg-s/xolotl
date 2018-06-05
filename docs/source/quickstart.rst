@@ -29,13 +29,13 @@ Creating a Hodgkin-Huxley Model
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 We will now create a ``xolotl`` object that describes a single-compartment neuron model with a fast sodium conductance, delayed rectifier potassium conductance, and passive leakage.
-The compartment has a membrane capacitance ``'Cm'`` of 10 nF/mm^2 and a surface area of 0.1 mm^2.
+The compartment has a membrane capacitance ``'Cm'`` of 10 nF/mm^2 and a surface area of 0.01 mm^2.
 These conductances come from Liu *et al.* 1998. ``'gbar'`` is the maximal conductance in uS/mm^2 and ``'E'`` is the reversal potential in mV. ::
 
   % create the xolotl object
   x = xolotl;
   % add a compartment
-  x.add('HH', 'compartment', 'Cm', 10, 'A', 0.1);
+  x.add('HH', 'compartment', 'Cm', 10, 'A', 0.01);
   % add conductances
   x.HH.add('liu/NaV', 'gbar', 1000, 'E', 50);
   x.HH.add('liu/Kd', 'gbar', 300, 'E', -80);
