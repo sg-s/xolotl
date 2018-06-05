@@ -4,12 +4,20 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>xolotl &#8212; xolotl 2018 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2018',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -20,10 +28,10 @@
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
-  
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head><body>
+  </head>
+  <body>
   
 
     <div class="document">
@@ -38,11 +46,38 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installing.html">Installing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installing.html#using-a-package-manager-from-matlab">Using a package manager from MATLAB</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installing.html#using-git">Using <code class="docutils literal notranslate"><span class="pre">git</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing.html#using-git">Using <code class="docutils literal"><span class="pre">git</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="installing.html#final-steps">Final Steps</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#why-use-xolotl">Why Use <code class="docutils literal"><span class="pre">xolotl</span></code>?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#how-to-get-xolotl">How to Get <code class="docutils literal"><span class="pre">`xolotl</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="methods.html">Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#children">Children</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#add">add</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#cleanup">cleanup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#compile">compile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#connect">connect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#copy">copy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#get">get</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#find">find</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#getgatingfunctions">getGatingFunctions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#integrate">integrate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#manipulate">manipulate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#plot">plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#replicate">replicate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#reset">reset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#set">set</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#show">show</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#slice">slice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#viewcode">viewCode</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="compilers.html">Compiler Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compilers.html#compiling-on-linux">Compiling on Linux</a></li>
 <li class="toctree-l1"><a class="reference internal" href="units.html">Units</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to xolotl</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="contributing.html#reporting-bugs">Reporting Bugs</a></li>
@@ -91,14 +126,12 @@
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -109,8 +142,8 @@
       &copy;2018, Srinivas Gorur-Shandilya and Alec Hoyland.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
       
       |
       <a href="_sources/xolotl_documentation.rst.txt"

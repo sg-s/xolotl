@@ -1,3 +1,8 @@
+.. set up matlab code highlighting
+.. highlight:: matlab
+
+.. set up referencing
+.. _contributing:
 Contributing to xolotl
 ======================
 
