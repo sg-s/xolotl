@@ -33,7 +33,8 @@ Use git if you plan to develop this further: ::
 
 
 
-Don't forget to set your ``MATLAB`` paths if you used git!
+Don't forget to set your ``MATLAB`` paths if you used git! You need the main folder
+for ``puppeteer``, ``cpplab``, and ``xolotl``, and all subfolders of ``srinivas.gs_mtools/src``.
 
 
 Final Steps

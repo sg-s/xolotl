@@ -50,8 +50,8 @@ a compartment::
 
 Valid compartment properties are
 
-======================= ================
-Name                    ``PropertyName``
+======================= ==================
+**Name**                **Property Name**
 Volume                  ``vol``
 Surface area            ``A``
 Extra. calcium steady.  ``Ca_out``
@@ -68,7 +68,7 @@ Ca++ buff. time const.  ``tau_Ca``
 Membrane capacitance    ``Cm``
 Intra. calcium conc.    ``Ca``
 Membrane potential      ``V``
-======================= ================
+======================= ==================
 
 To add a compartment named ``HH`` with a membrane capacitance ``Cm = 10`` ::
 
@@ -82,13 +82,13 @@ To access properties of that compartment, use the syntax ``x.HH``. To add a cond
 
 The following properties can be specified
 
-======================= ================
-Name                    ``PropertyName``
+======================= ==================
+**Name**                **Property Name**
 Maximal conductance     ``gbar``
 Reversal potential      ``E``
 Inactivation variable   ``h``
 Activation variable     ``m``
-======================= ================
+======================= ==================
 
 For example ::
 
@@ -167,7 +167,7 @@ function ::
 The following properties can be specified
 
 ======================= ================
-Name                    ``PropertyName``
+Name                    PropertyName
 Maximal conductance     ``gbar``
 Reversal potential      ``E``
 Activation variable     ``s``

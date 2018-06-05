@@ -7,7 +7,7 @@
 Units
 =====
 
-``xolotl`` doesn't come with a automatic unit handling system like in ``NEURON`` or in ``Julia``, so you have to pay attention and make sure your parameters are in the right units. The following are default units for various parameters.
+``xolotl`` doesn't come with a automatic unit handling system like in ``NEURON``, ``BRIAN``, or in ``Julia``, so you have to pay attention and make sure your parameters are in the right units. The following are default units for various parameters.
 
 ================================= ===========
 **Variable**                      **Units**

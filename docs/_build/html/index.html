@@ -1,0 +1,181 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>xolotl &#8212; xolotl 2018 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2018',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installing" href="installing.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="xolotl">
+<h1>xolotl<a class="headerlink" href="#xolotl" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods.html">Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compilers.html">Compiler Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compilers.html#compiling-on-linux">Compiling on Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units.html">Units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to xolotl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="quickstart">
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
+<p>Welcome to <code class="docutils literal"><span class="pre">xolotl</span></code>! This quickstart guide will get you started using <code class="docutils literal"><span class="pre">xolotl</span></code> right away.</p>
+<div class="section" id="installing">
+<h2>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h2>
+<p>Get this repo from within <code class="docutils literal"><span class="pre">MATLAB</span></code> using my package manager</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="c">% copy and paste this code in your MATLAB prompt</span>
+<span class="n">urlwrite</span><span class="p">(</span><span class="s">&#39;http://srinivas.gs/install.m&#39;</span><span class="p">,</span><span class="s">&#39;install.m&#39;</span><span class="p">);</span>
+<span class="n">install</span> <span class="n">sg</span><span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">srinivas</span><span class="p">.</span><span class="n">gs_mtools</span> <span class="c">% you&#39;ll need this</span>
+<span class="n">install</span> <span class="n">sg</span><span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">puppeteer</span> <span class="c">% for manipulation</span>
+<span class="n">install</span> <span class="n">sg</span><span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">cpplab</span>
+<span class="n">install</span> <span class="n">sg</span><span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">xolotl</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Make sure that <code class="docutils literal"><span class="pre">MATLAB</span></code> is set up to <a class="reference external" href="https://www.mathworks.com/help/matlab/ref/mex.html?s_tid=srchtitl">compile</a> <code class="docutils literal"><span class="pre">C++</span></code>. See our <a href="#id1"><span class="problematic" id="id2">compilers_</span></a> guide.</p>
+</div>
+</div>
+<div class="section" id="creating-a-hodgkin-huxley-model">
+<h2>Creating a Hodgkin-Huxley Model<a class="headerlink" href="#creating-a-hodgkin-huxley-model" title="Permalink to this headline">¶</a></h2>
+<p>We will now create a <code class="docutils literal"><span class="pre">xolotl</span></code> object that describes a single-compartment neuron model with a fast sodium conductance, delayed rectifier potassium conductance, and passive leakage.
+The compartment has a membrane capacitance <code class="docutils literal"><span class="pre">'Cm'</span></code> of 10 nF/mm^2 and a surface area of 0.1 mm^2.
+These conductances come from Liu <em>et al.</em> 1998. <code class="docutils literal"><span class="pre">'gbar'</span></code> is the maximal conductance in uS/mm^2 and <code class="docutils literal"><span class="pre">'E'</span></code> is the reversal potential in mV.</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="c">% create the xolotl object</span>
+<span class="n">x</span> <span class="p">=</span> <span class="n">xolotl</span><span class="p">;</span>
+<span class="c">% add a compartment</span>
+<span class="n">x</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;HH&#39;</span><span class="p">,</span> <span class="s">&#39;compartment&#39;</span><span class="p">,</span> <span class="s">&#39;Cm&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">);</span>
+<span class="c">% add conductances</span>
+<span class="n">x</span><span class="p">.</span><span class="n">HH</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;liu/NaV&#39;</span><span class="p">,</span> <span class="s">&#39;gbar&#39;</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="s">&#39;E&#39;</span><span class="p">,</span> <span class="mi">50</span><span class="p">);</span>
+<span class="n">x</span><span class="p">.</span><span class="n">HH</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;liu/Kd&#39;</span><span class="p">,</span> <span class="s">&#39;gbar&#39;</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="s">&#39;E&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">80</span><span class="p">);</span>
+<span class="n">x</span><span class="p">.</span><span class="n">HH</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;Leak&#39;</span><span class="p">,</span> <span class="s">&#39;gbar&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;E&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">50</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="simulate-the-model">
+<h2>Simulate the Model<a class="headerlink" href="#simulate-the-model" title="Permalink to this headline">¶</a></h2>
+<p>We simulate the model with 0.1 nA of injected current for 1 second.</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">t_end</span> <span class="p">=</span> <span class="mi">1000</span><span class="p">;</span> <span class="c">% ms</span>
+<span class="n">V</span> <span class="p">=</span> <span class="n">x</span><span class="p">.</span><span class="n">integrate</span><span class="p">(</span><span class="mf">0.1</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>And plot the voltage.</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">figure</span><span class="p">;</span>
+<span class="n">t</span> <span class="p">=</span> <span class="n">x</span><span class="p">.</span><span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">V</span><span class="p">));</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">V</span><span class="p">)</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;time (ms)&#39;</span><span class="p">)</span>
+<span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;membrane potential (mV)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">xolotl</a></li>
+<li><a class="reference internal" href="#quickstart">Quickstart</a><ul>
+<li><a class="reference internal" href="#installing">Installing</a></li>
+<li><a class="reference internal" href="#creating-a-hodgkin-huxley-model">Creating a Hodgkin-Huxley Model</a></li>
+<li><a class="reference internal" href="#simulate-the-model">Simulate the Model</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="installing.html" title="next chapter">Installing</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Srinivas Gorur-Shandilya and Alec Hoyland.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
