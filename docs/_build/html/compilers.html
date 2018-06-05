@@ -1,13 +1,16 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
     <title>Compiler Support &#8212; xolotl 2018 documentation</title>
+    
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
@@ -21,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Units" href="units.html" />
@@ -29,10 +32,11 @@
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
+  
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-  <body>
+  <body role="document">
   
 
     <div class="document">
@@ -113,9 +117,6 @@ looks something like this:</p>
 <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">g</span><span class="o">++</span>
 <span class="o">&gt;&gt;</span> !<span class="n">g</span><span class="o">++</span> <span class="o">-</span><span class="n">dumpversion</span>
 <span class="mf">8.1</span><span class="p">.</span><span class="mi">0</span>
-<span class="o">&gt;&gt;</span> <span class="n">mex</span> <span class="n">test</span><span class="p">.</span><span class="n">cpp</span>
-<span class="n">Error</span> <span class="n">using</span> <span class="n">mex</span>
-<span class="n">No</span> <span class="n">supported</span> <span class="n">compiler</span> <span class="n">was</span> <span class="n">found</span><span class="p">.</span> <span class="n">For</span> <span class="n">options</span><span class="p">,</span> <span class="n">visit</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">mathworks</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">support</span><span class="o">/</span><span class="n">compilers</span><span class="p">.</span>
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">MATLAB</span></code> cannot find the intended <code class="docutils literal"><span class="pre">C++</span></code> compiler.</p>
@@ -127,21 +128,20 @@ looks something like this:</p>
 <p><code class="docutils literal"><span class="pre">MATLAB</span></code> recommends changing your PATH so that you default to an older version
 of <code class="docutils literal"><span class="pre">g++</span></code>. This is not strictly necessary: <code class="docutils literal"><span class="pre">MATLAB</span></code> can still compile using <code class="docutils literal"><span class="pre">MEX</span></code>
 with newer versions of <code class="docutils literal"><span class="pre">g++</span></code> in most cases. Generally, downgrading to an older
-version of <code class="docutils literal"><span class="pre">g++</span></code> doesn’t solve the problem.</p>
+version of <code class="docutils literal"><span class="pre">g++</span></code> doesn&#8217;t solve the problem.</p>
 <p>There is a relatively simple fix however. Credit goes to <code class="docutils literal"><span class="pre">github</span></code> user <a class="reference external" href="https://gist.github.com/bonanza123/">bonanza123</a>
 for figuring it out.</p>
 <ul class="simple">
-<li>First download the proper version of <code class="docutils literal"><span class="pre">gcc/g++</span></code>. For example, the AUR has versions</li>
+<li>First download the proper version of <code class="docutils literal"><span class="pre">gcc/g++</span></code>. If you use a package manager there are generally legacy versions under <code class="docutils literal"><span class="pre">gcc-VERSION</span></code>. You can also find them <a class="reference external" href="https://gcc.gnu.org/">here</a>.</li>
+<li>Second change the <code class="docutils literal"><span class="pre">mex_LANG_glnxa64.xml</span></code> specification file. This is typically</li>
 </ul>
-<p>4.9, 5.5, and 6.4 as legacy builds.
-* Second change the <code class="docutils literal"><span class="pre">mex_LANG_glnxa64.xml</span></code> specification file. This is typically
-found at <code class="docutils literal"><span class="pre">~/.matlab/R2018a/mex_C_glnxa64.xml</span></code> where <code class="docutils literal"><span class="pre">R2018a</span></code> is the version
+<p>found at <code class="docutils literal"><span class="pre">~/.matlab/R2018a/mex_C_glnxa64.xml</span></code> where <code class="docutils literal"><span class="pre">R2018a</span></code> is the version
 of <code class="docutils literal"><span class="pre">MATLAB</span></code> and <code class="docutils literal"><span class="pre">C</span></code> is the name of the language.
 * Replace all references to <code class="docutils literal"><span class="pre">$GCC</span></code> with the path to the soft link to your <code class="docutils literal"><span class="pre">gcc</span></code>
 compiler (e.g. <code class="docutils literal"><span class="pre">/usr/bin/gcc-6</span></code>).
 * Repeat this process for the <code class="docutils literal"><span class="pre">./mex_C++_glnxa64.xml</span></code> file.
-* Sometimes <code class="docutils literal"><span class="pre">MATLAB</span></code> doesn’t generate this file, causing a lot of errors. If
-it doesn’t exist, copy the <code class="docutils literal"><span class="pre">C</span></code> verson of the file, rename it appropriately, and
+* Sometimes <code class="docutils literal"><span class="pre">MATLAB</span></code> doesn&#8217;t generate this file, causing a lot of errors. If
+it doesn&#8217;t exist, copy the <code class="docutils literal"><span class="pre">C</span></code> verson of the file, rename it appropriately, and
 replace all references to <code class="docutils literal"><span class="pre">gcc</span></code> with <code class="docutils literal"><span class="pre">g++</span></code>, so that <code class="docutils literal"><span class="pre">MATLAB</span></code> knows to use
 the right compiler.</p>
 <p>The problem is fixed if you see something like this in <code class="docutils literal"><span class="pre">MATLAB</span></code></p>
@@ -210,8 +210,8 @@ the right compiler.</p>
       &copy;2018, Srinivas Gorur-Shandilya and Alec Hoyland.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
       <a href="_sources/compilers.rst.txt"

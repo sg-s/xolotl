@@ -1,13 +1,16 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
     <title>Introduction &#8212; xolotl 2018 documentation</title>
+    
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
@@ -21,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Methods" href="methods.html" />
@@ -29,10 +32,11 @@
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
+  
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-  <body>
+  <body role="document">
   
 
     <div class="document">
@@ -45,12 +49,12 @@
 <p><code class="docutils literal"><span class="pre">xolotl</span></code> is a fast single-compartment and multi-compartment simulator written in
 <code class="docutils literal"><span class="pre">C++</span></code> with <code class="docutils literal"><span class="pre">MATLAB</span></code> wrappers. Written with a focus on flexibility and speed,
 it can simulate single-compartment conductance-based neuron models, networks of these,
-and detailed multi-compartment models. Because it’s written in <code class="docutils literal"><span class="pre">C++</span></code> it’s really fast.</p>
+and detailed multi-compartment models. Because it&#8217;s written in <code class="docutils literal"><span class="pre">C++</span></code> it&#8217;s really fast.</p>
 <div class="section" id="why-use-xolotl">
 <h2>Why Use <code class="docutils literal"><span class="pre">xolotl</span></code>?<a class="headerlink" href="#why-use-xolotl" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="it-s-fast">
-<h3>1. It’s Fast<a class="headerlink" href="#it-s-fast" title="Permalink to this headline">¶</a></h3>
-<p>Because <code class="docutils literal"><span class="pre">xolotl</span></code> is written in <code class="docutils literal"><span class="pre">C++</span></code>, it’s quite fast. Here are some benchmarks
+<h3>1. It&#8217;s Fast<a class="headerlink" href="#it-s-fast" title="Permalink to this headline">¶</a></h3>
+<p>Because <code class="docutils literal"><span class="pre">xolotl</span></code> is written in <code class="docutils literal"><span class="pre">C++</span></code>, it&#8217;s quite fast. Here are some benchmarks
 for a single-compartment Hodgkin-Huxley model with 7 conductances.
 Note that you can get speeds up to 300x realtime!</p>
 <div class="figure">
@@ -58,7 +62,7 @@ Note that you can get speeds up to 300x realtime!</p>
 </div>
 </div>
 <div class="section" id="it-s-easy-to-use">
-<h3>2. It’s Easy to Use<a class="headerlink" href="#it-s-easy-to-use" title="Permalink to this headline">¶</a></h3>
+<h3>2. It&#8217;s Easy to Use<a class="headerlink" href="#it-s-easy-to-use" title="Permalink to this headline">¶</a></h3>
 <p>You can set up complex models of neurons and networks very efficently,
 using an intuitive language that is tightly coupled to the object-based
 architecture of the underlying <code class="docutils literal"><span class="pre">`C++</span></code> code. For example, here, we set up a
@@ -72,7 +76,7 @@ compartment with some channels in it:</p>
 <span class="n">x</span><span class="p">.</span><span class="n">AB</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;prinz-approx/Kd&#39;</span><span class="p">,</span><span class="s">&#39;gbar&#39;</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="s">&#39;E&#39;</span><span class="p">,</span><span class="o">-</span><span class="mi">80</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>That’s it. To integrate it and see the time evolution of the voltage</p>
+<p>That&#8217;s it. To integrate it and see the time evolution of the voltage</p>
 <div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">V</span> <span class="p">=</span> <span class="n">x</span><span class="p">.</span><span class="n">integrate</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -113,8 +117,8 @@ you might need a <a class="reference external" href="compilers.html">compiler</a
   <ul>
 <li><a class="reference internal" href="#">Introduction</a><ul>
 <li><a class="reference internal" href="#why-use-xolotl">Why Use <code class="docutils literal"><span class="pre">xolotl</span></code>?</a><ul>
-<li><a class="reference internal" href="#it-s-fast">1. It’s Fast</a></li>
-<li><a class="reference internal" href="#it-s-easy-to-use">2. It’s Easy to Use</a></li>
+<li><a class="reference internal" href="#it-s-fast">1. It&#8217;s Fast</a></li>
+<li><a class="reference internal" href="#it-s-easy-to-use">2. It&#8217;s Easy to Use</a></li>
 <li><a class="reference internal" href="#manipulate-models-in-real-time">3. Manipulate Models in Real-time</a></li>
 <li><a class="reference internal" href="#optimize-models-really-quickly">4. Optimize Models Really Quickly</a></li>
 </ul>
@@ -157,8 +161,8 @@ you might need a <a class="reference external" href="compilers.html">compiler</a
       &copy;2018, Srinivas Gorur-Shandilya and Alec Hoyland.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
       <a href="_sources/introduction.rst.txt"
