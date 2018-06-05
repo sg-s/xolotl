@@ -32,9 +32,6 @@ looks something like this: ::
   /bin/g++
   >> !g++ -dumpversion
   8.1.0
-  >> mex test.cpp
-  Error using mex
-  No supported compiler was found. For options, visit https://www.mathworks.com/support/compilers.
 
 ``MATLAB`` cannot find the intended ``C++`` compiler. ::
 
@@ -51,9 +48,9 @@ There is a relatively simple fix however. Credit goes to ``github`` user bonanza
 for figuring it out.
 
 .. _bonanza123: https://gist.github.com/bonanza123/
+.. _here: https://gcc.gnu.org/
 
-* First download the proper version of ``gcc/g++``. For example, the AUR has versions
-4.9, 5.5, and 6.4 as legacy builds.
+* First download the proper version of ``gcc/g++``. If you use a package manager there are generally legacy versions under ``gcc-VERSION``. You can also find them here_.
 * Second change the ``mex_LANG_glnxa64.xml`` specification file. This is typically
 found at ``~/.matlab/R2018a/mex_C_glnxa64.xml`` where ``R2018a`` is the version
 of ``MATLAB`` and ``C`` is the name of the language.

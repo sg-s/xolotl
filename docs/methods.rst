@@ -14,7 +14,7 @@ A ``xolotl`` object can be instantiated ::
 
   x = xolotl;
 
-For consistency, this documentation will assume a ``xolotl`` object named ``x``.
+In the rest of this documentation we will assume a ``xolotl`` object named ``x``.
 
 .. hint::
 
@@ -78,7 +78,7 @@ To access properties of that compartment, use the syntax ``x.HH``. To add a cond
 
   x.HH.add('ConductancePath', 'PropertyName', 'PropertyValue', ...);
 
-``ConductancePath`` is the path to the ``.hpp`` file inside ``xolotl/c++/conductances/``. For example, the conductance path to add the slow calcium conductance from Prinz *et al.* 2003 is ``prinz/CaS`` since the conductance is specified in ``xolotl/c++/conductances/prinz/CaS.hpp``.
+``ConductancePath`` is the path to the ``.hpp`` file inside ``xolotl/c++/conductances/``. For example, the conductance path to add the slow calcium conductance from Prinz *et al.* 2003 is ``prinz/CaS`` since the conductance is specified in ``xolotl/c++/conductances/prinz/CaS.hpp``. It doesn't actually have to be the exact path. Any fragment of the path will be matched.
 
 The following properties can be specified
 
@@ -96,14 +96,18 @@ For example ::
 
 The maximal conductance defaults to 0, the reversal potential defaults based on
 the conductance. Activation variables (if any) default to zero. Inactivation variables
-default to one. Synapses can be added this way, but it is better to use the ``connect`` method.
+default to one. Synapses can be added this way, but it is better to use the connect_ method.
+
+.. note::
+
+  ``cpplab`` allows you to add any ``cpplab`` object to anything else, but ``xolotl`` assumes that you're doing sane things. If you add a compartment to a conductance, or something silly, you will get an error.
 
 .. _cleanup:
 
 cleanup
 ^^^^^^^
 
-When the ``C++`` code compiles, it produces a binary ``.mexa64`` file and a ``.cpp`` file in your ``xolotl`` directory. These files are hashed so that repeated simulation does not require recompilation. If these files are too numerous or broken, you can erase them all by calling either ::
+When the ``C++`` code compiles, it produces a binary and a ``.cpp`` file in your ``xolotl`` directory. These files are hashed so that repeated simulation does not require recompilation. If these files are too numerous or broken, you can erase them all by calling either ::
 
   xolotl.cleanup
   x.cleanup
@@ -116,22 +120,15 @@ compile
 
 Hashes and compiles the files needed to run a simulation. These are stored in
 your ``xolotl`` directory. ``xolotl`` automatically compiles when it needs to.
-You can turn this functionally off by setting ::
+You can turn this functionality off by setting ::
 
   x.skip_hash = true;
 
-In addition, creating a ``xolotl`` object through a function call does not
-automatically hash and compile. In this case, you should use ``x.md5hash``.
-=======
 In addition, creating a ``xolotl`` object through a function call does not automatically hash and compile. In this case, you should use ``x.md5hash``.
->>>>>>> 2c44bd81aed5d11aac7fb1677a4b462d47822744
 
-.. hint::
+.. warning::
 
-  Always transpile before you compile! ::
-
-    x.transpile;
-    x.compile;
+  If you turn hashing off, ``xolotl`` might not compile
 
 .. _connect:
 
@@ -144,9 +141,7 @@ Connects two compartments with a synapse. The basic syntax is ::
 
 The first two arguments are the presynaptic and postsynaptic compartment names.
 
-In the case of two arguments, or three arguments where the third is a ``double``,
-an axial or electrical synapse is created between the two compartments. An axial
-synapse is created if either of the compartments is part of a spacially-discretized
+``connect`` defaults to an axial synapse in the case of only two arguments (the pre- and postsynaptic compartments) and when either of the compartments is part of a spacially-discretized
 multi-compartment structure (e.g. has a defined ``tree_idx``). Otherwise, the created
 synapse is electrical. Axial and electrical synapses differ in how they are integrated
 (see Dayan & Abbott 2001, Ch. 5-6). ::
@@ -177,7 +172,7 @@ Maximal conductance     ``gbar``
 Reversal potential      ``E``
 Activation variable     ``s``
 ======================= ================
-=======
+
 Connects two compartments with a synapse. This defaults to an electrical synapse with axial conductance of ``NaN``.
 
 Connect two compartments ``AB`` and ``PD`` with an axial conductance of ``NaN`` ::
@@ -191,7 +186,6 @@ Connect two compartments with an axial conductance of ``gAxial`` ::
 Connect two compartments with a glutamatergic synapse with maximal conductance ``gGlut`` ::
 
   x.connect('AB', 'PD', 'Glut', gGlut)
->>>>>>> 2c44bd81aed5d11aac7fb1677a4b462d47822744
 
 .. _copy:
 
