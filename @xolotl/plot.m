@@ -6,7 +6,7 @@
 %
 % help: plots voltage traces
 %
-function plot(self)
+function plot(self, ~)
 
 comp_names = self.find('compartment');
 N = length(comp_names);

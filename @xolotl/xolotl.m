@@ -46,19 +46,20 @@ end  % end protected props
 
 properties
 	debug_mode@logical = false
-	controllers@cell = {}
 
 	% output delta t
 	dt@double = 50e-3; % ms
 
-	% simulation deltat t
+	% simulation deltat 
 	sim_dt@double = NaN;
-
 	t_end@double = 5000; % ms
+
 	handles
 	closed_loop@logical = true;
 	temperature@double = 11; % centigrade 
 	temperature_ref@double = 11; % centigrade 
+
+    manipulate_plot_func@cell;
 end % end general props
 
 
@@ -131,6 +132,8 @@ methods
         end
         hpp_files = unique(hpp_files);
         self.illegal_names = [self.illegal_names(:); hpp_files];
+
+        self.manipulate_plot_func{1} = @self.plot;
 	end
 
 

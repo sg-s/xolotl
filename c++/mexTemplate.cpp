@@ -36,6 +36,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     //xolotl:input_declarations
 
 
+    // temperature wire-ups
+    xolotl_network.temperature = temperature;
+    xolotl_network.temperature_ref = temperature_ref;
     double delta_temperature = (temperature - temperature_ref)/10;
 
     //xolotl:insert_constructors

@@ -36,8 +36,6 @@ protected:
     double V_inf;
     double Ca_inf;
 
-    double RT_by_nF;
-
 public:
 
     // some housekeeping parameters
@@ -47,7 +45,7 @@ public:
     double f_;
     double delta_V;
 
-
+    double RT_by_nF;
 
     // this int stores an integer that indicates
     // the hierarchy of this compartment in a multi-comp
@@ -145,7 +143,6 @@ public:
 
 
         // housekeeping
-        RT_by_nF = 500.0*(8.6174e-5)*(11 + 273.15);
         tree_idx = tree_idx_;
         neuron_idx = neuron_idx_;
 
@@ -153,7 +150,10 @@ public:
         if (isnan (Cm)) { Cm = 10;}
         if (isnan (tau_Ca)) { tau_Ca = 200;} // ms
         if (isnan (V)) { V = -60; } // mV
+        if (isnan (Ca_in)) { Ca_in = .05; }
+        if (isnan (Ca_out)) { Ca_out = 3000; }
         if (isnan (Ca)) { Ca = Ca_in; }
+
         // if (isnan (Ca_target)) { Ca_target = Ca_in; }
 
         if (!isnan(len) && !isnan(radius))
