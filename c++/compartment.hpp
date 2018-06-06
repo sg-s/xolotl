@@ -153,7 +153,10 @@ public:
         if (isnan (Cm)) { Cm = 10;}
         if (isnan (tau_Ca)) { tau_Ca = 200;} // ms
         if (isnan (V)) { V = -60; } // mV
+        if (isnan (Ca_in)) { Ca_in = .05; }
+        if (isnan (Ca_out)) { Ca_out = 3000; }
         if (isnan (Ca)) { Ca = Ca_in; }
+
         // if (isnan (Ca_target)) { Ca_target = Ca_in; }
 
         if (!isnan(len) && !isnan(radius))

@@ -5,6 +5,21 @@
 %   /_/\_\___/|_|\___/ \__|_|
 %
 % help: integrates, and generates UI to manipulate parameters
+% usage:
+%
+% assuming x is a xolotl object
+% 
+% manipualte all parameters:
+% x.manipulate() 
+%
+% manipualte some parameters:
+% x.manipulate('some*pattern')
+%
+% specify your own plot function:
+% x.manipulate_plot_func{1} = @some_func
+% where some_func accepts a xolotl object as the first argument
+% and two other inputs (for I_ext and V_clamp)
+% x.manipualte()
 
 function manipulate(self, manipulate_these)
 
@@ -25,8 +40,8 @@ t_end = self.t_end;
 compartment_names = self.find('compartment');
 n = length(compartment_names);
 
-% create a window to show all the traces
-self.plot;
+
+self.manipulate_plot_func{1}(self);
 
 
 

@@ -10,4 +10,5 @@
 function manipulateEvaluate(self,names,values)
 
 self.set(names,values)
-self.plot;
+
+self.manipulate_plot_func{1}(self);
