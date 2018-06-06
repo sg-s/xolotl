@@ -33,7 +33,9 @@ public:
      // pointers to all compartments in network
     vector<compartment*> comp;
 
-
+    // temperature
+    double temperature;
+    double temperature_ref;
 
     // housekeeping
     int n_comp = 0;
@@ -162,6 +164,8 @@ void network::addCompartment(compartment *comp_)
 {
     comp.push_back(comp_);
     n_comp++;
+
+    comp_->RT_by_nF = (0.0431)*(temperature + 273.15);
 }
 
 // this integrate method works for networks

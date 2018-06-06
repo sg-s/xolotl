@@ -36,8 +36,6 @@ protected:
     double V_inf;
     double Ca_inf;
 
-    double RT_by_nF;
-
 public:
 
     // some housekeeping parameters
@@ -47,7 +45,7 @@ public:
     double f_;
     double delta_V;
 
-
+    double RT_by_nF;
 
     // this int stores an integer that indicates
     // the hierarchy of this compartment in a multi-comp
@@ -145,7 +143,6 @@ public:
 
 
         // housekeeping
-        RT_by_nF = 500.0*(8.6174e-5)*(11 + 273.15);
         tree_idx = tree_idx_;
         neuron_idx = neuron_idx_;
 
