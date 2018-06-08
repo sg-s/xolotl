@@ -22,10 +22,10 @@ public:
         h = h_;
 
         // defaults 
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
-        if (isnan (E)) { E = 30; }
+        if (isnan (E)) { E = 50; }
 
         // cache values for m_inf and h_inf
         for (double V = -99; V < 101; V++) {

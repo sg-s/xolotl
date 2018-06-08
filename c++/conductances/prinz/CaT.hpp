@@ -23,10 +23,10 @@ public:
         h = h_;
 
         // defaults 
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
-        if (isnan (E)) { E = 20; }
+        if (isnan (E)) { E = 30; }
     }
 
     void integrate(double V, double Ca, double dt, double delta_temp);
