@@ -33,7 +33,7 @@ public:
         if (isnan (Q_g)) { Q_g = 1; }
         if (isnan (Q_tau_m)) { Q_tau_m = 1; }
         if (isnan (Q_tau_h)) { Q_tau_h = 1; }
-        if (isnan (E)) { E = -80; }
+        if (isnan (E)) { E = -20; }
 
     }
 

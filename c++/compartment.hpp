@@ -147,6 +147,7 @@ public:
         neuron_idx = neuron_idx_;
 
         // defaults
+        if (isnan (A)) { A = .0628;}
         if (isnan (Cm)) { Cm = 10;}
         if (isnan (tau_Ca)) { tau_Ca = 200;} // ms
         if (isnan (V)) { V = -60; } // mV
