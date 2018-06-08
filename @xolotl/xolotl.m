@@ -168,6 +168,11 @@ methods
         n_comp = length(self.find('compartment'));
         n_steps = floor(self.t_end/self.sim_dt);
 
+        if isvector(I_ext) && length(I_ext) == n_comp
+            I_ext = I_ext(:);
+            I_ext = repmat(I_ext,1,n_steps)';
+        end
+
         % make sure that it's the right size
         assert(size(I_ext,2) == n_comp,'Size of I_ext is incorrect::2nd dimension size should be n_comp')
         assert(size(I_ext,1) == n_steps,'Size of I_ext is incorrect::1st dimension size should be n_steps')
