@@ -47,6 +47,10 @@ end  % end protected props
 properties
 	debug_mode@logical = false
 
+
+    I_ext@double;
+    V_clamp@double;
+
 	% output delta t
 	dt@double = 50e-3; % ms
 
@@ -135,6 +139,50 @@ methods
 
         self.manipulate_plot_func{1} = @self.plot;
 	end
+
+
+    function self = set.V_clamp(self,V_clamp)
+        n_comp = length(self.find('compartment'));
+        n_steps = floor(self.t_end/self.sim_dt);
+
+        % make sure that it's the right size
+        assert(size(V_clamp,2) == n_comp,'Size of V_clamp is incorrect::2nd dimension size should be n_comp')
+        assert(size(V_clamp,1) == n_steps,'Size of V_clamp is incorrect::1st dimension size should be n_steps')
+
+        d = dbstack;
+
+        if any(strcmp({d.name},'xolotl.set.I_ext'))
+            % this is being called by setting I_ext, so 
+            % do nothing
+        else
+            % ignore I_ext, since it's being clamped
+            self.I_ext = zeros(n_steps,n_comp);
+        end
+
+        
+
+        self.V_clamp = V_clamp;
+    end
+
+     function self = set.I_ext(self,I_ext)
+        n_comp = length(self.find('compartment'));
+        n_steps = floor(self.t_end/self.sim_dt);
+
+        % make sure that it's the right size
+        assert(size(I_ext,2) == n_comp,'Size of I_ext is incorrect::2nd dimension size should be n_comp')
+        assert(size(I_ext,1) == n_steps,'Size of I_ext is incorrect::1st dimension size should be n_steps')
+
+        d = dbstack;
+        self.I_ext = I_ext;
+        if any(strcmp({d.name},'xolotl.set.V_clamp'))
+
+            % it's being called by V_clamp, so do nothing
+        else
+            % this is being called by the user, so we need to 
+            % cancel out V_clamp
+            self.V_clamp = NaN(n_steps,n_comp);
+        end
+    end
 
 
     function search(self,str)

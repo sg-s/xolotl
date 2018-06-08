@@ -22,20 +22,25 @@ x.sim_dt = .1;
 x.dt = .1;
 
 all_I = NaN(x.t_end/x.dt,length(all_V_step));
+all_V_step = repmat(all_V_step,x.t_end/x.dt,1);
 
-x.integrate([],holding_V);
+x.V_clamp = repmat(holding_V,x.t_end/x.dt,1);
+
+
+x.integrate;
 x.closed_loop = false;
 
-for i = 1:length(all_V_step)
-	all_I(:,i) = x.integrate([],all_V_step(i));
+for i = 1:size(all_V_step,2)
+	x.V_clamp = all_V_step(:,i);
+	all_I(:,i) = x.integrate;
 end
 
 time = (1:length(all_I))*x.dt;
 
 figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
 subplot(1,2,1); hold on
-c = parula(length(all_V_step));
-for i = 1:length(all_V_step)
+c = parula(size(all_V_step,2));
+for i = 1:size(all_V_step,2)
 	plot(time,all_I(:,i),'Color',c(i,:))
 end
 xlabel('Time (ms)')

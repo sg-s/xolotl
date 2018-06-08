@@ -212,6 +212,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         for(int i = 0; i < nsteps; i++)
         {
 
+            for(int q = 0; q < n_comp; q++)
+            {
+                I_ext[q] = I_ext_in[i*n_comp + q];
+            }
+
+
             xolotl_network.integrate(sim_dt,I_ext, delta_temperature);
 
             //xolotl:read_synapses_here
