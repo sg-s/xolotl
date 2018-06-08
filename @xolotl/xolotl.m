@@ -55,7 +55,7 @@ properties
 	dt@double = 50e-3; % ms
 
 	% simulation deltat 
-	sim_dt@double = NaN;
+	sim_dt@double = 50e-3;
 	t_end@double = 5000; % ms
 
 	handles
@@ -174,8 +174,8 @@ methods
         end
 
         % make sure that it's the right size
-        assert(size(I_ext,2) == n_comp,'Size of I_ext is incorrect::2nd dimension size should be n_comp')
-        assert(size(I_ext,1) == n_steps,'Size of I_ext is incorrect::1st dimension size should be n_steps')
+        assert(size(I_ext,2) == n_comp,['Size of I_ext is incorrect::2nd dimension size should be' mat2str(n_comp)])
+        assert(size(I_ext,1) == n_steps,['Size of I_ext is incorrect::1st dimension size should be ' mat2str(n_steps)])
 
         d = dbstack;
         self.I_ext = I_ext;
