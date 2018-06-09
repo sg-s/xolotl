@@ -34,7 +34,7 @@ Note that you can get speeds up to 300x realtime!
 
 You can set up complex models of neurons and networks very efficently,
 using an intuitive language that is tightly coupled to the object-based
-architecture of the underlying ```C++`` code. For example, here, we set up a
+architecture of the underlying ``C++`` code. For example, here, we set up a
 compartment with some channels in it: ::
 
   x = xolotl;
