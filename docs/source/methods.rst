@@ -353,6 +353,10 @@ that are wrapped by ``manipulate``. ::
   x.manipulate_plot_func{2} = @myFIcurve;
   x.manipulate
 
+.. note::
+
+  Multiple visualzation functions with ``manipulate`` is current in-development.
+
 .. _plot:
 
 plot
