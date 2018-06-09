@@ -518,19 +518,22 @@ or clamped voltage matrices is the right size (i.e. <code class="docutils litera
 <div class="section" id="manipulate">
 <span id="id12"></span><h2>manipulate<a class="headerlink" href="#manipulate" title="Permalink to this headline">¶</a></h2>
 <p>Opens the GUI to permit real-time visualization of changing network parameters.
-The first argument specifies for which network properties to generate sliders (default is all of them). This takes the form of a call to the <a class="reference internal" href="#find">find</a> function.
-The second argument specifies which visualization function should be used (default is <code class="docutils literal notranslate"><span class="pre">plot</span></code>).</p>
+An argument specifies for which network properties to generate sliders (default is all of them). This takes the form of a call to the <a class="reference internal" href="#find">find</a> function.</p>
 <div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% minimum usage</span>
 <span class="n">x</span><span class="p">.</span><span class="n">manipulate</span>
 <span class="c">% specify sliders only for maximal conductances of HH compartment</span>
 <span class="n">x</span><span class="p">.</span><span class="n">manipulate</span><span class="p">(</span><span class="s">&#39;HH*gbar&#39;</span><span class="p">)</span>
-<span class="c">% specify the myPlot function for visualization</span>
-<span class="n">x</span><span class="p">.</span><span class="n">manipulate</span><span class="p">(</span><span class="s">&#39;HH*gbar&#39;</span><span class="p">,</span> <span class="p">@</span><span class="n">myPlot</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The functionality of the second argument has not been implemented yet.</p>
+<p><code class="docutils literal notranslate"><span class="pre">manipulate</span></code> displays the results of the <code class="docutils literal notranslate"><span class="pre">plot</span></code> function by default.
+If the <code class="docutils literal notranslate"><span class="pre">manipulate_plot_func</span></code> property of <code class="docutils literal notranslate"><span class="pre">xolotl</span></code> is specified (e.g. <code class="docutils literal notranslate"><span class="pre">x.manipulate_plot_func{1}</span> <span class="pre">=</span> <span class="pre">&#64;myFunc</span></code>),
+it will display custom functions. <code class="docutils literal notranslate"><span class="pre">manipulate_plot_func</span></code> is a cell of function handles to all visualzation functions
+that are wrapped by <code class="docutils literal notranslate"><span class="pre">manipulate</span></code>.</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% wrap two visualization functions with manipulate</span>
+<span class="n">x</span><span class="p">.</span><span class="n">manipulate_plot_func</span><span class="p">{</span><span class="mi">1</span><span class="p">}</span> <span class="p">=</span> <span class="p">@</span><span class="n">x</span><span class="p">.</span><span class="n">plot</span><span class="p">;</span>
+<span class="n">x</span><span class="p">.</span><span class="n">manipulate_plot_func</span><span class="p">{</span><span class="mi">2</span><span class="p">}</span> <span class="p">=</span> <span class="p">@</span><span class="n">myFIcurve</span><span class="p">;</span>
+<span class="n">x</span><span class="p">.</span><span class="n">manipulate</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="plot">
