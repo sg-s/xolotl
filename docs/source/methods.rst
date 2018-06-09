@@ -325,19 +325,22 @@ manipulate
 ^^^^^^^^^^
 
 Opens the GUI to permit real-time visualization of changing network parameters.
-The first argument specifies for which network properties to generate sliders (default is all of them). This takes the form of a call to the find_ function.
-The second argument specifies which visualization function should be used (default is ``plot``). ::
+An argument specifies for which network properties to generate sliders (default is all of them). This takes the form of a call to the find_ function. ::
 
   % minimum usage
   x.manipulate
   % specify sliders only for maximal conductances of HH compartment
   x.manipulate('HH*gbar')
-  % specify the myPlot function for visualization
-  x.manipulate('HH*gbar', @myPlot)
 
-.. note::
+``manipulate`` displays the results of the ``plot`` function by default.
+If the ``manipulate_plot_func`` property of ``xolotl`` is specified (e.g. ``x.manipulate_plot_func{1} = @myFunc``),
+it will display custom functions. ``manipulate_plot_func`` is a cell of function handles to all visualzation functions
+that are wrapped by ``manipulate``. ::
 
-  The functionality of the second argument has not been implemented yet.
+  % wrap two visualization functions with manipulate
+  x.manipulate_plot_func{1} = @x.plot;
+  x.manipulate_plot_func{2} = @myFIcurve;
+  x.manipulate
 
 .. _plot:
 
