@@ -5,9 +5,9 @@
 
 function custom_fI(x)
 
-n_steps = 40;
+n_steps = 20;
 all_I_ext = [linspace(-.1,.3,n_steps) fliplr(linspace(-.1,.3,n_steps))];
-t_end = 1e3;
+t_end = 3e3;
 
 if isempty(x.handles) || ~isfield(x.handles,'fig') || ~isvalid(x.handles.fig)
 

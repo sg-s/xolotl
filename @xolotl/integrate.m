@@ -75,7 +75,7 @@ n_steps = floor(self.t_end/self.sim_dt);
 [~,f] = fileparts(self.linked_binary);
 
 f = str2func(f);
-[results{1:nargout+1}] = f(arguments,self.I_ext,self.V_clamp);
+[results{1:nargout+1}] = f(arguments,self.I_ext',self.V_clamp');
 
 if self.closed_loop
 	self.deserialize(results{1});
