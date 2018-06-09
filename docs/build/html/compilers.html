@@ -24,8 +24,7 @@
 
   
 
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -157,7 +156,7 @@
             
   <div class="section" id="compiler-support">
 <h1>Compiler Support<a class="headerlink" href="#compiler-support" title="Permalink to this headline">¶</a></h1>
-<p>Compilers for which <code class="docutils literal"><span class="pre">xolotl</span></code> has been known to work (or not).</p>
+<p>Compilers for which <code class="docutils literal notranslate"><span class="pre">xolotl</span></code> has been known to work (or not).</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="28%" />
@@ -220,42 +219,42 @@
 </table>
 <div class="section" id="compiling-on-linux">
 <h2>Compiling on Linux<a class="headerlink" href="#compiling-on-linux" title="Permalink to this headline">¶</a></h2>
-<p>On certain Linux distributions (Arch-based in particular), <code class="docutils literal"><span class="pre">MEX</span></code> cannot identify
-the installed <code class="docutils literal"><span class="pre">g++</span></code> compiler, even when it exists on your path. The error
+<p>On certain Linux distributions (Arch-based in particular), <code class="docutils literal notranslate"><span class="pre">MEX</span></code> cannot identify
+the installed <code class="docutils literal notranslate"><span class="pre">g++</span></code> compiler, even when it exists on your path. The error
 looks something like this:</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> !<span class="n">which</span> <span class="n">g</span><span class="o">++</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> !<span class="n">which</span> <span class="n">g</span><span class="o">++</span>
 <span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">g</span><span class="o">++</span>
 <span class="o">&gt;&gt;</span> !<span class="n">g</span><span class="o">++</span> <span class="o">-</span><span class="n">dumpversion</span>
 <span class="mf">8.1</span><span class="p">.</span><span class="mi">0</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">MATLAB</span></code> cannot find the intended <code class="docutils literal"><span class="pre">C++</span></code> compiler.</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">mex</span> <span class="o">-</span><span class="n">setup</span> <span class="n">C</span><span class="o">++</span>
+<p><code class="docutils literal notranslate"><span class="pre">MATLAB</span></code> cannot find the intended <code class="docutils literal notranslate"><span class="pre">C++</span></code> compiler.</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">mex</span> <span class="o">-</span><span class="n">setup</span> <span class="n">C</span><span class="o">++</span>
 <span class="n">Error</span> <span class="n">using</span> <span class="n">mex</span>
 <span class="n">No</span> <span class="n">supported</span> <span class="n">compiler</span> <span class="n">was</span> <span class="n">found</span><span class="p">.</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">MATLAB</span></code> recommends changing your PATH so that you default to an older version
-of <code class="docutils literal"><span class="pre">g++</span></code>. This is not strictly necessary: <code class="docutils literal"><span class="pre">MATLAB</span></code> can still compile using <code class="docutils literal"><span class="pre">MEX</span></code>
-with newer versions of <code class="docutils literal"><span class="pre">g++</span></code> in most cases. Generally, downgrading to an older
-version of <code class="docutils literal"><span class="pre">g++</span></code> doesn’t solve the problem.</p>
-<p>There is a relatively simple fix however. Credit goes to <code class="docutils literal"><span class="pre">github</span></code> user <a class="reference external" href="https://gist.github.com/bonanza123/">bonanza123</a>
+<p><code class="docutils literal notranslate"><span class="pre">MATLAB</span></code> recommends changing your PATH so that you default to an older version
+of <code class="docutils literal notranslate"><span class="pre">g++</span></code>. This is not strictly necessary: <code class="docutils literal notranslate"><span class="pre">MATLAB</span></code> can still compile using <code class="docutils literal notranslate"><span class="pre">MEX</span></code>
+with newer versions of <code class="docutils literal notranslate"><span class="pre">g++</span></code> in most cases. Generally, downgrading to an older
+version of <code class="docutils literal notranslate"><span class="pre">g++</span></code> doesn’t solve the problem.</p>
+<p>There is a relatively simple fix however. Credit goes to <code class="docutils literal notranslate"><span class="pre">github</span></code> user <a class="reference external" href="https://gist.github.com/bonanza123/">bonanza123</a>
 for figuring it out.</p>
 <ul class="simple">
-<li>First download the proper version of <code class="docutils literal"><span class="pre">gcc/g++</span></code>. If you use a package manager there are generally legacy versions under <code class="docutils literal"><span class="pre">gcc-VERSION</span></code>. You can also find them <a class="reference external" href="https://gcc.gnu.org/">here</a>.</li>
-<li>Second change the <code class="docutils literal"><span class="pre">mex_LANG_glnxa64.xml</span></code> specification file. This is typically</li>
+<li>First download the proper version of <code class="docutils literal notranslate"><span class="pre">gcc/g++</span></code>. If you use a package manager there are generally legacy versions under <code class="docutils literal notranslate"><span class="pre">gcc-VERSION</span></code>. You can also find them <a class="reference external" href="https://gcc.gnu.org/">here</a>.</li>
+<li>Second change the <code class="docutils literal notranslate"><span class="pre">mex_LANG_glnxa64.xml</span></code> specification file. This is typically</li>
 </ul>
-<p>found at <code class="docutils literal"><span class="pre">~/.matlab/R2018a/mex_C_glnxa64.xml</span></code> where <code class="docutils literal"><span class="pre">R2018a</span></code> is the version
-of <code class="docutils literal"><span class="pre">MATLAB</span></code> and <code class="docutils literal"><span class="pre">C</span></code> is the name of the language.
-* Replace all references to <code class="docutils literal"><span class="pre">$GCC</span></code> with the path to the soft link to your <code class="docutils literal"><span class="pre">gcc</span></code>
-compiler (e.g. <code class="docutils literal"><span class="pre">/usr/bin/gcc-6</span></code>).
-* Repeat this process for the <code class="docutils literal"><span class="pre">./mex_C++_glnxa64.xml</span></code> file.
-* Sometimes <code class="docutils literal"><span class="pre">MATLAB</span></code> doesn’t generate this file, causing a lot of errors. If
-it doesn’t exist, copy the <code class="docutils literal"><span class="pre">C</span></code> verson of the file, rename it appropriately, and
-replace all references to <code class="docutils literal"><span class="pre">gcc</span></code> with <code class="docutils literal"><span class="pre">g++</span></code>, so that <code class="docutils literal"><span class="pre">MATLAB</span></code> knows to use
+<p>found at <code class="docutils literal notranslate"><span class="pre">~/.matlab/R2018a/mex_C_glnxa64.xml</span></code> where <code class="docutils literal notranslate"><span class="pre">R2018a</span></code> is the version
+of <code class="docutils literal notranslate"><span class="pre">MATLAB</span></code> and <code class="docutils literal notranslate"><span class="pre">C</span></code> is the name of the language.
+* Replace all references to <code class="docutils literal notranslate"><span class="pre">$GCC</span></code> with the path to the soft link to your <code class="docutils literal notranslate"><span class="pre">gcc</span></code>
+compiler (e.g. <code class="docutils literal notranslate"><span class="pre">/usr/bin/gcc-6</span></code>).
+* Repeat this process for the <code class="docutils literal notranslate"><span class="pre">./mex_C++_glnxa64.xml</span></code> file.
+* Sometimes <code class="docutils literal notranslate"><span class="pre">MATLAB</span></code> doesn’t generate this file, causing a lot of errors. If
+it doesn’t exist, copy the <code class="docutils literal notranslate"><span class="pre">C</span></code> verson of the file, rename it appropriately, and
+replace all references to <code class="docutils literal notranslate"><span class="pre">gcc</span></code> with <code class="docutils literal notranslate"><span class="pre">g++</span></code>, so that <code class="docutils literal notranslate"><span class="pre">MATLAB</span></code> knows to use
 the right compiler.</p>
-<p>The problem is fixed if you see something like this in <code class="docutils literal"><span class="pre">MATLAB</span></code></p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">mex</span><span class="p">.</span><span class="n">getCompilerConfigurations</span><span class="p">(</span><span class="s">&#39;C++&#39;</span><span class="p">)</span>
+<p>The problem is fixed if you see something like this in <code class="docutils literal notranslate"><span class="pre">MATLAB</span></code></p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">mex</span><span class="p">.</span><span class="n">getCompilerConfigurations</span><span class="p">(</span><span class="s">&#39;C++&#39;</span><span class="p">)</span>
 <span class="nb">ans</span> <span class="p">=</span>
 
 <span class="n">CompilerConfiguration</span> <span class="n">with</span> <span class="k">properties</span><span class="p">:</span>
@@ -333,10 +332,7 @@ the right compiler.</p>
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
   <script type="text/javascript">
       jQuery(function () {

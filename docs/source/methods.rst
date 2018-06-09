@@ -291,22 +291,33 @@ All other outputs are ``time series x XYZ`` where XYZ is the serialized list of 
 with two conductances each: ``NaV`` and ``Kd``, the intrinsic currents would return in the form of a ``time steps x 4`` matrix where the columns would be ordered:
 Kd current from AB, NaV current from AB, Kd current from BC, NaV current from BC.
 
-If ``integrate`` is passed one argument, it interprets this as a matrix of injected currents (in nA). For example ::
+If the ``xolotl`` properties ``I_ext`` and ``V_clamp`` are empty (i.e. ``x.I_ext = []``), the integration proceeds without injected current or clamped voltage.
+Injected current and voltage clamp cannot co-occur.  Setting one of these properties negates the other. If ``I_ext`` is a scalar,
+current is injected into each compartment at every time step. ::
 
-  % applies 0.2 nA to each compartment
-  x.integrate(0.2)
-  % applies 0.2 nA to first compartment of three
-  x.integrate([0.2 0 0])
-  % applies a time-varying current to first compartment
-  % where S is a matrix of size time steps × compartments
-  x.integrate(S)
+  % add 0.1 nA to each compartment at each time-step
+  x.I_ext = 0.1;
 
-If ``integrate`` is passed two arguments, the first is ignored, and the second is treated as a matrix of clamped voltage. ::
+If ``I_ext`` is non-scalar, it must be a matrix of dimension ``nSteps x nComps`` where
+``nSteps`` is the number of time-steps in the simulation (i.e. ``x_t_end/x.dt``) and ``nComps`` is the number of compartments.
+Current is injected elementwise during simulation, so that the injected current at each time step for each compartment is specfied
+by an element in the matrix. ::
 
-  % fixes the voltage of all compartments at -50 mV
-  x.integrate([], -50])
-  % clamps the second compartment in a two-compartment network
-  x.integrate([], [NaN -50] )
+  % add a sinusoidal current only to the first compartment
+  Ie = zeros(nSteps, nComps); Ie(:,1) = 0.1*sin(1:size(I,1));
+  x.I_ext = Ie;
+
+Clamped voltage is always added to the ``xolotl`` structure in the matrix form. ::
+
+  % voltage clamp the first compartment at -50 then 50
+  Vc = zeros(nSteps, nComps); Vc(1:5000,1) = -50; Vc(5001:10000,1) = 50;
+  x.V_clamp = Vc;
+
+.. note::
+
+  If you add new compartments to the network, remember to make sure the injected current
+  or clamped voltage matrices is the right size (i.e. ``nSteps x nComps``).
+
 
 .. _manipulate:
 
