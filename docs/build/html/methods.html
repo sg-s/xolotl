@@ -494,12 +494,18 @@ current is injected into each compartment at every time step.</p>
 <span class="n">x</span><span class="p">.</span><span class="n">I_ext</span> <span class="p">=</span> <span class="mf">0.1</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>If <code class="docutils literal notranslate"><span class="pre">I_ext</span></code> is non-scalar, it must be a matrix of dimension <code class="docutils literal notranslate"><span class="pre">nSteps</span> <span class="pre">x</span> <span class="pre">nComps</span></code> where
-<code class="docutils literal notranslate"><span class="pre">nSteps</span></code> is the number of time-steps in the simulation (i.e. <code class="docutils literal notranslate"><span class="pre">x_t_end/x.dt</span></code>) and <code class="docutils literal notranslate"><span class="pre">nComps</span></code> is the number of compartments.
-Current is injected elementwise during simulation, so that the injected current at each time step for each compartment is specfied
+<p>If <code class="docutils literal notranslate"><span class="pre">I_ext</span></code> is non-scalar, it can take the form of a vector of size <code class="docutils literal notranslate"><span class="pre">nComps</span> <span class="pre">x</span> <span class="pre">1</span></code>, or a matrix of size <code class="docutils literal notranslate"><span class="pre">nSteps</span> <span class="pre">x</span> <span class="pre">nComps</span></code>, where
+<code class="docutils literal notranslate"><span class="pre">nSteps</span></code> is the number of time-steps in the simulation (i.e. <code class="docutils literal notranslate"><span class="pre">x_t_end/x.dt</span></code>) and <code class="docutils literal notranslate"><span class="pre">nComps</span></code> is the number of compartments.</p>
+<p>The first form injects a constant current into each compartment, as specified elementwise by the vector.</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% apply 0.1 nA to first compartment, 0 to second</span>
+<span class="n">x</span><span class="p">.</span><span class="n">I_ext</span> <span class="p">=</span> <span class="p">[</span><span class="mf">0.1</span> <span class="mi">0</span><span class="p">];</span>
+</pre></div>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">I_ext</span></code> is a matrix of size <code class="docutils literal notranslate"><span class="pre">nSteps</span> <span class="pre">x</span> <span class="pre">nComps</span></code>, current is injected elementwise during simulation,
+so that the injected current at each time step for each compartment is specfied
 by an element in the matrix.</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% add a sinusoidal current only to the first compartment</span>
-<span class="n">Ie</span> <span class="p">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">nSteps</span><span class="p">,</span> <span class="n">nComps</span><span class="p">);</span> <span class="n">Ie</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)</span> <span class="p">=</span> <span class="mf">0.1</span><span class="o">*</span><span class="nb">sin</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="nb">size</span><span class="p">(</span><span class="n">I</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% add a current step to the second half of the simulation</span>
+<span class="n">Ie</span> <span class="p">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">nSteps</span><span class="p">,</span> <span class="n">nComps</span><span class="p">);</span> <span class="n">Ie</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">nSteps</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span><span class="mi">1</span><span class="p">)</span> <span class="p">=</span> <span class="mf">0.1</span><span class="p">;</span>
 <span class="n">x</span><span class="p">.</span><span class="n">I_ext</span> <span class="p">=</span> <span class="n">Ie</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -511,14 +517,17 @@ by an element in the matrix.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you add new compartments to the network, remember to make sure the injected current
-or clamped voltage matrices is the right size (i.e. <code class="docutils literal notranslate"><span class="pre">nSteps</span> <span class="pre">x</span> <span class="pre">nComps</span></code>).</p>
+<p class="last">If you add new compartments to the network, it will reset the <code class="docutils literal notranslate"><span class="pre">I_ext</span></code> and <code class="docutils literal notranslate"><span class="pre">V_clamp</span></code>
+properties of <code class="docutils literal notranslate"><span class="pre">xolotl</span></code>.</p>
 </div>
 </div>
 <div class="section" id="manipulate">
 <span id="id12"></span><h2>manipulate<a class="headerlink" href="#manipulate" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">manipulate</span><span class="p">(</span><span class="s">&#39;findString&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>Opens the GUI to permit real-time visualization of changing network parameters.
-An argument specifies for which network properties to generate sliders (default is all of them). This takes the form of a call to the <a class="reference internal" href="#find">find</a> function.</p>
+An argument specifies for which network properties to generate sliders (default is all of them).</p>
 <div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% minimum usage</span>
 <span class="n">x</span><span class="p">.</span><span class="n">manipulate</span>
 <span class="c">% specify sliders only for maximal conductances of HH compartment</span>

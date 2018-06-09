@@ -298,13 +298,20 @@ current is injected into each compartment at every time step. ::
   % add 0.1 nA to each compartment at each time-step
   x.I_ext = 0.1;
 
-If ``I_ext`` is non-scalar, it must be a matrix of dimension ``nSteps x nComps`` where
+If ``I_ext`` is non-scalar, it can take the form of a vector of size ``nComps x 1``, or a matrix of size ``nSteps x nComps``, where
 ``nSteps`` is the number of time-steps in the simulation (i.e. ``x_t_end/x.dt``) and ``nComps`` is the number of compartments.
-Current is injected elementwise during simulation, so that the injected current at each time step for each compartment is specfied
+
+The first form injects a constant current into each compartment, as specified elementwise by the vector. ::
+
+  % apply 0.1 nA to first compartment, 0 to second
+  x.I_ext = [0.1 0];
+
+If ``I_ext`` is a matrix of size ``nSteps x nComps``, current is injected elementwise during simulation,
+so that the injected current at each time step for each compartment is specfied
 by an element in the matrix. ::
 
-  % add a sinusoidal current only to the first compartment
-  Ie = zeros(nSteps, nComps); Ie(:,1) = 0.1*sin(1:size(I,1));
+  % add a current step to the second half of the simulation
+  Ie = zeros(nSteps, nComps); Ie(round(nSteps/2),1) = 0.1;
   x.I_ext = Ie;
 
 Clamped voltage is always added to the ``xolotl`` structure in the matrix form. ::
@@ -315,8 +322,8 @@ Clamped voltage is always added to the ``xolotl`` structure in the matrix form. 
 
 .. note::
 
-  If you add new compartments to the network, remember to make sure the injected current
-  or clamped voltage matrices is the right size (i.e. ``nSteps x nComps``).
+  If you add new compartments to the network, it will reset the ``I_ext`` and ``V_clamp``
+  properties of ``xolotl``.
 
 
 .. _manipulate:
@@ -324,8 +331,12 @@ Clamped voltage is always added to the ``xolotl`` structure in the matrix form. 
 manipulate
 ^^^^^^^^^^
 
+::
+
+  x.manipulate('findString')
+
 Opens the GUI to permit real-time visualization of changing network parameters.
-An argument specifies for which network properties to generate sliders (default is all of them). This takes the form of a call to the find_ function. ::
+An argument specifies for which network properties to generate sliders (default is all of them). ::
 
   % minimum usage
   x.manipulate
