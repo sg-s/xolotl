@@ -291,42 +291,67 @@ All other outputs are ``time series x XYZ`` where XYZ is the serialized list of 
 with two conductances each: ``NaV`` and ``Kd``, the intrinsic currents would return in the form of a ``time steps x 4`` matrix where the columns would be ordered:
 Kd current from AB, NaV current from AB, Kd current from BC, NaV current from BC.
 
-If ``integrate`` is passed one argument, it interprets this as a matrix of injected currents (in nA). For example ::
+If the ``xolotl`` properties ``I_ext`` and ``V_clamp`` are empty (i.e. ``x.I_ext = []``), the integration proceeds without injected current or clamped voltage.
+Injected current and voltage clamp cannot co-occur.  Setting one of these properties negates the other. If ``I_ext`` is a scalar,
+current is injected into each compartment at every time step. ::
 
-  % applies 0.2 nA to each compartment
-  x.integrate(0.2)
-  % applies 0.2 nA to first compartment of three
-  x.integrate([0.2 0 0])
-  % applies a time-varying current to first compartment
-  % where S is a matrix of size time steps × compartments
-  x.integrate(S)
+  % add 0.1 nA to each compartment at each time-step
+  x.I_ext = 0.1;
 
-If ``integrate`` is passed two arguments, the first is ignored, and the second is treated as a matrix of clamped voltage. ::
+If ``I_ext`` is non-scalar, it can take the form of a vector of size ``nComps x 1``, or a matrix of size ``nSteps x nComps``, where
+``nSteps`` is the number of time-steps in the simulation (i.e. ``x_t_end/x.dt``) and ``nComps`` is the number of compartments.
 
-  % fixes the voltage of all compartments at -50 mV
-  x.integrate([], -50])
-  % clamps the second compartment in a two-compartment network
-  x.integrate([], [NaN -50] )
+The first form injects a constant current into each compartment, as specified elementwise by the vector. ::
+
+  % apply 0.1 nA to first compartment, 0 to second
+  x.I_ext = [0.1 0];
+
+If ``I_ext`` is a matrix of size ``nSteps x nComps``, current is injected elementwise during simulation,
+so that the injected current at each time step for each compartment is specfied
+by an element in the matrix. ::
+
+  % add a current step to the second half of the simulation
+  Ie = zeros(nSteps, nComps); Ie(round(nSteps/2),1) = 0.1;
+  x.I_ext = Ie;
+
+Clamped voltage is always added to the ``xolotl`` structure in the matrix form. ::
+
+  % voltage clamp the first compartment at -50 then 50
+  Vc = zeros(nSteps, nComps); Vc(1:5000,1) = -50; Vc(5001:10000,1) = 50;
+  x.V_clamp = Vc;
+
+.. note::
+
+  If you add new compartments to the network, it will reset the ``I_ext`` and ``V_clamp``
+  properties of ``xolotl``.
+
 
 .. _manipulate:
 
 manipulate
 ^^^^^^^^^^
 
+::
+
+  x.manipulate('findString')
+
 Opens the GUI to permit real-time visualization of changing network parameters.
-The first argument specifies for which network properties to generate sliders (default is all of them). This takes the form of a call to the find_ function.
-The second argument specifies which visualization function should be used (default is ``plot``). ::
+An argument specifies for which network properties to generate sliders (default is all of them). ::
 
   % minimum usage
   x.manipulate
   % specify sliders only for maximal conductances of HH compartment
   x.manipulate('HH*gbar')
-  % specify the myPlot function for visualization
-  x.manipulate('HH*gbar', @myPlot)
 
-.. note::
+``manipulate`` displays the results of the ``plot`` function by default.
+If the ``manipulate_plot_func`` property of ``xolotl`` is specified (e.g. ``x.manipulate_plot_func{1} = @myFunc``),
+it will display custom functions. ``manipulate_plot_func`` is a cell of function handles to all visualzation functions
+that are wrapped by ``manipulate``. ::
 
-  The functionality of the second argument has not been implemented yet.
+  % wrap two visualization functions with manipulate
+  x.manipulate_plot_func{1} = @x.plot;
+  x.manipulate_plot_func{2} = @myFIcurve;
+  x.manipulate
 
 .. _plot:
 
