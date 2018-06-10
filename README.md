@@ -60,7 +60,7 @@ V = x.integrate;
 
 ### Installation 
 
-[Click here](docs/INSTALLING.md)
+[Click here](https://xolotl.readthedocs.io/en/latest/installing.html)
 
 
 ## Benchmarks

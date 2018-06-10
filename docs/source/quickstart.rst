@@ -4,26 +4,17 @@
 Quickstart
 **********
 
-Welcome to ``xolotl``! This quickstart guide will get you started using ``xolotl`` right away.
+This quickstart guide will get you started using ``xolotl`` right away. It will cover installation and basic usage. 
 
 Installing
 ^^^^^^^^^^
 
-Get this repo from within ``MATLAB`` using my package manager ::
+The easiest way to get ``xolotl`` is to use a simple script that downloads, installs and links all code: ::
 
   % copy and paste this code in your MATLAB prompt
-  urlwrite('http://srinivas.gs/install.m','install.m');
-  install sg-s/srinivas.gs_mtools % you'll need this
-  install sg-s/puppeteer % for manipulation
-  install sg-s/cpplab
-  install sg-s/xolotl
+  urlwrite('https://raw.githubusercontent.com/sg-s/xolotl/master/install_xolotl.m','install_xolotl.m');
+  install_xolotl;
 
-.. warning::
-
-  Make sure that ``MATLAB`` is set up to compile_ ``C++``. See our compilers_ guide.
-
-.. _compile: https://www.mathworks.com/help/matlab/ref/mex.html?s_tid=srchtitl
-.. _compilers: compilers.html
 
 Creating a Hodgkin-Huxley Model
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -34,8 +25,10 @@ These conductances come from Liu *et al.* 1998. ``'gbar'`` is the maximal conduc
 
   % create the xolotl object
   x = xolotl;
+
   % add a compartment
   x.add('HH', 'compartment', 'Cm', 10, 'A', 0.01);
+
   % add conductances
   x.HH.add('liu/NaV', 'gbar', 1000, 'E', 50);
   x.HH.add('liu/Kd', 'gbar', 300, 'E', -80);
@@ -48,3 +41,6 @@ We simulate the model using the GUI to manipulate the leak conductance. ::
 
   x.t_end = 1000; % ms
   x.manipulate('*Leak*')
+
+
+You should get a GUI that pops up showing the voltage trace, with sliders that allow you to vary parameters for the Leak conductance. Play with the sliders and see what happens! 

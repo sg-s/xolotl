@@ -83,8 +83,8 @@
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installing.html">Installing</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Methods</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#children">Children</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#add">add</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#children">Children</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#cleanup">cleanup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#compile">compile</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#connect">connect</a></li>
@@ -173,35 +173,19 @@
             
   <div class="section" id="methods">
 <span id="id1"></span><h1>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h1>
-<p>This documentation will focus on using <code class="docutils literal"><span class="pre">xolotl</span></code> in <code class="docutils literal"><span class="pre">MATLAB</span></code>, though it is
-possible to compile and run the <code class="docutils literal"><span class="pre">C++</span></code> code on its own.</p>
-<p>A <code class="docutils literal"><span class="pre">xolotl</span></code> object can be instantiated</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="p">=</span> <span class="n">xolotl</span><span class="p">;</span>
-</pre></div>
-</div>
-<p>In the rest of this documentation we will assume a <code class="docutils literal"><span class="pre">xolotl</span></code> object named <code class="docutils literal"><span class="pre">x</span></code>.</p>
+<p>This page lists the methods of the <code class="docutils literal"><span class="pre">xolotl</span></code> class in <code class="docutils literal"><span class="pre">MATLAB</span></code>. This can serve as a reference for advanced usage.</p>
+<p>In the rest of this documentation we will assume a <code class="docutils literal"><span class="pre">xolotl</span></code> object named <code class="docutils literal"><span class="pre">x</span></code> that can be created using</p>
+<blockquote>
+<div>x = xolotl;</div></blockquote>
 <div class="admonition hint">
 <p class="first admonition-title">Hint</p>
 <p>You can list all the methods of <code class="docutils literal"><span class="pre">xolotl</span></code> object <code class="docutils literal"><span class="pre">x</span></code> by</p>
-<div class="last highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="k">methods</span>
+<div class="last highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="k">methods</span><span class="p">;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="children">
-<span id="id2"></span><h2>Children<a class="headerlink" href="#children" title="Permalink to this headline">¶</a></h2>
-<p>Returns the children of any <code class="docutils literal"><span class="pre">cpplab</span></code> object as a cell of character vectors.
-Children are also <code class="docutils literal"><span class="pre">cpplab</span></code> objects. For example, if <code class="docutils literal"><span class="pre">HH</span></code> is the only compartment in <code class="docutils literal"><span class="pre">x</span></code> then</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">Children</span>
-</pre></div>
-</div>
-<p>returns</p>
-<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s">&#39;HH&#39;</span><span class="p">}</span>
-</pre></div>
-</div>
-<p>This method is inherited from the superclass <code class="docutils literal"><span class="pre">cpplab</span></code>.</p>
 </div>
 <div class="section" id="add">
-<span id="id3"></span><h2>add<a class="headerlink" href="#add" title="Permalink to this headline">¶</a></h2>
+<span id="id2"></span><h2>add<a class="headerlink" href="#add" title="Permalink to this headline">¶</a></h2>
 <p>Adds a compartment, conductance, or synapse to the <code class="docutils literal"><span class="pre">xolotl</span></code> object. To add
 a compartment:</p>
 <div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;compartmentName&#39;</span><span class="p">,</span><span class="s">&#39;compartment&#39;</span><span class="p">,</span><span class="s">&#39;PropertyName&#39;</span><span class="p">,</span><span class="s">&#39;PropertyValue&#39;</span><span class="p">,</span> <span class="c">...)</span>
@@ -312,6 +296,18 @@ default to one. Synapses can be added this way, but it is better to use the <a c
 <p class="first admonition-title">Note</p>
 <p class="last"><code class="docutils literal"><span class="pre">cpplab</span></code> allows you to add any <code class="docutils literal"><span class="pre">cpplab</span></code> object to anything else, but <code class="docutils literal"><span class="pre">xolotl</span></code> assumes that you’re doing sane things. If you add a compartment to a conductance, or something silly, you will get an error.</p>
 </div>
+</div>
+<div class="section" id="children">
+<span id="id3"></span><h2>Children<a class="headerlink" href="#children" title="Permalink to this headline">¶</a></h2>
+<p>Returns the children of any <code class="docutils literal"><span class="pre">cpplab</span></code> object as a cell of character vectors. Children are also <code class="docutils literal"><span class="pre">cpplab</span></code> objects. For example, if <code class="docutils literal"><span class="pre">HH</span></code> is the only compartment in <code class="docutils literal"><span class="pre">x</span></code> then</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">Children</span>
+</pre></div>
+</div>
+<p>returns</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s">&#39;HH&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This method is inherited from the superclass <code class="docutils literal"><span class="pre">cpplab</span></code>.</p>
 </div>
 <div class="section" id="cleanup">
 <span id="id4"></span><h2>cleanup<a class="headerlink" href="#cleanup" title="Permalink to this headline">¶</a></h2>

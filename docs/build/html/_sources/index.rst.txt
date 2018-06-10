@@ -11,6 +11,7 @@
 
    quickstart
    installing
+   howdoi
    methods
    compilers
    units

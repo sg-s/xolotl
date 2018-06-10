@@ -4,44 +4,29 @@
 Installing
 ************
 
+There are multiple ways to install this toolbox, based on your level of expertise and the toolchain on your computer. 
+
 Using a package manager from MATLAB
 ===================================
 
-Get this repo from within ``MATLAB`` using my package manager ::
+This is the recommended way of installing ``xolotl`` for most users. Simply copy and paste this code snippet into your ``MATLAB`` prompt and hit enter::
 
   % copy and paste this code in your MATLAB prompt
-  urlwrite('http://srinivas.gs/install.m','install.m');
-  install sg-s/srinivas.gs_mtools % you'll need this
-  install sg-s/puppeteer % for manipulation
-  install sg-s/cpplab
-  install sg-s/xolotl
+  urlwrite('https://raw.githubusercontent.com/sg-s/xolotl/master/install_xolotl.m','install_xolotl.m');
+  install_xolotl;
+
+This script downloads ``xolotl`` and all dependencies, unzips them, puts them somewhere sensible, and adds those locations to your path. It also compiles some dependencies. ``xolotl`` should be ready to use. 
 
 Via Git or Download
 ===================
 
-Use git if you plan to develop this further: ::
+If you are comfortable with ``git``, you can clone all the code and dependencies yourself: ::
 
   git clone https://github.com/sg-s/srinivas.gs_mtools
   git clone https://github.com/sg-s/puppeteer
   git clone https://github.com/sg-s/xolotl
   git clone https://github.com/sg-s/cpplab
 
-Don't forget to set your ``MATLAB`` paths if you used git! You need the main folder
-for ``puppeteer``, ``cpplab``, and ``xolotl``, and all subfolders of ``srinivas.gs_mtools/src``.
+You will have to manually set your ``MATLAB`` paths. Make sure you add the main folder for ``puppeteer``, ``cpplab``, and ``xolotl``, and all subfolders of ``srinivas.gs_mtools/src``.
 
-Final Steps
-===========
 
-Finally, make sure you `configure MATLAB so that it is set up to delete files permanently`__.
-
-.. _MatlabDelete: https://www.mathworks.com/help/matlab/ref/delete.html
-
-__ MatlabDelete_
-
-Otherwise you will end up with a very large number of temporary files in your trash!
-
-.. warning::
-  There are no known issues on macOS (10.12 and 10.13). For Linux distributions,
-  you might need a compiler_ compatible with the ``mex`` ``MATLAB`` executable.
-
-.. _compiler: compilers.html

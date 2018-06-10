@@ -7,36 +7,18 @@
 Methods
 =======
 
-This documentation will focus on using ``xolotl`` in ``MATLAB``, though it is
-possible to compile and run the ``C++`` code on its own.
+This page lists the methods of the ``xolotl`` class in ``MATLAB``. This can serve as a reference for advanced usage. 
 
-A ``xolotl`` object can be instantiated ::
+In the rest of this documentation we will assume a ``xolotl`` object named ``x`` that can be created using
 
   x = xolotl;
-
-In the rest of this documentation we will assume a ``xolotl`` object named ``x``.
 
 .. hint::
 
   You can list all the methods of ``xolotl`` object ``x`` by ::
 
-    x.methods
+    x.methods;
 
-.. _children:
-
-Children
-^^^^^^^^
-
-Returns the children of any ``cpplab`` object as a cell of character vectors.
-Children are also ``cpplab`` objects. For example, if ``HH`` is the only compartment in ``x`` then ::
-
-  x.Children
-
-returns ::
-
-  {'HH'}
-
-This method is inherited from the superclass ``cpplab``.
 
 .. _add:
 
@@ -102,6 +84,23 @@ default to one. Synapses can be added this way, but it is better to use the conn
 .. note::
 
   ``cpplab`` allows you to add any ``cpplab`` object to anything else, but ``xolotl`` assumes that you're doing sane things. If you add a compartment to a conductance, or something silly, you will get an error.
+
+
+
+.. _children:
+
+Children
+^^^^^^^^
+
+Returns the children of any ``cpplab`` object as a cell of character vectors. Children are also ``cpplab`` objects. For example, if ``HH`` is the only compartment in ``x`` then ::
+
+  x.Children
+
+returns ::
+
+  {'HH'}
+
+This method is inherited from the superclass ``cpplab``.
 
 .. _cleanup:
 
