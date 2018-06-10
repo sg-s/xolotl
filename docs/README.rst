@@ -11,7 +11,7 @@ XOLOTL: A Fast and Flexible Neuronal Simulator
 
 .. image:: https://img.shields.io/github/last-commit/sg-s/xolotl.svg
 
-.. image:: https://user-images.githubusercontent.com/6005346/30719217-a1e8d54a-9ef0-11e7-8889-c284ac13163e.png
+.. image:: https://user-images.githubusercontent.com/6005346/41205222-30b6f3d4-6cbd-11e8-983b-9125585d629a.png
 
 ``xolotl`` is a fast single-compartment and multi-compartment simulator written in
 ``C++`` with ``MATLAB`` wrappers. Written with a focus on flexibility and speed,
