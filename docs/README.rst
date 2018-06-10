@@ -58,40 +58,4 @@ That's it. To integrate it and see the time evolution of the voltage ::
 4. Optimize Models Really Quickly
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-``xolotl`` comes with a powerful optimization toolbox called procrustes_.
-
-.. _procrustes: https://github.com/sg-s/procrustes
-
-NB: This repository is currently hidden (embargoed).
-
-How to Get ``xolotl``
-=====================
-
-Get this repo from within ``MATLAB`` using my package manager ::
-
-  % copy and paste this code in your MATLAB prompt
-  urlwrite('http://srinivas.gs/install.m','install.m');
-  install sg-s/srinivas.gs_mtools % you'll need this
-  install sg-s/puppeteer % for manipulation
-  install sg-s/cpplab
-  install sg-s/xolotl
-
-Via Git or Download
-^^^^^^^^^^^^^^^^^^^
-
-Use git if you plan to develop this further: ::
-
-  git clone https://github.com/sg-s/srinivas.gs_mtools
-  git clone https://github.com/sg-s/puppeteer
-  git clone https://github.com/sg-s/xolotl
-  git clone https://github.com/sg-s/cpplab
-
-Don't forget to set your ``MATLAB`` paths if you used git! You need the main folder
-for ``puppeteer``, ``cpplab``, and ``xolotl``, and all subfolders of ``srinivas.gs_mtools/src``.
-
-
-.. warning::
-  There are no known issues on macOS (10.12 and 10.13). For Linux distributions,
-  you might need a compiler_ compatible with the ``mex`` ``MATLAB`` executable.
-
-.. _compiler: compilers.html
+(coming soon)
