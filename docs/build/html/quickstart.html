@@ -158,11 +158,11 @@
             
   <div class="section" id="quickstart">
 <h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
-<p>Welcome to <code class="docutils literal notranslate"><span class="pre">xolotl</span></code>! This quickstart guide will get you started using <code class="docutils literal notranslate"><span class="pre">xolotl</span></code> right away.</p>
+<p>Welcome to <code class="docutils literal"><span class="pre">xolotl</span></code>! This quickstart guide will get you started using <code class="docutils literal"><span class="pre">xolotl</span></code> right away.</p>
 <div class="section" id="installing">
 <h2>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h2>
-<p>Get this repo from within <code class="docutils literal notranslate"><span class="pre">MATLAB</span></code> using my package manager</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% copy and paste this code in your MATLAB prompt</span>
+<p>Get this repo from within <code class="docutils literal"><span class="pre">MATLAB</span></code> using my package manager</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="c">% copy and paste this code in your MATLAB prompt</span>
 <span class="n">urlwrite</span><span class="p">(</span><span class="s">&#39;http://srinivas.gs/install.m&#39;</span><span class="p">,</span><span class="s">&#39;install.m&#39;</span><span class="p">);</span>
 <span class="n">install</span> <span class="n">sg</span><span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">srinivas</span><span class="p">.</span><span class="n">gs_mtools</span> <span class="c">% you&#39;ll need this</span>
 <span class="n">install</span> <span class="n">sg</span><span class="o">-</span><span class="n">s</span><span class="o">/</span><span class="n">puppeteer</span> <span class="c">% for manipulation</span>
@@ -172,15 +172,15 @@
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">Make sure that <code class="docutils literal notranslate"><span class="pre">MATLAB</span></code> is set up to <a class="reference external" href="https://www.mathworks.com/help/matlab/ref/mex.html?s_tid=srchtitl">compile</a> <code class="docutils literal notranslate"><span class="pre">C++</span></code>. See our <a class="reference external" href="compilers.html">compilers</a> guide.</p>
+<p class="last">Make sure that <code class="docutils literal"><span class="pre">MATLAB</span></code> is set up to <a class="reference external" href="https://www.mathworks.com/help/matlab/ref/mex.html?s_tid=srchtitl">compile</a> <code class="docutils literal"><span class="pre">C++</span></code>. See our <a class="reference external" href="compilers.html">compilers</a> guide.</p>
 </div>
 </div>
 <div class="section" id="creating-a-hodgkin-huxley-model">
 <h2>Creating a Hodgkin-Huxley Model<a class="headerlink" href="#creating-a-hodgkin-huxley-model" title="Permalink to this headline">¶</a></h2>
-<p>We will now create a <code class="docutils literal notranslate"><span class="pre">xolotl</span></code> object that describes a single-compartment neuron model with a fast sodium conductance, delayed rectifier potassium conductance, and passive leakage.
-The compartment has a membrane capacitance <code class="docutils literal notranslate"><span class="pre">'Cm'</span></code> of 10 nF/mm^2 and a surface area of 0.01 mm^2.
-These conductances come from Liu <em>et al.</em> 1998. <code class="docutils literal notranslate"><span class="pre">'gbar'</span></code> is the maximal conductance in uS/mm^2 and <code class="docutils literal notranslate"><span class="pre">'E'</span></code> is the reversal potential in mV.</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% create the xolotl object</span>
+<p>We will now create a <code class="docutils literal"><span class="pre">xolotl</span></code> object that describes a single-compartment neuron model with a fast sodium conductance, delayed rectifier potassium conductance, and passive leakage.
+The compartment has a membrane capacitance <code class="docutils literal"><span class="pre">'Cm'</span></code> of 10 nF/mm^2 and a surface area of 0.01 mm^2.
+These conductances come from Liu <em>et al.</em> 1998. <code class="docutils literal"><span class="pre">'gbar'</span></code> is the maximal conductance in uS/mm^2 and <code class="docutils literal"><span class="pre">'E'</span></code> is the reversal potential in mV.</p>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="c">% create the xolotl object</span>
 <span class="n">x</span> <span class="p">=</span> <span class="n">xolotl</span><span class="p">;</span>
 <span class="c">% add a compartment</span>
 <span class="n">x</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;HH&#39;</span><span class="p">,</span> <span class="s">&#39;compartment&#39;</span><span class="p">,</span> <span class="s">&#39;Cm&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s">&#39;A&#39;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">);</span>
@@ -194,7 +194,7 @@ These conductances come from Liu <em>et al.</em> 1998. <code class="docutils lit
 <div class="section" id="simulate-the-model">
 <h2>Simulate the Model<a class="headerlink" href="#simulate-the-model" title="Permalink to this headline">¶</a></h2>
 <p>We simulate the model using the GUI to manipulate the leak conductance.</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">t_end</span> <span class="p">=</span> <span class="mi">1000</span><span class="p">;</span> <span class="c">% ms</span>
+<div class="highlight-matlab"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">.</span><span class="n">t_end</span> <span class="p">=</span> <span class="mi">1000</span><span class="p">;</span> <span class="c">% ms</span>
 <span class="n">x</span><span class="p">.</span><span class="n">manipulate</span><span class="p">(</span><span class="s">&#39;*Leak*&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
