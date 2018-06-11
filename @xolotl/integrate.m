@@ -11,6 +11,9 @@ function [V, Ca, cont_state, curr_state, syn_state] = integrate(self)
 
 
 if isempty(self.linked_binary)
+	if self.debug_mode
+		disp(['[INFO] No linked binary, hashing...'])
+	end
 	h = self.hash;
 	mexBridge_name = [joinPath(self.xolotl_folder,'mexBridge') h(1:6) '.cpp'];
 	self.linked_binary = ['mexBridge' h(1:6) '.' self.OS_binary_ext];
@@ -20,8 +23,19 @@ end
 % does the binary exist?
 if exist(joinPath(self.xolotl_folder,self.linked_binary),'file') == 3
 	% does the hash match up?
+
+	if self.debug_mode
+		disp(['[INFO] Binary exists.'])
+	end
+
 	h = self.hash;
 	if ~strcmp(self.linked_binary(10:15),h(1:6))
+
+		if self.debug_mode
+			disp(['[INFO] Binary out of sync'])
+			disp(['[INFO] Current hash is ' h])
+		end
+
 		self.transpile;
 		self.compile;
 	end
@@ -52,16 +66,26 @@ cont_state = [];
 n_comp = length(self.find('compartment'));
 n_steps = floor(self.t_end/self.sim_dt);
 
-
 % make sure I_ext and V_clamp are specified
 if isempty(self.V_clamp)
 	% fill with NaNs
 	self.V_clamp = NaN(n_steps,n_comp);
 end
 
+if floor(self.t_end/self.sim_dt) ~= size(self.V_clamp,1)
+	warning('Incompatible V_clamp, will be ignored.')
+	self.V_clamp = NaN(n_steps,n_comp);
+end
+
 if isempty(self.I_ext)
 	% fill with zeros
 	self.I_ext = zeros(n_steps,n_comp);
+end
+
+if floor(self.t_end/self.sim_dt) ~= size(self.I_ext,1)
+	warning('Incompatible I_ext, will be ignored.')
+	self.I_ext = zeros(n_steps,n_comp);
+
 end
 
 

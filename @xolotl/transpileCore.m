@@ -11,6 +11,10 @@
 function transpileCore(self,in_file,out_file)
 
 
+if self.debug_mode
+	disp(['[INFO] starting transpile with hash: ' self.hash])
+end
+
 % read lines from mexTemplate
 cppfilename = joinPath(self.cpp_folder,in_file);
 lines = lineRead(cppfilename);

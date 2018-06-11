@@ -13,15 +13,24 @@ h = self.hash;
 
 mexBridge_name = [joinPath(self.xolotl_folder,'mexBridge') h(1:6) '.cpp'];
 assert(exist(mexBridge_name,'file')==2,'C++ file to compile does not exist. Use "transpile" before compiling')
-if (isunix && ~ismac)
-	warning('off')
+
+if self.debug_mode
+	disp(['[INFO] compiling using mex...'])
 end
 
 % tell mex about where to look for C++ files
 ipath = ['-I"' self.xolotl_folder '/c++/' '"'];
-mex('-silent',ipath,mexBridge_name,'-outdir',self.xolotl_folder)
+if self.debug_mode
+	mex('-v',ipath,mexBridge_name,'-outdir',self.xolotl_folder)
+else
+	mex('-silent',ipath,mexBridge_name,'-outdir',self.xolotl_folder)
+end
+
 
 
 % update linked_binary
 self.linked_binary = ['mexBridge' h(1:6) '.' self.OS_binary_ext];
 
+if self.debug_mode
+	disp(['[INFO] compilation successful!'])
+end
