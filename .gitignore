@@ -1,3 +1,5 @@
+*build/
+*.html
 *DS_Store
 *.eps
 *.mexmaci64
