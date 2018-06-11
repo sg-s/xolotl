@@ -122,7 +122,7 @@ lines = [lines(1:insert_here); channel_hookups(:); lines(insert_here+1:end)];
 
 synapse_add_lines = {};
 for i = 1:length(self.synapses)
-	synapse_add_lines{i} = ['synapses' mat2str(i) '.connect(&' self.synapse_pre{i} ', &' self.synapse_post{i} '); n_synapses ++;'];
+	synapse_add_lines{i} = ['synapses' mat2str(i) '.connect(&' self.synapse_pre{i} ', &' self.synapse_post{i} '); n_synapses ++; synapses.push_back(&synapses' mat2str(i) ');'];
 end
 
 insert_here = lineFind(lines,'//xolotl:add_synapses_here');

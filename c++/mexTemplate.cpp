@@ -45,7 +45,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     //xolotl:add_conductances_here
 
+
+    vector<synapse*> synapses; // pointers to all synapses 
     //xolotl:add_synapses_here
+
 
     //xolotl:add_controllers_here
 
@@ -60,33 +63,34 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // ask each controller (nicely) what their
     // full state size is
-
-    // mexPrintf("noutputs =  %i ", nlhs);
-
-    // compute cond_state_dim
     int full_controller_sizes[n_comp];
     int full_controller_size = 0;
     for (int i = 0; i < n_comp; i ++)
     {
         int n_cont = (xolotl_network.comp[i])->n_cont;
 
-        full_controller_sizes[n_comp] = xolotl_network.comp[i]->getFullControllerSize();
-        full_controller_size +=  full_controller_sizes[n_comp];
+        full_controller_sizes[i] = xolotl_network.comp[i]->getFullControllerSize();
+        full_controller_size += full_controller_sizes[i];
     }
-    // mexPrintf("full controller state size =  %i ", full_controller_size);
+    
 
     // compute ionic current state dimensions
+    // assumed to be the same for all conductances 
     int full_current_size = 0;
     for (int i = 0; i < n_comp; i ++)
     {
         full_current_size += (xolotl_network.comp[i])->n_cond;
     }
 
-    // compute synaptic current state dimensions
+    // compute synapse state dim
+    int full_synaptic_sizes[n_comp];
     int full_synaptic_size = 0;
     for (int i = 0; i < n_comp; i ++)
     {
-        full_synaptic_size += (xolotl_network.comp[i])->n_syn;
+        int n_syn = (xolotl_network.comp[i])->n_syn;
+
+        full_synaptic_sizes[i] = xolotl_network.comp[i]->getFullSynapseSize();
+        full_synaptic_size += full_synaptic_sizes[i];
     }
 
     // set up outputs as mex objects
@@ -186,15 +190,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                         output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
                     }
 
-                    // cond_idx = 0;
-                    // xolotl_network.comp[j]->get_cond_state(full_cond_state);
 
-                    // get the states of every conductance
-                    // for (int k = 0; k < cond_state_dims[j]; k++)
-                    // {
-                    //     output_cond_state[output_idx*cond_state_dim + cond_idx] = full_cond_state[k];
-                    //     cond_idx ++;
-                    // }
                 }
                 output_idx ++;
             }
@@ -220,9 +216,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
             xolotl_network.integrate(sim_dt,I_ext, delta_temperature);
 
-            //xolotl:read_synapses_here
 
-            //xolotl:read_controllers_here
 
             // here we're getting the state of every compartment -- V, Ca, and all conductances
             if (i%res == 0)
@@ -253,13 +247,21 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                         cond_idx = (xolotl_network.comp[j]->getFullCurrentState(output_curr_state,cond_idx));
                     }
 
-                    // read out synaptic currents
-                    if (nlhs > 5)
-                    {
-                        syn_idx = (xolotl_network.comp[j]->getFullSynapseState(output_syn_state,syn_idx));
-                    }
 
+                } // end j loop over compartments
+
+                // read out synaptic currents and full
+                // state of all synapses
+                if (nlhs > 5)
+                {
+                    for (int k = 0; k < n_synapses; k++)
+                    {
+                        syn_idx = (synapses[k]->getFullState(output_syn_state,syn_idx));
+                    }
+                    
                 }
+
+
                 output_idx ++;
             }
         } // end for loop over nsteps

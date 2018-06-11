@@ -24,9 +24,16 @@ public:
     }
     
     void integrate(double dt);
+    int getFullStateSize(void);
     void connect(compartment *pcomp1_, compartment *pcomp2_);
     double getCurrent(double V_post);
+    int getFullState(double*, int);
 };
+
+int Cholinergic::getFullStateSize()
+{
+    return 2; 
+}
 
 void Cholinergic::integrate(double dt)
 {   
@@ -43,11 +50,18 @@ void Cholinergic::integrate(double dt)
     
 }
 
-double Cholinergic::getCurrent(double V_post)
-{   
-    double I_out = -gbar*s*(V_post-E)/1000.0;
-    // mexPrintf("I_out = %f\n",I_out);
-    return I_out;// in units of nA
+
+int Cholinergic::getFullState(double *syn_state, int idx)
+{
+    // give it the current synapse variable
+    syn_state[idx] = s;
+
+    idx++;
+
+    // also return the current from this synapse
+    syn_state[idx] = gbar*s*(post_syn->V - E);
+    idx++;
+    return idx;
 }
 
 void Cholinergic::connect(compartment *pcomp1_, compartment *pcomp2_) 

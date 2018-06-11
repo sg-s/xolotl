@@ -25,8 +25,9 @@ public:
     }
     
     void integrate(double dt);
+    int getFullStateSize(void);
     void connect(compartment *pcomp1_, compartment *pcomp2_);
-    double getCurrent(double V_post);
+    int getFullState(double*, int);
 };
 
 void Glutamatergic::integrate(double dt)
@@ -47,12 +48,25 @@ void Glutamatergic::integrate(double dt)
 
 }
 
-double Glutamatergic::getCurrent(double V_post)
-{   
-    double I_out = -gbar*s*(V_post-E)/1000.0; // in units of nA
-    return I_out;
 
+int Glutamatergic::getFullState(double *syn_state, int idx)
+{
+    // give it the current synapse variable
+    syn_state[idx] = s;
+    idx++;
+
+    // also return the current from this synapse
+    syn_state[idx] = gbar*s*(post_syn->V - E);
+    idx++;
+    return idx;
 }
+
+
+int Glutamatergic::getFullStateSize()
+{
+    return 2; 
+}
+
 
 void Glutamatergic::connect(compartment *pcomp1_, compartment *pcomp2_) 
 {

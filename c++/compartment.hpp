@@ -26,6 +26,7 @@ protected:
     vector<synapse*> syn; // pointers to synapses onto this neuron.
     vector<controller*> cont; // pointers to controllers
     vector<int> controller_sizes; // stores sizes of each controller's full state
+    vector<int> synapse_sizes; // stores sizes of each controller's full state
 
     // vector that will store the axial synapses
     vector <synapse*> axial_syn;
@@ -219,6 +220,7 @@ public:
     int getFullCurrentState(double*, int);
     int getFullSynapseState(double*, int);
     int getFullControllerSize(void);
+    int getFullSynapseSize(void);
     controller* getControllerPointer(int);
     compartment* getConnectedCompartment(int);
     conductance* getConductancePointer(const char*);
@@ -268,6 +270,9 @@ void compartment::addSynapse(synapse *syn_)
 {
     syn.push_back(syn_);
     n_syn ++;
+
+    // also store the controller's full state size
+    synapse_sizes.push_back(syn_->getFullStateSize());
 }
 
 
@@ -313,6 +318,21 @@ compartment* compartment::getConnectedCompartment(int idx)
     neighbour = axial_syn[idx]->pre_syn;
     return neighbour;
 }
+
+// returns the size of data frame for all synapses 
+// in this compartment
+// includes synaptic currents interleaved
+// with state variables of each synapse
+int compartment::getFullSynapseSize(void)
+{
+    int full_size = 0;
+    for (int i=0; i<n_syn; i++)
+    {
+        full_size += syn[i]->getFullStateSize();
+    }
+    return full_size;
+}
+
 
 int compartment::getFullControllerSize(void)
 {
@@ -579,8 +599,7 @@ int compartment::getFullSynapseState(double *syn_state, int idx)
 {
     for (int i = 0; i < n_syn; i ++)
     {
-        syn_state[idx] = syn[i]->getCurrent(V);
-        idx ++;
+        idx = syn[i]->getFullState(syn_state,idx);
     }
     return idx;
 }
