@@ -1,4 +1,5 @@
-*build/
+*doctrees/
+*html/
 *.html
 *DS_Store
 *.eps
