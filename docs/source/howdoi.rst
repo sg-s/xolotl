@@ -125,4 +125,10 @@ Look in the folder yourself! All ``C++`` headerfiles are contained in the ``C++`
 
 
 
+...debug a model or simulation?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+``xolotl`` has a debug mode that can be turned on using ::
+
+  x.debug_mode = true;
 
