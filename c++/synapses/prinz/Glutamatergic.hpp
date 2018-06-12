@@ -25,9 +25,10 @@ public:
     }
     
     void integrate(double dt);
-    int getFullStateSize(void);
+    
     void connect(compartment *pcomp1_, compartment *pcomp2_);
     int getFullState(double*, int);
+    int getFullStateSize(void);
 };
 
 void Glutamatergic::integrate(double dt)

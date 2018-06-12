@@ -21,7 +21,9 @@ public:
     
     void integrate(double dt);
     void connect(compartment *pcomp1_, compartment *pcomp2_);
-    double getCurrent(double V_post);
+
+    int getFullState(double*, int);
+    int getFullStateSize(void);
 };
 
 void Axial::integrate(double dt)
@@ -30,11 +32,17 @@ void Axial::integrate(double dt)
     E = (pre_syn->V);
 }
 
-double Axial::getCurrent(double V_post)
-{   
-    return 0;
 
+int Axial::getFullStateSize()
+{
+    return 0; 
 }
+
+int Axial::getFullState(double *syn_state, int idx)
+{
+    return idx;
+}
+
 
 void Axial::connect(compartment *pcomp1_, compartment *pcomp2_) 
 {

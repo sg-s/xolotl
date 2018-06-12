@@ -175,14 +175,11 @@ public:
                     vol = pi*len*(radius*radius - inner_radius*inner_radius);
                 }
             }
-
-
-
         }
 
 
         // housekeeping
-        E_Ca = 0;
+        E_Ca = 0; // because this will be computed from the Nernst eq. 
         i_Ca = 0; // this is the current density (nA/mm^2)
         n_cond = 0;
         n_cont = 0;
@@ -215,23 +212,26 @@ public:
     void integrateC_V_clamp(double, double, double, double);
     void integrateCalcium(double, double);
 
+    // methods for integrating using Crank-Nicholson
+    // and methods for multi-compartment models
+    double getBCDF(int);
+    void integrateCNFirstPass(double);
+    void integrateCNSecondPass(double);
+    void resolveAxialConductances(void);
+
     // methods to retrieve information from compartment
     int getFullControllerState(double*, int);
     int getFullCurrentState(double*, int);
     int getFullSynapseState(double*, int);
     int getFullControllerSize(void);
     int getFullSynapseSize(void);
+
     controller* getControllerPointer(int);
+    controller* getControllerPointer(const char*); // overloaded
     compartment* getConnectedCompartment(int);
     conductance* getConductancePointer(const char*);
-    controller* getControllerPointer(const char*);
+    
 
-    void resolveAxialConductances(void);
-
-    // methods for integrating using Crank-Nicholson
-    double getBCDF(int);
-    void integrateCNFirstPass(double);
-    void integrateCNSecondPass(double);
 
 };
 
@@ -241,7 +241,7 @@ public:
 void compartment::addAxial(synapse *syn_)
 {
     axial_syn.push_back(syn_);
-    n_axial_syn ++;
+    n_axial_syn++;
 }
 
 // add conductance and provide pointer back to compartment
@@ -249,7 +249,7 @@ void compartment::addConductance(conductance *cond_)
 {
     cond.push_back(cond_);
     cond_->connect(this);
-    n_cond ++;
+    n_cond++;
 }
 
 // add controller to this compartment
@@ -289,6 +289,14 @@ conductance* compartment::getConductancePointer(const char* cond_class)
     }
 
     return req_cond;
+}
+
+
+controller * compartment::getControllerPointer(int cont_idx)
+{
+    if (cont_idx < n_cont) { return cont[cont_idx];} 
+    else { return NULL; }
+    
 }
 
 controller* compartment::getControllerPointer(const char* cond_class)
@@ -602,13 +610,6 @@ int compartment::getFullSynapseState(double *syn_state, int idx)
         idx = syn[i]->getFullState(syn_state,idx);
     }
     return idx;
-}
-
-// returns a pointer to a controller in this compartment
-controller * compartment::getControllerPointer(int cont_idx)
-{
-    // mexPrintf("In compartment, the controllers m is  %f\n",(cont[cont_idx])->m);
-    return cont[cont_idx];
 }
 
 
