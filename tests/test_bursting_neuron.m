@@ -21,10 +21,9 @@ x.AB.add('liu/Kd','gbar',@() 38.31/x.AB.A,'E',-80);
 x.AB.add('liu/HCurrent','gbar',@() .6343/x.AB.A,'E',-20);
 x.AB.add('Leak','gbar',@() 0.0622/x.AB.A,'E',-50);
 
-x.t_end = 10e3;
+x.t_end = 1e4;
 x.integrate;
 x.t_end = 1e3;
 
 x.plot;
-
 prettyFig();

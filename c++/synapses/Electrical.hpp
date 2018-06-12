@@ -19,7 +19,9 @@ public:
     
     void integrate(double dt);
     void connect(compartment *pcomp1_, compartment *pcomp2_);
-    double getCurrent(double V_post);
+    
+    int getFullState(double*, int);
+    int getFullStateSize(void);
 };
 
 void Electrical::integrate(double dt)
@@ -28,13 +30,17 @@ void Electrical::integrate(double dt)
     E = (pre_syn->V);
 }
 
-double Electrical::getCurrent(double V_post)
-{   
-    double V_pre = pre_syn->V;
-    double I_out = gbar*(V_pre-V_post)/1000.0; // in units of nA
-    return I_out;
-
+int Electrical::getFullStateSize()
+{
+    return 0; 
 }
+
+int Electrical::getFullState(double *syn_state, int idx)
+{
+    return idx;
+}
+
+
 
 void Electrical::connect(compartment *pcomp1_, compartment *pcomp2_) 
 {

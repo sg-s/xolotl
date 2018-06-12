@@ -55,7 +55,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     //xolotl:add_neurons_to_network
 
     //xolotl:call_methods_here
-
     int nsteps = (int) floor(t_end/sim_dt);
     int nsteps_out = (int) floor(t_end/dt);
     int n_comp = (int) (xolotl_network.comp).size(); // these many compartments
@@ -128,6 +127,38 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double * I_ext_in = mxGetPr(prhs[1]);
     double * V_clamp_in = mxGetPr(prhs[2]);
 
+
+    // figure out the sizes of the arrays 
+    // for V_clamp and I_ext
+    const mwSize *I_ext_dim, *V_clamp_dim;
+    I_ext_dim = mxGetDimensions(prhs[1]);
+    V_clamp_dim = mxGetDimensions(prhs[2]);
+
+    int I_ext_size_1 = I_ext_dim[0];
+    int I_ext_size_2 = I_ext_dim[1];
+    int V_clamp_size_1 = V_clamp_dim[0];
+    int V_clamp_size_2 = V_clamp_dim[1];
+
+
+    if (verbosity > 0)
+    {
+        if (I_ext_size_2 == nsteps)
+        {
+            mexPrintf("[C++] dynamically changing I_ext");
+        } else {
+            mexPrintf("[C++] fixed I_ext");
+        }
+
+        if (V_clamp_size_2 == nsteps)
+        {
+            mexPrintf("[C++] dynamically changing V_clamp");
+        } else {
+            mexPrintf("[C++] fixed V_clamp");
+        }
+    }
+
+
+
     // copy I_ext so we can use it
     for(int q = 0; q < n_comp; q++)
     {
@@ -137,7 +168,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
 
+
     // figure out if we're voltage clamping
+    // if any V_clamp is non-NaN, then we are
     bool is_voltage_clamped = false;
     for (int j = 0; j < n_comp; j++)
     {
@@ -147,8 +180,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         }
     }
 
+
     // resolve the tree (for multi-compartment models)
     xolotl_network.resolveTree();
+
 
     if (is_voltage_clamped)
     {
@@ -158,10 +193,16 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         {
 
 
-            for(int q = 0; q < n_comp; q++)
+
+            if (V_clamp_size_2 == nsteps)
             {
-                V_clamp[q] = V_clamp_in[i*n_comp + q];
+                // I_ext is dynamically changing
+                for(int q = 0; q < n_comp; q++)
+                {
+                    V_clamp[q] = V_clamp_in[i*n_comp + q];
+                }
             }
+
 
             xolotl_network.integrateClamp(sim_dt, V_clamp, delta_temperature);
 
@@ -199,6 +240,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     else
 
     {
+
         // voltage is not clamped
         // do the integration
         int output_idx = 0;
@@ -208,15 +250,18 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         for(int i = 0; i < nsteps; i++)
         {
 
-            for(int q = 0; q < n_comp; q++)
+
+            if (I_ext_size_2 == nsteps)
             {
-                I_ext[q] = I_ext_in[i*n_comp + q];
+                // I_ext is dynamically changing
+                for(int q = 0; q < n_comp; q++)
+                {
+                    I_ext[q] = I_ext_in[i*n_comp + q];
+                }
             }
 
 
             xolotl_network.integrate(sim_dt,I_ext, delta_temperature);
-
-
 
             // here we're getting the state of every compartment -- V, Ca, and all conductances
             if (i%res == 0)

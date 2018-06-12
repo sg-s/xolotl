@@ -204,4 +204,4 @@ object (e.g. how ``x`` displays them in the command window).
 
 ``xolotl`` has a debug mode that can be turned on using ::
 
-  x.debug_mode = true;
+  x.verbosity = 1;

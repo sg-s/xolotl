@@ -11,7 +11,7 @@
 function transpileCore(self,in_file,out_file)
 
 
-if self.debug_mode
+if self.verbosity > 0
 	disp(['[INFO] starting transpile with hash: ' self.hash])
 end
 

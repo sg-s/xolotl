@@ -45,7 +45,7 @@ end  % end protected props
 
 
 properties
-	debug_mode@logical = false
+	verbosity@double = 0;
 
 
     I_ext@double;
@@ -137,6 +137,8 @@ methods
         hpp_files = unique(hpp_files);
         self.illegal_names = [self.illegal_names(:); hpp_files];
 
+        self.setHiddenProps({'manipulate_plot_func','I_ext','V_clamp'});
+
         self.manipulate_plot_func{1} = @self.plot;
 	end
 
@@ -147,7 +149,9 @@ methods
 
         % make sure that it's the right size
         assert(size(V_clamp,2) == n_comp,'Size of V_clamp is incorrect::2nd dimension size should be n_comp')
-        assert(size(V_clamp,1) == n_steps,'Size of V_clamp is incorrect::1st dimension size should be n_steps')
+        if size(V_clamp,1) ~= 1
+            assert(size(V_clamp,1) == n_steps,'Size of V_clamp is incorrect::1st dimension size should be n_steps')
+        end
 
         d = dbstack;
 
@@ -156,7 +160,7 @@ methods
             % do nothing
         else
             % ignore I_ext, since it's being clamped
-            self.I_ext = zeros(n_steps,n_comp);
+            self.I_ext = zeros(1,n_comp);
         end
 
         
@@ -165,17 +169,19 @@ methods
     end
 
      function self = set.I_ext(self,I_ext)
+
         n_comp = length(self.find('compartment'));
         n_steps = floor(self.t_end/self.sim_dt);
 
         if isvector(I_ext) && length(I_ext) == n_comp
-            I_ext = I_ext(:);
-            I_ext = repmat(I_ext,1,n_steps)';
+            I_ext = I_ext(:)';
         end
 
         % make sure that it's the right size
         assert(size(I_ext,2) == n_comp,['Size of I_ext is incorrect::2nd dimension size should be' mat2str(n_comp)])
-        assert(size(I_ext,1) == n_steps,['Size of I_ext is incorrect::1st dimension size should be ' mat2str(n_steps)])
+        if size(I_ext,1) ~= 1
+            assert(size(I_ext,1) == n_steps,['Size of I_ext is incorrect::1st dimension size should be ' mat2str(n_steps)])
+        end
 
         d = dbstack;
         self.I_ext = I_ext;
@@ -185,7 +191,7 @@ methods
         else
             % this is being called by the user, so we need to 
             % cancel out V_clamp
-            self.V_clamp = NaN(n_steps,n_comp);
+            self.V_clamp = NaN(1,n_comp);
         end
     end
 
