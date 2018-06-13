@@ -13,6 +13,9 @@
 
 using namespace std;
 
+// declare global variable 
+// so that other code can access verbosity
+// double verbosity;
 
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
@@ -39,9 +42,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // temperature wire-ups
     xolotl_network.temperature = temperature;
     xolotl_network.temperature_ref = temperature_ref;
+    xolotl_network.verbosity = verbosity;
     double delta_temperature = (temperature - temperature_ref)/10;
 
     //xolotl:insert_constructors
+
+
+    //xolotl:add_neurons_to_network
 
     //xolotl:add_conductances_here
 
@@ -52,10 +59,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     //xolotl:add_controllers_here
 
-    //xolotl:add_neurons_to_network
+    
 
     //xolotl:call_methods_here
     int nsteps = (int) floor(t_end/sim_dt);
+    int progress_report = (int) floor(nsteps/10);
+
     int nsteps_out = (int) floor(t_end/dt);
     int n_comp = (int) (xolotl_network.comp).size(); // these many compartments
 
@@ -94,6 +103,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // set up outputs as mex objects
     int res = dt/sim_dt;
+    if (verbosity > 0)
+    {
+        mexPrintf("[C++] res = %i\n",res);
+        mexPrintf("[C++] nsteps = %i\n",nsteps);
+    }
+    
     plhs[0] = mxCreateDoubleMatrix(param_size, 1, mxREAL);
     output_state = mxGetPr(plhs[0]);
 
@@ -140,20 +155,21 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int V_clamp_size_2 = V_clamp_dim[1];
 
 
+
     if (verbosity > 0)
     {
         if (I_ext_size_2 == nsteps)
         {
-            mexPrintf("[C++] dynamically changing I_ext");
+            mexPrintf("[C++] dynamically changing I_ext\n");
         } else {
-            mexPrintf("[C++] fixed I_ext");
+            mexPrintf("[C++] fixed I_ext\n");
         }
 
         if (V_clamp_size_2 == nsteps)
         {
-            mexPrintf("[C++] dynamically changing V_clamp");
+            mexPrintf("[C++] dynamically changing V_clamp\n");
         } else {
-            mexPrintf("[C++] fixed V_clamp");
+            mexPrintf("[C++] fixed V_clamp\n");
         }
     }
 
@@ -184,6 +200,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // resolve the tree (for multi-compartment models)
     xolotl_network.resolveTree();
 
+    int percent_complete = 10;
 
     if (is_voltage_clamped)
     {
@@ -203,11 +220,15 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 }
             }
 
-
             xolotl_network.integrateClamp(sim_dt, V_clamp, delta_temperature);
 
-            //xolotl:read_synapses_here
-            //xolotl:read_controllers_here
+
+            if (i%progress_report == 0 & verbosity > 0)
+            {
+                mexPrintf("[C++] integration %i", percent_complete);
+                mexPrintf(" complete\n");
+                percent_complete += 10;
+            }
 
             // here we're getting the state of every compartment -- V, Ca, and all conductances
             if (i%res == 0)
@@ -262,6 +283,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
 
             xolotl_network.integrate(sim_dt,I_ext, delta_temperature);
+
+
+            if (i%progress_report == 0 & verbosity > 0)
+            {
+                mexPrintf("[C++] integration %i", percent_complete);
+                mexPrintf(" complete\n");
+                percent_complete += 10;
+            }
 
             // here we're getting the state of every compartment -- V, Ca, and all conductances
             if (i%res == 0)

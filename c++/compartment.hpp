@@ -46,6 +46,8 @@ public:
     double f_;
     double delta_V;
 
+    double verbosity = 0;
+
     double RT_by_nF;
 
     // this int stores an integer that indicates
@@ -250,6 +252,11 @@ void compartment::addConductance(conductance *cond_)
     cond.push_back(cond_);
     cond_->connect(this);
     n_cond++;
+
+    if (verbosity > 0)
+    {
+        mexPrintf("[C++] adding conductance of type: %s\n", cond_->getClass().c_str());
+    }
 }
 
 // add controller to this compartment

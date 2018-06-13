@@ -43,6 +43,8 @@ public:
     double V_prev;
     double Ca_prev;
 
+    double verbosity;
+
     // constructor
     network() {}
 
@@ -57,6 +59,11 @@ public:
 void network::resolveTree(void)
 {
     compartment * connected_comp = NULL;
+
+    if (verbosity > 0)
+    {
+        mexPrintf("[C++] network::resolveTree() called\n");
+    }
 
 
     // ttl =  this_tree_level
@@ -132,28 +139,32 @@ void network::resolveTree(void)
     // go over every compartment, and check that stream
     // pointers and gs match up
     
-    // for (int i = 0; i < n_comp; i++)
-    // {
-    //     mexPrintf("---------------\n");
-    //     mexPrintf("this comp tree_idx = %f\n",comp[i]->tree_idx);
-    //     if (comp[i]->downstream)
-    //     {
-    //         mexPrintf("downstream pointer exists\n");
-            
-    //     } else {
-    //         mexPrintf("NO downstream pointer\n");
-    //     }   
-    //     mexPrintf("downstream_g =  %f\n", comp[i]->downstream_g);
-    //     if (comp[i]->upstream)
-    //     {
-    //         mexPrintf("upstream pointer exists\n");
+    if (verbosity > 0)
+    {
 
-    //     } else {
-    //         mexPrintf("No upstream pointer\n");
-    //     }
-    //     mexPrintf("upstream_g =  %f\n", comp[i]->upstream_g);
+        for (int i = 0; i < n_comp; i++)
+        {
+            mexPrintf("---------------\n");
+            mexPrintf("this comp tree_idx = %f\n",comp[i]->tree_idx);
+            if (comp[i]->downstream)
+            {
+                mexPrintf("downstream pointer exists\n");
+                
+            } else {
+                mexPrintf("NO downstream pointer\n");
+            }   
+            mexPrintf("downstream_g =  %f\n", comp[i]->downstream_g);
+            if (comp[i]->upstream)
+            {
+                mexPrintf("upstream pointer exists\n");
 
-    // }
+            } else {
+                mexPrintf("No upstream pointer\n");
+            }
+            mexPrintf("upstream_g =  %f\n", comp[i]->upstream_g);
+
+        }
+    }
 
 }
 
@@ -164,8 +175,13 @@ void network::addCompartment(compartment *comp_)
 {
     comp.push_back(comp_);
     n_comp++;
-
+    comp_->verbosity = verbosity;
     comp_->RT_by_nF = (0.0431)*(temperature + 273.15);
+
+    if (verbosity > 0)
+    {
+        mexPrintf("[C++] adding compartment to network. \n");
+    }
 }
 
 // this integrate method works for networks
