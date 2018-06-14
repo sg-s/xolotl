@@ -11,5 +11,6 @@ x.AB.add('liu-approx/Kd','gbar',1e3,'E',-80);
 x.AB.add('Leak','gbar', .2,'E',-50);
 
 
+
 x.manipulate_plot_func{1} = @custom_fI;
 x.manipulate('*gbar');

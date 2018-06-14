@@ -200,6 +200,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // resolve the tree (for multi-compartment models)
     xolotl_network.resolveTree();
 
+    mexEvalString("drawnow;");
+
     int percent_complete = 10;
 
     if (is_voltage_clamped)
@@ -225,9 +227,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
             if (i%progress_report == 0 & verbosity > 0)
             {
-                mexPrintf("[C++] integration %i", percent_complete);
+                mexPrintf("[C++] integration %i %", percent_complete);
                 mexPrintf(" complete\n");
                 percent_complete += 10;
+                mexEvalString("drawnow;");
             }
 
             // here we're getting the state of every compartment -- V, Ca, and all conductances
@@ -287,9 +290,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
             if (i%progress_report == 0 & verbosity > 0)
             {
-                mexPrintf("[C++] integration %i", percent_complete);
+                mexPrintf("[C++] integration %i %", percent_complete);
                 mexPrintf(" complete\n");
                 percent_complete += 10;
+                mexEvalString("drawnow;");
             }
 
             // here we're getting the state of every compartment -- V, Ca, and all conductances
