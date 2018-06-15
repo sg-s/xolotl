@@ -69,11 +69,13 @@ if nargin < 3
 		ax(3).Tag = 'tau_m';
 		ax(4).Tag = 'tau_h';
 
-		ylabel(ax(1),'m_{inf}')
+		ylabel(ax(1),'m_{\infty}')
 		xlabel(ax(1),'V (mV)')
+		set(ax(1),'YLim',[0 1])
 
 		xlabel(ax(2),'V (mV)')
-		ylabel(ax(2),'h_{inf}')
+		ylabel(ax(2),'h_{\infty}')
+		set(ax(2),'YLim',[0 1])
 
 		ylabel(ax(3),'\tau_{m} (ms)')
 		xlabel(ax(3),'V (mV)')

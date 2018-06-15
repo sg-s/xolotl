@@ -24,7 +24,10 @@ if isempty(self.handles) || ~isfield(self.handles,'fig') || ~isvalid(self.handle
 		self.handles.ax(i) = subplot(N,1,i); hold on
 	end
 
-	linkaxes(self.handles.ax,'x');
+	try
+		linkaxes(self.handles.ax,'x');
+	catch
+	end
 
 	% make all dummy plots
 	
