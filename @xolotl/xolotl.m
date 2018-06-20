@@ -35,6 +35,8 @@ properties (Access = protected)
 	% specified by put
 	custom_owner
 
+    snapshots
+
 	% this stores information about calling methods
 	% of some objects after they have been created 
 	call_method_data
@@ -137,7 +139,9 @@ methods
         hpp_files = unique(hpp_files);
         self.illegal_names = [self.illegal_names(:); hpp_files];
 
-        self.setHiddenProps({'manipulate_plot_func','I_ext','V_clamp'});
+        self.setHiddenProps({'manipulate_plot_func','I_ext','V_clamp','snapshots'});
+
+        self.snapshots = struct('name','','V',[]);
 
         self.manipulate_plot_func{1} = @self.plot;
 	end

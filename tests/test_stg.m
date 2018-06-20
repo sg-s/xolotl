@@ -49,8 +49,9 @@ x.connect('LP','AB','Glut','gbar',30);
 
 x.t_end = 5e3;
 
-x.transpile; x.compile;
-x.integrate; [V, ~, ~, currs, syns] = x.integrate;
+
+x.integrate; 
+[V, ~, ~, currs, syns] = x.integrate;
 
 C = x.find('compartment');
 

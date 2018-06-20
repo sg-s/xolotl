@@ -450,6 +450,19 @@ The third argument sets the axial resistivity, which must be a real positive num
 
   This function assumes cylindrical geometry (i.e. the ``radius`` and ``len`` properties of the compartment must be defined).
 
+
+.. _snapshot:
+
+snapshot
+^^^^^^^^
+
+:: 
+  
+  x.snapshot('regular')
+
+Use this method to take a snapshot of a model in a particular state. The model can be restored to this state at any time using `x.reset('regular')`
+
+
 .. _viewCode:
 
 viewCode
