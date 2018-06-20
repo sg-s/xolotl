@@ -12,5 +12,9 @@ assert(nargin == 2, 'Two arguments required')
 assert(ischar(snap_name),'snap_name should be a string')
 
 S = self.serialize;
+
+rm_these = find(strcmp(snap_name,{self.snapshots.name}));
+self.snapshots(rm_these) = [];
+
 self.snapshots = [self.snapshots; struct('name',snap_name,'V',S)];
 
