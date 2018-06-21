@@ -19,7 +19,11 @@ if self.verbosity > 0
 end
 
 % tell mex about where to look for C++ files
-ipath = ['-I"' self.xolotl_folder '/c++/' '"'];
+if ispc
+	ipath = ['-I' self.xolotl_folder '/c++/'];
+else
+	ipath = ['-I"' self.xolotl_folder '/c++/"'];
+end
 if self.verbosity > 1
 	mex('-v',ipath,mexBridge_name,'-outdir',self.xolotl_folder)
 else
