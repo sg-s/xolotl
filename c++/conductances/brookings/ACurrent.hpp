@@ -46,7 +46,7 @@ void ACurrent::integrate(double V, double Ca, double dt, double delta_temp)
     g = gbar*m*m*m;
 }
 
-double ACurrent::m_inf(double V) {return 1.0 / (1.0 + exp(- (V + 27.2) / (8.7) ) ); }
-double ACurrent::tau_m(double V) {return 272 + 1499 * (1 + exp(- (V + 42.2) / (8.73) ) ); }
+double ACurrent::m_inf(double V) {return (1.0/(1.0+exp(((V)+12.3)/-11.8))); }
+double ACurrent::tau_m(double V) {return 7.2- (6.4/(1.0+exp(((V)+28.3)/-19.2))); }
 
 #endif

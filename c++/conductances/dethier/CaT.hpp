@@ -2,8 +2,10 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// Fast Calcium CONDUCTANCE
-// http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
+// Deleyed rectifier
+// Dethier, Drion, Franci, Sepulchre 2015
+// https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4620135/
+
 #ifndef CAT
 #define CAT
 #include "conductance.hpp"
@@ -24,25 +26,22 @@ public:
         // defaults
  if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
-        if (isnan (h)) { h = 1; }
+        if (isnan (h)) { h = 0; }
         if (isnan (E)) { E = 30; }
-
     }
 
     void integrate(double V, double Ca, double dt, double delta_temp);
 
     double m_inf(double V);
-    double h_inf(double V);
     double tau_m(double V);
+    double h_inf(double V);
     double tau_h(double V);
     string getClass(void);
 
 
 };
 
-string CaT::getClass(){
-    return "CaT";
-}
+string CaT::getClass(){return "CaT";}
 
 void CaT::integrate(double V, double Ca, double dt, double delta_temp)
 {
@@ -51,16 +50,11 @@ void CaT::integrate(double V, double Ca, double dt, double delta_temp)
     m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
     h = h_inf(V) + (h - h_inf(V))*exp(-dt/tau_h(V));
     g = gbar*m*m*m*h;
-
-    // compute the specific calcium current and update it in the cell
-    double this_I = g*(V-E);
-    container->i_Ca += this_I;
 }
 
-
-double CaT::m_inf(double V) {return 1.0/(1.0 + exp((V+27.1)/-7.2));}
-double CaT::h_inf(double V) {return 1.0/(1.0 + exp((V+32.1)/5.5));}
-double CaT::tau_m(double V) {return 21.7 - 21.3/(1.0 + exp((V+68.1)/-20.5));}
-double CaT::tau_h(double V) {return 105.0 - 89.8/(1.0 + exp((V+55.0)/-16.9));}
+double CaT::m_inf(double V) {return (1.0/(1.0+exp(((V)+57.1)/-7.2)));}
+double CaT::h_inf(double V) {return (1.0/(1.0+exp(((V)+82.1)/5.5)));}
+double CaT::tau_m(double V) {return 43.4- (42.6/(1.0+exp(((V)+68.1)/-20.5)));}
+double CaT::tau_h(double V) {return 840.0- (718.4/(1.0+exp(((V)+55.0)/-16.9)));}
 
 #endif
