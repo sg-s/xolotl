@@ -81,6 +81,9 @@ These benchmarks were computed from within MATLAB, running the simulation at a t
 
 ## Developing
 
+`xolotl` is currently in development, and improving every day. If you would like
+to contribute, or have a question, correction, or error, please check with our [guide](http://xolotl.readthedocs.io/en/latest/contributing.html).
+
 ### Tests
 
 You are strongly encouraged to use [git hooks](https://git-scm.com/docs/githooks) to make sure that the code you write actually compiles. Look at this [example git hook](dev/pre-commit) which attempts to compile a bunch of C++ wrappers before permitting you to commit code.
