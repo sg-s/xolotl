@@ -79,3 +79,6 @@ x.AB.add('kispersky/NaV', 'gbar', 1, 'E', 50);
 
 V = x.integrate;
 plot(V);
+
+
+%% Nadim
