@@ -42,7 +42,14 @@ string CaPump::getClass(){
 
 void CaPump::integrate(double V, double Ca, double dt, double delta_temp)
 {
+    // update E by copying E_Ca from the cell
+    E = container->E_Ca;
+
     g = (gbar)/((1.0+0.0001)/Ca);
+    
+    // compute the specific calcium current and update it in the cell
+    double this_I = g*(V-E);
+    container->i_Ca += this_I;
 }
 
 #endif

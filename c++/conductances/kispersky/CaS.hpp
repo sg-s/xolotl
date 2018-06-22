@@ -47,9 +47,14 @@ void CaS::integrate(double V, double Ca, double dt, double delta_temp)
 {
     // update E by copying E_Ca from the cell
     E = container->E_Ca;
+
     m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
     h = h_inf(V) + (h - h_inf(V))*exp(-dt/tau_h(V));
     g = gbar*m*m*m*h;
+
+    // compute the specific calcium current and update it in the cell
+    double this_I = g*(V-E);
+    container->i_Ca += this_I;
 }
 
 double CaS::m_inf(double V) {return 1.0 / (1.0 + exp( (V + 33.0) / -8.1 ));}
