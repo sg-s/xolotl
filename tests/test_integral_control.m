@@ -9,7 +9,7 @@ phi = (2*f*F*vol)/tau_Ca;
 Ca_target = 7; % used only when we add in homeostatic control 
 
 x = xolotl;
-x.add('AB','compartment','Cm',10,'A',A,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca,'Ca_target',Ca_target);
+x.add('compartment','AB','Cm',10,'A',A,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca,'Ca_target',Ca_target);
 
 g0 = 1e-1+1e-1*rand(7,1);
 

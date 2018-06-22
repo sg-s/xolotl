@@ -9,9 +9,11 @@
 % example usage:
 % x.add('AB',AB)
 
-function add(self,obj_name,varargin)
+function add(self,obj_type, obj_name,varargin)
 
 assert(nargin > 2,'No label! You have to label every compartment')
 assert(self.checkCompartmentName(obj_name),'Illegal compartment name')
 
-add@cpplab(self,obj_name,varargin{:});
+obj = cpplab(obj_type, varargin{:});
+
+add@cpplab(self,obj, obj_name);
