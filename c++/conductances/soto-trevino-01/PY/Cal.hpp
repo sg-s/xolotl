@@ -2,7 +2,7 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// potassium conductance
+// calcium conductance
 // https://www.nature.com/articles/nn0301_297#methods
 // Soto-Trevino et al. 2001
 
