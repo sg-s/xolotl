@@ -53,7 +53,7 @@ V = x.integrate;
 | OS          | Support | Comments |
 | -------          | ------- | -----------
 | macOS 10.12.6 | ✓ | no known issues |
-| Manjaro Hakoila 17.1.10 | ✓ |    you may need a specific compiler, see [this](http://xolotl.readthedocs.io/en/latest/compilers.html) for details |
+| Manjaro 17.1.10 | ✓ |    you may need a specific compiler, see [this](http://xolotl.readthedocs.io/en/latest/compilers.html) for details |
 | Ubuntu 16.04.3 LTS | ✓ |   you may need a specific compiler, see [this](http://xolotl.readthedocs.io/en/latest/compilers.html) for details |
 | Ubuntu 18.04 LTS | ✓ |   you may need a specific compiler, see [this](http://xolotl.readthedocs.io/en/latest/compilers.html) for details |
 | Windows 7/10 | ✓ | You will need the [MinGW](https://www.mathworks.com/matlabcentral/fileexchange/52848-matlab-support-for-mingw-w64-c-c++-compiler) compiler. |
