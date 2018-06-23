@@ -1,28 +1,23 @@
-%              _       _   _
-%   __  _____ | | ___ | |_| |
-%   \ \/ / _ \| |/ _ \| __| |
-%    >  < (_) | | (_) | |_| |
-%   /_/\_\___/|_|\___/ \__|_|
-%
-% this helper static method figures out spike times
-% (in units of simulation time step) and returns them
-% only works with one compartment
-%
-function spiketimes = findNSpikes(V,n_spikes,on_off_thresh)
 
-if nargin < 3
+
+function f = findNSpikes(V, on_off_thresh)
+
+assert(isvector(V),'V should be a vector')
+assert(~any(isnan(V)),'V cannot contain NaNs')
+assert(~any(isinf(V)),'V cannot contain Infs')
+
+if nargin < 2
 	on_off_thresh = 0;
 end
 
-spiketimes = NaN(n_spikes,1);
+assert(isscalar(on_off_thresh),'on_off_thresh must be a scalar')
+
+V = V(:);
+
 [ons, offs] = computeOnsOffs(V > on_off_thresh);
 if isempty(offs) || isempty(ons)
+	f = 0;
 	return
 end
 
-stop_here = min([length(ons) n_spikes]);
-
-for j = 1:stop_here
-	[~,idx] = max(V(ons(j):offs(j)));
-	spiketimes(j) = ons(j) + idx;
-end
+f = length(ons);
