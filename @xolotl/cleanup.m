@@ -4,7 +4,18 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% help: delete all mexBridge files and binaries
+% 
+% cleanup
+% =======
+%
+% Usage ::
+%
+%   xolotl.cleanup
+%   x.cleanup
+%
+% A static method that cleans up all transpiled ``C++`` and compiled binary files. Use of this method will trigger a warning every time it is called. You do not need to use this in normal use, but can call this to force a recompile, or to delete old and unused binaries. 
+% 
+
 
 function cleanup()
 

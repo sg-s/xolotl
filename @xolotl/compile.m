@@ -4,8 +4,19 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% help: compiles a C++ file using mex
-% 
+% compile
+% =======
+%
+% compiles a executable binary form a transpiled ``C++`` file. These are stored in your ``xolotl`` directory. ``xolotl`` automatically compiles when it needs to. You can turn this functionality off by setting ::
+%
+%   x.skip_hash = true;
+%
+% In addition, creating a ``xolotl`` object through a function call does not automatically hash and compile. In this case, you should use ``x.md5hash``.
+%
+% .. warning::
+%
+%   If you turn hashing off, ``xolotl`` might not compile
+
 
 function compile(self)
 

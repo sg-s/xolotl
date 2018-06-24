@@ -60,7 +60,8 @@ for i = 2:N_slices
 	padding_length = n_digits - length(mat2str(i));
 	new_comp_name = [compartment_root_name repmat('0',1,padding_length) mat2str(i)];
 
-	self.add(new_comp_name,root_comp);
+
+	self.add(root_comp, new_comp_name);
 	all_comps = [all_comps; new_comp_name];
 end
 
