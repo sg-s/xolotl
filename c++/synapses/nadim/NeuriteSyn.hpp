@@ -1,14 +1,14 @@
 // Neurite to Neurite Synapse
-#ifndef NEURITE
-#define NEURITE
+#ifndef NEURITESYN
+#define NEURITESYN
 #include "synapse.hpp"
 
-class Neurite: public synapse {
+class NeuriteSyn: public synapse {
 
 public:
 
     // specify parameters + initial conditions
-    Neurite(double g_, double s_)
+    NeuriteSyn(double g_, double s_)
     {
         gbar = g_;
         E = -70.0;
@@ -31,7 +31,7 @@ public:
     int getFullStateSize(void);
 };
 
-void Neurite::integrate(double dt)
+void NeuriteSyn::integrate(double dt)
 {
 
     // figure out the voltage of the pre-synaptic neuron
@@ -41,7 +41,7 @@ void Neurite::integrate(double dt)
     double s_inf = 1.0/(1.0+exp((Vth - V_pre)/Delta));
 
     // integrate using exponential Euler
-    double tau_s = 100.0/(1.0+exp((Vth - V_pre)/k_);
+    double tau_s = 100.0/(1.0+exp((Vth - V_pre)/k_));
 
     s = s_inf + (s - s_inf)*exp(-dt/tau_s);
 
@@ -50,7 +50,7 @@ void Neurite::integrate(double dt)
 }
 
 
-int Neurite::getFullState(double *syn_state, int idx)
+int NeuriteSyn::getFullState(double *syn_state, int idx)
 {
     // give it the current synapse variable
     syn_state[idx] = s;
@@ -63,13 +63,13 @@ int Neurite::getFullState(double *syn_state, int idx)
 }
 
 
-int Neurite::getFullStateSize()
+int NeuriteSyn::getFullStateSize()
 {
     return 2;
 }
 
 
-void Neurite::connect(compartment *pcomp1_, compartment *pcomp2_)
+void NeuriteSyn::connect(compartment *pcomp1_, compartment *pcomp2_)
 {
     pre_syn = pcomp1_;
     post_syn = pcomp2_;

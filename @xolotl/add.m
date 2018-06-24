@@ -28,7 +28,7 @@ else
 
 end
 
-assert(self.checkCompartmentName(obj_name),'Illegal compartment name')
+assert(self.checkCompartmentName(obj_name),['Illegal compartment name: ' obj_name])
 
 
 
