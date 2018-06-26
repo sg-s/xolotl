@@ -1,11 +1,19 @@
-%                    _       _     
-%   ___  _     _    | | __ _| |__  
-%  / __|| |_ _| |_  | |/ _` | '_ \ 
-% | (_|_   _|_   _| | | (_| | |_) |
-%  \___||_|   |_|   |_|\__,_|_.__/ 
+%              _       _   _ 
+%   __  _____ | | ___ | |_| |
+%   \ \/ / _ \| |/ _ \| __| |
+%    >  < (_) | | (_) | |_| |
+%   /_/\_\___/|_|\___/ \__|_|
 %
-% a copy method that actually works,
-% unlike MATLAB's built in copy
+% copy
+% ====
+%
+% copies a xolotl object. ``copy`` creates an identical copy of a xolotl object that can be manipulated seperately. Both copies will use the same binary to integrate, unless you add a new component to one of them. Syntax ::
+%
+%   x2 = copy(x);
+%
+% .. warning::
+%
+%   Some read-only properties in a xolotl object may not be copied over. 
 
 function N = copy(self)
 
