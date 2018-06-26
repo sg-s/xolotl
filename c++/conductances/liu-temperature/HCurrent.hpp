@@ -27,12 +27,12 @@ public:
         Q_tau_h = Q_tau_h_;
 
         // defaults 
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
         if (isnan (Q_g)) { Q_g = 1; }
-        if (isnan (Q_tau_m)) { Q_tau_m = 1; }
-        if (isnan (Q_tau_h)) { Q_tau_h = 1; }
+        if (isnan (Q_tau_m)) { Q_tau_m = 2; }
+        if (isnan (Q_tau_h)) { Q_tau_h = 2; }
         if (isnan (E)) { E = -20; }
 
     }
