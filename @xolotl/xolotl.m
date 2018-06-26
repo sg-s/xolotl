@@ -148,6 +148,13 @@ methods
 
 
     function self = set.V_clamp(self,V_clamp)
+
+        d = dbstack;
+        if strcmp(d(end).name,'copy')
+            self.V_clamp = V_clamp;
+            return
+        end
+        
         n_comp = length(self.find('compartment'));
         n_steps = floor(self.t_end/self.sim_dt);
 
@@ -173,6 +180,12 @@ methods
     end
 
      function self = set.I_ext(self,I_ext)
+
+        d = dbstack;
+        if strcmp(d(end).name,'copy')
+            self.I_ext = I_ext;
+            return
+        end
 
         n_comp = length(self.find('compartment'));
         n_steps = floor(self.t_end/self.sim_dt);
