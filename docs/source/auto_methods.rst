@@ -46,12 +46,18 @@ Test coverage
 
 ``add`` is tested in: 
 
-`test_bursting_neuron.m <https://https://github.com/sg-s/xolotl/blob/master/%40xolotl/test_bursting_neuron.m>`_
-`test_clamp.m <https://https://github.com/sg-s/xolotl/blob/master/%40xolotl/test_clamp.m>`_
-`test_fI.m <https://https://github.com/sg-s/xolotl/blob/master/%40xolotl/test_fI.m>`_
-`test_integral_control.m <https://https://github.com/sg-s/xolotl/blob/master/%40xolotl/test_integral_control.m>`_
-`test_stg.m <https://https://github.com/sg-s/xolotl/blob/master/%40xolotl/test_stg.m>`_
-`test_stg_temperature.m <https://https://github.com/sg-s/xolotl/blob/master/%40xolotl/test_stg_temperature.m>`_
+`test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/%40xolotl/test_bursting_neuron.m>`_ 
+
+`test_clamp.m <https://github.com/sg-s/xolotl/blob/master/%40xolotl/test_clamp.m>`_ 
+
+`test_fI.m <https://github.com/sg-s/xolotl/blob/master/%40xolotl/test_fI.m>`_ 
+
+`test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/%40xolotl/test_integral_control.m>`_ 
+
+`test_stg.m <https://github.com/sg-s/xolotl/blob/master/%40xolotl/test_stg.m>`_ 
+
+`test_stg_temperature.m <https://github.com/sg-s/xolotl/blob/master/%40xolotl/test_stg_temperature.m>`_ 
+
 
 
 .. _benchmark:
@@ -112,7 +118,8 @@ Test coverage
 
 ``cleanup`` is tested in: 
 
-`run_all_tests.m <https://https://github.com/sg-s/xolotl/blob/master/%40xolotl/run_all_tests.m>`_
+`run_all_tests.m <https://github.com/sg-s/xolotl/blob/master/%40xolotl/run_all_tests.m>`_ 
+
 
 
 .. _compile:
@@ -219,7 +226,9 @@ Test coverage
 
 ``manipulate`` is tested in: 
 
-`custom_fI.m <https://https://github.com/sg-s/xolotl/blob/master/%40xolotl/custom_fI.m>`_
-`test_fI.m <https://https://github.com/sg-s/xolotl/blob/master/%40xolotl/test_fI.m>`_
+`custom_fI.m <https://github.com/sg-s/xolotl/blob/master/%40xolotl/custom_fI.m>`_ 
+
+`test_fI.m <https://github.com/sg-s/xolotl/blob/master/%40xolotl/test_fI.m>`_ 
+
 
 

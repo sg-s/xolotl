@@ -71,7 +71,7 @@ for file in glob.glob("@xolotl/*.m"):
 
 			test_filename = os.path.basename(testfile)
 
-			out_file.write('\n`' + test_filename + ' <https://https://github.com/sg-s/xolotl/blob/master/%40xolotl/' + test_filename + '>`_')
+			out_file.write('\n`' + test_filename + ' <https://github.com/sg-s/xolotl/blob/master/%40xolotl/' + test_filename + '>`_ \n')
 			
 
 
