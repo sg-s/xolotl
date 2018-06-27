@@ -644,8 +644,8 @@ The compartment to be sliced must explicitly be a cylindrical section, i.e., it 
 Example
 -------
 
-	% assuming there is a compartment called 'Dendrite'
-    xolotl.slice('Dendrite',10)
+		% assuming there is a compartment called 'Dendrite'
+		xolotl.slice('Dendrite',10)
 	
 
 See Also
@@ -684,14 +684,13 @@ Creating two snapshots with the same name will overwrite the first.
 Example
 -------
 
-    % assuming a xolotl object is set up
-    x.integrate;
-    x.snapshot('base');
-    x.set('*gbar') = 1e-3; % turn off all conductances
-	x.integrate;
-
-	% now go back to original state
-	x.reset('base')
+		% assuming a xolotl object is set up
+		x.integrate;
+		x.snapshot('base');
+		x.set('*gbar') = 1e-3; % turn off all conductances
+		x.integrate;
+		% now go back to original state
+		x.reset('base')
 
 	
 
