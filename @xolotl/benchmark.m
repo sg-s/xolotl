@@ -10,7 +10,7 @@ benchmark
 
 performs a quick benchmarking of a given ``xolotl`` model. ``benchmark`` irst varies the simulation time step, and measures how quickly the model ntegrates. It then varies ``t_end``, and measures how fast it integrates at a fixed ``sim_dt``. Usage ::
 
-x.benchmark;
+    x.benchmark;
 
 
 %}

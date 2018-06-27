@@ -10,7 +10,7 @@ compile
 
 compiles a executable binary form a transpiled ``C++`` file. These are stored in your ``xolotl`` directory. ``xolotl`` automatically compiles when t needs to. You can turn this functionality off by setting ::
 
-x.skip_hash = true;
+    x.skip_hash = true;
 
 In addition, creating a ``xolotl`` object through a function call does not utomatically hash and compile. In this case, you should use ``x.md5hash``.
 
@@ -22,8 +22,8 @@ If you turn hashing off, ``xolotl`` might not compile
 See Also:
 ---------
 
-- transpile
-- cleanup
+- xolotl.transpile
+- xolotl.cleanup
 
 %}
 

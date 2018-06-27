@@ -1,17 +1,21 @@
-%              _       _   _
-%   __  _____ | | ___ | |_| |
-%   \ \/ / _ \| |/ _ \| __| |
-%    >  < (_) | | (_) | |_| |
-%   /_/\_\___/|_|\___/ \__|_|
-%
-% contributingCurrents
-% ^^^^^^^^^^^^^^^^^^^^
-%
-% calculates the contributions of each current at every point in a voltage trace. This is used internally in ``xolotl.plot`` to color voltage traces. Syntax ::
-%
-%   curr_index = contributingCurrents(V, I)
-%
-% where V is a vector of voltages, I is the corresponding matrix of currents %
+%{
+
+contributingCurrents
+^^^^^^^^^^^^^^^^^^^^
+
+calculates the contributions of each current at every point in a voltage race. This is used internally in ``xolotl.plot`` to color voltage traces. yntax ::
+
+    curr_index = contributingCurrents(V, I)
+
+where V is a vector of voltages, I is the corresponding matrix of currents 
+
+See Also
+--------
+
+- xolotl.plot
+- xolotl.manipulate
+
+%}
 
 function curr_index = contributingCurrents(V, I)
 

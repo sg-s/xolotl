@@ -8,6 +8,8 @@ out_file = open('auto_methods.rst','w')
 
 header_str = '.. _method_name:'
 
+method_url_root = '<https://xolotl.readthedocs.io/en/latest/auto_methods.html#';
+
 
 for file in glob.glob("@xolotl/*.m"):
 
@@ -59,11 +61,27 @@ for file in glob.glob("@xolotl/*.m"):
 	for i in range(a,z):
 		thisline = lines[i]
 		thisline = thisline.strip('%}')
-		out_file.write(thisline)
+
+
+
+		# insert hyperlinks to other methods 
+		if thisline.lower().find('- xolotl.') != -1:
+			# ok, there is something here...
+			method_name = thisline.lower().strip('- xolotl')
+			method_name = method_name.strip('.')
+			method_name = method_name.strip()
+			print('linked method found:')
+			print(method_name)
+
+			out_file.write('\n - `' + method_name + ' ' + method_url_root + method_name + '>`_ \n')
+
+
+		else:
+			out_file.write(thisline)
 
 	out_file.write('\n\nTest coverage\n')
 	out_file.write('--------------\n\n')
-	out_file.write('``' + filename + '`` is tested in: \n')
+	out_file.write('``' + filename + '`` is tested in: \n\n')
 
 	# go over every file in /tests and check for this filename 
 	for testfile in glob.glob("./tests/*.m"):
@@ -71,7 +89,7 @@ for file in glob.glob("@xolotl/*.m"):
 
 			test_filename = os.path.basename(testfile)
 
-			out_file.write('\n`' + test_filename + ' <https://github.com/sg-s/xolotl/blob/master/%40xolotl/' + test_filename + '>`_ \n')
+			out_file.write('- `' + test_filename + ' <https://github.com/sg-s/xolotl/blob/master/tests/' + test_filename + '>`_ \n')
 			
 
 
