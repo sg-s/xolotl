@@ -1,11 +1,26 @@
-%              _       _   _
-%   __  _____ | | ___ | |_| |
-%   \ \/ / _ \| |/ _ \| __| |
-%    >  < (_) | | (_) | |_| |
-%   /_/\_\___/|_|\___/ \__|_|
-%
-% help: plots voltage traces
-%
+%{
+              _       _   _ 
+   __  _____ | | ___ | |_| |
+   \ \/ / _ \| |/ _ \| __| |
+    >  < (_) | | (_) | |_| |
+   /_/\_\___/|_|\___/ \__|_|
+
+plot
+^^^^
+
+Makes a plot of voltage and calcium time series of all compartments. The default option is to color the voltage traces by the dominant current at that point using  ``contributingCurrents``. Usage ::
+
+   x.plot()
+
+See Also
+--------
+
+- xolotl.manipulate
+- xolotl.contributingCurrents
+
+%}
+
+
 function plot(self, ~)
 
 comp_names = self.find('compartment');

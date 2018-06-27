@@ -1,11 +1,37 @@
-%              _       _   _
-%   __  _____ | | ___ | |_| |
-%   \ \/ / _ \| |/ _ \| __| |
-%    >  < (_) | | (_) | |_| |
-%   /_/\_\___/|_|\___/ \__|_|
-%
-% help: shows the activation functions of channel
-%
+%{
+              _       _   _ 
+   __  _____ | | ___ | |_| |
+   \ \/ / _ \| |/ _ \| __| |
+    >  < (_) | | (_) | |_| |
+   /_/\_\___/|_|\___/ \__|_|
+
+show
+^^^^^
+
+shows activation functions and timescales of any conductance. Usage ::
+
+   x.show('cond_name')
+
+'cond_name' must be a string that resolves to a valid C++ file that describes a conductance. 
+
+Example
+-------
+
+	% compare some channels from the Prinz et al. paper
+    xolotl.show('prinz/NaV')
+    xolotl.show('prinz/Kd')
+    xolotl.show('prinz/KCa')
+
+	
+
+See Also
+--------
+
+- xolotl.plot
+
+%}
+
+
 function show(conductance)
 
 

@@ -1,13 +1,43 @@
-%              _       _   _
-%   __  _____ | | ___ | |_| |
-%   \ \/ / _ \| |/ _ \| __| |
-%    >  < (_) | | (_) | |_| |
-%   /_/\_\___/|_|\___/ \__|_|
-%
-% MATLAB -> C++ transpiler
-% creates a C++ file that can be compiled with mex
-% this is a thin wrapper around the actual transpiler
-% in transpileCore
+%{
+              _       _   _ 
+   __  _____ | | ___ | |_| |
+   \ \/ / _ \| |/ _ \| __| |
+    >  < (_) | | (_) | |_| |
+   /_/\_\___/|_|\___/ \__|_|
+
+transpile
+^^^^^^^^^
+
+Generate a C++ file that constructs the model, integrates it, and moves parameters and data from MATLAB to C++ and back. Usage ::
+
+   x.transpile;
+
+
+.. warning::
+
+``transpile`` assumes that your ``xolotl`` object has a valid hash. Empty hashes will throw an error. 
+
+
+Example
+-------
+
+    % assuming a xolotl object is set up
+    x.transpile;
+
+    % now view the transpiled code
+    x.viewCode;
+
+	
+
+See Also
+--------
+
+- xolotl.compile
+- xolotl.viewCode
+
+
+%}
+
 
 function transpile(self)
 

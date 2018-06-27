@@ -1,13 +1,19 @@
-%              _       _   _
-%   __  _____ | | ___ | |_| |
-%   \ \/ / _ \| |/ _ \| __| |
-%    >  < (_) | | (_) | |_| |
-%   /_/\_\___/|_|\___/ \__|_|
-%
-% sets the xolotl_folder, cpp_folder,
-% and searches these folders to build 
-% a list of full paths for all conductances,
-% controllers, synapses, etc. 
+%{
+              _       _   _ 
+   __  _____ | | ___ | |_| |
+   \ \/ / _ \| |/ _ \| __| |
+    >  < (_) | | (_) | |_| |
+   /_/\_\___/|_|\___/ \__|_|
+
+rebase
+^^^^^^
+
+Configures some internal house-keeping settings. This is called every time a new object is created. You probably don't ever have to use this, unless you copy ``xolotl`` objects across computers with different file systems or operating systems. Usage ::
+
+   x.rebase()
+
+%}
+
 
 function [] = rebase(self)
 

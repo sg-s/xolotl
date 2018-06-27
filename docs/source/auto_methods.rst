@@ -321,6 +321,53 @@ Test coverage
 
 
 
+.. _integrate:
+
+integrate
+^^^^^^^^^
+
+integrates a ``xolotl`` model. Usage ::
+
+   V = x.integrate;
+   I_clamp = x.integrate;
+   [V, Ca] = x.integrate;
+   [V, Ca, cont_state] = x.integrate;
+   [V, Ca, cont_state, I] = x.integrate;
+   [V, Ca, cont_state, I, syn_state] = x.integrate;
+
+
+``integrate`` will return different outputs as show above. Unless you need every output, it is recommended to skip it, as it makes the integration faster (and reduces the memory footprint). 
+
+Explanation of outputs
+----------------------
+
+- ``V`` Voltage trace of every compartment. A matrix of size (nsteps, n_comps)
+- ``I_clamp`` also returned in the first argument, this is the clamping current when a compartment is being voltage clamped. This can be inter-leaved with the voltage of other, non-clamped compartments. 
+- ``Ca`` Calcium concentration in every cell and the corresponding ``E_Ca`` (reversal potential of Calcium). A matrix of size (nsteps, n_comps)
+- ``cont_state`` a matrix representing every dimension of every controller in the tree. This matrix has size (nsteps, NC), where NC depends on the precise controllers used, and is automatically determined. 
+- ``I`` the currents of every ion channel type in the model. This is a matrix of size (nsteps, n_cond)
+
+
+
+
+
+
+
+
+Test coverage
+--------------
+
+``integrate`` is tested in: 
+
+- `custom_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/custom_fI.m>`_ 
+- `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
+- `test_clamp.m <https://github.com/sg-s/xolotl/blob/master/tests/test_clamp.m>`_ 
+- `test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/tests/test_integral_control.m>`_ 
+- `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
+- `test_stg_temperature.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg_temperature.m>`_ 
+
+
+
 .. _manipulate:
 
 manipulate
@@ -348,6 +395,133 @@ Test coverage
 
 - `custom_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/custom_fI.m>`_ 
 - `test_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/test_fI.m>`_ 
+
+
+
+.. _manipulateEvaluate:
+
+manipulateEvaluate
+^^^^^^^^^^^^^^^^^^
+
+This method is used to update the ``xolotl`` object every time a slider is moved in the manipulate window. This is used internally in ``xolotl.manipulate``. You should not need to use this by itself. 
+
+See Also
+--------
+
+
+ - `manipulate <https://xolotl.readthedocs.io/en/latest/auto_methods.html#manipulate>`_ 
+
+
+
+
+
+
+
+Test coverage
+--------------
+
+``manipulateEvaluate`` is tested in: 
+
+
+
+
+.. _rebase:
+
+rebase
+^^^^^^
+
+Configures some internal house-keeping settings. This is called every time a new object is created. You probably don't ever have to use this, unless you copy ``xolotl`` objects across computers with different file systems or operating systems. Usage ::
+
+   x.rebase()
+
+
+
+
+
+
+Test coverage
+--------------
+
+``rebase`` is tested in: 
+
+
+
+
+.. _show:
+
+show
+^^^^^
+
+shows activation functions and timescales of any conductance. Usage ::
+
+   x.show('cond_name')
+
+'cond_name' must be a string that resolves to a valid C++ file that describes a conductance. 
+
+Example
+-------
+
+	% compare some channels from the Prinz et al. paper
+    xolotl.show('prinz/NaV')
+    xolotl.show('prinz/Kd')
+    xolotl.show('prinz/KCa')
+
+	
+
+See Also
+--------
+
+
+ - `plot <https://xolotl.readthedocs.io/en/latest/auto_methods.html#plot>`_ 
+
+
+
+
+
+
+Test coverage
+--------------
+
+``show`` is tested in: 
+
+- `test_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/test_fI.m>`_ 
+
+
+
+.. _slice:
+
+slice
+^^^^^
+
+``slice`` partitions a cylindrical compartment into N slices.  Usage ::
+
+   x.slice('comp_name',N)
+
+The compartment to be sliced must explicitly be a cylindrical section, i.e., it must have a defined length and radius. ``slice`` cuts the cylinder along the axis, and connects each slice with ``Axial`` synapses. This object can then be treated as a multi-compartment model, and ``xolotl`` will integrate it using the Crank-Nicholson scheme reserved for multi-compartment models. 
+
+
+Example
+-------
+
+	% assuming there is a compartment called 'Dendrite'
+    xolotl.slice('Dendrite',10)
+	
+
+See Also
+--------
+
+
+ - `connect <https://xolotl.readthedocs.io/en/latest/auto_methods.html#connect>`_ 
+
+
+
+
+
+Test coverage
+--------------
+
+``slice`` is tested in: 
+
 
 
 
