@@ -43,7 +43,7 @@ for file in glob.glob("@xolotl/*.m"):
 		thisline = lines[i].strip('%')
 		thisline = thisline.strip()
 			
-		if thisline.lower().find('function') != -1:
+		if thisline.find('function') == 0:
 			z = i
 			break
 

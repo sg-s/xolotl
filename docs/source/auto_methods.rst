@@ -133,6 +133,27 @@ Test coverage
 compile
 ^^^^^^^
 
+compiles a executable binary form a transpiled ``C++`` file. These are stored in your ``xolotl`` directory. ``xolotl`` automatically compiles when t needs to. You can turn this functionality off by setting ::
+
+    x.skip_hash = true;
+
+In addition, creating a ``xolotl`` object through a function call does not utomatically hash and compile. In this case, you should use ``x.md5hash``.
+
+.. warning::
+
+If you turn hashing off, ``xolotl`` might not compile
+
+
+See Also:
+---------
+
+
+ - `transpile <https://xolotl.readthedocs.io/en/latest/auto_methods.html#transpile>`_ 
+
+ - `cleanup <https://xolotl.readthedocs.io/en/latest/auto_methods.html#cleanup>`_ 
+
+
+
 
 
 Test coverage
@@ -270,6 +291,25 @@ Test coverage
 
 
 .. _getGatingFunctions:
+
+getGatingFunctions
+^^^^^^^^^^^^^^^^^^
+
+static method of ``xolotl`` that returns function handles that represent the gating and activation functions of a particular conductance. Example use ::
+
+   [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance)
+
+
+where ``conductance`` is a string that specifies a conductance C++ header file. The outputs are function handles that can be evaluated independently. This method is used internally in ``xolotl.show()``
+
+See Also
+--------
+
+
+ - `show <https://xolotl.readthedocs.io/en/latest/auto_methods.html#show>`_ 
+
+
+
 
 
 
