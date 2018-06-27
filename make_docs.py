@@ -46,11 +46,11 @@ for file in glob.glob("@xolotl/*.m"):
 
 	for i in range(a,z):
 		thisline = lines[i]
-		thisline = thisline[1:]
+		thisline = thisline[2:]
 		out_file.write(thisline)
 
 	out_file.write('\n\nTest coverage\n')
-	out_file.write('-------------\n\n')
+	out_file.write('^^^^^^^^^^^^\n\n')
 	out_file.write(filename + ' is tested in: \n\n')
 
 	# go over every file in /tests and check for this filename 

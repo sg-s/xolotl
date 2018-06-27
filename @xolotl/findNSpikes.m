@@ -5,7 +5,7 @@
 %   /_/\_\___/|_|\___/ \__|_|
 %
 % findNSpikes
-% ===========
+% ^^^^^^^^^^^
 %
 % static method of ``xolotl`` that computes the number of spikes in a voltage trace. Example use ::
 %
