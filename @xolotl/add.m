@@ -4,10 +4,22 @@
 %    >  < (_) | | (_) | |_| |
 %   /_/\_\___/|_|\___/ \__|_|
 %
-% help: add thing to model  
+% add
+% ===
 %
-% example usage:
-% x.add('AB',AB)
+% adds a cpplab object to a xolotl object.
+%
+% The add method is the most important way you construct models. Usage ::
+%
+%   x.add(compartment,'comp_name')
+%   x.add('compartment','comp_name')
+%   x.add('compartment','comp_name',...)
+%
+% There are two primary ways of using ``add``. The first is to first construct a ``cpplab`` object (here called AB), and then add it to the xolotl object using x.add(AB,'AB'). xolotl requires that every compartment is named, and the name has to be specified as a string argument. 
+% 
+% .. warning::
+%
+%   Some read-only properties in a xolotl object may not be copied over. 
 
 function add(self,obj_type, obj_name,varargin)
 

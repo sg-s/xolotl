@@ -9,14 +9,14 @@ out_file = open('auto_methods.rst','w')
 header_str = '.. _method_name:'
 
 
-for file in glob.glob("*.m"):
+for file in glob.glob("@xolotl/*.m"):
     
 
 	filename = file.replace('.m','')
 	filename = filename.strip()
+	filename = filename.strip('@xolotl/')
 
 	lines = tuple(open(file, 'r'))
-
 
 	a = -1
 	z = -1
