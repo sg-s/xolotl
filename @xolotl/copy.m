@@ -1,19 +1,27 @@
-%              _       _   _ 
-%   __  _____ | | ___ | |_| |
-%   \ \/ / _ \| |/ _ \| __| |
-%    >  < (_) | | (_) | |_| |
-%   /_/\_\___/|_|\___/ \__|_|
-%
-% copy
-% ^^^^
-%
-% copies a xolotl object. ``copy`` creates an identical copy of a xolotl object that can be manipulated seperately. Both copies will use the same binary to integrate, unless you add a new component to one of them. Syntax ::
-%
-%   x2 = copy(x);
-%
-% .. warning::
-%
-%   Some read-only properties in a xolotl object may not be copied over. 
+%{
+              _       _   _ 
+   __  _____ | | ___ | |_| |
+   \ \/ / _ \| |/ _ \| __| |
+    >  < (_) | | (_) | |_| |
+   /_/\_\___/|_|\___/ \__|_|
+
+copy
+^^^^
+
+copies a xolotl object. ``copy`` creates an identical copy of a xolotl object that can be manipulated seperately. Both copies will use the same binary to integrate, unless you add a new component to one of them. Syntax ::
+
+    x2 = copy(x);
+
+.. warning::
+
+Some read-only properties in a xolotl object may not be copied over. 
+
+
+.. warning::
+
+Do not make vectors of ``xolotl`` objects, as it may lead to undefined behavior. 
+
+%}
 
 function N = copy(self)
 

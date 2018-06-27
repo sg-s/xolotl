@@ -13,6 +13,11 @@ is used internally by ``xolotl`` to verify that the compartment name you are usi
 
    ok = checkCompartmentName(self,comp_name)
 
+See Also
+--------
+
+- xolotl.add
+
 %}
 
 function ok = checkCompartmentName(self,comp_name)

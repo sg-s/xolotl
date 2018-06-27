@@ -67,13 +67,13 @@ for file in glob.glob("@xolotl/*.m"):
 		# insert hyperlinks to other methods 
 		if thisline.lower().find('- xolotl.') != -1:
 			# ok, there is something here...
-			method_name = thisline.lower().strip('- xolotl')
+			method_name = thisline.strip('- xolotl')
 			method_name = method_name.strip('.')
 			method_name = method_name.strip()
 			print('linked method found:')
 			print(method_name)
 
-			out_file.write('\n - `' + method_name + ' ' + method_url_root + method_name + '>`_ \n')
+			out_file.write('\n - `' + method_name + ' ' + method_url_root + method_name.lower() + '>`_ \n')
 
 
 		else:

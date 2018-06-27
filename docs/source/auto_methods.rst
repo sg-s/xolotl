@@ -86,6 +86,12 @@ is used internally by ``xolotl`` to verify that the compartment name you are usi
 
    ok = checkCompartmentName(self,comp_name)
 
+See Also
+--------
+
+
+ - `add <https://xolotl.readthedocs.io/en/latest/auto_methods.html#add>`_ 
+
 
 
 
@@ -170,16 +176,23 @@ Test coverage
 
 .. _copy:
 
- copy
- ^^^^
+copy
+^^^^
 
- copies a xolotl object. ``copy`` creates an identical copy of a xolotl object that can be manipulated seperately. Both copies will use the same binary to integrate, unless you add a new component to one of them. Syntax ::
+copies a xolotl object. ``copy`` creates an identical copy of a xolotl object that can be manipulated seperately. Both copies will use the same binary to integrate, unless you add a new component to one of them. Syntax ::
 
-   x2 = copy(x);
+    x2 = copy(x);
 
- .. warning::
+.. warning::
 
-   Some read-only properties in a xolotl object may not be copied over. 
+Some read-only properties in a xolotl object may not be copied over. 
+
+
+.. warning::
+
+Do not make vectors of ``xolotl`` objects, as it may lead to undefined behavior. 
+
+
 
 
 
@@ -193,15 +206,23 @@ Test coverage
 
 .. _findNSpikes:
 
- findNSpikes
- ^^^^^^^^^^^
+findNSpikes
+^^^^^^^^^^^
 
- static method of ``xolotl`` that computes the number of spikes in a voltage trace. Example use ::
+static method of ``xolotl`` that computes the number of spikes in a voltage trace. Example use ::
 
    f = findNSpikes(V);
    f = findNSpikes(V, on_off_thresh)
 
- ``V`` is a vector of voltages, and ``on_off_thresh`` is an optional argument that determines the threshold above which a voltage fluctuation is considered a spikes. The default is 0. 
+``V`` is a vector of voltages, and ``on_off_thresh`` is an optional argument that determines the threshold above which a voltage fluctuation is considered a spikes. The default is 0. 
+
+See Also
+--------
+
+
+ - `findNSpikeTimes <https://xolotl.readthedocs.io/en/latest/auto_methods.html#findnspiketimes>`_ 
+
+
 
 
 
@@ -211,6 +232,51 @@ Test coverage
 --------------
 
 ``findNSpikes`` is tested in: 
+
+
+
+
+.. _findNSpikeTimes:
+
+findNSpikeTimes
+^^^^^^^^^^^^^^^
+
+static method of ``xolotl`` that returns a vector of spike times from a voltage trace. Spikes are defined as voltage crossings across a threshold. Example use ::
+
+   spiketimes = findNSpikeTimes(V,n_spikes,on_off_thresh);
+
+
+``V`` is a vector of voltages, and ``on_off_thresh`` is an optional argument that determines the threshold above which a voltage fluctuation is considered a spikes. The default is 0. ``n_spikes`` is the number of spikes it should look for, and ``spiketimes`` will always be a vector ``n_spikes`` elments long. 
+
+See Also
+--------
+
+
+ - `findNSpikes <https://xolotl.readthedocs.io/en/latest/auto_methods.html#findnspikes>`_ 
+
+
+
+
+
+
+
+
+Test coverage
+--------------
+
+``findNSpikeTimes`` is tested in: 
+
+
+
+
+.. _getGatingFunctions:
+
+
+
+Test coverage
+--------------
+
+``getGatingFunctions`` is tested in: 
 
 
 

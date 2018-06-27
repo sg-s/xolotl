@@ -1,11 +1,27 @@
-%              _       _   _
-%   __  _____ | | ___ | |_| |
-%   \ \/ / _ \| |/ _ \| __| |
-%    >  < (_) | | (_) | |_| |
-%   /_/\_\___/|_|\___/ \__|_|
-%
-% help: recover gating functions from CPP file
-%
+%{
+              _       _   _ 
+   __  _____ | | ___ | |_| |
+   \ \/ / _ \| |/ _ \| __| |
+    >  < (_) | | (_) | |_| |
+   /_/\_\___/|_|\___/ \__|_|
+
+getGatingFunctions
+^^^^^^^^^^^^^^^^^^
+
+static method of ``xolotl`` that returns function handles that represent the gating and activation functions of a particular conductance. Example use ::
+
+   [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance)
+
+
+where ``conductance`` is a string that specifies a conductance C++ header file. The outputs are function handles that can be evaluated independently. This method is used internally in ``xolotl.show()``
+
+See Also
+--------
+
+- xolotl.show
+
+
+%}
 
 function [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance)
 
