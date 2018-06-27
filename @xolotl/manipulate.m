@@ -1,25 +1,25 @@
-%              _       _   _
-%   __  _____ | | ___ | |_| |
-%   \ \/ / _ \| |/ _ \| __| |
-%    >  < (_) | | (_) | |_| |
-%   /_/\_\___/|_|\___/ \__|_|
-%
-% help: integrates, and generates UI to manipulate parameters
-% usage:
-%
-% assuming x is a xolotl object
-% 
-% manipualte all parameters:
-% x.manipulate() 
-%
-% manipualte some parameters:
-% x.manipulate('some*pattern')
-%
-% specify your own plot function:
-% x.manipulate_plot_func{1} = @some_func
-% where some_func accepts a xolotl object as the first argument
-% and two other inputs (for I_ext and V_clamp)
-% x.manipualte()
+%{ 
+           _       _   _
+__  _____ | | ___ | |_| |
+\ \/ / _ \| |/ _ \| __| |
+>  < (_) | | (_) | |_| |
+/_/\_\___/|_|\___/ \__|_|
+
+manipulate
+^^^^^^^^^^
+
+method that allows you to manipulate some or all parameters in a model hile visualizing its behaviour. Usage ::
+
+   x.manipulate();
+   x.manipulate('some*pattern')
+   x.manipulate({'parameter1','parameter2'})
+
+The simplest way to use ``manipulate`` is to simply call it with no arguments. By default, all the parameters are linked to sliders that you can play with. In models with a large number of parameters, this can get messy. You can selectively only manipualte some parameters whose names match a pattern using ``x.manipulate('some*pattern')``
+
+
+%}
+
+
 
 function manipulate(self, manipulate_these)
 
@@ -39,9 +39,6 @@ t_end = self.t_end;
 
 compartment_names = self.find('compartment');
 n = length(compartment_names);
-
-
-self.manipulate_plot_func{1}(self);
 
 
 
@@ -70,7 +67,7 @@ if nargin < 2
 
 else
 
-	if any(strfind(manipulate_these,'*'))
+	if ~iscell(manipulate_these) && any(strfind(manipulate_these,'*'))
 		% first find objects, then get them
 		manipulate_these = self.find(manipulate_these);
 	end
@@ -88,6 +85,9 @@ else
 	end
 end
 
+assert(~isempty(manipulate_these),'Manipulate was called with illegal or invalid parameters that did not resolve to anything.')
+
+self.manipulate_plot_func{1}(self);
 
 
 % semi-intelligently make the upper and lower bounds

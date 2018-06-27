@@ -17,6 +17,11 @@ public:
         gbar = gbar_;
 
         if (isnan(resistivity)) {resistivity = 1e-3;}
+
+        if (resistivity == 0)
+        {
+            mexErrMsgIdAndTxt("xolotl:Axial", "resistivity cannot be zero.");
+        }
     }
     
     void integrate(double dt);

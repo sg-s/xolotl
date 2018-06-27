@@ -463,11 +463,15 @@ void compartment::integrateSynapses(double V_prev, double dt, double delta_tempe
 
 void compartment::integrateVC(double V_prev, double Ca_prev, double dt, double delta_temperature)
 {
+
     // compute infinity values for V and Ca
     if (sigma_g == 0)
+    {
         V_inf = V_prev;
-    else
+    }
+    else {
         V_inf = (sigma_gE + (I_ext/A))/sigma_g;
+    }
 
     Ca_inf = Ca_in - (tau_Ca*phi*i_Ca*A*.5)/(F*vol); // microM
 
