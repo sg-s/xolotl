@@ -104,13 +104,7 @@ This method is inherited from the superclass ``cpplab``.
 
 .. _cleanup:
 
-cleanup
-^^^^^^^
 
-When the ``C++`` code compiles, it produces a binary and a ``.cpp`` file in your ``xolotl`` directory. These files are hashed so that repeated simulation does not require recompilation. If these files are too numerous or broken, you can erase them all by calling either ::
-
-  xolotl.cleanup
-  x.cleanup
 
 
 .. _compile:

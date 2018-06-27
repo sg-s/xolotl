@@ -1,15 +1,19 @@
-%              _       _   _ 
-%   __  _____ | | ___ | |_| |
-%   \ \/ / _ \| |/ _ \| __| |
-%    >  < (_) | | (_) | |_| |
-%   /_/\_\___/|_|\___/ \__|_|
-%
-% 
-% checkCompartmentName
-% ^^^^^^^^^^^^^^^^^^^^
-%
-% is used internally by ``xolotl`` to verify that the compartment name you are using is valid and legal. This method is called every time you add a compartment to a ``xolotl`` object. 
-%
+%{
+             _       _   _ 
+  __  _____ | | ___ | |_| |
+  \ \/ / _ \| |/ _ \| __| |
+   >  < (_) | | (_) | |_| |
+  /_/\_\___/|_|\___/ \__|_|
+
+
+checkCompartmentName
+^^^^^^^^^^^^^^^^^^^^
+
+is used internally by ``xolotl`` to verify that the compartment name you are using is valid and legal. This method is called every time you add a compartment to a ``xolotl`` object. Usage ::
+
+   ok = checkCompartmentName(self,comp_name)
+
+%}
 
 function ok = checkCompartmentName(self,comp_name)
 

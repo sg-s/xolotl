@@ -46,17 +46,20 @@ for file in glob.glob("@xolotl/*.m"):
 
 	for i in range(a,z):
 		thisline = lines[i]
-		thisline = thisline[2:]
+		thisline = thisline.strip('%}')
 		out_file.write(thisline)
 
 	out_file.write('\n\nTest coverage\n')
-	out_file.write('^^^^^^^^^^^^\n\n')
-	out_file.write(filename + ' is tested in: \n\n')
+	out_file.write('--------------\n\n')
+	out_file.write('``' + filename + '`` is tested in: \n')
 
 	# go over every file in /tests and check for this filename 
-	for testfile in glob.glob("../tests/*.m"):
+	for testfile in glob.glob("./tests/*.m"):
 		if filename in open(testfile).read():
-			out_file.write('\n' + os.path.basename(testfile) + '\n')
+
+			test_filename = os.path.basename(testfile)
+
+			out_file.write('\n`' + test_filename + ' <https://https://github.com/sg-s/xolotl/blob/master/%40xolotl/' + test_filename + '>_')
 			
 
 
