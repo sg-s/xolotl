@@ -5,7 +5,7 @@
 %   /_/\_\___/|_|\___/ \__|_|
 %
 % copy
-% ====
+% ^^^^
 %
 % copies a xolotl object. ``copy`` creates an identical copy of a xolotl object that can be manipulated seperately. Both copies will use the same binary to integrate, unless you add a new component to one of them. Syntax ::
 %

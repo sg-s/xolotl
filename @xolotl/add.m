@@ -5,7 +5,7 @@
 %   /_/\_\___/|_|\___/ \__|_|
 %
 % add
-% ===
+% ^^^
 %
 % adds a cpplab object to a xolotl object.
 %

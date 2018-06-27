@@ -5,7 +5,7 @@
 %   /_/\_\___/|_|\___/ \__|_|
 %
 % compile
-% =======
+% ^^^^^^^
 %
 % compiles a executable binary form a transpiled ``C++`` file. These are stored in your ``xolotl`` directory. ``xolotl`` automatically compiles when it needs to. You can turn this functionality off by setting ::
 %

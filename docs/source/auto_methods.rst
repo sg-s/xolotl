@@ -21,7 +21,7 @@ In the rest of this documentation we will assume a ``xolotl`` object named ``x``
 .. _add:
 
  add
- ===
+ ^^^
 
  adds a cpplab object to a xolotl object.
 
@@ -49,7 +49,7 @@ add is tested in:
 .. _benchmark:
 
  benchmark
- =========
+ ^^^^^^^^^
 
  performs a quick benchmarking of a given ``xolotl`` model. ``benchmark`` first varies the simulation time step, and measures how quickly the model integrates. It then varies ``t_end``, and measures how fast it integrates at a fixed ``sim_dt``. Usage ::
 
@@ -68,7 +68,7 @@ benchmark is tested in:
 .. _checkCompartmentName:
 
  checkCompartmentName
- ====================
+ ^^^^^^^^^^^^^^^^^^^^
 
  is used internally by ``xolotl`` to verify that the compartment name you are using is valid and legal. This method is called every time you add a compartment to a ``xolotl`` object. 
 
@@ -85,7 +85,7 @@ checkCompartmentName is tested in:
 .. _cleanup:
 
  cleanup
- =======
+ ^^^^^^^
 
  Usage ::
 
@@ -107,7 +107,7 @@ cleanup is tested in:
 .. _compile:
 
  compile
- =======
+ ^^^^^^^
 
  compiles a executable binary form a transpiled ``C++`` file. These are stored in your ``xolotl`` directory. ``xolotl`` automatically compiles when it needs to. You can turn this functionality off by setting ::
 
@@ -131,7 +131,7 @@ compile is tested in:
 .. _contributingCurrents:
 
  contributingCurrents
- ====================
+ ^^^^^^^^^^^^^^^^^^^^
 
  calculates the contributions of each current at every point in a voltage trace. This is used internally in ``xolotl.plot`` to color voltage traces. Syntax ::
 
@@ -151,7 +151,7 @@ contributingCurrents is tested in:
 .. _copy:
 
  copy
- ====
+ ^^^^
 
  copies a xolotl object. ``copy`` creates an identical copy of a xolotl object that can be manipulated seperately. Both copies will use the same binary to integrate, unless you add a new component to one of them. Syntax ::
 

@@ -5,7 +5,7 @@
 %   /_/\_\___/|_|\___/ \__|_|
 %
 % contributingCurrents
-% ====================
+% ^^^^^^^^^^^^^^^^^^^^
 %
 % calculates the contributions of each current at every point in a voltage trace. This is used internally in ``xolotl.plot`` to color voltage traces. Syntax ::
 %

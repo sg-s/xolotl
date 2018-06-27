@@ -5,7 +5,7 @@
 %   /_/\_\___/|_|\___/ \__|_|
 %
 % connect
-% =======
+% ^^^^^^^
 %
 % Connects two compartments with a synapse. The basic syntax is ::
 %

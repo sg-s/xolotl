@@ -12,7 +12,7 @@
    quickstart
    installing
    howdoi
-   methods
+   auto_methods
    compilers
    units
    contributing
