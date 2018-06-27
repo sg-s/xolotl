@@ -62,12 +62,14 @@ Test coverage
 
 .. _benchmark:
 
- benchmark
- ^^^^^^^^^
+benchmark
+^^^^^^^^^
 
- performs a quick benchmarking of a given ``xolotl`` model. ``benchmark`` first varies the simulation time step, and measures how quickly the model integrates. It then varies ``t_end``, and measures how fast it integrates at a fixed ``sim_dt``. Usage ::
+performs a quick benchmarking of a given ``xolotl`` model. ``benchmark`` irst varies the simulation time step, and measures how quickly the model ntegrates. It then varies ``t_end``, and measures how fast it integrates at a fixed ``sim_dt``. Usage ::
 
-   x.benchmark;
+x.benchmark;
+
+
 
 
 
@@ -113,6 +115,7 @@ Use of this method will trigger a warning every time it is called. You do not ne
 
 
 
+
 Test coverage
 --------------
 
@@ -124,8 +127,8 @@ Test coverage
 
 .. _compile:
 
- compile
- ^^^^^^^
+compile
+^^^^^^^
 
 
 

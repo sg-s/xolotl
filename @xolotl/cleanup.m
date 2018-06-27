@@ -13,6 +13,7 @@ A static method that cleans up all transpiled ``C++`` and compiled binary files.
    x.cleanup
 
 Use of this method will trigger a warning every time it is called. You do not need to use this in normal use, but can call this to force a recompile, or to delete old and unused binaries. 
+
 %}
 
 function cleanup()
