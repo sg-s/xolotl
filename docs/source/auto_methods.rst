@@ -164,6 +164,64 @@ Test coverage
 
 
 
+.. _connect:
+
+connect
+^^^^^^^
+
+Connects two compartments with a synapse. The basic syntax is ::
+
+   x.connect('Comp1', 'Comp2', 'SynapseType', ...)
+
+The first two arguments are the presynaptic and postsynaptic compartment ames. For example ::
+
+    % connects two different neurons with an electrical synapse
+    x.connect('AB', 'LP')
+
+Axial synapses are a special type of electrical synapse that are created etween spatially-discrete compartments in a morphological structure. Electrical and axial synapses differ in how they are integrated (see ayan & Abbott 2001, Ch. 5-6).
+
+``connect`` defaults to an axial synapse when the type of synapse is not pecified and either compartment has a defined ``tree_idx`` (which dentifies the compartment as a part of a multi-compartment neuron model). Otherwise, the created synapse is electrical. ::
+
+   % create an (electrical or axial) synapse between AB and LP with gbar f NaN
+   x.connect('AB', 'LP')
+   % create an (electrical or axial) synapse between AB and LP with gbar f 10
+   x.connect('AB', 'LP', 10)
+
+
+The most common way to produce a synapse is to pass the synapse type and hen any properties. This is used to create chemical synapses. For example, o add a glutamatergic synapse (from Prinz *et al.* 2004) between ``AB`` nd ``LP`` with a maximal conductance of 100: ::
+
+   x.connect('AB', 'LP', 'prinz/Glut', 'gbar', 100)
+
+
+Synapses can also be connected by passing a ``cpplab`` object to the `connect`` method ::
+
+
+    % create a synapse using the cpplab object 'syn_cpplab' 
+    x.connect('AB', 'LP', syn_cpplab)
+
+
+The following properties can be specified
+
+======================= ================
+Name                    PropertyName
+Maximal conductance     ``gbar``
+Reversal potential      ``E``
+Activation variable     ``s``
+======================= ================
+
+
+
+
+
+Test coverage
+--------------
+
+``connect`` is tested in: 
+
+- `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
+
+
+
 .. _contributingCurrents:
 
 contributingCurrents
@@ -425,6 +483,43 @@ Test coverage
 
 
 
+.. _plot:
+
+plot
+^^^^
+
+Makes a plot of voltage and calcium time series of all compartments. The default option is to color the voltage traces by the dominant current at that point using  ``contributingCurrents``. Usage ::
+
+   x.plot()
+
+See Also
+--------
+
+
+ - `manipulate <https://xolotl.readthedocs.io/en/latest/auto_methods.html#manipulate>`_ 
+
+ - `contributingCurrents <https://xolotl.readthedocs.io/en/latest/auto_methods.html#contributingcurrents>`_ 
+
+
+
+
+
+
+Test coverage
+--------------
+
+``plot`` is tested in: 
+
+- `custom_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/custom_fI.m>`_ 
+- `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
+- `test_clamp.m <https://github.com/sg-s/xolotl/blob/master/tests/test_clamp.m>`_ 
+- `test_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/test_fI.m>`_ 
+- `test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/tests/test_integral_control.m>`_ 
+- `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
+- `test_stg_temperature.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg_temperature.m>`_ 
+
+
+
 .. _rebase:
 
 rebase
@@ -443,6 +538,52 @@ Test coverage
 --------------
 
 ``rebase`` is tested in: 
+
+
+
+
+.. _reset:
+
+reset
+^^^^^
+
+Resets a xolotl object to some default state. Usage ::
+
+   x.reset()
+   x.reset('snap_name')
+
+reset called without any arguments resets the model as best as it can -- voltages are set to -60 mV, Calcium in every compartment is set to the internal value, and the gating variables of every conductance are reset. 
+
+``reset`` can also be called with a string argument, which is the name of a snapshot previously stored in the model object. Then, ``reset`` reconfigures the parameters of the model to match that snapshot. This is useful for working with a model, changing parameters, evolving it, and then coming back to where you started off from. 
+
+Example
+-------
+
+	% assuming a xolotl object is set up
+	x.integrate;
+	x.snapshot('base');
+	x.set('*gbar') = 1e-3; % turn off all conductances
+	x.integrate;
+	% now go back to original state
+	x.reset('base')
+
+	
+
+See Also
+--------
+
+
+ - `snapshot <https://xolotl.readthedocs.io/en/latest/auto_methods.html#snapshot>`_ 
+
+
+
+
+
+
+Test coverage
+--------------
+
+``reset`` is tested in: 
 
 
 
@@ -521,6 +662,102 @@ Test coverage
 --------------
 
 ``slice`` is tested in: 
+
+
+
+
+.. _snapshot:
+
+snapshot
+^^^^^^^^
+
+Saves the current state of a ``xolotl`` object for future use. Usage ::
+
+   x.snapshot('snap_name')
+
+
+.. warning::
+
+Creating two snapshots with the same name will overwrite the first. 
+
+
+Example
+-------
+
+    % assuming a xolotl object is set up
+    x.integrate;
+    x.snapshot('base');
+    x.set('*gbar') = 1e-3; % turn off all conductances
+	x.integrate;
+
+	% now go back to original state
+	x.reset('base')
+
+	
+
+See Also
+--------
+
+
+ - `reset <https://xolotl.readthedocs.io/en/latest/auto_methods.html#reset>`_ 
+
+
+
+
+
+
+Test coverage
+--------------
+
+``snapshot`` is tested in: 
+
+
+
+
+.. _transpile:
+
+transpile
+^^^^^^^^^
+
+Generate a C++ file that constructs the model, integrates it, and moves parameters and data from MATLAB to C++ and back. Usage ::
+
+   x.transpile;
+
+
+.. warning::
+
+``transpile`` assumes that your ``xolotl`` object has a valid hash. Empty hashes will throw an error. 
+
+
+Example
+-------
+
+    % assuming a xolotl object is set up
+    x.transpile;
+
+    % now view the transpiled code
+    x.viewCode;
+
+	
+
+See Also
+--------
+
+
+ - `compile <https://xolotl.readthedocs.io/en/latest/auto_methods.html#compile>`_ 
+
+ - `viewCode <https://xolotl.readthedocs.io/en/latest/auto_methods.html#viewcode>`_ 
+
+
+
+
+
+
+
+Test coverage
+--------------
+
+``transpile`` is tested in: 
 
 
 

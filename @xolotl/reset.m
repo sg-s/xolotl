@@ -20,12 +20,11 @@ reset called without any arguments resets the model as best as it can -- voltage
 Example
 -------
 
-    % assuming a xolotl object is set up
-    x.integrate;
-    x.snapshot('base');
-    x.set('*gbar') = 1e-3; % turn off all conductances
+	% assuming a xolotl object is set up
 	x.integrate;
-
+	x.snapshot('base');
+	x.set('*gbar') = 1e-3; % turn off all conductances
+	x.integrate;
 	% now go back to original state
 	x.reset('base')
 

@@ -15,7 +15,7 @@ for file in glob.glob("@xolotl/*.m"):
 
 	filename = file.replace('.m','')
 	filename = filename.strip()
-	filename = filename.strip('@xolotl/')
+	filename = filename.replace('@xolotl/','')
 
 
 	print(filename)
@@ -60,18 +60,15 @@ for file in glob.glob("@xolotl/*.m"):
 
 	for i in range(a,z):
 		thisline = lines[i]
-		thisline = thisline.strip('%}')
+		thisline = thisline.replace('%}','')
 
 
 
 		# insert hyperlinks to other methods 
 		if thisline.lower().find('- xolotl.') != -1:
 			# ok, there is something here...
-			method_name = thisline.strip('- xolotl')
-			method_name = method_name.strip('.')
+			method_name = thisline.replace('- xolotl.','')
 			method_name = method_name.strip()
-			print('linked method found:')
-			print(method_name)
 
 			out_file.write('\n - `' + method_name + ' ' + method_url_root + method_name.lower() + '>`_ \n')
 
