@@ -10,11 +10,16 @@ header_str = '.. _method_name:'
 
 
 for file in glob.glob("@xolotl/*.m"):
-    
 
 	filename = file.replace('.m','')
 	filename = filename.strip()
 	filename = filename.strip('@xolotl/')
+
+
+	print(filename)
+
+	if len(filename) == 0:
+		continue
 
 	lines = tuple(open(file, 'r'))
 
@@ -29,15 +34,22 @@ for file in glob.glob("@xolotl/*.m"):
 
 		if thisline == filename:
 			a = i
+			break
+
+	for i in range(0,len(lines)):
+		
+		thisline = lines[i].strip('%')
+		thisline = thisline.strip()
 			
 		if thisline.lower().find('function') != -1:
 			z = i
+			break
 
 
 	if a < 0 or z < 0:
 		continue
 
-	print(filename)
+	
 
 	this_header_str = header_str.replace('method_name',filename)
 	out_file.write(this_header_str)
@@ -59,7 +71,7 @@ for file in glob.glob("@xolotl/*.m"):
 
 			test_filename = os.path.basename(testfile)
 
-			out_file.write('\n`' + test_filename + ' <https://https://github.com/sg-s/xolotl/blob/master/%40xolotl/' + test_filename + '>_')
+			out_file.write('\n`' + test_filename + ' <https://https://github.com/sg-s/xolotl/blob/master/%40xolotl/' + test_filename + '>`_')
 			
 
 
