@@ -5,50 +5,20 @@
 # that the code is correct; but if you get an error here, 
 # it prevents you from committing, which is a good thing 
 
-RED='\033[0;31m'
-GREEN='\033[1;32m'
-NC='\033[0m' # No Color
-
-echo "Cleaning up old mexBridge files and binaries"
-rm *mexBridge*
-
-# echo "Running MEX/MATLAB tests..."
-# matlab -nojvm -nosplash -nodisplay -nodesktop -r "run('tests/run_all_tests.m'); exit;"
-
-# echo "Trying to compile C++ code using MEX..."
-
-# for a in examples/mex/*.cpp
-# do 
-# 	printf "Compiling $a with mex..."
-# 	mex -silent $a
-# 	if [ $? -eq 0 ]; then
-# 	    printf "${GREEN}[OK]${NC}\n"
-# 	else
-# 	    printf "${GREEN}[FAIL]${NC}\n"
-# 	    exit 1
-# 	fi
-# done
-
-# echo "Trying to compile C++ code using gcc..."
-
-# for a in tests/g++/*.cpp
-# do 
-# 	printf "Compiling $a with g++..."
-# 	g++  $a
-# 	if [ $? -eq 0 ]; then
-# 	    printf "${GREEN}[OK]${NC}\n"
-# 	else
-# 	    printf "${GREEN}[FAIL]${NC}\n"
-# 	    exit 1
-# 	fi
-# done
-
-# echo "All code successfully compiled!"
 
 
 # copy this file into the repository so that others can use it
 cp .git/hooks/pre-commit dev/pre-commit
 
+
+# make the docs 
+python make_docs.py
+mv auto_methods.rst ./docs/source/auto_methods.rst
+cat ./docs/source/methods_header.rst ./docs/source/auto_methods.rst > auto_methods.rst
+mv auto_methods.rst ./docs/source/auto_methods.rst
+
+
 # automatic build number
 git log master --pretty=oneline | wc -l > build_number
 git add build_number
+git add *.rst
