@@ -38,6 +38,8 @@ public:
         m = m_;
 
         if (isnan (m)) { m = 0; }
+        if (isnan (tau_g_)) { tau_g_ = 5e3; }
+        if (isnan (tau_m_)) { tau_m_ = std::numeric_limits<double>::infinity(); }
     }
 
     
