@@ -27,7 +27,7 @@ These conductances come from Liu *et al.* 1998. ``'gbar'`` is the maximal conduc
   x = xolotl;
 
   % add a compartment
-  x.add('HH', 'compartment', 'Cm', 10, 'A', 0.01);
+  x.add('compartment', 'HH', 'Cm', 10, 'A', 0.01);
 
   % add conductances
   x.HH.add('liu/NaV', 'gbar', 1000, 'E', 50);
