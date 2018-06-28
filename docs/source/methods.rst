@@ -54,7 +54,7 @@ Membrane potential      ``V``
 
 To add a compartment named ``HH`` with a membrane capacitance ``Cm = 10`` ::
 
-  x.add('HH', 'compartment', 'Cm', 10);
+  x.add('compartment', 'HH', 'Cm', 10);
 
 To access properties of that compartment, use the syntax ``x.HH``. To add a conductance to that compartment ::
 
