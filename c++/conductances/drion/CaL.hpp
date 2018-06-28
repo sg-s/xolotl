@@ -44,8 +44,15 @@ string CaL::getClass(){
 
 void CaL::integrate(double V, double Ca, double dt, double delta_temp)
 {
+    // update E by copying E_Ca from the cell
+    E = container->E_Ca;
+    
     m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
     g = gbar*(d)*0.00018/(0.00018 + Ca);
+
+    // compute the specific calcium current and update it in the cell
+    double this_I = g*(V-E);
+    container->i_Ca += this_I;
 }
 
 
