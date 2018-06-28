@@ -28,7 +28,7 @@ add
 Adds a compartment, conductance, or synapse to the ``xolotl`` object. To add
 a compartment::
 
-  x.add('compartmentName','compartment','PropertyName','PropertyValue', ...)
+  x.add('compartment', 'compartmentName', 'PropertyName','PropertyValue', ...)
 
 Valid compartment properties are
 
