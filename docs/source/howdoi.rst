@@ -54,12 +54,12 @@ At this point you have created a free-floating object. You can inspect it just l
 
 and then add it to the ``xolotl`` object tree: ::
 
-  x.add('AB',AB);
+  x.add('AB', AB);
 
 
 A handy shortcut for this is: ::
 
-  x.add('AB','compartment','vol',.01)
+  x.add('compartment', 'AB', 'vol', .01)
 
 
 This shortcut syntax will be used for the rest of the documentation, but remember that you can also do things the "long" way.
