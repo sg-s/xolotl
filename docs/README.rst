@@ -59,4 +59,7 @@ Note that you can get speeds up to 300x realtime!
 4. Optimize Models Really Quickly
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-(coming soon)
+``xolotl`` uses ``MATLAB``'s Global Optimization Toolbox to optimize model parameters
+to satisfy arbitrary cost functions. The ``procrustes`` toolbox for ``xolotl`` optimizes
+chosen parameters in parallel to fit a cost function using pattern search, particle swarm, or
+a genenetic algorithm.
