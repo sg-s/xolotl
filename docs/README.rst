@@ -39,7 +39,7 @@ That's it. To integrate it and see the time evolution of the voltage ::
 
   V = x.integrate;
 
-.. figure:: https://user-images.githubusercontent.com/6005346/30713658-ff96faf4-9edd-11e7-9db1-a2ca4f2f0567.png
+.. figure:: https://user-images.githubusercontent.com/30243182/42067394-0801376e-7b14-11e8-8eb3-b20b64ffaf9f.png
 
 ``xolotl`` handles all of the compilation/linking/etc. for you.
 
