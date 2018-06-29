@@ -222,6 +222,10 @@ end % end methods
 
 methods (Static)
 
+    C = matrixCost(M1,M2);
+
+    [M, V_lim, dV_lim] = V2matrix(V, V_lim, dV_lim);
+
     cleanup;
     curr_index = contributingCurrents(V,I);
     C = coincidence(model_spiketimes, data_spiketimes, dt, Delta);

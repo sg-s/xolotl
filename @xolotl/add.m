@@ -18,9 +18,7 @@ The add method is the most important way you construct models. Usage ::
 
 There are two primary ways of using ``add``. The first is to first construct a ``cpplab`` object (here called AB), and then add it to the ``xolotl`` object using ``x.add(AB,'AB')``. ``xolotl`` requires that every compartment is named, and the name has to be specified as a string argument. 
 
-.. warning::
 
-Some read-only properties in a xolotl object may not be copied over. 
 
 %}
 

@@ -11,7 +11,7 @@ This page lists the methods of the ``xolotl`` class in ``MATLAB``. This can serv
 
 In the rest of this documentation we will assume a ``xolotl`` object named ``x`` that can be created using
 
-  x = xolotl;
+    x = xolotl;
 
 .. hint::
 
@@ -33,9 +33,7 @@ The add method is the most important way you construct models. Usage ::
 
 There are two primary ways of using ``add``. The first is to first construct a ``cpplab`` object (here called AB), and then add it to the ``xolotl`` object using ``x.add(AB,'AB')``. ``xolotl`` requires that every compartment is named, and the name has to be specified as a string argument. 
 
-.. warning::
 
-Some read-only properties in a xolotl object may not be copied over. 
 
 
 
@@ -60,7 +58,7 @@ Test coverage
 benchmark
 ^^^^^^^^^
 
-performs a quick benchmarking of a given ``xolotl`` model. ``benchmark`` irst varies the simulation time step, and measures how quickly the model ntegrates. It then varies ``t_end``, and measures how fast it integrates at a fixed ``sim_dt``. Usage ::
+performs a quick benchmarking of a given ``xolotl`` model. ``benchmark`` first varies the simulation time step, and measures how quickly the model integrates. It then varies ``t_end``, and measures how fast it integrates at a fixed ``sim_dt``. Usage ::
 
     x.benchmark;
 
@@ -483,6 +481,33 @@ Test coverage
 
 
 
+.. _matrixCost:
+
+matrixCost
+^^^^^^^^^^
+a static method to compute the distance between two LeMasson matrices. This is a useful way to determine how similar two voltage traces are. 
+
+See Also
+--------
+
+LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neu- roscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
+
+
+ - `V2matrix <https://xolotl.readthedocs.io/en/latest/auto_methods.html#v2matrix>`_ 
+
+
+
+
+
+
+Test coverage
+--------------
+
+``matrixCost`` is tested in: 
+
+
+
+
 .. _plot:
 
 plot
@@ -757,6 +782,42 @@ Test coverage
 --------------
 
 ``transpile`` is tested in: 
+
+
+
+
+.. _V2matrix:
+
+V2matrix
+^^^^^^^^
+a static method that converts a voltage trace into a LeMasson matrix.  Usage ::
+
+   [M, V_lim, dV_lim] = V2matrix(V, V_lim, dV_lim)
+
+where V is a vector (a voltage time series), and ``V_lim`` and ``dV_lim`` are two-element vectors that specify the lower and upper bounds of ``V`` and ``dV``
+
+This static method allows you to create a delay-embedding of a voltage trace, and then discretize the space and count the number of points in each bin. The resultant matrix is sometimes called a LeMasson matrix. ``M`` is the LeMasson matrix, which is always of size ``101x101``. 
+
+If you do not specify ``V_lim`` and ``dV_lim``, they will be computed automatically and returned. 
+
+See Also
+--------
+
+LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neu- roscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
+
+
+ - `matrixCost <https://xolotl.readthedocs.io/en/latest/auto_methods.html#matrixcost>`_ 
+
+
+
+
+
+
+
+Test coverage
+--------------
+
+``V2matrix`` is tested in: 
 
 
 

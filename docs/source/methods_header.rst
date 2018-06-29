@@ -11,7 +11,7 @@ This page lists the methods of the ``xolotl`` class in ``MATLAB``. This can serv
 
 In the rest of this documentation we will assume a ``xolotl`` object named ``x`` that can be created using
 
-  x = xolotl;
+    x = xolotl;
 
 .. hint::
 
