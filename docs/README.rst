@@ -29,9 +29,11 @@ architecture of the underlying ``C++`` code. For example, here, we set up a
 compartment with some channels in it: ::
 
   x = xolotl;
-  x.add('AB','compartment','Cm',10,'A',0.0628,'vol',1,'phi',19,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',200);
-  x.AB.add('prinz-approx/NaV','gbar',1000,'E',50);
-  x.AB.add('prinz-approx/Kd','gbar',1000,'E',-80);
+  x.add('compartment', 'HH', 'Cm', 10, 'A', 0.01);
+  x.HH.add('liu/NaV', 'gbar', 1000);
+  x.HH.add('liu/Kd', 'gbar', 300);
+  x.HH.add('Leak', 'gbar', 0.1);
+  x.I_ext = 0.1;
 
 That's it. To integrate it and see the time evolution of the voltage ::
 
