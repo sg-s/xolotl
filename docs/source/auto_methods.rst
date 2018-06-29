@@ -9,9 +9,10 @@ Methods
 
 This page lists the methods of the ``xolotl`` class in ``MATLAB``. This can serve as a reference for advanced usage. 
 
-In the rest of this documentation we will assume a ``xolotl`` object named ``x`` that can be created using
+In the rest of this documentation we will assume a ``xolotl`` object named ``x`` that can be created using :: 
 
-    x = xolotl;
+     x = xolotl;
+
 
 .. hint::
 
@@ -46,6 +47,7 @@ Test coverage
 
 - `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
 - `test_clamp.m <https://github.com/sg-s/xolotl/blob/master/tests/test_clamp.m>`_ 
+- `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
 - `test_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/test_fI.m>`_ 
 - `test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/tests/test_integral_control.m>`_ 
 - `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
@@ -72,6 +74,7 @@ Test coverage
 
 ``benchmark`` is tested in: 
 
+- `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
 
 
 
@@ -99,6 +102,7 @@ Test coverage
 
 ``checkCompartmentName`` is tested in: 
 
+- `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
 
 
 
@@ -159,6 +163,7 @@ Test coverage
 
 ``compile`` is tested in: 
 
+- `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
 
 
 
@@ -171,14 +176,14 @@ Connects two compartments with a synapse. The basic syntax is ::
 
    x.connect('Comp1', 'Comp2', 'SynapseType', ...)
 
-The first two arguments are the presynaptic and postsynaptic compartment ames. For example ::
+The first two arguments are the presynaptic and postsynaptic compartment names. For example ::
 
     % connects two different neurons with an electrical synapse
     x.connect('AB', 'LP')
 
-Axial synapses are a special type of electrical synapse that are created etween spatially-discrete compartments in a morphological structure. Electrical and axial synapses differ in how they are integrated (see ayan & Abbott 2001, Ch. 5-6).
+Axial synapses are a special type of electrical synapse that are created between spatially-discrete compartments in a morphological structure. Electrical and axial synapses differ in how they are integrated (see Dayan & Abbott 2001, Ch. 5-6).
 
-``connect`` defaults to an axial synapse when the type of synapse is not pecified and either compartment has a defined ``tree_idx`` (which dentifies the compartment as a part of a multi-compartment neuron model). Otherwise, the created synapse is electrical. ::
+``connect`` defaults to an axial synapse when the type of synapse is not specified and either compartment has a defined ``tree_idx`` (which identifies the compartment as a part of a multi-compartment neuron model). Otherwise, the created synapse is electrical. ::
 
    % create an (electrical or axial) synapse between AB and LP with gbar f NaN
    x.connect('AB', 'LP')
@@ -186,12 +191,12 @@ Axial synapses are a special type of electrical synapse that are created etween 
    x.connect('AB', 'LP', 10)
 
 
-The most common way to produce a synapse is to pass the synapse type and hen any properties. This is used to create chemical synapses. For example, o add a glutamatergic synapse (from Prinz *et al.* 2004) between ``AB`` nd ``LP`` with a maximal conductance of 100: ::
+The most common way to produce a synapse is to pass the synapse type and hen any properties. This is used to create chemical synapses. For example, o add a glutamatergic synapse (from Prinz *et al.* 2004) between ``AB`` and ``LP`` with a maximal conductance of 100: ::
 
    x.connect('AB', 'LP', 'prinz/Glut', 'gbar', 100)
 
 
-Synapses can also be connected by passing a ``cpplab`` object to the `connect`` method ::
+Synapses can also be connected by passing a ``cpplab`` object to the ``connect`` method ::
 
 
     % create a synapse using the cpplab object 'syn_cpplab' 
@@ -783,6 +788,7 @@ Test coverage
 
 ``transpile`` is tested in: 
 
+- `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
 
 
 

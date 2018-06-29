@@ -27,3 +27,6 @@ x.t_end = 1e3;
 
 x.plot;
 prettyFig();
+
+
+x.benchmark;
