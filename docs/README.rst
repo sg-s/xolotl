@@ -46,13 +46,21 @@ That's it. To integrate it and see the time evolution of the voltage ::
 2. It's Fast
 ^^^^^^^^^^^^
 Because ``xolotl`` is written in ``C++``, it's quite fast. Here are some benchmarks
-for a single-compartment Hodgkin-Huxley model with 7 conductances.
-Note that you can get speeds up to 300x realtime!
+for a single-compartment Hodgkin-Huxley model with sodium, potassium, and passive leak conductances. ::
 
-.. figure:: https://user-images.githubusercontent.com/6005346/38319588-223ab634-3800-11e8-954c-845c0692d4a0.png
+  x.benchmark;
+
+.. figure:: https://user-images.githubusercontent.com/30243182/42105769-9c1c407a-7b9f-11e8-86fb-8fc56eac9ff6.png
 
 3. Manipulate Models in Real-time
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Networks in ``xolotl`` can be manipulated in real-time using the graphical interface. Any parameter
+in ``xolotl`` can be accessed by a slider. Simulations are displayed by a chosen visualization function.
+Here, we manipulate the synaptic maximal conductances of a `three neuron model`__ and display using
+the ``xolotl`` ``plot`` function.
+
+.. _Prinz: https://www.ncbi.nlm.nih.gov/pubmed/15558066
+__ Prinz_
 
 .. figure:: https://user-images.githubusercontent.com/6005346/30785272-aef9fb44-a132-11e7-84a6-25fd8e58470a.gif
 
