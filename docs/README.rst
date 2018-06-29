@@ -72,6 +72,8 @@ __ Prinz_
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ``xolotl`` uses ``MATLAB``'s Global Optimization Toolbox to optimize model parameters
-to satisfy arbitrary cost functions. The ``procrustes`` toolbox for ``xolotl`` optimizes
+to satisfy arbitrary cost functions. The procrustes_ toolbox for ``xolotl`` optimizes
 chosen parameters in parallel to fit a cost function using pattern search, particle swarm, or
 a genenetic algorithm.
+
+.. _procrustes: https://github.com/sg-s/procrustes
