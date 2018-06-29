@@ -9,9 +9,10 @@ Methods
 
 This page lists the methods of the ``xolotl`` class in ``MATLAB``. This can serve as a reference for advanced usage. 
 
-In the rest of this documentation we will assume a ``xolotl`` object named ``x`` that can be created using
+In the rest of this documentation we will assume a ``xolotl`` object named ``x`` that can be created using :: 
 
-  x = xolotl;
+     x = xolotl;
+
 
 .. hint::
 
@@ -33,9 +34,7 @@ The add method is the most important way you construct models. Usage ::
 
 There are two primary ways of using ``add``. The first is to first construct a ``cpplab`` object (here called AB), and then add it to the ``xolotl`` object using ``x.add(AB,'AB')``. ``xolotl`` requires that every compartment is named, and the name has to be specified as a string argument. 
 
-.. warning::
 
-Some read-only properties in a xolotl object may not be copied over. 
 
 
 
@@ -48,6 +47,7 @@ Test coverage
 
 - `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
 - `test_clamp.m <https://github.com/sg-s/xolotl/blob/master/tests/test_clamp.m>`_ 
+- `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
 - `test_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/test_fI.m>`_ 
 - `test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/tests/test_integral_control.m>`_ 
 - `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
@@ -60,7 +60,7 @@ Test coverage
 benchmark
 ^^^^^^^^^
 
-performs a quick benchmarking of a given ``xolotl`` model. ``benchmark`` irst varies the simulation time step, and measures how quickly the model ntegrates. It then varies ``t_end``, and measures how fast it integrates at a fixed ``sim_dt``. Usage ::
+performs a quick benchmarking of a given ``xolotl`` model. ``benchmark`` first varies the simulation time step, and measures how quickly the model integrates. It then varies ``t_end``, and measures how fast it integrates at a fixed ``sim_dt``. Usage ::
 
     x.benchmark;
 
@@ -74,6 +74,7 @@ Test coverage
 
 ``benchmark`` is tested in: 
 
+- `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
 
 
 
@@ -101,6 +102,7 @@ Test coverage
 
 ``checkCompartmentName`` is tested in: 
 
+- `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
 
 
 
@@ -161,6 +163,7 @@ Test coverage
 
 ``compile`` is tested in: 
 
+- `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
 
 
 
@@ -173,14 +176,14 @@ Connects two compartments with a synapse. The basic syntax is ::
 
    x.connect('Comp1', 'Comp2', 'SynapseType', ...)
 
-The first two arguments are the presynaptic and postsynaptic compartment ames. For example ::
+The first two arguments are the presynaptic and postsynaptic compartment names. For example ::
 
     % connects two different neurons with an electrical synapse
     x.connect('AB', 'LP')
 
-Axial synapses are a special type of electrical synapse that are created etween spatially-discrete compartments in a morphological structure. Electrical and axial synapses differ in how they are integrated (see ayan & Abbott 2001, Ch. 5-6).
+Axial synapses are a special type of electrical synapse that are created between spatially-discrete compartments in a morphological structure. Electrical and axial synapses differ in how they are integrated (see Dayan & Abbott 2001, Ch. 5-6).
 
-``connect`` defaults to an axial synapse when the type of synapse is not pecified and either compartment has a defined ``tree_idx`` (which dentifies the compartment as a part of a multi-compartment neuron model). Otherwise, the created synapse is electrical. ::
+``connect`` defaults to an axial synapse when the type of synapse is not specified and either compartment has a defined ``tree_idx`` (which identifies the compartment as a part of a multi-compartment neuron model). Otherwise, the created synapse is electrical. ::
 
    % create an (electrical or axial) synapse between AB and LP with gbar f NaN
    x.connect('AB', 'LP')
@@ -188,12 +191,12 @@ Axial synapses are a special type of electrical synapse that are created etween 
    x.connect('AB', 'LP', 10)
 
 
-The most common way to produce a synapse is to pass the synapse type and hen any properties. This is used to create chemical synapses. For example, o add a glutamatergic synapse (from Prinz *et al.* 2004) between ``AB`` nd ``LP`` with a maximal conductance of 100: ::
+The most common way to produce a synapse is to pass the synapse type and hen any properties. This is used to create chemical synapses. For example, o add a glutamatergic synapse (from Prinz *et al.* 2004) between ``AB`` and ``LP`` with a maximal conductance of 100: ::
 
    x.connect('AB', 'LP', 'prinz/Glut', 'gbar', 100)
 
 
-Synapses can also be connected by passing a ``cpplab`` object to the `connect`` method ::
+Synapses can also be connected by passing a ``cpplab`` object to the ``connect`` method ::
 
 
     % create a synapse using the cpplab object 'syn_cpplab' 
@@ -483,6 +486,33 @@ Test coverage
 
 
 
+.. _matrixCost:
+
+matrixCost
+^^^^^^^^^^
+a static method to compute the distance between two LeMasson matrices. This is a useful way to determine how similar two voltage traces are. 
+
+See Also
+--------
+
+LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neu- roscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
+
+
+ - `V2matrix <https://xolotl.readthedocs.io/en/latest/auto_methods.html#v2matrix>`_ 
+
+
+
+
+
+
+Test coverage
+--------------
+
+``matrixCost`` is tested in: 
+
+
+
+
 .. _plot:
 
 plot
@@ -757,6 +787,43 @@ Test coverage
 --------------
 
 ``transpile`` is tested in: 
+
+- `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
+
+
+
+.. _V2matrix:
+
+V2matrix
+^^^^^^^^
+a static method that converts a voltage trace into a LeMasson matrix.  Usage ::
+
+   [M, V_lim, dV_lim] = V2matrix(V, V_lim, dV_lim)
+
+where V is a vector (a voltage time series), and ``V_lim`` and ``dV_lim`` are two-element vectors that specify the lower and upper bounds of ``V`` and ``dV``
+
+This static method allows you to create a delay-embedding of a voltage trace, and then discretize the space and count the number of points in each bin. The resultant matrix is sometimes called a LeMasson matrix. ``M`` is the LeMasson matrix, which is always of size ``101x101``. 
+
+If you do not specify ``V_lim`` and ``dV_lim``, they will be computed automatically and returned. 
+
+See Also
+--------
+
+LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neu- roscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
+
+
+ - `matrixCost <https://xolotl.readthedocs.io/en/latest/auto_methods.html#matrixcost>`_ 
+
+
+
+
+
+
+
+Test coverage
+--------------
+
+``V2matrix`` is tested in: 
 
 
 

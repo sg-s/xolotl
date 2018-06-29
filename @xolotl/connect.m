@@ -12,14 +12,14 @@ Connects two compartments with a synapse. The basic syntax is ::
 
    x.connect('Comp1', 'Comp2', 'SynapseType', ...)
 
-The first two arguments are the presynaptic and postsynaptic compartment ames. For example ::
+The first two arguments are the presynaptic and postsynaptic compartment names. For example ::
 
     % connects two different neurons with an electrical synapse
     x.connect('AB', 'LP')
 
-Axial synapses are a special type of electrical synapse that are created etween spatially-discrete compartments in a morphological structure. Electrical and axial synapses differ in how they are integrated (see ayan & Abbott 2001, Ch. 5-6).
+Axial synapses are a special type of electrical synapse that are created between spatially-discrete compartments in a morphological structure. Electrical and axial synapses differ in how they are integrated (see Dayan & Abbott 2001, Ch. 5-6).
 
-``connect`` defaults to an axial synapse when the type of synapse is not pecified and either compartment has a defined ``tree_idx`` (which dentifies the compartment as a part of a multi-compartment neuron model). Otherwise, the created synapse is electrical. ::
+``connect`` defaults to an axial synapse when the type of synapse is not specified and either compartment has a defined ``tree_idx`` (which identifies the compartment as a part of a multi-compartment neuron model). Otherwise, the created synapse is electrical. ::
 
    % create an (electrical or axial) synapse between AB and LP with gbar f NaN
    x.connect('AB', 'LP')
@@ -27,12 +27,12 @@ Axial synapses are a special type of electrical synapse that are created etween 
    x.connect('AB', 'LP', 10)
 
 
-The most common way to produce a synapse is to pass the synapse type and hen any properties. This is used to create chemical synapses. For example, o add a glutamatergic synapse (from Prinz *et al.* 2004) between ``AB`` nd ``LP`` with a maximal conductance of 100: ::
+The most common way to produce a synapse is to pass the synapse type and hen any properties. This is used to create chemical synapses. For example, o add a glutamatergic synapse (from Prinz *et al.* 2004) between ``AB`` and ``LP`` with a maximal conductance of 100: ::
 
    x.connect('AB', 'LP', 'prinz/Glut', 'gbar', 100)
 
 
-Synapses can also be connected by passing a ``cpplab`` object to the `connect`` method ::
+Synapses can also be connected by passing a ``cpplab`` object to the ``connect`` method ::
 
 
     % create a synapse using the cpplab object 'syn_cpplab' 

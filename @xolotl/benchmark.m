@@ -8,7 +8,7 @@
 benchmark
 ^^^^^^^^^
 
-performs a quick benchmarking of a given ``xolotl`` model. ``benchmark`` irst varies the simulation time step, and measures how quickly the model ntegrates. It then varies ``t_end``, and measures how fast it integrates at a fixed ``sim_dt``. Usage ::
+performs a quick benchmarking of a given ``xolotl`` model. ``benchmark`` first varies the simulation time step, and measures how quickly the model integrates. It then varies ``t_end``, and measures how fast it integrates at a fixed ``sim_dt``. Usage ::
 
     x.benchmark;
 
@@ -17,13 +17,15 @@ performs a quick benchmarking of a given ``xolotl`` model. ``benchmark`` irst va
 
 function benchmark(self)
 
-Delta = 2; % ms
+
 
 original_dt = self.sim_dt;
 original_t_end = self.t_end;
 original_state = self.closed_loop;
 
-self.t_end = 5e3;
+self.t_end = 10e3;
+self.integrate;
+
 self.closed_loop = false;
 
 max_dt = 1000; 
@@ -40,11 +42,13 @@ self.dt = max_dt*1e-3;
 tic
 V0 = self.integrate;
 all_speed(1) = toc;
-V0_diff = diff(V0);
 
-S0 = xolotl.findNSpikes(V0,1e3,-30);
+for j = size(V0,2):-1:1
+	[M0(:,:,j), V_lim(:,j), dV_lim(:,j)] = xolotl.V2matrix(V0(:,j));
+end
 
-all_Q(1) = 1;
+
+all_Q(1) = 0;
 
 for i = 2:length(all_dt)
 
@@ -53,21 +57,15 @@ for i = 2:length(all_dt)
 	V = self.integrate;
 	all_speed(i) = toc;
 
+	this_q = 0;
+	for j = 1:size(V0,2)
+		M(:,:,j) = xolotl.V2matrix(V(:,j),V_lim(:,j),dV_lim(:,j));
+		this_q =  this_q + xolotl.matrixCost(M(:,:,j),M0(:,:,j));
+	end
 
-	% measure quality using coincidence b/w spikes
-	S = xolotl.findNSpikes(V,1e3,-30);
-	all_Q(i) = xolotl.coincidence(S, S0, self.dt, Delta);
 
-
-	% % measure distance b/w diff-embedded attractors
-	% V_diff = diff(V);
-
-	% this_cost = 0;
-	% for j = 2:10:length(V0_diff)
-	% 	for k = 1:size(V,2)
-	% 		this_cost = this_cost + min(sqrt((V0_diff(j,k) - V_diff(:,k)).^2 + (V0(2:end,k) - V(2:end,k)).^2));
-	% 	end
-	% end
+	% measure quality using LeMasson matrices
+	all_Q(i) = this_q;
 
 
 end
@@ -77,7 +75,7 @@ figure('outerposition',[0 0 1001 500],'PaperUnits','points','PaperSize',[1000 50
 subplot(1,2,1); hold on
 yyaxis left
 plot(all_dt,all_Q,'-+')
-set(gca,'YScale','linear','YLim',[0 1])
+set(gca,'YScale','log')
 xlabel('dt (ms)')
 ylabel('Error (a.u.)')
 
@@ -87,6 +85,7 @@ ylabel('Speed (X realtime)')
 set(gca,'YScale','log','XScale','log')
 
 drawnow
+
 
 % now vary t_end to see the overhead costs 
 self.sim_dt = .1;
