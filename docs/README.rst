@@ -25,7 +25,11 @@ Why Use ``xolotl``?
 
 You can set up complex models of neurons and networks very efficently,
 using an intuitive language that is tightly coupled to the object-based
-architecture of the underlying ``C++`` code. For example, here, we set up a
+architecture of the underlying ``C++`` code.
+
+.. _model:
+
+For example, here, we set up a
 compartment with some channels in it: ::
 
   x = xolotl;
@@ -46,7 +50,7 @@ That's it. To integrate it and see the time evolution of the voltage ::
 2. It's Fast
 ^^^^^^^^^^^^
 Because ``xolotl`` is written in ``C++``, it's quite fast. Here are some benchmarks
-for a single-compartment Hodgkin-Huxley model with sodium, potassium, and passive leak conductances. ::
+for a single-compartment Hodgkin-Huxley model_ with sodium, potassium, and passive leak conductances. ::
 
   x.benchmark;
 
