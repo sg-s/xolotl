@@ -8,7 +8,7 @@
 
 
 # copy this file into the repository so that others can use it
-cp .git/hooks/pre-commit dev/pre-commit
+cp .git/hooks/pre-commit git-hooks/pre-commit
 
 
 # make the docs 
