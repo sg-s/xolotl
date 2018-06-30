@@ -1,5 +1,5 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/sg-s/xolotl.svg)]()
-![](https://img.shields.io/badge/macOS_10.12.6-7 / 7-brightgreen.svg) 
+![](https://img.shields.io/badge/macOS_10.12.6-7/7-brightgreen.svg) 
 ![](https://user-images.githubusercontent.com/6005346/41205222-30b6f3d4-6cbd-11e8-983b-9125585d629a.png)
 
 # xolotl: The Standard Network Simulator
