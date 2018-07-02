@@ -28,6 +28,7 @@ See Also
 --------
 
 - xolotl.plot
+- xolotl.getGatingFunctions
 
 %}
 
