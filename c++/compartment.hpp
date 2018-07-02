@@ -10,7 +10,7 @@
 #include <vector>
 #include "conductance.hpp"
 #include "synapse.hpp"
-#include "controller.hpp"
+#include "mechanism.hpp"
 class network;
 
 #define F 96485
@@ -24,9 +24,9 @@ protected:
 
     vector<conductance*> cond; // pointers to all conductances in compartment
     vector<synapse*> syn; // pointers to synapses onto this neuron.
-    vector<controller*> cont; // pointers to controllers
-    vector<int> controller_sizes; // stores sizes of each controller's full state
-    vector<int> synapse_sizes; // stores sizes of each controller's full state
+    vector<mechanism*> cont; // pointers to mechanisms
+    vector<int> mechanism_sizes; // stores sizes of each mechanism's full state
+    vector<int> synapse_sizes; // stores sizes of each mechanism's full state
 
     // vector that will store the axial synapses
     vector <synapse*> axial_syn;
@@ -109,7 +109,7 @@ public:
     double I_ext; // all external currents are summed here
     double I_clamp; // this is the current required to clamp it
     int n_cond; // this keep tracks of the # channels
-    int n_cont; // # of controllers
+    int n_cont; // # of mechanisms
     int n_syn; // # of synapses
     int n_axial_syn;
 
@@ -204,10 +204,10 @@ public:
     void addConductance(conductance*);
     void addSynapse(synapse*);
     void addAxial(synapse*);
-    void addController(controller*);
+    void addMechanism(mechanism*);
 
     // integration methods
-    void integrateControllers(double, double);
+    void integrateMechanisms(double);
     void integrateChannels(double, double, double, double);
     void integrateSynapses(double, double, double);
     void integrateVC(double, double, double, double);
@@ -222,14 +222,14 @@ public:
     void resolveAxialConductances(void);
 
     // methods to retrieve information from compartment
-    int getFullControllerState(double*, int);
+    int getFullMechanismState(double*, int);
     int getFullCurrentState(double*, int);
     int getFullSynapseState(double*, int);
-    int getFullControllerSize(void);
+    int getFullMechanismSize(void);
     int getFullSynapseSize(void);
 
-    controller* getControllerPointer(int);
-    controller* getControllerPointer(const char*); // overloaded
+    mechanism* getMechanismPointer(int);
+    mechanism* getMechanismPointer(const char*); // overloaded
     compartment* getConnectedCompartment(int);
     conductance* getConductancePointer(const char*);
     
@@ -259,16 +259,16 @@ void compartment::addConductance(conductance *cond_)
     }
 }
 
-// add controller to this compartment
-void compartment::addController(controller *cont_)
+// add mechanism to this compartment
+void compartment::addMechanism(mechanism *cont_)
 {
-    // mexPrintf("adding controller @  %p\n",cont_);
+    // mexPrintf("adding mechanism @  %p\n",cont_);
     cont.push_back(cont_);
-    cont_->controller_idx = n_cont; // tell the controller what rank it has
+    cont_->mechanism_idx = n_cont; // tell the mechanism what rank it has
     n_cont++;
 
-    // also store the controller's full state size
-    controller_sizes.push_back(cont_->getFullStateSize());
+    // also store the mechanism's full state size
+    mechanism_sizes.push_back(cont_->getFullStateSize());
 
 }
 
@@ -278,7 +278,7 @@ void compartment::addSynapse(synapse *syn_)
     syn.push_back(syn_);
     n_syn ++;
 
-    // also store the controller's full state size
+    // also store the mechanism's full state size
     synapse_sizes.push_back(syn_->getFullStateSize());
 }
 
@@ -299,16 +299,16 @@ conductance* compartment::getConductancePointer(const char* cond_class)
 }
 
 
-controller * compartment::getControllerPointer(int cont_idx)
+mechanism * compartment::getMechanismPointer(int cont_idx)
 {
     if (cont_idx < n_cont) { return cont[cont_idx];} 
     else { return NULL; }
     
 }
 
-controller* compartment::getControllerPointer(const char* cond_class)
+mechanism* compartment::getMechanismPointer(const char* cond_class)
 {
-    controller* req_cont = NULL;
+    mechanism* req_cont = NULL;
 
     for (int i = 0; i < n_cont; i ++)
     {
@@ -349,7 +349,7 @@ int compartment::getFullSynapseSize(void)
 }
 
 
-int compartment::getFullControllerSize(void)
+int compartment::getFullMechanismSize(void)
 {
     int full_size = 0;
     for (int i=0; i<n_cont; i++)
@@ -439,11 +439,11 @@ void compartment::integrateChannels(double V_prev, double Ca_prev, double dt, do
 
 
 
-void compartment::integrateControllers(double Ca_prev, double dt)
+void compartment::integrateMechanisms(double dt)
 {
     for (int i=0; i<n_cont; i++)
     {
-        cont[i]->integrate(Ca_target - Ca_prev, dt);
+        cont[i]->integrate(dt);
     }
 }
 
@@ -587,16 +587,16 @@ void compartment::integrateCNSecondPass(double dt)
     V += delta_V;
 }
 
-// returns a vector of the state of every controller
+// returns a vector of the state of every mechanism
 // cont_state is a pointer to a matrix that is hopefully of
 // the right size
-int compartment::getFullControllerState(double *cont_state, int idx)
+int compartment::getFullMechanismState(double *cont_state, int idx)
 {
     for (int i = 0; i < n_cont; i ++)
     {
 
         cont[i]->getFullState(cont_state, idx);
-        idx += controller_sizes[i];
+        idx += mechanism_sizes[i];
 
     }
     return idx;
