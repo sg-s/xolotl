@@ -3,24 +3,20 @@
 // _/\_ |__| |___ |__|  |  |___ 
 //
 // Abstract class for defining mechanisms 
-// mechanisms are tied to specific conductances,
-// or synapses. You can't have "naked" mechanisms
-// that have nothing to control. 
+// mechanisms are tied to specific conductances, 
+// synapses or compartments. You can't have 
+// "naked" mechanisms that have nothing to control. 
 // 
 // mechanisms are stored in compartments, and are
 // asked to integrate by the compartment they are in
 // which provides them the calcium error signal
 // and the timestep
 //
-// this abstract class the following elements, which
-// all mechanisms will always have:
-// channel        (a pointer to the conductance it controls)
-// mechanism_idx (an integer identifying the mechanism 
-//                 within the compartment it is in)
-// 
-// everything else assumes something about the 
-// mechanism of the mechanism, so should be in its own
-// sub class
+// mechanisms can thus connect to 3 different types
+// of objects: compartments, conductances or synapses
+// mechanisms can do anything they want, and can 
+// read and modify any public propoerty they can
+// get their hands on 
 
 
 #ifndef MECHANISM
@@ -36,9 +32,11 @@ class mechanism {
 protected:
     conductance* channel; // pointer to conductance that this regulates
     synapse* syn; // pointer to synapse that this regulates 
-    compartment * comp; // pointer to compartment that it is in
+
 
 public:
+
+    compartment * comp; // pointer to compartment that it is in
 
     // store the type of the thing being controlled
     // as a string 
@@ -53,7 +51,9 @@ public:
 
     mechanism()
     {
-        channel = NULL; // null pointer 
+        // null pointers to all 
+        // connectors for safety 
+        channel = NULL; 
         syn = NULL; 
         comp = NULL;
     }
