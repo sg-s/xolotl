@@ -211,7 +211,7 @@ void network::integrate(double dt, double * I_ext_now, double delta_temperature)
         Ca_prev = comp[i]->Ca;
 
         // integrate controllers
-        comp[i]->integrateControllers(Ca_prev, dt);
+        comp[i]->integrateMechanisms(dt);
 
         comp[i]->integrateChannels(V_prev, Ca_prev, dt, delta_temperature);
 
