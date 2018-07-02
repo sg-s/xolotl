@@ -1,5 +1,5 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/sg-s/xolotl.svg)]()
-
+![](https://img.shields.io/badge/macOS_10.12.6-7/7-brightgreen.svg) 
 ![](https://user-images.githubusercontent.com/6005346/41205222-30b6f3d4-6cbd-11e8-983b-9125585d629a.png)
 
 # xolotl: The Standard Network Simulator
@@ -52,11 +52,11 @@ V = x.integrate;
 
 | OS          | Support | Comments |
 | -------          | ------- | -----------
-| macOS 10.12.6 | ✓ | no known issues |
-| Manjaro 17.1.10 | ✓ |    you may need a specific compiler, see [this](http://xolotl.readthedocs.io/en/latest/compilers.html) for details |
-| Ubuntu 16.04.3 LTS | ✓ |   you may need a specific compiler, see [this](http://xolotl.readthedocs.io/en/latest/compilers.html) for details |
-| Ubuntu 18.04 LTS | ✓ |   you may need a specific compiler, see [this](http://xolotl.readthedocs.io/en/latest/compilers.html) for details |
-| Windows 7/10 | ✓ | You will need the [MinGW](https://www.mathworks.com/matlabcentral/fileexchange/52848-matlab-support-for-mingw-w64-c-c++-compiler) compiler. |
+| macOS 10.12.6 |  | no known issues |
+| Manjaro 17.1.10 |  |    you may need a specific compiler, see [this](http://xolotl.readthedocs.io/en/latest/compilers.html) for details |
+| Ubuntu 16.04.3 LTS |  |   you may need a specific compiler, see [this](http://xolotl.readthedocs.io/en/latest/compilers.html) for details |
+| Ubuntu 18.04 LTS |  |   you may need a specific compiler, see [this](http://xolotl.readthedocs.io/en/latest/compilers.html) for details |
+| Windows 7/10 |  | You will need the [MinGW](https://www.mathworks.com/matlabcentral/fileexchange/52848-matlab-support-for-mingw-w64-c-c++-compiler) compiler. |
 
 `xolotl` has been tested on `MATLAB 9.3.0.713579 (R2017b)` and `9.4.0.813654 (R2018a)`, but other versions should work too.
 
@@ -93,3 +93,4 @@ You are strongly encouraged to use [git hooks](https://git-scm.com/docs/githooks
 ## License
 
 GPL v3
+
