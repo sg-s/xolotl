@@ -39,3 +39,10 @@ V = x.integrate;
 plot(time,V,'r')
 
 xlabel('Time (s)')
+
+x.reset('zero')
+x.set('*noise_amplitude',0)
+x.AB.HCurrent.add('SubunitNoise','noise_amplitude',.002);
+
+V = x.integrate;
+plot(time,V,'b')
