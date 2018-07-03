@@ -8,11 +8,11 @@
 
 #ifndef INTEGRALCONTROLLER
 #define INTEGRALCONTROLLER
-#include "controller.hpp"
+#include "mechanism.hpp"
 #include <limits>
 
 //inherit controller class spec
-class IntegralController: public controller {
+class IntegralController: public mechanism {
 
 protected:
 public:
@@ -29,7 +29,7 @@ public:
     double container_A;
 
     // specify parameters + initial conditions for 
-    // controller that controls a conductance 
+    // mechanism that controls a conductance 
     IntegralController(double tau_m_, double tau_g_, double m_)
     {
 
@@ -43,7 +43,7 @@ public:
     }
 
     
-    void integrate(double Ca_error, double dt);
+    void integrate(double dt);
     void connect(conductance * channel_, synapse * syn_);
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
@@ -112,8 +112,12 @@ void IntegralController::connect(conductance * channel_, synapse * syn_)
     }
 }
 
-void IntegralController::integrate(double Ca_error, double dt)
+void IntegralController::integrate(double dt)
 {
+
+    double Ca_error = (channel->container)->Ca_target - (channel->container)->Ca;
+
+
     // integrate mRNA
     m += (dt/tau_m)*(Ca_error);
 

@@ -7,7 +7,7 @@
 #define CONDUCTANCE
 #include <cmath>
 #include <string>
-#include "controller.hpp"
+// #include "mechanism.hpp"
 using std::string;
 class compartment;
 // class controller;

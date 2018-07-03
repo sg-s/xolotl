@@ -2,29 +2,25 @@
 //  \/  |  | |    |  |  |  |    
 // _/\_ |__| |___ |__|  |  |___ 
 //
-// Abstract class for defining controllers 
-// controllers are tied to specific conductances,
-// or synapses. You can't have "naked" controllers
-// that have nothing to control. 
+// Abstract class for defining mechanisms 
+// mechanisms are tied to specific conductances, 
+// synapses or compartments. You can't have 
+// "naked" mechanisms that have nothing to control. 
 // 
-// controllers are stored in compartments, and are
+// mechanisms are stored in compartments, and are
 // asked to integrate by the compartment they are in
 // which provides them the calcium error signal
 // and the timestep
 //
-// this abstract class the following elements, which
-// all controllers will always have:
-// channel        (a pointer to the conductance it controls)
-// controller_idx (an integer identifying the controller 
-//                 within the compartment it is in)
-// 
-// everything else assumes something about the 
-// mechanism of the controller, so should be in its own
-// sub class
+// mechanisms can thus connect to 3 different types
+// of objects: compartments, conductances or synapses
+// mechanisms can do anything they want, and can 
+// read and modify any public propoerty they can
+// get their hands on 
 
 
-#ifndef CONTROLLER
-#define CONTROLLER
+#ifndef MECHANISM
+#define MECHANISM
 #include <cmath>
 #include <string>
 using std::string;
@@ -32,7 +28,7 @@ class conductance;
 class synapse;
 
 
-class controller {
+class mechanism {
 protected:
     conductance* channel; // pointer to conductance that this regulates
     synapse* syn; // pointer to synapse that this regulates 
@@ -40,26 +36,31 @@ protected:
 
 public:
 
+    compartment * comp; // pointer to compartment that it is in
+
     // store the type of the thing being controlled
     // as a string 
     string controlling_class;
 
-    int controller_idx;
+    int mechanism_idx;
 
     // also store the parameters of the 
     // compartment that it is physically located in
     double container_A;
     double container_vol;
 
-    controller()
+    mechanism()
     {
-        channel = NULL; // null pointer 
+        // null pointers to all 
+        // connectors for safety 
+        channel = NULL; 
         syn = NULL; 
+        comp = NULL;
     }
     
-    ~controller() {}
+    ~mechanism() {}
     
-    virtual void integrate(double, double) = 0;
+    virtual void integrate(double) = 0;
     virtual int getFullStateSize(void) = 0;
     virtual int getFullState(double*, int) = 0;
     virtual double getState(int) = 0;

@@ -24,7 +24,7 @@ header_files{1} = joinPath(self.cpp_folder,'network.hpp');
 header_files{2} = joinPath(self.cpp_folder,'compartment.hpp');
 header_files{3} = joinPath(self.cpp_folder,'synapse.hpp');
 header_files{4} = joinPath(self.cpp_folder,'conductance.hpp');
-header_files{5} = joinPath(self.cpp_folder,'controller.hpp');
+header_files{5} = joinPath(self.cpp_folder,'mechanism.hpp');
 temp = self.generateHeaders; temp = temp(:);
 header_files = [header_files(:); unique(temp(2:end))];
 
@@ -135,60 +135,79 @@ lines = [lines(1:insert_here); synapse_add_lines(:); lines(insert_here+1:end)];
 
 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-% add the controllers here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-% controllers work like this: every controller must have a pointer to a 
+% add the mechanisms here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% mechanisms work like this: every mechanism must have a pointer to a 
 % a conductance, and in addition, must be handed over to the containing
-% compartment using .addController 
+% compartment using .addMechanism 
 % 
 
-controller_add_lines = {};
+mechanism_add_lines = {};
 
 
-% first, we need to add controller to the 
+% first, we need to add mechanism to the 
 % channels/synapses they control and then
 % we need to add them to the compartment they are in
-all_controllers = self.find('controller');
+all_mechanisms = self.find('mechanism');
 
-for i = 1:length(all_controllers)
+for i = 1:length(all_mechanisms)
 	% connect to synapse/conductance
-	idx = max(strfind(all_controllers{i},'.'));
+	idx = max(strfind(all_mechanisms{i},'.'));
 	cond_name = 'NULL';
 	syn_name = 'NULL'; 
-	if strcmp(self.get(all_controllers{i}(1:idx-1)).cpp_class_parent,'conductance')
-		cond_name = strrep(all_controllers{i}(1:idx-1),'.','_');
-	elseif strcmp(self.get(all_controllers{i}(1:idx-1)).cpp_class_parent,'synapse')
-		syn_name = strrep(all_controllers{i}(1:idx-1),'.','_');
+	if strcmp(self.get(all_mechanisms{i}(1:idx-1)).cpp_class_parent,'conductance')
+		% adding a mechanism to a conductance
+		cond_name = strrep(all_mechanisms{i}(1:idx-1),'.','_');
+		thing_name = strrep(all_mechanisms{i}(1:idx-1),'.','_');
+		mechanism_name = strrep(all_mechanisms{i},'.','_');
+		mechanism_add_lines{end+1} = [mechanism_name '.connect(&' cond_name ',' syn_name,');'];
+
+
+
+	elseif strcmp(self.get(all_mechanisms{i}(1:idx-1)).cpp_class_parent,'synapse')
+		% adding a mechanism to a synapse
+
+		syn_name = strrep(all_mechanisms{i}(1:idx-1),'.','_');
+		thing_name = strrep(all_mechanisms{i}(1:idx-1),'.','_');
+		mechanism_name = strrep(all_mechanisms{i},'.','_');
+		mechanism_add_lines{end+1} = [mechanism_name '.connect(&' cond_name ',' syn_name,');'];
+
+
+
+	elseif strcmp(self.get(all_mechanisms{i}(1:idx-1)).cpp_class_name,'compartment')
+		% adding a mechanism to a compartment 
+		mechanism_name = strrep(all_mechanisms{i},'.','_');
+		comp_name = strrep(all_mechanisms{i}(1:idx-1),'.','_');
+		mechanism_add_lines{end+1} = [mechanism_name '.connect(&' comp_name,');'];
+
+
 	else
 	 	error('Controller connected to unrecognised type')
 	end 
 
-	thing_name = strrep(all_controllers{i}(1:idx-1),'.','_');
-	controller_name = strrep(all_controllers{i},'.','_');
-	controller_add_lines{end+1} = [controller_name '.connect(&' cond_name ',' syn_name,');'];
+	
 
-	% add to compartment -- this is generally the comprtment
-	% that contains the conductance that this controller points to
+	% add to compartment -- this is generally the compartment
+	% that contains the conductance that this mechanism points to
 	% but it may be overridden by self.custom_owner
 	idx = [];
 	if ~isempty(self.custom_owner)
-		idx = find(strcmp(self.custom_owner(:,1),all_controllers{i}));
+		idx = find(strcmp(self.custom_owner(:,1),all_mechanisms{i}));
 	end
 	if isempty(idx)
 
-		idx = min(strfind(all_controllers{i},'.'));
-		comp_name = all_controllers{i}(1:idx-1);
+		idx = min(strfind(all_mechanisms{i},'.'));
+		comp_name = all_mechanisms{i}(1:idx-1);
 	else
 		comp_name = self.custom_owner{idx,2};
 	end
-
-	controller_add_lines{end+1} = [comp_name '.addController(&' controller_name ');'];
+	mechanism_add_lines{end+1} = [comp_name '.addMechanism(&' mechanism_name ');'];
 end
 
-controller_add_lines{end+1} = ['int n_controllers = ' mat2str(length(all_controllers)) ';'];
+mechanism_add_lines{end+1} = ['int n_mechanisms = ' mat2str(length(all_mechanisms)) ';'];
 
-insert_here = lineFind(lines,'//xolotl:add_controllers_here');
-assert(length(insert_here)==1,'Could not find insertion point for controller hookups');
-lines = [lines(1:insert_here); controller_add_lines(:); lines(insert_here+1:end)];
+insert_here = lineFind(lines,'//xolotl:add_mechanisms_here');
+assert(length(insert_here)==1,'Could not find insertion point for mechanism hookups');
+lines = [lines(1:insert_here); mechanism_add_lines(:); lines(insert_here+1:end)];
 
 
 

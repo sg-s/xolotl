@@ -1,7 +1,3 @@
-% this tests generates and integrates
-% a bursting neuron neuron that reproduces Fig 3
-% in Tim O'Leary's 2013 paper
-
 vol = 0.0628; % this can be anything, doesn't matter
 f = 1.496; % uM/nA
 tau_Ca = 200;
@@ -20,12 +16,33 @@ x.AB.add('liu/Kd','gbar',@() 38.31/x.AB.A,'E',-80);
 x.AB.add('liu/HCurrent','gbar',@() .6343/x.AB.A,'E',-20);
 x.AB.add('Leak','gbar',@() 0.0622/x.AB.A,'E',-50);
 
-x.t_end = 1e4;
+x.AB.add('CurrentNoise','noise_amplitude',2);
+
+x.sim_dt = .1;
+x.dt = .1;
+
 x.integrate;
-x.t_end = 1e3;
-
-x.plot;
-prettyFig();
 
 
-x.benchmark;
+
+x.t_end = 2e3;
+
+x.snapshot('zero');
+
+figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
+V = x.integrate;
+time = (1:length(V))*x.dt*1e-3;
+plot(time,V,'k')
+
+x.reset('zero')
+V = x.integrate;
+plot(time,V,'r')
+
+xlabel('Time (s)')
+
+x.reset('zero')
+x.set('*noise_amplitude',0)
+x.AB.HCurrent.add('SubunitNoise','noise_amplitude',.002);
+
+V = x.integrate;
+plot(time,V,'b')

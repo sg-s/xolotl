@@ -26,7 +26,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double *output_I_clamp;
     double *output_curr_state; // currents
     double *output_syn_state;  // synapses
-    double *output_cont_state; // controllers
+    double *output_cont_state; // mechanisms
 
 
     //xolotl:define_v_clamp_idx
@@ -57,7 +57,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     //xolotl:add_synapses_here
 
 
-    //xolotl:add_controllers_here
+    //xolotl:add_mechanisms_here
 
     
 
@@ -77,7 +77,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     {
         int n_cont = (xolotl_network.comp[i])->n_cont;
 
-        full_controller_sizes[i] = xolotl_network.comp[i]->getFullControllerSize();
+        full_controller_sizes[i] = xolotl_network.comp[i]->getFullMechanismSize();
         full_controller_size += full_controller_sizes[i];
     }
     
@@ -316,7 +316,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
                     // read out controllers
                     if (nlhs > 3) {
-                        cont_idx = (xolotl_network.comp[j]->getFullControllerState(output_cont_state,cont_idx));
+                        cont_idx = (xolotl_network.comp[j]->getFullMechanismState(output_cont_state,cont_idx));
                     }
 
                     // read out ionic currents
