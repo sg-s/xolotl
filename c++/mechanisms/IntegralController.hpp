@@ -38,8 +38,8 @@ public:
         m = m_;
 
         if (isnan (m)) { m = 0; }
-        if (isnan (tau_g_)) { tau_g_ = 5e3; }
-        if (isnan (tau_m_)) { tau_m_ = std::numeric_limits<double>::infinity(); }
+        if (isnan (tau_g)) { tau_g = 5e3; }
+        if (isnan (tau_m)) { tau_m = std::numeric_limits<double>::infinity(); }
 
         if (tau_m<=0) {mexErrMsgTxt("[IntegralController] tau_m must be > 0. Perhaps you meant to set it to Inf?\n");}
         if (tau_g<=0) {mexErrMsgTxt("[IntegralController] tau_g must be > 0. Perhaps you meant to set it to Inf?\n");}
@@ -102,11 +102,6 @@ void IntegralController::connect(conductance * channel_, synapse * syn_)
         // check that the compartment we are in has a valid
         // (non NaN Ca_target)
 
-        if (isnan((channel->container)->Ca_target))
-        {
-            mexErrMsgTxt("IntegralController needs Ca_target of compartment to be defined\n");
-        }
-
         controlling_class = (channel_->getClass()).c_str();
 
         // attempt to read the area of the container that this
@@ -125,6 +120,11 @@ void IntegralController::connect(conductance * channel_, synapse * syn_)
 
 void IntegralController::integrate(double dt)
 {
+
+    // if the target is NaN, we will interpret this
+    // as the controller being disabled 
+    // and do nothing 
+    if (isnan((channel->container)->Ca_target)) {return;}
 
     double Ca_error = (channel->container)->Ca_target - (channel->container)->Ca;
 

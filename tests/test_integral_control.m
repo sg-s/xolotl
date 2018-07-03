@@ -22,15 +22,14 @@ x.AB.add('liu/Kd','gbar',g0(6),'E',-80);
 x.AB.add('liu/HCurrent','gbar',g0(7),'E',-20);
 x.AB.add('Leak','gbar',.099,'E',-50);
 
-tau_g = 5e3;
 
-x.AB.NaV.add('IntegralController','tau_m',666,'tau_g',tau_g);
-x.AB.CaT.add('IntegralController','tau_m',55555,'tau_g',tau_g);
-x.AB.CaS.add('IntegralController','tau_m',45454,'tau_g',tau_g);
-x.AB.ACurrent.add('IntegralController','tau_m',5000,'tau_g',tau_g);
-x.AB.KCa.add('IntegralController','tau_m',1250,'tau_g',tau_g);
-x.AB.Kd.add('IntegralController','tau_m',2000,'tau_g',tau_g);
-x.AB.HCurrent.add('IntegralController','tau_m',125000,'tau_g',tau_g);
+x.AB.NaV.add('IntegralController','tau_m',666);
+x.AB.CaT.add('IntegralController','tau_m',55555);
+x.AB.CaS.add('IntegralController','tau_m',45454);
+x.AB.ACurrent.add('IntegralController','tau_m',5000);
+x.AB.KCa.add('IntegralController','tau_m',1250);
+x.AB.Kd.add('IntegralController','tau_m',2000);
+x.AB.HCurrent.add('IntegralController','tau_m',125000);
 
 
 x.t_end = 5e5;
