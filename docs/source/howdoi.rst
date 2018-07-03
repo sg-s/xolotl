@@ -100,6 +100,27 @@ Look in the folder yourself! All ``C++`` headerfiles are contained in the ``C++`
 
   fileparts(fileparts(which('xolotl')))
 
+...add a custom conductance?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The quickest way is to use the ``conductance`` class. The ``conductance`` class expects steady-state gating functions
+for activation and inactivation variables (``m_inf`` and ``h_inf``) and their respective time-constants (``tau_m``, ``tau_h``).
+Whether the channel fluxes calcium (``is_Ca``) and whether it should use approximations for the gating functions
+rather than integrating (``is_approx``) can be set. In addition, you can set the default activation and inactivation variable
+initial conditions (``default_m`` and ``default_h``), and the default reversal potential (``default_E``). Finally, you should
+be sure to set the exponential fit parameters (``p`` and ``q``) so that the instantaneous conductance is ``gbar * m^p * h^q``. ::
+
+  newCond = conductance;
+  newCond.m_inf = @m_inf;
+  newCond.h_inf = @h_inf;
+  ...
+  newCond.generateCPPFile('name_of_conductance');
+
+Alternatively, you can make your own custom conductances by editing a copy of the conductance templates found in
+``../xolotl/conductances/templates/``. If you think it should be added to ``xolotl`` as a permanent feature, send us a message__.
+
+__ contributing.rst
+
 ...inspect the object I have created?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
