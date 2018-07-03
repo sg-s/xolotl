@@ -32,6 +32,12 @@ methods
 		assert(nargin == 2,'Not enough input arguments')
 
 
+		% check that the "custom" folder exists
+		if exist([fileparts(which(mfilename)) filesep 'c++' filesep 'conductances' filesep 'custom'],'dir') ~= 7
+			mkdir([fileparts(which(mfilename)) filesep 'c++' filesep 'conductances' filesep 'custom'])
+		end
+
+
 		% check that everything is filled out 
 		props = properties(self);
 		for i = 1:length(props)
