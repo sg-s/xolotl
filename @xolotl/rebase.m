@@ -17,7 +17,7 @@ Configures some internal house-keeping settings. This is called every time a new
 
 function [] = rebase(self)
 
-	self.xolotl_folder = fileparts(fileparts(which(mfilename)));
+	self.xolotl_folder = fileparts(fileparts(which('xolotl')));
 	self.cpp_folder = joinPath(self.xolotl_folder,'c++');
 
 	if ismac
@@ -27,6 +27,9 @@ function [] = rebase(self)
 	else
 		self.OS_binary_ext = 'mexa64';
 	end
+
+	% update all C++ class paths 
+	rebase@cpplab(self);
 
 
 end
