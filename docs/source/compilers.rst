@@ -50,17 +50,13 @@ for figuring it out.
 .. _bonanza123: https://gist.github.com/bonanza123/
 .. _here: https://gcc.gnu.org/
 
+
 * First download the proper version of ``gcc/g++``. If you use a package manager there are generally legacy versions under ``gcc-VERSION``. You can also find them here_.
-* Second change the ``mex_LANG_glnxa64.xml`` specification file. This is typically
-found at ``~/.matlab/R2018a/mex_C_glnxa64.xml`` where ``R2018a`` is the version
-of ``MATLAB`` and ``C`` is the name of the language.
-* Replace all references to ``$GCC`` with the path to the soft link to your ``gcc``
-compiler (e.g. ``/usr/bin/gcc-6``).
+* Second change the ``mex_LANG_glnxa64.xml`` specification file. This is typically found at ``~/.matlab/R2018a/mex_C_glnxa64.xml`` where ``R2018a`` is the version of ``MATLAB`` and ``C`` is the name of the language.
+* Replace all references to ``$GCC`` with the path to the soft link to your ``gcc`` compiler (e.g. ``/usr/bin/gcc-6``).
 * Repeat this process for the ``./mex_C++_glnxa64.xml`` file.
-* Sometimes ``MATLAB`` doesn't generate this file, causing a lot of errors. If
-it doesn't exist, copy the ``C`` verson of the file, rename it appropriately, and
-replace all references to ``gcc`` with ``g++``, so that ``MATLAB`` knows to use
-the right compiler.
+* Sometimes ``MATLAB`` doesn't generate this file, causing a lot of errors. If it doesn't exist, copy the ``C`` verson of the file, rename it appropriately, and replace all references to ``gcc`` with ``g++``, so that ``MATLAB`` knows to use the right compiler.
+
 
 The problem is fixed if you see something like this in ``MATLAB`` ::
 
