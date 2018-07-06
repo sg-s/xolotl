@@ -62,3 +62,8 @@ Networks in ``xolotl`` can be manipulated in real-time using the graphical inter
 ### It's free to use, free to copy and free to improve 
 
 `xolotl` is released under a permissive GPL license. `xolotl` is meant to make working with neuron models easier, and will always be free to use. 
+
+
+# Where do I get this?
+
+[Read the docs](https://xolotl.readthedocs.io/en/latest/) to find out how to install it and how to use it. 
