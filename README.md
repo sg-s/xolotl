@@ -1,5 +1,9 @@
 # xolotl: a fast and flexible neuronal simulator
+<<<<<<< HEAD
 ![](https://img.shields.io/badge/macOS_10.12.6-8/9-red.svg) 
+=======
+![](https://img.shields.io/badge/macOS_10.12.6-9/9-brightgreen.svg) 
+>>>>>>> d293961183797b567bce70d273ca7a025f8f2fa4
 ![](https://readthedocs.org/projects/sphinx-rtd-theme/badge/?version=latest)
 ![](https://img.shields.io/github/last-commit/sg-s/xolotl.svg)
 
