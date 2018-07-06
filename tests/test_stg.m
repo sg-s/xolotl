@@ -6,6 +6,9 @@
 % http://www.nature.com/neuro/journal/v7/n12/abs/nn1352.html
 
 
+% deliberate error
+a+^&
+
 xolotl.cleanup;
 
 % conversion from Prinz to phi
