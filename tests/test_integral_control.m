@@ -1,5 +1,7 @@
 % tests a neuron that reproduces Fig 3 in Tim's paper
 
+xolotl.cleanup;
+
 A = 0.0628; % mm^2
 vol = A; % mm^3
 f = 1.496; % uM/nA

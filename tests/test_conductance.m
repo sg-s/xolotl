@@ -3,6 +3,8 @@
 % custom conductances using the conductance class 
 % and compare that the two neurons are identical 
 
+xolotl.cleanup;
+
 
 A = 0.0628; % this can be anything, doesn't matter
 

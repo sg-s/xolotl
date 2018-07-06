@@ -1,4 +1,4 @@
-# xolotl: A Fast and Flexible Neuronal Simulator
+# xolotl: a fast and flexible neuronal simulator
 
 
 
@@ -12,7 +12,7 @@
 ## Why Use `xolotl`?
 
 
-### It's Easy to Use
+### It's easy to use
 
 You can set up complex models of neurons and networks very efficently, using an intuitive language that is tightly coupled to the object-based architecture of the underlying `C++` code.
 
@@ -39,7 +39,7 @@ That's it. To integrate it and see the time evolution of the voltage
 
 ``xolotl`` handles all of the compilation/linking/etc. for you.
 
-### It's Fast
+### It's fast
 
 
 Because ``xolotl`` is written in ``C++``, it's quite fast. Here are some benchmarks for a single-compartment Hodgkin-Huxley model_ with sodium, potassium, and passive leak conductances.

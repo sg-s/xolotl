@@ -5,6 +5,7 @@
 % Prinz ... Marder Nat Neuro 2004
 % http://www.nature.com/neuro/journal/v7/n12/abs/nn1352.html
 
+xolotl.cleanup;
 
 % conversion from Prinz to phi
 vol = 1; % this can be anything, doesn't matter

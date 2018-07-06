@@ -222,6 +222,9 @@ end % end methods
 
 methods (Static)
 
+
+    run_all_tests(cleanup);
+
     C = matrixCost(M1,M2);
 
     [M, V_lim, dV_lim] = V2matrix(V, V_lim, dV_lim);

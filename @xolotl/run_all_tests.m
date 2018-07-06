@@ -10,8 +10,10 @@ if cleanup
 	xolotl.cleanup;
 end
 
+this_dir = fileparts(fileparts(which(mfilename)));
+all_tests = dir(joinPath(this_dir,'tests','test*.m'));	
 
-all_tests = dir('test*.m');	
+cd(joinPath(this_dir,'tests'))
 	
 for i = length(all_tests):-1:1	
 	disp(['Running test: ' all_tests(i).name])	
