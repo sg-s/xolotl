@@ -6,5 +6,7 @@
   "dev-branch": "dev",
   "stable-branch": "master",
   "author": "Srinivas Gorur-Shandilya",
-  "author-url": "https://srinivas.gs"
+  "author-url": "https://srinivas.gs",
+  "preferred-test-time": "03:00",
+  "test-time-margin": 60
 }
