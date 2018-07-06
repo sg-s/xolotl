@@ -48,8 +48,10 @@ Test coverage
 - `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
 - `test_clamp.m <https://github.com/sg-s/xolotl/blob/master/tests/test_clamp.m>`_ 
 - `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
+- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
 - `test_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/test_fI.m>`_ 
 - `test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/tests/test_integral_control.m>`_ 
+- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
 - `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
 - `test_stg_temperature.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg_temperature.m>`_ 
 
@@ -126,7 +128,15 @@ Test coverage
 
 ``cleanup`` is tested in: 
 
-- `run_all_tests.m <https://github.com/sg-s/xolotl/blob/master/tests/run_all_tests.m>`_ 
+- `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
+- `test_clamp.m <https://github.com/sg-s/xolotl/blob/master/tests/test_clamp.m>`_ 
+- `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
+- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
+- `test_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/test_fI.m>`_ 
+- `test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/tests/test_integral_control.m>`_ 
+- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
+- `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
+- `test_stg_temperature.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg_temperature.m>`_ 
 
 
 
@@ -379,6 +389,7 @@ Test coverage
 
 ``getGatingFunctions`` is tested in: 
 
+- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
 
 
 
@@ -423,7 +434,9 @@ Test coverage
 - `custom_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/custom_fI.m>`_ 
 - `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
 - `test_clamp.m <https://github.com/sg-s/xolotl/blob/master/tests/test_clamp.m>`_ 
+- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
 - `test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/tests/test_integral_control.m>`_ 
+- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
 - `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
 - `test_stg_temperature.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg_temperature.m>`_ 
 
@@ -543,8 +556,10 @@ Test coverage
 - `custom_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/custom_fI.m>`_ 
 - `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
 - `test_clamp.m <https://github.com/sg-s/xolotl/blob/master/tests/test_clamp.m>`_ 
+- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
 - `test_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/test_fI.m>`_ 
 - `test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/tests/test_integral_control.m>`_ 
+- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
 - `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
 - `test_stg_temperature.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg_temperature.m>`_ 
 
@@ -615,6 +630,8 @@ Test coverage
 
 ``reset`` is tested in: 
 
+- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
+- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
 
 
 
@@ -644,6 +661,8 @@ See Also
 
 
  - `plot <https://xolotl.readthedocs.io/en/latest/auto_methods.html#plot>`_ 
+
+ - `getGatingFunctions <https://xolotl.readthedocs.io/en/latest/auto_methods.html#getgatingfunctions>`_ 
 
 
 
@@ -740,6 +759,7 @@ Test coverage
 
 ``snapshot`` is tested in: 
 
+- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
 
 
 
