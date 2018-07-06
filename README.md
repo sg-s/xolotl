@@ -3,18 +3,18 @@
 
 
 ![](https://readthedocs.org/projects/sphinx-rtd-theme/badge/?version=latest)
-![](image:: https://img.shields.io/github/last-commit/sg-s/xolotl.svg)
+![](https://img.shields.io/github/last-commit/sg-s/xolotl.svg)
 
 ![](https://user-images.githubusercontent.com/6005346/41205222-30b6f3d4-6cbd-11e8-983b-9125585d629a.png)
 
-``xolotl`` is a fast single-compartment and multi-compartment simulator written in ``C++`` with a ``MATLAB`` interface. Designed with a focus on ease-of-use, flexibility and speed, ``xolotl`` simulates conductance-based neuron models and networks.
+`xolotl` is a fast single-compartment and multi-compartment simulator written in `C++` with a `MATLAB` interface. Designed with a focus on ease-of-use, flexibility and speed, `xolotl` simulates conductance-based neuron models and networks.
 
-## Why Use ``xolotl``?
+## Why Use `xolotl`?
 
 
 ### It's Easy to Use
 
-You can set up complex models of neurons and networks very efficently, using an intuitive language that is tightly coupled to the object-based architecture of the underlying ``C++`` code.
+You can set up complex models of neurons and networks very efficently, using an intuitive language that is tightly coupled to the object-based architecture of the underlying `C++` code.
 
 For example, here, we set up a compartment with some channels in it: 
 
@@ -59,3 +59,6 @@ Networks in ``xolotl`` can be manipulated in real-time using the graphical inter
 ![](https://user-images.githubusercontent.com/6005346/30785272-aef9fb44-a132-11e7-84a6-25fd8e58470a.gif)
 
 
+### It's free to use, free to copy and free to improve 
+
+`xolotl` is released under a permissive GPL license. `xolotl` is meant to make working with neuron models easier, and will always be free to use. 
