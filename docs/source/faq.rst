@@ -20,3 +20,10 @@ How Can I Contribute?
 on how to report bugs, add conductances and mechanisms, or contribute to the code base.
 
 .. _guide: contributing.rst
+
+Something is Broken, What Do I Do?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+As the Hitchiker's Guide to the Galaxy reads, "DON'T PANIC". The most common error
+we see is an issue between ``MATLAB``, the ``MEX`` compiler, and your computer. In that
+situation, a first step would be to check our compilers_ guide which has detailed fixes for
+some of the most common compiler issues we've seen.
