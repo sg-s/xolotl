@@ -52,7 +52,7 @@ void Shaker::integrate(double V, double Ca, double dt, double delta_temp)
 
 
 double Shaker::m_inf(double V) {return (1.0/(1.0+exp(((V)+23.7)/-12.8)))^(1.0/3.0);}
-double Shaker::tau_m(double V) {return 1.0/(0.00817*exp((-V+1.62)/24.7)+0.0581*(-V-56.6)/(exp((-V-59.6)/4.50))-1.0);}
+double Shaker::tau_m(double V) {return 1.0/(0.00817*exp((-V+1.62)/24.7)+0.0581*(-V-56.6)/(exp((-V-59.6)/4.50)-1.0));}
 double Shaker::h_inf(double V) {return (0.8/(1.0+exp((55.3+V)/3.9)))+(0.2/(1.0+exp((74.8+V)/10.7)));}
 double Shaker::tau_h(double V) {return 1.0/(0.230*exp((-V-193.0)/31.3)+0.0437*(-V+13.5)/exp((-V-13.5)/11.1));}
 
