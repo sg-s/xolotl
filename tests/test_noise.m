@@ -5,7 +5,7 @@ vol = 0.0628; % this can be anything, doesn't matter
 
 x = xolotl;
 x.add('compartment','AB','A',0.0628);
-x.AB.add('CalciumMech','f',1.496);
+x.AB.add('CalciumMech1','f',1.496);
 
 x.AB.add('liu/NaV','gbar',@() 115/x.AB.A,'E',30);
 x.AB.add('liu/CaT','gbar',@() 1.44/x.AB.A,'E',30);

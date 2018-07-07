@@ -7,7 +7,7 @@ Ca_target = 7; % used only when we add in homeostatic control
 
 x = xolotl;
 x.add('compartment','AB','A',A,'Ca_target',Ca_target);
-x.AB.add('CalciumMech','f',1.496);
+x.AB.add('CalciumMech1','f',1.496);
 
 g0 = 1e-1+1e-1*rand(7,1);
 

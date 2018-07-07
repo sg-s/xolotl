@@ -28,7 +28,7 @@ compartments = x.find('compartment');
 for j = 1:length(compartments)
 
 	% add Calcium mechanism
-	x.(compartments{j}).add('CalciumMech');
+	x.(compartments{j}).add('CalciumMech1');
 
 	for i = 1:length(channels)
 		x.(compartments{j}).add([prefix channels{i}],'gbar',gbar(i,j),'E',E(i));

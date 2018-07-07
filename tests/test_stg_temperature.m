@@ -12,7 +12,7 @@ xolotl.cleanup;
 x = xolotl;
 x.add('compartment','AB','A',0.0628);
 
-x.AB.add('CalciumMech');
+x.AB.add('CalciumMech1');
 
 qg = 2;
 qm = 2;

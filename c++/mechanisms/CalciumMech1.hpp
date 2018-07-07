@@ -2,23 +2,23 @@
 //  \/  |  | |    |  |  |  |    
 // _/\_ |__| |___ |__|  |  |___ 
 //
-// CalciumMech mechanism 
+// CalciumMech1 mechanism 
 // as in Prinz et al 2003 (and others)
 
-#ifndef CALCIUMMECH
-#define CALCIUMMECH
+#ifndef CALCIUMMECH1
+#define CALCIUMMECH1
 #include "mechanism.hpp"
 #include <limits>
 
 
 //inherit controller class spec
-class CalciumMech: public mechanism {
+class CalciumMech1: public mechanism {
 
 protected:
 public:
 
 
-    // parameters for calciumMech 
+    // parameters for calciumMech1 
     double tau_Ca = 200;  // milliseconds
 
     // parameter to convert from i_Ca to uM 
@@ -28,7 +28,7 @@ public:
 
     // specify parameters + initial conditions for 
     // mechanism that controls a conductance 
-    CalciumMech(double tau_Ca_, double f_, double Ca_in_)
+    CalciumMech1(double tau_Ca_, double f_, double Ca_in_)
     {
         f = f_;
         tau_Ca = tau_Ca_;
@@ -48,7 +48,7 @@ public:
 };
 
 
-double CalciumMech::getState(int idx)
+double CalciumMech1::getState(int idx)
 {
 
     return std::numeric_limits<double>::quiet_NaN();
@@ -56,25 +56,25 @@ double CalciumMech::getState(int idx)
 }
 
 
-int CalciumMech::getFullStateSize()
+int CalciumMech1::getFullStateSize()
 {
     return 0; 
 }
 
 
-int CalciumMech::getFullState(double *cont_state, int idx)
+int CalciumMech1::getFullState(double *cont_state, int idx)
 {
     // do nothing
     return idx;
 }
 
 
-void CalciumMech::connect(compartment* comp_)
+void CalciumMech1::connect(compartment* comp_)
 {
     comp = comp_;
 }
 
-void CalciumMech::integrate(double dt)
+void CalciumMech1::integrate(double dt)
 {
 
 
