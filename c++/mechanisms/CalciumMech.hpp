@@ -19,12 +19,12 @@ public:
 
 
     // parameters for calciumMech 
-    double tau_Ca; 
+    double tau_Ca = 200;  // milliseconds
 
     // parameter to convert from i_Ca to uM 
-    double f; 
+    double f = 14.96; 
 
-    double Ca_in;
+    double Ca_in = .05;
 
     // specify parameters + initial conditions for 
     // mechanism that controls a conductance 
@@ -33,10 +33,6 @@ public:
         f = f_;
         tau_Ca = tau_Ca_;
         Ca_in = Ca_in_;
-
-        if (isnan (tau_Ca)) { tau_Ca = 200; }
-        if (isnan (Ca_in)) { Ca_in = .05; }
-        if (isnan (f)) { f = 14.96; }
 
         controlling_class = "unset";
 

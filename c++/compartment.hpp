@@ -83,18 +83,18 @@ public:
     // geometry is assumed to be a cylinder.
     // if not, you must specify the area and
     // volume
-    double A;
+    double A = .0628;
     double vol;
     double radius; // mm
     double len; // mm
     double shell_thickness; // mm
 
 
-    double Cm; // specific capacitance
+    double Cm = 10; // specific capacitance
 
 
     double Ca_target; // for homeostatic control
-    double Ca_out;
+    double Ca_out = 3000;
 
 
     // stores the average Ca over the integration
@@ -103,7 +103,7 @@ public:
     // pulling out the full trace
     double Ca_average;
 
-    double V;
+    double V = -60;
     double Ca;
     double E_Ca;
     double i_Ca; // specific calcium current (current/area. nA/mm^2)
@@ -149,7 +149,6 @@ public:
         // defaults
         if (isnan (Ca_out)) { Ca_out = 3000;}
         if (isnan (A)) { A = .0628;}
-        if (isnan (Cm)) { Cm = 10;}
         if (isnan (V)) { V = -60; } // mV
         if (isnan (Ca)) { Ca = .05; }
 
