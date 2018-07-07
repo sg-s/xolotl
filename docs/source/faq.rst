@@ -27,3 +27,34 @@ As the Hitchiker's Guide to the Galaxy reads, "DON'T PANIC". The most common err
 we see is an issue between ``MATLAB``, the ``MEX`` compiler, and your computer. In that
 situation, a first step would be to check our compilers_ guide which has detailed fixes for
 some of the most common compiler issues we've seen.
+
+.. hint::
+  If ``GetMD5`` fails, then it's definitely at least a compiler issue.
+
+If it's not a compiler issue and you've checked all the typical programming
+pitfalls (syntax, spelling, your ``MATLAB`` path, cleared your workspace, etc...),
+try the following ::
+  % erases all the compiled binaries of xolotl networks
+  x.cleanup
+  % rehash
+
+If you're still having a problem, we might have fixed it already! Reinstall or update
+by running the `install script` or pulling from the repository if you're using ``git``.
+
+.. _compilers: compilers.rst
+.. _`install script`: installing.rst
+
+How Do I Cite This?
+^^^^^^^^^^^^^^^^^^^
+Thanks for thinking of us! We'll be publishing later this year, and putting a
+manuscript on Arxiv sooner than that. For now though,
+
+*Gorur-Shandilya, Hoyland, & Marder, in preparation* should be sufficient.
+
+How Do I Install It?
+^^^^^^^^^^^^^^^^^^^^
+``xolotl`` can be installed into your home folder by a simple script_. For advanced
+users, feel free to clone from our github repository_.
+
+.. _script: installing.rst
+.. _repository: https://github.com/sg-s/xolotl
