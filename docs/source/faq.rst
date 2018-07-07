@@ -19,4 +19,4 @@ How Can I Contribute?
 ``xolotl`` is far from complete and contributions are welcome. Check out our guide_
 on how to report bugs, add conductances and mechanisms, or contribute to the code base.
 
-.. _guide: _contributing
+.. _guide: contributing
