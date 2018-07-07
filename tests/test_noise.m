@@ -2,13 +2,10 @@
 xolotl.cleanup;
 
 vol = 0.0628; % this can be anything, doesn't matter
-f = 1.496; % uM/nA
-tau_Ca = 200;
-F = 96485; % Faraday constant in SI units
-phi = (2*f*F*vol)/tau_Ca;
 
 x = xolotl;
-x.add('compartment','AB','Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
+x.add('compartment','AB','A',0.0628);
+x.AB.add('CalciumMech','f',1.496);
 
 x.AB.add('liu/NaV','gbar',@() 115/x.AB.A,'E',30);
 x.AB.add('liu/CaT','gbar',@() 1.44/x.AB.A,'E',30);

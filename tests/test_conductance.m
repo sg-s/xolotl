@@ -9,7 +9,8 @@ xolotl.cleanup;
 A = 0.0628; % this can be anything, doesn't matter
 
 x = xolotl;
-x.add('compartment','AB','A',A,'vol',A,'phi',90);
+x.add('compartment','AB','A',A);
+x.AB.add('CalciumMech','f',1.496);
 
 x.AB.add('liu-approx/NaV','gbar',@() 115/x.AB.A,'E',30);
 x.AB.add('liu-approx/CaT','gbar',@() 1.44/x.AB.A,'E',30);
@@ -27,7 +28,7 @@ channels = x.AB.find('conductance');
 all_p = [3  3   3   1  4  4   0    3];
 all_q = [1  1   1   0  0  0   0    1];
 is_Ca = [0  1   1   0  0  0   0    0];
-is_apx =[1  1   0   0  0  0   0    0];
+is_apx =[0  0   1   0  0  0   0    1];
 
 for i = 1:length(channels)
 
@@ -59,7 +60,8 @@ end
 % now construct a new object using these channels
 
 x2 = xolotl;
-x2.add('compartment','AB','A',A,'vol',A,'phi',90);
+x2.add('compartment','AB','A',A);
+x2.AB.add('CalciumMech','f',1.496);
 
 x2.AB.add('custom/NaV','gbar',@() 115/x.AB.A,'E',30);
 x2.AB.add('custom/CaT','gbar',@() 1.44/x.AB.A,'E',30);

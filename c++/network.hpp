@@ -40,8 +40,6 @@ public:
     // housekeeping
     int n_comp = 0;
     int n_soma = 0; // will be used in the Crank-Nicholson scheme
-    double V_prev;
-    double Ca_prev;
 
     double verbosity;
 
@@ -204,21 +202,25 @@ void network::integrate(double dt, double * I_ext_now, double delta_temperature)
     for (int i = 0; i < n_comp; i++)
     {
 
+        // move current values to previous values
+        comp[i]->V_prev = comp[i]->V;
+        comp[i]->Ca_prev = comp[i]->Ca;
+        comp[i]->i_Ca_prev = comp[i]->i_Ca;
+
         comp[i]->i_Ca = 0;
         comp[i]->I_ext = I_ext_now[i];
-
-        V_prev = comp[i]->V;
-        Ca_prev = comp[i]->Ca;
-
+        
         // integrate controllers
         comp[i]->integrateMechanisms(dt);
 
-        comp[i]->integrateChannels(V_prev, Ca_prev, dt, delta_temperature);
+        comp[i]->integrateChannels(dt, delta_temperature);
+
+        
 
         // integrate synapses
         if (isnan(comp[i]->neuron_idx))
         {
-            comp[i]->integrateSynapses(V_prev, dt, delta_temperature);
+            comp[i]->integrateSynapses(dt, delta_temperature);
         }
         
     }
@@ -227,14 +229,13 @@ void network::integrate(double dt, double * I_ext_now, double delta_temperature)
     // and calcium in all compartments
     for (int i = 0; i < n_comp; i++)
     {
-        V_prev = comp[i]->V;
-        Ca_prev = comp[i]->Ca;
         if (isnan(comp[i]->neuron_idx)) {
-            comp[i]->integrateVC(V_prev, Ca_prev, dt, delta_temperature);
+            comp[i]->integrateVoltage(dt, delta_temperature);
         } else {
             // this is a multi-compartment model,
             // so just integrate the calcium
-            comp[i]->integrateCalcium(Ca_prev, dt);
+            // this is assumed to be already done in the 
+            // mechanism integration, so do nothing here
         }
         
     }
@@ -286,35 +287,39 @@ void network::integrate(double dt, double * I_ext_now, double delta_temperature)
     }
 }
 
-// integrate while clamping some compartments 
+// integrate while voltage clamping some compartments 
 void network::integrateClamp(double dt, double *V_clamp, double delta_temperature)
 {
 
     // integrate all channels in all compartments
     for (int i = 0; i < n_comp; i++)
     {
+
+        // move current values to previous values
+        comp[i]->V_prev = comp[i]->V;
+        comp[i]->Ca_prev = comp[i]->Ca;
+        comp[i]->i_Ca_prev = comp[i]->i_Ca;
+
+
         comp[i]->i_Ca = 0;
         comp[i]->I_ext = 0;
         comp[i]->I_clamp = 0;
 
-        V_prev = comp[i]->V;
-        Ca_prev = comp[i]->Ca;
-        comp[i]->integrateChannels(V_prev,Ca_prev,dt, delta_temperature);
+        comp[i]->integrateChannels(dt, delta_temperature);
 
         // integrate synapses
-        comp[i]->integrateSynapses(V_prev,dt, delta_temperature);
+        comp[i]->integrateSynapses(dt, delta_temperature);
     }
 
     // integrate all voltages and Ca in all compartments
     for (int i = 0; i < n_comp; i++)
     {
         
-        Ca_prev = comp[i]->Ca;
         if (isnan(V_clamp[i])){
-            V_prev = comp[i]->V;
-            comp[i]->integrateVC(V_prev, Ca_prev, dt, delta_temperature);
+
+            comp[i]->integrateVoltage(dt, delta_temperature);
         } else {
-            comp[i]->integrateC_V_clamp(V_clamp[i], Ca_prev, dt, delta_temperature);
+            comp[i]->integrateV_clamp(V_clamp[i], dt, delta_temperature);
         }
 
     }

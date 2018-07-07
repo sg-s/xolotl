@@ -10,10 +10,6 @@ xolotl.cleanup;
 
 % conversion from Prinz to phi
 A = 0.0628;
-vol = A; % this can be anything, doesn't matter
-f = 14.96; % uM/nA
-tau_Ca = 200;
-phi = (2*f*96485*vol)/tau_Ca;
 
 channels = {'NaV','CaT','CaS','ACurrent','KCa','Kd','HCurrent'};
 prefix = 'prinz/';
@@ -24,12 +20,16 @@ E =         [50   30  30 -80 -80 -80   -20];
 
 x = xolotl;
 
-x.add('compartment','AB','Cm',10,'A',A,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
-x.add('compartment','LP','Cm',10,'A',0.0628,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
-x.add('compartment','PY','Cm',10,'A',A,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca);
+x.add('compartment','AB','Cm',10,'A',A);
+x.add('compartment','LP','Cm',10,'A',A);
+x.add('compartment','PY','Cm',10,'A',A);
 
 compartments = x.find('compartment');
 for j = 1:length(compartments)
+
+	% add Calcium mechanism
+	x.(compartments{j}).add('CalciumMech');
+
 	for i = 1:length(channels)
 		x.(compartments{j}).add([prefix channels{i}],'gbar',gbar(i,j),'E',E(i));
 	end
@@ -65,6 +65,8 @@ for i = 1:3
 	title(C{i})
 
 end
+
+
 
 prettyFig('plw',1.5);
 drawnow
