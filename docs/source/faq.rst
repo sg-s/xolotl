@@ -36,7 +36,6 @@ pitfalls (syntax, spelling, your ``MATLAB`` path, cleared your workspace, etc...
 try the following ::
   % erases all the compiled binaries of xolotl networks
   x.cleanup
-  % rehash
 
 If you're still having a problem, we might have fixed it already! Reinstall or update
 by running the `install script` or pulling from the repository if you're using ``git``.
