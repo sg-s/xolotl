@@ -21,6 +21,10 @@ See Also
 
 function manipulateEvaluate(self,names,values)
 
+self.reset('manipulate_zero')
+
 self.set(names,values)
 
-self.manipulate_plot_func{1}(self);
+for i = 1:length(self.manipulate_plot_func)
+	self.manipulate_plot_func{i}(self);
+end
