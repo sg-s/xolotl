@@ -64,6 +64,7 @@ if nargin < 2
 
 	values(rm_this) = [];
 	real_names(rm_this) = [];
+	manipulate_these = real_names;
 
 else
 
@@ -84,6 +85,7 @@ else
 		values(i) = temp;
 	end
 end
+
 
 assert(~isempty(manipulate_these),'Manipulate was called with illegal or invalid parameters that did not resolve to anything.')
 

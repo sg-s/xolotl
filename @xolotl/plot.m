@@ -48,24 +48,38 @@ if isempty(self.handles) || ~isfield(self.handles,'fig') || ~isvalid(self.handle
 	
 	for i = 1:N
 
-		yyaxis(self.handles.ax(i),'left')
+		if getpref('xolotl','show_Ca',true)
+			yyaxis(self.handles.ax(i),'left')
+		end
+		
 		cond_names = self.(comp_names{i}).find('conductance');
-		for j = 1:length(cond_names)
-			self.handles.plots(i).ph(j) = plot(self.handles.ax(i),NaN,NaN, 'Color', c(j,:),'LineWidth',3);
+
+		if getpref('xolotl','plot_color',true)
+
+			for j = 1:length(cond_names)
+				self.handles.plots(i).ph(j) = plot(self.handles.ax(i),NaN,NaN, 'Color', c(j,:),'LineWidth',3);
+			end
+		else
+			self.handles.plots(i).ph = plot(self.handles.ax(i),NaN,NaN, 'Color', 'k','LineWidth',1.5);
 		end
 
 		xlabel(self.handles.ax(i),'Time (s)')
 		ylabel(self.handles.ax(i),['V_{ ' comp_names{i} '} (mV)'])
 
 		% make calcium dummy plots
-		yyaxis(self.handles.ax(i),'right')
-		self.handles.Ca_trace(i) = plot(self.handles.ax(i),NaN,NaN,'Color','k');
-		ylabel(self.handles.ax(i),['[Ca^2^+]_{' comp_names{i} '} (uM)'] )
+		
+		if getpref('xolotl','show_Ca',true)
+			yyaxis(self.handles.ax(i),'right')
+			self.handles.Ca_trace(i) = plot(self.handles.ax(i),NaN,NaN,'Color','k');
+			ylabel(self.handles.ax(i),['[Ca^2^+]_{' comp_names{i} '} (uM)'] )
+		end
 
-		lh = legend([self.handles.plots(i).ph self.handles.Ca_trace(i)],[cond_names; '[Ca]']);
-		lh.Location = 'eastoutside';
+		if getpref('xolotl','show_Ca',true) & getpref('xolotl','plot_color',true)
+			lh = legend([self.handles.plots(i).ph self.handles.Ca_trace(i)],[cond_names; '[Ca]']);
+			lh.Location = 'eastoutside';
 
-		self.handles.lh = lh;
+			self.handles.lh = lh;
+		end
 
 		for j = 1:length(self.handles.plots(i).ph)
 			self.handles.plots(i).ph(j).Marker = 'none';
@@ -107,25 +121,22 @@ for i = 1:N
 
 		end
 	else
-		for j = 1:size(this_I,2)
-			self.handles.plots(i).ph(j).XData = NaN;
-			self.handles.plots(i).ph(j).YData = NaN;
 
-		end
-		self.handles.plots(i).ph(j).Color = 'k';
-		self.handles.plots(i).ph(j).XData = time;
-		self.handles.plots(i).ph(j).YData = this_V;
-		self.handles.lh.Visible = 'off';
+		self.handles.plots(i).ph(1).Color = 'k';
+		self.handles.plots(i).ph(1).XData = time;
+		self.handles.plots(i).ph(1).YData = this_V;
 	end
 
 
 	% and now show calcium
-	self.handles.Ca_trace(i).XData = time;
-	self.handles.Ca_trace(i).YData = Ca(:,i);
-	if isnan(max_Ca)
-		set(self.handles.ax(i),'YLim',[0 1])
-	else
-		set(self.handles.ax(i),'YLim',[0 max_Ca])
+	if getpref('xolotl','show_Ca',true)
+		self.handles.Ca_trace(i).XData = time;
+		self.handles.Ca_trace(i).YData = Ca(:,i);
+		if isnan(max_Ca)
+			set(self.handles.ax(i),'YLim',[0 1])
+		else
+			set(self.handles.ax(i),'YLim',[0 max_Ca])
+		end
 	end
 
 

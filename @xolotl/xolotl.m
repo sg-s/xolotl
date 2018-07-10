@@ -125,9 +125,17 @@ methods
 	function self = xolotl()
 		self.rebase;
 
-        
-        if isempty(getpref('xolotl'))
+        p = getpref('xolotl');
+        if isempty(p)
             setpref('xolotl','plot_color',true)
+            setpref('xolotl','show_Ca',true)
+        else
+            if ~isfield(p,'plot_color')
+                setpref('xolotl','plot_color',true)
+            end
+            if ~isfield(p,'show_Ca')
+                setpref('xolotl','show_Ca',true)
+            end
         end
 
 
