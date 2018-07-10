@@ -65,6 +65,8 @@ if isempty(self.handles) || ~isfield(self.handles,'fig') || ~isvalid(self.handle
 		lh = legend([self.handles.plots(i).ph self.handles.Ca_trace(i)],[cond_names; '[Ca]']);
 		lh.Location = 'eastoutside';
 
+		self.handles.lh = lh;
+
 		for j = 1:length(self.handles.plots(i).ph)
 			self.handles.plots(i).ph(j).Marker = 'none';
 			self.handles.plots(i).ph(j).LineStyle = '-';
@@ -96,12 +98,24 @@ for i = 1:N
 	curr_index = xolotl.contributingCurrents(this_V, this_I);
 
 	% show voltage
-	for j = 1:size(this_I,2)
-		Vplot = this_V;
-		Vplot(curr_index ~= j) = NaN;
-		self.handles.plots(i).ph(j).XData = time;
-		self.handles.plots(i).ph(j).YData = Vplot;
+	if getpref('xolotl','plot_color',true)
+		for j = 1:size(this_I,2)
+			Vplot = this_V;
+			Vplot(curr_index ~= j) = NaN;
+			self.handles.plots(i).ph(j).XData = time;
+			self.handles.plots(i).ph(j).YData = Vplot;
 
+		end
+	else
+		for j = 1:size(this_I,2)
+			self.handles.plots(i).ph(j).XData = NaN;
+			self.handles.plots(i).ph(j).YData = NaN;
+
+		end
+		self.handles.plots(i).ph(j).Color = 'k';
+		self.handles.plots(i).ph(j).XData = time;
+		self.handles.plots(i).ph(j).YData = this_V;
+		self.handles.lh.Visible = 'off';
 	end
 
 
