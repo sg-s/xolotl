@@ -35,7 +35,7 @@ protected:
     double sigma_g;
     double sigma_gE;
     double V_inf;
-    double Ca_inf;
+
 
 public:
 
@@ -45,6 +45,9 @@ public:
     double c_;
     double f_;
     double delta_V;
+    double i_Ca_prev = 0;
+    double Ca_prev;
+    double V_prev;
 
     double verbosity = 0;
 
@@ -80,20 +83,18 @@ public:
     // geometry is assumed to be a cylinder.
     // if not, you must specify the area and
     // volume
-    double A;
+    double A = .0628;
     double vol;
     double radius; // mm
     double len; // mm
     double shell_thickness; // mm
 
 
-    double Cm; // specific capacitance
+    double Cm = 10; // specific capacitance
 
-    double phi;
-    double Ca_in;
-    double Ca_out;
-    double tau_Ca;
+
     double Ca_target; // for homeostatic control
+    double Ca_out = 3000;
 
 
     // stores the average Ca over the integration
@@ -102,7 +103,7 @@ public:
     // pulling out the full trace
     double Ca_average;
 
-    double V;
+    double V = -60;
     double Ca;
     double E_Ca;
     double i_Ca; // specific calcium current (current/area. nA/mm^2)
@@ -114,15 +115,15 @@ public:
     int n_axial_syn;
 
     // constructor with all parameters
-    compartment(double V_, double Ca_, double Cm_, double A_, double vol_, double phi_, double Ca_out_, double Ca_in_, double tau_Ca_, double Ca_target_, double Ca_average_, double tree_idx_, double neuron_idx_, double radius_, double len_, double shell_thickness_)
+    compartment(double V_, double Ca_, double Cm_, double A_, double vol_,  double Ca_target_, double Ca_average_, double tree_idx_, double neuron_idx_, double radius_, double len_, double shell_thickness_, double Ca_out_)
     {
         V = V_;
         Ca = Ca_;
+        Ca_out = Ca_out_;
 
         sigma_g = 0;
         sigma_gE = 0;
         V_inf = 0;
-        Ca_inf = 0;
 
         // geometry
         vol = vol_;
@@ -136,10 +137,6 @@ public:
 
 
         // calcium
-        phi = phi_;
-        Ca_in = Ca_in_;
-        Ca_out = Ca_out_;
-        tau_Ca = tau_Ca_;
         Ca_target = Ca_target_;
         Ca_average = Ca_average_;
         Ca_average = 0; // reset it every time
@@ -150,13 +147,10 @@ public:
         neuron_idx = neuron_idx_;
 
         // defaults
+        if (isnan (Ca_out)) { Ca_out = 3000;}
         if (isnan (A)) { A = .0628;}
-        if (isnan (Cm)) { Cm = 10;}
-        if (isnan (tau_Ca)) { tau_Ca = 200;} // ms
         if (isnan (V)) { V = -60; } // mV
-        if (isnan (Ca_in)) { Ca_in = .05; }
-        if (isnan (Ca_out)) { Ca_out = 3000; }
-        if (isnan (Ca)) { Ca = Ca_in; }
+        if (isnan (Ca)) { Ca = .05; }
 
         // if (isnan (Ca_target)) { Ca_target = Ca_in; }
 
@@ -208,11 +202,10 @@ public:
 
     // integration methods
     void integrateMechanisms(double);
-    void integrateChannels(double, double, double, double);
-    void integrateSynapses(double, double, double);
-    void integrateVC(double, double, double, double);
-    void integrateC_V_clamp(double, double, double, double);
-    void integrateCalcium(double, double);
+    void integrateChannels(double, double);
+    void integrateSynapses(double, double);
+    void integrateVoltage(double, double);
+    void integrateV_clamp(double, double, double);
 
     // methods for integrating using Crank-Nicholson
     // and methods for multi-compartment models
@@ -406,16 +399,10 @@ double compartment::getBCDF(int idx)
 
 }
 
-void compartment::integrateCalcium(double Ca_prev, double dt)
-{
-    Ca_inf = Ca_in - (tau_Ca*phi*i_Ca*A*.5)/(F*vol); // microM
-    Ca = Ca_inf + (Ca_prev - Ca_inf)*exp(-dt/tau_Ca);
-}
 
 
 
-
-void compartment::integrateChannels(double V_prev, double Ca_prev, double dt, double delta_temperature)
+void compartment::integrateChannels(double dt, double delta_temperature)
 {
 
     sigma_g = 0.0;
@@ -448,7 +435,7 @@ void compartment::integrateMechanisms(double dt)
 }
 
 
-void compartment::integrateSynapses(double V_prev, double dt, double delta_temperature)
+void compartment::integrateSynapses(double dt, double delta_temperature)
 {
     // we treat synapses identically to any other conductance
     for (int i=0; i<n_syn; i++)
@@ -461,7 +448,7 @@ void compartment::integrateSynapses(double V_prev, double dt, double delta_tempe
 }
 
 
-void compartment::integrateVC(double V_prev, double Ca_prev, double dt, double delta_temperature)
+void compartment::integrateVoltage(double dt, double delta_temperature)
 {
 
     // compute infinity values for V and Ca
@@ -473,26 +460,17 @@ void compartment::integrateVC(double V_prev, double Ca_prev, double dt, double d
         V_inf = (sigma_gE + (I_ext/A))/sigma_g;
     }
 
-    Ca_inf = Ca_in - (tau_Ca*phi*i_Ca*A*.5)/(F*vol); // microM
-
-    // integrate V and Ca
+    // integrate V 
     V = V_inf + (V_prev - V_inf)*exp(-dt/(Cm/(sigma_g)));
-    Ca = Ca_inf + (Ca_prev - Ca_inf)*exp(-dt/tau_Ca);
+
 }
 
 
-// integrates calcium, but not voltage
-// assumes cell is voltage clamped, and
-// returns the current required to clamp it
-void compartment::integrateC_V_clamp(double V_clamp, double Ca_prev, double dt, double delta_temperature)
+// assumes the cell is being clamped, and 
+// integrates and solves for I_clamp
+
+void compartment::integrateV_clamp(double V_clamp, double dt, double delta_temperature)
 {
-    // compute infinity values for Ca
-    Ca_inf = Ca_in - (tau_Ca*phi*i_Ca*A*.5)/(F*vol); // microM
-
-    //
-
-    // integrate Ca
-    Ca = Ca_inf + (Ca_prev - Ca_inf)*exp(-dt/tau_Ca);
 
     // calculate I_clamp, and set voltage to the clamped
     // voltage

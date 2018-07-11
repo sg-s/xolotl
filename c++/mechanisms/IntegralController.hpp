@@ -17,11 +17,11 @@ class IntegralController: public mechanism {
 protected:
 public:
     // timescales
-    double tau_m;
-    double tau_g; 
+    double tau_m = std::numeric_limits<double>::infinity();
+    double tau_g = 5e3; 
 
     // mRNA concentration 
-    double m; 
+    double m = 0; 
 
     // area of the container this is in
     // this is NOT necessarily the area of the compartment
@@ -37,9 +37,6 @@ public:
         tau_g = tau_g_;
         m = m_;
 
-        if (isnan (m)) { m = 0; }
-        if (isnan (tau_g)) { tau_g = 5e3; }
-        if (isnan (tau_m)) { tau_m = std::numeric_limits<double>::infinity(); }
 
         if (tau_m<=0) {mexErrMsgTxt("[IntegralController] tau_m must be > 0. Perhaps you meant to set it to Inf?\n");}
         if (tau_g<=0) {mexErrMsgTxt("[IntegralController] tau_g must be > 0. Perhaps you meant to set it to Inf?\n");}

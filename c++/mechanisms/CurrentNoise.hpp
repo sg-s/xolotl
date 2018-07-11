@@ -20,7 +20,7 @@ public:
 
 
     // scale
-    double noise_amplitude; 
+    double noise_amplitude = 0; 
 
 
     // specify parameters + initial conditions for 
@@ -28,11 +28,7 @@ public:
     CurrentNoise(double noise_amplitude_)
     {
         noise_amplitude = noise_amplitude_;
-        if (isnan (noise_amplitude)) { noise_amplitude = 0; }
         controlling_class = "unset";
-
-
-        
 
     }
 

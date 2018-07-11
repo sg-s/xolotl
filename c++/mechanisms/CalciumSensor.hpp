@@ -22,7 +22,7 @@ public:
 
 
     // scale
-    double tau; 
+    double tau = 5e3; 
 
     double Ca_average;
 
@@ -32,7 +32,6 @@ public:
     CalciumSensor(double tau_)
     {
         tau = tau_;
-        if (isnan (tau)) { tau = 5e3; }
         controlling_class = "unset";
 
     }

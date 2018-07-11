@@ -3,15 +3,11 @@
 xolotl.cleanup;
 
 A = 0.0628; % mm^2
-vol = A; % mm^3
-f = 1.496; % uM/nA
-tau_Ca = 200;
-F = 96485; % Faraday constant in SI units
-phi = (2*f*F*vol)/tau_Ca;
 Ca_target = 7; % used only when we add in homeostatic control 
 
 x = xolotl;
-x.add('compartment','AB','Cm',10,'A',A,'vol',vol,'phi',phi,'Ca_out',3000,'Ca_in',0.05,'tau_Ca',tau_Ca,'Ca_target',Ca_target);
+x.add('compartment','AB','A',A,'Ca_target',Ca_target);
+x.AB.add('CalciumMech1','f',1.496);
 
 g0 = 1e-1+1e-1*rand(7,1);
 
@@ -48,7 +44,7 @@ time = x.dt*(1:length(C))*1e-3;
 plot(time,C(:,2:2:end));
 set(gca,'XScale','log','YScale','log','YTick',[1e-2 1e0 1e2 1e4])
 xlabel('Time (s)')
-ylabel('g (uS/mm^2')
+ylabel('g (uS/mm^2)')
 
 subplot(2,1,2); hold on
 x.dt = .1;
