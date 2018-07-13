@@ -200,4 +200,4 @@ epub_exclude_files = ['search.html']
 intersphinx_mapping = {'https://docs.python.org/': None}
 
 # Summon MathJax from the aether
-mathjax_path = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js'
+mathjax_path = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML'
