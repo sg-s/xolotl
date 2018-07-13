@@ -27,7 +27,7 @@ public:
  if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
-        if (isnan (E)) { E = -80; }
+        if (isnan (E)) { E = 30; }
     }
 
     void integrate(double V, double Ca, double dt, double delta_temp);
@@ -47,6 +47,8 @@ string Cal::getClass(){
 
 void Cal::integrate(double V, double Ca, double dt, double delta_temp)
 {
+    // update E by copying E_Ca from the cell
+    E = container->E_Ca;
     m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
     h = h_inf(V) + (h - h_inf(V))*exp(-dt/tau_h(V));
     g = gbar*m*m*h;
