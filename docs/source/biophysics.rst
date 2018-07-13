@@ -52,7 +52,7 @@ The gating variables evolve as functions of voltage and time according to the fi
 where :math:`x = (m,h)`
 
 .. hint::
-  For more information, see `Destexhe & Huguenard 2000`__
+  For more information, see `Destexhe & Huguenard 2000`__.
 
 __ http://cns.iaf.cnrs-gif.fr/files/Desh99.pdf
 
