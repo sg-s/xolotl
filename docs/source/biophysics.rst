@@ -49,7 +49,7 @@ The gating variables evolve as functions of voltage and time according to the fi
 .. math::
   \tau_x (V)\frac{dx}{dt} = x_{\infty}(V) - x
 
-where :math:`x = (m,h)`
+where :math:`x = (m,h)`.
 
 .. hint::
   For more information, see `Destexhe & Huguenard 2000`__.
