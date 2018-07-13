@@ -15,6 +15,7 @@
    auto_methods
    compilers
    units
+   biophysics
    contributing
    license
 
