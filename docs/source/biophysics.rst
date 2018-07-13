@@ -51,6 +51,14 @@ The gating variables evolve as functions of voltage and time according to the fi
 
 where :math:`x = (m,h)`
 
+.. hint::
+  For more information, see `Destexhe & Huguenard 2000`__
+
+__ http://cns.iaf.cnrs-gif.fr/files/Desh99.pdf
+
+Integration of Gating Variables
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 ``xolotl`` solves this equation using the exponential Euler method.
 
 .. math::
@@ -64,6 +72,9 @@ the exponential Euler method computes the value of the gating variable at the ne
 :math:`t + \Delta t`.
 
 .. math:: x(t + \Delta t) = x_{\infty}(V(t)) + \Big(x(t) - x_{\infty}(V(t))\Big)\exp\Bigg(-\frac{\Delta t}{\tau_x(V(t))}\Bigg)
+
+Integration of Membrane Potential
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The membrane potential is integrated in a similar method. If the differential equation for membrane potential
 is represented in the form
