@@ -42,8 +42,8 @@ if isempty(self.linked_binary)
 		disp(['[INFO] No linked binary, hashing...'])
 	end
 	h = self.hash;
-	mexBridge_name = [joinPath(self.xolotl_folder,'mexBridge') h(1:6) '.cpp'];
-	self.linked_binary = ['mexBridge' h(1:6) '.' self.OS_binary_ext];
+	mexBridge_name = [joinPath(self.xolotl_folder,'X_') h '.cpp'];
+	self.linked_binary = ['X_' h '.' self.OS_binary_ext];
 end
 
 
@@ -56,7 +56,7 @@ if exist(joinPath(self.xolotl_folder,self.linked_binary),'file') == 3
 	end
 
 	h = self.hash;
-	if ~strcmp(self.linked_binary(10:15),h(1:6))
+	if ~strcmp(self.linked_binary(10:15),h)
 
 		if self.verbosity > 0
 			disp(['[INFO] Binary out of sync'])

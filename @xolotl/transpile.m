@@ -42,7 +42,7 @@ See Also
 function transpile(self)
 
 h = self.hash;
-out_file = ['mexBridge' h(1:6) '.cpp'];
+out_file = ['X_' h '.cpp'];
 self.transpileCore('mexTemplate.cpp',out_file)
 
 
