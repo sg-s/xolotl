@@ -3,7 +3,7 @@
   "vm_names": ["debian"],
   "test_folder": "tests",
   "deps": ["https://github.com/sg-s/cpplab", "https://github.com/sg-s/srinivas.gs_mtools","https://github.com/sg-s/puppeteer"],
-  "dev-branch": "dev",
+  "dev-branch": "dev-clean",
   "stable-branch": "master",
   "author": "Srinivas Gorur-Shandilya",
   "author-url": "https://srinivas.gs",

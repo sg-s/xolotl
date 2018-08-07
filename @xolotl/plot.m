@@ -89,7 +89,10 @@ if isempty(self.handles) || ~isfield(self.handles,'fig') || ~isvalid(self.handle
 		set(self.handles.ax(1),'XLim',[0 max(self.t_end*1e-3)]);
 
 		% attach this figure to the puppeteer instance 
-		self.handles.puppeteer_object.attachFigure(self.handles.fig);
+		try
+			self.handles.puppeteer_object.attachFigure(self.handles.fig);
+		catch
+		end
 
 	end
 
