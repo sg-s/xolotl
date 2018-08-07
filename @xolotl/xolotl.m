@@ -125,6 +125,20 @@ methods
 	function self = xolotl()
 		self.rebase;
 
+        p = getpref('xolotl');
+        if isempty(p)
+            setpref('xolotl','plot_color',true)
+            setpref('xolotl','show_Ca',true)
+        else
+            if ~isfield(p,'plot_color')
+                setpref('xolotl','plot_color',true)
+            end
+            if ~isfield(p,'show_Ca')
+                setpref('xolotl','show_Ca',true)
+            end
+        end
+
+
         % append all classnames to illegal names
         [~,hpp_files] = self.resolvePath('');
         self.hpp_files = hpp_files;

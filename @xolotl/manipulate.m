@@ -32,8 +32,8 @@ end
 % disable closed loop
 self.closed_loop = false;
 
-[V,Ca] = self.integrate;
-time = (1:length(V))*self.dt*1e-3;
+% make a snapshot of this now
+self.snapshot('manipulate_zero')
 
 t_end = self.t_end;
 
@@ -64,6 +64,7 @@ if nargin < 2
 
 	values(rm_this) = [];
 	real_names(rm_this) = [];
+	manipulate_these = real_names;
 
 else
 
@@ -85,24 +86,30 @@ else
 	end
 end
 
+
 assert(~isempty(manipulate_these),'Manipulate was called with illegal or invalid parameters that did not resolve to anything.')
-
-self.manipulate_plot_func{1}(self);
-
 
 % semi-intelligently make the upper and lower bounds
 lb = values/3;
 ub = values*3;
 
+% create a puppeteer instance and configure
+p = puppeteer(real_names,values,lb,ub,[],true);
+self.handles.puppeteer_object = p;
+
+
+
+
+for i = length(self.manipulate_plot_func):-1:1
+	self.reset('manipulate_zero')
+	self.manipulate_plot_func{i}(self);
+end
+
+
 
 warning('off','MATLAB:hg:uicontrol:ValueMustBeInRange')
 
-% create a puppeteer instance and configure
-p = puppeteer(real_names,values,lb,ub,[],true);
 
-
-
-p.attachFigure(self.handles.fig);
 p.callback_function = @self.manipulateEvaluate;
-self.handles.puppeteer_object = p;
+
 

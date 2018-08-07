@@ -5,12 +5,12 @@
 xolotl.cleanup;
 
 x = xolotl;
-x.add('compartment','AB','A',0.0628,'vol',0.0628,'phi',90);
+x.add('compartment','AB','A',0.0628);
+x.AB.add('CalciumMech1','f',1.496);
 x.AB.add('liu-approx/NaV','gbar',2e3,'E',30);
 x.AB.add('liu-approx/CaT','gbar',10,'E',30);
 x.AB.add('liu-approx/Kd','gbar',1e3,'E',-80);
 x.AB.add('Leak','gbar', .2,'E',-50);
-
 
 
 x.manipulate_plot_func{1} = @custom_fI;

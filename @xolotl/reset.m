@@ -47,7 +47,7 @@ if nargin == 1
 	all_compartments = self.find('compartment');
 	for i = 1:length(all_compartments)
 		self.(all_compartments{i}).V = -60;
-		self.(all_compartments{i}).Ca = self.(all_compartments{i}).Ca_in;
+		self.(all_compartments{i}).Ca = .05;
 		self.(all_compartments{i}).Ca_average = NaN;
 	end
 
