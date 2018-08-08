@@ -56,7 +56,7 @@ if exist(joinPath(self.xolotl_folder,self.linked_binary),'file') == 3
 	end
 
 	h = self.hash;
-	if ~strcmp(self.linked_binary(10:15),h)
+	if ~strcmp(self.linked_binary(3:34),h)
 
 		if self.verbosity > 0
 			disp(['[INFO] Binary out of sync'])
