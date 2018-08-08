@@ -64,6 +64,14 @@ A handy shortcut for this is: ::
 
 This shortcut syntax will be used for the rest of the documentation, but remember that you can also do things the "long" way.
 
+...add a mechanisms to a compartment?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Assuming you have a compartment called ``AB`` in your ``xolotl`` object, you can add
+the mechanism ``CalciumMech1`` through the ``add`` function and specify the value
+of the parameter ``f``,  ::
+
+  x.AB.add('CalciumMech1', 'f', 1.498)
 
 ...add a conductance to a compartment?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
