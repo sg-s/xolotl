@@ -7,6 +7,13 @@ class Glutamatergic: public synapse {
 
 public:
 
+
+    double Delta;
+
+    double k_;
+    double Vth;
+
+
     // specify parameters + initial conditions 
     Glutamatergic(double g_, double s_)
     {

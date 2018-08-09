@@ -7,6 +7,11 @@ class Cholinergic: public synapse {
 
 public:
 
+    double Delta;
+    double k_;
+    double Vth;
+
+
     // specify parameters + initial conditions 
     Cholinergic(double g_, double s_)
     {

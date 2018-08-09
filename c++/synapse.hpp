@@ -13,21 +13,15 @@ class compartment;
 
 class synapse {
 protected:
-    // parameters
-    double Delta;
-
-    double k_;
-    double Vth;
-
 
 
     compartment *post_syn; // pointer to pre-synaptic compartment
 public:
 
     compartment *pre_syn; // pointer to pre-synaptic compartment
-    double s;
     double gbar;
     double E;
+    double s;
     bool is_electrical;
 
 
