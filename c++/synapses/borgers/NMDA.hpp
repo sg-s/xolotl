@@ -24,7 +24,7 @@ public:
         if (isnan (s)) { s = 0; }
         if (isnan (gbar)) { gbar = 0; }
         if (isnan (E)) { E = 0; }
-        if (isnan (Mg)) { Mg = 1 }
+        if (isnan (Mg)) { Mg = 1; }
         is_electrical = false;
     }
 
