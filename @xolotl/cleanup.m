@@ -21,7 +21,7 @@ function cleanup()
 this_dir = fileparts(fileparts(which('xolotl.cleanup')));
 
 warning('Deleting compiled binaries...')
-allfiles = dir([this_dir filesep '*mexBridge*']);
+allfiles = dir([this_dir filesep '*X_*']);
 for i = 1:length(allfiles)
 	delete([this_dir filesep allfiles(i).name]);
 end

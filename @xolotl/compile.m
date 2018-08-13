@@ -31,7 +31,7 @@ function compile(self)
 
 h = self.hash;
 
-mexBridge_name = [joinPath(self.xolotl_folder,'mexBridge') h(1:6) '.cpp'];
+mexBridge_name = [joinPath(self.xolotl_folder,'X_') h '.cpp'];
 assert(exist(mexBridge_name,'file')==2,'C++ file to compile does not exist. Use "transpile" before compiling')
 
 if self.verbosity > 0
@@ -53,7 +53,7 @@ end
 
 
 % update linked_binary
-self.linked_binary = ['mexBridge' h(1:6) '.' self.OS_binary_ext];
+self.linked_binary = ['X_' h '.' self.OS_binary_ext];
 
 if self.verbosity > 0
 	disp(['[INFO] compilation successful!'])

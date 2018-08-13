@@ -9,7 +9,7 @@
 *.mexa64
 *.sublime-workspace
 *a.out
-*mexBridge*
+*X_*.cpp
 *.mat
 *.lyx~
 *.lyx#
