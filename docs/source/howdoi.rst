@@ -7,7 +7,7 @@ How do I...
 ===========
 
 
-...create a empty xolotl object?
+create a empty xolotl object?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
@@ -18,7 +18,7 @@ How do I...
 This is a prerequisite to doing anything else. (You can name your object whatever you want, but this documentation will assume that you've named it ``x``).
 
 
-...create a new compartment?
+create a new compartment?
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You can first create a new compartment using ``cpplab`` ::
@@ -64,7 +64,7 @@ A handy shortcut for this is: ::
 
 This shortcut syntax will be used for the rest of the documentation, but remember that you can also do things the "long" way.
 
-...add a mechanisms to a compartment?
+add a mechanism to a compartment?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Assuming you have a compartment called ``AB`` in your ``xolotl`` object, you can add
@@ -73,7 +73,7 @@ of the parameter ``f``,  ::
 
   x.AB.add('CalciumMech1', 'f', 1.498)
 
-...add a conductance to a compartment?
+add a conductance to a compartment?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Assuming you have a compartment called ``AB`` in your ``xolotl`` object, ::
@@ -101,14 +101,14 @@ As always, you can set these properties after-the-fact (e.g. ``x.gbar = 100``), 
 (e.g. ``x.add('liu/NaV', 'gbar', 100)``).
 
 
-...find out what conductances are available?
+find out what conductances are available?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Look in the folder yourself! All ``C++`` headerfiles are contained in the ``C++`` folder in the ``xolotl`` directory. If you are unsure where that is, type this in your ``MATLAB`` prompt: ::
 
   fileparts(fileparts(which('xolotl')))
 
-...add a custom conductance?
+add a custom conductance?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The quickest way is to use the ``conductance`` class. The ``conductance`` class expects steady-state gating functions
@@ -129,7 +129,7 @@ Alternatively, you can make your own custom conductances by editing a copy of th
 
 __ contributing.rst
 
-...inspect the object I have created?
+inspect the object I have created?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You can inspect any object by outputting it in the command window. For example, to inspect the whole xolotl object ::
@@ -142,7 +142,7 @@ You can inspect any object by outputting it in the command window. For example, 
 
 You can click on the linked (blue) text to inspect those properties, or reference them directly (e.g. ``x.AB.NaV``).
 
-...connect two compartments using a synapse?
+connect two compartments using a synapse?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Connect two compartments with an electrical synapse ::
@@ -161,14 +161,14 @@ Connect two compartments with a glutmatergic synapse and specify properties ::
 
   x.connect('AB', 'LP', 'prinz/Glut', 'gbar', 100)
 
-...find out what synapse types are available?
+find out what synapse types are available?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Look in the folder yourself! All ``C++`` headerfiles are contained in the ``c++/synapses`` folder in the ``xolotl`` directory. If you are unsure where that is, type this in your ``MATLAB`` prompt: ::
 
   fileparts(fileparts(which('xolotl')))
 
-...inject current into a compartment?
+inject current into a compartment?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Add a scalar, vector, or matrix to ``x.I_ext``. This is interpreted as an injected current in nanoamperes.
@@ -188,7 +188,7 @@ Inject a variable current into one of two compartments ::
   I_ext(:,1) = 0.2 * rand(nSteps, 1);
   x.I_ext = I_ext;
 
-...voltage clamp a compartment?
+voltage clamp a compartment?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Add a matrix to ``x.V_clamp``. This is interpreted as an ``nSteps x nComps`` matrix of clamped voltage, where
@@ -202,7 +202,7 @@ Clamp the voltage and step it from -50 mV to 50 mV and back ::
   V_clamp(ceil(nSteps*3/4), 1) = -50;
   x.V_clamp = V_clamp;
 
-...specify simulation time step and other integration parameters?
+specify simulation time step and other integration parameters?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Specify the time step by setting ``x.dt`` in milliseconds. Specify the simulation time by setting
@@ -216,7 +216,7 @@ Set the time step to 0.1 ms ::
 
   x.dt = 0.1
 
-...integrate the model and obtain outputs?
+integrate the model and obtain outputs?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Integrate the model ::
@@ -228,7 +228,7 @@ Integrate the model ::
 are the time traces of all the currents and synaptic currents, in the order that they are displayed in the serialized ``xolotl``
 object (e.g. how ``x`` displays them in the command window).
 
-...debug a model or simulation?
+debug a model or simulation?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ``xolotl`` has a debug mode that can be turned on using ::
