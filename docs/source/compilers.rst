@@ -6,7 +6,7 @@
 Compiler Support
 ================
 
-Compilers for which ``xolotl`` has been known to work (or not).
+Compilers for which ``xolotl`` has been known to work (or not). Note that this has nothing to do with ``xolotl``, but rather reflects whether MEX works with these compilers on these OSes.
 
 =================== ============ ============================ ======
  **OS**             **Compiler**     **Version**              **Works**

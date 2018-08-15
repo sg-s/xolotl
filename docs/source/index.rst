@@ -16,6 +16,7 @@
    compilers
    units
    contributing
+   troubleshooting
    license
 
 
