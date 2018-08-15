@@ -9,10 +9,17 @@ matrixCost
 ^^^^^^^^^^
 a static method to compute the distance between two LeMasson matrices. This is a useful way to determine how similar two voltage traces are. 
 
+Usage ::
+
+	C = matrixCost(M1,M2)
+
+where ``M1`` and ``M2`` are two matrices returned by xolotl.V2matrix() and represent discretized probability distributions of a derivative-embedded attractor of the voltage trace. 
+
+
 See Also
 --------
 
-LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neu- roscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
+LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
 
 - xolotl.V2matrix
 

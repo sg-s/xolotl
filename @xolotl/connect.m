@@ -57,6 +57,8 @@ assert(ischar(comp2),'Second argument should be a string; the name of the postsy
 assert(any(strcmp(comp1,properties(self))),'Unknown compartment')
 assert(any(strcmp(comp2,properties(self))),'Unknown compartment')
 
+assert(~strcmp(comp1,comp2),'You cannot connect a compartment to itself')
+
 
 if isempty(self.synapse_pre)
 	self.synapse_pre = {};

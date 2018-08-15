@@ -13,9 +13,9 @@ integrates a ``xolotl`` model. Usage ::
    V = x.integrate;
    I_clamp = x.integrate;
    [V, Ca] = x.integrate;
-   [V, Ca, cont_state] = x.integrate;
-   [V, Ca, cont_state, I] = x.integrate;
-   [V, Ca, cont_state, I, syn_state] = x.integrate;
+   [V, Ca, mech_state] = x.integrate;
+   [V, Ca, mech_state, I] = x.integrate;
+   [V, Ca, mech_state, I, syn_state] = x.integrate;
 
 
 ``integrate`` will return different outputs as show above. Unless you need every output, it is recommended to skip it, as it makes the integration faster (and reduces the memory footprint). 
@@ -26,7 +26,7 @@ Explanation of outputs
 - ``V`` Voltage trace of every compartment. A matrix of size (nsteps, n_comps)
 - ``I_clamp`` also returned in the first argument, this is the clamping current when a compartment is being voltage clamped. This can be inter-leaved with the voltage of other, non-clamped compartments. 
 - ``Ca`` Calcium concentration in every cell and the corresponding ``E_Ca`` (reversal potential of Calcium). A matrix of size (nsteps, n_comps)
-- ``cont_state`` a matrix representing every dimension of every controller in the tree. This matrix has size (nsteps, NC), where NC depends on the precise controllers used, and is automatically determined. 
+- ``mech_state`` a matrix representing every dimension of every mechanism in the tree. This matrix has size (nsteps, NC), where NC depends on the precise controllers used, and is automatically determined. 
 - ``I`` the currents of every ion channel type in the model. This is a matrix of size (nsteps, n_cond)
 
 

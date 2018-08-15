@@ -18,6 +18,9 @@ The compartment to be sliced must explicitly be a cylindrical section, i.e., it 
 Example
 -------
 
+
+:: 
+
 		% assuming there is a compartment called 'Dendrite'
 		xolotl.slice('Dendrite',10)
 	

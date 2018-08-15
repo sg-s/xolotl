@@ -19,7 +19,7 @@ Some read-only properties in a xolotl object may not be copied over.
 
 .. warning::
 
-Do not make vectors of ``xolotl`` objects, as it may lead to undefined behavior. 
+	Do not make vectors of ``xolotl`` objects, as it may lead to undefined behavior. 
 
 %}
 

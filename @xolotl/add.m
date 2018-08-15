@@ -25,7 +25,7 @@ There are two primary ways of using ``add``. The first is to first construct a `
 function add(self,obj_type, obj_name,varargin)
 
 assert(nargin > 2,'No label! You have to label every compartment')
-
+assert(ischar(obj_name),'The name of the object has to be a character vector')
 if isa(obj_type,'cpplab')
 	% we're adding a cpplab object
 	% if so, then the convention is 

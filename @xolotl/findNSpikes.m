@@ -10,10 +10,10 @@ findNSpikes
 
 static method of ``xolotl`` that computes the number of spikes in a voltage trace. Example use ::
 
-   f = findNSpikes(V);
-   f = findNSpikes(V, on_off_thresh)
+   N = xolotl.findNSpikes(V);
+   N = xolotl.findNSpikes(V, on_off_thresh)
 
-``V`` is a vector of voltages, and ``on_off_thresh`` is an optional argument that determines the threshold above which a voltage fluctuation is considered a spikes. The default is 0. 
+``V`` is a vector of voltages, and ``on_off_thresh`` is an optional argument that determines the threshold above which a voltage fluctuation is considered a spikes. The default is 0 mV. 
 
 See Also
 --------

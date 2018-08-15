@@ -20,6 +20,8 @@ reset called without any arguments resets the model as best as it can -- voltage
 Example
 -------
 
+:: 
+
 	% assuming a xolotl object is set up
 	x.integrate;
 	x.snapshot('base');

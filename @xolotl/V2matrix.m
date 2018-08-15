@@ -20,7 +20,7 @@ If you do not specify ``V_lim`` and ``dV_lim``, they will be computed automatica
 See Also
 --------
 
-LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neu- roscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
+LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
 
 - xolotl.matrixCost
 

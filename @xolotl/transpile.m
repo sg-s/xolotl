@@ -15,11 +15,13 @@ Generate a C++ file that constructs the model, integrates it, and moves paramete
 
 .. warning::
 
-``transpile`` assumes that your ``xolotl`` object has a valid hash. Empty hashes will throw an error. 
+  ``transpile`` assumes that your ``xolotl`` object has a valid hash. Empty hashes will throw an error. 
 
 
 Example
 -------
+
+:: 
 
     % assuming a xolotl object is set up
     x.transpile;
@@ -27,6 +29,9 @@ Example
     % now view the transpiled code
     x.viewCode;
 
+.. warning::
+
+  You should generally never use  ``transpile`` since ``xolotl`` will automatically transpile and compile code for you. Manually transpiling will hinder performance. 
 	
 
 See Also

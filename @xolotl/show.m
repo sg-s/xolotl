@@ -17,6 +17,8 @@ shows activation functions and timescales of any conductance. Usage ::
 Example
 -------
 
+:: 
+
 	% compare some channels from the Prinz et al. paper
     xolotl.show('prinz/NaV')
     xolotl.show('prinz/Kd')
