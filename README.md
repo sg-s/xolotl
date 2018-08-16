@@ -1,5 +1,5 @@
 # xolotl: a fast and flexible neuronal simulator
-![](https://img.shields.io/badge/macOS_10.12.6-9/9-brightgreen.svg) 
+![](https://img.shields.io/badge/macOS_10.13.6-9/9-brightgreen.svg) 
 ![](https://readthedocs.org/projects/sphinx-rtd-theme/badge/?version=latest)
 ![](https://img.shields.io/github/last-commit/sg-s/xolotl.svg)
 
@@ -65,6 +65,7 @@ Networks in ``xolotl`` can be manipulated in real-time using the graphical inter
 # Where do I get this?
 
 [Read the docs](https://xolotl.readthedocs.io/en/latest/) to find out how to install it and how to use it. 
+
 
 
 

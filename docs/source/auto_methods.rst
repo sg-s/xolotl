@@ -19,105 +19,37 @@ In the rest of this documentation we will assume a ``xolotl`` object named ``x``
   You can list all the methods of ``xolotl`` object ``x`` by ::
 
     x.methods;
-.. _add:
+.. _show:
 
-add
-^^^
+show
+^^^^^
 
-adds a ``cpplab`` object to a ``xolotl`` object.
+shows activation functions and timescales of any conductance. Usage ::
 
-The add method is the most important way you construct models. Usage ::
+   x.show('cond_name')
 
-	x.add(compartment,'comp_name')
-	x.add('compartment','comp_name')
-	x.add('compartment','comp_name',...)
+'cond_name' must be a string that resolves to a valid C++ file that describes a conductance. 
 
-There are two primary ways of using ``add``. The first is to first construct a ``cpplab`` object (here called AB), and then add it to the ``xolotl`` object using ``x.add(AB,'AB')``. ``xolotl`` requires that every compartment is named, and the name has to be specified as a string argument. 
+Example
+-------
 
+:: 
 
+	% compare some channels from the Prinz et al. paper
+    xolotl.show('prinz/NaV')
+    xolotl.show('prinz/Kd')
+    xolotl.show('prinz/KCa')
 
-
-
-
-
-Test coverage
---------------
-
-``add`` is tested in: 
-
-- `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
-- `test_clamp.m <https://github.com/sg-s/xolotl/blob/master/tests/test_clamp.m>`_ 
-- `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
-- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
-- `test_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/test_fI.m>`_ 
-- `test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/tests/test_integral_control.m>`_ 
-- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
-- `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
-- `test_stg_temperature.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg_temperature.m>`_ 
-
-
-
-.. _benchmark:
-
-benchmark
-^^^^^^^^^
-
-performs a quick benchmarking of a given ``xolotl`` model. ``benchmark`` first varies the simulation time step, and measures how quickly the model integrates. It then varies ``t_end``, and measures how fast it integrates at a fixed ``sim_dt``. Usage ::
-
-    x.benchmark;
-
-
-
-
-
-
-Test coverage
---------------
-
-``benchmark`` is tested in: 
-
-- `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
-
-
-
-.. _checkCompartmentName:
-
-checkCompartmentName
-^^^^^^^^^^^^^^^^^^^^
-
-is used internally by ``xolotl`` to verify that the compartment name you are using is valid and legal. This method is called every time you add a compartment to a ``xolotl`` object. Usage ::
-
-   ok = checkCompartmentName(self,comp_name)
+	
 
 See Also
 --------
 
 
- - `add <https://xolotl.readthedocs.io/en/latest/auto_methods.html#add>`_ 
+ - `plot <https://xolotl.readthedocs.io/en/latest/auto_methods.html#plot>`_ 
 
+ - `getGatingFunctions <https://xolotl.readthedocs.io/en/latest/auto_methods.html#getgatingfunctions>`_ 
 
-
-
-
-Test coverage
---------------
-
-``checkCompartmentName`` is tested in: 
-
-- `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
-
-
-
-.. _cleanup:
-
-cleanup
-^^^^^^^
-A static method that cleans up all transpiled ``C++`` and compiled binary files. Usage ::
-
-   xolotl.cleanup
-   x.cleanup
-
-Use of this method will trigger a warning every time it is called. You do not need to use this in normal use, but can call this to force a recompile, or to delete old and unused binaries. 
 
 
 
@@ -126,17 +58,9 @@ Use of this method will trigger a warning every time it is called. You do not ne
 Test coverage
 --------------
 
-``cleanup`` is tested in: 
+``show`` is tested in: 
 
-- `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
-- `test_clamp.m <https://github.com/sg-s/xolotl/blob/master/tests/test_clamp.m>`_ 
-- `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
-- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
 - `test_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/test_fI.m>`_ 
-- `test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/tests/test_integral_control.m>`_ 
-- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
-- `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
-- `test_stg_temperature.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg_temperature.m>`_ 
 
 
 
@@ -174,6 +98,623 @@ Test coverage
 ``compile`` is tested in: 
 
 - `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
+
+
+
+.. _contributingCurrents:
+
+contributingCurrents
+^^^^^^^^^^^^^^^^^^^^
+
+This static method calculates the contributions of each current at every point in a voltage race. This is used internally in ``xolotl.plot`` to color voltage traces. The syntax is ::
+
+    curr_index = xolotl.contributingCurrents(V, I)
+
+where V is a vector of voltages, I is the corresponding matrix of currents 
+
+See Also
+--------
+
+
+ - `plot <https://xolotl.readthedocs.io/en/latest/auto_methods.html#plot>`_ 
+
+ - `manipulate <https://xolotl.readthedocs.io/en/latest/auto_methods.html#manipulate>`_ 
+
+
+
+
+
+Test coverage
+--------------
+
+``contributingCurrents`` is tested in: 
+
+
+
+
+.. _matrixCost:
+
+matrixCost
+^^^^^^^^^^
+a static method to compute the distance between two LeMasson matrices. This is a useful way to determine how similar two voltage traces are. 
+
+Usage ::
+
+	C = matrixCost(M1,M2)
+
+where ``M1`` and ``M2`` are two matrices returned by xolotl.V2matrix() and represent discretized probability distributions of a derivative-embedded attractor of the voltage trace. 
+
+
+See Also
+--------
+
+LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
+
+
+ - `V2matrix <https://xolotl.readthedocs.io/en/latest/auto_methods.html#v2matrix>`_ 
+
+
+
+
+
+
+Test coverage
+--------------
+
+``matrixCost`` is tested in: 
+
+
+
+
+.. _checkCompartmentName:
+
+checkCompartmentName
+^^^^^^^^^^^^^^^^^^^^
+
+is used internally by ``xolotl`` to verify that the compartment name you are using is valid and legal. This method is called every time you add a compartment to a ``xolotl`` object. Usage ::
+
+   ok = checkCompartmentName(self,comp_name)
+
+See Also
+--------
+
+
+ - `add <https://xolotl.readthedocs.io/en/latest/auto_methods.html#add>`_ 
+
+
+
+
+
+Test coverage
+--------------
+
+``checkCompartmentName`` is tested in: 
+
+- `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
+
+
+
+.. _benchmark:
+
+benchmark
+^^^^^^^^^
+
+performs a quick benchmarking of a given ``xolotl`` model. ``benchmark`` first varies the simulation time step, and measures how quickly the model integrates. It then varies ``t_end``, and measures how fast it integrates at a fixed ``sim_dt``. Usage ::
+
+    x.benchmark;
+
+
+
+
+
+
+Test coverage
+--------------
+
+``benchmark`` is tested in: 
+
+- `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
+
+
+
+.. _V2matrix:
+
+V2matrix
+^^^^^^^^
+a static method that converts a voltage trace into a LeMasson matrix.  Usage ::
+
+   [M, V_lim, dV_lim] = V2matrix(V, V_lim, dV_lim)
+
+where V is a vector (a voltage time series), and ``V_lim`` and ``dV_lim`` are two-element vectors that specify the lower and upper bounds of ``V`` and ``dV``
+
+This static method allows you to create a delay-embedding of a voltage trace, and then discretize the space and count the number of points in each bin. The resultant matrix is sometimes called a LeMasson matrix. ``M`` is the LeMasson matrix, which is always of size ``101x101``. 
+
+If you do not specify ``V_lim`` and ``dV_lim``, they will be computed automatically and returned. 
+
+See Also
+--------
+
+LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
+
+
+ - `matrixCost <https://xolotl.readthedocs.io/en/latest/auto_methods.html#matrixcost>`_ 
+
+
+
+
+
+
+
+Test coverage
+--------------
+
+``V2matrix`` is tested in: 
+
+
+
+
+.. _copy:
+
+copy
+^^^^
+
+copies a xolotl object. ``copy`` creates an identical copy of a xolotl object that can be manipulated seperately. Both copies will use the same binary to integrate, unless you add a new component to one of them. Syntax ::
+
+    x2 = copy(x);
+
+.. warning::
+
+Some read-only properties in a xolotl object may not be copied over. 
+
+
+.. warning::
+
+	Do not make vectors of ``xolotl`` objects, as it may lead to undefined behavior. 
+
+
+
+
+
+Test coverage
+--------------
+
+``copy`` is tested in: 
+
+
+
+
+.. _reset:
+
+reset
+^^^^^
+
+Resets a xolotl object to some default state. Usage ::
+
+   x.reset()
+   x.reset('snap_name')
+
+reset called without any arguments resets the model as best as it can -- voltages are set to -60 mV, Calcium in every compartment is set to the internal value, and the gating variables of every conductance are reset. 
+
+``reset`` can also be called with a string argument, which is the name of a snapshot previously stored in the model object. Then, ``reset`` reconfigures the parameters of the model to match that snapshot. This is useful for working with a model, changing parameters, evolving it, and then coming back to where you started off from. 
+
+Example
+-------
+
+:: 
+
+	% assuming a xolotl object is set up
+	x.integrate;
+	x.snapshot('base');
+	x.set('*gbar') = 1e-3; % turn off all conductances
+	x.integrate;
+	% now go back to original state
+	x.reset('base')
+
+	
+
+See Also
+--------
+
+
+ - `snapshot <https://xolotl.readthedocs.io/en/latest/auto_methods.html#snapshot>`_ 
+
+
+
+
+
+
+Test coverage
+--------------
+
+``reset`` is tested in: 
+
+- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
+- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
+
+
+
+.. _snapshot:
+
+snapshot
+^^^^^^^^
+
+Saves the current state of a ``xolotl`` object for future use. Usage ::
+
+   x.snapshot('snap_name')
+
+
+.. warning::
+
+Creating two snapshots with the same name will overwrite the first. 
+
+
+Example
+-------
+
+::
+
+		% assuming a xolotl object is set up
+		x.integrate;
+		x.snapshot('base');
+		x.set('*gbar') = 1e-3; % turn off all conductances
+		x.integrate;
+		% now go back to original state
+		x.reset('base')
+
+	
+
+See Also
+--------
+
+
+ - `reset <https://xolotl.readthedocs.io/en/latest/auto_methods.html#reset>`_ 
+
+
+
+
+
+
+Test coverage
+--------------
+
+``snapshot`` is tested in: 
+
+- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
+
+
+
+.. _plot:
+
+plot
+^^^^
+
+Makes a plot of voltage and calcium time series of all compartments. The default option is to color the voltage traces by the dominant current at that point using  ``contributingCurrents`` and to also show the Calcium concentration on the same plot. Usage ::
+
+   x.plot()
+
+If you want to turn off the colouring, or to hide the Calcium concentration, change your preference using ::
+
+	setpref('xolotl','plot_color',false)
+	setpref('xolotl','show_Ca',false)
+
+See Also
+--------
+
+
+ - `manipulate <https://xolotl.readthedocs.io/en/latest/auto_methods.html#manipulate>`_ 
+
+ - `contributingCurrents <https://xolotl.readthedocs.io/en/latest/auto_methods.html#contributingcurrents>`_ 
+
+
+
+
+
+
+Test coverage
+--------------
+
+``plot`` is tested in: 
+
+- `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
+- `test_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/test_fI.m>`_ 
+- `test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/tests/test_integral_control.m>`_ 
+- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
+- `test_clamp.m <https://github.com/sg-s/xolotl/blob/master/tests/test_clamp.m>`_ 
+- `custom_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/custom_fI.m>`_ 
+- `test_stg_temperature.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg_temperature.m>`_ 
+- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
+- `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
+
+
+
+.. _getGatingFunctions:
+
+getGatingFunctions
+^^^^^^^^^^^^^^^^^^
+
+static method of ``xolotl`` that returns function handles that represent the gating and activation functions of a particular conductance. Example use ::
+
+   [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance)
+
+
+where ``conductance`` is a string that specifies a conductance C++ header file. The outputs are function handles that can be evaluated independently. This method is used internally in ``xolotl.show()``
+
+See Also
+--------
+
+
+ - `show <https://xolotl.readthedocs.io/en/latest/auto_methods.html#show>`_ 
+
+
+
+
+
+
+Test coverage
+--------------
+
+``getGatingFunctions`` is tested in: 
+
+- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
+
+
+
+.. _cleanup:
+
+cleanup
+^^^^^^^
+A static method that cleans up all transpiled ``C++`` and compiled binary files. Usage ::
+
+   xolotl.cleanup
+   x.cleanup
+
+Use of this method will trigger a warning every time it is called. You do not need to use this in normal use, but can call this to force a recompile, or to delete old and unused binaries. 
+
+
+
+
+
+Test coverage
+--------------
+
+``cleanup`` is tested in: 
+
+- `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
+- `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
+- `test_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/test_fI.m>`_ 
+- `test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/tests/test_integral_control.m>`_ 
+- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
+- `test_clamp.m <https://github.com/sg-s/xolotl/blob/master/tests/test_clamp.m>`_ 
+- `test_stg_temperature.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg_temperature.m>`_ 
+- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
+- `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
+
+
+
+.. _integrate:
+
+integrate
+^^^^^^^^^
+
+integrates a ``xolotl`` model. Usage ::
+
+   V = x.integrate;
+   I_clamp = x.integrate;
+   [V, Ca] = x.integrate;
+   [V, Ca, mech_state] = x.integrate;
+   [V, Ca, mech_state, I] = x.integrate;
+   [V, Ca, mech_state, I, syn_state] = x.integrate;
+
+
+``integrate`` will return different outputs as show above. Unless you need every output, it is recommended to skip it, as it makes the integration faster (and reduces the memory footprint). 
+
+Explanation of outputs
+----------------------
+
+- ``V`` Voltage trace of every compartment. A matrix of size (nsteps, n_comps)
+- ``I_clamp`` also returned in the first argument, this is the clamping current when a compartment is being voltage clamped. This can be inter-leaved with the voltage of other, non-clamped compartments. 
+- ``Ca`` Calcium concentration in every cell and the corresponding ``E_Ca`` (reversal potential of Calcium). A matrix of size (nsteps, n_comps)
+- ``mech_state`` a matrix representing every dimension of every mechanism in the tree. This matrix has size (nsteps, NC), where NC depends on the precise controllers used, and is automatically determined. 
+- ``I`` the currents of every ion channel type in the model. This is a matrix of size (nsteps, n_cond)
+
+
+
+
+
+
+
+
+Test coverage
+--------------
+
+``integrate`` is tested in: 
+
+- `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
+- `test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/tests/test_integral_control.m>`_ 
+- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
+- `test_clamp.m <https://github.com/sg-s/xolotl/blob/master/tests/test_clamp.m>`_ 
+- `custom_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/custom_fI.m>`_ 
+- `test_stg_temperature.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg_temperature.m>`_ 
+- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
+- `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
+
+
+
+.. _transpile:
+
+transpile
+^^^^^^^^^
+
+Generate a C++ file that constructs the model, integrates it, and moves parameters and data from MATLAB to C++ and back. Usage ::
+
+   x.transpile;
+
+
+.. warning::
+
+  ``transpile`` assumes that your ``xolotl`` object has a valid hash. Empty hashes will throw an error. 
+
+
+Example
+-------
+
+:: 
+
+    % assuming a xolotl object is set up
+    x.transpile;
+
+    % now view the transpiled code
+    x.viewCode;
+
+.. warning::
+
+  You should generally never use  ``transpile`` since ``xolotl`` will automatically transpile and compile code for you. Manually transpiling will hinder performance. 
+	
+
+See Also
+--------
+
+
+ - `compile <https://xolotl.readthedocs.io/en/latest/auto_methods.html#compile>`_ 
+
+ - `viewCode <https://xolotl.readthedocs.io/en/latest/auto_methods.html#viewcode>`_ 
+
+
+
+
+
+
+
+Test coverage
+--------------
+
+``transpile`` is tested in: 
+
+- `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
+
+
+
+.. _viewCode:
+
+viewCode
+^^^^^^^^
+
+view the C++ code generated by xolotl.transpile that constructs the model and integrates it ::
+
+     x.viewCode;
+
+See Also:
+---------
+
+
+ - `transpile <https://xolotl.readthedocs.io/en/latest/auto_methods.html#transpile>`_ 
+
+
+
+
+
+Test coverage
+--------------
+
+``viewCode`` is tested in: 
+
+
+
+
+.. _add:
+
+add
+^^^
+
+adds a ``cpplab`` object to a ``xolotl`` object.
+
+The add method is the most important way you construct models. Usage ::
+
+	x.add(compartment,'comp_name')
+	x.add('compartment','comp_name')
+	x.add('compartment','comp_name',...)
+
+There are two primary ways of using ``add``. The first is to first construct a ``cpplab`` object (here called AB), and then add it to the ``xolotl`` object using ``x.add(AB,'AB')``. ``xolotl`` requires that every compartment is named, and the name has to be specified as a string argument. 
+
+
+
+
+
+
+
+Test coverage
+--------------
+
+``add`` is tested in: 
+
+- `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
+- `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
+- `test_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/test_fI.m>`_ 
+- `test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/tests/test_integral_control.m>`_ 
+- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
+- `test_clamp.m <https://github.com/sg-s/xolotl/blob/master/tests/test_clamp.m>`_ 
+- `test_stg_temperature.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg_temperature.m>`_ 
+- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
+- `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
+
+
+
+.. _findNSpikes:
+
+findNSpikes
+^^^^^^^^^^^
+
+static method of ``xolotl`` that computes the number of spikes in a voltage trace. Example use ::
+
+   N = xolotl.findNSpikes(V);
+   N = xolotl.findNSpikes(V, on_off_thresh)
+
+``V`` is a vector of voltages, and ``on_off_thresh`` is an optional argument that determines the threshold above which a voltage fluctuation is considered a spikes. The default is 0 mV. 
+
+See Also
+--------
+
+
+ - `findNSpikeTimes <https://xolotl.readthedocs.io/en/latest/auto_methods.html#findnspiketimes>`_ 
+
+
+
+
+
+
+
+Test coverage
+--------------
+
+``findNSpikes`` is tested in: 
+
+
+
+
+.. _manipulateEvaluate:
+
+manipulateEvaluate
+^^^^^^^^^^^^^^^^^^
+
+This method is used to update the ``xolotl`` object every time a slider is moved in the manipulate window. This is used internally in ``xolotl.manipulate``. You should not need to use this by itself. 
+
+See Also
+--------
+
+
+ - `manipulate <https://xolotl.readthedocs.io/en/latest/auto_methods.html#manipulate>`_ 
+
+
+
+
+
+
+
+Test coverage
+--------------
+
+``manipulateEvaluate`` is tested in: 
+
 
 
 
@@ -235,86 +776,33 @@ Test coverage
 
 
 
-.. _contributingCurrents:
+.. _slice:
 
-contributingCurrents
-^^^^^^^^^^^^^^^^^^^^
+slice
+^^^^^
 
-calculates the contributions of each current at every point in a voltage race. This is used internally in ``xolotl.plot`` to color voltage traces. yntax ::
+``slice`` partitions a cylindrical compartment into N slices.  Usage ::
 
-    curr_index = contributingCurrents(V, I)
+   x.slice('comp_name',N)
 
-where V is a vector of voltages, I is the corresponding matrix of currents 
-
-See Also
---------
+The compartment to be sliced must explicitly be a cylindrical section, i.e., it must have a defined length and radius. ``slice`` cuts the cylinder along the axis, and connects each slice with ``Axial`` synapses. This object can then be treated as a multi-compartment model, and ``xolotl`` will integrate it using the Crank-Nicholson scheme reserved for multi-compartment models. 
 
 
- - `plot <https://xolotl.readthedocs.io/en/latest/auto_methods.html#plot>`_ 
-
- - `manipulate <https://xolotl.readthedocs.io/en/latest/auto_methods.html#manipulate>`_ 
-
+Example
+-------
 
 
+:: 
 
-
-Test coverage
---------------
-
-``contributingCurrents`` is tested in: 
-
-
-
-
-.. _copy:
-
-copy
-^^^^
-
-copies a xolotl object. ``copy`` creates an identical copy of a xolotl object that can be manipulated seperately. Both copies will use the same binary to integrate, unless you add a new component to one of them. Syntax ::
-
-    x2 = copy(x);
-
-.. warning::
-
-Some read-only properties in a xolotl object may not be copied over. 
-
-
-.. warning::
-
-Do not make vectors of ``xolotl`` objects, as it may lead to undefined behavior. 
-
-
-
-
-
-Test coverage
---------------
-
-``copy`` is tested in: 
-
-
-
-
-.. _findNSpikes:
-
-findNSpikes
-^^^^^^^^^^^
-
-static method of ``xolotl`` that computes the number of spikes in a voltage trace. Example use ::
-
-   f = findNSpikes(V);
-   f = findNSpikes(V, on_off_thresh)
-
-``V`` is a vector of voltages, and ``on_off_thresh`` is an optional argument that determines the threshold above which a voltage fluctuation is considered a spikes. The default is 0. 
+		% assuming there is a compartment called 'Dendrite'
+		xolotl.slice('Dendrite',10)
+	
 
 See Also
 --------
 
 
- - `findNSpikeTimes <https://xolotl.readthedocs.io/en/latest/auto_methods.html#findnspiketimes>`_ 
-
-
+ - `connect <https://xolotl.readthedocs.io/en/latest/auto_methods.html#connect>`_ 
 
 
 
@@ -323,7 +811,7 @@ See Also
 Test coverage
 --------------
 
-``findNSpikes`` is tested in: 
+``slice`` is tested in: 
 
 
 
@@ -335,7 +823,7 @@ findNSpikeTimes
 
 static method of ``xolotl`` that returns a vector of spike times from a voltage trace. Spikes are defined as voltage crossings across a threshold. Example use ::
 
-   spiketimes = findNSpikeTimes(V,n_spikes,on_off_thresh);
+   spiketimes = xolotl.findNSpikeTimes(V,n_spikes,on_off_thresh);
 
 
 ``V`` is a vector of voltages, and ``on_off_thresh`` is an optional argument that determines the threshold above which a voltage fluctuation is considered a spikes. The default is 0. ``n_spikes`` is the number of spikes it should look for, and ``spiketimes`` will always be a vector ``n_spikes`` elments long. 
@@ -358,87 +846,6 @@ Test coverage
 
 ``findNSpikeTimes`` is tested in: 
 
-
-
-
-.. _getGatingFunctions:
-
-getGatingFunctions
-^^^^^^^^^^^^^^^^^^
-
-static method of ``xolotl`` that returns function handles that represent the gating and activation functions of a particular conductance. Example use ::
-
-   [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance)
-
-
-where ``conductance`` is a string that specifies a conductance C++ header file. The outputs are function handles that can be evaluated independently. This method is used internally in ``xolotl.show()``
-
-See Also
---------
-
-
- - `show <https://xolotl.readthedocs.io/en/latest/auto_methods.html#show>`_ 
-
-
-
-
-
-
-Test coverage
---------------
-
-``getGatingFunctions`` is tested in: 
-
-- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
-
-
-
-.. _integrate:
-
-integrate
-^^^^^^^^^
-
-integrates a ``xolotl`` model. Usage ::
-
-   V = x.integrate;
-   I_clamp = x.integrate;
-   [V, Ca] = x.integrate;
-   [V, Ca, cont_state] = x.integrate;
-   [V, Ca, cont_state, I] = x.integrate;
-   [V, Ca, cont_state, I, syn_state] = x.integrate;
-
-
-``integrate`` will return different outputs as show above. Unless you need every output, it is recommended to skip it, as it makes the integration faster (and reduces the memory footprint). 
-
-Explanation of outputs
-----------------------
-
-- ``V`` Voltage trace of every compartment. A matrix of size (nsteps, n_comps)
-- ``I_clamp`` also returned in the first argument, this is the clamping current when a compartment is being voltage clamped. This can be inter-leaved with the voltage of other, non-clamped compartments. 
-- ``Ca`` Calcium concentration in every cell and the corresponding ``E_Ca`` (reversal potential of Calcium). A matrix of size (nsteps, n_comps)
-- ``cont_state`` a matrix representing every dimension of every controller in the tree. This matrix has size (nsteps, NC), where NC depends on the precise controllers used, and is automatically determined. 
-- ``I`` the currents of every ion channel type in the model. This is a matrix of size (nsteps, n_cond)
-
-
-
-
-
-
-
-
-Test coverage
---------------
-
-``integrate`` is tested in: 
-
-- `custom_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/custom_fI.m>`_ 
-- `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
-- `test_clamp.m <https://github.com/sg-s/xolotl/blob/master/tests/test_clamp.m>`_ 
-- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
-- `test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/tests/test_integral_control.m>`_ 
-- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
-- `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
-- `test_stg_temperature.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg_temperature.m>`_ 
 
 
 
@@ -467,101 +874,8 @@ Test coverage
 
 ``manipulate`` is tested in: 
 
-- `custom_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/custom_fI.m>`_ 
 - `test_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/test_fI.m>`_ 
-
-
-
-.. _manipulateEvaluate:
-
-manipulateEvaluate
-^^^^^^^^^^^^^^^^^^
-
-This method is used to update the ``xolotl`` object every time a slider is moved in the manipulate window. This is used internally in ``xolotl.manipulate``. You should not need to use this by itself. 
-
-See Also
---------
-
-
- - `manipulate <https://xolotl.readthedocs.io/en/latest/auto_methods.html#manipulate>`_ 
-
-
-
-
-
-
-
-Test coverage
---------------
-
-``manipulateEvaluate`` is tested in: 
-
-
-
-
-.. _matrixCost:
-
-matrixCost
-^^^^^^^^^^
-a static method to compute the distance between two LeMasson matrices. This is a useful way to determine how similar two voltage traces are. 
-
-See Also
---------
-
-LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neu- roscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
-
-
- - `V2matrix <https://xolotl.readthedocs.io/en/latest/auto_methods.html#v2matrix>`_ 
-
-
-
-
-
-
-Test coverage
---------------
-
-``matrixCost`` is tested in: 
-
-
-
-
-.. _plot:
-
-plot
-^^^^
-
-Makes a plot of voltage and calcium time series of all compartments. The default option is to color the voltage traces by the dominant current at that point using  ``contributingCurrents``. Usage ::
-
-   x.plot()
-
-See Also
---------
-
-
- - `manipulate <https://xolotl.readthedocs.io/en/latest/auto_methods.html#manipulate>`_ 
-
- - `contributingCurrents <https://xolotl.readthedocs.io/en/latest/auto_methods.html#contributingcurrents>`_ 
-
-
-
-
-
-
-Test coverage
---------------
-
-``plot`` is tested in: 
-
 - `custom_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/custom_fI.m>`_ 
-- `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
-- `test_clamp.m <https://github.com/sg-s/xolotl/blob/master/tests/test_clamp.m>`_ 
-- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
-- `test_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/test_fI.m>`_ 
-- `test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/tests/test_integral_control.m>`_ 
-- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
-- `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
-- `test_stg_temperature.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg_temperature.m>`_ 
 
 
 
@@ -583,294 +897,6 @@ Test coverage
 --------------
 
 ``rebase`` is tested in: 
-
-
-
-
-.. _reset:
-
-reset
-^^^^^
-
-Resets a xolotl object to some default state. Usage ::
-
-   x.reset()
-   x.reset('snap_name')
-
-reset called without any arguments resets the model as best as it can -- voltages are set to -60 mV, Calcium in every compartment is set to the internal value, and the gating variables of every conductance are reset. 
-
-``reset`` can also be called with a string argument, which is the name of a snapshot previously stored in the model object. Then, ``reset`` reconfigures the parameters of the model to match that snapshot. This is useful for working with a model, changing parameters, evolving it, and then coming back to where you started off from. 
-
-Example
--------
-
-	% assuming a xolotl object is set up
-	x.integrate;
-	x.snapshot('base');
-	x.set('*gbar') = 1e-3; % turn off all conductances
-	x.integrate;
-	% now go back to original state
-	x.reset('base')
-
-	
-
-See Also
---------
-
-
- - `snapshot <https://xolotl.readthedocs.io/en/latest/auto_methods.html#snapshot>`_ 
-
-
-
-
-
-
-Test coverage
---------------
-
-``reset`` is tested in: 
-
-- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
-- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
-
-
-
-.. _show:
-
-show
-^^^^^
-
-shows activation functions and timescales of any conductance. Usage ::
-
-   x.show('cond_name')
-
-'cond_name' must be a string that resolves to a valid C++ file that describes a conductance. 
-
-Example
--------
-
-	% compare some channels from the Prinz et al. paper
-    xolotl.show('prinz/NaV')
-    xolotl.show('prinz/Kd')
-    xolotl.show('prinz/KCa')
-
-	
-
-See Also
---------
-
-
- - `plot <https://xolotl.readthedocs.io/en/latest/auto_methods.html#plot>`_ 
-
- - `getGatingFunctions <https://xolotl.readthedocs.io/en/latest/auto_methods.html#getgatingfunctions>`_ 
-
-
-
-
-
-
-Test coverage
---------------
-
-``show`` is tested in: 
-
-- `test_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/test_fI.m>`_ 
-
-
-
-.. _slice:
-
-slice
-^^^^^
-
-``slice`` partitions a cylindrical compartment into N slices.  Usage ::
-
-   x.slice('comp_name',N)
-
-The compartment to be sliced must explicitly be a cylindrical section, i.e., it must have a defined length and radius. ``slice`` cuts the cylinder along the axis, and connects each slice with ``Axial`` synapses. This object can then be treated as a multi-compartment model, and ``xolotl`` will integrate it using the Crank-Nicholson scheme reserved for multi-compartment models. 
-
-
-Example
--------
-
-		% assuming there is a compartment called 'Dendrite'
-		xolotl.slice('Dendrite',10)
-	
-
-See Also
---------
-
-
- - `connect <https://xolotl.readthedocs.io/en/latest/auto_methods.html#connect>`_ 
-
-
-
-
-
-Test coverage
---------------
-
-``slice`` is tested in: 
-
-
-
-
-.. _snapshot:
-
-snapshot
-^^^^^^^^
-
-Saves the current state of a ``xolotl`` object for future use. Usage ::
-
-   x.snapshot('snap_name')
-
-
-.. warning::
-
-Creating two snapshots with the same name will overwrite the first. 
-
-
-Example
--------
-
-		% assuming a xolotl object is set up
-		x.integrate;
-		x.snapshot('base');
-		x.set('*gbar') = 1e-3; % turn off all conductances
-		x.integrate;
-		% now go back to original state
-		x.reset('base')
-
-	
-
-See Also
---------
-
-
- - `reset <https://xolotl.readthedocs.io/en/latest/auto_methods.html#reset>`_ 
-
-
-
-
-
-
-Test coverage
---------------
-
-``snapshot`` is tested in: 
-
-- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
-
-
-
-.. _transpile:
-
-transpile
-^^^^^^^^^
-
-Generate a C++ file that constructs the model, integrates it, and moves parameters and data from MATLAB to C++ and back. Usage ::
-
-   x.transpile;
-
-
-.. warning::
-
-``transpile`` assumes that your ``xolotl`` object has a valid hash. Empty hashes will throw an error. 
-
-
-Example
--------
-
-    % assuming a xolotl object is set up
-    x.transpile;
-
-    % now view the transpiled code
-    x.viewCode;
-
-	
-
-See Also
---------
-
-
- - `compile <https://xolotl.readthedocs.io/en/latest/auto_methods.html#compile>`_ 
-
- - `viewCode <https://xolotl.readthedocs.io/en/latest/auto_methods.html#viewcode>`_ 
-
-
-
-
-
-
-
-Test coverage
---------------
-
-``transpile`` is tested in: 
-
-- `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
-
-
-
-.. _V2matrix:
-
-V2matrix
-^^^^^^^^
-a static method that converts a voltage trace into a LeMasson matrix.  Usage ::
-
-   [M, V_lim, dV_lim] = V2matrix(V, V_lim, dV_lim)
-
-where V is a vector (a voltage time series), and ``V_lim`` and ``dV_lim`` are two-element vectors that specify the lower and upper bounds of ``V`` and ``dV``
-
-This static method allows you to create a delay-embedding of a voltage trace, and then discretize the space and count the number of points in each bin. The resultant matrix is sometimes called a LeMasson matrix. ``M`` is the LeMasson matrix, which is always of size ``101x101``. 
-
-If you do not specify ``V_lim`` and ``dV_lim``, they will be computed automatically and returned. 
-
-See Also
---------
-
-LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neu- roscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
-
-
- - `matrixCost <https://xolotl.readthedocs.io/en/latest/auto_methods.html#matrixcost>`_ 
-
-
-
-
-
-
-
-Test coverage
---------------
-
-``V2matrix`` is tested in: 
-
-
-
-
-.. _viewCode:
-
-viewCode
-^^^^^^^^
-
-view the C++ code generated by xolotl.transpile that constructs the model and integrates it ::
-
-     x.viewCode;
-
-See Also:
----------
-
-
- - `transpile <https://xolotl.readthedocs.io/en/latest/auto_methods.html#transpile>`_ 
-
-
-
-
-
-Test coverage
---------------
-
-``viewCode`` is tested in: 
 
 
 
