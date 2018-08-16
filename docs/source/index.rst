@@ -10,6 +10,7 @@
    :caption: Contents:
 
    quickstart
+   faq
    installing
    howdoi
    auto_methods
