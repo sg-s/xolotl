@@ -18,11 +18,7 @@ function update()
 
 % check if we are in a git repo 
 
-if ispc
-	warning('Updating not supported on Windows')
-	return
 
-end
 
 if exist([fileparts(fileparts(which('xolotl'))) filesep '.git'],'dir') == 7
 	% .git exists
