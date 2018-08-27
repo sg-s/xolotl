@@ -38,12 +38,12 @@ try the following ::
   x.cleanup
 
 If you're still having a problem, we might have fixed it already! Reinstall or update
-by running the `install script` or pulling from the repository if you're using ``git``.
+by running the `install script`__ or pulling from the repository if you're using ``git``.
 Remember that if you're using ``git`` you should be sure to pull all the dependencies as well
 (``srinivas.gs_mtools``, ``cpplab``, ``puppeteer``).
 
 .. _compilers: compilers.rst
-.. _`install script`: installing.rst
+__ installing.rst
 
 How Do I Cite This?
 ^^^^^^^^^^^^^^^^^^^
