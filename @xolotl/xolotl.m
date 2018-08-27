@@ -235,7 +235,8 @@ methods
 end % end methods 
 
 methods (Static)
-
+    
+    update();
 
     run_all_tests(cleanup);
 
