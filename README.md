@@ -66,7 +66,7 @@ Neurons and networks in ``xolotl`` can be manipulated in real-time using the gra
 
 # Where do I get this?
 
-Click [here](https://drive.google.com/uc?id=1LRlTNWvtfV4BKYcuLjEdTeh-Cjr6oWKJ&export=download) to download, and click on the downloaded file to install. 
+Click [here](https://drive.google.com/uc?id=15_Fy40Icnhbzfyz9eTqw-E0p5K9Lg_xu&export=download) to download, and click on the downloaded file to install. 
 
 
 

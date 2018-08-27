@@ -24,4 +24,4 @@ git add build_number
 git add *.rst
 
 # ask matlab to make a new package with all the deps
-matlab -nodesktop -r "matlab.addons.toolbox.packageToolbox('xolotl.prj'); exit;"
+matlab -nodesktop -r "load('build_number'); matlab.addons.toolbox.toolboxVersion('xolotl.prj',['1.0.0.' mat2str(build_number)]); matlab.addons.toolbox.packageToolbox('xolotl.prj'); exit;"

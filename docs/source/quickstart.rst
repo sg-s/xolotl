@@ -11,7 +11,7 @@ Installing
 
 The easiest way to get ``xolotl`` is as a MATLAB toolbox. Click here_ to download it, and click on the downloaded file to install. 
 
-.. _here: https://drive.google.com/uc?id=1LRlTNWvtfV4BKYcuLjEdTeh-Cjr6oWKJ&export=download
+.. _here: https://drive.google.com/uc?id=15_Fy40Icnhbzfyz9eTqw-E0p5K9Lg_xu&export=download
 
 
 Creating a Hodgkin-Huxley Model
