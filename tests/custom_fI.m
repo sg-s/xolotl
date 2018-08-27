@@ -38,8 +38,6 @@ if isempty(x.handles) || ~isfield(x.handles,'fig') || ~isvalid(x.handles.fig)
 	x.handles.xh2.YData = NaN*all_I_ext(n_steps+1:end);
 
 
-	prettyFig();
-
 
 end
 

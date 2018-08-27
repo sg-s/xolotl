@@ -13,3 +13,5 @@
 *.mat
 *.lyx~
 *.lyx#
+*.mltbx
+*.prj

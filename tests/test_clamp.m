@@ -51,5 +51,4 @@ plot(all_V_step,all_I(end,:),'r')
 xlabel('Voltage step (mV)')
 ylabel('Current (nA)')
 
-prettyFig();
 drawnow

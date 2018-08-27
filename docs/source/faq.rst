@@ -48,9 +48,11 @@ Remember that if you're using ``git`` you should be sure to pull all the depende
 How Do I Cite This?
 ^^^^^^^^^^^^^^^^^^^
 Thanks for thinking of us! We'll be publishing later this year, and putting a
-manuscript on Arxiv sooner than that. For now though,
+manuscript on ArXiv_ sooner than that. For now though,
 
 *Gorur-Shandilya, Hoyland, & Marder, in preparation* should be sufficient.
+
+.. _ArXiv: https://www.biorxiv.org/content/early/2018/08/18/394973
 
 How Do I Install It?
 ^^^^^^^^^^^^^^^^^^^^

@@ -34,23 +34,20 @@ At this point you have created a free-floating object. You can inspect it just l
 
    compartment object with:
 
-               hash : 5549561
-                vol : 0.01
-         neuron_idx : NaN
-          Ca_target : NaN
-              Ca_in : NaN
-         Ca_average : NaN
-                 Cm : NaN
-                phi : NaN
-             radius : NaN
-                  V : NaN
-                len : NaN
-                 Ca : NaN
+       hash : 44c3772
+         Cm : 10
+          A : 0.01
+     radius : NaN
+        vol : NaN
+    Ca_average : NaN
     shell_thickness : NaN
-             tau_Ca : NaN
-             Ca_out : NaN
-                  A : NaN
-           tree_idx : NaN
+    tree_idx : NaN
+          V : -60
+    neuron_idx : NaN
+    Ca_target : NaN
+         Ca : NaN
+     Ca_out : 3000
+        len : NaN
 
 and then add it to the ``xolotl`` object tree: ::
 

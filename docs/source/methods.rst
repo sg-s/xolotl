@@ -7,7 +7,7 @@
 Methods
 =======
 
-This page lists the methods of the ``xolotl`` class in ``MATLAB``. This can serve as a reference for advanced usage. 
+This page lists the methods of the ``xolotl`` class in ``MATLAB``. This can serve as a reference for advanced usage.
 
 In the rest of this documentation we will assume a ``xolotl`` object named ``x`` that can be created using
 
@@ -450,8 +450,8 @@ The third argument sets the axial resistivity, which must be a real positive num
 snapshot
 ^^^^^^^^
 
-:: 
-  
+::
+
   x.snapshot('regular')
 
 Use this method to take a snapshot of a model in a particular state. The model can be restored to this state at any time using `x.reset('regular')`
