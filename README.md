@@ -24,34 +24,36 @@ For example, here, we set up a compartment with some channels in it:
   x.HH.add('liu/Kd', 'gbar', 300);
   x.HH.add('Leak', 'gbar', 0.1);
   x.I_ext = 0.1;
+  x.t_end = 300; % ms
 
 ```
 
-That's it. To integrate it and see the time evolution of the voltage
+That's it. To integrate it and see the time evolution of the voltage, type:
 
 ```matlab
-  V = x.integrate;
+   x.plot
 ```
 
-![](https://user-images.githubusercontent.com/30243182/42067394-0801376e-7b14-11e8-8eb3-b20b64ffaf9f.png)
+![](https://user-images.githubusercontent.com/6005346/44669694-24e53580-aa10-11e8-9bd0-5b0378d33342.png)
 
 ``xolotl`` handles all of the compilation/linking/etc. for you.
 
 ### It's fast
 
 
-Because ``xolotl`` is written in ``C++``, it's quite fast. Here are some benchmarks for a single-compartment Hodgkin-Huxley model_ with sodium, potassium, and passive leak conductances.
+Because ``xolotl`` is written in ``C++``, it's quite fast. Here are some benchmarks for a single-compartment Hodgkin-Huxley model_ with sodium, potassium, and passive leak conductances. The built-in benchmarking tool can benchmark any model configured in it:
 
 ```matlab
-  x.benchmark;
+   x.benchmark;
 ```
 
-![](https://user-images.githubusercontent.com/30243182/42105769-9c1c407a-7b9f-11e8-86fb-8fc56eac9ff6.png)
+
+![](https://user-images.githubusercontent.com/6005346/44669774-6544b380-aa10-11e8-86e8-7bea1b2ad90b.png)
 
 ### Manipulate models in real time
 
 
-Networks in ``xolotl`` can be manipulated in real-time using the graphical interface. Any parameter in ``xolotl`` can be accessed by a slider. Simulations are displayed by a chosen visualization function. Here, we manipulate the synaptic maximal conductances of a [three neuron model](https://www.ncbi.nlm.nih.gov/pubmed/15558066) and display using the ``xolotl`` ``plot`` function.
+Neurons and networks in ``xolotl`` can be manipulated in real-time using the graphical interface. Any parameter in ``xolotl`` can be accessed by a slider. Simulations are displayed by a chosen visualization function. Here, we manipulate the synaptic maximal conductances of a [three neuron model](https://www.ncbi.nlm.nih.gov/pubmed/15558066) and display using the ``xolotl`` ``plot`` function.
 
 
 ![](https://user-images.githubusercontent.com/6005346/30785272-aef9fb44-a132-11e7-84a6-25fd8e58470a.gif)
@@ -64,7 +66,7 @@ Networks in ``xolotl`` can be manipulated in real-time using the graphical inter
 
 # Where do I get this?
 
-[Read the docs](https://xolotl.readthedocs.io/en/latest/) to find out how to install it and how to use it. 
+Click [here](https://drive.google.com/uc?id=1LRlTNWvtfV4BKYcuLjEdTeh-Cjr6oWKJ&export=download) to download, and click on the downloaded file to install. 
 
 
 
