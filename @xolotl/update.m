@@ -40,7 +40,33 @@ if exist([fileparts(fileparts(which('xolotl'))) filesep '.git'],'dir') == 7
 
 
 else
-	% no .git
-	warning('not a git repo, will not update.')
+	% no .git. maybe toolbox?
+	toolboxes = matlab.addons.toolbox.installedToolboxes;
+	if any(strcmp({toolboxes.Name},'xolotl'))
+		% xolotl installed as a toolbox
+		% go somewhere safe
+		cd(matlabroot)
+
+		% remove all toolboxes with "xolotl" in it
+		for i = 1:length(toolboxes)
+			if strcmp(toolboxes(i).Name,'xolotl')
+				matlab.addons.toolbox.uninstallToolbox(toolboxes(i));
+			end
+		end
+
+		% download the new toolbox 
+		websave('xolotl.mltbx','https://drive.google.com/uc?id=15_Fy40Icnhbzfyz9eTqw-E0p5K9Lg_xu&export=download');
+
+		assert(exist('xolotl.mltbx') == 2,'Failed to download toolbox')
+
+		t = matlab.addons.toolbox.installToolbox('xolotl.mltbx');
+
+		disp('Installed xolotl version:')
+		disp(t.Version)
+
+
+	else
+		error('Xolotl is not in a git repo, nor is it in a toolbox. Cannot update')
+	end
 end
 
