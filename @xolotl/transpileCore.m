@@ -45,7 +45,7 @@ lines = [lines(1:insert_here); header_files(:); lines(insert_here+1:end)];
 input_hookups{1} = ['double * params  = mxGetPr(prhs[0]);'];
 
 for j = 1:length(names)
-	input_hookups{end+1} = ['double ' names{j} ' = params[' oval(j-1) '];'];
+	input_hookups{end+1} = ['double ' names{j} ' = params[' mat2str(j-1) '];'];
 end
 input_hookups{end+1} = ['int param_size = ' mat2str(length(names)) ';'];
 insert_here = lineFind(lines,'//xolotl:input_declarations');

@@ -94,12 +94,12 @@ methods (Access = protected)
         		if isa(self.(compartment).(C{j}).gbar,'function_handle')
         			g = strrep(func2str(self.(compartment).(C{j}).gbar),'@()','');
         		else
-        			g = oval(self.(compartment).(C{j}).gbar);
+        			g = mat2str(self.(compartment).(C{j}).gbar);
         		end
         		if isa(self.(compartment).(C{j}).E,'function_handle')
         			E = strrep(func2str(self.(compartment).(C{j}).E),'@()','');
         		else
-        			E = oval(self.(compartment).(C{j}).E);
+        			E = mat2str(self.(compartment).(C{j}).E);
         		end
         		info_str = [' (g=' g ', E=' E ')'];
 
@@ -144,7 +144,7 @@ methods
         self.hpp_files = hpp_files;
         for i = 1:length(hpp_files)
             try
-                hpp_files{i} = pathEnd(hpp_files{i});
+                [~,hpp_files{i}] = fileparts(hpp_files{i});
             catch
                 hpp_files{i} = '';
             end

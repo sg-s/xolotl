@@ -23,8 +23,8 @@ for i = length(all_tests):-1:1
 		pause(1)	
 		close all	
 		% clearvars -except all_tests i 	
-		cprintf('green','TEST PASSED\n')	
+		disp('TEST PASSED')	
 	catch err
-		cprintf('red','TEST FAILED\n')	
+		disp('TEST FAILED')	
 	end	
 end 

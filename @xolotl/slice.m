@@ -35,7 +35,9 @@ See Also
 function slice(self, compartment, N_slices, axial_resistivity)
 
 assert(any(strcmp(self.find('compartment'),compartment)),'Unknown compartment')
-assert(isint(N_slices),'N_slices must be an integer > 1')
+
+
+assert(~any(N_slices - floor(N_slices)),'N_slices must be an integer > 1')
 assert(isscalar(N_slices),'N_slices must be an integer > 1')
 assert(N_slices > 1,'N_slices must be an integer > 1')
 

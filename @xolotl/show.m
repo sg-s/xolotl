@@ -124,8 +124,10 @@ plot(ax(find(strcmp({ax.Tag},'h_inf'))),V,hinf,'DisplayName',conductance);
 plot(ax(find(strcmp({ax.Tag},'tau_m'))),V,taum,'DisplayName',conductance);
 plot(ax(find(strcmp({ax.Tag},'tau_h'))),V,tauh,'DisplayName',conductance);
 
-
-prettyFig();
+try
+	prettyFig();
+catch
+end
 
 axes(ax(1))
 legend;

@@ -158,4 +158,7 @@ if strcmp(self.handles.ax(1).XLimMode,'auto')
 	self.handles.ax(1).XLimMode = 'auto';
 end
 
-prettyFig('plw',1,'lw',1);
+try
+	prettyFig('plw',1,'lw',1);
+catch
+end
