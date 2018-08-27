@@ -9,10 +9,9 @@ This quickstart guide will get you started using ``xolotl`` right away. It will 
 Installing
 ^^^^^^^^^^
 
-The easiest way to get ``xolotl`` is to use this one-line script that downloads, installs and links all code: ::
+The easiest way to get ``xolotl`` is as a MATLAB toolbox. Click here_ to download it, and click on the downloaded file to install. 
 
-  % copy and paste this in your MATLAB prompt
-  urlwrite('https://git.io/f4SdA','ix.m'); ix; 
+.. _here: https://drive.google.com/uc?id=1LRlTNWvtfV4BKYcuLjEdTeh-Cjr6oWKJ&export=download
 
 
 Creating a Hodgkin-Huxley Model
