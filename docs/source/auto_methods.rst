@@ -253,6 +253,27 @@ Test coverage
 
 
 
+.. _update:
+
+update
+^^^^^^
+A static method that updates your installation of xolotl in place. If you installed using git, ``xolotl`` will attempt to use git to update itself. Usage ::
+
+   xolotl.update
+   x.update
+
+
+
+
+
+Test coverage
+--------------
+
+``update`` is tested in: 
+
+
+
+
 .. _copy:
 
 copy

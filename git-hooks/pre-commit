@@ -12,6 +12,7 @@ cp .git/hooks/pre-commit git-hooks/pre-commit
 
 
 # make the docs 
+echo "Making the docs..."
 python make_docs.py
 mv auto_methods.rst ./docs/source/auto_methods.rst
 cat ./docs/source/methods_header.rst ./docs/source/auto_methods.rst > auto_methods.rst
@@ -19,9 +20,14 @@ mv auto_methods.rst ./docs/source/auto_methods.rst
 
 
 # automatic build number
+echo "Updating build number..."
 git log master --pretty=oneline | wc -l > build_number
-git add build_number
-git add *.rst
+
 
 # ask matlab to make a new package with all the deps
+echo "Updating toolbox for distribution..."
 matlab -nodesktop -r "load('build_number'); matlab.addons.toolbox.toolboxVersion('xolotl.prj',['1.0.0.' mat2str(build_number)]); matlab.addons.toolbox.packageToolbox('xolotl.prj'); exit;"
+
+git add build_number
+git add git-hooks/pre-commit
+git add docs/source/auto_methods.rst
