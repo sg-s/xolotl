@@ -1,34 +1,34 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
-// CalciumMech1 mechanism 
+// CalciumMech mechanism
 // as in Prinz et al 2003 (and others)
 
-#ifndef CALCIUMMECH1
-#define CALCIUMMECH1
+#ifndef CALCIUMMECH
+#define CALCIUMMECH
 #include "mechanism.hpp"
 #include <limits>
 
 
 //inherit controller class spec
-class CalciumMech1: public mechanism {
+class CalciumMech: public mechanism {
 
 protected:
 public:
 
 
-    // parameters for calciumMech1 
+    // parameters for calciumMech1
     double tau_Ca = 200;  // milliseconds
 
-    // parameter to convert from i_Ca to uM 
-    double f = 14.96; 
+    // parameter to convert from i_Ca to uM
+    double f = 14.96;
 
     double Ca_in = .05;
 
-    // specify parameters + initial conditions for 
-    // mechanism that controls a conductance 
-    CalciumMech1(double tau_Ca_, double f_, double Ca_in_)
+    // specify parameters + initial conditions for
+    // mechanism that controls a conductance
+    CalciumMech(double tau_Ca_, double f_, double Ca_in_)
     {
         f = f_;
         tau_Ca = tau_Ca_;
@@ -38,7 +38,7 @@ public:
 
     }
 
-    
+
     void integrate(double dt);
     void connect(compartment * comp_);
     int getFullStateSize(void);
@@ -48,7 +48,7 @@ public:
 };
 
 
-double CalciumMech1::getState(int idx)
+double CalciumMech::getState(int idx)
 {
 
     return std::numeric_limits<double>::quiet_NaN();
@@ -56,25 +56,25 @@ double CalciumMech1::getState(int idx)
 }
 
 
-int CalciumMech1::getFullStateSize()
+int CalciumMech::getFullStateSize()
 {
-    return 0; 
+    return 0;
 }
 
 
-int CalciumMech1::getFullState(double *cont_state, int idx)
+int CalciumMech::getFullState(double *cont_state, int idx)
 {
     // do nothing
     return idx;
 }
 
 
-void CalciumMech1::connect(compartment* comp_)
+void CalciumMech::connect(compartment* comp_)
 {
     comp = comp_;
 }
 
-void CalciumMech1::integrate(double dt)
+void CalciumMech::integrate(double dt)
 {
 
 
