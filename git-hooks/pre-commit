@@ -22,3 +22,6 @@ mv auto_methods.rst ./docs/source/auto_methods.rst
 git log master --pretty=oneline | wc -l > build_number
 git add build_number
 git add *.rst
+
+# ask matlab to make a new package with all the deps
+matlab -nodesktop -r "matlab.addons.toolbox.packageToolbox('xolotl.prj'); exit;"
