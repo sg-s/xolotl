@@ -253,6 +253,27 @@ Test coverage
 
 
 
+.. _uninstall:
+
+uninstall
+^^^^^^
+A static method that uninstalls your installation of xolotl in place. If you installed using git, ``xolotl`` will attempt to use git to uninstall itself. Usage ::
+
+   xolotl.uninstall
+   x.uninstall
+
+
+
+
+
+Test coverage
+--------------
+
+``uninstall`` is tested in: 
+
+
+
+
 .. _update:
 
 update

@@ -236,6 +236,7 @@ end % end methods
 
 methods (Static)
     
+    uninstall();
     update();
 
     run_all_tests(cleanup);

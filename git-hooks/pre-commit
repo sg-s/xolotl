@@ -25,8 +25,8 @@ git log master --pretty=oneline | wc -l > build_number
 
 
 # ask matlab to make a new package with all the deps
-echo "Updating toolbox for distribution..."
-matlab -nodesktop -r "load('build_number'); matlab.addons.toolbox.toolboxVersion('xolotl.prj',['1.0.0.' mat2str(build_number)]); matlab.addons.toolbox.packageToolbox('xolotl.prj'); exit;"
+# echo "Updating toolbox for distribution..."
+# matlab -nodesktop -r "load('build_number'); matlab.addons.toolbox.toolboxVersion('xolotl.prj',['1.0.0.' mat2str(build_number)]); matlab.addons.toolbox.packageToolbox('xolotl.prj'); exit;"
 
 git add build_number
 git add git-hooks/pre-commit

@@ -1,14 +1,13 @@
 .. highlight:: matlab
 
-************
-Installing
-************
+*************************************
+Installing, Updating and Uninstalling
+*************************************
 
 There are multiple ways to install this toolbox, based on your level of expertise and the toolchain on your computer.
 
-
-Download a MATLAB Toolbox
-=========================
+Installing: Download a MATLAB Toolbox
+=====================================
 
 ``xolotl`` is available as a MATLAB toolbox. Click here_ to download it, and click on the downloaded file to install. 
 
@@ -19,8 +18,8 @@ Download a MATLAB Toolbox
    If you wish to develop ``xolotl`` further, you should probably use git (see below).
 
 
-Via Git
-=======
+Installing: Via Git
+=====================
 
 If you are comfortable with ``git``, you can clone all the code and dependencies yourself: ::
 
@@ -37,3 +36,21 @@ You will have to manually set your ``MATLAB`` paths. Make sure you add the main 
 
    If you want to develop ``xolotl`` further, make sure you're running a non-Windows OS, and that you make the `pre-commit` git hook executable: ``chmod a+x ./git/hooks/pre-commit``
 
+Updating 
+========
+
+In most cases, ``xolotl`` can update itself to the latest version using ::
+
+   xolotl.update()
+
+If you installed using ``git``, ``xolotl`` will attempt to do a ``git pull`` and update itself. If you installed it as a MATLAB toolbox, ``xolotl`` will delete the old toolbox, download the new one, and install that. 
+
+
+Uninstalling
+============
+
+If you installed ``xolotl`` as a MATLAB toolbox, you can easily uninstall it using :: 
+
+   xolotl.uninstall()
+
+Note that this doesn't do anything if you installed using ``git``, or if you manually downloaded the files and linked them. 
