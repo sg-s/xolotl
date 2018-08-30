@@ -77,7 +77,7 @@ if isnan(self.sim_dt) || isempty(self.sim_dt)
 	self.sim_dt = self.dt;
 end
 
-assert(~any(self.dt/self.sim_dt - floor(self.dt/self.sim_dt)),'Simulation & output dt are not compatible')
+assert(rem(self.dt,self.sim_dt)==0,'Simulation & output dt are not compatible')
 
 if nargout == 0 & self.closed_loop == false
 	error('Are you sure you want to integrate this with no outputs and with closed_loop set to FALSE?')
