@@ -20,6 +20,6 @@ Specific conductance of channel   μS/mm^2
 Synaptic strength                 nS
 Current injected into cell        nA
 Axial resistivity                 MΩ mm
-calcium conductance               μM
+Calcium concentration             μM
 temperature                       K
 ================================= ===========
