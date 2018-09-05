@@ -50,7 +50,7 @@ public:
 
     // function declarations
     void integrate(double *, double);
-    //void integrateMS(double, double *, double);
+    void integrateMS(double *, double);
     void integrateClamp(double *, double);
     void addCompartment(compartment*);
     bool resolveTree(void);
@@ -230,28 +230,28 @@ void network::addCompartment(compartment *comp_)
 // this requires there to exist a solver
 // for every component that supports this 
 // order
-// void network::integrateMS(double dt, double * I_ext_now, double delta_temperature)
-// {
+void network::integrateMS(double * I_ext_now, double delta_temperature)
+{
 
 
-//     // first move all variables to prev state in all comps
-//     for (int i = 0; i < n_comp; i++)
-//     {
-//         comp[i]->V_prev = comp[i]->V;
-//         comp[i]->Ca_prev = comp[i]->Ca;
-//         comp[i]->i_Ca_prev = comp[i]->i_Ca;
-//         comp[i]->i_Ca = 0;
-//         comp[i]->I_ext = I_ext_now[i];
-//     }
+    // first move all variables to prev state in all comps
+    for (int i = 0; i < n_comp; i++)
+    {
+        comp[i]->V_prev = comp[i]->V;
+        comp[i]->Ca_prev = comp[i]->Ca;
+        comp[i]->i_Ca_prev = comp[i]->i_Ca;
+        comp[i]->i_Ca = 0;
+        comp[i]->I_ext = I_ext_now[i];
+    }
 
-//     for (int k = 0; k < solver_order; k ++)
-//     {
-//         for (int i = 0; i < n_comp; i++)
-//         {
-//             comp[i]->integrateMS(dt, delta_temperature, k);
-//         }
-//     }
-// }
+    for (int k = 0; k < solver_order; k ++)
+    {
+        for (int i = 0; i < n_comp; i++)
+        {
+            comp[i]->integrateMS(dt, delta_temperature, k);
+        }
+    }
+}
 
 
 // this integrate method works for networks

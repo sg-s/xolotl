@@ -31,8 +31,8 @@ public:
 
     void integrate(double V, double Ca, double delta_temp);
 
-    double m_inf(double V);
-    double tau_m(double V);
+    double m_inf(double, double);
+    double tau_m(double, double);
     string getClass(void);
 
 };
@@ -44,7 +44,7 @@ string Kc::getClass(){
 
 void Kc::integrate(double V, double Ca, double delta_temp)
 {
-    m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
+    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
     g = gbar * m * min(1.0, Ca / 250.0);
 }
 

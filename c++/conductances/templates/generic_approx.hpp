@@ -32,10 +32,10 @@ public:
 
         // cache values for m_inf and h_inf
         for (double V = -99; V < 101; V++) {
-            m_inf_cache[(int) round(V+99)] = m_inf(V);
-            h_inf_cache[(int) round(V+99)] = h_inf(V);
-            tau_m_cache[(int) round(V+99)] = tau_m(V);
-            tau_h_cache[(int) round(V+99)] = tau_h(V);
+            m_inf_cache[(int) round(V+99)] = m_inf(V,Ca);
+            h_inf_cache[(int) round(V+99)] = h_inf(V,Ca);
+            tau_m_cache[(int) round(V+99)] = tau_m(V,Ca);
+            tau_h_cache[(int) round(V+99)] = tau_h(V,Ca);
         }
 
     }
@@ -52,10 +52,10 @@ public:
 
     void integrate(double V, double Ca, double delta_temp);
 
-    double m_inf(double V);
-    double h_inf(double V);
-    double tau_m(double V);
-    double tau_h(double V);
+    double m_inf(double, double);
+    double h_inf(double, double);
+    double tau_m(double, double);
+    double tau_h(double, double);
     string getClass(void);
 };
 
@@ -79,9 +79,9 @@ void CondName::integrate(double V, double Ca, double delta_temp)
     $GBAR=?
 }
 
-double CondName::m_inf(double V) {return $m_inf;}
-double CondName::h_inf(double V) {return $h_inf;}
-double CondName::tau_m(double V) {return $tau_m;}
-double CondName::tau_h(double V) {return $tau_h;}
+double CondName::m_inf(double V, double Ca) {return $m_inf;}
+double CondName::h_inf(double V, double Ca) {return $h_inf;}
+double CondName::tau_m(double V, double Ca) {return $tau_m;}
+double CondName::tau_h(double V, double Ca) {return $tau_h;}
 
 #endif

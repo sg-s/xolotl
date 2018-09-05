@@ -34,10 +34,10 @@ public:
 
     void integrate(double V, double Ca, double delta_temp);
 
-    double m_inf(double V);
-    double h_inf(double V);
-    double tau_m(double V);
-    double tau_h(double V);
+    double m_inf(double, double);
+    double h_inf(double, double);
+    double tau_m(double, double);
+    double tau_h(double, double);
     string getClass(void);
 
 
@@ -47,14 +47,14 @@ string DmNaV::getClass(){return "DmNaV";}
 
 void DmNaV::integrate(double V, double Ca, double delta_temp)
 {
-    m = m_inf(V) + (m - m_inf(V))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V));
-    h = h_inf(V) + (h - h_inf(V))*exp(-(dt*pow(Q_tau_h, delta_temp))/tau_h(V));
+    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V,Ca));
+    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-(dt*pow(Q_tau_h, delta_temp))/tau_h(V,Ca));
     g = pow(Q_g, delta_temp)*gbar*m*m*m*m*m*h;
 }
 
-double DmNaV::m_inf(double V) {return 1.0/(1.0+exp((V+34.3)/-8.79));}
-double DmNaV::h_inf(double V) {return 1.0/(1.0+exp((V+48)/6));}
-double DmNaV::tau_m(double V) {return (3 - 2.4/(1+exp((V+33.6)/-9.0)))/5;}
-double DmNaV::tau_h(double V) {return 3 - 2.53/(1+exp((V+22.8)/-3.5));}
+double DmNaV::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+34.3)/-8.79));}
+double DmNaV::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+48)/6));}
+double DmNaV::tau_m(double V, double Ca) {return (3 - 2.4/(1+exp((V+33.6)/-9.0)))/5;}
+double DmNaV::tau_h(double V, double Ca) {return 3 - 2.53/(1+exp((V+22.8)/-3.5));}
 
 #endif

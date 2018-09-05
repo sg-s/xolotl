@@ -27,10 +27,10 @@ public:
 
     void integrate(double V, double Ca, double delta_temp);
 
-    double m_inf(double V);
-    double h_inf(double V);
-    double tau_m(double V);
-    double tau_h(double V);
+    double m_inf(double, double);
+    double h_inf(double, double);
+    double tau_m(double, double);
+    double tau_h(double, double);
     string getClass(void);
 };
 
@@ -40,8 +40,8 @@ void CaTPD::integrate(double V, double Ca, double delta_temp)
 {
     // update E by copying E_Ca from the cell
     E = container->E_Ca;
-    m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
-    h = h_inf(V) + (h - h_inf(V))*exp(-dt/tau_h(V));
+    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
+    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
     g = gbar*m*m*m*h;
 
     // compute the specific calcium current and update it in the cell
@@ -50,9 +50,9 @@ void CaTPD::integrate(double V, double Ca, double delta_temp)
 }
 
 
-double CaTPD::m_inf(double V) {return 1.0/(1.0 + exp((V+25)/-7.2));}
-double CaTPD::h_inf(double V) {return 1.0/(1.0 + exp((V+36)/7));}
-double CaTPD::tau_m(double V) {return 55 - 49.5/(1.0 + exp(-(V+58)/17));}
-double CaTPD::tau_h(double V) {return 350 - 300/(1.0 + exp(-(V+50.0)/16.9));}
+double CaTPD::m_inf(double V, double Ca) {return 1.0/(1.0 + exp((V+25)/-7.2));}
+double CaTPD::h_inf(double V, double Ca) {return 1.0/(1.0 + exp((V+36)/7));}
+double CaTPD::tau_m(double V, double Ca) {return 55 - 49.5/(1.0 + exp(-(V+58)/17));}
+double CaTPD::tau_h(double V, double Ca) {return 350 - 300/(1.0 + exp(-(V+50.0)/16.9));}
 
 #endif

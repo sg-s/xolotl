@@ -33,10 +33,10 @@ public:
 
     void integrate(double V, double Ca, double delta_temp);
 
-    double m_inf(double V);
-    double h_inf(double V);
-    double tau_m(double V);
-    double tau_h(double V);
+    double m_inf(double, double);
+    double h_inf(double, double);
+    double tau_m(double, double);
+    double tau_h(double, double);
     string getClass(void);
 
 };
@@ -45,16 +45,16 @@ string At::getClass(){return "At";}
 
 void At::integrate(double V, double Ca, double delta_temp)
 {
-    m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
-    h = h_inf(V) + (h - h_inf(V))*exp(-dt/tau_h(V));
+    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
+    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
     g = gbar*m*h;
 }
 
 
-double At::m_inf(double V) {return (1.0/(1.0+exp(((V)+23.0)/-13.0)));}
-double At::tau_m(double V) {return 11.0+(8.0/(1.0+exp(((V)+70.0)/-15.0)));}
-double At::h_inf(double V) {return (1.0/(1.0+exp(((V)+62.0)/7.0)));}
-double At::tau_h(double V) {return 6.0+(40.0/(1.0+exp(((V)-55.0)/-18.0)));}
+double At::m_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+23.0)/-13.0)));}
+double At::tau_m(double V, double Ca) {return 11.0+(8.0/(1.0+exp(((V)+70.0)/-15.0)));}
+double At::h_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+62.0)/7.0)));}
+double At::tau_h(double V, double Ca) {return 6.0+(40.0/(1.0+exp(((V)-55.0)/-18.0)));}
 
 
 #endif

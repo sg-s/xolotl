@@ -31,7 +31,7 @@ public:
 
     void integrate(double V, double Ca, double delta_temp);
 
-    double m_inf(double V);
+    double m_inf(double, double);
     string getClass(void);
 
 };
@@ -43,7 +43,7 @@ void Cal::integrate(double V, double Ca, double delta_temp)
     // update E by copying E_Ca from the cell
     E = container->E_Ca;
 
-    m = m_inf(V)
+    m = m_inf(V,Ca)
     g = gbar*m;
 
     // compute the specific calcium current and update it in the cell
@@ -52,6 +52,6 @@ void Cal::integrate(double V, double Ca, double delta_temp)
 }
 
 
-double Cal::m_inf(double V) {return (0.5)*(1.0+tanh((V))/15.0)));}
+double Cal::m_inf(double V, double Ca) {return (0.5)*(1.0+tanh((V))/15.0)));}
 
 #endif

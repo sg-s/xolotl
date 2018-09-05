@@ -33,10 +33,10 @@ public:
 
     void integrate(double V, double Ca, double delta_temp);
 
-    double m_inf(double V);
-    double h_inf(double V);
-    double tau_m(double V);
-    double tau_h(double V);
+    double m_inf(double, double);
+    double h_inf(double, double);
+    double tau_m(double, double);
+    double tau_h(double, double);
     string getClass(void);
 
 };
@@ -45,16 +45,16 @@ string KCaT::getClass(){return "KCaT";}
 
 void KCaT::integrate(double V, double Ca, double delta_temp)
 {
-    m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
-    h = h_inf(V) + (h - h_inf(V))*exp(-dt/tau_h(V));
+    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
+    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
     g = gbar*m*h;
 }
 
 
-double KCaT::m_inf(double V) {return (1.0/(1.0+exp(((V)+10.0)/-1.0)));}
-double KCaT::tau_m(double V) {return 43.0+(12.0/(1.0+exp(((V)+10.0)/4.0)));}
-double KCaT::h_inf(double V) {return (1.0/(1.0+exp(((V)+36.0)/8.0)));}
-double KCaT::tau_h(double V) {return 95.0+(33.0/(1.0+exp(((V)+36.0)/-22.0)));}
+double KCaT::m_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+10.0)/-1.0)));}
+double KCaT::tau_m(double V, double Ca) {return 43.0+(12.0/(1.0+exp(((V)+10.0)/4.0)));}
+double KCaT::h_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+36.0)/8.0)));}
+double KCaT::tau_h(double V, double Ca) {return 95.0+(33.0/(1.0+exp(((V)+36.0)/-22.0)));}
 
 
 #endif

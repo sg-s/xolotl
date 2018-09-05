@@ -37,8 +37,8 @@ public:
 
     void integrate(double V, double Ca, double delta_temp);
 
-    double m_inf(double V);
-    double tau_m(double V);
+    double m_inf(double, double);
+    double tau_m(double, double);
     string getClass(void);
 
 
@@ -49,13 +49,13 @@ string Kd::getClass(){return "Kd";}
 
 void Kd::integrate(double V, double Ca, double delta_temp)
 {
-    m = m_inf(V) + (m - m_inf(V))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V));
+    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V,Ca));
     g = pow(Q_g, delta_temp)*gbar*m*m*m*m;
 }
 
 
 
-double Kd::m_inf(double V) {return 1.0/(1.0+exp((V+12.3)/-11.8));}
-double Kd::tau_m(double V) {return 7.2 - 6.4/(1.0+exp((V+28.3)/-19.2));}
+double Kd::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+12.3)/-11.8));}
+double Kd::tau_m(double V, double Ca) {return 7.2 - 6.4/(1.0+exp((V+28.3)/-19.2));}
 
 #endif

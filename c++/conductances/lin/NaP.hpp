@@ -28,10 +28,10 @@ public:
 
     void integrate(double V, double Ca, double delta_temp);
 
-    double m_inf(double V);
-    double h_inf(double V);
-    double tau_m(double V);
-    double tau_h(double V);
+    double m_inf(double, double);
+    double h_inf(double, double);
+    double tau_m(double, double);
+    double tau_h(double, double);
     string getClass(void);
 
 };
@@ -40,10 +40,10 @@ string NaP::getClass(){return "NaP";}
 
 void NaP::integrate(double V, double Ca, double delta_temp)
 {
-    m = m_inf(V) + (m - m_inf(V))*exp(-dt);
+    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt);
     g = gbar*m;
 }
 
-double NaP::m_inf(double V) {return 1.0/(1.0+exp((V+48.77)/-3.68));}
+double NaP::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+48.77)/-3.68));}
 
 #endif

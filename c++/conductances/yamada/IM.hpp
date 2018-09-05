@@ -36,8 +36,8 @@ public:
 
     void integrate(double V, double Ca, double delta_temp);
 
-    double m_inf(double V);
-    double tau_m(double V);
+    double m_inf(double, double);
+    double tau_m(double, double);
     string getClass(void);
 
 
@@ -48,15 +48,15 @@ string IM::getClass(){return "IM";}
 void IM::integrate(double V, double Ca, double delta_temp)
 {
 
-    m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
+    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
     g = gbar*m;
 
 
 }
 
-double IM::m_inf(double V) {return 1.0/(1.0+exp((V+35.0)/-10));}
+double IM::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+35.0)/-10));}
 
-double IM::tau_m(double V) {return 1e3(3.3*exp((V+35)/20) + exp((V+35)/(-20)));}
+double IM::tau_m(double V, double Ca) {return 1e3(3.3*exp((V+35)/20) + exp((V+35)/(-20)));}
 
 
 

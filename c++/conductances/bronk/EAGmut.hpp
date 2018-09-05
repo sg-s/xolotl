@@ -33,7 +33,7 @@ public:
     void integrate(double V, double Ca, double delta_temp);
 
     double m_inf(double V, double Ca);
-    double tau_m(double V);
+    double tau_m(double, double);
     string getClass(void);
 
 };
@@ -42,11 +42,11 @@ string EAGmut::getClass(){return "EAG";}
 
 void EAGmut::integrate(double V, double Ca, double delta_temp)
 {
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V));
+    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
     g = pow(Q_g, delta_temp)*gbar*m*m;
 }
 
 double EAGmut::m_inf(double V, double Ca) { return (.92*(1-.05)/(Ca+.92) + .05)/(1.0+exp((V+23.12)/-16.94)); }
-double EAGmut::tau_m(double V) {return 5497 - 5500/(1.0+exp((V+251.5 )/-51.5));}
+double EAGmut::tau_m(double V, double Ca) {return 5497 - 5500/(1.0+exp((V+251.5 )/-51.5));}
 
 #endif

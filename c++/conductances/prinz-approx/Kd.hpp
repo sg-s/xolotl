@@ -29,8 +29,8 @@ public:
 
         // cache values for m_inf and h_inf
         for (double V = -99; V < 101; V++) {
-            m_inf_cache[(int) round(V+99)] = m_inf(V);
-            tau_m_cache[(int) round(V+99)] = tau_m(V);
+            m_inf_cache[(int) round(V+99)] = m_inf(V,Ca);
+            tau_m_cache[(int) round(V+99)] = tau_m(V,Ca);
         }
 
     }
@@ -44,8 +44,8 @@ public:
 
     void integrate(double V, double Ca, double delta_temp);
 
-    double m_inf(double V);
-    double tau_m(double V);
+    double m_inf(double, double);
+    double tau_m(double, double);
     string getClass(void);
 
 
@@ -69,7 +69,7 @@ void Kd::integrate(double V, double Ca, double delta_temp)
 
 
 
-double Kd::m_inf(double V) {return 1.0/(1.0+exp((V+12.3)/-11.8));}
-double Kd::tau_m(double V) {return 14.4 - 12.8/(1.0+exp((V+28.3)/-19.2));}
+double Kd::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+12.3)/-11.8));}
+double Kd::tau_m(double V, double Ca) {return 14.4 - 12.8/(1.0+exp((V+28.3)/-19.2));}
 
 #endif

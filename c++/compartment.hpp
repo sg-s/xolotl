@@ -203,7 +203,7 @@ public:
     void addMechanism(mechanism*);
 
     // integration methods
-    //void integrateMS(double, double, int);
+    void integrateMS(double, int);
     void integrateMechanisms(void);
     void integrateChannels(double);
     void integrateSynapses(double);
@@ -436,23 +436,23 @@ double compartment::getBCDF(int idx)
 }
 
 
-// void compartment::integrateMS(double dt, double delta_temperature, int k)
-// {
+void compartment::integrateMS(double delta_temperature, int k)
+{
 
-//     E_Ca = RT_by_nF*log((Ca_out)/(Ca_prev));
+    E_Ca = RT_by_nF*log((Ca_out)/(Ca_prev));
 
-//     // channels
-//     for (int i=0; i<n_cond; i++)
-//     {
-//         cond[i]->integrateMS(dt, delta_temperature, k);
-//     }
+    // channels
+    for (int i=0; i<n_cond; i++)
+    {
+        cond[i]->integrateMS(dt, delta_temperature, k);
+    }
 
-//     // mechanisms
+    // mechanisms
 
-//     //synapses 
+    //synapses 
 
-//     //voltage 
-// }
+    //voltage 
+}
 
 
 void compartment::integrateChannels(double delta_temperature)

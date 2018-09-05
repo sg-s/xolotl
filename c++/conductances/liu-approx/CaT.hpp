@@ -30,10 +30,10 @@ public:
 
         // cache values for m_inf and h_inf
         for (double V = -99; V < 101; V++) {
-            m_inf_cache[(int) round(V+99)] = m_inf(V);
-            h_inf_cache[(int) round(V+99)] = h_inf(V);
-            tau_m_cache[(int) round(V+99)] = tau_m(V);
-            tau_h_cache[(int) round(V+99)] = tau_h(V);
+            m_inf_cache[(int) round(V+99)] = m_inf(V,Ca);
+            h_inf_cache[(int) round(V+99)] = h_inf(V,Ca);
+            tau_m_cache[(int) round(V+99)] = tau_m(V,Ca);
+            tau_h_cache[(int) round(V+99)] = tau_h(V,Ca);
         }
 
     }
@@ -50,10 +50,10 @@ public:
 
     void integrate(double V, double Ca, double delta_temp);
 
-    double m_inf(double V);
-    double h_inf(double V);
-    double tau_m(double V);
-    double tau_h(double V);
+    double m_inf(double, double);
+    double h_inf(double, double);
+    double tau_m(double, double);
+    double tau_h(double, double);
     string getClass(void);
 
 
@@ -93,10 +93,10 @@ void CaT::integrate(double V, double Ca, double delta_temp)
 }
 
 
-double CaT::m_inf(double V) {return 1.0/(1.0 + exp((V+27.1)/-7.2));}
-double CaT::h_inf(double V) {return 1.0/(1.0 + exp((V+32.1)/5.5));}
-double CaT::tau_m(double V) {return 21.7 - 21.3/(1.0 + exp((V+68.1)/-20.5));}
-double CaT::tau_h(double V) {return 105.0 - 89.8/(1.0 + exp((V+55.0)/-16.9));}
+double CaT::m_inf(double V, double Ca) {return 1.0/(1.0 + exp((V+27.1)/-7.2));}
+double CaT::h_inf(double V, double Ca) {return 1.0/(1.0 + exp((V+32.1)/5.5));}
+double CaT::tau_m(double V, double Ca) {return 21.7 - 21.3/(1.0 + exp((V+68.1)/-20.5));}
+double CaT::tau_h(double V, double Ca) {return 105.0 - 89.8/(1.0 + exp((V+55.0)/-16.9));}
 
 
 #endif

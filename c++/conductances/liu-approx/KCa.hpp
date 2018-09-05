@@ -30,7 +30,7 @@ public:
 
         // cache values for m_inf and h_inf
         for (double V = -99; V < 101; V++) {
-            tau_m_cache[(int) round(V+99)] = tau_m(V);
+            tau_m_cache[(int) round(V+99)] = tau_m(V,Ca);
         }
     }
 
@@ -40,7 +40,7 @@ public:
     void integrate(double V, double Ca, double delta_temp);
 
     double m_inf(double V, double Ca);
-    double tau_m(double V);
+    double tau_m(double, double);
     string getClass(void);
 
 
@@ -68,6 +68,6 @@ void KCa::integrate(double V, double Ca, double delta_temp)
 }
 
 double KCa::m_inf(double V, double Ca) { return (Ca/(Ca+3.0))/(1.0+exp((V+28.3)/-12.6)); }
-double KCa::tau_m(double V) {return 90.3 - 75.1/(1.0+exp((V+46.0)/-22.7));}
+double KCa::tau_m(double V, double Ca) {return 90.3 - 75.1/(1.0+exp((V+46.0)/-22.7));}
 
 #endif

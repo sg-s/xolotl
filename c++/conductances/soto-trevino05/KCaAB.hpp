@@ -29,7 +29,7 @@ public:
     void integrate(double V, double Ca, double delta_temp);
 
     double m_inf(double V, double Ca);
-    double tau_m(double V);
+    double tau_m(double, double);
     string getClass(void);
 };
 
@@ -37,12 +37,12 @@ string KCaAB::getClass(){return "KCaAB";}
 
 void KCaAB::integrate(double V, double Ca, double delta_temp)
 {
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V));
+    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
     g = gbar*m*m*m*m;
 }
 
 double KCaAB::m_inf(double V, double Ca) { return (Ca/(Ca+30))/(1.0+exp(-(V+51.0)/4)); }
-double KCaAB::tau_m(double V) {return 90.3 - 75.09/(1.0+exp(-(V+46.0)/22.7));}
+double KCaAB::tau_m(double V, double Ca) {return 90.3 - 75.09/(1.0+exp(-(V+46.0)/22.7));}
 
 
 #endif
