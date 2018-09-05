@@ -3,9 +3,6 @@
 % in Tim O'Leary's 2013 paper
 
 
-xolotl.cleanup;
-
-
 vol = 0.0628; % this can be anything, doesn't matter
 f = 1.496; % uM/nA
 tau_Ca = 200;

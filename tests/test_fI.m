@@ -2,7 +2,6 @@
 % you can visualize the effects of changing parameters of the f-I curve 
 % of a neuron
 
-xolotl.cleanup;
 
 x = xolotl;
 x.add('compartment','AB','A',0.0628);

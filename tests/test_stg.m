@@ -6,8 +6,6 @@
 % http://www.nature.com/neuro/journal/v7/n12/abs/nn1352.html
 
 
-xolotl.cleanup;
-
 % conversion from Prinz to phi
 A = 0.0628;
 

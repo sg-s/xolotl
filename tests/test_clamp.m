@@ -1,7 +1,4 @@
 
-xolotl.cleanup;
-
-
 
 x = xolotl;
 x.add('compartment','AB','A',0.0628);

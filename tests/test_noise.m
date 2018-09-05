@@ -1,5 +1,4 @@
 
-xolotl.cleanup;
 
 vol = 0.0628; % this can be anything, doesn't matter
 

@@ -521,15 +521,6 @@ Test coverage
 
 ``cleanup`` is tested in: 
 
-- `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
-- `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
-- `test_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/test_fI.m>`_ 
-- `test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/tests/test_integral_control.m>`_ 
-- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
-- `test_clamp.m <https://github.com/sg-s/xolotl/blob/master/tests/test_clamp.m>`_ 
-- `test_stg_temperature.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg_temperature.m>`_ 
-- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
-- `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
 
 
 

@@ -1,8 +1,6 @@
 % this script tests whether xolotl's built in
 % compartment_name checker works
 
-xolotl.cleanup;
-
 
 x = xolotl;
 

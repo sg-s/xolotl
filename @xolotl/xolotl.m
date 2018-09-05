@@ -239,7 +239,7 @@ methods (Static)
     uninstall();
     update();
 
-    run_all_tests(cleanup);
+    [passed, total] = run_all_tests(cleanup);
 
     C = matrixCost(M1,M2);
 
