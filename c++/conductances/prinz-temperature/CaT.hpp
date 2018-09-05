@@ -13,6 +13,10 @@ class CaT: public conductance {
 
 public:
 
+    double Q_g;
+    double Q_tau_m;
+    double Q_tau_h;
+
     // specify parameters + initial conditions
     CaT(double g_, double E_, double m_, double h_, double Q_g_, double Q_tau_m_, double Q_tau_h_)
     {
@@ -35,7 +39,7 @@ public:
         if (isnan (E)) { E = 30; }
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double V, double Ca, double delta_temp);
 
     double m_inf(double V);
     double h_inf(double V);
@@ -46,7 +50,7 @@ public:
 
 string CaT::getClass(){return "CaT";}
 
-void CaT::integrate(double V, double Ca, double dt, double delta_temp)
+void CaT::integrate(double V, double Ca, double delta_temp)
 {
     // update E by copying E_Ca from the cell
     E = container->E_Ca;

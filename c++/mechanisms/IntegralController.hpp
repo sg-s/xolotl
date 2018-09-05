@@ -43,7 +43,7 @@ public:
     }
 
     
-    void integrate(double dt);
+    void integrate(void);
     void connect(conductance * channel_, synapse * syn_);
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
@@ -115,7 +115,7 @@ void IntegralController::connect(conductance * channel_, synapse * syn_)
     }
 }
 
-void IntegralController::integrate(double dt)
+void IntegralController::integrate(void)
 {
 
     // if the target is NaN, we will interpret this

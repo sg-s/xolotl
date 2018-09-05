@@ -28,7 +28,7 @@ public:
         if (isnan (E)) { E = -80; }
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double V, double Ca, double delta_temp);
 
     double m_inf(double V, double Ca);
     double tau_m(double V);
@@ -41,7 +41,7 @@ string Kahp::getClass(){
     return "Kahp";
 }
 
-void Kahp::integrate(double V, double Ca, double dt, double delta_temp)
+void Kahp::integrate(double V, double Ca, double delta_temp)
 {
     m = m_inf(V, Ca) + (m - m_inf(V))*exp(-dt/tau_m(V));
     g = gbar*m;

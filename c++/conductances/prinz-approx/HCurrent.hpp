@@ -43,7 +43,7 @@ public:
     double taum;
     double minf;
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double V, double Ca, double delta_temp);
 
     double m_inf(double V);
     double tau_m(double V);
@@ -53,7 +53,7 @@ public:
 
 string HCurrent::getClass(){return "HCurrent";}
 
-void HCurrent::integrate(double V, double Ca, double dt, double delta_temp)
+void HCurrent::integrate(double V, double Ca, double delta_temp)
 {
 
     // clamp the voltage inside of cached range

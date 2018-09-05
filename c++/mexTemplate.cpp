@@ -185,9 +185,22 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
 
 
+    // determine mode
+    bool is_voltage_clamped = false;
+    bool is_multi_comp = xolotl_network.resolveTree();
+    bool is_multi_step = false;
+    if (solver_order > 0) {
+        is_multi_step = true;
+        xolotl_network.solver_order = (int) solver_order;
+
+        // check that every component has a supported
+        // solver that can work with this order
+        xolotl_network.checkSolvers();
+    }
+
     // figure out if we're voltage clamping
     // if any V_clamp is non-NaN, then we are
-    bool is_voltage_clamped = false;
+    
     for (int j = 0; j < n_comp; j++)
     {
         if (!isnan(V_clamp[j]))
@@ -197,99 +210,44 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
 
-    // resolve the tree (for multi-compartment models)
-    xolotl_network.resolveTree();
-
     mexEvalString("drawnow;");
 
     int percent_complete = 10;
 
-    if (is_voltage_clamped)
-    {
-        // do the integration respecting V_clamp
-        int output_idx = 0;
-        for(int i = 0; i < nsteps; i++)
-        {
 
-
-
-            if (V_clamp_size_2 == nsteps)
-            {
-                // I_ext is dynamically changing
-                for(int q = 0; q < n_comp; q++)
-                {
-                    V_clamp[q] = V_clamp_in[i*n_comp + q];
-                }
-            }
-
-            xolotl_network.integrateClamp(sim_dt, V_clamp, delta_temperature);
-
-
-            if (i%progress_report == 0 & verbosity > 0)
-            {
-                mexPrintf("[C++] integration %i %", percent_complete);
-                mexPrintf(" complete\n");
-                percent_complete += 10;
-                mexEvalString("drawnow;");
-            }
-
-            // here we're getting the state of every compartment -- V, Ca, and all conductances
-            if (i%res == 0)
-            {
-
-                for (int j = 0; j < n_comp; j++)
-                {
-
-                    if (nlhs > 1) {
-                        if (isnan(V_clamp[j]))
-                        {
-                            output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
-                        }
-                        else {
-                            output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->I_clamp;
-                        }
-                    }
-
-                    if (nlhs > 2) {
-                        output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
-                        output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
-                    }
-
-
-                }
-                output_idx ++;
-            }
-        } // end for loop over nsteps
+    if (is_multi_comp & is_multi_step){
+        mexErrMsgTxt("[xolotl] multi-compartment models cannot be integrated with multi-step methods yet. \n");
     }
-    else
 
-    {
-
-        // voltage is not clamped
-        // do the integration
-        int output_idx = 0;
-        int cont_idx = 0;
-        int cond_idx = 0;
-        int syn_idx = 0;
-        for(int i = 0; i < nsteps; i++)
-        {
+    if (is_multi_comp & is_voltage_clamped){
+        mexErrMsgTxt("[xolotl] multi-compartment models cannot be integrated when something is clamped yet. \n");
+    }
 
 
-            if (I_ext_size_2 == nsteps)
-            {
+    int output_idx = 0; 
+    int cont_idx = 0;
+    int cond_idx = 0;
+    int syn_idx = 0;
+
+    // tell all components what the time step for 
+    // solving is
+    xolotl_network.broadcastdt(sim_dt);
+
+    if (!is_voltage_clamped & !is_multi_step){
+        mexPrintf("Mode 0\n");
+        
+        for (int i = 0; i < nsteps; i++) {
+            if (I_ext_size_2 == nsteps) {
                 // I_ext is dynamically changing
-                for(int q = 0; q < n_comp; q++)
-                {
+                for(int q = 0; q < n_comp; q++) {
                     I_ext[q] = I_ext_in[i*n_comp + q];
                 }
             }
 
+            xolotl_network.integrate(I_ext, delta_temperature);
 
-            xolotl_network.integrate(sim_dt,I_ext, delta_temperature);
 
-
-            if (i%progress_report == 0 & verbosity > 0)
-            {
+            if (i%progress_report == 0 & verbosity > 0) {
                 mexPrintf("[C++] integration %i %", percent_complete);
                 mexPrintf(" complete\n");
                 percent_complete += 10;
@@ -297,8 +255,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             }
 
             // here we're getting the state of every compartment -- V, Ca, and all conductances
-            if (i%res == 0)
-            {
+            if (i%res == 0) {
 
                 for (int j = 0; j < n_comp; j++)
                 {
@@ -320,11 +277,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                     }
 
                     // read out ionic currents
-                    if (nlhs > 4)
-                    {
+                    if (nlhs > 4) {
                         cond_idx = (xolotl_network.comp[j]->getFullCurrentState(output_curr_state,cond_idx));
                     }
-
 
                 } // end j loop over compartments
 
@@ -338,13 +293,91 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                     }
                     
                 }
-
-
                 output_idx ++;
             }
         } // end for loop over nsteps
-    }
 
+
+    } else if (is_voltage_clamped & !is_multi_step) {
+        mexPrintf("Mode 1\n");
+
+        // do the integration respecting V_clamp
+
+        for (int i = 0; i < nsteps; i++) {
+
+            if (V_clamp_size_2 == nsteps) {
+                // I_ext is dynamically changing
+                for(int q = 0; q < n_comp; q++) {
+                    V_clamp[q] = V_clamp_in[i*n_comp + q];
+                }
+            }
+
+            xolotl_network.integrateClamp(V_clamp, delta_temperature);
+
+            if (i%progress_report == 0 & verbosity > 0)
+            {
+                mexPrintf("[C++] integration %i %", percent_complete);
+                mexPrintf(" complete\n");
+                percent_complete += 10;
+                mexEvalString("drawnow;");
+            }
+
+            // here we're getting the state of every compartment -- V, Ca, and all conductances
+            if (i%res == 0)
+            {
+                for (int j = 0; j < n_comp; j++)
+                {
+                    if (nlhs > 1) {
+                        if (isnan(V_clamp[j])) {
+                            output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
+                        }
+                        else {
+                            output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->I_clamp;
+                        }
+                    }
+
+                    if (nlhs > 2) {
+                        output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
+                        output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
+                    }
+                }
+                output_idx ++;
+            }
+        } // end for loop over nsteps
+
+
+    } else if (!is_voltage_clamped & is_multi_step) {
+        // mode 2
+        mexPrintf("[xolotl] %i-step integration requested.\n", xolotl_network.solver_order);
+
+
+
+        for (int i = 0; i < nsteps; i++) {
+            if (I_ext_size_2 == nsteps) {
+                // I_ext is dynamically changing
+                for(int q = 0; q < n_comp; q++) {
+                    I_ext[q] = I_ext_in[i*n_comp + q];
+                }
+            }
+
+            //xolotl_network.integrateMS(sim_dt,I_ext, delta_temperature);
+
+
+            if (i%progress_report == 0 & verbosity > 0) {
+                mexPrintf("[C++] integration %i %", percent_complete);
+                mexPrintf(" complete\n");
+                percent_complete += 10;
+                mexEvalString("drawnow;");
+            }
+
+        } // end for loop over nsteps
+
+
+
+
+    } else  {
+        mexErrMsgTxt("[xolotl] Unknown integration mode. \n");
+    }
 
 
 

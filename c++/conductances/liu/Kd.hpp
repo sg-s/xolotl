@@ -24,14 +24,16 @@ public:
         if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = -80; }
+
+        supported_solver_order = 4;
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double V, double Ca, double delta_temp);
 
     double m_inf(double V);
     double tau_m(double V);
     string getClass(void);
-
+    void checkSolvers(int);
 
 };
 
@@ -39,7 +41,7 @@ string Kd::getClass(){
     return "Kd";
 }
 
-void Kd::integrate(double V, double Ca, double dt, double delta_temp)
+void Kd::integrate(double V, double Ca, double delta_temp)
 {
     m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
     g = gbar*m*m*m*m;
@@ -47,5 +49,6 @@ void Kd::integrate(double V, double Ca, double dt, double delta_temp)
 
 double Kd::m_inf(double V) {return 1.0/(1.0+exp((V+12.3)/-11.8));}
 double Kd::tau_m(double V) {return 7.2 - 6.4/(1.0+exp((V+28.3)/-19.2));}
+
 
 #endif

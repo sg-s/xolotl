@@ -29,7 +29,7 @@ public:
 
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double V, double Ca, double delta_temp);
 
     string getClass(void);
 
@@ -40,7 +40,7 @@ string CaPump::getClass(){
     return "CaPump";
 }
 
-void CaPump::integrate(double V, double Ca, double dt, double delta_temp)
+void CaPump::integrate(double V, double Ca, double delta_temp)
 {
     // update E by copying E_Ca from the cell
     E = container->E_Ca;

@@ -37,7 +37,7 @@ public:
     double tau_m_cache[200];
     double taum;
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double V, double Ca, double delta_temp);
 
     double m_inf(double V, double Ca);
     double tau_m(double V);
@@ -48,7 +48,7 @@ public:
 
 string KCa::getClass(){return "KCa";}
 
-void KCa::integrate(double V, double Ca, double dt, double delta_temp)
+void KCa::integrate(double V, double Ca, double delta_temp)
 {
 
     // clamp the voltage inside of cached range

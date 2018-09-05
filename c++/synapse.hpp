@@ -24,6 +24,8 @@ public:
     double s;
     bool is_electrical;
 
+    double dt;
+
 
     synapse()
     {
@@ -32,7 +34,7 @@ public:
     }
     ~synapse() {}
 
-    virtual void integrate(double) = 0;
+    virtual void integrate(void) = 0;
     virtual void connect(compartment*, compartment*) = 0;// tells compiler they will be overridden by derived class
     virtual int getFullStateSize(void) = 0;
     virtual int getFullState(double*, int) = 0;

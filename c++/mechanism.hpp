@@ -49,6 +49,8 @@ public:
     double container_A;
     double container_vol;
 
+    double dt;
+
     mechanism()
     {
         // null pointers to all 
@@ -60,7 +62,7 @@ public:
     
     ~mechanism() {}
     
-    virtual void integrate(double) = 0;
+    virtual void integrate(void) = 0;
     virtual int getFullStateSize(void) = 0;
     virtual int getFullState(double*, int) = 0;
     virtual double getState(int) = 0;

@@ -29,7 +29,7 @@ public:
 
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double V, double Ca, double delta_temp);
 
     double m_inf(double V);
     double h_inf(double V);
@@ -40,7 +40,7 @@ public:
 
 string DmNaV::getClass(){return "DmNaV";}
 
-void DmNaV::integrate(double V, double Ca, double dt, double delta_temp)
+void DmNaV::integrate(double V, double Ca, double delta_temp)
 {
     m = m_inf(V) + (m - m_inf(V))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V));
     h = h_inf(V) + (h - h_inf(V))*exp(-(dt*pow(Q_tau_h, delta_temp))/tau_h(V));

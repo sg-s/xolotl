@@ -22,14 +22,15 @@ public:
         h = h_;
 
         // defaults 
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
         if (isnan (E)) { E = 30; }
 
+        supported_solver_order = 4;
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double V, double Ca, double delta_temp);
 
     double m_inf(double V);
     double h_inf(double V);
@@ -43,7 +44,7 @@ string CaS::getClass(){
     return "CaS";
 }
 
-void CaS::integrate(double V, double Ca, double dt, double delta_temp)
+void CaS::integrate(double V, double Ca, double delta_temp)
 {
     // update E by copying E_Ca from the cell
     E = container->E_Ca;

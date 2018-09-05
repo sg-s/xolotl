@@ -28,7 +28,7 @@ public:
         is_electrical = false;
     }
     
-    void integrate(double dt);
+    void integrate(void);
     int getFullStateSize(void);
     void connect(compartment *pcomp1_, compartment *pcomp2_);
     double getCurrent(double V_post);
@@ -40,7 +40,7 @@ int Cholinergic::getFullStateSize()
     return 2; 
 }
 
-void Cholinergic::integrate(double dt)
+void Cholinergic::integrate(void)
 {   
     // figure out the voltage of the pre-synaptic neuron
     double V_pre = pre_syn->V;

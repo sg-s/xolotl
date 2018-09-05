@@ -21,11 +21,13 @@ public:
 
         if (isnan (E)) { E = -55; }
 
+        supported_solver_order = 0;
+
     }
 
 
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double V, double Ca, double delta_temp);
 
     string getClass(void);
 
@@ -33,9 +35,10 @@ public:
 
 string Leak::getClass(){return "Leak";}
 
-void Leak::integrate(double V, double Ca, double dt, double delta_temp) {
+void Leak::integrate(double V, double Ca, double delta_temp) {
     // do nothing
 }
+
 
 
 #endif

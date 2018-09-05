@@ -50,7 +50,7 @@ public:
     double minf;
     double hinf;
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double V, double Ca, double delta_temp);
 
     double m_inf(double V);
     double h_inf(double V);
@@ -61,7 +61,7 @@ public:
 
 string CondName::getClass(){return "CondName";}
 
-void CondName::integrate(double V, double Ca, double dt, double delta_temp)
+void CondName::integrate(double V, double Ca, double delta_temp)
 {
 
     // clamp the voltage inside of cached range

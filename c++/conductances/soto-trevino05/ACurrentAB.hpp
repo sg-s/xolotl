@@ -29,7 +29,7 @@ public:
 
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double V, double Ca, double delta_temp);
 
     double m_inf(double V);
     double h_inf(double V);
@@ -40,7 +40,7 @@ public:
 
 string ACurrentAB::getClass(){return "ACurrentAB";}
 
-void ACurrentAB::integrate(double V, double Ca, double dt, double delta_temp)
+void ACurrentAB::integrate(double V, double Ca, double delta_temp)
 {
     m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
     h = h_inf(V) + (h - h_inf(V))*exp(-dt/tau_h(V));

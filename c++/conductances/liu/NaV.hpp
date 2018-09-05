@@ -26,22 +26,25 @@ public:
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
         if (isnan (E)) { E = 30; }
+
+        supported_solver_order = 4;
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double V, double Ca, double delta_temp);
 
     double m_inf(double V);
     double h_inf(double V);
     double tau_m(double V);
     double tau_h(double V);
     string getClass(void);
+    void checkSolvers(int);
 
 
 };
 
 string NaV::getClass(){return "NaV";}
 
-void NaV::integrate(double V, double Ca, double dt, double delta_temp)
+void NaV::integrate(double V, double Ca, double delta_temp)
 {
     m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
     h = h_inf(V) + (h - h_inf(V))*exp(-dt/tau_h(V));

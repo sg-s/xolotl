@@ -29,15 +29,18 @@ public:
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
         if (isnan (E)) { E = -80; }
+
+        supported_solver_order = 4;
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double V, double Ca, double delta_temp);
 
     double m_inf(double V);
     double h_inf(double V);
     double tau_m(double V);
     double tau_h(double V);
     string getClass(void);
+    void checkSolvers(int);
 
 };
 
@@ -46,7 +49,7 @@ string ACurrent::getClass(){
     return "ACurrent";
 }
 
-void ACurrent::integrate(double V, double Ca, double dt, double delta_temp)
+void ACurrent::integrate(double V, double Ca, double delta_temp)
 {
     m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
     h = h_inf(V) + (h - h_inf(V))*exp(-dt/tau_h(V));
@@ -57,5 +60,6 @@ double ACurrent::m_inf(double V) {return 1.0/(1.0+exp((V+27.2)/-8.7)); }
 double ACurrent::h_inf(double V) {return 1.0/(1.0+exp((V+56.9)/4.9)); }
 double ACurrent::tau_m(double V) {return 11.6 - 10.4/(1.0+exp((V+32.9)/-15.2));}
 double ACurrent::tau_h(double V) {return 38.6 - 29.2/(1.0+exp((V+38.9)/-26.5));}
+
 
 #endif

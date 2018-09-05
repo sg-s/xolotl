@@ -31,7 +31,7 @@ public:
         if (isnan (E)) { E = $default_E; }
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double V, double Ca, double delta_temp);
 
     double m_inf(double V, double Ca);
     double h_inf(double V, double Ca);
@@ -44,7 +44,7 @@ public:
 
 string CondName::getClass(){return "CondName";}
 
-void CondName::integrate(double V, double Ca, double dt, double delta_temp)
+void CondName::integrate(double V, double Ca, double delta_temp)
 {
     // update E by copying E_Ca from the cell
     E = container->E_Ca;

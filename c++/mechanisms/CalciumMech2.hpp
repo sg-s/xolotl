@@ -42,7 +42,7 @@ public:
     }
 
     
-    void integrate(double dt);
+    void integrate(void);
     void connect(compartment * comp_);
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
@@ -81,7 +81,7 @@ void CalciumMech2::connect(compartment* comp_)
     comp = comp_;
 }
 
-void CalciumMech2::integrate(double dt)
+void CalciumMech2::integrate(void)
 {
 
     double Ca = comp->Ca_prev;

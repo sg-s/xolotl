@@ -31,14 +31,14 @@ public:
 
     }
     
-    void integrate(double dt);
+    void integrate(void);
     
     void connect(compartment *pcomp1_, compartment *pcomp2_);
     int getFullState(double*, int);
     int getFullStateSize(void);
 };
 
-void Glutamatergic::integrate(double dt)
+void Glutamatergic::integrate(void)
 {   
     
     // figure out the voltage of the pre-synaptic neuron

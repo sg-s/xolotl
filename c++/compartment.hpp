@@ -36,8 +36,9 @@ protected:
     double sigma_gE;
     double V_inf;
 
-
 public:
+
+    double dt;
 
     // some housekeeping parameters
     // that will be useful in the
@@ -73,8 +74,6 @@ public:
     // will be generated on initialization
     double downstream_g;
     double upstream_g;
-
-
 
 
     // neuron parameters
@@ -114,6 +113,8 @@ public:
     int n_syn; // # of synapses
     int n_axial_syn;
 
+    int solver_order = 0;
+
     // constructor with all parameters
     compartment(double V_, double Ca_, double Cm_, double A_, double vol_,  double Ca_target_, double Ca_average_, double tree_idx_, double neuron_idx_, double radius_, double len_, double shell_thickness_, double Ca_out_)
     {
@@ -145,6 +146,7 @@ public:
         // housekeeping
         tree_idx = tree_idx_;
         neuron_idx = neuron_idx_;
+
 
         // defaults
         if (isnan (Ca_out)) { Ca_out = 3000;}
@@ -201,17 +203,18 @@ public:
     void addMechanism(mechanism*);
 
     // integration methods
-    void integrateMechanisms(double);
-    void integrateChannels(double, double);
-    void integrateSynapses(double, double);
-    void integrateVoltage(double, double);
-    void integrateV_clamp(double, double, double);
+    //void integrateMS(double, double, int);
+    void integrateMechanisms(void);
+    void integrateChannels(double);
+    void integrateSynapses(double);
+    void integrateVoltage(double);
+    void integrateV_clamp(double, double);
 
     // methods for integrating using Crank-Nicholson
     // and methods for multi-compartment models
     double getBCDF(int);
-    void integrateCNFirstPass(double);
-    void integrateCNSecondPass(double);
+    void integrateCNFirstPass(void);
+    void integrateCNSecondPass(void);
     void resolveAxialConductances(void);
 
     // methods to retrieve information from compartment
@@ -225,7 +228,12 @@ public:
     mechanism* getMechanismPointer(const char*); // overloaded
     compartment* getConnectedCompartment(int);
     conductance* getConductancePointer(const char*);
+    conductance* getConductancePointer(int);
+
+    synapse* getSynapsePointer(int);
     
+
+    void checkSolvers(int);
 
 
 };
@@ -276,6 +284,20 @@ void compartment::addSynapse(synapse *syn_)
 }
 
 
+void compartment::checkSolvers(int solver_order)
+{
+    if (solver_order ==0){
+        return;
+    } else if (solver_order == 4){
+        for (int i=0; i<n_cond; i++)
+        {
+            cond[i]->checkSolvers(solver_order);
+        }
+    } else {
+        mexErrMsgTxt("[compartment] Unsupported solver order \n");
+    }
+}
+
 conductance* compartment::getConductancePointer(const char* cond_class)
 {
     conductance* req_cond = NULL;
@@ -289,6 +311,20 @@ conductance* compartment::getConductancePointer(const char* cond_class)
     }
 
     return req_cond;
+}
+
+synapse * compartment::getSynapsePointer(int syn_idx)
+{
+    if (syn_idx < n_syn) { return syn[syn_idx];} 
+    else { return NULL; } 
+}
+
+
+
+conductance * compartment::getConductancePointer(int cond_idx)
+{
+    if (cond_idx < n_cond) { return cond[cond_idx];} 
+    else { return NULL; } 
 }
 
 
@@ -400,9 +436,26 @@ double compartment::getBCDF(int idx)
 }
 
 
+// void compartment::integrateMS(double dt, double delta_temperature, int k)
+// {
+
+//     E_Ca = RT_by_nF*log((Ca_out)/(Ca_prev));
+
+//     // channels
+//     for (int i=0; i<n_cond; i++)
+//     {
+//         cond[i]->integrateMS(dt, delta_temperature, k);
+//     }
+
+//     // mechanisms
+
+//     //synapses 
+
+//     //voltage 
+// }
 
 
-void compartment::integrateChannels(double dt, double delta_temperature)
+void compartment::integrateChannels(double delta_temperature)
 {
 
     sigma_g = 0.0;
@@ -415,7 +468,7 @@ void compartment::integrateChannels(double dt, double delta_temperature)
     // integrate all channels
     for (int i=0; i<n_cond; i++)
     {
-        cond[i]->integrate(V_prev, Ca_prev, dt, delta_temperature);
+        cond[i]->integrate(V_prev, Ca_prev, delta_temperature);
         sigma_g += cond[i]->g;
         sigma_gE += (cond[i]->g)*(cond[i]->E);
     }
@@ -426,29 +479,29 @@ void compartment::integrateChannels(double dt, double delta_temperature)
 
 
 
-void compartment::integrateMechanisms(double dt)
+void compartment::integrateMechanisms(void)
 {
     for (int i=0; i<n_cont; i++)
     {
-        cont[i]->integrate(dt);
+        cont[i]->integrate();
     }
 }
 
 
-void compartment::integrateSynapses(double dt, double delta_temperature)
+void compartment::integrateSynapses(double delta_temperature)
 {
     // we treat synapses identically to any other conductance
     for (int i=0; i<n_syn; i++)
     {
         // mexPrintf("integrating synapse in comp: =  %i\n",&(syn[i]));
-        syn[i]->integrate(dt);
+        syn[i]->integrate();
         sigma_g += (syn[i]->gbar)*(syn[i]->s)/(1000*A); // now uS/mm^2
         sigma_gE += ((syn[i]->gbar)*(syn[i]->s)*(syn[i]->E)/(1000*A));
     }
 }
 
 
-void compartment::integrateVoltage(double dt, double delta_temperature)
+void compartment::integrateVoltage(double delta_temperature)
 {
 
     // compute infinity values for V and Ca
@@ -469,7 +522,7 @@ void compartment::integrateVoltage(double dt, double delta_temperature)
 // assumes the cell is being clamped, and 
 // integrates and solves for I_clamp
 
-void compartment::integrateV_clamp(double V_clamp, double dt, double delta_temperature)
+void compartment::integrateV_clamp(double V_clamp, double delta_temperature)
 {
 
     // calculate I_clamp, and set voltage to the clamped
@@ -484,7 +537,7 @@ void compartment::integrateV_clamp(double V_clamp, double dt, double delta_tempe
 }
 
 
-void compartment::integrateCNFirstPass(double dt)
+void compartment::integrateCNFirstPass(void)
 {
 
     // intermiediate variables
@@ -549,7 +602,7 @@ void compartment::integrateCNFirstPass(double dt)
 
 }
 
-void compartment::integrateCNSecondPass(double dt)
+void compartment::integrateCNSecondPass(void)
 {
     delta_V = f_;
     if (downstream)

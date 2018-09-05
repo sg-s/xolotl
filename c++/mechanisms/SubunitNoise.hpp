@@ -33,7 +33,7 @@ public:
     }
 
     
-    void integrate(double dt);
+    void integrate(void);
     void connect(conductance * cond_, synapse* syn_);
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
@@ -79,7 +79,7 @@ void SubunitNoise::connect(conductance * channel_, synapse * syn_)
     }
 }
 
-void SubunitNoise::integrate(double dt)
+void SubunitNoise::integrate(void)
 {
 
     std::random_device generator;

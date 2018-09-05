@@ -29,7 +29,7 @@ public:
 
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double V, double Ca, double delta_temp);
 
     double m_inf(double V);
     double tau_m(double V);
@@ -39,7 +39,7 @@ public:
 
 string Ap::getClass(){return "Ap";}
 
-void Ap::integrate(double V, double Ca, double dt, double delta_temp)
+void Ap::integrate(double V, double Ca, double delta_temp)
 {
     m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
     g = gbar*m;

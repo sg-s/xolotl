@@ -27,7 +27,7 @@ public:
     }
 
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double V, double Ca, double delta_temp);
 
     double m_inf(double V, double Ca);
     double tau_m(double V);
@@ -36,7 +36,7 @@ public:
 
 string KCaPD::getClass(){return "KCaPD";}
 
-void KCaPD::integrate(double V, double Ca, double dt, double delta_temp)
+void KCaPD::integrate(double V, double Ca, double delta_temp)
 {
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V));
     g = gbar*m*m*m*m;

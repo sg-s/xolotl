@@ -15,6 +15,7 @@ class compartment;
 class conductance {
 protected:
 
+    int supported_solver_order = 1;
 
 public:
     compartment *container; // pointer to compartment that contains this
@@ -24,11 +25,8 @@ public:
     double m;
     double h;
 
-    // temperature compensation parameters
-    double Q_g;
-    double Q_tau_m;
-    double Q_tau_h;
-    double delta_temp;
+    double dt;
+
 
     conductance()
     {
@@ -37,15 +35,31 @@ public:
 
     ~conductance() {}
 
-    virtual void integrate(double, double, double, double) = 0;
-    void connect(compartment*); // null pointer for safety
+    virtual void integrate(double, double, double) = 0;
+    //void integrateMS(double, double, double);
+    void connect(compartment*); 
     virtual string getClass(void) = 0;
     double getCurrent(double);
+    void checkSolvers(int);
 
 };
 
 double conductance::getCurrent(double V) { return g * (V - E); }
 
 void conductance::connect(compartment *pcomp_) {container = pcomp_;}
+
+void conductance::checkSolvers(int solver_order)
+{
+    if (solver_order == 0){return;}
+    
+    if (supported_solver_order % solver_order == 0){
+
+    } else {
+        mexPrintf("Error using %s", this->getClass().c_str());
+        mexErrMsgTxt("Unsupported solver order \n");
+    }
+
+}
+
 
 #endif
