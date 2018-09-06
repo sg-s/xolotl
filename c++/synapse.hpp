@@ -25,6 +25,8 @@ public:
     bool is_electrical;
 
     double dt;
+    double temperature_ref = 11;
+    double temperature;
 
 
     synapse()

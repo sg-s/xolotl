@@ -31,7 +31,7 @@ public:
 
     }
 
-    void integrate(double V, double Ca, double delta_temp);
+    void integrate(double, double);
 
     double m_inf(double, double);
     double h_inf(double, double);
@@ -44,7 +44,7 @@ public:
 
 string Shaker::getClass(){return "Shaker";}
 
-void Shaker::integrate(double V, double Ca, double delta_temp)
+void Shaker::integrate(double V, double Ca)
 {
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
     h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));

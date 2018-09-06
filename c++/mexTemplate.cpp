@@ -41,9 +41,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // temperature wire-ups
     xolotl_network.temperature = temperature;
-    xolotl_network.temperature_ref = temperature_ref;
     xolotl_network.verbosity = verbosity;
-    double delta_temperature = (temperature - temperature_ref)/10;
 
     //xolotl:insert_constructors
 
@@ -229,9 +227,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int cond_idx = 0;
     int syn_idx = 0;
 
-    // tell all components what the time step for 
-    // solving is
-    xolotl_network.broadcastdt(sim_dt);
+    // tell all components about some core 
+    // parameters
+    xolotl_network.broadcast(sim_dt, temperature);
 
     if (!is_voltage_clamped & !is_multi_step){
         mexPrintf("Mode 0\n");
@@ -244,7 +242,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 }
             }
 
-            xolotl_network.integrate(I_ext, delta_temperature);
+            xolotl_network.integrate(I_ext);
 
 
             if (i%progress_report == 0 & verbosity > 0) {
@@ -301,6 +299,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     } else if (is_voltage_clamped & !is_multi_step) {
         mexPrintf("Mode 1\n");
 
+//                             _           _ 
+//         _ __ ___   ___   __| | ___     / |
+//        | '_ ` _ \ / _ \ / _` |/ _ \    | |
+//        | | | | | | (_) | (_| |  __/    | |
+//        |_| |_| |_|\___/ \__,_|\___|    |_|
+                                
+
+
         // do the integration respecting V_clamp
 
         for (int i = 0; i < nsteps; i++) {
@@ -312,7 +318,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 }
             }
 
-            xolotl_network.integrateClamp(V_clamp, delta_temperature);
+            xolotl_network.integrateClamp(V_clamp);
 
             if (i%progress_report == 0 & verbosity > 0)
             {
@@ -347,7 +353,15 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
 
     } else if (!is_voltage_clamped & is_multi_step) {
-        // mode 2
+//              
+//                            _        ____  
+//        _ __ ___   ___   __| | ___  |___ \  
+//       | '_ ` _ \ / _ \ / _` |/ _ \   __) |
+//       | | | | | | (_) | (_| |  __/  / __/ 
+//       |_| |_| |_|\___/ \__,_|\___| |_____|
+                                    
+
+
         mexPrintf("[xolotl] %i-step integration requested.\n", xolotl_network.solver_order);
 
 
@@ -360,7 +374,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 }
             }
 
-            //xolotl_network.integrateMS(sim_dt,I_ext, delta_temperature);
+            xolotl_network.integrateMS(I_ext);
 
 
             if (i%progress_report == 0 & verbosity > 0) {
@@ -369,6 +383,44 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 percent_complete += 10;
                 mexEvalString("drawnow;");
             }
+
+
+
+            // here we're getting the state of every compartment -- V, Ca, and all conductances
+            if (i%res == 0) {
+
+                for (int j = 0; j < n_comp; j++)
+                {
+
+                    if (nlhs > 1) {
+                        output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
+                    }
+
+                    if (nlhs > 2) {
+                        output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
+                        output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
+                    }
+
+                    if (nlhs > 3) {
+                        cont_idx = (xolotl_network.comp[j]->getFullMechanismState(output_cont_state,cont_idx));
+                    }
+
+                    if (nlhs > 4) {
+                        cond_idx = (xolotl_network.comp[j]->getFullCurrentState(output_curr_state,cond_idx));
+                    }
+
+                } // end j loop over compartments
+
+                // read out synaptic currents and full
+                // state of all synapses
+                if (nlhs > 5) {
+                    for (int k = 0; k < n_synapses; k++) {
+                        syn_idx = (synapses[k]->getFullState(output_syn_state,syn_idx));
+                    }
+                }
+                output_idx ++;
+            } // end read out variables
+
 
         } // end for loop over nsteps
 

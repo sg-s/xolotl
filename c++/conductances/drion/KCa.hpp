@@ -29,7 +29,7 @@ public:
 
     }
 
-    void integrate(double V, double Ca, double delta_temp);
+    void integrate(double, double);
 
     string getClass(void);
 
@@ -40,7 +40,7 @@ string CaPump::getClass(){
     return "CaPump";
 }
 
-void CaPump::integrate(double V, double Ca, double delta_temp)
+void CaPump::integrate(double V, double Ca)
 {
     g = gbar*((Ca)/(0.0004+Ca))/(V-E);
 }

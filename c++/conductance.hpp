@@ -10,7 +10,6 @@
 // #include "mechanism.hpp"
 using std::string;
 class compartment;
-// class controller;
 
 class conductance {
 protected:
@@ -25,7 +24,15 @@ public:
     double m;
     double h;
 
+    int p = 1;
+    int q = 1;
+
+    double k_m[4] = {0,0,0,0};
+    double k_h[4] = {0,0,0,0};
+
     double dt;
+    double temperature;
+    double temperature_ref = 11;
 
 
     conductance()
@@ -35,24 +42,64 @@ public:
 
     ~conductance() {}
 
-    virtual void integrate(double, double, double) = 0;
+    virtual void integrate(double, double);
+    void integrateMS(int, double, double);
+
     void connect(compartment*); 
     virtual string getClass(void) = 0;
     double getCurrent(double);
     void checkSolvers(int);
 
-    double mdot(double, double);
-    double hdot(double, double);
+    double mdot(double, double, double);
+    double hdot(double, double, double);
 
-    double m_inf(double, double);
-    double h_inf(double, double);
-    double tau_m(double, double);
-    double tau_h(double, double);
-
-
+    virtual double m_inf(double, double);
+    virtual double h_inf(double, double);
+    virtual double tau_m(double, double);
+    virtual double tau_h(double, double);
 
 
 };
+
+// Exponential Euler integrator 
+void conductance::integrate(double V, double Ca)
+{   
+    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
+    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
+    g = gbar*pow(m,p)*pow(h,q);
+
+}
+
+
+// Runge-Kutta 4 integrator 
+void conductance::integrateMS(int k, double V, double Ca)
+{
+    if (k == 0) {
+        k_m[0] = dt*(mdot(V, Ca, m));
+        k_h[0] = dt*(hdot(V, Ca, h));
+        g = gbar*pow(m,p)*pow(h,q);
+    } else if (k == 1) {
+        k_m[1] = dt*(mdot(V, Ca, m + k_m[0]/2));
+        k_h[1] = dt*(hdot(V, Ca, h + k_h[0]/2));
+        g = gbar*pow(m + k_m[0]/2,p)*pow(h + k_h[0]/2,q);
+
+    } else if (k == 2) {
+        k_m[2] = dt*(mdot(V, Ca, m + k_m[1]/2));
+        k_h[2] = dt*(hdot(V, Ca, h + k_h[1]/2));
+        g = gbar*pow(m + k_m[1]/2,p)*pow(h + k_h[1]/2,q);
+
+    } else if (k == 3) {
+        k_m[3] = dt*(mdot(V, Ca, m + k_m[2]));
+        k_h[3] = dt*(hdot(V, Ca, h + k_h[2]));
+        g = gbar*pow(m + k_m[2],p)*pow(h + k_h[2],q);
+
+    } else {
+        // last step
+        m = m + (k_m[0] + 2*k_m[1] + 2*k_m[2] + k_m[3])/6;
+        h = h + (k_h[0] + 2*k_h[1] + 2*k_h[2] + k_h[3])/6;
+    }
+}
+
 
 double conductance::getCurrent(double V) { return g * (V - E); }
 
@@ -66,8 +113,7 @@ void conductance::checkSolvers(int solver_order)
     if (supported_solver_order % solver_order == 0){
         // make the vectors to store 
         // intermediate values
-        std::vector<int> k_m(solver_order);
-        std::vector<int> k_h(solver_order);
+
 
     } else {
         mexPrintf("Error using %s", getClass().c_str());
@@ -75,16 +121,14 @@ void conductance::checkSolvers(int solver_order)
     }
 }
 
-
-
-double conductance::mdot(double V, double Ca)
+double conductance::mdot(double V, double Ca, double m_)
 {
-    return (m_inf(V,Ca) - m)/tau_m(V,Ca);
+    return (m_inf(V,Ca) - m_)/tau_m(V,Ca);
 }
 
-double conductance::hdot(double V, double Ca)
+double conductance::hdot(double V, double Ca, double h_)
 {
-    return (h_inf(V,Ca) - h)/tau_h(V,Ca);
+    return (h_inf(V,Ca) - h_)/tau_h(V,Ca);
 }
 
 // placeholder functions, these should be ovewritten

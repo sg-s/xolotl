@@ -27,7 +27,7 @@ public:
 
 
 
-    void integrate(double V, double Ca, double delta_temp);
+    void integrate(double, double);
 
     string getClass(void);
 
@@ -35,7 +35,7 @@ public:
 
 string Leak::getClass(){return "Leak";}
 
-void Leak::integrate(double V, double Ca, double delta_temp) {
+void Leak::integrate(double V, double Ca) {
     // do nothing
 }
 

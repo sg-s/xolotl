@@ -31,7 +31,7 @@ public:
 
     }
 
-    void integrate(double V, double Ca, double delta_temp);
+    void integrate(double, double);
 
     double m_inf(double, double);
     double h_inf(double, double);
@@ -43,7 +43,7 @@ public:
 
 string Cal::getClass(){return "Cal";}
 
-void Cal::integrate(double V, double Ca, double delta_temp)
+void Cal::integrate(double V, double Ca)
 {
     // update E by copying E_Ca from the cell
     E = container->E_Ca;

@@ -31,7 +31,7 @@ public:
 
     }
 
-    void integrate(double V, double Ca, double delta_temp);
+    void integrate(double, double);
 
     double m_inf(double, double);
     double h_inf(double, double);
@@ -43,7 +43,7 @@ public:
 
 string Shab::getClass(){return "Shab";}
 
-void Shab::integrate(double V, double Ca, double delta_temp)
+void Shab::integrate(double V, double Ca)
 {
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
     h = 0.7 * (h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca))) + (1 - 0.7) * (h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/3000.0));

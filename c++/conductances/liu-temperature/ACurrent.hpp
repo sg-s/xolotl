@@ -37,7 +37,7 @@ public:
         if (isnan (E)) { E = -80; }
     }
 
-    void integrate(double V, double Ca, double delta_temp);
+    void integrate(double, double);
 
     double m_inf(double, double);
     double h_inf(double, double);
@@ -49,7 +49,7 @@ public:
 };
 string ACurrent::getClass(){return "ACurrent";}
 
-void ACurrent::integrate(double V, double Ca, double delta_temp)
+void ACurrent::integrate(double V, double Ca)
 {
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V,Ca));
     h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-(dt*pow(Q_tau_h, delta_temp))/tau_h(V,Ca));

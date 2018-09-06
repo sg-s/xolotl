@@ -50,6 +50,8 @@ public:
     double container_vol;
 
     double dt;
+    double temperature;
+    double temperature_ref;
 
     mechanism()
     {
@@ -63,6 +65,7 @@ public:
     ~mechanism() {}
     
     virtual void integrate(void) = 0;
+    virtual void integrateMS(int, double, double) = 0;
     virtual int getFullStateSize(void) = 0;
     virtual int getFullState(double*, int) = 0;
     virtual double getState(int) = 0;

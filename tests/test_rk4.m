@@ -1,5 +1,8 @@
 
 
+xolotl.cleanup;
+close all
+
 vol = 0.0628; % this can be anything, doesn't matter
 f = 1.496; % uM/nA
 tau_Ca = 200;
@@ -7,6 +10,7 @@ F = 96485; % Faraday constant in SI units
 phi = (2*f*F*vol)/tau_Ca;
 
 x = xolotl;
+
 x.add('compartment','AB','A',0.0628,'vol',.0628);
 x.AB.add('CalciumMech2','phi',phi);
 
@@ -21,11 +25,22 @@ x.AB.add('liu/HCurrent','gbar',@() .6343/x.AB.A,'E',-20);
 x.AB.add('Leak','gbar',@() 0.0622/x.AB.A,'E',-50);
 
 
-x.solver_order = 4;
+
 
 x.t_end = 1e4;
 x.integrate;
 x.t_end = 1e3;
 
-x.plot;
+x.closed_loop = false;
 
+% figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
+% V = x.integrate;
+% plot(V,'k')
+
+x.solver_order = 4;
+x.sim_dt = .01;
+x.dt = .01;
+% x.t_end = 1;
+% x.verbosity = 99;
+V = x.integrate;
+plot(V,'r')

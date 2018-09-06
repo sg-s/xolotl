@@ -30,10 +30,10 @@ public:
 
         // cache values for m_inf and h_inf
         for (double V = -99; V < 101; V++) {
-            m_inf_cache[(int) round(V+99)] = m_inf(V,Ca);
-            h_inf_cache[(int) round(V+99)] = h_inf(V,Ca);
-            tau_m_cache[(int) round(V+99)] = tau_m(V,Ca);
-            tau_h_cache[(int) round(V+99)] = tau_h(V,Ca);
+            m_inf_cache[(int) round(V+99)] = m_inf(V,0);
+            h_inf_cache[(int) round(V+99)] = h_inf(V,0);
+            tau_m_cache[(int) round(V+99)] = tau_m(V,0);
+            tau_h_cache[(int) round(V+99)] = tau_h(V,0);
         }
 
     }
@@ -48,7 +48,7 @@ public:
     double minf;
     double hinf;
 
-    void integrate(double V, double Ca, double delta_temp);
+    void integrate(double, double);
 
     double m_inf(double, double);
     double h_inf(double, double);
@@ -61,7 +61,7 @@ public:
 
 string CaT::getClass(){return "CaT";}
 
-void CaT::integrate(double V, double Ca, double delta_temp)
+void CaT::integrate(double V, double Ca)
 {
     // update E by copying E_Ca from the cell
     E = container->E_Ca;

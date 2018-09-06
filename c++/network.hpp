@@ -30,6 +30,10 @@ protected:
     // keeps track of the # of terminals in terminal_comp
     int n_terminals; 
 public:
+
+
+    double dt;
+
      // pointers to all compartments in network
     vector<compartment*> comp;
 
@@ -49,33 +53,40 @@ public:
     network() {}
 
     // function declarations
-    void integrate(double *, double);
-    void integrateMS(double *, double);
-    void integrateClamp(double *, double);
+    void integrate(double *);
+    void integrateMS(double *);
+    void integrateClamp(double *);
     void addCompartment(compartment*);
     bool resolveTree(void);
 
     void checkSolvers(void);
 
-    void broadcastdt(double);
+    void broadcast(double, double);
 
 };
 
-
-void network::broadcastdt(double dt)
+// broadcast is a method that tells all 
+// components of a network about some 
+// important parameters that are not
+// going to change
+void network::broadcast(double dt, double temperature)
 {
+    dt = dt;
     for (int i = 0; i < n_comp; i ++) 
     {
         comp[i]->dt = dt;
         for (int j = 0; j < comp[i]->n_cond; j ++) {
             (comp[i]->getConductancePointer(j))->dt = dt; 
+            (comp[i]->getConductancePointer(j))->temperature = temperature;
         }
         for (int j = 0; j < comp[i]->n_cont; j ++) {
             (comp[i]->getMechanismPointer(j))->dt = dt;
+            (comp[i]->getMechanismPointer(j))->temperature = temperature;
         }
         for (int j = 0; j < comp[i]->n_syn; j ++) 
         {
             (comp[i]->getSynapsePointer(j))->dt = dt;
+            (comp[i]->getSynapsePointer(j))->temperature = temperature;
         }
 
     }
@@ -230,10 +241,8 @@ void network::addCompartment(compartment *comp_)
 // this requires there to exist a solver
 // for every component that supports this 
 // order
-void network::integrateMS(double * I_ext_now, double delta_temperature)
+void network::integrateMS(double * I_ext_now)
 {
-
-
     // first move all variables to prev state in all comps
     for (int i = 0; i < n_comp; i++)
     {
@@ -244,11 +253,11 @@ void network::integrateMS(double * I_ext_now, double delta_temperature)
         comp[i]->I_ext = I_ext_now[i];
     }
 
-    for (int k = 0; k < solver_order; k ++)
+    for (int k = 0; k <= solver_order; k ++)
     {
         for (int i = 0; i < n_comp; i++)
         {
-            comp[i]->integrateMS(dt, delta_temperature, k);
+            comp[i]->integrateMS(k);
         }
     }
 }
@@ -259,7 +268,7 @@ void network::integrateMS(double * I_ext_now, double delta_temperature)
 // multiple compartments under normal
 // conditions. Don't use if something is
 // being voltage clamped!
-void network::integrate(double * I_ext_now, double delta_temperature)
+void network::integrate(double * I_ext_now)
 {
 
     // we will use Exponential Euler for single-compartment
@@ -285,14 +294,14 @@ void network::integrate(double * I_ext_now, double delta_temperature)
         // integrate controllers
         comp[i]->integrateMechanisms();
 
-        comp[i]->integrateChannels(delta_temperature);
+        comp[i]->integrateChannels();
 
         
 
         // integrate synapses
         if (isnan(comp[i]->neuron_idx))
         {
-            comp[i]->integrateSynapses(delta_temperature);
+            comp[i]->integrateSynapses();
         }
         
     }
@@ -302,7 +311,7 @@ void network::integrate(double * I_ext_now, double delta_temperature)
     for (int i = 0; i < n_comp; i++)
     {
         if (isnan(comp[i]->neuron_idx)) {
-            comp[i]->integrateVoltage(delta_temperature);
+            comp[i]->integrateVoltage();
         } else {
             // this is a multi-compartment model,
             // so just integrate the calcium
@@ -360,7 +369,7 @@ void network::integrate(double * I_ext_now, double delta_temperature)
 }
 
 // integrate while voltage clamping some compartments 
-void network::integrateClamp(double *V_clamp, double delta_temperature)
+void network::integrateClamp(double *V_clamp)
 {
 
     // integrate all channels in all compartments
@@ -377,10 +386,10 @@ void network::integrateClamp(double *V_clamp, double delta_temperature)
         comp[i]->I_ext = 0;
         comp[i]->I_clamp = 0;
 
-        comp[i]->integrateChannels(delta_temperature);
+        comp[i]->integrateChannels();
 
         // integrate synapses
-        comp[i]->integrateSynapses(delta_temperature);
+        comp[i]->integrateSynapses();
     }
 
     // integrate all voltages and Ca in all compartments
@@ -389,9 +398,9 @@ void network::integrateClamp(double *V_clamp, double delta_temperature)
         
         if (isnan(V_clamp[i])){
 
-            comp[i]->integrateVoltage(delta_temperature);
+            comp[i]->integrateVoltage();
         } else {
-            comp[i]->integrateV_clamp(V_clamp[i], delta_temperature);
+            comp[i]->integrateV_clamp(V_clamp[i]);
         }
 
     }

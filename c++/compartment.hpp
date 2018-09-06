@@ -38,7 +38,18 @@ protected:
 
 public:
 
+
+    // core dynamic variables
+    double V = -60;
+    double Ca;
+    double k_V[4] = {0,0,0,0};
+    double k_Ca[4] = {0,0,0,0};
+
+
+
     double dt;
+    double temperature;
+    double temperature_ref = 11;
 
     // some housekeeping parameters
     // that will be useful in the
@@ -102,8 +113,7 @@ public:
     // pulling out the full trace
     double Ca_average;
 
-    double V = -60;
-    double Ca;
+
     double E_Ca;
     double i_Ca; // specific calcium current (current/area. nA/mm^2)
     double I_ext; // all external currents are summed here
@@ -118,8 +128,12 @@ public:
     // constructor with all parameters
     compartment(double V_, double Ca_, double Cm_, double A_, double vol_,  double Ca_target_, double Ca_average_, double tree_idx_, double neuron_idx_, double radius_, double len_, double shell_thickness_, double Ca_out_)
     {
+
+        // core dynamic variables
         V = V_;
         Ca = Ca_;
+
+
         Ca_out = Ca_out_;
 
         sigma_g = 0;
@@ -203,12 +217,12 @@ public:
     void addMechanism(mechanism*);
 
     // integration methods
-    void integrateMS(double, int);
+    void integrateMS(int);
     void integrateMechanisms(void);
-    void integrateChannels(double);
-    void integrateSynapses(double);
-    void integrateVoltage(double);
-    void integrateV_clamp(double, double);
+    void integrateChannels(void);
+    void integrateSynapses(void);
+    void integrateVoltage(void);
+    void integrateV_clamp(double);
 
     // methods for integrating using Crank-Nicholson
     // and methods for multi-compartment models
@@ -274,8 +288,7 @@ void compartment::addMechanism(mechanism *cont_)
 }
 
 // add synapse to this compartment (this compartment is after synapse)
-void compartment::addSynapse(synapse *syn_)
-{
+void compartment::addSynapse(synapse *syn_) {
     syn.push_back(syn_);
     n_syn ++;
 
@@ -284,8 +297,7 @@ void compartment::addSynapse(synapse *syn_)
 }
 
 
-void compartment::checkSolvers(int solver_order)
-{
+void compartment::checkSolvers(int solver_order) {
     if (solver_order ==0){
         return;
     } else if (solver_order == 4){
@@ -298,8 +310,7 @@ void compartment::checkSolvers(int solver_order)
     }
 }
 
-conductance* compartment::getConductancePointer(const char* cond_class)
-{
+conductance* compartment::getConductancePointer(const char* cond_class) {
     conductance* req_cond = NULL;
 
     for (int i = 0; i < n_cond; i ++)
@@ -313,30 +324,23 @@ conductance* compartment::getConductancePointer(const char* cond_class)
     return req_cond;
 }
 
-synapse * compartment::getSynapsePointer(int syn_idx)
-{
+synapse * compartment::getSynapsePointer(int syn_idx){
     if (syn_idx < n_syn) { return syn[syn_idx];} 
     else { return NULL; } 
 }
 
-
-
-conductance * compartment::getConductancePointer(int cond_idx)
-{
+conductance * compartment::getConductancePointer(int cond_idx){
     if (cond_idx < n_cond) { return cond[cond_idx];} 
     else { return NULL; } 
 }
 
 
-mechanism * compartment::getMechanismPointer(int cont_idx)
-{
+mechanism * compartment::getMechanismPointer(int cont_idx){
     if (cont_idx < n_cont) { return cont[cont_idx];} 
-    else { return NULL; }
-    
+    else { return NULL; }   
 }
 
-mechanism* compartment::getMechanismPointer(const char* cond_class)
-{
+mechanism* compartment::getMechanismPointer(const char* cond_class){
     mechanism* req_cont = NULL;
 
     for (int i = 0; i < n_cont; i ++)
@@ -355,8 +359,7 @@ mechanism* compartment::getMechanismPointer(const char* cond_class)
 // returns a list of connected compartments.
 // this function returns only one pointer at a time
 // to get them all, iterative over the integer argument
-compartment* compartment::getConnectedCompartment(int idx)
-{
+compartment* compartment::getConnectedCompartment(int idx) {
     compartment* neighbour = NULL;
     if (idx > n_axial_syn) {return neighbour;}
     neighbour = axial_syn[idx]->pre_syn;
@@ -367,8 +370,7 @@ compartment* compartment::getConnectedCompartment(int idx)
 // in this compartment
 // includes synaptic currents interleaved
 // with state variables of each synapse
-int compartment::getFullSynapseSize(void)
-{
+int compartment::getFullSynapseSize(void) {
     int full_size = 0;
     for (int i=0; i<n_syn; i++)
     {
@@ -378,8 +380,7 @@ int compartment::getFullSynapseSize(void)
 }
 
 
-int compartment::getFullMechanismSize(void)
-{
+int compartment::getFullMechanismSize(void) {
     int full_size = 0;
     for (int i=0; i<n_cont; i++)
     {
@@ -392,8 +393,7 @@ int compartment::getFullMechanismSize(void)
 // helper function used in the Crank-Nicholson scheme
 // and returns B, C, D and F values as defined in eq.
 // 6.45 of Dayan and Abbott
-double compartment::getBCDF(int idx)
-{
+double compartment::getBCDF(int idx){
     if (idx == 0) {
         return 0;
     } else if (idx == 1) {
@@ -436,26 +436,65 @@ double compartment::getBCDF(int idx)
 }
 
 
-void compartment::integrateMS(double delta_temperature, int k)
-{
+void compartment::integrateMS(int k){
 
+    if (k == 4) {
+        // terminal calculations, advance step
+        V = V_prev + (k_V[0] + 2*k_V[1] + 2*k_V[2] + k_V[3])/6;
+        return;
+    }
+
+
+    // reset some things
     E_Ca = RT_by_nF*log((Ca_out)/(Ca_prev));
+    sigma_g = 0;
+    sigma_gE = 0;
+
+    double V_MS;
+    double Ca_MS;
+
+    if (k == 0) {
+        // first step
+        V_MS = V_prev;
+        Ca_MS = Ca_prev;
+    } else if (k == 1) {
+        V_MS = V + k_V[0]/2;
+        Ca_MS = Ca + k_Ca[0]/2;
+    } else if (k == 2) {
+        V_MS = V + k_V[1]/2;
+        Ca_MS = Ca + k_Ca[1]/2;
+    } else if (k == 3) {
+        V_MS = V + k_V[2];
+        Ca_MS = Ca + k_Ca[2];
+    }
+
 
     // channels
     for (int i=0; i<n_cond; i++)
     {
-        cond[i]->integrateMS(dt, delta_temperature, k);
+        cond[i]->integrateMS(k, V_MS, Ca_MS);
+        sigma_g += cond[i]->g;
+        sigma_gE += (cond[i]->g)*(cond[i]->E);
     }
 
     // mechanisms
+    for (int i=0; i<n_cont; i++) {
+        cont[i]->integrateMS(k, V_MS, Ca_MS);
+    }
 
     //synapses 
 
     //voltage 
+    // mexPrintf("Microstep %i\n", k);
+
+    k_V[k] = dt*(sigma_gE - sigma_g*V_MS)/Cm;
+    
+    // mexPrintf("k_V =  %f\n", k_V[k]);
+
 }
 
 
-void compartment::integrateChannels(double delta_temperature)
+void compartment::integrateChannels(void)
 {
 
     sigma_g = 0.0;
@@ -468,7 +507,7 @@ void compartment::integrateChannels(double delta_temperature)
     // integrate all channels
     for (int i=0; i<n_cond; i++)
     {
-        cond[i]->integrate(V_prev, Ca_prev, delta_temperature);
+        cond[i]->integrate(V_prev, Ca_prev);
         sigma_g += cond[i]->g;
         sigma_gE += (cond[i]->g)*(cond[i]->E);
     }
@@ -488,7 +527,7 @@ void compartment::integrateMechanisms(void)
 }
 
 
-void compartment::integrateSynapses(double delta_temperature)
+void compartment::integrateSynapses(void)
 {
     // we treat synapses identically to any other conductance
     for (int i=0; i<n_syn; i++)
@@ -501,7 +540,7 @@ void compartment::integrateSynapses(double delta_temperature)
 }
 
 
-void compartment::integrateVoltage(double delta_temperature)
+void compartment::integrateVoltage(void)
 {
 
     // compute infinity values for V and Ca
@@ -522,7 +561,7 @@ void compartment::integrateVoltage(double delta_temperature)
 // assumes the cell is being clamped, and 
 // integrates and solves for I_clamp
 
-void compartment::integrateV_clamp(double V_clamp, double delta_temperature)
+void compartment::integrateV_clamp(double V_clamp)
 {
 
     // calculate I_clamp, and set voltage to the clamped
@@ -537,9 +576,7 @@ void compartment::integrateV_clamp(double V_clamp, double delta_temperature)
 }
 
 
-void compartment::integrateCNFirstPass(void)
-{
-
+void compartment::integrateCNFirstPass(void) {
     // intermiediate variables
     double b; // b is b for this compartment
     double d; // d is d for the prev compartment
@@ -598,12 +635,9 @@ void compartment::integrateCNFirstPass(void)
     // mexPrintf("c_ is %f\n", c_);
     // mexPrintf("f_ is %f\n", f_);
 
-
-
 }
 
-void compartment::integrateCNSecondPass(void)
-{
+void compartment::integrateCNSecondPass(void) {
     delta_V = f_;
     if (downstream)
     {

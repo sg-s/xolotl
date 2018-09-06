@@ -29,7 +29,7 @@ public:
 
     }
 
-    void integrate(double V, double Ca, double delta_temp);
+    void integrate(double, double);
 
     double m_inf(double, double);
     double tau_m(double, double);
@@ -42,7 +42,7 @@ string CaL::getClass(){
     return "CaL";
 }
 
-void CaL::integrate(double V, double Ca, double delta_temp)
+void CaL::integrate(double V, double Ca)
 {
     // update E by copying E_Ca from the cell
     E = container->E_Ca;

@@ -34,7 +34,7 @@ public:
         if (isnan (E)) { E = 0; }
     }
 
-    void integrate(double V, double Ca, double delta_temp);
+    void integrate(double, double);
 
     double m_inf(double V, double Ca);
     double tau_m(double V, double Ca);
@@ -45,7 +45,7 @@ public:
 
 string AHP::getClass(){return "AHP";}
 
-void AHP::integrate(double V, double Ca, double delta_temp)
+void AHP::integrate(double V, double Ca)
 {
 
     m = m_inf(V, Ca) + (m - m_inf(V, Ca))*exp(-dt/tau_m(V, Ca));

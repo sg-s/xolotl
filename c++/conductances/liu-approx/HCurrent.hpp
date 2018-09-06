@@ -28,8 +28,8 @@ public:
 
         // cache values for m_inf and h_inf
         for (double V = -99; V < 101; V++) {
-            m_inf_cache[(int) round(V+99)] = m_inf(V,Ca);
-            tau_m_cache[(int) round(V+99)] = tau_m(V,Ca);
+            m_inf_cache[(int) round(V+99)] = m_inf(V,0);
+            tau_m_cache[(int) round(V+99)] = tau_m(V,0);
         }
 
     }
@@ -41,7 +41,7 @@ public:
     double taum;
     double minf;
 
-    void integrate(double V, double Ca, double delta_temp);
+    void integrate(double, double);
 
     double m_inf(double, double);
     double tau_m(double, double);
@@ -53,7 +53,7 @@ public:
 
 string HCurrent::getClass(){return "HCurrent";}
 
-void HCurrent::integrate(double V, double Ca, double delta_temp)
+void HCurrent::integrate(double V, double Ca)
 {
     // clamp the voltage inside of cached range
     if (V > 101.0)

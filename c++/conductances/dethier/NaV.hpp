@@ -30,7 +30,7 @@ public:
         if (isnan (E)) { E = 30; }
     }
 
-    void integrate(double V, double Ca, double delta_temp);
+    void integrate(double, double);
 
     double m_inf(double, double);
     double h_inf(double, double);
@@ -43,7 +43,7 @@ public:
 
 string NaV::getClass(){return "NaV";}
 
-void NaV::integrate(double V, double Ca, double delta_temp)
+void NaV::integrate(double V, double Ca)
 {
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
     h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));

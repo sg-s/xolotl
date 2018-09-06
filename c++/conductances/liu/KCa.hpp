@@ -26,26 +26,18 @@ public:
         if (isnan (E)) { E = -80; }
 
         supported_solver_order = 4;
+        p = 4;
     }
-
-    void integrate(double V, double Ca, double delta_temp);
 
     double m_inf(double V, double Ca);
     double tau_m(double, double);
     string getClass(void);
-    void checkSolvers(int);
 
 
 };
 
 string KCa::getClass(){
     return "KCa";
-}
-
-void KCa::integrate(double V, double Ca, double delta_temp)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    g = gbar*m*m*m*m;
 }
 
 double KCa::m_inf(double V, double Ca) { return (Ca/(Ca+3.0))/(1.0+exp((V+28.3)/-12.6)); }

@@ -31,7 +31,7 @@ public:
 
     }
 
-    void integrate(double V, double Ca, double delta_temp);
+    void integrate(double, double);
 
     double m_inf(double, double);
     double h_inf(double, double);
@@ -43,7 +43,7 @@ public:
 
 string KCaT::getClass(){return "KCaT";}
 
-void KCaT::integrate(double V, double Ca, double delta_temp)
+void KCaT::integrate(double V, double Ca)
 {
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
     h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));

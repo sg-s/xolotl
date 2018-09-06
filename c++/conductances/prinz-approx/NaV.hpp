@@ -47,7 +47,7 @@ public:
     double minf;
     double hinf;
 
-    void integrate(double V, double Ca, double delta_temp);
+    void integrate(double, double);
 
     double m_inf(double, double);
     double h_inf(double, double);
@@ -58,7 +58,7 @@ public:
 
 string NaV::getClass(){return "NaV";}
 
-void NaV::integrate(double V, double Ca, double delta_temp)
+void NaV::integrate(double V, double Ca)
 {
 
     // clamp the voltage inside of cached range

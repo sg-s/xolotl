@@ -522,6 +522,7 @@ Test coverage
 
 ``cleanup`` is tested in: 
 
+- `test_rk4.m <https://github.com/sg-s/xolotl/blob/master/tests/test_rk4.m>`_ 
 
 
 

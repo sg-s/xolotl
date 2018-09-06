@@ -29,7 +29,7 @@ public:
         if (isnan (E)) { E = -80; }
     }
 
-    void integrate(double V, double Ca, double delta_temp);
+    void integrate(double, double);
 
     double m_inf(double, double);
     double tau_m(double, double);
@@ -42,7 +42,7 @@ string Kc::getClass(){
     return "Kc";
 }
 
-void Kc::integrate(double V, double Ca, double delta_temp)
+void Kc::integrate(double V, double Ca)
 {
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
     g = gbar * m * min(1.0, Ca / 250.0);

@@ -43,10 +43,13 @@ public:
 
     
     void integrate(void);
+    void integrateMS(int, double, double);
     void connect(compartment * comp_);
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
+
+    double Cadot(double);
 
 };
 
@@ -94,6 +97,33 @@ void CalciumMech2::integrate(void)
 
     double Ca_inf = Ca_in - (tau_Ca*phi*(comp->i_Ca_prev)*(comp->A))/(192971*(comp->vol)); // microM
     comp->Ca = Ca_inf + (Ca - Ca_inf)*exp(-dt/tau_Ca);
+}
+
+
+double CalciumMech2::Cadot(double Ca_)
+{
+    return -(phi*(comp->i_Ca_prev)*(comp->A)/(192971*(comp->vol))) - (Ca_ - Ca_in)/tau_Ca;
+}
+
+// Runge-Kutta 4 integrator 
+void CalciumMech2::integrateMS(int k, double V, double Ca)
+{
+    if (k == 0) {
+        comp->k_Ca[0] = dt*(Cadot(Ca));
+    } else if (k == 1) {
+        comp->k_Ca[1] = dt*(Cadot(Ca + comp->k_Ca[0]/2));
+
+    } else if (k == 2) {
+        comp->k_Ca[2] = dt*(Cadot(Ca + comp->k_Ca[1]/2));
+
+    } else if (k == 3) {
+        comp->k_Ca[3] = dt*(Cadot(Ca + comp->k_Ca[2]));
+
+    } else {
+        // last step
+        comp->Ca = comp->Ca + (comp->k_Ca[0] + 2*comp->k_Ca[1] + 2*comp->k_Ca[2] + comp->k_Ca[3])/6;
+
+    }
 }
 
 

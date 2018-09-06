@@ -52,7 +52,7 @@ public:
     double minf;
     double hinf;
 
-    void integrate(double V, double Ca, double delta_temp);
+    void integrate(double, double);
 
     double m_inf(double, double);
     double h_inf(double, double);
@@ -65,7 +65,7 @@ public:
 
 string ACurrent::getClass(){return "ACurrent";}
 
-void ACurrent::integrate(double V, double Ca, double delta_temp)
+void ACurrent::integrate(double V, double Ca)
 {
 
     // clamp the voltage inside of cached range

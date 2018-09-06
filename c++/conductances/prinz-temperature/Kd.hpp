@@ -36,7 +36,7 @@ public:
         if (isnan (E)) { E = -80; }
     }
 
-    void integrate(double V, double Ca, double delta_temp);
+    void integrate(double, double);
 
     double m_inf(double, double);
     double tau_m(double, double);
@@ -46,8 +46,9 @@ public:
 
 string Kd::getClass(){return "Kd";}
 
-void Kd::integrate(double V, double Ca, double delta_temp)
+void Kd::integrate(double V, double Ca)
 {
+    double delta_temp = (temperature - temperature_ref)/10;
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V,Ca));
     g = pow(Q_g, delta_temp)*gbar*m*m*m*m;
 

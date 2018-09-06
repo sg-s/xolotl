@@ -28,7 +28,7 @@ public:
     }
 
 
-    void integrate(double V, double Ca, double delta_temp);
+    void integrate(double, double);
 
     double m_inf(double, double);
     double tau_m(double, double);
@@ -38,7 +38,7 @@ public:
 
 string Proc::getClass(){return "Proc";}
 
-void Proc::integrate(double V, double Ca, double delta_temp)
+void Proc::integrate(double V, double Ca)
 {
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/0.5);
     g = gbar*m;

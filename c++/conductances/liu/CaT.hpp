@@ -31,7 +31,8 @@ public:
 
     }
 
-    void integrate(double V, double Ca, double delta_temp);
+    void integrate(double, double);
+    void integrateMS(int, double, double);
 
     double m_inf(double, double);
     double h_inf(double, double);
@@ -46,7 +47,7 @@ string CaT::getClass(){
     return "CaT";
 }
 
-void CaT::integrate(double V, double Ca, double delta_temp)
+void CaT::integrate(double V, double Ca)
 {
     // update E by copying E_Ca from the cell
     E = container->E_Ca;
@@ -55,9 +56,44 @@ void CaT::integrate(double V, double Ca, double delta_temp)
     g = gbar*m*m*m*h;
 
     // compute the specific calcium current and update it in the cell
-    double this_I = g*(V-E);
-    container->i_Ca += this_I;
+    container->i_Ca += getCurrent(V);
 }
+
+
+// Runge-Kutta 4 integrator 
+void CaT::integrateMS(int k, double V, double Ca)
+{
+
+    E = container->E_Ca;
+
+    if (k == 0) {
+        k_m[0] = dt*(mdot(V, Ca, m));
+        k_h[0] = dt*(hdot(V, Ca, h));
+        g = gbar*pow(m,p)*pow(h,q);
+    } else if (k == 1) {
+        k_m[1] = dt*(mdot(V, Ca, m + k_m[0]/2));
+        k_h[1] = dt*(hdot(V, Ca, h + k_h[0]/2));
+        g = gbar*pow(m + k_m[0]/2,p)*pow(h + k_h[0]/2,q);
+
+    } else if (k == 2) {
+        k_m[2] = dt*(mdot(V, Ca, m + k_m[1]/2));
+        k_h[2] = dt*(hdot(V, Ca, h + k_h[1]/2));
+        g = gbar*pow(m + k_m[1]/2,p)*pow(h + k_h[1]/2,q);
+
+    } else if (k == 3) {
+        k_m[3] = dt*(mdot(V, Ca, m + k_m[2]));
+        k_h[3] = dt*(hdot(V, Ca, h + k_h[2]));
+        g = gbar*pow(m + k_m[2],p)*pow(h + k_h[2],q);
+
+    } else {
+        // last step
+        m = m + (k_m[0] + 2*k_m[1] + 2*k_m[2] + k_m[3])/6;
+        h = h + (k_h[0] + 2*k_h[1] + 2*k_h[2] + k_h[3])/6;
+    }
+
+    container->i_Ca += getCurrent(V);
+}
+
 
 
 double CaT::m_inf(double V, double Ca) {return 1.0/(1.0 + exp((V+27.1)/-7.2));}

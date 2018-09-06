@@ -39,7 +39,7 @@ public:
         if (isnan (E)) { E = 30; }
     }
 
-    void integrate(double V, double Ca, double delta_temp);
+    void integrate(double, double);
 
     double m_inf(double, double);
     double h_inf(double, double);
@@ -50,8 +50,9 @@ public:
 
 string CaT::getClass(){return "CaT";}
 
-void CaT::integrate(double V, double Ca, double delta_temp)
+void CaT::integrate(double V, double Ca)
 {
+    double delta_temp = (temperature - temperature_ref)/10;
     // update E by copying E_Ca from the cell
     E = container->E_Ca;
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V,Ca));
