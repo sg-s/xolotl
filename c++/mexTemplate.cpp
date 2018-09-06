@@ -355,7 +355,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     } else if (!is_voltage_clamped & is_multi_step) {
 //              
 //                            _        ____  
-//        _ __ ___   ___   __| | ___  |___ \  
+//        _ __ ___   ___   __| | ___  |___ \
 //       | '_ ` _ \ / _ \ / _` |/ _ \   __) |
 //       | | | | | | (_) | (_| |  __/  / __/ 
 //       |_| |_| |_|\___/ \__,_|\___| |_____|

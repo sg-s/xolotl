@@ -438,10 +438,12 @@ double compartment::getBCDF(int idx){
 
 void compartment::integrateMS(int k){
 
+
+    // mexPrintf("Microstep %i\n", k);
+
     if (k == 4) {
         // terminal calculations, advance step
         V = V_prev + (k_V[0] + 2*k_V[1] + 2*k_V[2] + k_V[3])/6;
-        return;
     }
 
 
@@ -458,14 +460,14 @@ void compartment::integrateMS(int k){
         V_MS = V_prev;
         Ca_MS = Ca_prev;
     } else if (k == 1) {
-        V_MS = V + k_V[0]/2;
-        Ca_MS = Ca + k_Ca[0]/2;
+        V_MS = V_prev + k_V[0]/2;
+        Ca_MS = Ca_prev + k_Ca[0]/2;
     } else if (k == 2) {
-        V_MS = V + k_V[1]/2;
-        Ca_MS = Ca + k_Ca[1]/2;
+        V_MS = V_prev + k_V[1]/2;
+        Ca_MS = Ca_prev + k_Ca[1]/2;
     } else if (k == 3) {
-        V_MS = V + k_V[2];
-        Ca_MS = Ca + k_Ca[2];
+        V_MS = V_prev + k_V[2];
+        Ca_MS = Ca_prev + k_Ca[2];
     }
 
 
@@ -485,11 +487,12 @@ void compartment::integrateMS(int k){
     //synapses 
 
     //voltage 
-    // mexPrintf("Microstep %i\n", k);
-
+    // only compute when k < 4
+    if (k == 4) {return;}
+    
     k_V[k] = dt*(sigma_gE - sigma_g*V_MS)/Cm;
     
-    // mexPrintf("k_V =  %f\n", k_V[k]);
+    // mexPrintf("V_MS =  %f\n", V_MS);
 
 }
 

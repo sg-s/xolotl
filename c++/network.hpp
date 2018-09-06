@@ -106,8 +106,7 @@ void network::checkSolvers(void)
 
 }
 
-bool network::resolveTree(void)
-{
+bool network::resolveTree(void) {
     compartment * connected_comp = NULL;
     bool is_multi_comp = false;
     if (verbosity > 0)
@@ -221,8 +220,7 @@ bool network::resolveTree(void)
 
 // add a compartment to the network -- network contains
 // a vector of pointers to compartments
-void network::addCompartment(compartment *comp_)
-{
+void network::addCompartment(compartment *comp_) {
     comp.push_back(comp_);
     n_comp++;
     comp_->verbosity = verbosity;
@@ -241,8 +239,7 @@ void network::addCompartment(compartment *comp_)
 // this requires there to exist a solver
 // for every component that supports this 
 // order
-void network::integrateMS(double * I_ext_now)
-{
+void network::integrateMS(double * I_ext_now) {
     // first move all variables to prev state in all comps
     for (int i = 0; i < n_comp; i++)
     {
