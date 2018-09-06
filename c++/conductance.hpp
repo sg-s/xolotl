@@ -24,6 +24,8 @@ public:
     double m;
     double h;
 
+    bool is_calcium = false;
+
     int p = 1;
     int q = 1;
 
@@ -74,6 +76,8 @@ void conductance::integrate(double V, double Ca)
 // Runge-Kutta 4 integrator 
 void conductance::integrateMS(int k, double V, double Ca)
 {
+
+
     // mexPrintf("conductance::integrateMS, p =  %i\n",p);
     if (k == 0) {
         k_m[0] = dt*(mdot(V, Ca, m));
@@ -100,6 +104,7 @@ void conductance::integrateMS(int k, double V, double Ca)
         h = h + (k_h[0] + 2*k_h[1] + 2*k_h[2] + k_h[3])/6;
     }
     // mexPrintf("g = %f\n", g);
+
 }
 
 

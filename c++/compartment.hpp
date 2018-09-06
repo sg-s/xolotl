@@ -298,12 +298,13 @@ void compartment::addSynapse(synapse *syn_) {
 
 
 void compartment::checkSolvers(int solver_order) {
+    mexPrintf("TODO: Need to do something about checkSolvers\n");
     if (solver_order ==0){
         return;
     } else if (solver_order == 4){
         for (int i=0; i<n_cond; i++)
         {
-            cond[i]->checkSolvers(solver_order);
+            // cond[i]->checkSolvers(solver_order);
         }
     } else {
         mexErrMsgTxt("[compartment] Unsupported solver order \n");
@@ -439,18 +440,17 @@ double compartment::getBCDF(int idx){
 void compartment::integrateMS(int k){
 
 
-    // mexPrintf("Microstep %i\n", k);
-
     if (k == 4) {
         // terminal calculations, advance step
         V = V_prev + (k_V[0] + 2*k_V[1] + 2*k_V[2] + k_V[3])/6;
+        Ca = Ca_prev + (k_Ca[0] + 2*k_Ca[1] + 2*k_Ca[2] + k_Ca[3])/6;
     }
 
 
     // reset some things
-    E_Ca = RT_by_nF*log((Ca_out)/(Ca_prev));
     sigma_g = 0;
     sigma_gE = 0;
+    i_Ca = 0;
 
     double V_MS;
     double Ca_MS;
@@ -469,6 +469,8 @@ void compartment::integrateMS(int k){
         V_MS = V_prev + k_V[2];
         Ca_MS = Ca_prev + k_Ca[2];
     }
+
+    E_Ca = RT_by_nF*log((Ca_out)/(Ca_MS));
 
 
     // channels

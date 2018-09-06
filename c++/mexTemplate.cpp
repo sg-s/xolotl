@@ -232,7 +232,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     xolotl_network.broadcast(sim_dt, temperature);
 
     if (!is_voltage_clamped & !is_multi_step){
-        mexPrintf("Mode 0\n");
+ 
         
         for (int i = 0; i < nsteps; i++) {
             if (I_ext_size_2 == nsteps) {
@@ -297,7 +297,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
 
     } else if (is_voltage_clamped & !is_multi_step) {
-        mexPrintf("Mode 1\n");
 
 //                             _           _ 
 //         _ __ ___   ___   __| | ___     / |
@@ -361,8 +360,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 //       |_| |_| |_|\___/ \__,_|\___| |_____|
                                     
 
+        if (verbosity > 0) {
+            mexPrintf("[xolotl] %i-step integration requested.\n", xolotl_network.solver_order);
 
-        mexPrintf("[xolotl] %i-step integration requested.\n", xolotl_network.solver_order);
+        }
+        
 
 
 

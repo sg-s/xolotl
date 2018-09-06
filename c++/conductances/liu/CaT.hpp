@@ -66,6 +66,7 @@ void CaT::integrateMS(int k, double V, double Ca)
 
     E = container->E_Ca;
 
+
     if (k == 0) {
         k_m[0] = dt*(mdot(V, Ca, m));
         k_h[0] = dt*(hdot(V, Ca, h));
@@ -92,6 +93,7 @@ void CaT::integrateMS(int k, double V, double Ca)
     }
 
     container->i_Ca += getCurrent(V);
+
 }
 
 

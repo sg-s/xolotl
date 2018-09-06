@@ -246,7 +246,6 @@ void network::integrateMS(double * I_ext_now) {
         comp[i]->V_prev = comp[i]->V;
         comp[i]->Ca_prev = comp[i]->Ca;
         comp[i]->i_Ca_prev = comp[i]->i_Ca;
-        comp[i]->i_Ca = 0;
         comp[i]->I_ext = I_ext_now[i];
     }
 

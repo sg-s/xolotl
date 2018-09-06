@@ -31,10 +31,10 @@ public:
         if (isnan (h)) { h = 1; }
         if (isnan (E)) { E = -80; }
 
+        p = 3;
+
 
     }
-
-    void integrate(double, double);
 
     double m_inf(double, double);
     double h_inf(double, double);
@@ -47,13 +47,6 @@ public:
 
 string ACurrent::getClass(){return "ACurrent";}
 
-void ACurrent::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-(dt/tau_m(V,Ca)));
-    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-(dt/tau_h(V,Ca)));
-    g = gbar*m*m*m*h;
-
-}
 
 double ACurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+27.2)/-8.7)); }
 double ACurrent::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+56.9)/4.9)); }

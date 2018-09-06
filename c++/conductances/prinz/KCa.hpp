@@ -26,9 +26,9 @@ public:
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
         if (isnan (E)) { E = -80; }
-    }
 
-    void integrate(double, double);
+        p = 4;
+    }
 
     double m_inf(double V, double Ca);
     double tau_m(double, double);
@@ -39,12 +39,6 @@ public:
 
 string KCa::getClass(){return "KCa";}
 
-void KCa::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    g = gbar*m*m*m*m;
-
-}
 
 double KCa::m_inf(double V, double Ca) { return (Ca/(Ca+3.0))/(1.0+exp((V+28.3)/-12.6)); }
 double KCa::tau_m(double V, double Ca) {return 180.6 - 150.2/(1.0+exp((V+46.0)/-22.7));}

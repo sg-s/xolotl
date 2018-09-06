@@ -91,6 +91,8 @@ void CaS::integrateMS(int k, double V, double Ca)
     }
 
     container->i_Ca += getCurrent(V);
+
+
 }
 
 

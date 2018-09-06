@@ -3,30 +3,39 @@
 xolotl.cleanup;
 close all
 
-vol = 0.0628; % this can be anything, doesn't matter
-f = 1.496; % uM/nA
-tau_Ca = 200;
-F = 96485; % Faraday constant in SI units
-phi = (2*f*F*vol)/tau_Ca;
+
+% conversion from Prinz to phi
+A = 0.0628;
+
+channels = {'NaV','CaT','CaS','ACurrent','KCa','Kd','HCurrent'};
+prefix = 'prinz/';
+gbar(:,1) = [1000 25  60 500  50  1000 .1];
+E =         [50   30  30 -80 -80 -80   -20];
 
 x = xolotl;
 
-x.add('compartment','HH', 'Cm', 10, 'A', 0.01);
-x.HH.add('liu/NaV', 'gbar', 1000, 'E', 50);
-x.HH.add('liu/Kd', 'gbar', 300, 'E', -80);
-x.HH.add('Leak', 'gbar', 1, 'E', -30);
+x.add('compartment','AB','Cm',10,'A',A);
+
+% add Calcium mechanism
+x.AB.add('CalciumMech1');
+
+for i = 1:length(channels)
+	x.AB.add([prefix channels{i}],'gbar',gbar(i),'E',E(i));
+end
 
 
 x.t_end = 1e4;
 x.integrate;
-x.t_end = 1e3;
+x.t_end = 5e3;
 
 x.closed_loop = false;
+x.sim_dt = .01;
+x.dt = .01;
 
 figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
 V = x.integrate;
 plot(V,'k')
 
 x.solver_order = 4;
-V = x.integrate;
+[V, Ca] = x.integrate;
 plot(V,'r')

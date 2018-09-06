@@ -102,28 +102,14 @@ void CalciumMech2::integrate(void)
 
 double CalciumMech2::Cadot(double Ca_)
 {
-    return -(phi*(comp->i_Ca_prev)*(comp->A)/(192971*(comp->vol))) - (Ca_ - Ca_in)/tau_Ca;
+    return -(phi*(comp->i_Ca)*(comp->A)/(192971*(comp->vol))) - (Ca_ - Ca_in)/tau_Ca;
 }
 
 // Runge-Kutta 4 integrator 
-void CalciumMech2::integrateMS(int k, double V, double Ca)
+void CalciumMech2::integrateMS(int k, double V, double Ca_)
 {
-    if (k == 0) {
-        comp->k_Ca[0] = dt*(Cadot(Ca));
-    } else if (k == 1) {
-        comp->k_Ca[1] = dt*(Cadot(Ca + comp->k_Ca[0]/2));
-
-    } else if (k == 2) {
-        comp->k_Ca[2] = dt*(Cadot(Ca + comp->k_Ca[1]/2));
-
-    } else if (k == 3) {
-        comp->k_Ca[3] = dt*(Cadot(Ca + comp->k_Ca[2]));
-
-    } else {
-        // last step
-        comp->Ca = comp->Ca + (comp->k_Ca[0] + 2*comp->k_Ca[1] + 2*comp->k_Ca[2] + comp->k_Ca[3])/6;
-
-    }
+    if (k == 4){return;}
+    comp->k_Ca[k] = dt*(Cadot(Ca_));
 }
 
 
