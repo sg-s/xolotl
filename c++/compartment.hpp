@@ -310,6 +310,10 @@ void compartment::checkSolvers(int solver_order) {
             cont[i]->checkSolvers(solver_order);
         }
 
+        for (int i=0; i<n_syn; i++) {
+            syn[i]->checkSolvers(solver_order);
+        }
+
     } else {
         mexErrMsgTxt("[compartment] Unsupported solver order \n");
     }
@@ -485,12 +489,19 @@ void compartment::integrateMS(int k){
         sigma_gE += (cond[i]->g)*(cond[i]->E);
     }
 
+    //synapses 
+    for (int i=0; i<n_syn; i++) {
+        syn[i]->integrateMS(k, V_MS, Ca_MS);
+        sigma_g += (syn[i]->gbar)*(syn[i]->s)/(1000*A); // now uS/mm^2
+        sigma_gE += ((syn[i]->gbar)*(syn[i]->s)*(syn[i]->E)/(1000*A));
+    }
+
+
     // mechanisms
     for (int i=0; i<n_cont; i++) {
         cont[i]->integrateMS(k, V_MS, Ca_MS);
     }
 
-    //synapses 
 
     //voltage 
     // only compute when k < 4

@@ -20,6 +20,8 @@ public:
         Delta = 5.0;
         Vth = -35.0;
         k_ = 0.01;
+
+        // dynamic variables
         s = s_;
 
         // defaults
@@ -29,6 +31,13 @@ public:
     }
     
     void integrate(void);
+    void integrateMS(int, double, double);
+    void checkSolvers(int);
+
+    double s_inf(double);
+    double tau_s(double);
+    double sdot(double, double);
+
     int getFullStateSize(void);
     void connect(compartment *pcomp1_, compartment *pcomp2_);
     double getCurrent(double V_post);
@@ -40,21 +49,80 @@ int Cholinergic::getFullStateSize()
     return 2; 
 }
 
+
+double Cholinergic::s_inf(double V_pre)
+{
+    return 1.0/(1.0+exp((Vth - V_pre)/Delta));
+}
+
+double Cholinergic::tau_s(double sinf_)
+{
+    return (1 - sinf_)/k_;
+}
+
+double Cholinergic::sdot(double V_pre, double s_)
+{
+    double sinf = s_inf(V_pre);
+    return (sinf - s_)/tau_s(sinf);
+}
+
 void Cholinergic::integrate(void)
 {   
     // figure out the voltage of the pre-synaptic neuron
     double V_pre = pre_syn->V;
+    double sinf = s_inf(V_pre);
 
-    // find s_inf 
-    double s_inf = 1.0/(1.0+exp((Vth - V_pre)/Delta));
-
-    // integrate using exponential Euler 
-    double tau_s = (1 - s_inf)/k_;
-    
-    s = s_inf + (s - s_inf)*exp(-dt/tau_s);
+    // integrate using exponential Euler
+    s = sinf + (s - sinf)*exp(-dt/tau_s(sinf));
     
 }
 
+void Cholinergic::integrateMS(int k, double V, double Ca)
+{
+
+    double V_pre;
+
+
+
+    if (k == 0) {
+        V_pre = pre_syn->V_prev;
+        k_s[0] = dt*(sdot(V_pre, s));
+        
+    } else if (k == 1) {
+
+        V_pre = pre_syn->V_prev + pre_syn->k_V[0]/2;
+        k_s[1] = dt*(sdot(V_pre, s + k_s[0]/2));
+
+
+    } else if (k == 2) {
+
+        V_pre = pre_syn->V_prev + pre_syn->k_V[1]/2;
+        k_s[2] = dt*(sdot(V_pre, s + k_s[1]/2));
+
+    } else if (k == 3) {
+        V_pre = pre_syn->V_prev + pre_syn->k_V[2];
+        k_s[3] = dt*(sdot(V_pre, s + k_s[2]));
+
+
+    } else {
+        // last step
+
+        s = s + (k_s[0] + 2*k_s[1] + 2*k_s[2] + k_s[3])/6;
+
+        if (s < 0) {s = 0;}
+        if (s > 1) {s = 1;}
+    }
+
+}
+
+void Cholinergic::checkSolvers(int k){
+    if (k == 0) {
+        return;
+    } else if (k == 4) {
+        return;
+    }
+    mexErrMsgTxt("[Cholinergic] Unsupported solver order\n");
+}
 
 int Cholinergic::getFullState(double *syn_state, int idx)
 {
