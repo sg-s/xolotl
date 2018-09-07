@@ -23,9 +23,6 @@ for i = 1:length(channels)
 	x.AB.add([prefix channels{i}],'gbar',gbar(i),'E',E(i));
 end
 
-
-x.verbosity = 99;
-
 x.t_end = 1e4;
 x.integrate;
 x.t_end = 5e3;
@@ -33,8 +30,8 @@ x.t_end = 5e3;
 
 
 x.closed_loop = false;
-x.sim_dt = .01;
-x.dt = .01;
+x.sim_dt = .1;
+x.dt = .1;
 
 figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
 V = x.integrate;

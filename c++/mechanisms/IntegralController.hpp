@@ -44,6 +44,9 @@ public:
 
     
     void integrate(void);
+
+    void checkSolvers(int);
+
     void connect(conductance * channel_, synapse * syn_);
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
@@ -175,6 +178,18 @@ void IntegralController::integrate(void)
 
 
 }
+
+
+
+void IntegralController::checkSolvers(int k)
+{
+    if (k == 0){
+        return;
+    } else {
+        mexErrMsgTxt("[CalciumMech1] unsupported solver order\n");
+    }
+}
+
 
 
 

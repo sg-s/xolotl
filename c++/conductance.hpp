@@ -14,8 +14,6 @@ class compartment;
 class conductance {
 protected:
 
-    int supported_solver_order = 1;
-
 public:
     compartment *container; // pointer to compartment that contains this
     double gbar;
@@ -23,8 +21,6 @@ public:
     double E;
     double m = 0;
     double h = 1;
-
-    bool is_calcium = false;
 
     int p = 1;
     int q = 0;
@@ -64,9 +60,8 @@ public:
 };
 
 // Exponential Euler integrator 
-void conductance::integrate(double V, double Ca)
-{   
-    
+void conductance::integrate(double V, double Ca) {   
+
     // assume that p > 0
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
     if (q == 0)
@@ -81,8 +76,7 @@ void conductance::integrate(double V, double Ca)
 
 
 // Runge-Kutta 4 integrator 
-void conductance::integrateMS(int k, double V, double Ca)
-{
+void conductance::integrateMS(int k, double V, double Ca) {
 
 
     if (q == 0)
@@ -148,15 +142,11 @@ double conductance::getCurrent(double V) { return g * (V - E); }
 void conductance::connect(compartment *pcomp_) {container = pcomp_;}
 
 // asks each conductance if they have a solver with this order
-void conductance::checkSolvers(int solver_order)
-{
-    if (solver_order == 0){return;}
-    
-    if (supported_solver_order % solver_order == 0){
-        // make the vectors to store 
-        // intermediate values
-
-
+void conductance::checkSolvers(int solver_order) {
+    if (solver_order == 0){
+        return;
+    } else if (solver_order == 4) {
+        return;
     } else {
         mexPrintf("Error using %s", getClass().c_str());
         mexErrMsgTxt("Unsupported solver order \n");

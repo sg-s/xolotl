@@ -25,7 +25,6 @@ public:
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = -80; }
 
-        supported_solver_order = 4;
         p = 4;
     }
 

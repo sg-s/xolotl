@@ -34,6 +34,8 @@ public:
 
     
     void integrate(void);
+    void checkSolvers(int);
+    
     void connect(compartment * comp_);
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
@@ -80,6 +82,15 @@ void CurrentNoise::integrate(void)
     comp->I_ext += distribution(generator);
 
 
+}
+
+void CurrentNoise::checkSolvers(int k)
+{
+    if (k == 0){
+        return;
+    } else {
+        mexErrMsgTxt("[CurrentNoise] unsupported solver order\n");
+    }
 }
 
 

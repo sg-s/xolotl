@@ -44,6 +44,9 @@ public:
     
     void integrate(void);
     void integrateMS(int, double, double);
+
+    void checkSolvers(int);
+
     void connect(compartment * comp_);
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
@@ -110,6 +113,17 @@ void CalciumMech2::integrateMS(int k, double V, double Ca_)
 {
     if (k == 4){return;}
     comp->k_Ca[k] = dt*(Cadot(Ca_));
+}
+
+void CalciumMech2::checkSolvers(int k)
+{
+    if (k == 0){
+        return;
+    } else if (k == 4){
+        return;
+    } else {
+        mexErrMsgTxt("[CalciumMech1] unsupported solver order\n");
+    }
 }
 
 

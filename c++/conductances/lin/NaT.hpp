@@ -22,10 +22,13 @@ public:
         h = h_;
 
         // defaults 
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
         if (isnan (E)) { E = 50; }
+
+        p = 3;
+        q = 1;
     }
 
     void integrate(double, double);
@@ -41,12 +44,6 @@ public:
 
 string NaT::getClass(){return "NaT";}
 
-void NaT::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V,Ca));
-    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-(dt*pow(Q_tau_h, delta_temp))/tau_h(V,Ca));
-    g = pow(Q_g, delta_temp)*gbar*m*m*m*h;
-}
 
 double NaT::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+29.13)/-8.92));}
 double NaT::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+40.0)/6.04));}

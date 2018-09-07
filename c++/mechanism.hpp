@@ -70,19 +70,19 @@ public:
     virtual int getFullState(double*, int) = 0;
     virtual double getState(int) = 0;
 
+    virtual void checkSolvers(int) = 0;
+
 };
 
-void mechanism::integrate()
-{
-    
+void mechanism::integrate() {
+    mexErrMsgTxt("[mechanism] Unimplemented integration method\n");
 }
 
 
 
-void mechanism::integrateMS(int k, double V, double Ca)
-{
-
-}
+void mechanism::integrateMS(int k, double V, double Ca) {
+    mexErrMsgTxt("[mechanism] Unimplemented multi-step integration method\n");
+}   
 
 
 

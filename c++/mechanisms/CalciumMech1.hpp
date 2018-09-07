@@ -38,6 +38,7 @@ public:
 
     }
 
+    void checkSolvers(int);
     
     void integrate(void);
     void integrateMS(int, double, double);
@@ -99,6 +100,17 @@ void CalciumMech1::integrateMS(int k, double V, double Ca_)
 
     comp->k_Ca[k] = dt*(Cadot(Ca_));
     // mexPrintf("k_Ca[k] = %f\n", comp->k_Ca[k]);
+}
+
+void CalciumMech1::checkSolvers(int k)
+{
+    if (k == 0){
+        return;
+    } else if (k == 4){
+        return;
+    } else {
+        mexErrMsgTxt("[CalciumMech1] unsupported solver order\n");
+    }
 }
 
 

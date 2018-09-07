@@ -34,6 +34,8 @@ public:
 
     
     void integrate(void);
+    void checkSolvers(int);
+
     void connect(conductance * cond_, synapse* syn_);
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
@@ -89,8 +91,6 @@ void SubunitNoise::integrate(void)
     // mexPrintf("n = %f\n",n);
 
     channel->m += distribution(generator);
-
-
     channel->h += distribution(generator);
 
     if ((channel->m) < 0) {channel->m = 0;}
@@ -98,8 +98,15 @@ void SubunitNoise::integrate(void)
     if ((channel->m) > 1) {channel->m = 1;}
     if ((channel->h) > 1) {channel->h = 1;}
 
+}
 
-
+void SubunitNoise::checkSolvers(int k)
+{
+    if (k == 0){
+        return;
+    } else {
+        mexErrMsgTxt("[SubunitNoise] unsupported solver order\n");
+    }
 }
 
 

@@ -21,10 +21,7 @@ public:
 
         if (isnan (E)) { E = -55; }
 
-        supported_solver_order = 0;
-
     }
-
 
 
     void integrate(double, double);
@@ -38,6 +35,7 @@ string Leak::getClass(){return "Leak";}
 
 void Leak::integrate(double V, double Ca) {
     // do nothing
+    // because there is nothing to integrate 
 }
 
 // Runge-Kutta 4 integrator 

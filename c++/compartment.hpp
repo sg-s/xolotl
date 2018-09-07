@@ -298,14 +298,18 @@ void compartment::addSynapse(synapse *syn_) {
 
 
 void compartment::checkSolvers(int solver_order) {
-    mexPrintf("TODO: Need to do something about checkSolvers\n");
-    if (solver_order ==0){
+
+    if (solver_order == 0){
         return;
     } else if (solver_order == 4){
-        for (int i=0; i<n_cond; i++)
-        {
-            // cond[i]->checkSolvers(solver_order);
+        for (int i=0; i<n_cond; i++) {
+            cond[i]->checkSolvers(solver_order);
         }
+
+        for (int i=0; i<n_cont; i++) {
+            cont[i]->checkSolvers(solver_order);
+        }
+
     } else {
         mexErrMsgTxt("[compartment] Unsupported solver order \n");
     }

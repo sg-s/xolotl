@@ -26,7 +26,8 @@ public:
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = -20; }
 
-       supported_solver_order = 4;
+        p = 1;
+
     }
 
     double m_inf(double, double);

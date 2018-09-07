@@ -27,8 +27,8 @@ public:
         if (isnan (h)) { h = 1; }
         if (isnan (E)) { E = 30; }
 
-        supported_solver_order = 4;
         p = 3;
+        q = 1;
     }
 
     double m_inf(double, double);

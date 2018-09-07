@@ -27,12 +27,9 @@ public:
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = -20; }
     }
-
     double m_inf(double, double);
     double tau_m(double, double);
     string getClass(void);
-
-
 
 };
 

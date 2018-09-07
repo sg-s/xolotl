@@ -227,7 +227,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int cond_idx = 0;
     int syn_idx = 0;
 
-    mexPrintf("[C++] %i outputs requested\n", nlhs);
+    if (verbosity > 0){
+        mexPrintf("[C++] %i outputs requested\n", nlhs);
+    }
+    
 
     // tell all components about some core 
     // parameters
