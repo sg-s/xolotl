@@ -24,9 +24,13 @@ for i = 1:length(channels)
 end
 
 
+x.verbosity = 99;
+
 x.t_end = 1e4;
 x.integrate;
 x.t_end = 5e3;
+
+
 
 x.closed_loop = false;
 x.sim_dt = .01;

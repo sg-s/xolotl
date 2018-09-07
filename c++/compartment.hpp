@@ -492,6 +492,7 @@ void compartment::integrateMS(int k){
     // only compute when k < 4
     if (k == 4) {return;}
     
+
     k_V[k] = dt*(sigma_gE - sigma_g*V_MS)/Cm;
     
     // mexPrintf("V_MS =  %f\n", V_MS);

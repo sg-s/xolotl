@@ -32,7 +32,7 @@ public:
         if (isnan (E)) { E = -80; }
 
         p = 3;
-
+        q = 1;
 
     }
 

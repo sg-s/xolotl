@@ -89,7 +89,7 @@ void CalciumMech1::integrate(void)
 
 double CalciumMech1::Cadot(double Ca_)
 {
-    return -(f*(comp->i_Ca)*(comp->A) - Ca_ + Ca_in)/tau_Ca;
+    return (-f*(comp->i_Ca)*(comp->A) - Ca_ + Ca_in)/tau_Ca;
 }
 
 // Runge-Kutta 4 integrator 

@@ -29,6 +29,7 @@ public:
         if (isnan (E)) { E = 30; }
 
         p = 3;
+        q = 1;
     }
 
 

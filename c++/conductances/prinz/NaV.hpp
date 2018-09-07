@@ -29,7 +29,7 @@ public:
         if (isnan (E)) { E = 50; }
 
         p = 3;
-
+        q = 1;
     }
 
     double m_inf(double, double);

@@ -28,6 +28,7 @@ public:
         if (isnan (E)) { E = -80; }
 
         p = 4;
+        
     }
 
     double m_inf(double V, double Ca);
