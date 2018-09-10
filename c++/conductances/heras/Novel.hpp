@@ -18,7 +18,7 @@ public:
 
 
     //specify both gbar and erev and initial conditions
-    Novel(double g_, double E_, double m_, double h_)
+    Novel(double g_, double E_, double m_)
     {
         gbar = g_;
         E = E_;
@@ -31,8 +31,6 @@ public:
 
     }
 
-    void integrate(double, double);
-
     double m_inf(double, double);
     double tau_m(double, double);
     string getClass(void);
@@ -41,14 +39,8 @@ public:
 
 string Novel::getClass(){return "Novel";}
 
-void Novel::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    g = gbar*m;
-}
 
-
-double Novel::m_inf(double V, double Ca) {return (1.0/(1.0+exp((-1.0-V)/9.1)))^(1.0/2.0);}
-double Novel::tau_m(double V, double Ca) {return 13.0+165.0*exp(-2.0*((V+19.4)/30.0)^2.0);}
+double Novel::m_inf(double V, double Ca) {return (1.0/(1.0+exp(sqrt((1.0+V)/-9.1))));}
+double Novel::tau_m(double V, double Ca) {return 13.0+165.0*exp(-2.0*((V+19.4)/30.0)*((V+19.4)/30.0));}
 
 #endif

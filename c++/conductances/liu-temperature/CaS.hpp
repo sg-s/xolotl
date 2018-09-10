@@ -13,6 +13,10 @@ class CaS: public conductance {
 
 public:
 
+    double Q_g;
+    double Q_tau_m;
+    double Q_tau_h;
+
     // specify parameters + initial conditions
     CaS(double g_, double E_, double m_, double h_, double Q_g_, double Q_tau_m_, double Q_tau_h_)
     {
@@ -27,7 +31,7 @@ public:
         Q_tau_h = Q_tau_h_;
 
         // defaults 
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
         if (isnan (Q_g)) { Q_g = 1; }
@@ -52,6 +56,9 @@ string CaS::getClass(){return "CaS";}
 
 void CaS::integrate(double V, double Ca)
 {
+
+    double delta_temp = (temperature - temperature_ref)/10;
+
     // update E by copying E_Ca from the cell
     E = container->E_Ca;
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V,Ca));

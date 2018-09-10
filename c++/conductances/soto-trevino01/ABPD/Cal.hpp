@@ -24,7 +24,7 @@ public:
         m = m_;
 
          // defaults
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = -80; }
     }
@@ -43,7 +43,7 @@ void Cal::integrate(double V, double Ca)
     // update E by copying E_Ca from the cell
     E = container->E_Ca;
 
-    m = m_inf(V,Ca)
+    m = m_inf(V,Ca);
     g = gbar*m;
 
     // compute the specific calcium current and update it in the cell
@@ -52,6 +52,6 @@ void Cal::integrate(double V, double Ca)
 }
 
 
-double Cal::m_inf(double V, double Ca) {return (0.5)*(1.0+tanh((V)+20.0)/8.0)));}
+double Cal::m_inf(double V, double Ca) {return (0.5)*(1.0+tanh((V)+20.0)/8.0);}
 
 #endif

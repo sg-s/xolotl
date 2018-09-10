@@ -32,7 +32,7 @@ public:
 
         // cache values for m_inf and h_inf
         for (double V = -99; V < 101; V++) {
-            tau_m_cache[(int) round(V+99)] = tau_m(V,Ca);
+            tau_m_cache[(int) round(V+99)] = tau_m(V,0);
         }
     }
 

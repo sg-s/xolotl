@@ -26,7 +26,7 @@ public:
 
 
         // defaults 
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
         if (isnan (E)) { E = -80; }
@@ -34,10 +34,10 @@ public:
 
         // cache values for m_inf and h_inf
         for (double V = -99; V < 101; V++) {
-            m_inf_cache[(int) round(V+99)] = m_inf(V,Ca);
-            h_inf_cache[(int) round(V+99)] = h_inf(V,Ca);
-            tau_m_cache[(int) round(V+99)] = tau_m(V,Ca);
-            tau_h_cache[(int) round(V+99)] = tau_h(V,Ca);
+            m_inf_cache[(int) round(V+99)] = m_inf(V,0);
+            h_inf_cache[(int) round(V+99)] = h_inf(V,0);
+            tau_m_cache[(int) round(V+99)] = tau_m(V,0);
+            tau_h_cache[(int) round(V+99)] = tau_h(V,0);
         }
 
     }

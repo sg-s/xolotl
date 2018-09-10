@@ -29,8 +29,8 @@ public:
 
         // cache values for m_inf and h_inf
         for (double V = -99; V < 101; V++) {
-            m_inf_cache[(int) round(V+99)] = m_inf(V,Ca);
-            tau_m_cache[(int) round(V+99)] = tau_m(V,Ca);
+            m_inf_cache[(int) round(V+99)] = m_inf(V,0);
+            tau_m_cache[(int) round(V+99)] = tau_m(V,0);
         }
 
     }

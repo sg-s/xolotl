@@ -3,6 +3,12 @@
 // _/\_ |__| |___ |__|  |  |___
 //
 //Abstract class for defining conductances
+// This class includes the following integration
+// methods:
+// exponential Euler (default)
+// Runge-Kutta 4 (can be chosen using 
+//      solver_order = 4)
+// 
 #ifndef CONDUCTANCE
 #define CONDUCTANCE
 #include <cmath>
@@ -130,10 +136,6 @@ void conductance::integrateMS(int k, double V, double Ca) {
         }
 
     }
-
-    
-    // mexPrintf("g = %f\n", g);
-
 }
 
 

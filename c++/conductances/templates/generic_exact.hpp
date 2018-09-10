@@ -30,9 +30,10 @@ public:
         if (isnan (h)) { h = $default_h; }
         if (isnan (E)) { E = $default_E; }
 
-    }
+        p = $p;
+        q = $q;
 
-    void integrate(double, double);
+    }
 
     double m_inf(double V, double Ca);
     double h_inf(double V, double Ca);
@@ -44,14 +45,6 @@ public:
 };
 
 string CondName::getClass(){return "CondName";}
-
-void CondName::integrate(double V, double Ca)
-{
-    m = m_inf(V, Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    h = h_inf(V, Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
-    $GBAR=?
-
-}
 
 double CondName::m_inf(double V, double Ca) {return $m_inf;}
 double CondName::h_inf(double V, double Ca) {return $h_inf;}

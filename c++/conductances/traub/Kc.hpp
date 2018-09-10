@@ -14,7 +14,13 @@
 //inherit conductance class spec
 class Kc: public conductance {
 
+protected:
+
+    double alpha = 0;
+    double beta = 0;
+
 public:
+
 
     // specify parameters + initial conditions
     Kc(double g_, double E_, double m_)
@@ -24,7 +30,7 @@ public:
         m = m_;
 
         // defaults
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = -80; }
     }
@@ -50,8 +56,8 @@ void Kc::integrate(double V, double Ca)
 
 double Kc::m_inf(double V, double Ca) {
     if (V <= -50.0) {
-        double alpha = exp(((V-10.0)/11.0)-((V-6.5)/27.0))/18.975;
-        double beta = 2*exp(-(V-6.5)/27.0) - alpha;
+        alpha = exp(((V-10.0)/11.0)-((V-6.5)/27.0))/18.975;
+        beta = 2*exp(-(V-6.5)/27.0) - alpha;
         return alpha / (alpha + beta);
     }
     return 1.0;
@@ -59,8 +65,8 @@ double Kc::m_inf(double V, double Ca) {
 
 double Kc::tau_m(double V, double Ca) {
     if (V <= -50.0) {
-        double alpha = exp(((V-10.0)/11.0)-((V-6.5)/27.0))/18.975;
-        double beta = 2*exp(-(V-6.5)/27.0) - alpha;
+        alpha = exp(((V-10.0)/11.0)-((V-6.5)/27.0))/18.975;
+        beta = 2*exp(-(V-6.5)/27.0) - alpha;
         return 1.0 / (alpha + beta);
     }
     return alpha + beta;

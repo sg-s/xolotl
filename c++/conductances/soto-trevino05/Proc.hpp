@@ -22,7 +22,7 @@ public:
         m = m_;
 
          // defaults 
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = 0; }
     }
@@ -31,7 +31,6 @@ public:
     void integrate(double, double);
 
     double m_inf(double, double);
-    double tau_m(double, double);
     string getClass(void);
 
 };

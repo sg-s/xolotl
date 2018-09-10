@@ -565,6 +565,7 @@ Test coverage
 ``integrate`` is tested in: 
 
 - `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
+- `test_all_cond.m <https://github.com/sg-s/xolotl/blob/master/tests/test_all_cond.m>`_ 
 - `test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/tests/test_integral_control.m>`_ 
 - `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
 - `test_rk4.m <https://github.com/sg-s/xolotl/blob/master/tests/test_rk4.m>`_ 
@@ -686,6 +687,7 @@ Test coverage
 - `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
 - `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
 - `test_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/test_fI.m>`_ 
+- `test_all_cond.m <https://github.com/sg-s/xolotl/blob/master/tests/test_all_cond.m>`_ 
 - `test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/tests/test_integral_control.m>`_ 
 - `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
 - `test_rk4.m <https://github.com/sg-s/xolotl/blob/master/tests/test_rk4.m>`_ 

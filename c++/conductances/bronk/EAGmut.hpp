@@ -24,13 +24,11 @@ public:
         m = m_;
 
         // defaults 
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = -80; }
     }
 
-
-    void integrate(double, double);
 
     double m_inf(double V, double Ca);
     double tau_m(double, double);
@@ -40,11 +38,6 @@ public:
 
 string EAGmut::getClass(){return "EAG";}
 
-void EAGmut::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    g = pow(Q_g, delta_temp)*gbar*m*m;
-}
 
 double EAGmut::m_inf(double V, double Ca) { return (.92*(1-.05)/(Ca+.92) + .05)/(1.0+exp((V+23.12)/-16.94)); }
 double EAGmut::tau_m(double V, double Ca) {return 5497 - 5500/(1.0+exp((V+251.5 )/-51.5));}

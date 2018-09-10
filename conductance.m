@@ -10,7 +10,6 @@ properties
 	tau_h@function_handle
 
 	is_Ca@logical = false
-	is_approx@logical = false
 
 	default_m@double = 0
 	default_h@double = 1
@@ -49,13 +48,9 @@ methods
 
 
 
-		if     self.is_Ca  & self.is_approx
-			lines = lineRead([this_dir 'Ca_approx.hpp']);
-		elseif ~self.is_Ca & self.is_approx
-			lines = lineRead([this_dir 'generic_approx.hpp']);
-		elseif self.is_Ca  & ~self.is_approx
+		if self.is_Ca  
 			lines = lineRead([this_dir 'Ca_exact.hpp']);
-		elseif ~self.is_Ca & ~self.is_approx
+		else
 			lines = lineRead([this_dir 'generic_exact.hpp']);
 		end
 
@@ -100,19 +95,6 @@ methods
 			lines{i} = strrep(lines{i},'CondName',name);
 		end
 
-		% get the p and q right
-		gbar_line = 'g = gbar*';
-		for i = 1:self.p
-			gbar_line = [gbar_line 'm*'];
-		end
-		for i = 1:self.q
-			gbar_line = [gbar_line 'h*'];
-		end
-		gbar_line(end) = ';';
-
-		for i = 1:length(lines)
-			lines{i} = strrep(lines{i},'$GBAR=?',gbar_line);
-		end
 
 		lineWrite([fileparts(fileparts(this_dir)) filesep 'custom' filesep name '.hpp'],lines);
 

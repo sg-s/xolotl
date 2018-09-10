@@ -24,7 +24,7 @@ public:
         m = m_;
 
          // defaults
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = -80; }
     }
@@ -46,7 +46,7 @@ void Kd::integrate(double V, double Ca)
 }
 
 
-double Kd::m_inf(double V, double Ca) {return (0.5)*(1.0+tanh((V)+20.0)/8.0)));}
+double Kd::m_inf(double V, double Ca) {return (0.5)*(1.0+tanh((V)+20.0)/8.0);}
 double Kd::tau_m(double V, double Ca) {return 1.0 / ( 0.0008*cosh((V + 5.0)/40.0) );}
 
 
