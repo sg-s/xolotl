@@ -14,6 +14,10 @@ class HCurrent: public conductance {
 
 public:
 
+    double Q_g;
+    double Q_tau_m;
+    double Q_tau_h;
+
     //specify both gbar and erev and initial conditions
     HCurrent(double g_, double E_, double m_, double Q_g_, double Q_tau_m_)
     {
@@ -34,10 +38,10 @@ public:
         if (isnan (E)) { E = -20; }
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double, double);
 
-    double m_inf(double V);
-    double tau_m(double V);
+    double m_inf(double, double);
+    double tau_m(double, double);
     string getClass(void);
 
 };
@@ -46,15 +50,16 @@ string HCurrent::getClass(){
     return "HCurrent";
 }
 
-void HCurrent::integrate(double V, double Ca, double dt, double delta_temp)
+void HCurrent::integrate(double V, double Ca)
 {
-    m = m_inf(V) + (m - m_inf(V))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V));
+    double delta_temp = (temperature - temperature_ref)/10;
+    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V,Ca));
     g = pow(Q_g, delta_temp)*gbar*m;
 }
 
 
-double HCurrent::m_inf(double V) {return 1.0/(1.0+exp((V+75.0)/5.5));}
-double HCurrent::tau_m(double V) {return (2/( exp((V+169.7)/(-11.6)) + exp((V- 26.7)/(14.3)) ));}
+double HCurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+75.0)/5.5));}
+double HCurrent::tau_m(double V, double Ca) {return (2/( exp((V+169.7)/(-11.6)) + exp((V- 26.7)/(14.3)) ));}
 
 
 #endif

@@ -13,6 +13,10 @@ class CaS: public conductance {
 
 public:
 
+    double Q_g;
+    double Q_tau_m;
+    double Q_tau_h;
+
     // specify parameters + initial conditions
     CaS(double g_, double E_, double m_, double h_, double Q_g_, double Q_tau_m_, double Q_tau_h_)
     {
@@ -27,7 +31,7 @@ public:
         Q_tau_h = Q_tau_h_;
 
         // defaults 
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
         if (isnan (Q_g)) { Q_g = 1; }
@@ -37,12 +41,12 @@ public:
 
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double, double);
 
-    double m_inf(double V);
-    double h_inf(double V);
-    double tau_m(double V);
-    double tau_h(double V);
+    double m_inf(double, double);
+    double h_inf(double, double);
+    double tau_m(double, double);
+    double tau_h(double, double);
     string getClass(void);
 
 
@@ -50,12 +54,15 @@ public:
 
 string CaS::getClass(){return "CaS";}
 
-void CaS::integrate(double V, double Ca, double dt, double delta_temp)
+void CaS::integrate(double V, double Ca)
 {
+
+    double delta_temp = (temperature - temperature_ref)/10;
+
     // update E by copying E_Ca from the cell
     E = container->E_Ca;
-    m = m_inf(V) + (m - m_inf(V))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V));
-    h = h_inf(V) + (h - h_inf(V))*exp(-(dt*pow(Q_tau_h, delta_temp))/tau_h(V));
+    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V,Ca));
+    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-(dt*pow(Q_tau_h, delta_temp))/tau_h(V,Ca));
     g = pow(Q_g, delta_temp)*gbar*m*m*m*h;
 
     // compute the specific calcium current and update it in the cell
@@ -64,9 +71,9 @@ void CaS::integrate(double V, double Ca, double dt, double delta_temp)
 
 }
 
-double CaS::m_inf(double V) {return 1.0/(1.0+exp((V+33.0)/-8.1));}
-double CaS::h_inf(double V) {return 1.0/(1.0+exp((V+60.0)/6.2));}
-double CaS::tau_m(double V) {return 1.4 + 7.0/(exp((V+27.0)/10.0) + exp((V+70.0)/-13.0));}
-double CaS::tau_h(double V) {return 60.0 + 150.0/(exp((V+55.0)/9.0) + exp((V+65.0)/-16.0));}
+double CaS::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+33.0)/-8.1));}
+double CaS::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+60.0)/6.2));}
+double CaS::tau_m(double V, double Ca) {return 1.4 + 7.0/(exp((V+27.0)/10.0) + exp((V+70.0)/-13.0));}
+double CaS::tau_h(double V, double Ca) {return 60.0 + 150.0/(exp((V+55.0)/9.0) + exp((V+65.0)/-16.0));}
 
 #endif

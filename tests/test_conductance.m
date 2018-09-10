@@ -10,8 +10,8 @@ x = xolotl;
 x.add('compartment','AB','A',A);
 x.AB.add('CalciumMech1','f',1.496);
 
-x.AB.add('liu-approx/NaV','gbar',@() 115/x.AB.A,'E',30);
-x.AB.add('liu-approx/CaT','gbar',@() 1.44/x.AB.A,'E',30);
+x.AB.add('liu/NaV','gbar',@() 115/x.AB.A,'E',30);
+x.AB.add('liu/CaT','gbar',@() 1.44/x.AB.A,'E',30);
 x.AB.add('liu/CaS','gbar',@() 1.7/x.AB.A,'E',30);
 x.AB.add('liu/ACurrent','gbar',@() 15.45/x.AB.A,'E',-80);
 x.AB.add('liu/KCa','gbar',@() 61.54/x.AB.A,'E',-80);
@@ -26,7 +26,6 @@ channels = x.AB.find('conductance');
 all_p = [3  3   3   1  4  4   0    3];
 all_q = [1  1   1   0  0  0   0    1];
 is_Ca = [0  1   1   0  0  0   0    0];
-is_apx =[0  0   1   0  0  0   0    1];
 
 for i = 1:length(channels)
 
@@ -48,7 +47,6 @@ for i = 1:length(channels)
 	temp.p = all_p(i);
 	temp.q = all_q(i);
 	temp.is_Ca = logical(is_Ca(i));
-	temp.is_approx = logical(is_apx(i));
 
 	temp.generateCPPFile(channels{i});
 
@@ -83,3 +81,5 @@ V2 = x2.integrate;
 figure, hold on
 plot(V)
 plot(V2)
+
+assert(sum(V2 - V)==0,'Something went wrong')

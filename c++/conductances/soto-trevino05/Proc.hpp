@@ -22,30 +22,29 @@ public:
         m = m_;
 
          // defaults 
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = 0; }
     }
 
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double, double);
 
-    double m_inf(double V);
-    double tau_m(double V);
+    double m_inf(double, double);
     string getClass(void);
 
 };
 
 string Proc::getClass(){return "Proc";}
 
-void Proc::integrate(double V, double Ca, double dt, double delta_temp)
+void Proc::integrate(double V, double Ca)
 {
-    m = m_inf(V) + (m - m_inf(V))*exp(-dt/0.5);
+    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/0.5);
     g = gbar*m;
 }
 
 
-double Proc::m_inf(double V) {return 1.0/(1.0+exp(-(V+12.0)/3.05));}
+double Proc::m_inf(double V, double Ca) {return 1.0/(1.0+exp(-(V+12.0)/3.05));}
 
 
 

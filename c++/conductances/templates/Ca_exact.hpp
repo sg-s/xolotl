@@ -29,9 +29,13 @@ public:
         if (isnan (m)) { m = $default_m; }
         if (isnan (h)) { h = $default_h; }
         if (isnan (E)) { E = $default_E; }
+
+        p = $p;
+        q = $q;
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double, double);
+    void integrateMS(int, double, double);
 
     double m_inf(double V, double Ca);
     double h_inf(double V, double Ca);
@@ -44,19 +48,16 @@ public:
 
 string CondName::getClass(){return "CondName";}
 
-void CondName::integrate(double V, double Ca, double dt, double delta_temp)
-{
-    // update E by copying E_Ca from the cell
+void CondName::integrate(double V, double Ca) {
     E = container->E_Ca;
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
-    
-    $GBAR=?
+    conductance::integrate(V,Ca);
+    container->i_Ca += getCurrent(V);
+}
 
-    // compute the specific calcium current and update it in the cell
-    double this_I = g*(V-E);
-    container->i_Ca += this_I;
-
+void CondName::integrateMS(int k, double V, double Ca) {
+    E = container->E_Ca;
+    conductance::integrateMS(k, V, Ca);
+    container->i_Ca += getCurrent(V);
 }
 
 double CondName::m_inf(double V, double Ca) {return $m_inf;}

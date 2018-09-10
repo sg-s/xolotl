@@ -29,10 +29,10 @@ public:
 
         // cache values for m_inf and h_inf
         for (double V = -99; V < 101; V++) {
-            m_inf_cache[(int) round(V+99)] = m_inf(V);
-            h_inf_cache[(int) round(V+99)] = h_inf(V);
-            tau_m_cache[(int) round(V+99)] = tau_m(V);
-            tau_h_cache[(int) round(V+99)] = tau_h(V);
+            m_inf_cache[(int) round(V+99)] = m_inf(V,0);
+            h_inf_cache[(int) round(V+99)] = h_inf(V,0);
+            tau_m_cache[(int) round(V+99)] = tau_m(V,0);
+            tau_h_cache[(int) round(V+99)] = tau_h(V,0);
         }
 
     }
@@ -47,12 +47,12 @@ public:
     double minf;
     double hinf;
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double, double);
 
-    double m_inf(double V);
-    double h_inf(double V);
-    double tau_m(double V);
-    double tau_h(double V);
+    double m_inf(double, double);
+    double h_inf(double, double);
+    double tau_m(double, double);
+    double tau_h(double, double);
     string getClass(void);
 
 
@@ -60,7 +60,7 @@ public:
 
 string NaV::getClass(){return "NaV";}
 
-void NaV::integrate(double V, double Ca, double dt, double delta_temp)
+void NaV::integrate(double V, double Ca)
 {
 
     // clamp the voltage inside of cached range
@@ -84,9 +84,9 @@ void NaV::integrate(double V, double Ca, double dt, double delta_temp)
     g = gbar*m*m*m*h;
 }
 
-double NaV::m_inf(double V) {return 1.0/(1.0+exp((V+25.5)/-5.29));}
-double NaV::h_inf(double V) {return 1.0/(1.0+exp((V+48.9)/5.18));}
-double NaV::tau_m(double V) {return 1.32 - 1.26/(1+exp((V+120.0)/-25.0));}
-double NaV::tau_h(double V) {return (0.67/(1.0+exp((V+62.9)/-10.0)))*(1.5+1.0/(1.0+exp((V+34.9)/3.6)));}
+double NaV::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+25.5)/-5.29));}
+double NaV::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+48.9)/5.18));}
+double NaV::tau_m(double V, double Ca) {return 1.32 - 1.26/(1+exp((V+120.0)/-25.0));}
+double NaV::tau_h(double V, double Ca) {return (0.67/(1.0+exp((V+62.9)/-10.0)))*(1.5+1.0/(1.0+exp((V+34.9)/3.6)));}
 
 #endif

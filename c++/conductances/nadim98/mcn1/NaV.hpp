@@ -30,30 +30,30 @@ public:
 
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double, double);
 
-    double m_inf(double V);
-    double h_inf(double V);
-    double tau_m(double V);
-    double tau_h(double V);
+    double m_inf(double, double);
+    double h_inf(double, double);
+    double tau_m(double, double);
+    double tau_h(double, double);
     string getClass(void);
 
 };
 
 string NaV::getClass(){return "NaV";}
 
-void NaV::integrate(double V, double Ca, double dt, double delta_temp)
+void NaV::integrate(double V, double Ca)
 {
-    m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
-    h = h_inf(V) + (h - h_inf(V))*exp(-dt/tau_h(V));
+    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
+    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
     g = gbar*m*m*m*h;
 }
 
 
-double NaV::m_inf(double V) {return (1.0/(1.0+exp(-0.08*((V)+21.0))));}
-double NaV::tau_m(double V) {return 0.0;}
-double NaV::h_inf(double V) {return (1.0/(1.0+exp(0.13*((V)+33.0))));}
-double NaV::tau_h(double V) {return (5.0/(1.0+exp(-0.12*((V)+62.0))));}
+double NaV::m_inf(double V, double Ca) {return (1.0/(1.0+exp(-0.08*((V)+21.0))));}
+double NaV::tau_m(double V, double Ca) {return 0.0;}
+double NaV::h_inf(double V, double Ca) {return (1.0/(1.0+exp(0.13*((V)+33.0))));}
+double NaV::tau_h(double V, double Ca) {return (5.0/(1.0+exp(-0.12*((V)+62.0))));}
 
 
 #endif

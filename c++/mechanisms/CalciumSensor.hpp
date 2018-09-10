@@ -80,6 +80,14 @@ void CalciumSensor::integrate(double dt)
     Ca_average += (dt/tau)*(comp->Ca - Ca_average);
 }
 
+void CalciumMech1::checkSolvers(int k)
+{
+    if (k == 0){
+        return;
+    } else {
+        mexErrMsgTxt("[CalciumMech1] unsupported solver order\n");
+    }
+}
 
 
 #endif

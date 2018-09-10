@@ -13,6 +13,10 @@ class KCa: public conductance {
 
 public:
 
+    double Q_g;
+    double Q_tau_m;
+    double Q_tau_h;
+
     // specify parameters + initial conditions
     KCa(double g_, double E_, double m_, double Q_g_, double Q_tau_m_)
     {
@@ -31,24 +35,25 @@ public:
         if (isnan (E)) { E = -80; }
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double, double);
 
     double m_inf(double V, double Ca);
-    double tau_m(double V);
+    double tau_m(double, double);
     string getClass(void);
 };
 
 string KCa::getClass(){return "KCa";}
 
-void KCa::integrate(double V, double Ca, double dt, double delta_temp)
+void KCa::integrate(double V, double Ca)
 {
-    m = m_inf(V, Ca) + (m - m_inf(V, Ca))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V));
+    double delta_temp = (temperature - temperature_ref)/10;
+    m = m_inf(V, Ca) + (m - m_inf(V, Ca))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V,Ca));
     g = pow(Q_g, delta_temp)*gbar*m*m*m*m;
 
 }
 
 double KCa::m_inf(double V, double Ca) { return (Ca/(Ca+3.0))/(1.0+exp((V+28.3)/-12.6)); }
-double KCa::tau_m(double V) {return 180.6 - 150.2/(1.0+exp((V+46.0)/-22.7));}
+double KCa::tau_m(double V, double Ca) {return 180.6 - 150.2/(1.0+exp((V+46.0)/-22.7));}
 
 
 #endif

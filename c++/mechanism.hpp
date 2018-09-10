@@ -49,6 +49,10 @@ public:
     double container_A;
     double container_vol;
 
+    double dt;
+    double temperature;
+    double temperature_ref;
+
     mechanism()
     {
         // null pointers to all 
@@ -60,14 +64,25 @@ public:
     
     ~mechanism() {}
     
-    virtual void integrate(double) = 0;
+    virtual void integrate(void);
+    virtual void integrateMS(int, double, double);
     virtual int getFullStateSize(void) = 0;
     virtual int getFullState(double*, int) = 0;
     virtual double getState(int) = 0;
 
+    virtual void checkSolvers(int) = 0;
+
 };
 
+void mechanism::integrate() {
+    mexErrMsgTxt("[mechanism] Unimplemented integration method\n");
+}
 
+
+
+void mechanism::integrateMS(int k, double V, double Ca) {
+    mexErrMsgTxt("[mechanism] Unimplemented multi-step integration method\n");
+}   
 
 
 

@@ -24,8 +24,8 @@ public:
     }
 
 
-
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double, double);
+    void integrateMS(int, double, double);
 
     string getClass(void);
 
@@ -33,9 +33,19 @@ public:
 
 string Leak::getClass(){return "Leak";}
 
-void Leak::integrate(double V, double Ca, double dt, double delta_temp) {
+void Leak::integrate(double V, double Ca) {
     // do nothing
+    // because there is nothing to integrate 
 }
+
+// Runge-Kutta 4 integrator 
+void Leak::integrateMS(int k, double V, double Ca)
+{
+
+    // do nothing
+    // because there is nothing to integrate
+}
+
 
 
 #endif

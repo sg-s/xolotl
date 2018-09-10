@@ -24,7 +24,7 @@ public:
     int getFullStateSize(void);
 };
 
-void Electrical::integrate(double dt)
+void Electrical::integrate(void)
 {
     // set E to V_pre
     E = (pre_syn->V);

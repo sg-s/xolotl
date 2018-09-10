@@ -13,6 +13,7 @@ x = xolotl;
 x.add('compartment','AB','A',0.0628,'vol',NaN);
 x.AB.add('CalciumMech2','phi',phi);
 
+
 x.AB.add('liu/NaV','gbar',@() 115/x.AB.A,'E',30);
 x.AB.add('liu/CaT','gbar',@() 1.44/x.AB.A,'E',30);
 x.AB.add('liu/CaS','gbar',@() 1.7/x.AB.A,'E',30);

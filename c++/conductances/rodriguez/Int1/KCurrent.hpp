@@ -30,12 +30,12 @@ public:
         if (isnan (E)) { E = -70; }
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double, double);
 
-    double m_inf(double V);
-    double h_inf(double V);
-    double tau_m(double V);
-    double tau_h(double V);
+    double m_inf(double, double);
+    double h_inf(double, double);
+    double tau_m(double, double);
+    double tau_h(double, double);
     string getClass(void);
 
 
@@ -43,17 +43,17 @@ public:
 
 string KCurrent::getClass(){return "KCurrent";}
 
-void KCurrent::integrate(double V, double Ca, double dt, double delta_temp)
+void KCurrent::integrate(double V, double Ca)
 {
-    m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
-    h = h_inf(V) + (h - h_inf(V))*exp(-dt/tau_h(V));
+    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
+    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
     g = gbar*m*m*m*m*h*h;
 }
 
-double KCurrent::m_inf(double V) {return 1.0/(1.0+exp((V+26.0)/-9.0));}
-double KCurrent::h_inf(double V) {return 1.0/(1.0+exp((V+16.0)/1.5));}
-double KCurrent::tau_m(double V) {return 27.0;}
-double KCurrent::tau_h(double V) {return 20.0;}
+double KCurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+26.0)/-9.0));}
+double KCurrent::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+16.0)/1.5));}
+double KCurrent::tau_m(double V, double Ca) {return 27.0;}
+double KCurrent::tau_h(double V, double Ca) {return 20.0;}
 
 // NOTE
 // reported time constants are in the range (27, 3) and (20, 200) ms respectively.

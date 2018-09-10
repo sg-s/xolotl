@@ -20,7 +20,10 @@ function cleanup()
 
 this_dir = fileparts(fileparts(which('xolotl.cleanup')));
 
-warning('Deleting compiled binaries...')
+d = dbstack;
+if ~any(strcmp({d.name},'run_all_tests'))
+	warning('Deleting compiled binaries...')
+end
 allfiles = dir([this_dir filesep '*X_*']);
 for i = 1:length(allfiles)
 	delete([this_dir filesep allfiles(i).name]);

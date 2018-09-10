@@ -65,6 +65,9 @@ properties
 	temperature_ref@double = 11; % centigrade 
 
     manipulate_plot_func@cell;
+
+    solver_order@double = 0;
+
 end % end general props
 
 

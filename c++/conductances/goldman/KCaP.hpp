@@ -29,24 +29,24 @@ public:
 
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double, double);
 
-    double m_inf(double V);
-    double tau_m(double V);
+    double m_inf(double, double);
+    double tau_m(double, double);
     string getClass(void);
 
 };
 
 string KCaP::getClass(){return "KCaP";}
 
-void KCaP::integrate(double V, double Ca, double dt, double delta_temp)
+void KCaP::integrate(double V, double Ca)
 {
-    m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
+    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
     g = gbar*m;
 }
 
-double KCaP::m_inf(double V) {return (1.0/(1.0+exp(((V)-2.0)/-9.0)));}
-double KCaP::tau_m(double V) {return 13.0+(8.0/(1.0+exp(((V)+1.0)/-1.0)));}
+double KCaP::m_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)-2.0)/-9.0)));}
+double KCaP::tau_m(double V, double Ca) {return 13.0+(8.0/(1.0+exp(((V)+1.0)/-1.0)));}
 
 
 #endif

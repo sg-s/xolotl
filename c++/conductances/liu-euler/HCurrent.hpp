@@ -28,10 +28,10 @@ public:
 
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double, double);
 
-    double m_inf(double V);
-    double tau_m(double V);
+    double m_inf(double, double);
+    double tau_m(double, double);
     string getClass(void);
 
 
@@ -40,14 +40,14 @@ public:
 
 string HCurrent::getClass(){return "HCurrent";}
 
-void HCurrent::integrate(double V, double Ca, double dt, double delta_temp)
+void HCurrent::integrate(double V, double Ca)
 {
-    m += (m_inf(V) - m)*(dt/tau_m(V));
+    m += (m_inf(V,Ca) - m)*(dt/tau_m(V,Ca));
     g = gbar*m;
 }
 
 
-double HCurrent::m_inf(double V) {return 1.0/(1.0+exp((V+70.0)/6.0));}
-double HCurrent::tau_m(double V) {return (272.0 + 1499.0/(1.0+exp((V+42.2)/-8.73)));}
+double HCurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+70.0)/6.0));}
+double HCurrent::tau_m(double V, double Ca) {return (272.0 + 1499.0/(1.0+exp((V+42.2)/-8.73)));}
 
 #endif

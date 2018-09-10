@@ -29,21 +29,21 @@ public:
 
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double, double);
 
-    double m_inf(double V);
-    double tau_m(double V);
+    double m_inf(double, double);
+    double tau_m(double, double);
     string getClass(void);
 
 };
 
 string CaS::getClass(){return "CaS";}
 
-void CaS::integrate(double V, double Ca, double dt, double delta_temp)
+void CaS::integrate(double V, double Ca)
 {
     // update E by copying E_Ca from the cell
     E = container->E_Ca;
-    m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
+    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
     g = gbar*m*m*m;
 
     // compute the specific calcium current and update it in the cell
@@ -52,8 +52,8 @@ void CaS::integrate(double V, double Ca, double dt, double delta_temp)
 
 }
 
-double CaS::m_inf(double V) {return 1.0/(1.0+exp(-(V+22.0)/8.5));}
-double CaS::tau_m(double V) {return 16 - 13.1/(1 + exp(-(V+25.1)/-26.4));}
+double CaS::m_inf(double V, double Ca) {return 1.0/(1.0+exp(-(V+22.0)/8.5));}
+double CaS::tau_m(double V, double Ca) {return 16 - 13.1/(1 + exp(-(V+25.1)/-26.4));}
 
 
 #endif

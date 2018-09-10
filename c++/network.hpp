@@ -30,6 +30,10 @@ protected:
     // keeps track of the # of terminals in terminal_comp
     int n_terminals; 
 public:
+
+
+    double dt;
+
      // pointers to all compartments in network
     vector<compartment*> comp;
 
@@ -41,23 +45,70 @@ public:
     int n_comp = 0;
     int n_soma = 0; // will be used in the Crank-Nicholson scheme
 
+    int solver_order = 0;
+
     double verbosity;
 
     // constructor
     network() {}
 
     // function declarations
-    void integrate(double,double *, double);
-    void integrateClamp(double, double *, double);
+    void integrate(double *);
+    void integrateMS(double *);
+    void integrateClamp(double *);
     void addCompartment(compartment*);
-    void resolveTree(void);
+    bool resolveTree(void);
+
+    void checkSolvers(void);
+
+    void broadcast(double, double);
 
 };
 
-void network::resolveTree(void)
+// broadcast is a method that tells all 
+// components of a network about some 
+// important parameters that are not
+// going to change
+void network::broadcast(double dt, double temperature)
 {
-    compartment * connected_comp = NULL;
+    dt = dt;
+    for (int i = 0; i < n_comp; i ++) 
+    {
+        comp[i]->dt = dt;
+        for (int j = 0; j < comp[i]->n_cond; j ++) {
+            (comp[i]->getConductancePointer(j))->dt = dt; 
+            (comp[i]->getConductancePointer(j))->temperature = temperature;
+        }
+        for (int j = 0; j < comp[i]->n_cont; j ++) {
+            (comp[i]->getMechanismPointer(j))->dt = dt;
+            (comp[i]->getMechanismPointer(j))->temperature = temperature;
+        }
+        for (int j = 0; j < comp[i]->n_syn; j ++) 
+        {
+            (comp[i]->getSynapsePointer(j))->dt = dt;
+            (comp[i]->getSynapsePointer(j))->temperature = temperature;
+        }
 
+    }
+}
+
+// this method checks that every component
+// in the network has a solver that supports
+// the requested order. if it doesn't, it 
+// throws an error 
+void network::checkSolvers(void)
+{
+    if (solver_order == 0) { return;}
+
+    for (int i = 0; i < n_comp; i ++){
+        comp[i]->checkSolvers(solver_order);
+    }
+
+}
+
+bool network::resolveTree(void) {
+    compartment * connected_comp = NULL;
+    bool is_multi_comp = false;
     if (verbosity > 0)
     {
         mexPrintf("[C++] network::resolveTree() called\n");
@@ -105,6 +156,7 @@ void network::resolveTree(void)
                     (connected_comp->upstream) = comp[i];
 
                     connected_comp->neuron_idx = comp[i]->neuron_idx;
+                    is_multi_comp = true;
                 }
                 else if ((connected_comp->tree_idx) == (ttl+1)) {
                     // connected_comp already has a tree_idx
@@ -115,6 +167,7 @@ void network::resolveTree(void)
                     (connected_comp->upstream) = comp[i];
 
                     connected_comp->neuron_idx = comp[i]->neuron_idx;
+                    is_multi_comp = true;
 
                 }
             }
@@ -126,12 +179,9 @@ void network::resolveTree(void)
     // OK, now we have resolved the tree. 
     // now, we need to mark the downstream_g and 
     // upstream_g for every compartment
-
-    for (int i = 0; i < n_comp; i ++)
-    {
+    for (int i = 0; i < n_comp; i ++) {
         comp[i]->resolveAxialConductances();
     }
-
 
 
     // go over every compartment, and check that stream
@@ -139,7 +189,6 @@ void network::resolveTree(void)
     
     if (verbosity > 0)
     {
-
         for (int i = 0; i < n_comp; i++)
         {
             mexPrintf("---------------\n");
@@ -164,13 +213,14 @@ void network::resolveTree(void)
         }
     }
 
+    return is_multi_comp;
+
 }
 
 
 // add a compartment to the network -- network contains
 // a vector of pointers to compartments
-void network::addCompartment(compartment *comp_)
-{
+void network::addCompartment(compartment *comp_) {
     comp.push_back(comp_);
     n_comp++;
     comp_->verbosity = verbosity;
@@ -182,12 +232,39 @@ void network::addCompartment(compartment *comp_)
     }
 }
 
+
+
+// this integrate method is meant to use
+// a multi-step solver like a rk4 solver
+// this requires there to exist a solver
+// for every component that supports this 
+// order
+void network::integrateMS(double * I_ext_now) {
+    // first move all variables to prev state in all comps
+    for (int i = 0; i < n_comp; i++)
+    {
+        comp[i]->V_prev = comp[i]->V;
+        comp[i]->Ca_prev = comp[i]->Ca;
+        comp[i]->i_Ca_prev = comp[i]->i_Ca;
+        comp[i]->I_ext = I_ext_now[i];
+    }
+
+    for (int k = 0; k <= solver_order; k ++)
+    {
+        for (int i = 0; i < n_comp; i++)
+        {
+            comp[i]->integrateMS(k);
+        }
+    }
+}
+
+
 // this integrate method works for networks
 // of single compartments, or cells with
 // multiple compartments under normal
 // conditions. Don't use if something is
 // being voltage clamped!
-void network::integrate(double dt, double * I_ext_now, double delta_temperature)
+void network::integrate(double * I_ext_now)
 {
 
     // we will use Exponential Euler for single-compartment
@@ -211,16 +288,16 @@ void network::integrate(double dt, double * I_ext_now, double delta_temperature)
         comp[i]->I_ext = I_ext_now[i];
         
         // integrate controllers
-        comp[i]->integrateMechanisms(dt);
+        comp[i]->integrateMechanisms();
 
-        comp[i]->integrateChannels(dt, delta_temperature);
+        comp[i]->integrateChannels();
 
         
 
         // integrate synapses
         if (isnan(comp[i]->neuron_idx))
         {
-            comp[i]->integrateSynapses(dt, delta_temperature);
+            comp[i]->integrateSynapses();
         }
         
     }
@@ -230,7 +307,7 @@ void network::integrate(double dt, double * I_ext_now, double delta_temperature)
     for (int i = 0; i < n_comp; i++)
     {
         if (isnan(comp[i]->neuron_idx)) {
-            comp[i]->integrateVoltage(dt, delta_temperature);
+            comp[i]->integrateVoltage();
         } else {
             // this is a multi-compartment model,
             // so just integrate the calcium
@@ -266,7 +343,7 @@ void network::integrate(double dt, double * I_ext_now, double delta_temperature)
         // to terminal, increasing in tree_idx
         while (temp_comp)
         {
-            temp_comp->integrateCNFirstPass(dt);
+            temp_comp->integrateCNFirstPass();
             last_valid_comp = temp_comp;
             temp_comp = temp_comp->downstream;
             // nothing after this--temp_comp may be NULL
@@ -280,7 +357,7 @@ void network::integrate(double dt, double * I_ext_now, double delta_temperature)
         // away from terminal, decreasing in tree_idx
         while (temp_comp)
         {
-            temp_comp->integrateCNSecondPass(dt);
+            temp_comp->integrateCNSecondPass();
             temp_comp = temp_comp->upstream;
             // nothing after this, becaue temp_comp may be NULL
         }
@@ -288,7 +365,7 @@ void network::integrate(double dt, double * I_ext_now, double delta_temperature)
 }
 
 // integrate while voltage clamping some compartments 
-void network::integrateClamp(double dt, double *V_clamp, double delta_temperature)
+void network::integrateClamp(double *V_clamp)
 {
 
     // integrate all channels in all compartments
@@ -305,10 +382,10 @@ void network::integrateClamp(double dt, double *V_clamp, double delta_temperatur
         comp[i]->I_ext = 0;
         comp[i]->I_clamp = 0;
 
-        comp[i]->integrateChannels(dt, delta_temperature);
+        comp[i]->integrateChannels();
 
         // integrate synapses
-        comp[i]->integrateSynapses(dt, delta_temperature);
+        comp[i]->integrateSynapses();
     }
 
     // integrate all voltages and Ca in all compartments
@@ -317,9 +394,9 @@ void network::integrateClamp(double dt, double *V_clamp, double delta_temperatur
         
         if (isnan(V_clamp[i])){
 
-            comp[i]->integrateVoltage(dt, delta_temperature);
+            comp[i]->integrateVoltage();
         } else {
-            comp[i]->integrateV_clamp(V_clamp[i], dt, delta_temperature);
+            comp[i]->integrateV_clamp(V_clamp[i]);
         }
 
     }

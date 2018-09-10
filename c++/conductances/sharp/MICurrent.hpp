@@ -28,25 +28,25 @@ public:
         if (isnan (E)) { E = -20; }
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double, double);
 
-    double m_inf(double V);
-    double tau_m(double V);
+    double m_inf(double, double);
+    double tau_m(double, double);
     string getClass(void);
 
 };
 
 string MICurrent::getClass(){return "MICurrent";}
 
-void MICurrent::integrate(double V, double Ca, double dt, double delta_temp)
+void MICurrent::integrate(double V, double Ca)
 {
-    m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
+    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
     g = gbar*m;
 }
 
 
-double MICurrent::m_inf(double V) {return 1.0/(1.0+exp((V+55.0)/-5));}
-double MICurrent::tau_m(double V) {return 6.0;}
+double MICurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+55.0)/-5));}
+double MICurrent::tau_m(double V, double Ca) {return 6.0;}
 
 
 #endif

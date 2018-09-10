@@ -25,29 +25,21 @@ public:
         m = m_;
 
         // defaults
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = -80; }
     }
 
-
-    void integrate(double V, double Ca, double dt, double delta_temp);
-
     double m_inf(double V, double Ca);
-    double tau_m(double V);
+    double tau_m(double, double);
     string getClass(void);
 
 };
 
 string EAGes::getClass(){return "EAG";}
 
-void EAGes::integrate(double V, double Ca, double dt, double delta_temp)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V));
-    g = pow(Q_g, delta_temp)*gbar*m*m;
-}
 
 double EAGes::m_inf(double V, double Ca) { return (9.29e-4/(Ca+9.29e-4))/(1.0+exp((V+23.12)/-16.94)); }
-double EAGes::tau_m(double V) {return 5497 - 5500/(1.0+exp((V+251.5 )/-51.5));}
+double EAGes::tau_m(double V, double Ca) {return 5497 - 5500/(1.0+exp((V+251.5 )/-51.5));}
 
 #endif

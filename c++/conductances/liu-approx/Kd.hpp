@@ -27,8 +27,8 @@ public:
 
         // cache values for m_inf and h_inf
         for (double V = -99; V < 101; V++) {
-            m_inf_cache[(int) round(V+99)] = m_inf(V);
-            tau_m_cache[(int) round(V+99)] = tau_m(V);
+            m_inf_cache[(int) round(V+99)] = m_inf(V,0);
+            tau_m_cache[(int) round(V+99)] = tau_m(V,0);
         }
 
     }
@@ -40,10 +40,10 @@ public:
     double taum;
     double minf;
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double, double);
 
-    double m_inf(double V);
-    double tau_m(double V);
+    double m_inf(double, double);
+    double tau_m(double, double);
     string getClass(void);
 
 
@@ -53,7 +53,7 @@ public:
 
 string Kd::getClass(){return "Kd";}
 
-void Kd::integrate(double V, double Ca, double dt, double delta_temp)
+void Kd::integrate(double V, double Ca)
 {
 
     // clamp the voltage inside of cached range
@@ -77,7 +77,7 @@ void Kd::integrate(double V, double Ca, double dt, double delta_temp)
 
 
 
-double Kd::m_inf(double V) {return 1.0/(1.0+exp((V+12.3)/-11.8));}
-double Kd::tau_m(double V) {return 7.2 - 6.4/(1.0+exp((V+28.3)/-19.2));}
+double Kd::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+12.3)/-11.8));}
+double Kd::tau_m(double V, double Ca) {return 7.2 - 6.4/(1.0+exp((V+28.3)/-19.2));}
 
 #endif

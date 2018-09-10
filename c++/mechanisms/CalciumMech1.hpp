@@ -38,8 +38,13 @@ public:
 
     }
 
+    void checkSolvers(int);
     
-    void integrate(double dt);
+    void integrate(void);
+    void integrateMS(int, double, double);
+
+    double Cadot(double);
+
     void connect(compartment * comp_);
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
@@ -74,15 +79,38 @@ void CalciumMech1::connect(compartment* comp_)
     comp = comp_;
 }
 
-void CalciumMech1::integrate(double dt)
+void CalciumMech1::integrate(void)
 {
-
-
     double Ca = comp->Ca_prev;
     double Ca_inf = Ca_in - f*(comp->A)*(comp->i_Ca_prev);
     Ca = Ca_inf + (Ca - Ca_inf)*exp(-dt/tau_Ca);
     comp->Ca = Ca;
 
+}
+
+double CalciumMech1::Cadot(double Ca_)
+{
+    return (-f*(comp->i_Ca)*(comp->A) - Ca_ + Ca_in)/tau_Ca;
+}
+
+// Runge-Kutta 4 integrator 
+void CalciumMech1::integrateMS(int k, double V, double Ca_)
+{
+    if (k == 4){return;}
+
+    comp->k_Ca[k] = dt*(Cadot(Ca_));
+    // mexPrintf("k_Ca[k] = %f\n", comp->k_Ca[k]);
+}
+
+void CalciumMech1::checkSolvers(int k)
+{
+    if (k == 0){
+        return;
+    } else if (k == 4){
+        return;
+    } else {
+        mexErrMsgTxt("[CalciumMech1] unsupported solver order\n");
+    }
 }
 
 

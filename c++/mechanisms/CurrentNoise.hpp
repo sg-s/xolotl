@@ -33,7 +33,9 @@ public:
     }
 
     
-    void integrate(double dt);
+    void integrate(void);
+    void checkSolvers(int);
+    
     void connect(compartment * comp_);
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
@@ -68,7 +70,7 @@ void CurrentNoise::connect(compartment* comp_)
     comp = comp_;
 }
 
-void CurrentNoise::integrate(double dt)
+void CurrentNoise::integrate(void)
 {
 
     std::random_device generator;
@@ -80,6 +82,15 @@ void CurrentNoise::integrate(double dt)
     comp->I_ext += distribution(generator);
 
 
+}
+
+void CurrentNoise::checkSolvers(int k)
+{
+    if (k == 0){
+        return;
+    } else {
+        mexErrMsgTxt("[CurrentNoise] unsupported solver order\n");
+    }
 }
 
 

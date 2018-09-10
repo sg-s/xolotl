@@ -31,24 +31,24 @@ public:
         if (isnan (E)) { E = -80; }
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double, double);
 
-    double m_inf(double V);
-    double h_inf(double V);
-    double tau_h(double V);
+    double m_inf(double, double);
+    double h_inf(double, double);
+    double tau_h(double, double);
     string getClass(void);
 
 };
 
 string Cal::getClass(){return "Cal";}
 
-void Cal::integrate(double V, double Ca, double dt, double delta_temp)
+void Cal::integrate(double V, double Ca)
 {
     // update E by copying E_Ca from the cell
     E = container->E_Ca;
 
-    m = m_inf(V);
-    h = h_inf(V) + (h - h_inf(V))*exp(-dt/tau_h(V));
+    m = m_inf(V,Ca);
+    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
     g = gbar*m*h;
 
     // compute the specific calcium current and update it in the cell
@@ -57,8 +57,8 @@ void Cal::integrate(double V, double Ca, double dt, double delta_temp)
 }
 
 
-double Cal::m_inf(double V) {return (1.0/(1.0+exp(((V)+61.0)/-4.2)));}
-double Cal::h_inf(double V) {return (1.0/(1.0+exp(((V)+88.0)/8.5)));}
-double Cal::tau_h(double V) {return 350.0;}
+double Cal::m_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+61.0)/-4.2)));}
+double Cal::h_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+88.0)/8.5)));}
+double Cal::tau_h(double V, double Ca) {return 350.0;}
 
 #endif

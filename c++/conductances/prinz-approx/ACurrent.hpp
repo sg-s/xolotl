@@ -26,7 +26,7 @@ public:
 
 
         // defaults 
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
         if (isnan (E)) { E = -80; }
@@ -34,10 +34,10 @@ public:
 
         // cache values for m_inf and h_inf
         for (double V = -99; V < 101; V++) {
-            m_inf_cache[(int) round(V+99)] = m_inf(V);
-            h_inf_cache[(int) round(V+99)] = h_inf(V);
-            tau_m_cache[(int) round(V+99)] = tau_m(V);
-            tau_h_cache[(int) round(V+99)] = tau_h(V);
+            m_inf_cache[(int) round(V+99)] = m_inf(V,0);
+            h_inf_cache[(int) round(V+99)] = h_inf(V,0);
+            tau_m_cache[(int) round(V+99)] = tau_m(V,0);
+            tau_h_cache[(int) round(V+99)] = tau_h(V,0);
         }
 
     }
@@ -52,12 +52,12 @@ public:
     double minf;
     double hinf;
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double, double);
 
-    double m_inf(double V);
-    double h_inf(double V);
-    double tau_m(double V);
-    double tau_h(double V);
+    double m_inf(double, double);
+    double h_inf(double, double);
+    double tau_m(double, double);
+    double tau_h(double, double);
     string getClass(void);
 
 
@@ -65,7 +65,7 @@ public:
 
 string ACurrent::getClass(){return "ACurrent";}
 
-void ACurrent::integrate(double V, double Ca, double dt, double delta_temp)
+void ACurrent::integrate(double V, double Ca)
 {
 
     // clamp the voltage inside of cached range
@@ -82,9 +82,9 @@ void ACurrent::integrate(double V, double Ca, double dt, double delta_temp)
     g = gbar*m*m*m*h;
 }
 
-double ACurrent::m_inf(double V) {return 1.0/(1.0+exp((V+27.2)/-8.7)); }
-double ACurrent::h_inf(double V) {return 1.0/(1.0+exp((V+56.9)/4.9)); }
-double ACurrent::tau_m(double V) {return 23.2 - 20.8/(1.0+exp((V+32.9)/-15.2));}
-double ACurrent::tau_h(double V) {return 77.2 - 58.4/(1.0+exp((V+38.9)/-26.5));}
+double ACurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+27.2)/-8.7)); }
+double ACurrent::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+56.9)/4.9)); }
+double ACurrent::tau_m(double V, double Ca) {return 23.2 - 20.8/(1.0+exp((V+32.9)/-15.2));}
+double ACurrent::tau_h(double V, double Ca) {return 77.2 - 58.4/(1.0+exp((V+38.9)/-26.5));}
 
 #endif

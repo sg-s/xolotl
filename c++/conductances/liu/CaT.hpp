@@ -22,19 +22,23 @@ public:
         h = h_;
 
         // defaults
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
         if (isnan (E)) { E = 30; }
 
+        p = 3;
+        q = 1;
+
     }
 
-    void integrate(double V, double Ca, double dt, double delta_temp);
+    void integrate(double, double);
+    void integrateMS(int, double, double);
 
-    double m_inf(double V);
-    double h_inf(double V);
-    double tau_m(double V);
-    double tau_h(double V);
+    double m_inf(double, double);
+    double h_inf(double, double);
+    double tau_m(double, double);
+    double tau_h(double, double);
     string getClass(void);
 
 
@@ -44,23 +48,22 @@ string CaT::getClass(){
     return "CaT";
 }
 
-void CaT::integrate(double V, double Ca, double dt, double delta_temp)
-{
-    // update E by copying E_Ca from the cell
+void CaT::integrate(double V, double Ca) {
     E = container->E_Ca;
-    m = m_inf(V) + (m - m_inf(V))*exp(-dt/tau_m(V));
-    h = h_inf(V) + (h - h_inf(V))*exp(-dt/tau_h(V));
-    g = gbar*m*m*m*h;
-
-    // compute the specific calcium current and update it in the cell
-    double this_I = g*(V-E);
-    container->i_Ca += this_I;
+    conductance::integrate(V,Ca);
+    container->i_Ca += getCurrent(V);
 }
 
+void CaT::integrateMS(int k, double V, double Ca) {
+    E = container->E_Ca;
+    conductance::integrateMS(k, V, Ca);
+    container->i_Ca += getCurrent(V);
+}
 
-double CaT::m_inf(double V) {return 1.0/(1.0 + exp((V+27.1)/-7.2));}
-double CaT::h_inf(double V) {return 1.0/(1.0 + exp((V+32.1)/5.5));}
-double CaT::tau_m(double V) {return 21.7 - 21.3/(1.0 + exp((V+68.1)/-20.5));}
-double CaT::tau_h(double V) {return 105.0 - 89.8/(1.0 + exp((V+55.0)/-16.9));}
+double CaT::m_inf(double V, double Ca) {return 1.0/(1.0 + exp((V+27.1)/-7.2));}
+double CaT::h_inf(double V, double Ca) {return 1.0/(1.0 + exp((V+32.1)/5.5));}
+double CaT::tau_m(double V, double Ca) {return 21.7 - 21.3/(1.0 + exp((V+68.1)/-20.5));}
+double CaT::tau_h(double V, double Ca) {return 105.0 - 89.8/(1.0 + exp((V+55.0)/-16.9));}
+
 
 #endif
