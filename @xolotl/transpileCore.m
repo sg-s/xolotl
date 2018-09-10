@@ -154,53 +154,13 @@ for i = 1:length(all_mechanisms)
 	idx = max(strfind(all_mechanisms{i},'.'));
 	cond_name = 'NULL';
 	syn_name = 'NULL'; 
-	if strcmp(self.get(all_mechanisms{i}(1:idx-1)).cpp_class_parent,'conductance')
-		% adding a mechanism to a conductance
-		cond_name = strrep(all_mechanisms{i}(1:idx-1),'.','_');
-		thing_name = strrep(all_mechanisms{i}(1:idx-1),'.','_');
-		mechanism_name = strrep(all_mechanisms{i},'.','_');
-		mechanism_add_lines{end+1} = [mechanism_name '.connect(&' cond_name ',' syn_name,');'];
+
+	parent_name = strrep(all_mechanisms{i}(1:idx-1),'.','_');
+	mechanism_name = strrep(all_mechanisms{i},'.','_');
+
+	mechanism_add_lines{end+1} = [mechanism_name '.connect(&' parent_name ');'];
 
 
-
-	elseif strcmp(self.get(all_mechanisms{i}(1:idx-1)).cpp_class_parent,'synapse')
-		% adding a mechanism to a synapse
-
-		syn_name = strrep(all_mechanisms{i}(1:idx-1),'.','_');
-		thing_name = strrep(all_mechanisms{i}(1:idx-1),'.','_');
-		mechanism_name = strrep(all_mechanisms{i},'.','_');
-		mechanism_add_lines{end+1} = [mechanism_name '.connect(&' cond_name ',' syn_name,');'];
-
-
-
-	elseif strcmp(self.get(all_mechanisms{i}(1:idx-1)).cpp_class_name,'compartment')
-		% adding a mechanism to a compartment 
-		mechanism_name = strrep(all_mechanisms{i},'.','_');
-		comp_name = strrep(all_mechanisms{i}(1:idx-1),'.','_');
-		mechanism_add_lines{end+1} = [mechanism_name '.connect(&' comp_name,');'];
-
-
-	else
-	 	error('Controller connected to unrecognised type')
-	end 
-
-	
-
-	% add to compartment -- this is generally the compartment
-	% that contains the conductance that this mechanism points to
-	% but it may be overridden by self.custom_owner
-	idx = [];
-	if ~isempty(self.custom_owner)
-		idx = find(strcmp(self.custom_owner(:,1),all_mechanisms{i}));
-	end
-	if isempty(idx)
-
-		idx = min(strfind(all_mechanisms{i},'.'));
-		comp_name = all_mechanisms{i}(1:idx-1);
-	else
-		comp_name = self.custom_owner{idx,2};
-	end
-	mechanism_add_lines{end+1} = [comp_name '.addMechanism(&' mechanism_name ');'];
 end
 
 mechanism_add_lines{end+1} = ['int n_mechanisms = ' mat2str(length(all_mechanisms)) ';'];

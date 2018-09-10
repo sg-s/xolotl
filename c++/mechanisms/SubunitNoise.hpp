@@ -36,7 +36,10 @@ public:
     void integrate(void);
     void checkSolvers(int);
 
-    void connect(conductance * cond_, synapse* syn_);
+    void connect(compartment*);
+    void connect(conductance*);
+    void connect(synapse*);
+    
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
@@ -65,20 +68,25 @@ int SubunitNoise::getFullState(double *cont_state, int idx)
 }
 
 
-void SubunitNoise::connect(conductance * channel_, synapse * syn_)
+void SubunitNoise::connect(conductance * channel_)
 {
-    if (channel_)
-    {
-        // connect to a channel
-        channel = channel_;
 
-        controlling_class = (channel_->getClass()).c_str();
-    }
-    if (syn_)
-    {
-        // connect to a synapse 
-        syn = syn_;
-    }
+    // connect to a channel
+    channel = channel_;
+    (channel->container)->addMechanism(this);
+    controlling_class = (channel_->getClass()).c_str();
+    
+
+}
+
+void SubunitNoise::connect(compartment* comp_)
+{
+    mexErrMsgTxt("[SubunitNoise] This mechanism cannot connect to a compartment object");
+}
+
+void SubunitNoise::connect(synapse* syn_)
+{
+    mexErrMsgTxt("[SubunitNoise] This mechanism cannot connect to a synapse object");
 }
 
 void SubunitNoise::integrate(void)

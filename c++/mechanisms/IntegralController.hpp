@@ -47,7 +47,10 @@ public:
 
     void checkSolvers(int);
 
-    void connect(conductance * channel_, synapse * syn_);
+    void connect(conductance *);
+    void connect(synapse*);
+    void connect(compartment*);
+
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
@@ -64,10 +67,7 @@ double IntegralController::getState(int idx)
 }
 
 
-int IntegralController::getFullStateSize()
-{
-    return 2; 
-}
+int IntegralController::getFullStateSize(){return 2; }
 
 
 int IntegralController::getFullState(double *cont_state, int idx)
@@ -92,31 +92,39 @@ int IntegralController::getFullState(double *cont_state, int idx)
 }
 
 
-void IntegralController::connect(conductance * channel_, synapse * syn_)
+void IntegralController::connect(conductance * channel_)
 {
-    if (channel_)
-    {
-        // connect to a channel
-        channel = channel_;
 
-        // check that the compartment we are in has a valid
-        // (non NaN Ca_target)
+    // connect to a channel
+    channel = channel_;
 
-        controlling_class = (channel_->getClass()).c_str();
+    // make sure the compartment that we are in knows about us
+    (channel->container)->addMechanism(this);
 
-        // attempt to read the area of the container that this
-        // controller should be in. note that this is not necessarily the
-        // container that contains this controller. rather, it is 
-        // the compartment that contains the conductance/synapse 
-        // that this controller controls
-        container_A  = (channel->container)->A;
-    }
-    if (syn_)
-    {
-        // connect to a synapse 
-        syn = syn_;
-    }
+    // check that the compartment we are in has a valid
+    // (non NaN Ca_target)
+
+    controlling_class = (channel_->getClass()).c_str();
+
+    // attempt to read the area of the container that this
+    // controller should be in. note that this is not necessarily the
+    // container that contains this controller. rather, it is 
+    // the compartment that contains the conductance/synapse 
+    // that this controller controls
+    container_A  = (channel->container)->A;
+
 }
+
+void IntegralController::connect(compartment* comp_)
+{
+    mexErrMsgTxt("[IntegralController] This mechanism cannot connect to a compartment object");
+}
+
+void IntegralController::connect(synapse* syn_)
+{
+    mexErrMsgTxt("[IntegralController] This mechanism cannot connect to a synapse object");
+}
+
 
 void IntegralController::integrate(void)
 {

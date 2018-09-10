@@ -45,7 +45,11 @@ public:
 
     double Cadot(double);
 
-    void connect(compartment * comp_);
+    void connect(compartment*);
+    void connect(conductance*);
+    void connect(synapse*);
+
+
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
@@ -53,18 +57,10 @@ public:
 };
 
 
-double CalciumMech1::getState(int idx)
-{
-
-    return std::numeric_limits<double>::quiet_NaN();
-
-}
+double CalciumMech1::getState(int idx){return std::numeric_limits<double>::quiet_NaN();}
 
 
-int CalciumMech1::getFullStateSize()
-{
-    return 0; 
-}
+int CalciumMech1::getFullStateSize(){return 0; }
 
 
 int CalciumMech1::getFullState(double *cont_state, int idx)
@@ -73,11 +69,24 @@ int CalciumMech1::getFullState(double *cont_state, int idx)
     return idx;
 }
 
-
+// connection methods
 void CalciumMech1::connect(compartment* comp_)
 {
     comp = comp_;
+    comp->addMechanism(this);
 }
+
+void CalciumMech1::connect(conductance* cond_)
+{
+    mexErrMsgTxt("[CalciumMech1] This mechanism cannot connect to a conductance object");
+}
+
+void CalciumMech1::connect(synapse* syn_)
+{
+    mexErrMsgTxt("[CalciumMech1] This mechanism cannot connect to a synapse object");
+}
+
+
 
 void CalciumMech1::integrate(void)
 {

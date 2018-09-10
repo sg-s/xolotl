@@ -47,7 +47,10 @@ public:
 
     void checkSolvers(int);
 
-    void connect(compartment * comp_);
+    void connect(compartment*);
+    void connect(conductance*);
+    void connect(synapse*);
+    
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
@@ -78,14 +81,27 @@ int CalciumMech2::getFullState(double *cont_state, int idx)
 }
 
 
+
+// connection methods
 void CalciumMech2::connect(compartment* comp_)
 {
-
-    // make sure the compartment has a volume defined
     if (isnan(comp_->vol)) {mexErrMsgTxt("[CalciumMech2] this mechanism requires that the volume of the compartment it is in be defined. \n");}
 
     comp = comp_;
+    comp->addMechanism(this);
 }
+
+void CalciumMech2::connect(conductance* cond_)
+{
+    mexErrMsgTxt("[CalciumMech2] This mechanism cannot connect to a conductance object");
+}
+
+void CalciumMech2::connect(synapse* syn_)
+{
+    mexErrMsgTxt("[CalciumMech2] This mechanism cannot connect to a synapse object");
+}
+
+
 
 void CalciumMech2::integrate(void)
 {

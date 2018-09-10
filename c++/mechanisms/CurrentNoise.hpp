@@ -36,7 +36,11 @@ public:
     void integrate(void);
     void checkSolvers(int);
     
-    void connect(compartment * comp_);
+    void connect(compartment*);
+    void connect(conductance*);
+    void connect(synapse*);
+
+
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
@@ -48,14 +52,10 @@ double CurrentNoise::getState(int idx)
 {
 
     return std::numeric_limits<double>::quiet_NaN();
-
 }
 
 
-int CurrentNoise::getFullStateSize()
-{
-    return 0; 
-}
+int CurrentNoise::getFullStateSize() {return 0; }
 
 
 int CurrentNoise::getFullState(double *cont_state, int idx)
@@ -68,7 +68,19 @@ int CurrentNoise::getFullState(double *cont_state, int idx)
 void CurrentNoise::connect(compartment* comp_)
 {
     comp = comp_;
+    comp->addMechanism(this);
 }
+
+void CurrentNoise::connect(conductance* cond_)
+{
+    mexErrMsgTxt("[CurrentNoise] This mechanism cannot connect to a conductance object");
+}
+
+void CurrentNoise::connect(synapse* syn_)
+{
+    mexErrMsgTxt("[CurrentNoise] This mechanism cannot connect to a synapse object");
+}
+
 
 void CurrentNoise::integrate(void)
 {

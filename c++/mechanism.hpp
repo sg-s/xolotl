@@ -24,6 +24,7 @@
 #include <cmath>
 #include <string>
 using std::string;
+class compartment;
 class conductance;
 class synapse;
 
@@ -72,7 +73,14 @@ public:
 
     virtual void checkSolvers(int) = 0;
 
+    // connection methods
+    virtual void connect(compartment *) = 0;
+    virtual void connect(conductance *) = 0;
+    virtual void connect(synapse *) = 0;
+
+
 };
+
 
 void mechanism::integrate() {
     mexErrMsgTxt("[mechanism] Unimplemented integration method\n");
