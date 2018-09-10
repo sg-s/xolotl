@@ -16,6 +16,11 @@
 class CurrentNoise: public mechanism {
 
 protected:
+
+    std::random_device generator;
+    std::normal_distribution<double> distribution;
+
+
 public:
 
 
@@ -84,16 +89,7 @@ void CurrentNoise::connect(synapse* syn_)
 
 void CurrentNoise::integrate(void)
 {
-
-    std::random_device generator;
-    std::normal_distribution<double> distribution(0,noise_amplitude*dt);
-
-    // double n = distribution(generator);
-    // mexPrintf("n = %f\n",n);
-
-    comp->I_ext += distribution(generator);
-
-
+    comp->I_ext += distribution(generator)*noise_amplitude*dt;
 }
 
 void CurrentNoise::checkSolvers(int k)

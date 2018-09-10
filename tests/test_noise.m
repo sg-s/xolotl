@@ -22,8 +22,6 @@ x.dt = .1;
 
 x.integrate;
 
-
-
 x.t_end = 2e3;
 
 x.snapshot('zero');

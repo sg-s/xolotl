@@ -16,6 +16,8 @@
 class SubunitNoise: public mechanism {
 
 protected:
+    std::random_device generator;
+    std::normal_distribution<double> distribution;
 public:
 
 
@@ -92,14 +94,8 @@ void SubunitNoise::connect(synapse* syn_)
 void SubunitNoise::integrate(void)
 {
 
-    std::random_device generator;
-    std::normal_distribution<double> distribution(0,noise_amplitude*dt);
-
-    // double n = distribution(generator);
-    // mexPrintf("n = %f\n",n);
-
-    channel->m += distribution(generator);
-    channel->h += distribution(generator);
+    channel->m += distribution(generator)*noise_amplitude*dt;;
+    channel->h += distribution(generator)*noise_amplitude*dt;;
 
     if ((channel->m) < 0) {channel->m = 0;}
     if ((channel->h) < 0) {channel->h = 0;}
