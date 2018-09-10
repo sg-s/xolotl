@@ -37,7 +37,6 @@ public:
 
     }
 
-    
     void integrate(void);
     void checkSolvers(int);
     
