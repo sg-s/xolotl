@@ -37,27 +37,15 @@ try the following ::
   % erases all the compiled binaries of xolotl networks
   x.cleanup
 
-If you're still having a problem, we might have fixed it already! Reinstall or update
-by running the `install script`__ or pulling from the repository if you're using ``git``.
+If you're still having a problem, we might have fixed it already! Reinstall or update by running the ``xolotl.update()`` if you installed the toolbox or pulling from the repository if you're using ``git``.
 Remember that if you're using ``git`` you should be sure to pull all the dependencies as well
 (``srinivas.gs_mtools``, ``cpplab``, ``puppeteer``).
 
 .. _compilers: compilers.rst
-__ installing.rst
 
 How Do I Cite This?
 ^^^^^^^^^^^^^^^^^^^
-Thanks for thinking of us! We'll be publishing later this year, and putting a
-manuscript on ArXiv_ sooner than that. For now though,
-
-*Gorur-Shandilya, Hoyland, & Marder, in preparation* should be sufficient.
+Thanks for thinking of us! We'll be publishing later this year, and a preprint is available on bioRxiv.
 
 .. _ArXiv: https://www.biorxiv.org/content/early/2018/08/18/394973
 
-How Do I Install It?
-^^^^^^^^^^^^^^^^^^^^
-``xolotl`` can be installed into your home folder by a simple script_. For advanced
-users, feel free to clone from our github repository_.
-
-.. _script: installing.rst
-.. _repository: https://github.com/sg-s/xolotl
