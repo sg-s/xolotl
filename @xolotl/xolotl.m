@@ -256,6 +256,8 @@ methods (Static)
     ax = show(conductance,ax);
     [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance);
 
+    setup();
+
 
 end % end static methods
 end % end classdef 

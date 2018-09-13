@@ -425,6 +425,30 @@ Test coverage
 
 
 
+.. _setup:
+
+setup
+^^^^^
+A static method that allows you to set up compilers on some operating systems. You need to run this only once. If xolotl works, there is no need to run this. 
+
+Usage ::
+
+   xolotl.setup
+   x.setup
+
+
+
+
+
+
+Test coverage
+--------------
+
+``setup`` is tested in: 
+
+
+
+
 .. _plot:
 
 plot
