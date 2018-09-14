@@ -5,7 +5,7 @@
 // Slow Calcium conductance
 #ifndef LEAK
 #define LEAK
-#include "../conductance.hpp"
+#include "conductance.hpp"
 
 //inherit conductance class spec
 class Leak: public conductance {
