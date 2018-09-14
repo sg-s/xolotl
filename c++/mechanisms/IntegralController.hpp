@@ -134,55 +134,21 @@ void IntegralController::integrate(void)
     // and do nothing 
     if (isnan((channel->container)->Ca_target)) {return;}
 
-    double Ca_error = (channel->container)->Ca_target - (channel->container)->Ca;
+    double Ca_error = (channel->container)->Ca_target - (channel->container)->Ca_prev;
 
 
     // integrate mRNA
     m += (dt/tau_m)*(Ca_error);
 
-    // mexPrintf("m =  %f\n",m);
-
     // mRNA levels below zero don't make any sense
-    if (m < 0) {
-        m = 0;
-    }
+    if (m < 0) {m = 0;}
 
 
+    double g = (channel->gbar)*container_A;
+    (channel->gbar) += ((dt/tau_g)*(m - g))/container_A;
 
-
-    if (channel) {
-        // channel is a non-NULL pointer, so
-        // this controller must be controlling a 
-        // channel
-        // calculate conductance, not conductance density
-        
-        double g = (channel->gbar)*container_A;
-        (channel->gbar) += ((dt/tau_g)*(m - g))/container_A;
-
-        // make sure it doesn't go below zero
-        if ((channel->gbar) < 0) {
-            (channel->gbar) = 0;
-        }
-    }
-
-    if (syn) {
-        // syn is a non-NULL pointer, so
-        // this controller must be controlling a 
-        // synapse that is presynaptic to this compartment 
-        // calculate conductance, not conductance density
-        double g = (syn->gbar); 
-
-        // remember, that since everything is confusing,
-        // synapses are in nS, and conductances are in 
-        // uS/mm^2
-
-        (syn->gbar) += ((dt/tau_g)*(m - g));
-
-        // make sure it doesn't go below zero
-        if ((syn->gbar) < 0) {
-            (syn->gbar) = 0;
-        }
-    }
+    // make sure it doesn't go below zero
+    if ((channel->gbar) < 0) {(channel->gbar) = 0;}
 
 
 }
