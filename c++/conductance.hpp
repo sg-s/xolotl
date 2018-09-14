@@ -23,6 +23,7 @@ protected:
 public:
     compartment *container; // pointer to compartment that contains this
     double gbar;
+    double gbar_next;
     double g;
     double E;
     double m = 0;
@@ -77,7 +78,9 @@ void conductance::integrate(double V, double Ca) {
         h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
         g = gbar*pow(m,p)*pow(h,q);
     }
-    
+
+    gbar = gbar_next;
+
 }
 
 
@@ -141,7 +144,10 @@ void conductance::integrateMS(int k, double V, double Ca) {
 
 double conductance::getCurrent(double V) { return g * (V - E); }
 
-void conductance::connect(compartment *pcomp_) {container = pcomp_;}
+void conductance::connect(compartment *pcomp_) {
+    container = pcomp_;
+    gbar_next = gbar;
+}
 
 // asks each conductance if they have a solver with this order
 void conductance::checkSolvers(int solver_order) {

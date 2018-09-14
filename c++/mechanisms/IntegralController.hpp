@@ -21,11 +21,9 @@ public:
     double tau_g = 5e3; 
 
     // mRNA concentration 
-    double m = 0; 
+    double m = 0;
 
     // area of the container this is in
-    // this is NOT necessarily the area of the compartment
-    // that contains it
     double container_A;
 
     // specify parameters + initial conditions for 
@@ -98,6 +96,7 @@ void IntegralController::connect(conductance * channel_)
     // connect to a channel
     channel = channel_;
 
+
     // make sure the compartment that we are in knows about us
     (channel->container)->addMechanism(this);
 
@@ -112,6 +111,7 @@ void IntegralController::connect(conductance * channel_)
     // the compartment that contains the conductance/synapse 
     // that this controller controls
     container_A  = (channel->container)->A;
+
 
 }
 
@@ -143,13 +143,16 @@ void IntegralController::integrate(void)
     // mRNA levels below zero don't make any sense
     if (m < 0) {m = 0;}
 
+    // copy the protein levels from this channel
+    double g = channel->gbar*container_A;
 
-    double g = (channel->gbar)*container_A;
-    (channel->gbar) += ((dt/tau_g)*(m - g))/container_A;
+    g += ((dt/tau_g)*(m - g));
 
     // make sure it doesn't go below zero
-    if ((channel->gbar) < 0) {(channel->gbar) = 0;}
+    if (g < 0) {g = 0;}
 
+    // update
+    channel->gbar_next = g/container_A;
 
 }
 
