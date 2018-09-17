@@ -136,7 +136,6 @@ void IntegralController::integrate(void)
 
     double Ca_error = (channel->container)->Ca_target - (channel->container)->Ca_prev;
 
-
     // integrate mRNA
     m += (dt/tau_m)*(Ca_error);
 
@@ -144,16 +143,14 @@ void IntegralController::integrate(void)
     if (m < 0) {m = 0;}
 
     // copy the protein levels from this channel
-    double g = channel->gbar*container_A;
-
-    g += ((dt/tau_g)*(m - g));
+    double gdot = ((dt/tau_g)*(m - channel->gbar*container_A));
 
     // make sure it doesn't go below zero
-    if (g < 0) {g = 0;}
-
-    // update
-    channel->gbar_next = g/container_A;
-
+    if (channel->gbar_next + gdot < 0) {
+        channel->gbar_next = 0;
+    } else {
+        channel->gbar_next += gdot/container_A;
+    }
 }
 
 
