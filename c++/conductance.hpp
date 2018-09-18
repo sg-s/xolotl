@@ -139,6 +139,8 @@ void conductance::integrateMS(int k, double V, double Ca) {
         }
 
     }
+
+    gbar = gbar_next;
 }
 
 
