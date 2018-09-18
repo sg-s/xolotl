@@ -9,7 +9,7 @@ end % end props
 
 methods (Static)
 
-	metrics = V2metrics(V);
+	metrics = V2metrics(V,varargin);
 
 end % methods
 
