@@ -13,7 +13,7 @@ metrics = orderfields(struct('firing_rate',NaN,'burst_period',NaN,'ibi_mean',NaN
 options.sampling_rate = 20; % samples per millisecond
 options.ibi_thresh = 3e2; % inter-burst interval in ms
 options.spike_threshold = 0; % mV 
-options.debug = true;
+options.debug = false;
 
 if nargout && ~nargin 
 	varargout{1} = options;
