@@ -73,6 +73,10 @@ assert((isreal(V)),'V cannot be complex')
 n_spikes = xolotl.findNSpikes(V);
 spiketimes = xolotl.findNSpikeTimes(V,n_spikes);
 
+if n_spikes == 0
+	metrics.firing_rate = 0;
+	return
+end
 
 % compute firing rate 
 metrics.firing_rate = (1e3*n_spikes)/(length(V)/options.sampling_rate);
