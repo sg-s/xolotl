@@ -92,8 +92,13 @@ metrics.min_V_mean = min(V);
 
 
 % measure spike height stats
-metrics.spike_peak_mean = mean(V(spiketimes));
-metrics.spike_peak_std = std(V(spiketimes));
+try
+	metrics.spike_peak_mean = mean(V(spiketimes));
+	metrics.spike_peak_std = std(V(spiketimes));
+catch
+	disp('Something went wrong')
+	return
+end
 
 
 
