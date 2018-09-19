@@ -260,44 +260,88 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             // here we're getting the state of every compartment -- V, Ca, and all conductances
             if (i%res == 0) {
 
-                for (int j = 0; j < n_comp; j++)
+
+                switch (nlhs)
                 {
-                    // read out voltages
-                    if (nlhs > 1) {
-                        output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
-                    }
+                    case 1:
+                        // only one output, do nothing
+                        break;
+                    case 2:
+                        // read out voltages only
+                        for (int j = 0; j < n_comp; j++)
+                        {
+                            output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
+                        } // end j loop over compartments
+                        break;
 
 
-                    // read out calcium + E_Ca
-                    if (nlhs > 2) {
-                        output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
-                        output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
-                    }
+                    case 3:
+                        // V + Ca
+                        for (int j = 0; j < n_comp; j++)
+                        {
+                            output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
+                            output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
+                            output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
 
-                    // read out controllers
-                    if (nlhs > 3) {
-                        cont_idx = (xolotl_network.comp[j]->getFullMechanismState(output_cont_state,cont_idx));
-                    }
+                        } // end j loop over compartments
+                        break;
 
-                    // read out ionic currents
-                    if (nlhs > 4) {
-                        cond_idx = (xolotl_network.comp[j]->getFullCurrentState(output_curr_state,cond_idx));
-                    }
+                    case 4:
+                        // V, Ca, mechanisms
 
-                } // end j loop over compartments
+                        for (int j = 0; j < n_comp; j++)
+                        {
 
-                // read out synaptic currents and full
-                // state of all synapses
-                if (nlhs > 5)
-                {
-                    for (int k = 0; k < n_synapses; k++)
-                    {
-                        syn_idx = (synapses[k]->getFullState(output_syn_state,syn_idx));
-                    }
+                            output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
+                            output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
+                            output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
+                            cont_idx = (xolotl_network.comp[j]->getFullMechanismState(output_cont_state,cont_idx));
+
+                        } // end j loop over compartments
+                        break;
                     
-                }
+
+                    case 5:
+                        // V, Ca, C, I
+                        for (int j = 0; j < n_comp; j++)
+                        {
+
+                            output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
+   
+                            output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
+                            output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
+                            cont_idx = (xolotl_network.comp[j]->getFullMechanismState(output_cont_state,cont_idx));
+                            cond_idx = (xolotl_network.comp[j]->getFullCurrentState(output_curr_state,cond_idx));
+
+                        } // end j loop over compartments
+                        break;
+
+
+
+                    case 6: 
+                        // V, Ca, Ca, I, Syn
+                        for (int j = 0; j < n_comp; j++)
+                        {
+
+                            output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
+   
+                            output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
+                            output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
+                            cont_idx = (xolotl_network.comp[j]->getFullMechanismState(output_cont_state,cont_idx));
+                            cond_idx = (xolotl_network.comp[j]->getFullCurrentState(output_curr_state,cond_idx));
+
+                        } // end j loop over compartments
+
+                        for (int k = 0; k < n_synapses; k++)
+                        {
+                            syn_idx = (synapses[k]->getFullState(output_syn_state,syn_idx));
+                        }
+
+                        break;
+                } // switch
                 output_idx ++;
-            }
+
+            } // if we need to write output 
         } // end for loop over nsteps
 
 

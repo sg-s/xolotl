@@ -64,6 +64,8 @@ public:
     virtual double tau_h(double, double);
 
 
+    inline double expa(double);
+
 };
 
 // Exponential Euler integrator 
@@ -71,16 +73,55 @@ void conductance::integrate(double V, double Ca) {
 
     // assume that p > 0
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    if (q == 0)
+
+    switch (p)
     {
-        g = gbar*pow(m,p);
-    } else {
-        h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
-        g = gbar*pow(m,p)*pow(h,q);
+        case 1:
+            g = gbar*m;
+            break;
+        case 2:
+            g = gbar*m*m;
+            break;
+        case 3:
+            g = gbar*m*m*m;
+            break;
+        case 4:
+            g = gbar*m*m*m*m;
+            break;
+    }
+
+    switch (q)
+    {
+        case 0:
+            break;
+        case 1:
+            g = g*h;
+            h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
+            break;
+        case 2:
+            g = g*h*h;
+            h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
+            break;
+        case 3:
+            g = g*h*h*h;
+            h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
+            break;
+        case 4:
+            g = g*h*h*h*h;
+            h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
+            break;
+
     }
 
     gbar = gbar_next;
 
+}
+
+inline double conductance::expa(double x) {
+    x = 1.0 + x / 256.0;
+    x *= x; x *= x; x *= x; x *= x;
+    x *= x; x *= x; x *= x; x *= x;
+    return x;
 }
 
 

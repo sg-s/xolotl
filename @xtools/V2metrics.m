@@ -1,8 +1,28 @@
-% xtools::V2metrics(V)
-% 
-% this static method of xtools
-% accepts a vector of a voltage trace
-% and returns various metrics of the voltage trace
+%{
+
+;;     ;; ;;;;;;;;  ;;;;;;;   ;;;;;;;  ;;        ;;;;;;  
+ ;;   ;;     ;;    ;;     ;; ;;     ;; ;;       ;;    ;; 
+  ;; ;;      ;;    ;;     ;; ;;     ;; ;;       ;;       
+   ;;;       ;;    ;;     ;; ;;     ;; ;;        ;;;;;;  
+  ;; ;;      ;;    ;;     ;; ;;     ;; ;;             ;; 
+ ;;   ;;     ;;    ;;     ;; ;;     ;; ;;       ;;    ;; 
+;;     ;;    ;;     ;;;;;;;   ;;;;;;;  ;;;;;;;;  ;;;;;;  
+
+V2metrics.m
+
+computes metrics from a raw time series of voltage
+should work with either simulations or real data 
+
+usage
+=====
+
+metrics = xtools.V2metrics(V);
+metrics = xtools.V2metrics(V,'sampling_rate',20); % n samples/ms
+metrics = xtools.V2metrics(V,'ibi_thresh',300); % 300 ms defines a inter-burst interval
+metrics = xtools.V2metrics(V,'debug',true); % make plots
+metrics = xtools.V2metrics(V,'spike_threshold',0); % excurions above this are considered a spike 
+
+%}
 
 function metrics = V2metrics(V, varargin)
 
