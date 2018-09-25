@@ -37,7 +37,7 @@ public:
     }
 
     
-    void integrate(double dt);
+    void integrate(void);
 
 
     void connect(compartment*);
@@ -93,7 +93,7 @@ void CalciumSensor::connect(conductance* cond_)
     mexErrMsgTxt("[CalciumSensor] cannot be added to a conductance\n");
 }
 
-void CalciumSensor::integrate(double dt)
+void CalciumSensor::integrate(void)
 {
     Ca_average += (dt/tau)*(comp->Ca - Ca_average);
 }
