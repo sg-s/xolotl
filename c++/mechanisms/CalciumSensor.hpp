@@ -38,10 +38,16 @@ public:
 
     
     void integrate(double dt);
-    void connect(compartment* );
+
+
+    void connect(compartment*);
+    void connect(conductance*);
+    void connect(synapse*);
+
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
+    void checkSolvers(int);
 
 };
 
@@ -75,17 +81,28 @@ void CalciumSensor::connect(compartment* comp_)
     Ca_average = comp->Ca;
 }
 
+void CalciumSensor::connect(synapse* syn_)
+{
+    mexErrMsgTxt("[CalciumSensor] cannot be added to a synapse\n");
+}
+
+
+void CalciumSensor::connect(conductance* cond_)
+{
+    mexErrMsgTxt("[CalciumSensor] cannot be added to a conductance\n");
+}
+
 void CalciumSensor::integrate(double dt)
 {
     Ca_average += (dt/tau)*(comp->Ca - Ca_average);
 }
 
-void CalciumMech1::checkSolvers(int k)
+void CalciumSensor::checkSolvers(int k)
 {
     if (k == 0){
         return;
     } else {
-        mexErrMsgTxt("[CalciumMech1] unsupported solver order\n");
+        mexErrMsgTxt("[CalciumSensor] unsupported solver order\n");
     }
 }
 
