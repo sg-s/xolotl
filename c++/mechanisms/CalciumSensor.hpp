@@ -79,6 +79,7 @@ void CalciumSensor::connect(compartment* comp_)
 {
     comp = comp_;
     Ca_average = comp->Ca;
+    comp->addMechanism(this);
 }
 
 void CalciumSensor::connect(synapse* syn_)
