@@ -73,6 +73,8 @@ assert((isreal(V)),'V cannot be complex')
 n_spikes = xolotl.findNSpikes(V);
 spiketimes = xolotl.findNSpikeTimes(V,n_spikes);
 
+spiketimes(spiketimes > length(V)) = [];
+
 if n_spikes == 0
 	metrics.firing_rate = 0;
 	return
@@ -92,13 +94,8 @@ metrics.min_V_mean = min(V);
 
 
 % measure spike height stats
-try
-	metrics.spike_peak_mean = mean(V(spiketimes));
-	metrics.spike_peak_std = std(V(spiketimes));
-catch
-	disp('Something went wrong')
-	return
-end
+metrics.spike_peak_mean = mean(V(spiketimes));
+metrics.spike_peak_std = std(V(spiketimes));
 
 
 

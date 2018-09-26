@@ -40,6 +40,6 @@ end
 stop_here = min([length(ons) n_spikes]);
 
 for j = 1:stop_here
-	[~,idx] = max(V(ons(j):offs(j)));
-	spiketimes(j) = ons(j) + idx;
+  [~,idx] = max(V(ons(j):offs(j)));
+  spiketimes(j) = ons(j) + idx;
 end

@@ -44,4 +44,4 @@ if isempty(offs) || isempty(ons)
 	return
 end
 
-f = length(ons);
+f = min([length(ons) length(offs)]);

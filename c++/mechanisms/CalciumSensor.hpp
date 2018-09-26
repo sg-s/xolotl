@@ -29,10 +29,11 @@ public:
 
     // specify parameters + initial conditions for 
     // mechanism that controls a conductance 
-    CalciumSensor(double tau_)
+    CalciumSensor(double tau_, double Ca_average_)
     {
         tau = tau_;
         controlling_class = "unset";
+        Ca_average = Ca_average_;
 
     }
 
@@ -78,7 +79,7 @@ int CalciumSensor::getFullState(double *cont_state, int idx)
 void CalciumSensor::connect(compartment* comp_)
 {
     comp = comp_;
-    Ca_average = comp->Ca;
+    if (isnan(Ca_average)) {Ca_average = comp->Ca;}
     comp->addMechanism(this);
 }
 
