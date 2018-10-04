@@ -15,7 +15,7 @@ Run the following in your shell (not the MATLAB prompt)::
 On macOS, I get a warning saying that "Warning: Xcode is installed, but its license has not been accepted."
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-First, make sure you have XCode installed (not just the Command Line Tools -- the whole thing). You can get this from the Mac App Store. Then, open XCode and accept the license. You will have to do this only once. 
+First, make sure you have XCode installed (not just the Command Line Tools -- the whole thing). You can get this from the Mac App Store. Then, open XCode and accept the license. You will have to do this only once.
 
 I ran the quickstart, but I don't see anything
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
