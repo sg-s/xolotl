@@ -6,7 +6,7 @@
 Compiler Support
 ================
 
-``xolotl`` simulates models by running compiled ``C++` code in ``MATLAB``. This process requires a ``C++`` compiler that is linked to the ``MATLAB`` executable (``mex``) system.
+``xolotl`` simulates models by running compiled ``C++`` code in ``MATLAB``. This process requires a ``C++`` compiler that is linked to the ``MATLAB`` executable (``mex``) system.
 
 Compiling on Microsoft Windows
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -87,7 +87,6 @@ There is a relatively simple fix however. Credit goes to ``github`` user bonanza
 for figuring it out.
 
 .. _bonanza123: https://gist.github.com/bonanza123/
-.. _here: https://gcc.gnu.org/
 
 
 * First download the proper version of ``gcc/g++``. If you use a package manager there are generally legacy versions under ``gcc-VERSION``, where ``VERSION`` is the version number (e.g. 6). You can also find them here_.
@@ -96,6 +95,7 @@ for figuring it out.
 * Repeat this process for the ``mex_C++_glnxa64.xml`` file. It should be in the same location as the ``C``-specific file.
 * Sometimes ``MATLAB`` doesn't generate the ``C++`` ``.xml`` file, causing a lot of errors. If it doesn't exist, copy the ``C`` version of the file, rename it to ``mex_C++_glnxa64.xml``, and replace all references to ``gcc`` with ``g++``, so that ``MATLAB`` knows to use the right compiler.
 
+.. _here: https://www.gnu.org/software/gcc/
 __ https://askubuntu.com/questions/898578/how-can-i-change-which-gcc-directory
 
 The problem is fixed if you see something like this in ``MATLAB`` ::
