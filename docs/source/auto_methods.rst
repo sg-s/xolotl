@@ -274,6 +274,31 @@ Test coverage
 
 
 
+.. _plotgbars:
+
+plotgbars
+^^^^^^^^^
+
+makes a stem plot of conductance densities in a given compartment. Usage ::
+
+   x.plotgbars('compartment_name');
+   x.plotgbars(axes_handle,'compartment_name');
+
+
+
+
+
+
+
+
+Test coverage
+--------------
+
+``plotgbars`` is tested in: 
+
+
+
+
 .. _update:
 
 update

@@ -30,15 +30,8 @@ properties (Access = protected)
 	illegal_names = {'xolotl_network','compartment','conductance','controller','synapse','network','x','self'}; % list of illegal names for compartments, synpases and other objects
 	
 
-	% this stores custom owners of some objects
-	% specified by put
-	custom_owner
-
     snapshots
 
-	% this stores information about calling methods
-	% of some objects after they have been created 
-	call_method_data
 
     hpp_files
 
@@ -64,9 +57,11 @@ properties
 	temperature@double = 11; % centigrade 
 	temperature_ref@double = 11; % centigrade 
 
-    manipulate_plot_func@cell;
+    manipulate_plot_func@cell
 
     solver_order@double = 0;
+
+
 
 end % end general props
 
@@ -111,11 +106,6 @@ methods (Access = protected)
         		fprintf(['  > ' url_str info_str '\n'])
         	end
         	fprintf('---------------------\n')
-        end
-        if ~isempty(self.call_method_data)
-        	for i = 1:length(self.call_method_data)
-                disp([self.call_method_data(i).object, '.' , self.call_method_data(i).method_name ,'(', self.call_method_data(i).method_values , ')'])
-            end
         end
 
 
