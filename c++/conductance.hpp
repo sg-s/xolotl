@@ -63,8 +63,8 @@ public:
     virtual double tau_m(double, double);
     virtual double tau_h(double, double);
 
-
-    inline double expa(double);
+    inline double fast_pow(double, int);
+    inline double fast_exp(double);
 
 };
 
@@ -74,50 +74,60 @@ void conductance::integrate(double V, double Ca) {
     // assume that p > 0
     m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
 
-    switch (p)
-    {
-        case 1:
-            g = gbar*m;
-            break;
-        case 2:
-            g = gbar*m*m;
-            break;
-        case 3:
-            g = gbar*m*m*m;
-            break;
-        case 4:
-            g = gbar*m*m*m*m;
-            break;
-    }
+
+    g = gbar*fast_pow(m,p);
 
     switch (q)
     {
         case 0:
             break;
-        case 1:
-            g = g*h;
+        default:
             h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
+            g = g*fast_pow(h,q);            
             break;
-        case 2:
-            g = g*h*h;
-            h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
-            break;
-        case 3:
-            g = g*h*h*h;
-            h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
-            break;
-        case 4:
-            g = g*h*h*h*h;
-            h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
-            break;
-
     }
 
     gbar = gbar_next;
 
 }
 
-inline double conductance::expa(double x) {
+inline double conductance::fast_pow(double x, int a)
+{
+    switch (a)
+    {
+        case 0:
+            return 1;
+            break;
+        case 1:
+            return x;
+            break;
+        case 2:
+            return x*x;
+            break;
+        case 3:
+            return x*x*x;
+            break;
+        case 4:
+            return x*x*x*x;
+            break;
+        case 5:
+            return x*x*x*x*x;
+            break;
+        case 6:
+            return x*x*x*x*x*x;
+            break;
+        case 7:
+            return x*x*x*x*x*x*x;
+            break;
+        case 8:
+            return x*x*x*x*x*x*x*x;
+            break;
+    }
+    return x;
+}
+
+
+inline double conductance::fast_exp(double x) {
     x = 1.0 + x / 256.0;
     x *= x; x *= x; x *= x; x *= x;
     x *= x; x *= x; x *= x; x *= x;
@@ -131,52 +141,61 @@ void conductance::integrateMS(int k, double V, double Ca) {
 
     if (q == 0)
     {
-        if (k == 0) {
-            k_m[0] = dt*(mdot(V, Ca, m));
-            g = gbar*pow(m,p);
-        } else if (k == 1) {
-            k_m[1] = dt*(mdot(V, Ca, m + k_m[0]/2));
-            g = gbar*pow(m + k_m[0]/2,p);
-
-        } else if (k == 2) {
-            k_m[2] = dt*(mdot(V, Ca, m + k_m[1]/2));
-            g = gbar*pow(m + k_m[1]/2,p);
-
-        } else if (k == 3) {
-            k_m[3] = dt*(mdot(V, Ca, m + k_m[2]));
-            g = gbar*pow(m + k_m[2],p);
-
-        } else {
-            // last step
-            m = m + (k_m[0] + 2*k_m[1] + 2*k_m[2] + k_m[3])/6;
+        switch (k)
+        {
+            case 0:
+                k_m[0] = dt*(mdot(V, Ca, m));
+                g = gbar*fast_pow(m,p);
+                break;
+            case 1:
+                k_m[1] = dt*(mdot(V, Ca, m + k_m[0]/2));
+                g = gbar*fast_pow(m + k_m[0]/2,p);
+                break;
+            case 2:
+                k_m[2] = dt*(mdot(V, Ca, m + k_m[1]/2));
+                g = gbar*fast_pow(m + k_m[1]/2,p);
+                break;
+            case 3:
+                k_m[3] = dt*(mdot(V, Ca, m + k_m[2]));
+                g = gbar*fast_pow(m + k_m[2],p);
+                break;
+            case 4:
+                // last step
+                m = m + (k_m[0] + 2*k_m[1] + 2*k_m[2] + k_m[3])/6;
+                break;
         }
+            
+
 
     } else {
 
-        // mexPrintf("conductance::integrateMS, p =  %i\n",p);
-        if (k == 0) {
-            k_m[0] = dt*(mdot(V, Ca, m));
-            k_h[0] = dt*(hdot(V, Ca, h));
-            g = gbar*pow(m,p)*pow(h,q);
-        } else if (k == 1) {
-            k_m[1] = dt*(mdot(V, Ca, m + k_m[0]/2));
-            k_h[1] = dt*(hdot(V, Ca, h + k_h[0]/2));
-            g = gbar*pow(m + k_m[0]/2,p)*pow(h + k_h[0]/2,q);
 
-        } else if (k == 2) {
-            k_m[2] = dt*(mdot(V, Ca, m + k_m[1]/2));
-            k_h[2] = dt*(hdot(V, Ca, h + k_h[1]/2));
-            g = gbar*pow(m + k_m[1]/2,p)*pow(h + k_h[1]/2,q);
-
-        } else if (k == 3) {
-            k_m[3] = dt*(mdot(V, Ca, m + k_m[2]));
-            k_h[3] = dt*(hdot(V, Ca, h + k_h[2]));
-            g = gbar*pow(m + k_m[2],p)*pow(h + k_h[2],q);
-
-        } else {
-            // last step
-            m = m + (k_m[0] + 2*k_m[1] + 2*k_m[2] + k_m[3])/6;
-            h = h + (k_h[0] + 2*k_h[1] + 2*k_h[2] + k_h[3])/6;
+        switch (k)
+        {
+            case 0:
+                k_m[0] = dt*(mdot(V, Ca, m));
+                k_h[0] = dt*(hdot(V, Ca, h));
+                g = gbar*fast_pow(m,p)*fast_pow(h,q);
+                break;
+            case 1:
+                k_m[1] = dt*(mdot(V, Ca, m + k_m[0]/2));
+                k_h[1] = dt*(hdot(V, Ca, h + k_h[0]/2));
+                g = gbar*fast_pow(m + k_m[0]/2,p)*fast_pow(h + k_h[0]/2,q);
+                break;
+            case 2:
+                k_m[2] = dt*(mdot(V, Ca, m + k_m[1]/2));
+                k_h[2] = dt*(hdot(V, Ca, h + k_h[1]/2));
+                g = gbar*fast_pow(m + k_m[1]/2,p)*fast_pow(h + k_h[1]/2,q);
+                break;
+            case 3:
+                k_m[3] = dt*(mdot(V, Ca, m + k_m[2]));
+                k_h[3] = dt*(hdot(V, Ca, h + k_h[2]));
+                g = gbar*fast_pow(m + k_m[2],p)*fast_pow(h + k_h[2],q);
+                break;
+            case 4:
+                m = m + (k_m[0] + 2*k_m[1] + 2*k_m[2] + k_m[3])/6;
+                h = h + (k_h[0] + 2*k_h[1] + 2*k_h[2] + k_h[3])/6;
+                break;
         }
 
     }
