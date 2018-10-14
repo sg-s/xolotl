@@ -10,6 +10,9 @@ if cleanup
 	xolotl.cleanup;
 end
 
+% rebuild cpplab cache just to be safe
+cpplab.rebuildCache;
+
 this_dir = fileparts(fileparts(which(mfilename)));
 all_tests = dir(joinPath(this_dir,'tests','test*.m'));	
 
