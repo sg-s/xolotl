@@ -48,6 +48,7 @@ public:
     int solver_order = 0;
 
     double verbosity;
+    double approx_channels = 0;
 
     // constructor
     network() {}
@@ -78,6 +79,13 @@ void network::broadcast(double dt, double temperature)
         for (int j = 0; j < comp[i]->n_cond; j ++) {
             (comp[i]->getConductancePointer(j))->dt = dt; 
             (comp[i]->getConductancePointer(j))->temperature = temperature;
+
+            // built look up table if asked to 
+            // approximate gating functions 
+
+            (comp[i]->getConductancePointer(j))->buildLUT(approx_channels);
+  
+            
         }
         for (int j = 0; j < comp[i]->n_cont; j ++) {
             (comp[i]->getMechanismPointer(j))->dt = dt;

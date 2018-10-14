@@ -42,6 +42,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // temperature wire-ups
     xolotl_network.temperature = temperature;
     xolotl_network.verbosity = verbosity;
+    xolotl_network.approx_channels = approx_channels;
 
     //xolotl:insert_constructors
 
