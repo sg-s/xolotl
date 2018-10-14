@@ -5,9 +5,9 @@ x.add('compartment','AB','A',0.0628);
 
 x.AB.add('CalciumMech1','f',1.496);
 
-x.AB.add('liu-approx/NaV','gbar',@() 115/x.AB.A,'E',30);
-x.AB.add('liu-approx/CaT','gbar',@() 1.44/x.AB.A,'E',30);
-x.AB.add('liu-approx/Kd','gbar',@() 38.31/x.AB.A,'E',-80);
+x.AB.add('liu/NaV','gbar',@() 115/x.AB.A,'E',30);
+x.AB.add('liu/CaT','gbar',@() 1.44/x.AB.A,'E',30);
+x.AB.add('liu/Kd','gbar',@() 38.31/x.AB.A,'E',-80);
 x.AB.add('Leak','gbar',@() 0.0622/x.AB.A,'E',-50);
 
 holding_V = -60;

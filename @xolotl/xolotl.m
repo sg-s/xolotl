@@ -61,6 +61,11 @@ properties
 
     solver_order@double = 0;
 
+    % should we approximate gating functions?
+    % 0 -- no approximations 
+    % 1 -- integer mV only (approx)
+    approx_channels@double = 0;
+
 
 
 end % end general props

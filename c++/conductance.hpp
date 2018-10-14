@@ -40,6 +40,19 @@ public:
     double temperature_ref = 11;
 
 
+    // switches to tell xolotl
+    // if channel supports approximation 
+    // for performance speedup 
+    int approx_m = 0;
+    int approx_h  = 0;
+
+    double m_inf_cache[200];
+    double h_inf_cache[200];
+    double tau_m_cache[200];
+    double tau_h_cache[200];
+
+
+
     conductance()
     {
         container = 0; //null pointer for safety
@@ -66,13 +79,64 @@ public:
     inline double fast_pow(double, int);
     inline double fast_exp(double);
 
+    void buildLUT(double);
+
+
+    // housekeeping, temp variables
+    double minf = 0;
+    double hinf = 1;
+
 };
+
+
+// build look-up table
+void conductance::buildLUT(double approx_channels)
+{
+    if (approx_channels == 0)
+    {
+        // turn off approximations
+        approx_m = 0;
+        approx_h = 0;
+        return;
+    }
+
+    if (approx_m == 1)
+    {
+        mexPrintf("%s using approximate activation functions\n", getClass().c_str());
+        for (double V = -99; V < 101; V++) {
+            m_inf_cache[(int) round(V+99)] = m_inf(V,0);
+            tau_m_cache[(int) round(V+99)] = tau_m(V,0);
+        }
+    }
+
+    if (approx_h == 1) {
+        mexPrintf("%s using approximate in-activation functions\n", getClass().c_str());
+        for (double V = -99; V < 101; V++) {
+            h_inf_cache[(int) round(V+99)] = h_inf(V,0);
+            tau_h_cache[(int) round(V+99)] = tau_h(V,0);
+        }
+
+    }
+
+
+}
+
 
 // Exponential Euler integrator 
 void conductance::integrate(double V, double Ca) {   
 
     // assume that p > 0
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
+    switch (approx_m)
+    {
+        case 0:
+            minf = m_inf(V,Ca);
+            m = minf + (m - minf)*exp(-dt/tau_m(V,Ca));
+            break;
+        default:
+            m = m_inf_cache[(int) round(V+99)] + (m - m_inf_cache[(int) round(V+99)])*fast_exp(-(dt/tau_m_cache[(int) round(V+99)]));
+            break;
+    }
+    
 
 
     g = gbar*fast_pow(m,p);
@@ -82,7 +146,18 @@ void conductance::integrate(double V, double Ca) {
         case 0:
             break;
         default:
-            h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
+
+            switch (approx_h)
+            {
+                case 0:
+                    hinf = h_inf(V,Ca);
+                    h = hinf + (h - hinf)*exp(-dt/tau_h(V,Ca));
+                    break;
+                default:
+                    h = h_inf_cache[(int) round(V+99)] + (h - h_inf_cache[(int) round(V+99)])*fast_exp(-(dt/tau_h_cache[(int) round(V+99)]));
+                    break;
+            }
+
             g = g*fast_pow(h,q);            
             break;
     }

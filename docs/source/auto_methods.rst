@@ -515,6 +515,7 @@ Test coverage
 - `custom_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/custom_fI.m>`_ 
 - `test_stg_temperature.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg_temperature.m>`_ 
 - `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
+- `test_approx.m <https://github.com/sg-s/xolotl/blob/master/tests/test_approx.m>`_ 
 - `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
 
 
@@ -572,6 +573,7 @@ Test coverage
 ``cleanup`` is tested in: 
 
 - `test_rk4.m <https://github.com/sg-s/xolotl/blob/master/tests/test_rk4.m>`_ 
+- `test_approx.m <https://github.com/sg-s/xolotl/blob/master/tests/test_approx.m>`_ 
 
 
 
@@ -622,6 +624,7 @@ Test coverage
 - `custom_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/custom_fI.m>`_ 
 - `test_stg_temperature.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg_temperature.m>`_ 
 - `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
+- `test_approx.m <https://github.com/sg-s/xolotl/blob/master/tests/test_approx.m>`_ 
 - `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
 
 
@@ -743,6 +746,7 @@ Test coverage
 - `test_clamp.m <https://github.com/sg-s/xolotl/blob/master/tests/test_clamp.m>`_ 
 - `test_stg_temperature.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg_temperature.m>`_ 
 - `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
+- `test_approx.m <https://github.com/sg-s/xolotl/blob/master/tests/test_approx.m>`_ 
 - `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
 
 
