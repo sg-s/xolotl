@@ -29,7 +29,7 @@ elseif ismac
 	mex -setup C
 	mex -setup C++
 
-if 
+else 
 
 	% guess if this is Ubuntu
 	[e,o] = system('lsb_release -a');
