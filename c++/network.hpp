@@ -77,6 +77,10 @@ void network::broadcast(double dt, double temperature)
     {
         comp[i]->dt = dt;
         for (int j = 0; j < comp[i]->n_cond; j ++) {
+
+            // configure verbosity
+            (comp[i]->getConductancePointer(j))->verbosity = verbosity;
+
             (comp[i]->getConductancePointer(j))->dt = dt; 
             (comp[i]->getConductancePointer(j))->temperature = temperature;
 
