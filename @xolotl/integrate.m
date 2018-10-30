@@ -18,7 +18,7 @@ integrates a ``xolotl`` model. Usage ::
    [V, Ca, mech_state, I, syn_state] = x.integrate;
 
 
-``integrate`` will return different outputs as show above. Unless you need every output, it is recommended to skip it, as it makes the integration faster (and reduces the memory footprint). 
+``integrate`` will return different outputs as shown above. Unless you need every output, it is recommended to skip it, as it makes the integration faster (and reduces the memory footprint). 
 
 Explanation of outputs
 ----------------------
@@ -124,8 +124,11 @@ f = str2func(f);
 [results{1:nargout+1}] = f(arguments,self.I_ext',self.V_clamp');
 
 if self.closed_loop
-	self.deserialize(results{1});
+	self.deserialize(results{1}(1:length(arguments)));
 end
+
+% read out mechanism sizes
+mechanism_sizes = results{1}(length(arguments)+1:end);
 
 if nargout > 0
 	V = (results{2})';

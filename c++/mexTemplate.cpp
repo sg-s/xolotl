@@ -102,14 +102,30 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // set up outputs as mex objects
     int res = dt/sim_dt;
-    if (verbosity > 0)
-    {
+    if (verbosity > 0) {
         mexPrintf("[C++] res = %i\n",res);
         mexPrintf("[C++] nsteps = %i\n",nsteps);
     }
     
+
+
+    // ask all the mechanisms for their sizes
+    int begin_mechansism_sizes = param_size;
+    param_size = param_size + n_mechanisms;
+    
+
     plhs[0] = mxCreateDoubleMatrix(param_size, 1, mxREAL);
     output_state = mxGetPr(plhs[0]);
+
+    int idx = 0;
+    for(int j = 0; j < n_comp; j++) {
+        for (int k = 0; k < xolotl_network.comp[j]->n_cont; k++) {
+            int mech_size = (xolotl_network.comp[j]->getMechanismPointer(k))->getFullStateSize();
+            output_state[begin_mechansism_sizes+idx] = mech_size;
+            idx++;
+        }
+    }
+         
 
     if (nlhs > 1) {
         plhs[1] = mxCreateDoubleMatrix(n_comp, nsteps_out, mxREAL);

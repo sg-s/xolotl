@@ -592,7 +592,7 @@ integrates a ``xolotl`` model. Usage ::
    [V, Ca, mech_state, I, syn_state] = x.integrate;
 
 
-``integrate`` will return different outputs as show above. Unless you need every output, it is recommended to skip it, as it makes the integration faster (and reduces the memory footprint). 
+``integrate`` will return different outputs as shown above. Unless you need every output, it is recommended to skip it, as it makes the integration faster (and reduces the memory footprint). 
 
 Explanation of outputs
 ----------------------

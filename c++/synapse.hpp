@@ -15,9 +15,9 @@ class synapse {
 protected:
 
 
-    compartment *post_syn; // pointer to pre-synaptic compartment
+    
 public:
-
+    compartment *post_syn; // pointer to pre-synaptic compartment
     compartment *pre_syn; // pointer to pre-synaptic compartment
     double gbar;
     double E;

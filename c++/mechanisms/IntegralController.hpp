@@ -15,6 +15,13 @@
 class IntegralController: public mechanism {
 
 protected:
+    // flag used to switch between
+    // controlling channels and synapses
+    // meaning:
+    // 0 --- unset, will throw an error
+    // 1 --- channels
+    // 2 --- synapses
+    int control_type = 0;
 public:
     // timescales
     double tau_m = std::numeric_limits<double>::infinity();
@@ -100,17 +107,15 @@ void IntegralController::connect(conductance * channel_)
     // make sure the compartment that we are in knows about us
     (channel->container)->addMechanism(this);
 
-    // check that the compartment we are in has a valid
-    // (non NaN Ca_target)
+
 
     controlling_class = (channel_->getClass()).c_str();
 
     // attempt to read the area of the container that this
-    // controller should be in. note that this is not necessarily the
-    // container that contains this controller. rather, it is 
-    // the compartment that contains the conductance/synapse 
-    // that this controller controls
+    // controller should be in. 
     container_A  = (channel->container)->A;
+
+    control_type = 1;
 
 
 }
@@ -122,35 +127,105 @@ void IntegralController::connect(compartment* comp_)
 
 void IntegralController::connect(synapse* syn_)
 {
-    mexErrMsgTxt("[IntegralController] This mechanism cannot connect to a synapse object");
+
+    // connect to a synpase
+    syn = syn_;
+
+
+    // make sure the compartment that we are in knows about us
+    (syn->post_syn)->addMechanism(this);
+
+
+    // attempt to read the area of the container that this
+    // controller should be in. 
+    container_A  = (syn->post_syn)->A;
+
+    control_type = 2;
+
 }
 
 
 void IntegralController::integrate(void)
 {
 
-    // if the target is NaN, we will interpret this
-    // as the controller being disabled 
-    // and do nothing 
-    if (isnan((channel->container)->Ca_target)) {return;}
 
-    double Ca_error = (channel->container)->Ca_target - (channel->container)->Ca_prev;
+    switch (control_type)
+    {
+        case 0:
+            mexErrMsgTxt("[IntegralController] misconfigured controller");
+            break;
 
-    // integrate mRNA
-    m += (dt/tau_m)*(Ca_error);
 
-    // mRNA levels below zero don't make any sense
-    if (m < 0) {m = 0;}
+        case 1:
 
-    // copy the protein levels from this channel
-    double gdot = ((dt/tau_g)*(m - channel->gbar*container_A));
+            {
+            // if the target is NaN, we will interpret this
+            // as the controller being disabled 
+            // and do nothing 
+            if (isnan((channel->container)->Ca_target)) {return;}
 
-    // make sure it doesn't go below zero
-    if (channel->gbar_next + gdot < 0) {
-        channel->gbar_next = 0;
-    } else {
-        channel->gbar_next += gdot/container_A;
+            double Ca_error = (channel->container)->Ca_target - (channel->container)->Ca_prev;
+
+            // integrate mRNA
+            m += (dt/tau_m)*(Ca_error);
+
+            // mRNA levels below zero don't make any sense
+            if (m < 0) {m = 0;}
+
+            // copy the protein levels from this channel
+            double gdot = ((dt/tau_g)*(m - channel->gbar*container_A));
+
+            // make sure it doesn't go below zero
+            if (channel->gbar_next + gdot < 0) {
+                channel->gbar_next = 0;
+            } else {
+                channel->gbar_next += gdot/container_A;
+            }
+
+
+            break;
+
+            }
+        case 2:
+            {
+            // if the target is NaN, we will interpret this
+            // as the controller being disabled 
+            // and do nothing 
+
+            // mexPrintf("synapse being controlled\n");
+
+            if (isnan((syn->post_syn)->Ca_target)) {return;}
+
+            double Ca_error = (syn->post_syn)->Ca_target - (syn->post_syn)->Ca_prev;
+
+            // integrate mRNA
+            m += (dt/tau_m)*(Ca_error);
+
+            // mRNA levels below zero don't make any sense
+            if (m < 0) {m = 0;}
+
+            // copy the protein levels from this syn
+            double gdot = ((dt/tau_g)*(m - syn->gbar));
+
+            // make sure it doesn't go below zero
+            if (syn->gbar + gdot < 0) {
+                syn->gbar = 0;
+            } else {
+                syn->gbar += gdot;
+            }
+
+
+            break;
+
+            }
+
+        default:
+            mexErrMsgTxt("[IntegralController] misconfigured controller");
+            break;
+
     }
+
+
 }
 
 
