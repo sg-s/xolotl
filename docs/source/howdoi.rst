@@ -231,3 +231,19 @@ debug a model or simulation?
 ``xolotl`` has a debug mode that can be turned on using ::
 
   x.verbosity = 1;
+
+use a specific numerical integration scheme?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+By default, for single-compartment models and networks, xolotl uses an exponential
+Euler regime (Eq. 1.6 here_), which balances computational speed and simulation accuracy.
+
+.. _here: https://na.math.kit.edu/download/papers/acta-final.pdf
+
+Xolotl can be forced to use a fourth-order Runge-Kutta_ method by setting the
+``solver_order`` flag ::
+  x.solver_order = 4
+
+To go back to the exponential Euler method, set ``x.solver_order = 0``.
+
+.. _Runge-Kutta: http://lpsa.swarthmore.edu/NumInt/NumIntFourth.html
