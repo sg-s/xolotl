@@ -6,7 +6,7 @@
 Compiler Support
 ================
 
-``xolotl`` simulates models by running compiled ``C++` code in ``MATLAB``. This process requires a ``C++`` compiler that is linked to the ``MATLAB`` executable (``mex``) system.
+``xolotl`` simulates models by running compiled ``C++`` code in ``MATLAB``. This process requires a ``C++`` compiler that is linked to the ``MATLAB`` executable (``mex``) system.
 
 Compiling on Microsoft Windows
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -83,19 +83,19 @@ of ``g++``. This is not strictly necessary; ``MATLAB`` can still compile using `
 with newer versions of ``g++`` in most cases. Generally, downgrading to an older
 version of ``g++`` doesn't solve this problem.
 
-There is a relatively simple fix however. Credit goes to ``github`` user bonanza123_
+There is a relatively simple fix however. Credit goes to GitHub user bonanza123_
 for figuring it out.
 
 .. _bonanza123: https://gist.github.com/bonanza123/
-.. _here: https://gcc.gnu.org/
 
 
-* First download the proper version of ``gcc/g++``. If you use a package manager there are generally legacy versions under ``gcc-VERSION``, where ``VERSION`` is the version number (e.g. 6). You can also find them here_.
+* First download the proper version of ``gcc/g++``. If you use a package manager there are generally legacy versions under ``gcc-VERSION``, where ``VERSION`` is the version number (e.g. 6). You can also find them from the GCC project_.
 * Second change the ``mex_LANG_glnxa64.xml`` specification file, where ``LANG`` is either ``C`` or ``C++``. This is typically found at ``~/.matlab/R2018a/mex_C_glnxa64.xml`` where ``R2018a`` is the version of ``MATLAB`` and ``C`` is the name of the language.
 * Replace all references to ``$GCC`` with the path to the soft link to your ``gcc`` compiler (e.g. ``/usr/bin/gcc-6``). If you don't have a soft link to your compiler set up (i.e. ``which gcc`` doesn't tell you the path to the link), then you have to `set one up`__.
 * Repeat this process for the ``mex_C++_glnxa64.xml`` file. It should be in the same location as the ``C``-specific file.
 * Sometimes ``MATLAB`` doesn't generate the ``C++`` ``.xml`` file, causing a lot of errors. If it doesn't exist, copy the ``C`` version of the file, rename it to ``mex_C++_glnxa64.xml``, and replace all references to ``gcc`` with ``g++``, so that ``MATLAB`` knows to use the right compiler.
 
+.. _project: https://www.gnu.org/software/gcc/
 __ https://askubuntu.com/questions/898578/how-can-i-change-which-gcc-directory
 
 The problem is fixed if you see something like this in ``MATLAB`` ::
