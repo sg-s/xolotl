@@ -15,7 +15,7 @@ Run the following in your shell (not the MATLAB prompt)::
 On macOS, I get a warning saying that "Warning: Xcode is installed, but its license has not been accepted."
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-First, make sure you have XCode installed (not just the Command Line Tools -- the whole thing). You can get this from the Mac App Store. Then, open XCode and accept the license. You will have to do this only once. 
+First, make sure you have XCode installed (not just the Command Line Tools -- the whole thing). You can get this from the Mac App Store. Then, open XCode and accept the license. You will have to do this only once.
 
 I ran the quickstart, but I don't see anything
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -32,4 +32,4 @@ I get an error saying I don't have a compiler
 You need a C/C++ compiler. You need to follow MATLAB's instructions_ on how to get one, how to install one, and how to configure one. It may be helpful to also see our advice on compilers_.
 
 .. _instructions: https://www.mathworks.com/support/compilers.html
-.. _compilers: compilers.rst
+.. _compilers: https://xolotl.readthedocs.io/en/latest/compilers.html
