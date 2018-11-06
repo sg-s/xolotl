@@ -52,7 +52,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     //xolotl:add_conductances_here
 
 
-    vector<synapse*> synapses; // pointers to all synapses 
+    vector<synapse*> all_synapses; // pointers to all synapses 
     //xolotl:add_synapses_here
 
 
@@ -351,7 +351,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
                         for (int k = 0; k < n_synapses; k++)
                         {
-                            syn_idx = (synapses[k]->getFullState(output_syn_state,syn_idx));
+                            syn_idx = (all_synapses[k]->getFullState(output_syn_state,syn_idx));
                         }
 
                         break;
@@ -483,7 +483,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 // state of all synapses
                 if (nlhs > 5) {
                     for (int k = 0; k < n_synapses; k++) {
-                        syn_idx = (synapses[k]->getFullState(output_syn_state,syn_idx));
+                        syn_idx = (all_synapses[k]->getFullState(output_syn_state,syn_idx));
                     }
                 }
                 output_idx ++;

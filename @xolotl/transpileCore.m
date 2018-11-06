@@ -57,6 +57,7 @@ lines = [lines(1:insert_here); input_hookups(:); lines(insert_here+1:end)];
 % make all the C++ objects 
 [constructors, class_parents, obj_names] = self.generateConstructors;
 
+
 insert_here = lineFind(lines,'//xolotl:insert_constructors');
 assert(length(insert_here)==1,'Could not find insertion point for object constructors')
 lines = [lines(1:insert_here); constructors(:); lines(insert_here+1:end)];
@@ -125,8 +126,18 @@ lines = [lines(1:insert_here); channel_hookups(:); lines(insert_here+1:end)];
 
 
 synapse_add_lines = {};
-for i = 1:length(self.synapses)
-	synapse_add_lines{i} = ['synapses' mat2str(i) '.connect(&' self.synapse_pre{i} ', &' self.synapse_post{i} '); n_synapses ++; synapses.push_back(&synapses' mat2str(i) ');'];
+
+if length(self.synapses) == 1
+	% special case for when there is only
+	% one synapse
+
+	synapse_add_lines{1} = ['synapses.connect(&' self.synapse_pre{1} ', &' self.synapse_post{1} '); n_synapses ++; all_synapses.push_back(&synapses);'];
+else
+
+	for i = 1:length(self.synapses)
+		synapse_add_lines{i} = ['synapses' mat2str(i) '.connect(&' self.synapse_pre{i} ', &' self.synapse_post{i} '); n_synapses ++; all_synapses.push_back(&synapses' mat2str(i) ');'];
+	end
+
 end
 
 insert_here = lineFind(lines,'//xolotl:add_synapses_here');
