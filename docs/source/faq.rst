@@ -28,8 +28,12 @@ we see is an issue between ``MATLAB``, the ``MEX`` compiler, and your computer. 
 situation, a first step would be to check our compilers_ guide which has detailed fixes for
 some of the most common compiler issues we've seen.
 
+.. _compilers: compilers.rst
+
 .. hint::
-  If ``GetMD5`` fails, then it's definitely at least a compiler issue.
+  If GetMD5_ fails, then it's definitely at least a compiler issue.
+
+.. _GetMD5: https://github.com/sg-s/srinivas.gs_mtools/blob/master/src/file-tools/GetMD5.m
 
 If it's not a compiler issue and you've checked all the typical programming
 pitfalls (syntax, spelling, your ``MATLAB`` path, cleared your workspace, etc...),
@@ -37,15 +41,19 @@ try the following ::
   % erases all the compiled binaries of xolotl networks
   x.cleanup
 
-If you're still having a problem, we might have fixed it already! Reinstall or update by running the ``xolotl.update()`` if you installed the toolbox or pulling from the repository if you're using ``git``.
-Remember that if you're using ``git`` you should be sure to pull all the dependencies as well
-(``srinivas.gs_mtools``, ``cpplab``, ``puppeteer``).
+If you're still having a problem, we might have fixed it already! Reinstall or update by running the command
+``xolotl.update()`` if you installed the toolbox or by pulling from the repository if you're using ``git``.
 
-.. _compilers: compilers.rst
+.. hint::
+  Remember that if you're using ``git`` you should be sure to pull all the dependencies as well
+  (srinivas.gs_mtools_, cpplab_, puppeteer_).
+
+.. _srinivas.gs_mtools: https://github.com/sg-s/srinivas.gs_mtools
+.. _cpplab: https://github.com/sg-s/cpplab
+.. _puppeteer: https://github.com/sg-s/puppeteer
 
 How Do I Cite This?
 ^^^^^^^^^^^^^^^^^^^
-Thanks for thinking of us! We'll be publishing later this year, and a preprint is available on bioRxiv.
+Thanks for thinking of us! We'll be publishing later this year, and a preprint is available on bioRxiv_.
 
-.. _ArXiv: https://www.biorxiv.org/content/early/2018/08/18/394973
-
+.. _bioRxiv: https://www.biorxiv.org/content/early/2018/08/18/394973
