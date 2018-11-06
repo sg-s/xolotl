@@ -43,6 +43,9 @@ end
 
 assert(self.checkCompartmentName(obj_name),['Illegal compartment name: ' obj_name])
 
-
-
 add@cpplab(self,obj, obj_name);
+
+% reset I_ext and V_clamp
+N = length(self.find('compartment'));
+self.I_ext = zeros(1,N);
+self.V_clamp = NaN(1,N);
