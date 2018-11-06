@@ -60,7 +60,6 @@ Test coverage
 
 ``show`` is tested in: 
 
-- `test_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/test_fI.m>`_ 
 
 
 
@@ -97,7 +96,6 @@ Test coverage
 
 ``compile`` is tested in: 
 
-- `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
 
 
 
@@ -190,7 +188,6 @@ Test coverage
 
 ``checkCompartmentName`` is tested in: 
 
-- `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
 
 
 
@@ -213,7 +210,6 @@ Test coverage
 
 ``benchmark`` is tested in: 
 
-- `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
 
 
 
@@ -395,8 +391,6 @@ Test coverage
 
 ``reset`` is tested in: 
 
-- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
-- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
 
 
 
@@ -446,7 +440,6 @@ Test coverage
 
 ``snapshot`` is tested in: 
 
-- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
 
 
 
@@ -506,17 +499,6 @@ Test coverage
 
 ``plot`` is tested in: 
 
-- `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
-- `test_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/test_fI.m>`_ 
-- `test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/tests/test_integral_control.m>`_ 
-- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
-- `test_rk4.m <https://github.com/sg-s/xolotl/blob/master/tests/test_rk4.m>`_ 
-- `test_clamp.m <https://github.com/sg-s/xolotl/blob/master/tests/test_clamp.m>`_ 
-- `custom_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/custom_fI.m>`_ 
-- `test_stg_temperature.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg_temperature.m>`_ 
-- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
-- `test_approx.m <https://github.com/sg-s/xolotl/blob/master/tests/test_approx.m>`_ 
-- `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
 
 
 
@@ -548,7 +530,6 @@ Test coverage
 
 ``getGatingFunctions`` is tested in: 
 
-- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
 
 
 
@@ -572,8 +553,6 @@ Test coverage
 
 ``cleanup`` is tested in: 
 
-- `test_rk4.m <https://github.com/sg-s/xolotl/blob/master/tests/test_rk4.m>`_ 
-- `test_approx.m <https://github.com/sg-s/xolotl/blob/master/tests/test_approx.m>`_ 
 
 
 
@@ -615,17 +594,6 @@ Test coverage
 
 ``integrate`` is tested in: 
 
-- `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
-- `test_all_cond.m <https://github.com/sg-s/xolotl/blob/master/tests/test_all_cond.m>`_ 
-- `test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/tests/test_integral_control.m>`_ 
-- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
-- `test_rk4.m <https://github.com/sg-s/xolotl/blob/master/tests/test_rk4.m>`_ 
-- `test_clamp.m <https://github.com/sg-s/xolotl/blob/master/tests/test_clamp.m>`_ 
-- `custom_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/custom_fI.m>`_ 
-- `test_stg_temperature.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg_temperature.m>`_ 
-- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
-- `test_approx.m <https://github.com/sg-s/xolotl/blob/master/tests/test_approx.m>`_ 
-- `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
 
 
 
@@ -679,7 +647,6 @@ Test coverage
 
 ``transpile`` is tested in: 
 
-- `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
 
 
 
@@ -736,18 +703,6 @@ Test coverage
 
 ``add`` is tested in: 
 
-- `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
-- `test_compartment_name.m <https://github.com/sg-s/xolotl/blob/master/tests/test_compartment_name.m>`_ 
-- `test_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/test_fI.m>`_ 
-- `test_all_cond.m <https://github.com/sg-s/xolotl/blob/master/tests/test_all_cond.m>`_ 
-- `test_integral_control.m <https://github.com/sg-s/xolotl/blob/master/tests/test_integral_control.m>`_ 
-- `test_conductance.m <https://github.com/sg-s/xolotl/blob/master/tests/test_conductance.m>`_ 
-- `test_rk4.m <https://github.com/sg-s/xolotl/blob/master/tests/test_rk4.m>`_ 
-- `test_clamp.m <https://github.com/sg-s/xolotl/blob/master/tests/test_clamp.m>`_ 
-- `test_stg_temperature.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg_temperature.m>`_ 
-- `test_noise.m <https://github.com/sg-s/xolotl/blob/master/tests/test_noise.m>`_ 
-- `test_approx.m <https://github.com/sg-s/xolotl/blob/master/tests/test_approx.m>`_ 
-- `test_bursting_neuron.m <https://github.com/sg-s/xolotl/blob/master/tests/test_bursting_neuron.m>`_ 
 
 
 
@@ -864,7 +819,6 @@ Test coverage
 
 ``connect`` is tested in: 
 
-- `test_stg.m <https://github.com/sg-s/xolotl/blob/master/tests/test_stg.m>`_ 
 
 
 
@@ -966,8 +920,6 @@ Test coverage
 
 ``manipulate`` is tested in: 
 
-- `test_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/test_fI.m>`_ 
-- `custom_fI.m <https://github.com/sg-s/xolotl/blob/master/tests/custom_fI.m>`_ 
 
 
 

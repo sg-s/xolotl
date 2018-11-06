@@ -14,9 +14,9 @@ end
 cpplab.rebuildCache;
 
 this_dir = fileparts(fileparts(which(mfilename)));
-all_tests = dir(joinPath(this_dir,'tests','test*.m'));	
+all_tests = dir(joinPath(this_dir,'examples','demo*.m'));	
 
-cd(joinPath(this_dir,'tests'))
+cd(joinPath(this_dir,'examples'))
 	
 
 passed = 0;
