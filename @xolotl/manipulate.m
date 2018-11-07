@@ -35,6 +35,7 @@ self.closed_loop = false;
 % make a snapshot of this now
 self.snapshot('manipulate_zero')
 
+
 t_end = self.t_end;
 
 compartment_names = self.find('compartment');
@@ -86,7 +87,6 @@ else
 	end
 end
 
-
 assert(~isempty(manipulate_these),'Manipulate was called with illegal or invalid parameters that did not resolve to anything.')
 
 % semi-intelligently make the upper and lower bounds
@@ -94,9 +94,10 @@ lb = values/3;
 ub = values*3;
 
 % create a puppeteer instance and configure
+warning('off','MATLAB:hg:uicontrol:ValueMustBeInRange')
+warning('off','MATLAB:hg:uicontrol:MinMustBeLessThanMax')
 p = puppeteer(real_names,values,lb,ub,[],true);
 self.handles.puppeteer_object = p;
-
 
 
 
@@ -105,10 +106,8 @@ for i = length(self.manipulate_plot_func):-1:1
 	self.manipulate_plot_func{i}(self);
 end
 
-
-
-warning('off','MATLAB:hg:uicontrol:ValueMustBeInRange')
-
+warning('on','MATLAB:hg:uicontrol:MinMustBeLessThanMax')
+warning('on','MATLAB:hg:uicontrol:ValueMustBeInRange')
 
 p.callback_function = @self.manipulateEvaluate;
 

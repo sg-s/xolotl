@@ -25,6 +25,14 @@ self.reset('manipulate_zero')
 
 self.set(names,values)
 
+original_approx_state = self.approx_channels;
+
+if self.pref.use_approx
+	self.approx_channels = 1;
+end
+
 for i = 1:length(self.manipulate_plot_func)
 	self.manipulate_plot_func{i}(self);
 end
+
+self.approx_channels = original_approx_state;

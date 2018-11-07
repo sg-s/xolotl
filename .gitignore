@@ -17,3 +17,4 @@
 *.prj
 demos.xml
 last_build.kapalin
+*pref.m

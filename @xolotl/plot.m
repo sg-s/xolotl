@@ -53,13 +53,13 @@ if isempty(self.handles) || ~isfield(self.handles,'fig') || ~isvalid(self.handle
 	
 	for i = 1:N
 
-		if getpref('xolotl','show_Ca',true)
+		if self.pref.show_Ca
 			yyaxis(self.handles.ax(i),'left')
 		end
 		
 		cond_names = self.(comp_names{i}).find('conductance');
 
-		if getpref('xolotl','plot_color',true)
+		if self.pref.plot_color
 
 			for j = 1:length(cond_names)
 				self.handles.plots(i).ph(j) = plot(self.handles.ax(i),NaN,NaN, 'Color', c(j,:),'LineWidth',3);
@@ -73,13 +73,13 @@ if isempty(self.handles) || ~isfield(self.handles,'fig') || ~isvalid(self.handle
 
 		% make calcium dummy plots
 		
-		if getpref('xolotl','show_Ca',true)
+		if self.pref.show_Ca
 			yyaxis(self.handles.ax(i),'right')
 			self.handles.Ca_trace(i) = plot(self.handles.ax(i),NaN,NaN,'Color','k');
 			ylabel(self.handles.ax(i),['[Ca^2^+]_{' comp_names{i} '} (uM)'] )
 		end
 
-		if getpref('xolotl','show_Ca',true) & getpref('xolotl','plot_color',true)
+		if self.pref.show_Ca & self.pref.plot_color
 			lh = legend([self.handles.plots(i).ph self.handles.Ca_trace(i)],[cond_names; '[Ca]']);
 			lh.Location = 'eastoutside';
 
@@ -123,7 +123,7 @@ for i = 1:N
 	curr_index = xolotl.contributingCurrents(this_V, this_I);
 
 	% show voltage
-	if getpref('xolotl','plot_color',true)
+	if self.pref.plot_color
 		for j = 1:size(this_I,2)
 			Vplot = this_V;
 			Vplot(curr_index ~= j) = NaN;
@@ -140,7 +140,7 @@ for i = 1:N
 
 
 	% and now show calcium
-	if getpref('xolotl','show_Ca',true)
+	if self.pref.show_Ca
 		self.handles.Ca_trace(i).XData = time;
 		self.handles.Ca_trace(i).YData = Ca(:,i);
 		if isnan(max_Ca)

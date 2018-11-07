@@ -66,6 +66,9 @@ properties
     % 1 -- integer mV only (approx)
     approx_channels@double = 0;
 
+    % structure that stores preferences
+    % edit pref.m to change these
+    pref
 
 
 end % end general props
@@ -123,18 +126,7 @@ methods
 	function self = xolotl()
 		self.rebase;
 
-        p = getpref('xolotl');
-        if isempty(p)
-            setpref('xolotl','plot_color',true)
-            setpref('xolotl','show_Ca',true)
-        else
-            if ~isfield(p,'plot_color')
-                setpref('xolotl','plot_color',true)
-            end
-            if ~isfield(p,'show_Ca')
-                setpref('xolotl','show_Ca',true)
-            end
-        end
+        self.pref = readPref(which(mfilename));
 
 
         % append all classnames to illegal names

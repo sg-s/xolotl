@@ -114,6 +114,8 @@ end
 % vectorize the current state
 arguments = self.serialize;
 
+% this may give us some small speed bump
+%arguments = self.get(self.find('*'));
 
 [~,f] = fileparts(self.linked_binary);
 
