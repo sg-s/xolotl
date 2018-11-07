@@ -114,9 +114,6 @@ end
 % vectorize the current state
 arguments = self.serialize;
 
-n_comp = length(self.find('compartment'));
-n_steps = floor(self.t_end/self.sim_dt);
-
 
 [~,f] = fileparts(self.linked_binary);
 
