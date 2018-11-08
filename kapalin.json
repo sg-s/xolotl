@@ -7,5 +7,12 @@
   "author": "Srinivas Gorur-Shandilya",
   "author-url": "https://srinivas.gs",
   "preferred-test-time": "03:00",
-  "test-time-margin": 60
+  "test-time-margin": 60,
+  "github_user_name": "sg-s",
+  "github_repo": "xolotl",
+  "github_binary": ["xolotl.mltbx"],
+  "github_token": ".github_token"
 }
+
+
+

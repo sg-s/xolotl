@@ -128,7 +128,6 @@ methods
 
         self.pref = readPref(which(mfilename));
 
-
         % append all classnames to illegal names
         [~,hpp_files] = self.resolvePath('');
         self.hpp_files = hpp_files;
