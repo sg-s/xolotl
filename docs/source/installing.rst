@@ -11,7 +11,7 @@ Installing: Download a MATLAB Toolbox
 
 ``xolotl`` is available as a MATLAB toolbox. Click here_ to download it, and click on the downloaded file to install. 
 
-.. _here: https://drive.google.com/uc?id=19xddT00ObfsKHaa2T1YobZeA2C2qfuIh&export=download
+.. _here: https://github.com/sg-s/xolotl/releases/download/latest/xolotl.mltbx
 
 .. warning::
 

@@ -1,7 +1,5 @@
 # xolotl: a fast and flexible neuronal simulator
-<!--kapalin_test_result_start-->
-![](https://img.shields.io/badge/macOS_10.14-11/11-brightgreen.svg) 
-<!--kapalin_test_result_stop-->
+
 ![](https://readthedocs.org/projects/sphinx-rtd-theme/badge/?version=latest)
 ![](https://img.shields.io/github/last-commit/sg-s/xolotl.svg)
 
@@ -68,7 +66,7 @@ Neurons and networks in ``xolotl`` can be manipulated in real-time using the gra
 
 # Where do I get this?
 
-Click [here](https://drive.google.com/uc?id=19xddT00ObfsKHaa2T1YobZeA2C2qfuIh&export=download) to download, and click on the downloaded file to install. 
+Click [here](https://github.com/sg-s/xolotl/releases/download/latest/xolotl.mltbx) to download, and click on the downloaded file to install. 
 
 
 

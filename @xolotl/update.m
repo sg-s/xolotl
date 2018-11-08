@@ -43,7 +43,7 @@ else
 		xolotl.uninstall();
 
 		% download the new toolbox 
-		websave('xolotl.mltbx','https://drive.google.com/uc?id=19xddT00ObfsKHaa2T1YobZeA2C2qfuIh&export=download');
+		websave('xolotl.mltbx','https://github.com/sg-s/xolotl/releases/download/latest/xolotl.mltbx');
 
 		assert(exist('xolotl.mltbx') == 2,'Failed to download toolbox')
 
