@@ -13,6 +13,9 @@ end
 % rebuild cpplab cache just to be safe
 cpplab.rebuildCache;
 
+% compile GetMD5
+ok = InstallMex('GetMD5.c', 'uTest_GetMD5');
+
 this_dir = fileparts(fileparts(which(mfilename)));
 all_tests = dir(joinPath(this_dir,'examples','demo*.m'));	
 
