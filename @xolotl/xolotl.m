@@ -225,6 +225,9 @@ end % end methods
 
 methods (Static)
     
+
+    go_to_examples()
+
     uninstall();
     update();
 

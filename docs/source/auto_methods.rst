@@ -862,6 +862,27 @@ Test coverage
 
 
 
+.. _go_to_examples:
+
+go_to_examples
+^^^^^^^^^^^^^^
+A static method that goes to the folder that contains xolotl examples. Usage ::
+
+   xolotl.go_to_examples
+
+
+
+
+
+
+Test coverage
+--------------
+
+``go_to_examples`` is tested in: 
+
+
+
+
 .. _findNSpikeTimes:
 
 findNSpikeTimes
