@@ -1,7 +1,5 @@
 {
   "name": "xolotl",
-  "vm_names": ["debian"],
-  "test_folder": "tests",
   "deps": ["cpplab", "srinivas.gs_mtools","puppeteer"],
   "stable-branch": "master",
   "author": "Srinivas Gorur-Shandilya",
