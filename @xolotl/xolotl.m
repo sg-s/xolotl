@@ -149,6 +149,14 @@ methods
 	end
 
 
+    function self = set.closed_loop(self,value)
+        if isscalar(value)
+            self.closed_loop = logical(value);
+        else
+            error('xolotl::closed_loop must be a logical scalar, either "True" or "False"')
+        end
+    end % set.closed_loop
+
     function self = set.V_clamp(self,V_clamp)
 
         d = dbstack;
