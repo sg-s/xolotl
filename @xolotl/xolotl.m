@@ -70,6 +70,8 @@ properties
     % edit pref.m to change these
     pref
 
+    output_structure@logical = false;
+
 
 end % end general props
 

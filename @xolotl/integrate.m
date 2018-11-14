@@ -34,7 +34,7 @@ Explanation of outputs
 %}
 
 
-function [V, Ca, cont_state, curr_state, syn_state] = integrate(self)
+function varargout = integrate(self)
 
 
 if isempty(self.linked_binary)
@@ -83,6 +83,12 @@ if nargout == 0 & self.closed_loop == false
 	error('Are you sure you want to integrate this with no outputs and with closed_loop set to FALSE?')
 end
 
+if self.output_structure
+	n_outputs = 5; % we get everyting
+else
+	n_outputs = nargout;
+end
+
 V = [];
 Ca = [];
 I_clamp = [];
@@ -90,8 +96,8 @@ curr_state = [];
 syn_state = [];
 cont_state = [];
 
-
-n_comp = length(self.find('compartment'));
+comp_names = self.find('compartment');
+n_comp = length(comp_names);
 n_steps = floor(self.t_end/self.sim_dt);
 
 % make sure I_ext and V_clamp are specified
@@ -120,7 +126,7 @@ arguments = self.serialize;
 [~,f] = fileparts(self.linked_binary);
 
 f = str2func(f);
-[results{1:nargout+1}] = f(arguments,self.I_ext',self.V_clamp');
+[results{1:n_outputs+1}] = f(arguments,self.I_ext',self.V_clamp');
 
 if self.closed_loop
 	self.deserialize(results{1}(1:length(arguments)));
@@ -129,18 +135,85 @@ end
 % read out mechanism sizes
 mechanism_sizes = results{1}(length(arguments)+1:end);
 
-if nargout > 0
+
+if n_outputs > 0
 	V = (results{2})';
 end
-if nargout > 1
+if n_outputs > 1
 	Ca = (results{3})';
 end
-if nargout > 2
+if n_outputs > 2
 	cont_state = (results{4})';
 end
-if nargout > 3
+if n_outputs > 3
 	curr_state = (results{5})';
 end
-if nargout > 4
+if n_outputs > 4
 	syn_state = (results{6})';
 end
+
+
+if ~self.output_structure
+	varargout{1} = V;
+	varargout{2} = Ca;
+	varargout{3} = cont_state;
+	varargout{4} = curr_state;
+	varargout{5} = syn_state;
+	return
+else
+
+	data = struct;
+
+	% voltages
+	for i = 1:n_comp
+		data.(comp_names{i}).V = V(:,i);
+	end
+
+	% calcium and E_Ca
+	for i = 1:n_comp
+		data.(comp_names{i}).Ca = Ca(:,i);
+		data.(comp_names{i}).E_Ca = Ca(:,i+n_comp);
+	end
+
+
+	% all mechanisms 
+	all_mechanisms = self.find('mechanism');
+	a = 1;
+	for i = 1:length(mechanism_sizes)
+		this_mech_size = mechanism_sizes(i);
+
+		if this_mech_size == 0
+			continue
+		end
+
+		z = a + this_mech_size - 1;
+
+		eval(['data.' all_mechanisms{i} '=cont_state(:,a:z);']);
+
+		a = z + 1;
+
+	end
+
+
+	% all currents
+	a = 1;
+	for i = 1:n_comp
+		cond_names = self.(comp_names{i}).find('conductance');
+		for j = 1:length(cond_names)
+			data.(comp_names{i}).(cond_names{j}).I = curr_state(:,a);
+			a = a + 1;
+		end
+	end
+
+
+	% all synapses
+	if ~isempty(syn_state )
+		data.synapses = syn_state;
+	end
+
+	varargout{1} = data;
+	return
+
+
+end
+
