@@ -208,7 +208,7 @@ else
 
 	% all synapses
 	if ~isempty(syn_state )
-		data.synapses = syn_state;
+		data.synapse_state = syn_state;
 	end
 
 	varargout{1} = data;
