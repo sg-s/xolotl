@@ -152,7 +152,7 @@ void IntegralController::integrate(void)
     switch (control_type)
     {
         case 0:
-            mexErrMsgTxt("[IntegralController] misconfigured controller");
+            mexErrMsgTxt("[IntegralController] misconfigured controller. Make sure this object is contained by a conductance or synapse object");
             break;
 
 
@@ -192,8 +192,6 @@ void IntegralController::integrate(void)
             // as the controller being disabled 
             // and do nothing 
 
-            // mexPrintf("synapse being controlled\n");
-
             if (isnan((syn->post_syn)->Ca_target)) {return;}
 
             double Ca_error = (syn->post_syn)->Ca_target - (syn->post_syn)->Ca_prev;
@@ -205,13 +203,13 @@ void IntegralController::integrate(void)
             if (m < 0) {m = 0;}
 
             // copy the protein levels from this syn
-            double gdot = ((dt/tau_g)*(m - syn->gbar));
+            double gdot = ((dt/tau_g)*(m - syn->gbar*1e-3));
 
             // make sure it doesn't go below zero
-            if (syn->gbar + gdot < 0) {
+            if (syn->gbar + gdot*1e3 < 0) {
                 syn->gbar = 0;
             } else {
-                syn->gbar += gdot;
+                syn->gbar += gdot*1e3;
             }
 
 
@@ -235,7 +233,7 @@ void IntegralController::checkSolvers(int k)
     if (k == 0){
         return;
     } else {
-        mexErrMsgTxt("[CalciumMech1] unsupported solver order\n");
+        mexErrMsgTxt("[IntegralController] unsupported solver order\n");
     }
 }
 

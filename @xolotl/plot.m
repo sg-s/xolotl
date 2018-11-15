@@ -32,6 +32,9 @@ comp_names = self.find('compartment');
 N = length(comp_names);
 c = lines(100);
 
+output_structure = self.output_structure;
+self.output_structure = false;
+
 if isempty(self.handles) || ~isfield(self.handles,'fig') || ~isvalid(self.handles.fig)
 	if N == 1
 		y = 500;
@@ -162,3 +165,5 @@ try
 	prettyFig('plw',1,'lw',1);
 catch
 end
+
+self.output_structure = output_structure;
