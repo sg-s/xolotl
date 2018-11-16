@@ -171,7 +171,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int * spike_time_idx = new int[n_comp]; 
     int spikes_only = 0;
     if (output_type == 2){
-        mexPrintf("Returning spiketimes instead of voltage..\n");
+        // mexPrintf("Returning spiketimes instead of voltage..\n");
         spikes_only = 1;
         for (int i = 0; i < n_comp; i ++){
             spike_time_idx[i] = 0;
