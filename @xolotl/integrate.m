@@ -83,8 +83,10 @@ if nargout == 0 & self.closed_loop == false
 	error('Are you sure you want to integrate this with no outputs and with closed_loop set to FALSE?')
 end
 
-if self.output_structure
-	n_outputs = 5; % we get everyting
+if self.output_type == 1
+	n_outputs = 5; % we get everything
+elseif self.output_type == 2
+	n_outputs = 6; % everything + spiketimes
 else
 	n_outputs = nargout;
 end
@@ -95,6 +97,7 @@ I_clamp = [];
 curr_state = [];
 syn_state = [];
 cont_state = [];
+spiketimes = [];
 
 comp_names = self.find('compartment');
 n_comp = length(comp_names);
@@ -138,82 +141,93 @@ mechanism_sizes = results{1}(length(arguments)+1:end);
 
 if n_outputs > 0
 	V = (results{2})';
+	varargout{1} = V;
 end
 if n_outputs > 1
 	Ca = (results{3})';
+	varargout{2} = Ca;
 end
 if n_outputs > 2
 	cont_state = (results{4})';
+	varargout{3} = cont_state;
 end
 if n_outputs > 3
 	curr_state = (results{5})';
+	varargout{4} = curr_state;
 end
 if n_outputs > 4
 	syn_state = (results{6})';
-end
-
-
-if ~self.output_structure
-	varargout{1} = V;
-	varargout{2} = Ca;
-	varargout{3} = cont_state;
-	varargout{4} = curr_state;
 	varargout{5} = syn_state;
+end
+
+if self.output_type == 0
 	return
-else
+end
 
-	data = struct;
 
-	% voltages
+
+% return a data structure
+
+data = struct;
+
+% voltages/spikes
+if self.output_type == 2
+	spiketimes = results{7};
+	% spiketimes only
 	for i = 1:n_comp
-		data.(comp_names{i}).V = V(:,i);
+		data.(comp_names{i}).spiketimes = nonzeros(spiketimes(:,i));
 	end
-
-	% calcium and E_Ca
-	for i = 1:n_comp
-		data.(comp_names{i}).Ca = Ca(:,i);
-		data.(comp_names{i}).E_Ca = Ca(:,i+n_comp);
-	end
-
-
-	% all mechanisms 
-	all_mechanisms = self.find('mechanism');
-	a = 1;
-	for i = 1:length(mechanism_sizes)
-		this_mech_size = mechanism_sizes(i);
-
-		if this_mech_size == 0
-			continue
-		end
-
-		z = a + this_mech_size - 1;
-
-		eval(['data.' all_mechanisms{i} '=cont_state(:,a:z);']);
-
-		a = z + 1;
-
-	end
-
-
-	% all currents
-	a = 1;
-	for i = 1:n_comp
-		cond_names = self.(comp_names{i}).find('conductance');
-		for j = 1:length(cond_names)
-			data.(comp_names{i}).(cond_names{j}).I = curr_state(:,a);
-			a = a + 1;
-		end
-	end
-
-
-	% all synapses
-	if ~isempty(syn_state )
-		data.synapse_state = syn_state;
-	end
-
-	varargout{1} = data;
-	return
-
 
 end
+
+for i = 1:n_comp
+	data.(comp_names{i}).V = V(:,i);
+end
+
+
+% calcium and E_Ca
+for i = 1:n_comp
+	data.(comp_names{i}).Ca = Ca(:,i);
+	data.(comp_names{i}).E_Ca = Ca(:,i+n_comp);
+end
+
+
+% all mechanisms 
+all_mechanisms = self.find('mechanism');
+a = 1;
+for i = 1:length(mechanism_sizes)
+	this_mech_size = mechanism_sizes(i);
+
+	if this_mech_size == 0
+		continue
+	end
+
+	z = a + this_mech_size - 1;
+
+	eval(['data.' all_mechanisms{i} '=cont_state(:,a:z);']);
+
+	a = z + 1;
+
+end
+
+
+% all currents
+a = 1;
+for i = 1:n_comp
+	cond_names = self.(comp_names{i}).find('conductance');
+	for j = 1:length(cond_names)
+		data.(comp_names{i}).(cond_names{j}).I = curr_state(:,a);
+		a = a + 1;
+	end
+end
+
+
+% all synapses
+if ~isempty(syn_state )
+	data.synapse_state = syn_state;
+end
+
+varargout{1} = data;
+return
+
 

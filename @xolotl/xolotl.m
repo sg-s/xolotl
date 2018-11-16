@@ -70,7 +70,13 @@ properties
     % edit pref.m to change these
     pref
 
-    output_structure@logical = false;
+
+    % what sort of output do you desire? 
+    % 0 -- standard, V, Ca, etc. separated into variables
+    % 1 -- a structure. all outputs included
+    % 2 -- structure, but only with spike times 
+    output_type@double = 0
+    spike_thresh@double = 0 % mV
 
 
 end % end general props
