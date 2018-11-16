@@ -32,8 +32,8 @@ comp_names = self.find('compartment');
 N = length(comp_names);
 c = lines(100);
 
-output_structure = self.output_structure;
-self.output_structure = false;
+output_type = self.output_type;
+self.output_type = 0;
 
 if isempty(self.handles) || ~isfield(self.handles,'fig') || ~isvalid(self.handles.fig)
 	if N == 1
@@ -166,4 +166,4 @@ try
 catch
 end
 
-self.output_structure = output_structure;
+self.output_type = output_type;

@@ -27,6 +27,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double *output_curr_state; // currents
     double *output_syn_state;  // synapses
     double *output_cont_state; // mechanisms
+    double * spiketimes; 
 
 
     //xolotl:define_v_clamp_idx
@@ -151,12 +152,32 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         output_syn_state = mxGetPr(plhs[5]);
     }
 
+    // return another output for spiketimes 
+    if (nlhs > 6) {
+        plhs[6] = mxCreateDoubleMatrix(nsteps_out, n_comp, mxREAL);
+        spiketimes = mxGetPr(plhs[6]);
+    }
+
     // link up I_ext and V_clamp
     double * I_ext = new double[n_comp];
     double * V_clamp = new double[n_comp];
     double * I_ext_in = mxGetPr(prhs[1]);
     double * V_clamp_in = mxGetPr(prhs[2]);
 
+
+    // create arrays to help us find spikes
+    // and return just the spiketimes
+    double * prev_V = new double[n_comp]; 
+    int * spike_time_idx = new int[n_comp]; 
+    int spikes_only = 0;
+    if (output_type == 2){
+        mexPrintf("Returning spiketimes instead of voltage..\n");
+        spikes_only = 1;
+        for (int i = 0; i < n_comp; i ++){
+            spike_time_idx[i] = 0;
+            prev_V[i] = -200;
+        }
+    }
 
     // figure out the sizes of the arrays 
     // for V_clamp and I_ext
@@ -277,7 +298,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             // here we're getting the state of every compartment -- V, Ca, and all conductances
             if (i%res == 0) {
 
-
                 switch (nlhs)
                 {
                     case 1:
@@ -285,12 +305,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                         break;
                     case 2:
                         // read out voltages only
-                        for (int j = 0; j < n_comp; j++)
-                        {
+                        for (int j = 0; j < n_comp; j++) {
                             output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
                         } // end j loop over compartments
                         break;
-
 
                     case 3:
                         // V + Ca
@@ -335,7 +353,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
 
 
-                    case 6: 
+                    default:
                         // V, Ca, Ca, I, Syn
                         for (int j = 0; j < n_comp; j++)
                         {
@@ -358,7 +376,32 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 } // switch
                 output_idx ++;
 
-            } // if we need to write output 
+
+
+            } // if we need to write output
+
+
+
+            // do we need to return spike times? 
+            switch (spikes_only){
+
+                case 0:
+                    break;
+                case 1:
+                    // must return just spike times
+                    for (int j = 0; j < n_comp; j++) {
+                        if ((prev_V[j] < spike_thresh) && ((xolotl_network.comp[j]->V) > spike_thresh)) {
+                            spiketimes[spike_time_idx[j] + j*nsteps_out] = i;
+                            spike_time_idx[j]++;
+                        } 
+                        prev_V[j] = xolotl_network.comp[j]->V;
+                    } // end j loop over compartments
+                    break;
+            }
+
+
+                            
+
         } // end for loop over nsteps
 
 
@@ -488,6 +531,25 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                 }
                 output_idx ++;
             } // end read out variables
+
+
+
+            // do we need to return spike times? 
+            switch (spikes_only){
+
+                case 0:
+                    break;
+                case 1:
+                    // must return just spike times
+                    for (int j = 0; j < n_comp; j++) {
+                        if ((prev_V[j] < spike_thresh) && ((xolotl_network.comp[j]->V) > spike_thresh)) {
+                            spiketimes[spike_time_idx[j] + j*nsteps_out] = i;
+                            spike_time_idx[j]++;
+                        } 
+                        prev_V[j] = xolotl_network.comp[j]->V;
+                    } // end j loop over compartments
+                    break;
+            }
 
 
         } // end for loop over nsteps
