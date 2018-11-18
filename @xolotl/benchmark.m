@@ -5,13 +5,13 @@
     >  < (_) | | (_) | |_| |
    /_/\_\___/|_|\___/ \__|_|
 
-benchmark
-^^^^^^^^^
+### benchmark
 
-performs a quick benchmarking of a given ``xolotl`` model. ``benchmark`` first varies the simulation time step, and measures how quickly the model integrates. It then varies ``t_end``, and measures how fast it integrates at a fixed ``sim_dt``. Usage ::
+performs a quick benchmarking of a given `xolotl` model. `benchmark` first varies the simulation time step, and measures how quickly the model integrates. It then varies `t_end`, and measures how fast it integrates at a fixed `sim_dt`. Usage
 
-    x.benchmark;
-
+```
+x.benchmark;
+```
 
 %}
 

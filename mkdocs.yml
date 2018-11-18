@@ -2,3 +2,28 @@ site_name: xolotl
 repo_url: https://github.com/sg-s/xolotl/
 site_author: Srinivas Gorur-Shandilya
 docs_dir: ./docs
+theme: readthedocs
+nav:
+  - TUTORIALS:
+    - Getting Started: 'tutorials/start-here.md'
+    - Demos: 'tutorials/built-in-demos.md'
+  - HOW TO: 
+    - Install and configure: how-to/install-configure.md
+    - Construct models: how-to/construct-models.md
+    - Modify existing models: how-to/change-existing-models.md
+    - Save and load models: how-to/save-load-models.md
+    - Run simulations: how-to/run-simulations.md
+    - Make plots: how-to/make-plots.md
+    - Save configurations and use snapshots: how-to/snapshots.md
+    - Make your own models: how-to/make-own-models.md
+  - REFERENCE: 
+    - xolotl Properties: 'xolotl-properties.md'
+    - xolotl Methods: 'xolotl-methods.md'
+    - cpplab Properties: 'cpplab-properties.md'
+    - cpplab Methods: 'cpplab-methods.md'
+  - About: 'about.md'
+  - FAQ: 'faq.md'
+  - Contributing: 'contributing.md'
+  - License: 'license.md'
+
+use_directory_urls: true

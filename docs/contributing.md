@@ -1,28 +1,22 @@
-.. set up matlab code highlighting
-.. highlight:: matlab
 
-.. set up referencing
-.. _contributing:
-Contributing to xolotl
-======================
+# Contributing to xolotl
 
-``xolotl`` is far from feature complete, and your contributions are welcome.
+`xolotl` is far from feature complete, and your contributions are welcome.
 
-Reporting Bugs
-^^^^^^^^^^^^^^
+### Reporting Bugs
 
-* Is it a bug? Are you sure the bug persists after you run ``transpile`` and ``compile``` and ``xolotl.cleanup``?
+
+* Is it a bug? Are you sure the bug persists after you run `transpile` and `compile` and `xolotl.cleanup``?
 * Describe what the expected behavior is, and what the actual behavior was
 
-Requesting Features
-^^^^^^^^^^^^^^^^^^^
+
+# Requesting Features
 
 * Describe what you want
 * Describe why you want it
 * List papers that describe this mechanism, or original research that describes the feature you want
 
-Adding New Conductances/Synapses/Controllers
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+# Adding New Conductances/Synapses/Controllers
 
 * Look at existing conductances/synapses/controllers and use them as a guideline
 * If you're making a new conductance, put them in ``c++/conductances/<first_author_name>``
