@@ -26,9 +26,5 @@ This GUI will appear with sliders for maximal conductances of all the channels i
 
 ![](../images/manipulate.png)
 
-To see how this model was created, and to use this as a template for your own projects, type:
-
-```
-edit demo_bursting_neuron.m
-```
-
+!!! note
+    Xolotl comes with several example scripts that illustrate various features of the simulator. They're all in a folder called "examples", and you can jump into this folder from anywhere using `xolotl.go_to_examples`. `demo_stg` is a script that creates a three-cell network and integrates it. `demo_noise` introduces various types of noise into a bursting neuron and shows what the effect is. Run through all these examples to get a sense of what xolotl can do. 

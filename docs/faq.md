@@ -6,6 +6,13 @@
 ``xolotl`` was designed and written by [Srinivas Gorur-Shandilya](https://srinivas.gs/) and Alec Hoyland in
 [Eve Marder's laboratory](https://blogs.brandeis.edu/marderlab/) at Brandeis University.
 
+## What's with the name? And how do I pronounce it? 
+
+Xolotl is the meso-American god of [lightning and death](https://en.wikipedia.org/wiki/Xolotl). It is the humble opinion of some of this writer that this is a better name for a neuron simulator than say, "NEURON". 
+
+[Click here to listen to a pronunciation.](https://upload.wikimedia.org/wikipedia/commons/4/48/Xolotl.ogg) 
+
+
 
 ## How can I contribute?
 

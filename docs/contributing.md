@@ -6,7 +6,7 @@
 ### Reporting Bugs
 
 
-* Is it a bug? Are you sure the bug persists after you run `transpile` and `compile` and `xolotl.cleanup``?
+* Is it a bug? Are you sure the bug persists after you run `transpile` and `compile` and `xolotl.cleanup`?
 * Describe what the expected behavior is, and what the actual behavior was
 
 

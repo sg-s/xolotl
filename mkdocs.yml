@@ -8,9 +8,12 @@ pages:
   - TUTORIALS:
     - Getting Started: 'tutorials/start-here.md'
     - Demos: 'tutorials/built-in-demos.md'
+    - Your first neuron: 'tutorials/first-neuron.md'
+    - Your first network: 'tutorials/first-network.md'
   - HOW TO: 
     - Install and configure: how-to/install-configure.md
     - Construct models: how-to/construct-models.md
+    - Discover and explore existing components: how-to/discover-components.md
     - Modify existing models: how-to/change-existing-models.md
     - Save and load models: how-to/save-load-models.md
     - Run simulations: how-to/run-simulations.md
@@ -34,3 +37,9 @@ use_directory_urls: true
 
 markdown_extensions:
   - admonition
+  - mdx_math:
+      enable_dollar_delimiter: True #for use of inline $..$
+   
+
+# Required to load the MathJax javascript for the mdx_math.py
+extra_javascript: ['https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML']

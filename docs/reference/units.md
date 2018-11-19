@@ -5,12 +5,12 @@
 
 | Variable |                       Units |
 | -----------------------| ------------|
-| Length of cell                   | mm |
-| Surface area of cell             | mm^2 |
-| Volume of cell                   | mm^3 |
+| Length of compartment          | mm |
+| Surface area of compartment    | $mm^2$ |
+| Volume of compartment          | $mm^3$ |
 | Voltage                          | mV |
-| Specific capacitance of membrane | nF/mm^2 |
-| Specific conductance of channel  | μS/mm^2 |
+| Specific capacitance of membrane | $nF/mm^2$ |
+| Specific conductance of channel  | $μS/mm^2$ |
 | Synaptic strength                | nS |
 | Current injected into cell       | nA |
 | Axial resistivity                | MΩ mm |
