@@ -12,33 +12,37 @@ x.add('compartment','AB','A',0.0628);
 
 x.AB.add('CalciumMech1');
 
-qg = 2;
-qm = 2;
-qh = 2;
+x.AB.add('prinz-temperature/NaV','gbar',1000);
+x.AB.add('prinz-temperature/CaT','gbar',25);
+x.AB.add('prinz-temperature/CaS','gbar',60);
+x.AB.add('prinz-temperature/ACurrent','gbar',500);
+x.AB.add('prinz-temperature/KCa','gbar',50);
+x.AB.add('prinz-temperature/Kd','gbar',1000);
+x.AB.add('prinz-temperature/HCurrent','gbar',.1);
 
-x.AB.add('prinz-temperature/NaV','gbar',1000,'E',50,'Q_g',qg,'Q_tau_m',qm,'Q_tau_h',qh);
-x.AB.add('prinz-temperature/CaT','gbar',25,'E',30,'Q_g',qg,'Q_tau_m',qm,'Q_tau_h',qh);
-x.AB.add('prinz-temperature/CaS','gbar',60,'E',30,'Q_g',qg,'Q_tau_m',qm,'Q_tau_h',qh);
-x.AB.add('prinz-temperature/ACurrent','gbar',500,'E',-80,'Q_g',qg,'Q_tau_m',qm,'Q_tau_h',qh);
-x.AB.add('prinz-temperature/KCa','gbar',50,'E',-80,'Q_g',qg,'Q_tau_m',qm);
-x.AB.add('prinz-temperature/Kd','gbar',1000,'E',-80,'Q_g',qg,'Q_tau_m',qm);
-x.AB.add('prinz-temperature/HCurrent','gbar',.1,'E',-20,'Q_g',qg,'Q_tau_m',qm);
-
+x.set('*Q_g',2)
+x.set('*Q_h',2)
+x.set('*Q_tau_m',2)
+x.set('*Q_tau_h',2)
 
 x.dt = 50e-3;
-x.t_end = 20e3;
+x.t_end = 5e3;
 
 x.closed_loop = false;
 
 V = x.integrate;
+time = (1:length(V))*1e-3*x.dt;
 
 x.temperature = 22;
 V2 = x.integrate;
 
 figure('outerposition',[0 0 1000 500],'PaperUnits','points','PaperSize',[1000 500]); hold on
 
-plot(V,'k')
-plot(V2,'r')
-
-
+plot(time,V,'k')
+plot(time,V2,'r')
+xlabel('Time (s)')
+ylabel('V_{m} (mV)')
+legend({'11C','22C'})
+set(gca,'XLim',[0 6],'YLim',[-80 50])
+prettyFig('plw',1,'lw',1)
 drawnow

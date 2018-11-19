@@ -1,0 +1,44 @@
+site_name: xolotl
+repo_url: https://github.com/sg-s/xolotl/
+site_author: Srinivas Gorur-Shandilya
+docs_dir: 'docs'
+theme: 'readthedocs'
+pages:
+  - Home: index.md
+  - TUTORIALS:
+    - Getting Started: 'tutorials/start-here.md'
+    - Demos: 'tutorials/built-in-demos.md'
+    - Your first neuron: 'tutorials/first-neuron.md'
+    - Your first network: 'tutorials/first-network.md'
+  - HOW TO: 
+    - Install and configure: how-to/install-configure.md
+    - Construct models: how-to/construct-models.md
+    - Discover and explore existing components: how-to/discover-components.md
+    - Modify existing models: how-to/change-existing-models.md
+    - Save and load models: how-to/save-load-models.md
+    - Run simulations: how-to/run-simulations.md
+    - Make plots: how-to/make-plots.md
+    - Save configurations and use snapshots: how-to/snapshots.md
+    - Make your own models: how-to/make-own-models.md
+  - REFERENCE: 
+    - Units: 'reference/units.md'
+    - xolotl Properties: 'reference/xolotl-properties.md'
+    - xolotl Methods: 'reference/xolotl-methods.md'
+    - cpplab Properties: 'reference/cpplab-properties.md'
+    - cpplab Methods: 'reference/cpplab-methods.md'
+  - TROUBLESHOOTING: 
+    - Fixes to common problems: troubleshooting.md
+  - About: 'about.md'
+  - FAQ: 'faq.md'
+  - Contributing: 'contributing.md'
+  - License: 'license.md'
+
+use_directory_urls: true
+
+markdown_extensions:
+  - admonition
+  # - mdx_math:
+      # enable_dollar_delimiter: True #for use of inline $..$
+   
+# Required to load the MathJax javascript for the mdx_math.py
+extra_javascript: ['https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML']

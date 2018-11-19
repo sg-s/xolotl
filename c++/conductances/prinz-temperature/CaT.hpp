@@ -11,6 +11,13 @@
 //inherit conductance class spec
 class CaT: public conductance {
 
+private: 
+    double delta_temp = 0;
+    double pow_Q_tau_m_delta_temp = 0;
+    double pow_Q_tau_h_delta_temp = 0;
+    double pow_Q_g = 0;
+
+
 public:
 
     double Q_g;
@@ -40,6 +47,7 @@ public:
     }
 
     void integrate(double, double);
+    void connect(compartment*);
 
     double m_inf(double, double);
     double h_inf(double, double);
@@ -50,14 +58,24 @@ public:
 
 string CaT::getClass(){return "CaT";}
 
+void CaT::connect(compartment *pcomp_) {
+    // call super class method
+    conductance::connect(pcomp_);
+
+    // also set up some useful things
+    delta_temp = (temperature - temperature_ref)/10;
+    pow_Q_tau_m_delta_temp = (dt*pow(Q_tau_m, delta_temp));
+    pow_Q_tau_h_delta_temp = (dt*pow(Q_tau_h, delta_temp));
+    pow_Q_g = pow(Q_g, delta_temp);
+}
+
 void CaT::integrate(double V, double Ca)
 {
-    double delta_temp = (temperature - temperature_ref)/10;
     // update E by copying E_Ca from the cell
     E = container->E_Ca;
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V,Ca));
-    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-(dt*pow(Q_tau_h, delta_temp))/tau_h(V,Ca));
-    g = pow(Q_g, delta_temp)*gbar*m*m*m*h;
+    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-pow_Q_tau_m_delta_temp/tau_m(V,Ca));
+    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-pow_Q_tau_h_delta_temp/tau_h(V,Ca));
+    g = pow_Q_g*gbar*m*m*m*h;
 
     // compute the specific calcium current and update it in the cell
     double this_I = g*(V-E);

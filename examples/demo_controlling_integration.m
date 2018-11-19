@@ -46,12 +46,12 @@ memory_usage(1) = sum([temp.bytes]);
 
 figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
 subplot(2,3,1)
-raster(xolotl.findNSpikeTimes(V,xolotl.findNSpikes(V)),'Color','k')
+mtools.neuro.raster(xolotl.findNSpikeTimes(V,xolotl.findNSpikes(V)),'Color','k')
 set(gca,'XLim',[0 10],'YTick',[])
 
 
 subplot(2,3,2)
-raster(xolotl.findNSpikeTimes(V,xolotl.findNSpikes(V)),'Color','k')
+mtools.neuro.raster(xolotl.findNSpikeTimes(V,xolotl.findNSpikes(V)),'Color','k')
 set(gca,'XLim',[1e3-1 1e3],'YTick',[])
 
 % now use C++ spike finding
@@ -63,12 +63,12 @@ temp = whos('data');
 memory_usage(2) = temp.bytes;
 
 subplot(2,3,4)
-raster(data.AB.spiketimes,'Color','r')
+mtools.neuro.raster(data.AB.spiketimes,'Color','r')
 set(gca,'XLim',[0 10],'YTick',[])
 xlabel('Time (s)')
 
 subplot(2,3,5)
-raster(data.AB.spiketimes,'Color','r')
+mtools.neuro.raster(data.AB.spiketimes,'Color','r')
 set(gca,'XLim',[1e3-1 1e3],'YTick',[])
 xlabel('Time (s)')
 

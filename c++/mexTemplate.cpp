@@ -13,9 +13,6 @@
 
 using namespace std;
 
-// declare global variable 
-// so that other code can access verbosity
-// double verbosity;
 
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
@@ -40,8 +37,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     //xolotl:input_declarations
 
 
-    // temperature wire-ups
+    // temperature and other wire-ups
     xolotl_network.temperature = temperature;
+    xolotl_network.temperature_ref = temperature_ref;
+
+    xolotl_network.sim_dt = sim_dt;
+    xolotl_network.dt = dt;
+
     xolotl_network.verbosity = verbosity;
     xolotl_network.approx_channels = approx_channels;
 
@@ -272,7 +274,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // tell all components about some core 
     // parameters
-    xolotl_network.broadcast(sim_dt, temperature);
+    // xolotl_network.broadcast(sim_dt, temperature);
 
     if (!is_voltage_clamped & !is_multi_step){
  

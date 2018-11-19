@@ -74,6 +74,8 @@ void Glutamatergic::integrate(void)
 
     // integrate using exponential Euler
     s = sinf + (s - sinf)*exp(-dt/tau_s(sinf));
+
+    g = gbar*s;
     
 }
 

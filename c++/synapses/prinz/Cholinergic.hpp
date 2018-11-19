@@ -7,9 +7,9 @@ class Cholinergic: public synapse {
 
 public:
 
-    double Delta;
-    double k_;
-    double Vth;
+    double Delta = 5.0;
+    double k_ = 0.01;
+    double Vth = -35.0;
 
 
     // specify parameters + initial conditions 
@@ -17,9 +17,7 @@ public:
     {
         gbar = g_;
         E = -80.0;
-        Delta = 5.0;
-        Vth = -35.0;
-        k_ = 0.01;
+        
 
         // dynamic variables
         s = s_;
@@ -74,6 +72,9 @@ void Cholinergic::integrate(void)
 
     // integrate using exponential Euler
     s = sinf + (s - sinf)*exp(-dt/tau_s(sinf));
+
+    g = gbar*s;
+
     
 }
 

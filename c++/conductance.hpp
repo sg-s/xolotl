@@ -37,8 +37,8 @@ public:
     double k_m[4] = {0,0,0,0};
     double k_h[4] = {0,0,0,0};
 
-    double dt;
-    double temperature;
+    double dt = .05;
+    double temperature = 11;
     double temperature_ref = 11;
 
 
@@ -65,7 +65,7 @@ public:
     virtual void integrate(double, double);
     virtual void integrateMS(int, double, double);
 
-    void connect(compartment*); 
+    virtual void connect(compartment*); 
     virtual string getClass(void) = 0;
     double getCurrent(double);
     void checkSolvers(int);

@@ -19,18 +19,20 @@ protected:
 public:
     compartment *post_syn; // pointer to pre-synaptic compartment
     compartment *pre_syn; // pointer to pre-synaptic compartment
-    double gbar;
-    double E;
+    double gbar = 0;
+    double g = 0;
+    double E = 0;
     
     // dynamic variables
-    double s;
+    double s = 0;
     double k_s[4] = {0,0,0,0};
 
-    bool is_electrical;
+    bool is_electrical = false;
 
-    double dt;
+    double dt = 0;
+    double verbosity = 0;
     double temperature_ref = 11;
-    double temperature;
+    double temperature = 11;
 
 
     synapse()
