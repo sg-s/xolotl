@@ -17,13 +17,19 @@ pages:
     - Save configurations and use snapshots: how-to/snapshots.md
     - Make your own models: how-to/make-own-models.md
   - REFERENCE: 
-    - xolotl Properties: 'xolotl-properties.md'
-    - xolotl Methods: 'xolotl-methods.md'
-    - cpplab Properties: 'cpplab-properties.md'
-    - cpplab Methods: 'cpplab-methods.md'
+    - Units: 'reference/units.md'
+    - xolotl Properties: 'reference/xolotl-properties.md'
+    - xolotl Methods: 'reference/xolotl-methods.md'
+    - cpplab Properties: 'reference/cpplab-properties.md'
+    - cpplab Methods: 'reference/cpplab-methods.md'
+  - TROUBLESHOOTING: 
+    - Fixes to common problems: troubleshooting.md
   - About: 'about.md'
   - FAQ: 'faq.md'
   - Contributing: 'contributing.md'
   - License: 'license.md'
 
 use_directory_urls: true
+
+markdown_extensions:
+  - admonition

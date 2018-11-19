@@ -10,39 +10,39 @@ Download [xolotl here](https://github.com/sg-s/xolotl/releases/download/latest/x
 
 Then we need to install a C/C++ compiler, and get MATLAB to work with that. Follow these instructions based on your operating system:
 
-## Installing on macOS 
+### Installing on macOS 
 
 1. Install [XCode](https://developer.apple.com/xcode/)
 2. Open XCode, and accept the license agreement.
-3. Run this in your MATLAB prompt:
 
-```
-mex -setup c++
-mex -setup c
-```
 
-## Installing on Windows
+### Installing on Windows
 
 1. Download and install the [MinGW compiler](https://www.mathworks.com/matlabcentral/fileexchange/52848-matlab-support-for-mingw-w64-c-c-compiler) from the Mathworks FileExchange. You'll need to log in using a Mathworks account. This ridiculous restriction is Mathworks' fault. 
-2. Run this in your MATLAB prompt:
 
-```
-mex -setup c++
-mex -setup c
-```
 
-## Installing on GNU/Linux
+### Installing on GNU/Linux
 
 1. Use your favorite package manager to install a C and C++ compiler. For example, on Debian-based systems, use `sudo apt install gcc & sudo apt install g++` 
 2. Verify that your compiler is on the MATLAB path by running `system('which gcc')` from within MATLAB
-3.  Run this in your MATLAB prompt:
 
-```
+## Configure MATLAB to use compilers
+
+Run this in your MATLAB terminal:
+
+```matlab
 mex -setup c++
 mex -setup c
 ```
 
-If you still have trouble setting up compilers ant MATLAB, see this section [INSERT LINK HERE]
+You should see something like this:
+
+```matlab
+% This is what you'll see on macOS. The precise message
+% may be different on other operating systems
+MEX configured to use 'Xcode Clang++' for C++ language compilation.
+MEX configured to use 'Xcode with Clang' for C language compilation.
+```
 
 # Verify your installation 
 
@@ -58,4 +58,6 @@ You should see this plot appear:
 
 ![](../images/bursting-neuron.png)
 
-If you don't see this plot, or see some horrible error message, click on this link so we can figure out what went wrong
+
+!!! note
+    If you don't see this plot, or see some horrible error message, click on [this link](../troubleshooting.md) so we can figure out what went wrong
