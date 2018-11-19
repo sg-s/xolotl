@@ -37,12 +37,8 @@ use_directory_urls: true
 
 markdown_extensions:
   - admonition
-  - mdx_math:
-      enable_dollar_delimiter: True #for use of inline $..$
+  # - mdx_math:
+      # enable_dollar_delimiter: True #for use of inline $..$
    
-python:
-  - version: 2 # for unicode
-  - setup_py_install: true
-
 # Required to load the MathJax javascript for the mdx_math.py
 extra_javascript: ['https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML']
