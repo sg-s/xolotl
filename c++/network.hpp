@@ -33,13 +33,14 @@ public:
 
 
     double dt;
+    double sim_dt;
 
      // pointers to all compartments in network
     vector<compartment*> comp;
 
     // temperature
-    double temperature;
-    double temperature_ref;
+    double temperature = 11;
+    double temperature_ref = 11;
 
     // housekeeping
     int n_comp = 0;
@@ -59,50 +60,9 @@ public:
     void integrateClamp(double *);
     void addCompartment(compartment*);
     bool resolveTree(void);
-
     void checkSolvers(void);
-
-    void broadcast(double, double);
-
 };
 
-// broadcast is a method that tells all 
-// components of a network about some 
-// important parameters that are not
-// going to change
-void network::broadcast(double dt, double temperature)
-{
-    dt = dt;
-    for (int i = 0; i < n_comp; i ++) 
-    {
-        comp[i]->dt = dt;
-        for (int j = 0; j < comp[i]->n_cond; j ++) {
-
-            // configure verbosity
-            (comp[i]->getConductancePointer(j))->verbosity = verbosity;
-
-            (comp[i]->getConductancePointer(j))->dt = dt; 
-            (comp[i]->getConductancePointer(j))->temperature = temperature;
-
-            // built look up table if asked to 
-            // approximate gating functions 
-
-            (comp[i]->getConductancePointer(j))->buildLUT(approx_channels);
-  
-            
-        }
-        for (int j = 0; j < comp[i]->n_cont; j ++) {
-            (comp[i]->getMechanismPointer(j))->dt = dt;
-            (comp[i]->getMechanismPointer(j))->temperature = temperature;
-        }
-        for (int j = 0; j < comp[i]->n_syn; j ++) 
-        {
-            (comp[i]->getSynapsePointer(j))->dt = dt;
-            (comp[i]->getSynapsePointer(j))->temperature = temperature;
-        }
-
-    }
-}
 
 // this method checks that every component
 // in the network has a solver that supports
@@ -110,6 +70,8 @@ void network::broadcast(double dt, double temperature)
 // throws an error 
 void network::checkSolvers(void)
 {
+    // we assume that every component supports
+    // the 0th order solver (Euler/exp Euler)
     if (solver_order == 0) { return;}
 
     for (int i = 0; i < n_comp; i ++){
@@ -235,11 +197,14 @@ bool network::resolveTree(void) {
 void network::addCompartment(compartment *comp_) {
     comp.push_back(comp_);
     n_comp++;
+    comp_->approx_channels = approx_channels;
+    comp_->dt = sim_dt;
     comp_->verbosity = verbosity;
     comp_->RT_by_nF = (0.0431)*(temperature + 273.15);
+    comp_->temperature = temperature;
+    comp_->temperature_ref = temperature_ref;
 
-    if (verbosity > 0)
-    {
+    if (verbosity > 0){
         mexPrintf("[C++] adding compartment to network. \n");
     }
 }

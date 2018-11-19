@@ -46,7 +46,7 @@ public:
     double k_Ca[4] = {0,0,0,0};
 
 
-
+    double approx_channels = 0;
     double dt;
     double temperature;
     double temperature_ref = 11;
@@ -265,7 +265,13 @@ void compartment::addAxial(synapse *syn_)
 void compartment::addConductance(conductance *cond_)
 {
     cond.push_back(cond_);
+    cond_->verbosity = verbosity;
+    cond_->buildLUT(approx_channels);
+    cond_->dt = dt;
+    cond_->temperature_ref = temperature_ref;
+    cond_->temperature = temperature;
     cond_->connect(this);
+
     n_cond++;
 
     if (verbosity > 0)
@@ -275,24 +281,30 @@ void compartment::addConductance(conductance *cond_)
 }
 
 // add mechanism to this compartment
-void compartment::addMechanism(mechanism *cont_)
+void compartment::addMechanism(mechanism *mech_)
 {
-    // mexPrintf("adding mechanism @  %p\n",cont_);
-    cont.push_back(cont_);
-    cont_->mechanism_idx = n_cont; // tell the mechanism what rank it has
+    // mexPrintf("adding mechanism @  %p\n",mech_);
+    mech_->dt = dt;
+    // mech_->verbosity = verbosity;
+    mech_->temperature = temperature;
+    mech_->temperature_ref = temperature_ref;
+    cont.push_back(mech_);
+    mech_->mechanism_idx = n_cont; // tell the mechanism what rank it has
     n_cont++;
 
     // also store the mechanism's full state size
-    mechanism_sizes.push_back(cont_->getFullStateSize());
+    mechanism_sizes.push_back(mech_->getFullStateSize());
 
 }
 
 // add synapse to this compartment (this compartment is after synapse)
 void compartment::addSynapse(synapse *syn_) {
+    syn_->dt = dt;
+    syn_->verbosity = verbosity;
     syn.push_back(syn_);
     n_syn ++;
 
-    // also store the mechanism's full state size
+    // also store the synapse's full state size
     synapse_sizes.push_back(syn_->getFullStateSize());
 }
 
@@ -344,8 +356,8 @@ conductance * compartment::getConductancePointer(int cond_idx){
 }
 
 
-mechanism * compartment::getMechanismPointer(int cont_idx){
-    if (cont_idx < n_cont) { return cont[cont_idx];} 
+mechanism * compartment::getMechanismPointer(int mech_idx){
+    if (mech_idx < n_cont) { return cont[mech_idx];} 
     else { return NULL; }   
 }
 
@@ -674,14 +686,14 @@ void compartment::integrateCNSecondPass(void) {
 }
 
 // returns a vector of the state of every mechanism
-// cont_state is a pointer to a matrix that is hopefully of
+// mech_state is a pointer to a matrix that is hopefully of
 // the right size
-int compartment::getFullMechanismState(double *cont_state, int idx)
+int compartment::getFullMechanismState(double *mech_state, int idx)
 {
     for (int i = 0; i < n_cont; i ++)
     {
 
-        cont[i]->getFullState(cont_state, idx);
+        cont[i]->getFullState(mech_state, idx);
         idx += mechanism_sizes[i];
 
     }

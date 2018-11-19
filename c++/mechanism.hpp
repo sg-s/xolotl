@@ -54,6 +54,8 @@ public:
     double temperature;
     double temperature_ref;
 
+    double verbosity;
+
     mechanism()
     {
         // null pointers to all 
