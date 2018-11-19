@@ -4,6 +4,7 @@ site_author: Srinivas Gorur-Shandilya
 docs_dir: 'docs'
 theme: 'readthedocs'
 pages:
+  - Home: index.md
   - TUTORIALS:
     - Getting Started: 'tutorials/start-here.md'
     - Demos: 'tutorials/built-in-demos.md'
