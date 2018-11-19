@@ -1,8 +1,8 @@
 site_name: xolotl
 repo_url: https://github.com/sg-s/xolotl/
 site_author: Srinivas Gorur-Shandilya
-docs_dir: ./docs
-theme: readthedocs
+docs_dir: 'docs'
+theme: 'readthedocs'
 pages:
   - TUTORIALS:
     - Getting Started: 'tutorials/start-here.md'
