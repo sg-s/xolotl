@@ -8,7 +8,7 @@
 
 ## What's with the name? And how do I pronounce it? 
 
-Xolotl is the meso-American god of [lightning and death](https://en.wikipedia.org/wiki/Xolotl). It is the humble opinion of some of this writer that this is a better name for a neuron simulator than say, "NEURON". 
+Xolotl is the meso-American god of [lightning and death](https://en.wikipedia.org/wiki/Xolotl). It is the humble opinion of this writer that "xolotl" is a better name for a neuron simulator than say, "NEURON". 
 
 [Click here to listen to a pronunciation.](https://upload.wikimedia.org/wikipedia/commons/4/48/Xolotl.ogg) 
 
@@ -35,6 +35,9 @@ try the following
 ```
 % erases all the compiled binaries of xolotl networks
 xolotl.cleanup
+
+% rebuilds the cache of C++ objects
+cpplab.rebuildCache()
 ```
 
 If you're still having a problem, we might have fixed it already! Reinstall or update by running the `xolotl.update()` if you installed the toolbox or pulling from the repository if you're using `git`.
@@ -42,7 +45,7 @@ Remember that if you're using `git` you should be sure to pull all the dependenc
 (`srinivas.gs_mtools`, `cpplab`, `puppeteer`).
 
 
-## How Do I Cite This?
+## How do I cite this?
 
 Thanks for thinking of us! We have written a technology report about this that has been published in Frontiers in Neuroinformatics. 
 
