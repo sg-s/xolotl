@@ -527,8 +527,7 @@ void compartment::integrateMS(int k){
 }
 
 
-void compartment::integrateChannels(void)
-{
+void compartment::integrateChannels(void) {
 
     sigma_g = 0.0;
     sigma_gE = 0.0;
@@ -551,34 +550,27 @@ void compartment::integrateChannels(void)
 
 
 
-void compartment::integrateMechanisms(void)
-{
-    for (int i=0; i<n_cont; i++)
-    {
+void compartment::integrateMechanisms(void) {
+    for (int i=0; i<n_cont; i++) {
         cont[i]->integrate();
     }
 }
 
 
-void compartment::integrateSynapses(void)
-{
+void compartment::integrateSynapses(void) {
     // we treat synapses identically to any other conductance
-    for (int i=0; i<n_syn; i++)
-    {
-        // mexPrintf("integrating synapse in comp: =  %i\n",&(syn[i]));
+    for (int i=0; i<n_syn; i++) {
         syn[i]->integrate();
-        sigma_g += (syn[i]->gbar)*(syn[i]->s)/(1000*A); // now uS/mm^2
-        sigma_gE += ((syn[i]->gbar)*(syn[i]->s)*(syn[i]->E)/(1000*A));
+        sigma_g += (syn[i]->g)/(1000*A); // now uS/mm^2
+        sigma_gE += ((syn[i]->g)*(syn[i]->E))/(1000*A); // now uS/mm^2
     }
 }
 
 
-void compartment::integrateVoltage(void)
-{
+void compartment::integrateVoltage(void) {
 
     // compute infinity values for V and Ca
-    if (sigma_g == 0)
-    {
+    if (sigma_g == 0) {
         V_inf = V_prev;
     }
     else {
@@ -594,8 +586,7 @@ void compartment::integrateVoltage(void)
 // assumes the cell is being clamped, and 
 // integrates and solves for I_clamp
 
-void compartment::integrateV_clamp(double V_clamp)
-{
+void compartment::integrateV_clamp(double V_clamp) {
 
     // calculate I_clamp, and set voltage to the clamped
     // voltage
