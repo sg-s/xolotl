@@ -30,7 +30,7 @@ public:
  if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 0; }
-        if (isnan (E)) { E = 50; }
+        if (isnan (E)) { E = -80; }
     }
 
     void integrate(double, double);
