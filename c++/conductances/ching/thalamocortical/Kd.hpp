@@ -58,8 +58,8 @@ void Kd::integrate(double V, double Ca)
 
 }
 
-double Kd::m_a(double V, double Ca) {return .032*(15.-(X+25.))/(exp((15.-(X+25.))/5.)-1.);}
-double Kd::m_b(double V, double Ca) {return .5*exp((10.-(X+25.))/40.);}
+double Kd::m_a(double V, double Ca) {return .032*(15.-(V+25.))/(exp((15.-(V+25.))/5.)-1.);}
+double Kd::m_b(double V, double Ca) {return .5*exp((10.-(V+25.))/40.);}
 
 double Kd::m_inf(double V, double Ca) {return m_a(V, Ca) / (m_a(V,Ca) + m_b(V,Ca));}
 double Kd::h_inf(double V, double Ca) {return 1.0;}
