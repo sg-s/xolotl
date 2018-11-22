@@ -16,16 +16,12 @@ class AMPAergic: public synapse {
 
 public:
 
-    double Delta = 5.0;
-    double k_ = 0.01;
-    double Vth = -35.0;
-
 
     // specify parameters + initial conditions
     AMPAergic(double g_, double s_)
     {
         gbar = g_;
-        E = -80.0;
+        E = 0.0;
 
 
         // dynamic variables
@@ -41,8 +37,6 @@ public:
     void integrateMS(int, double, double);
     void checkSolvers(int);
 
-    double s_inf(double);
-    double tau_s(double);
     double sdot(double, double);
 
     int getFullStateSize(void);
@@ -57,30 +51,18 @@ int AMPAergic::getFullStateSize()
 }
 
 
-double AMPAergic::s_inf(double V_pre)
-{
-    return 1.0/(1.0+exp((Vth - V_pre)/Delta));
-}
-
-double AMPAergic::tau_s(double sinf_)
-{
-    return (1 - sinf_)/k_;
-}
-
 double AMPAergic::sdot(double V_pre, double s_)
 {
-    double sinf = s_inf(V_pre);
-    return (sinf - s_)/tau_s(sinf);
+    return 5.0*(1.0 + tanh(V_pre/4.0))*(1.0-s_) - s_ / 2.0;
 }
 
 void AMPAergic::integrate(void)
 {
     // figure out the voltage of the pre-synaptic neuron
     double V_pre = pre_syn->V;
-    double sinf = s_inf(V_pre);
 
-    // integrate using exponential Euler
-    s = sinf + (s - sinf)*exp(-dt/tau_s(sinf));
+    // integrate using forward Euler
+    s = s + dt*sdot(V_pre, s);
 
     g = gbar*s;
 
