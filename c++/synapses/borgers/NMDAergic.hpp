@@ -1,25 +1,30 @@
-// nearly-instantaneous rise synaptic conductance for AMPA receptors
+// nearly-instantaneous rise synaptic conductance for NMDAergic receptors
+// based on the Jahr-Stevens model
 // based on C. Borgers "An Introduction to Modeling Neuronal Dynamics" Ch. 20
-#ifndef AMPA
-#define AMPA
+#ifndef NMDA
+#define NMDA
 #include "synapse.hpp"
 #include "math.hpp"
 
-class AMPA: public synapse {
+class NMDAergic: public synapse {
 
 public:
 
+  double Mg; // Mg++ concentration in millimolar (mM)
+
     // specify parameters + initial conditions
-    AMPA(double g_, double s_, double E_)
+    NMDAergic(double g_, double s_, double E_, double Mg_)
     {
         gbar = g_;
         E = E_;
         s = s_;
+        Mg = Mg_;
 
         // defaults
         if (isnan (s)) { s = 0; }
         if (isnan (gbar)) { gbar = 0; }
         if (isnan (E)) { E = 0; }
+        if (isnan (Mg)) { Mg = 1; }
         is_electrical = false;
     }
 
@@ -30,15 +35,16 @@ public:
     int getFullState(double*, int);
 };
 
-int AMPA::getFullStateSize()
+int NMDAergic::getFullStateSize()
 {
     return 2;
 }
 
-void AMPA::integrate(double dt)
+void NMDAergic::integrate(double dt)
 {
     // figure out the voltage of the pre-synaptic neuron
     double V_pre = pre_syn->V;
+    double V_post = post_syn->V;
 
     // find s_inf
     double s_inf = ((1.0 + tanh(V_pre/10.0))/2.0) / ( ((1.0 + tanh(V_pre/10.0))/2.0) + tau_r / tau_d );
@@ -46,12 +52,12 @@ void AMPA::integrate(double dt)
     // integrate using exponential Euler
     double tau_s = tau_r / ( ((1.0 + tanh(V_pre/10.0))/2.0) + tau_r / tau_d );
 
-    s = s_inf + (s - s_inf)*exp(-dt/tau_s);
+    s = s_inf + (s - s_inf)*exp(-dt/tau_s) * 1.0 / (1.0 + Mg / 3.57 * exp(-0.062*V_post));
 
 }
 
 
-int AMPA::getFullState(double *syn_state, int idx)
+int NMDAergic::getFullState(double *syn_state, int idx)
 {
     // give it the current synapse variable
     syn_state[idx] = s;
@@ -64,7 +70,7 @@ int AMPA::getFullState(double *syn_state, int idx)
     return idx;
 }
 
-void AMPA::connect(compartment *pcomp1_, compartment *pcomp2_)
+void NMDAergic::connect(compartment *pcomp1_, compartment *pcomp2_)
 {
     pre_syn = pcomp1_;
     post_syn = pcomp2_;
