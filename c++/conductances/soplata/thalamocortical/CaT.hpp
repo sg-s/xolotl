@@ -44,6 +44,7 @@ public:
 
     double m_inf(double, double);
     double h_inf(double, double);
+    double tau_m(double, double);
     double tau_h(double, double);
     string getClass(void);
 
