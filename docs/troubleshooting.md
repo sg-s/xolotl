@@ -27,3 +27,10 @@ You need a C/C++ compiler. You need to follow MATLAB's
 [instructions](https://www.mathworks.com/support/compilers.html) 
 on how to get one, how to install one, and how to configure one. 
 It may be helpful to also see our advice on [compilers](how-to/install-configure.md)
+
+### I created a new component, but `cpplab` can't find it
+
+* Are you sure that your named it `*****.hpp` and not `*****.cpp`?
+* Does it exist somewhere on your MATLAB path, or in a subfolder?
+* Did you try running `cpplab.rebuildCache`? 
+* If you still run into errors, file an issue at [cpplab](https://github.com/sg-s/cpplab/issues/)
