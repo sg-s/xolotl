@@ -90,7 +90,7 @@ void CaT::integrateMS(int k, double V, double Ca)
             g = gbar*fast_pow(m + k_m[2],p)*fast_pow(h + k_h[2],q);
             break;
         case 4:
-            m = minf(V, Ca);
+            m = m_inf(V, Ca);
             h = h + (k_h[0] + 2*k_h[1] + 2*k_h[2] + k_h[3])/6;
             break;
     }
