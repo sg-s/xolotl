@@ -5,6 +5,6 @@ from setuptools import setup
 setup(
     name="xolotl_docs",
     install_requires=[
-        'mdx_math',
+        'python-markdown-math',
         'simplejson']
 )
