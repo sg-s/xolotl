@@ -2,4 +2,9 @@
 
 from setuptools import setup
 
-setup()
+setup(
+    name="xolotl_docs",
+    install_requires=[
+        'reqmdx_mathuests',
+        'simplejson']
+)
