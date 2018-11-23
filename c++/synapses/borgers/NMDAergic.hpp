@@ -4,31 +4,37 @@
 #ifndef NMDA
 #define NMDA
 #include "synapse.hpp"
-#include "math.hpp"
+// #include "math.hpp"
 
 class NMDAergic: public synapse {
 
 public:
 
   double Mg; // Mg++ concentration in millimolar (mM)
+  double tau_r;
+  double tau_d;
 
     // specify parameters + initial conditions
-    NMDAergic(double g_, double s_, double E_, double Mg_)
+    NMDAergic(double g_, double s_, double E_, double Mg_, double tau_r_, double tau_d_)
     {
         gbar = g_;
         E = E_;
         s = s_;
         Mg = Mg_;
+        tau_r = tau_r_;
+        tau_d = tau_d_;
 
         // defaults
         if (isnan (s)) { s = 0; }
         if (isnan (gbar)) { gbar = 0; }
         if (isnan (E)) { E = 0; }
         if (isnan (Mg)) { Mg = 1; }
+        if (isnan (tau_r)) { tau_r = 1; }
+        if (isnan (tau_d)) { tau_d = 1; }
         is_electrical = false;
     }
 
-    void integrate(double dt);
+    void integrate(void);
     int getFullStateSize(void);
     void connect(compartment *pcomp1_, compartment *pcomp2_);
     double getCurrent(double V_post);
@@ -40,7 +46,7 @@ int NMDAergic::getFullStateSize()
     return 2;
 }
 
-void NMDAergic::integrate(double dt)
+void NMDAergic::integrate(void)
 {
     // figure out the voltage of the pre-synaptic neuron
     double V_pre = pre_syn->V;

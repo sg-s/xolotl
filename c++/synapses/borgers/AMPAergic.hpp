@@ -3,27 +3,34 @@
 #ifndef AMPA
 #define AMPA
 #include "synapse.hpp"
-#include "math.hpp"
+// #include "math.hpp"
 
 class AMPAergic: public synapse {
 
 public:
 
-    // specify parameters + initial conditions
-    AMPAergic(double g_, double s_, double E_)
-    {
-        gbar = g_;
-        E = E_;
-        s = s_;
+    double tau_r;
+    double tau_d;
 
-        // defaults
-        if (isnan (s)) { s = 0; }
-        if (isnan (gbar)) { gbar = 0; }
-        if (isnan (E)) { E = 0; }
-        is_electrical = false;
-    }
+      // specify parameters + initial conditions
+      AMPAergic(double g_, double s_, double E_, double tau_r_, double tau_d_)
+      {
+          gbar = g_;
+          E = E_;
+          s = s_;
+          tau_r = tau_r_;
+          tau_d = tau_d_;
 
-    void integrate(double dt);
+          // defaults
+          if (isnan (s)) { s = 0; }
+          if (isnan (gbar)) { gbar = 0; }
+          if (isnan (E)) { E = 0; }
+          if (isnan (tau_r)) { tau_r = 1; }
+          if (isnan (tau_d)) { tau_d = 1; }
+          is_electrical = false;
+      }
+
+    void integrate(void);
     int getFullStateSize(void);
     void connect(compartment *pcomp1_, compartment *pcomp2_);
     double getCurrent(double V_post);
@@ -35,7 +42,7 @@ int AMPAergic::getFullStateSize()
     return 2;
 }
 
-void AMPAergic::integrate(double dt)
+void AMPAergic::integrate(void)
 {
     // figure out the voltage of the pre-synaptic neuron
     double V_pre = pre_syn->V;
