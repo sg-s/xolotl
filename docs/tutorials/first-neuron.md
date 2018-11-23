@@ -8,11 +8,11 @@ A simple description of a neuron is to imagine that it a small spherical object,
 
 ### Implementing this in xolotl
 
-Note that this description of a neuron imposes a natural heirarchy to the things in our model: the soma *contains* various populations of ion channels. We will create a model in xolotl that looks like this:
+Note that this description of a neuron imposes a natural hierarchy to the things in our model: the soma *contains* various populations of ion channels. We will create a model in xolotl that looks like this:
 
 ![](../images/neuron-xolotl.png)  
 
-See that the `compartment` object contains the three populations of ion channels, just like in our description of the neuron? 
+See that the `compartment` object contains the three populations of ion channels, just like in our description of the neuron?
 
 To set up this model, the first thing we will do is create a new xolotl object:
 
