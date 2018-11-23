@@ -18,18 +18,16 @@ public:
 
 
     // specify parameters + initial conditions
-    GABAergic(double g_, double s_)
+    GABAergic(double g_, double s_, double E_)
     {
         gbar = g_;
-        E = 0.0;
-
-
-        // dynamic variables
+        E = E_;
         s = s_;
 
         // defaults
         if (isnan (s)) { s = 0; }
         if (isnan (gbar)) { gbar = 0; }
+        if (isnan (E)) { E = 0; }
         is_electrical = false;
     }
 
