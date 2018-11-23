@@ -34,7 +34,12 @@ public:
         is_electrical = false;
     }
 
+    double ss_core(double);
+    double s_inf(double);
+    double tau_s(double);
+    double sdot(double, double);
     void integrate(void);
+    void integrateMS(int, double, double);
     int getFullStateSize(void);
     void connect(compartment *pcomp1_, compartment *pcomp2_);
     double getCurrent(double V_post);
@@ -45,6 +50,85 @@ int NMDAergic::getFullStateSize()
 {
     return 2;
 }
+
+// // //
+double NMDAergic::ss_core(double V_pre)
+{
+    return (1.0 + tanh(V_pre/10.0))/2.0;
+}
+
+double NMDAergic::s_inf(double ss)
+{
+    return ss / ( ss + tau_r / tau_d );
+}
+
+double NMDAergic::tau_s(double ss)
+{
+    return tau_r / (ss + tau_r / tau_d);
+}
+
+double NMDAergic::sdot(double V_pre, double V_post, double s_)
+{
+    double ss = ss_core(V_pre);
+    return (s_inf(ss) - s_) / tau_s(ss) * 1.0 / (1.0 + Mg / 3.57 * exp(-0.062*V_post));
+}
+
+void NMDAergic::integrate(void)
+{
+    // figure out the voltage of the pre-synaptic neuron
+    double V_pre = pre_syn -> V;
+    double V_post = post_syn -> V;
+    double ss = ss_core(V_pre);
+    double sinf = s_inf(ss);
+
+    // integrate using exponential Euler
+    s = sinf + (s - sinf)*exp(-dt/tau_s(ss)) * 1.0 / (1.0 + Mg / 3.57 * exp(-0.062*V_post));
+    g = gbar*s;
+}
+
+void NMDAergic::integrate(int k, double V, double Ca)
+{
+
+    double V_pre;
+    double V_post;
+
+
+    if (k == 0) {
+        V_pre = pre_syn->V_prev;
+        V_post = post_syn->V_prev;
+        k_s[0] = dt*(sdot(V_pre, V_post, s));
+
+    } else if (k == 1) {
+
+        V_pre = pre_syn->V_prev + pre_syn->k_V[0]/2;
+        V_post = post_syn->V_prev + post_syn->k_V[0]/2;
+        k_s[1] = dt*(sdot(V_pre, V_post, s + k_s[0]/2));
+
+
+    } else if (k == 2) {
+
+        V_pre = pre_syn->V_prev + pre_syn->k_V[1]/2;
+        V_post = post_syn->V_prev + post_syn->k_V[1]/2;
+        k_s[2] = dt*(sdot(V_pre, V_post, s + k_s[1]/2));
+
+    } else if (k == 3) {
+        V_pre = pre_syn->V_prev + pre_syn->k_V[2];
+        V_post = post_syn->V_prev + post_syn->k_V[2];
+        k_s[3] = dt*(sdot(V_pre, V_post, s + k_s[2]));
+
+
+    } else {
+        // last step
+
+        s = s + (k_s[0] + 2*k_s[1] + 2*k_s[2] + k_s[3])/6;
+
+        if (s < 0) {s = 0;}
+        if (s > 1) {s = 1;}
+    }
+
+}
+
+// // //
 
 void NMDAergic::integrate(void)
 {

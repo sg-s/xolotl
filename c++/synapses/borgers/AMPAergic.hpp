@@ -30,7 +30,12 @@ public:
           is_electrical = false;
       }
 
+    double ss_core(double);
+    double s_inf(double);
+    double tau_s(double);
+    double sdot(double, double);
     void integrate(void);
+    void integrateMS(int, double, double);
     int getFullStateSize(void);
     void connect(compartment *pcomp1_, compartment *pcomp2_);
     double getCurrent(double V_post);
@@ -42,21 +47,76 @@ int AMPAergic::getFullStateSize()
     return 2;
 }
 
+double AMPAergic::ss_core(double V_pre)
+{
+    return (1.0 + tanh(V_pre/10.0))/2.0;
+}
+
+double AMPAergic::s_inf(double ss)
+{
+    return ss / ( ss + tau_r / tau_d );
+}
+
+double AMPAergic::tau_s(double ss)
+{
+    return tau_r / (ss + tau_r / tau_d);
+}
+
+double AMPAergic::sdot(double V_pre, double s_)
+{
+    double ss = ss_core(V_pre);
+    return (s_inf(ss) - s_) / tau_s(ss);
+}
+
 void AMPAergic::integrate(void)
 {
     // figure out the voltage of the pre-synaptic neuron
-    double V_pre = pre_syn->V;
-
-    // find s_inf
-    double s_inf = ((1.0 + tanh(V_pre/10.0))/2.0) / ( ((1.0 + tanh(V_pre/10.0))/2.0) + tau_r / tau_d );
+    double V_pre = pre_syn -> V;
+    double ss = ss_core(V_pre);
+    double sinf = s_inf(ss);
 
     // integrate using exponential Euler
-    double tau_s = tau_r / ( ((1.0 + tanh(V_pre/10.0))/2.0) + tau_r / tau_d );
-
-    s = s_inf + (s - s_inf)*exp(-dt/tau_s);
-
+    s = sinf + (s - sinf)*exp(-dt/tau_s(ss));
+    g = gbar*s;
 }
 
+void AMPAergic::integrate(int k, double V, double Ca)
+{
+
+    double V_pre;
+
+
+
+    if (k == 0) {
+        V_pre = pre_syn->V_prev;
+        k_s[0] = dt*(sdot(V_pre, s));
+
+    } else if (k == 1) {
+
+        V_pre = pre_syn->V_prev + pre_syn->k_V[0]/2;
+        k_s[1] = dt*(sdot(V_pre, s + k_s[0]/2));
+
+
+    } else if (k == 2) {
+
+        V_pre = pre_syn->V_prev + pre_syn->k_V[1]/2;
+        k_s[2] = dt*(sdot(V_pre, s + k_s[1]/2));
+
+    } else if (k == 3) {
+        V_pre = pre_syn->V_prev + pre_syn->k_V[2];
+        k_s[3] = dt*(sdot(V_pre, s + k_s[2]));
+
+
+    } else {
+        // last step
+
+        s = s + (k_s[0] + 2*k_s[1] + 2*k_s[2] + k_s[3])/6;
+
+        if (s < 0) {s = 0;}
+        if (s > 1) {s = 1;}
+    }
+
+}
 
 int AMPAergic::getFullState(double *syn_state, int idx)
 {
