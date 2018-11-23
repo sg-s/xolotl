@@ -54,10 +54,10 @@ public:
 
 string NaV::getClass(){return "NaV";}
 
-double aM(double V, double Ca) = {0.32*(13.0-(V+35.0))/(exp((13.0-(V+35.0))/4.0)-1.0); }
-double bM(double V, double Ca) = {0.28*((V+35.0)-40)/(exp(((V+35.0)-40.0)/5.0)-1.0); }
-double aH(double V, double Ca) = {0.128*exp((17.0-(V+35.0))/18.0); }
-double bH(double V, double Ca) = {4.0/(1.0+exp((40.0-(V+35.0))/5.0)); }
+double a_m(double V, double Ca) {return 0.32*(13.0-(V+35.0))/(exp((13.0-(V+35.0))/4.0)-1.0); }
+double b_m(double V, double Ca) {return 0.28*((V+35.0)-40)/(exp(((V+35.0)-40.0)/5.0)-1.0); }
+double a_h(double V, double Ca) {return 0.128*exp((17.0-(V+35.0))/18.0); }
+double b_h(double V, double Ca) {return 4.0/(1.0+exp((40.0-(V+35.0))/5.0)); }
 
 double NaV::m_inf(double V, double Ca) {return a_m(V,Ca) / (a_m(V,Ca) + b_m(V,Ca)); }
 double NaV::h_inf(double V, double Ca) {return a_h(V,Ca) / (a_h(V,Ca) + b_h(V,Ca)); }
