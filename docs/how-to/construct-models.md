@@ -393,8 +393,8 @@ ans =
 
 ## Where should I put them?
 
-All conductances are defined by an `.hpp` header file and live in the xolotl
-directory under `xolotl/c++/conductances/`.
+All conductances (and any other network component) are defined by
+an `.hpp` header file and live in the xolotl directory under `xolotl/c++/conductances/`.
 Within that directory, conductances are grouped by the surname of the first
 author on the paper from where they were sourced. For example, conductances
 from Liu *et al.* 1998 can be found in `xolotl/c++/conductances/liu/`.
