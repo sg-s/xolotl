@@ -45,10 +45,10 @@ public:
     string getClass(void);
 
     // auxiliary functions
-    double a_m(double V, double Ca);
-    double b_m(double V, double Ca);
-    double a_h(double V, double Ca);
-    double b_h(double V, double Ca);
+    double a_m(double, double);
+    double b_m(double, double);
+    double a_h(double, double);
+    double b_h(double, double);
 
 };
 
