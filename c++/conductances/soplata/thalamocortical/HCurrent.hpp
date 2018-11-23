@@ -18,23 +18,37 @@ class HCurrent: public conductance {
 
 public:
 
+    // dynamical variables
+    double C1;
+    double P0;
+    double O1;
+
+    // containers for multi-step solvers
+    double k_C1[4] = {0,0,0,0};
+    double k_P0[4] = {0,0,0,0};
+    double k_O1[4] = {0,0,0,0};
+
     //specify both gbar and erev and initial conditions
-    HCurrent(double g_, double E_, double m_)
+    HCurrent(double g_, double E_, double C1_, double P0_, double O1_)
     {
         gbar = g_;
         E = E_;
-        m = m_;
+
+        C1 = C1_;
+        P0 = P0_;
+        O1 = O1_;
 
         // defaults
         if (isnan(gbar)) { gbar = 0; }
-        if (isnan (m)) { m = 0; }
-        if (isnan (E)) { E = -20; }
+        if (isnan (C1)) { C1 = 0; }
+        if (isnan (P0)) { P0 = 0; }
+        if (isnan (O1)) { O1 = 0; }
+        if (isnan (E)) { E = -43; }
 
         p = 1;
 
         // allow this channel to be approximated
         approx_m = 1;
-        approx_h = 1;
 
     }
 
@@ -42,6 +56,18 @@ public:
     double tau_m(double, double);
     string getClass(void);
 
+    // equations of state
+    double C1dot(double, double, double, double, double);
+    double P0dot(double, double, double, double, double);
+    double O1dot(double, double, double, double, double);
+
+    // auxiliary functions
+    double aH(double, double);
+    double bH(double, double);
+
+    // use non-default integration methods
+    void integrate(double, double);
+    void integrateMS(int, double, double);
 
 };
 
@@ -49,8 +75,84 @@ string HCurrent::getClass(){
     return "HCurrent";
 }
 
-double HCurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+70.0)/6.0));}
-double HCurrent::tau_m(double V, double Ca) {return (272.0 + 1499.0/(1.0+exp((V+42.2)/-8.73)));}
+double HCurrent::aH(double V, double Ca)
+{
+    return (1.0 - m_inf(V, Ca)) / tau_m(V, Ca);
+}
+
+double HCurrent::bH(double V, double Ca)
+{
+    return m_inf(V, Ca) / tau_m(V, Ca);
+}
+
+double HCurrent::C1dot(double V, double Ca, double C1, double 01, double P1)
+{
+    return aH(V, Ca) * O1 - bH(V, Ca) * C1;
+}
+
+double HCurrent::P0dot(double V, double Ca, double C1, double 01, double P1)
+{
+    return 0.0004*(1.0-P0) - 0.0004*((Ca/0.002)^4).*P0;
+}
+
+double HCurrent::O1dot(double V, double Ca, double C1, double 01, double P1)
+{
+    return 0.001*(1.0-C1-O1) - 0.1*P0*O1;
+}
+
+// implement forward Euler
+void HCurrent::integrate(double V, double Ca)
+{
+    C1 = C1 + dt*C1dot(V, Ca);
+    P0 = P0 + dt*P0dot(V, Ca);
+    O1 = O1 + dt*O1dot(V, Ca);
+
+    g = gbar * (O1 + 2.0 * (1.0 - C1 - O1));
+
+}
+
+void HCurrent::integrateMS(int k, double V, double Ca)
+{
+
+    switch (k)
+    {
+        case 0:
+            k_C1[0] = dt*C1dot(V, Ca, C1, O1, P0);
+            k_O1[0] = dt*O1dot(V, Ca, C1, O1, P0);
+            k_P0[0] = dt*P0dot(V, Ca, C1, O1, P0);
+            g = gbar * (O1 + 2.0 * (1.0 - C1 - O1));
+            break;
+        case 1:
+            k_C1[1] = dt*C1dot(V, Ca, C1 + k_C1[0]/2, O1 + k_O1[0]/2, P0 + k_P0[0]/2);
+            k_O1[1] = dt*O1dot(V, Ca, C1 + k_C1[0]/2, O1 + k_O1[0]/2, P0 + k_P0[0]/2);
+            k_P0[1] = dt*P0dot(V, Ca, C1 + k_C1[0]/2, O1 + k_O1[0]/2, P0 + k_P0[0]/2);
+            g = gbar * ((O1+k_O1[0]/2) + 2.0 * (1.0 - (C1+k_C1[0]/2) - (O1+k_O1[0]/2)));
+            break;
+        case 2:
+            k_C1[2] = dt*C1dot(V, Ca, C1 + k_C1[1]/2, O1 + k_O1[1]/2, P0 + k_P0[1]/2);
+            k_O1[2] = dt*O1dot(V, Ca, C1 + k_C1[1]/2, O1 + k_O1[1]/2, P0 + k_P0[1]/2);
+            k_P0[2] = dt*P0dot(V, Ca, C1 + k_C1[1]/2, O1 + k_O1[1]/2, P0 + k_P0[1]/2);
+            g = gbar * ((O1+k_O1[1]/2) + 2.0 * (1.0 - (C1+k_C1[1]/2) - (O1+k_O1[1]/2)));
+            break;
+        case 3:
+            k_C1[3] =  dt*C1dot(V, Ca, C1 + k_C1[2]/2, O1 + k_O1[2]/2, P0 + k_P0[2]/2);
+            k_O1[3] =  dt*O1dot(V, Ca, C1 + k_C1[2]/2, O1 + k_O1[2]/2, P0 + k_P0[2]/2);
+            k_P0[3] =  dt*P0dot(V, Ca, C1 + k_C1[2]/2, O1 + k_O1[2]/2, P0 + k_P0[2]/2);
+            g = gbar * ((O1+k_O1[2]/2) + 2.0 * (1.0 - (C1+k_C1[2]/2) - (O1+k_O1[2]/2)));
+            break;
+        case 4:
+            C1 = C1 + (k_C1[0] + 2*k_C1[1] + 2*k_C1[2] + k_C1[3])/6;
+            O1 = O1 + (k_O1[0] + 2*k_O1[1] + 2*k_O1[2] + k_O1[3])/6;
+            O1 = O1 + (k_O1[0] + 2*k_O1[1] + 2*k_O1[2] + k_O1[3])/6;
+            break;
+    }
+
+    gbar = gbar_next;
+
+}
+
+double HCurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+75.0)/5.5));}
+double HCurrent::tau_m(double V, double Ca) {return 20.0 + 1000.0/(exp((V+71.5)/14.2)+exp((-(V+89.0))/11.6));}
 
 
 #endif
