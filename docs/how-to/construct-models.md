@@ -393,6 +393,22 @@ ans =
 
 ## Where should I put them?
 
+All conductances are defined by an `.hpp` header file and live in the xolotl
+directory under `xolotl/c++/conductances/`.
+Within that directory, conductances are grouped by the surname of the first
+author on the paper from where they were sourced. For example, conductances
+from Liu *et al.* 1998 can be found in `xolotl/c++/conductances/liu/`.
+
+If an author, such as Farzan Nadim or Cristina Soto-Trevino happens to have
+papers over multiple years, the last two digits of the paper publishing year
+are appended to the author name (*e.g.* `../nadim98`). If there are multiple
+papers in a single year, lowercase alphabetical indices are used (*e.g.* `../golowasch01a`).
+
+If a paper, such as Soplata *et al.* 2017 describes multiple channels of a
+single type in different cell types (*e.g.* thalamocortical relay and thalamic
+reticular cells), then full-word descriptions can be used, such as
+(`../soplata/thalamocortical`).
+
 # Creating new synapses
 
 ## Understanding the `synapse` class
@@ -435,12 +451,3 @@ delete(which('paths.cpplab'))
 ## Mixing object types
 
 ## Compartment types
-
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbMTgzMTkzMTY2NSwtNDc3OTc0MzQ2LDE3NT
-Y3MjA4NDAsLTE3NDkxODEwMSwxNTQ3NjkxODQsMjI0MDYzOTcs
-LTg3MjU1Njg5NSwyMDY3MDcwODcyLDE4MTQ1MzI0MSw0MzI5MD
-E0NTAsNzIyMTgzMTczLDY3MTkwODUyMSwtMTU5OTgzOTIxNiwt
-Mjg3ODUxMjYxLC03NDQyMzM5MzIsLTEwMzgzODUxMTEsLTQzOT
-gyMDg2OF19
--->
