@@ -41,4 +41,4 @@ markdown_extensions:
       # enable_dollar_delimiter: True #for use of inline $..$
    
 # Required to load the MathJax javascript for the mdx_math.py
-extra_javascript: ['https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML']
+extra_javascript: ['https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML']
