@@ -1,6 +1,33 @@
-In this document we will learn how to inspect the parameters of an existing model, and how we can change them. `xolotl` comes with powerful tools to change large numbers of parameters using logical operators and wildcards in one fell swoop. 
+In this document we will learn how to inspect the parameters of an existing model, and how we can change them. `xolotl` comes with powerful tools to change large numbers of parameters using logical operators and wildcards in one fell swoop.
 
-### Using the `find` and `get` methods
+### Adding to existing models
+Xolotl objects are MATLAB objects. You can add new network components on-the-fly
+by using the `add` function for compartments, conductances, and mechanisms, and
+the `connect` function for synapses.
+
+### Using "dot" notation to change parameters
+Numerical parameters of xolotl objects, such as maximal conductances can be changed
+by setting the value of the parameter to the new parameter. For example, to change
+the maximal conductance `gbar` of the `NaV` conductance in the `AB` compartment
+of the `x` xolotl object to $10~\mathrm{\mu S / mm^2}$, you can do:
+
+```matlab
+x.AB.NaV.gbar = 10;
+```
+
+This value is now saved in the object structure. You can `save` the model, or
+take a `snapshot` and this parameter's value will be maintained.
+
+If you just wanted to see the parameter value (or store the value in another variable),
+you can treat the expression `x.AB.NaV.gbar` just like any other variable.
+
+```matlab
+% print to the console
+% The fast sodium maximal conductance is: 10
+disp(['The fast sodium maximal conductance is: ' num2str(x.AB.NaV.gbar)])
+```
+
+### Using the `find` and `get` methods to find parameters and values
 
 The `find` and `get` functions are robust searching tools for accessing parameters in `xolotl`. They are especially useful when you want to change many parameters at once.
 
@@ -107,6 +134,29 @@ ans =
     0.1815
 ```
 
-## Changing parameters
+### Using `set` to change many parameters at once
+Sometimes you want to set a bunch of parameters at once, such as all of the maximal
+conductances, to values stored in a vector. You can do this line by line using
+the "dot" notation as above, or use the `set` function to set all the parameters
+at once.
 
-### Using `x.set()`
+The `set` function expects the same searching syntax as `find` and `get`, however
+it also takes another argument which is the vector of values to assign to the
+parameters.
+
+If you wanted to set the maximal conductances of a single-compartment Hodgkin-Huxley
+cell (`HH`) with fast sodium (`NaV`), delayed rectifier potassium (`Kd`), and `Leak`
+conductances, you could set the parameters manually by
+
+```matlab
+x.HH.Kd.gbar = 300;
+x.HH.Leak.gbar = 0.1;
+x.HH.NaV.gbar = 1000;
+```
+
+or use the `set` function with the argument `'*gbar'`, meaning "all parameters of `x` ending
+in `'gbar'`."
+
+```matlab
+x.set('*gbar', [300, 0.1, 1000]);
+```

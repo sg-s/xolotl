@@ -7,31 +7,31 @@ In this page we will learn how to construct neuron and network models in `xolotl
 % create a xolotl object
 x = xolotl;
 ```
-`xolotl` is a *component-oriented* simulation environment, which means that all "things" that can exist in the model are pre-defined components; and models are created by linking this components together like building blocks. 
+`xolotl` is a *component-oriented* simulation environment, which means that all "things" that can exist in the model are pre-defined components; and models are created by linking this components together like building blocks.
 
 `xolotl` has 4 fundamental types of components:
 
 1. `compartment` Objects of this type are used to represent compartments. Compartments can model entire neurons or parts of neurons. Compartments contain all other component types.
-2. `conductance` Objects of this type represent populations of ion channels. They are contained within compartments. 
-3. `synapse` Objects of this type represent populations of synapses. They connect two different compartments together. 
-4. `mechanism` Objects of this type can represent any arbitrary (typically intracellular) mechanism. For example, Calcium buffering is represented as a mechanism. 
+2. `conductance` Objects of this type represent populations of ion channels. They are contained within compartments.
+3. `synapse` Objects of this type represent populations of synapses. They connect two different compartments together.
+4. `mechanism` Objects of this type can represent any arbitrary (typically intracellular) mechanism. For example, Calcium buffering is represented as a mechanism.
 
-# How to create compartments
+<!-- # How to create compartments -->
 
-The first thing we want to do is create a compartment. A compartment is a piece of neural tissue that shares a common voltage. A compartment can represent a whole neuron, or a small part of one. 
+The first thing we want to do is create a compartment. A compartment is a piece of neural tissue that shares a common voltage. A compartment can represent a whole neuron, or a small part of one.
 
 To create a compartment, we use:
 
 ```matlab
 x.add('compartment','exampleNeuron','A',.01)
-``` 
+```
 
-What we're doing here is creating a compartment and adding it to our `xolotl` object. This neuron is called `exampleNeuron`, and we are specifying that it has a surface area of 0.1 mm^2. 
+What we're doing here is creating a compartment and adding it to our `xolotl` object. This neuron is called `exampleNeuron`, and we are specifying that it has a surface area of 0.1 mm^2.
 
 We get a prompt that looks like this:
 
 ```matlab
-xolotl object with 
+xolotl object with
 ---------------------
 + exampleNeuron  
 ---------------------
@@ -45,11 +45,11 @@ To inspect your `xolotl` object at any time, simply type its name. Here, since w
 x
 ```
 
-## How to insert a channel into a compartment 
+<!-- ## How to insert a channel into a compartment
 
-## How to create a Calcium mechanism 
+## How to create a Calcium mechanism
 
-## How to connect cells together using a synapse 
+## How to connect cells together using a synapse  -->
 
 
 
@@ -67,7 +67,7 @@ AB = cpplab('compartment', 'vol', 0.01)
 ```matlab
 >>  AB
 
-AB = 
+AB =
 
 compartment object with:
 
@@ -109,7 +109,7 @@ There are many useful properties of each `compartment` object:
 * The membrane potential is `V` in $\mathrm{mV}$.
 
 #### Size and shape of compartments
-Compartments are assumed to be specified by their size or shape. In the case of size, compartments have a defined surface area `A` ($\mathrm{mm^2}$). If shape is instead defined, the compartment is assumed to be cylindrical with a `radius` and `len` (length). The surface area is then computed to be $2 \pi (r ^2 + rh)$ in single-compartment cases (and potentially lacking the cylindrical surface areas in the case of multi-compartment models). If the radius and length are defined (which they must be in multi-compartment cases), then the `A` property is ignored. Similarly, the compartment volume is contained within the `vol` property. In the case of a cylindrical compartment with defined radius and length, the volume is defined to be $\pi r^2 h$. 
+Compartments are assumed to be specified by their size or shape. In the case of size, compartments have a defined surface area `A` ($\mathrm{mm^2}$). If shape is instead defined, the compartment is assumed to be cylindrical with a `radius` and `len` (length). The surface area is then computed to be $2 \pi (r ^2 + rh)$ in single-compartment cases (and potentially lacking the cylindrical surface areas in the case of multi-compartment models). If the radius and length are defined (which they must be in multi-compartment cases), then the `A` property is ignored. Similarly, the compartment volume is contained within the `vol` property. In the case of a cylindrical compartment with defined radius and length, the volume is defined to be $\pi r^2 h$.
 
 #### Calcium properties
 * `Ca` contains the intracellular calcium concentration in $\mu$M.
@@ -124,7 +124,7 @@ A conductance object can be created using [cpplab](https://github.com/sg-s/cppla
 ```matlab
 % instantiate the fast sodium conductance from Prinz et al. 2003
 >> NaV = cpplab('prinz/NaV', 'gbar', 1000, 'E', 50)
-NaV = 
+NaV =
 
  NaV object with:
 
@@ -192,25 +192,25 @@ cpplab.search('synapses')
 ```
 
 
-### Mechanisms 
+### Mechanisms
 
 
 ## The `add` function and the object tree
-The general-purpose `add` function adds [cpplab](https://github.com/sg-s/cpplab) objects to the `xolotl` tree. In brief, a `cpplab` object is a special type of `MATLAB` data structure that secretly  binds `MATLAB` code to `C++` code. The advantage of this is that the user gets to work entirely in `MATLAB` but simulations run with the full power and speed of `C++`. 
+The general-purpose `add` function adds [cpplab](https://github.com/sg-s/cpplab) objects to the `xolotl` tree. In brief, a `cpplab` object is a special type of `MATLAB` data structure that secretly  binds `MATLAB` code to `C++` code. The advantage of this is that the user gets to work entirely in `MATLAB` but simulations run with the full power and speed of `C++`.
 
 `xolotl` itself is a framework for creating and integrating neuronal and network models using `cpplab`.
 
 ### What can be added to what?
 `compartments` are added directly to the `xolotl` object. `conductances` are added to `compartments`. `synapses` connect two compartments together but themselves are properties of the `xolotl` object. `mechanisms` are special types of `cpplab` objects that affect how `xolotl` performs computations. They include stochastic noise, calcium integration, homeostatic tuning, and so on. As such, they can be added to `compartments` or `conductances`.
 
-### Exploring constructed models in the command line 
+### Exploring constructed models in the command line
 `xolotl` objects are *bona fide* `MATLAB` objects and can be readily manipulated in the command line.
 Here is an example of a `xolotl` object, representing the structure of a stomatogastric ganglion model from crustacea published in Prinz *et al.* 2004. The code to produce this model can be found in `examples/demo_stg.m`.
 
 ```matlab
 >> x
 
-xolotl object with 
+xolotl object with
 ---------------------
 + AB  
   > ACurrent (g=500, E=-80)
@@ -242,14 +242,14 @@ xolotl object with
   > NaV (g=1000, E=50)
 ---------------------
 ```
-Displaying the `xolotl` object shows select properties of each conductance within each compartment. We can see that there are three compartments each with 7-8 conductances with varied maximal conductances. In addition, we can infer that the sodium channels have reversal potentials of $50~\mathrm{mV}$ and the potassium channels of $-80~\mathrm{mV}$. 
+Displaying the `xolotl` object shows select properties of each conductance within each compartment. We can see that there are three compartments each with 7-8 conductances with varied maximal conductances. In addition, we can infer that the sodium channels have reversal potentials of $50~\mathrm{mV}$ and the potassium channels of $-80~\mathrm{mV}$.
 
 In `MATLAB`, all compartments and conductances in this view are hyperlinked and can be clicked on to view that particular object. We can also access this view through the command line. Let's look at the first compartment.
 
 ```matlab
 >> x.AB
 
-ans = 
+ans =
 
  compartment object with:
 
@@ -282,7 +282,7 @@ We see all the properties of a standard `compartment` object plus each of the `c
 ```matlab
 >> x.AB.NaV
 
-ans = 
+ans =
 
  NaV object with:
 
@@ -299,7 +299,7 @@ Since these are `MATLAB` objects, we can edit the properties *in-situ*.
 % set AB's NaV maximal conductance to zero
 >> x.AB.NaV.gbar = 0
 
-xolotl object with 
+xolotl object with
 ---------------------
 + AB  
   > ACurrent (g=500, E=-80)
@@ -339,7 +339,7 @@ Each `xolotl` object is hashed by the MD5 algorithm to determine a unit alphanum
 % hash a xolotl object
 >> x
 
-xolotl object with 
+xolotl object with
 ---------------------
 + AB  
   > ACurrent (g=5, E=-80)
@@ -374,13 +374,13 @@ ans =
 
 ## The `slice` method
 
-# Visualization 
+# Visualization
 
 ## Using the built-in `plot` function
 
 ## Manipulating models
 
-### Writing custom plot functions that can be manipulated 
+### Writing custom plot functions that can be manipulated
 
 
 # Creating new conductances
@@ -393,27 +393,43 @@ ans =
 
 ## Where should I put them?
 
+All conductances (and any other network component) are defined by
+an `.hpp` header file and live in the xolotl directory under `xolotl/c++/conductances/`.
+Within that directory, conductances are grouped by the surname of the first
+author on the paper from where they were sourced. For example, conductances
+from Liu *et al.* 1998 can be found in `xolotl/c++/conductances/liu/`.
+
+If an author, such as Farzan Nadim or Cristina Soto-Trevino happens to have
+papers over multiple years, the last two digits of the paper publishing year
+are appended to the author name (*e.g.* `../nadim98`). If there are multiple
+papers in a single year, lowercase alphabetical indices are used (*e.g.* `../golowasch01a`).
+
+If a paper, such as Soplata *et al.* 2017 describes multiple channels of a
+single type in different cell types (*e.g.* thalamocortical relay and thalamic
+reticular cells), then full-word descriptions can be used, such as
+(`../soplata/thalamocortical`).
+
 # Creating new synapses
 
 ## Understanding the `synapse` class
 
-# Creating new mechanisms 
+# Creating new mechanisms
 
-## Understanding the `mechanism` class 
+## Understanding the `mechanism` class
 
 
 # Diving deeper: `cpplab`
 
 
-# Troubleshooting 
+# Troubleshooting
 
-## Controlling Verbosity 
+## Controlling Verbosity
 
 ```
 x.verbosity = 99;
 ```
 
-Need a table to tell the user what each value of verbosity does. 
+Need a table to tell the user what each value of verbosity does.
 
 
 ## Resetting the `cpplab` path cache
@@ -432,15 +448,6 @@ delete(which('paths.cpplab'))
 
 # Limitations and gotchas
 
-## Mixing object types 
+## Mixing object types
 
-## Compartment types 
-
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbMTgzMTkzMTY2NSwtNDc3OTc0MzQ2LDE3NT
-Y3MjA4NDAsLTE3NDkxODEwMSwxNTQ3NjkxODQsMjI0MDYzOTcs
-LTg3MjU1Njg5NSwyMDY3MDcwODcyLDE4MTQ1MzI0MSw0MzI5MD
-E0NTAsNzIyMTgzMTczLDY3MTkwODUyMSwtMTU5OTgzOTIxNiwt
-Mjg3ODUxMjYxLC03NDQyMzM5MzIsLTEwMzgzODUxMTEsLTQzOT
-gyMDg2OF19
--->
+## Compartment types
