@@ -101,11 +101,11 @@ double HCurrent::O1dot(double V, double Ca, double C1, double O1, double P1)
 }
 
 // implement forward Euler
-void HCurrent::integrate(double V, double Ca)
+void HCurrent::integrate(double V, double Ca, double C1, double O1, double P1)
 {
-    C1 = C1 + dt*C1dot(V, Ca);
-    P0 = P0 + dt*P0dot(V, Ca);
-    O1 = O1 + dt*O1dot(V, Ca);
+    C1 = C1 + dt*C1dot(V, Ca, C1, O1, P1);
+    P0 = P0 + dt*P0dot(V, Ca, C1, O1, P1);
+    O1 = O1 + dt*O1dot(V, Ca, C1, O1, P1);
 
     g = gbar * (O1 + 2.0 * (1.0 - C1 - O1));
 
