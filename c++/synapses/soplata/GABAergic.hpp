@@ -1,30 +1,33 @@
-// Cholingeric Synapse
-#ifndef CHOLINERGIC
-#define CHOLINERGIC
+// XOLOTL
+
+// GABAergic (A) synapse
+
+// Reference:
+//   "Ching, S., Cimenser, A., Purdon, P. L., Brown, E. N., & Kopell, N.
+//   J. (2010). Thalamocortical model for a propofol-induced alpha-rhythm
+//   associated with loss of consciousness. Proceedings of the National Academy of
+//   Sciences, 107(52), 22665-22670. doi:10.1073/pnas.1017069108"
+
+#ifndef GABA
+#define GABA
 #include "synapse.hpp"
 
-class Cholinergic: public synapse {
+class GABAergic: public synapse {
 
 public:
 
-    double Delta = 5.0;
-    double k_ = 0.01;
-    double Vth = -35.0;
-
 
     // specify parameters + initial conditions
-    Cholinergic(double g_, double s_)
+    GABAergic(double g_, double s_, double E_)
     {
         gbar = g_;
-        E = -80.0;
-
-
-        // dynamic variables
+        E = E_;
         s = s_;
 
         // defaults
         if (isnan (s)) { s = 0; }
         if (isnan (gbar)) { gbar = 0; }
+        if (isnan (E)) { E = 0; }
         is_electrical = false;
     }
 
@@ -32,8 +35,6 @@ public:
     void integrateMS(int, double, double);
     void checkSolvers(int);
 
-    double s_inf(double);
-    double tau_s(double);
     double sdot(double, double);
 
     int getFullStateSize(void);
@@ -42,43 +43,31 @@ public:
     int getFullState(double*, int);
 };
 
-int Cholinergic::getFullStateSize()
+int GABAergic::getFullStateSize()
 {
     return 2;
 }
 
 
-double Cholinergic::s_inf(double V_pre)
+double GABAergic::sdot(double V_pre, double s_)
 {
-    return 1.0/(1.0+exp((Vth - V_pre)/Delta));
+    return 2.0*(1.0 + tanh(V_pre/4.0))*(1.0-s_) - s_/5.0;
 }
 
-double Cholinergic::tau_s(double sinf_)
-{
-    return (1 - sinf_)/k_;
-}
-
-double Cholinergic::sdot(double V_pre, double s_)
-{
-    double sinf = s_inf(V_pre);
-    return (sinf - s_)/tau_s(sinf);
-}
-
-void Cholinergic::integrate(void)
+void GABAergic::integrate(void)
 {
     // figure out the voltage of the pre-synaptic neuron
     double V_pre = pre_syn->V;
-    double sinf = s_inf(V_pre);
 
-    // integrate using exponential Euler
-    s = sinf + (s - sinf)*exp(-dt/tau_s(sinf));
+    // integrate using forward Euler
+    s = s + dt*sdot(V_pre, s);
 
     g = gbar*s;
 
 
 }
 
-void Cholinergic::integrateMS(int k, double V, double Ca)
+void GABAergic::integrateMS(int k, double V, double Ca)
 {
 
     double V_pre;
@@ -116,16 +105,16 @@ void Cholinergic::integrateMS(int k, double V, double Ca)
 
 }
 
-void Cholinergic::checkSolvers(int k){
+void GABAergic::checkSolvers(int k){
     if (k == 0) {
         return;
     } else if (k == 4) {
         return;
     }
-    mexErrMsgTxt("[Cholinergic] Unsupported solver order\n");
+    mexErrMsgTxt("[GABAergic] Unsupported solver order\n");
 }
 
-int Cholinergic::getFullState(double *syn_state, int idx)
+int GABAergic::getFullState(double *syn_state, int idx)
 {
     // give it the current synapse variable
     syn_state[idx] = s;
@@ -138,7 +127,7 @@ int Cholinergic::getFullState(double *syn_state, int idx)
     return idx;
 }
 
-void Cholinergic::connect(compartment *pcomp1_, compartment *pcomp2_)
+void GABAergic::connect(compartment *pcomp1_, compartment *pcomp2_)
 {
     pre_syn = pcomp1_;
     post_syn = pcomp2_;
