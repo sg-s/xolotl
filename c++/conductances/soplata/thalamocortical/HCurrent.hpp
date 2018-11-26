@@ -85,17 +85,17 @@ double HCurrent::bH(double V, double Ca)
     return m_inf(V, Ca) / tau_m(V, Ca);
 }
 
-double HCurrent::C1dot(double V, double Ca, double C1, double 01, double P1)
+double HCurrent::C1dot(double V, double Ca, double C1, double O1, double P1)
 {
     return aH(V, Ca) * O1 - bH(V, Ca) * C1;
 }
 
-double HCurrent::P0dot(double V, double Ca, double C1, double 01, double P1)
+double HCurrent::P0dot(double V, double Ca, double C1, double O1, double P1)
 {
     return 0.0004*(1.0-P0) - 0.0004*((Ca/0.002)^4).*P0;
 }
 
-double HCurrent::O1dot(double V, double Ca, double C1, double 01, double P1)
+double HCurrent::O1dot(double V, double Ca, double C1, double O1, double P1)
 {
     return 0.001*(1.0-C1-O1) - 0.1*P0*O1;
 }
