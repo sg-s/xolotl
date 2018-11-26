@@ -66,8 +66,8 @@ public:
     double bH(double, double);
 
     // use non-default integration methods
-    void integrate(double, double);
-    void integrateMS(int, double, double);
+    void integrate(double, double, double, double, double);
+    void integrateMS(int, double, double, double, double, double);
 
 };
 
@@ -92,7 +92,7 @@ double HCurrent::C1dot(double V, double Ca, double C1, double O1, double P1)
 
 double HCurrent::P0dot(double V, double Ca, double C1, double O1, double P1)
 {
-    return 0.0004*(1.0-P0) - 0.0004*((Ca/0.002)^4).*P0;
+    return 0.0004*(1.0-P0) -6.4e-15*(Ca*Ca*Ca*Ca)*P0;
 }
 
 double HCurrent::O1dot(double V, double Ca, double C1, double O1, double P1)
@@ -111,7 +111,7 @@ void HCurrent::integrate(double V, double Ca, double C1, double O1, double P1)
 
 }
 
-void HCurrent::integrateMS(int k, double V, double Ca)
+void HCurrent::integrateMS(int k, double V, double Ca, double C1, double O1, double P1)
 {
 
     switch (k)
