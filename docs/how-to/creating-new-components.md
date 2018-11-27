@@ -1,7 +1,7 @@
 # Creating new conductances
 
 !!! Note "Demos"
-  Code this functionality exists in `../xolotl/examples/demo_conductance`.
+    Code this functionality exists in `../xolotl/examples/demo_conductance`.
 
 The `conductance` class exists to generate custom `C++` header files for novel
 conductances without leaving the `MATLAB` prompt.
@@ -61,10 +61,10 @@ A `C++` header file will be generated at `../xolotl/c++/conductances/custom/cond
 You can now use this conductance like any other, e.g. `x.comp.add('custom/condName', 'gbar', 10)`.
 
 !!! Note "Debugging `generateCPPFile`"
-  If the `../xolotl/c++/` folder and its subfolders are not on your MATLAB path,
-  sometimes `generateCPPFIle` will fail. You can add these folders with
-  `addpath(genpath(pathToCPPFolder))` where `pathToCPPFolder` is the full file path
-  to `../xolotl/c++/`.
+    If the `../xolotl/c++/` folder and its subfolders are not on your MATLAB path,
+    sometimes `generateCPPFIle` will fail. You can add these folders with
+    `addpath(genpath(pathToCPPFolder))` where `pathToCPPFolder` is the full file path
+    to `../xolotl/c++/`.
 
 ## Creating new conductances by hand
 
