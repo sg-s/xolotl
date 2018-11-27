@@ -47,4 +47,6 @@ Remember that if you're using `git` you should be sure to pull all the dependenc
 
 ## How do I cite this?
 
-Thanks for thinking of us! We have written a [technology report](https://www.frontiersin.org/articles/10.3389/fninf.2018.00087/abstract) about this that has been published in Frontiers in Neuroinformatics.
+Thanks for thinking of us! We have written a
+[technology report](https://www.frontiersin.org/articles/10.3389/fninf.2018.00087/full)
+about this that has been published in Frontiers in Neuroinformatics.

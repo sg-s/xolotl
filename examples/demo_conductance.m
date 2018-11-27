@@ -1,7 +1,7 @@
 % in this test, first we construct a neuron using
 % built-in conductances, and then create
-% custom conductances using the conductance class 
-% and compare that the two neurons are identical 
+% custom conductances using the conductance class
+% and compare that the two neurons are identical
 
 
 A = 0.0628; % this can be anything, doesn't matter

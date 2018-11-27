@@ -383,41 +383,6 @@ ans =
 ### Writing custom plot functions that can be manipulated
 
 
-# Creating new conductances
-
-## Understanding the `conductance` class
-
-## Manually  
-
-## Using the `conductance` class
-
-## Where should I put them?
-
-All conductances (and any other network component) are defined by
-an `.hpp` header file and live in the xolotl directory under `xolotl/c++/conductances/`.
-Within that directory, conductances are grouped by the surname of the first
-author on the paper from where they were sourced. For example, conductances
-from Liu *et al.* 1998 can be found in `xolotl/c++/conductances/liu/`.
-
-If an author, such as Farzan Nadim or Cristina Soto-Trevino happens to have
-papers over multiple years, the last two digits of the paper publishing year
-are appended to the author name (*e.g.* `../nadim98`). If there are multiple
-papers in a single year, lowercase alphabetical indices are used (*e.g.* `../golowasch01a`).
-
-If a paper, such as Soplata *et al.* 2017 describes multiple channels of a
-single type in different cell types (*e.g.* thalamocortical relay and thalamic
-reticular cells), then full-word descriptions can be used, such as
-(`../soplata/thalamocortical`).
-
-# Creating new synapses
-
-## Understanding the `synapse` class
-
-# Creating new mechanisms
-
-## Understanding the `mechanism` class
-
-
 # Diving deeper: `cpplab`
 
 

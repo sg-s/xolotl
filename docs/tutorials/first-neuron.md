@@ -118,4 +118,4 @@ and a window like this should pop up:
 Your browser does not support the video tag.
 </video>
 
-Play with the sliders and see how the voltage trace changes. 
+Play with the sliders and see how the voltage trace changes.

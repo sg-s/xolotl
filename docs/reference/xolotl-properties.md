@@ -7,7 +7,7 @@ All flags unless otherwise specified and default to 0 or false. Generally, flags
 * The `closed_loop` flag (false or true) determines whether initial conditions should be reset before a new simulation. If `closed_loop` is true, successive simulations will use the current state of the `xolotl` object (e.g. the end state of the previous simulation if you run `integrate` twice in a row).
 * The `approx_channels` flag (0 or 1) determines whether approximations to computing gating functions should be used. Look-up tables and approximations to the exponential function significantly increase computational speed, but decrease accuracy, especially at high temporal resolution in the data.
 * The `solver_order` flag takes the values 0 or 4. In the 0 case, standard solvers are used (exponential Euler). In the 4 case, a Runge-Kutta 4th order method is used instead. This method is slower but more accurate.
-* The `output_structure` flag (false or true) determines if outputs from the `integrate` function should be separate (false) or organized in a structure (true). The former is useful when you only want a few outputs or don't care about lots of variable names. The latter is useful when it's important to keep all the output data organized.
+* The `output_structure` flag (0, 1, or 2) determines if outputs from the `integrate` function should be separate matrices (0) or organized in a structure (1), or organized in a structure and enable spike-detection in C++ code (2). The 0 option is useful when you only want a few outputs or don't care about lots of variable names. The latter options are useful when it's important to keep all the output data organized. In addition, the 2 option saves memory at the expense of detail.
 
 ### Numerical Properties
 
