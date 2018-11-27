@@ -391,16 +391,16 @@ conductances without leaving the `MATLAB` prompt.
 
 First, instantiate a `conductance` object. Remember that you can always see all the
 properties of the object by typing its name in to the command window, or
-`fieldnames(temp)`.
+`fieldnames(newCond)`.
 
 ```matlab
-temp = conductance;
+newCond = conductance;
 ```
 
 Then, the activation steady-state function `m_inf`, the (de)inactivation steady-state function `h_inf`, the activation time constant function `tau_m`, and the (de)inactivation time constant function `tau_h` must be defined, as function handles.
 
 ```matlab
-temp.m_inf = @(V,Ca) 1.0 / (1.0 + exp((V-20.0)/5.0));
+newCond.m_inf = @(V,Ca) 1.0 / (1.0 + exp((V-20.0)/5.0));
 ...
 ```
 
@@ -413,30 +413,30 @@ temp.m_inf = @(V,Ca) 1.0 / (1.0 + exp((V-20.0)/5.0));
 You must also set whether this conductance fluxes Calcium.
 
 ```matlab
-temp.is_Ca = false;
+newCond.is_Ca = false;
 ```
 
 And the exponents of the activation `p` and (de)inactivation `q` gating variables
 in the current equation.
 
 ```matlab
-temp.p = 4;
-temp.q = 1;
+newCond.p = 4;
+newCond.q = 1;
 ```
 
 Finally, you must set the default reversal potential.
 
 ```matlab
-temp.default_E = -80;
+newCond.default_E = -80;
 ```
 
 You can also set the default activation and inactivation gating variable values with
-`temp.default_m` and `temp.default_h`.
+`newCond.default_m` and `newCond.default_h`.
 
 To generate the `C++` header file:
 
 ```matlab
-temp.generateCPPFile('condName')
+newCond.generateCPPFile('condName')
 ```
 
 where `'condName'` is what you want to name the conductance.
