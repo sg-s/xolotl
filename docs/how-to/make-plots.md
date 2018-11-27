@@ -1,6 +1,5 @@
 ### Making plot using the outputs from `integrate`
-Since the outputs from `x.integrate` are matrices, you can use all normal MATLAB
-plotting functionality.
+Since the outputs from `x.integrate` are matrices when `x.output_structure = false`, you can use all normal MATLAB plotting functionality.
 
 ### Making plots using the `plot` function
 The `x.plot` function will generate a figure, simulate the model, and plot the
@@ -10,9 +9,11 @@ voltage traces. Here are a few important features to note:
 generate the plot and put the figure handle there.
 * Subplot handles are stores in `x.handles.ax`.
 * The plots are colored by the largest contributing current. You can turn this
-functionality off by setting `setpref('xolotl', 'plot_color', false)`.
+functionality off by setting `x.pref.plot_color = false`. To make this change
+permanent for all xolotl objects, edit the `pref.m` file in the xolotl directory.
 * The plots also show the calcium trace (if any). To turn this functionality off,
-set `setpref('xolotl', 'show_Ca', false)`.
+set `x.pref.show_Ca = false`. To make this change
+permanent for all xolotl objects, edit the `pref.m` file in the xolotl directory.
 
 !!! Note "What's a contributing current?""
   The voltage trace is colored by the dominant current at that time. When the voltage
