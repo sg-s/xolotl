@@ -1,5 +1,6 @@
 
 # Contributing to xolotl
+<a name="contributing"><\a>
 
 `xolotl` is far from feature complete, and your contributions are welcome.
 
