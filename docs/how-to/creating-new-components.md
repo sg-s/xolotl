@@ -93,7 +93,7 @@ author on the paper from where they were sourced. For example, conductances
 from Liu *et al.* 1998 can be found in `xolotl/c++/conductances/liu/`.
 
 If an author, such as Farzan Nadim or Cristina Soto-Trevino, happens to have
-sources papers from multiple years, the last two digits of the paper publishing year
+sourced papers from multiple years, the last two digits of the paper publishing year
 are appended to the author name (*e.g.* `../nadim98`). If there are multiple
 papers in a single year, lowercase alphabetical indices are used (*e.g.* `../golowasch01a`).
 
