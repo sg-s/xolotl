@@ -382,14 +382,86 @@ ans =
 
 ### Writing custom plot functions that can be manipulated
 
-
 # Creating new conductances
 
-## Understanding the `conductance` class
+> code testing this functionality exists in `../xolotl/examples/demo_conductance`.
 
-## Manually  
+The `conductance` class exists to generate custom `C++` header files for novel
+conductances without leaving the `MATLAB` prompt.
 
-## Using the `conductance` class
+First, instantiate a `conductance` object. Remember that you can always see all the
+properties of the object by typing its name in to the command window, or
+`fieldnames(temp)`.
+
+```matlab
+temp = conductance;
+```
+
+Then, the activation steady-state function `m_inf`, the (de)inactivation steady-state function `h_inf`, the activation time constant function `tau_m`, and the (de)inactivation time constant function `tau_h` must be defined, as function handles.
+
+```matlab
+temp.m_inf = @(V,Ca) 1.0 / (1.0 + exp((V-20.0)/5.0));
+...
+```
+
+!!! Note "Anonymous functions in MATLAB"
+  Anonymous functions in MATLAB are defined by `@` then the function arguments
+  `(V, Ca)`, and then the body of the function. Anonymous functions use the current
+  scope, meaning that if you have `a = 5` defined, then you can use `a` in the function
+  definition.
+
+You must also set whether this conductance fluxes Calcium.
+
+```matlab
+temp.is_Ca = false;
+```
+
+And the exponents of the activation `p` and (de)inactivation `q` gating variables
+in the current equation.
+
+```matlab
+temp.p = 4;
+temp.q = 1;
+```
+
+Finally, you must set the default reversal potential.
+
+```matlab
+temp.default_E = -80;
+```
+
+You can also set the default activation and inactivation gating variable values with
+`temp.default_m` and `temp.default_h`.
+
+To generate the `C++` header file:
+
+```matlab
+temp.generateCPPFile('condName')
+```
+
+where `'condName'` is what you want to name the conductance.
+A `C++` header file will be generated at `../xolotl/c++/conductances/custom/condName.hpp`.
+You can now use this conductance like any other, e.g. `x.comp.add('custom/condName', 'gbar', 10)`.
+
+!!! Note "Debugging `generateCPPFile`"
+  If the `../xolotl/c++/` folder and its subfolders are not on your MATLAB path,
+  sometimes `generateCPPFIle` will fail. You can add these folders with
+  `addpath(genpath(pathToCPPFolder))` where `pathToCPPFolder` is the full file path
+  to `../xolotl/c++/`.
+
+## Creating new conductances by hand
+
+You can create a new conductance by hand by creating a new `.hpp` file in the
+[xolotl file tree](construct-models.md#whereshouldIputthem). You can find template files in
+`../xolotl/c++/conductances/templates/`.
+
+Conductances inherit from `../xolotl/c++/conductances.hpp` so if your novel conductance
+follows the Hodgkin-Huxley standard form, most methods from the conductance superclass
+can be used. Otherwise, you can write them yourself. Conductances can be arbitrarily
+complex because they are specified in their own header files.
+
+If you want to contribute your conductance to the xolotl project,
+[send us a pull request](contributing.md).
 
 ## Where should I put them?
 <a name="whereshouldIputthem"></a>
@@ -409,14 +481,6 @@ If a paper, such as Soplata *et al.* 2017 describes multiple channels of a
 single type in different cell types (*e.g.* thalamocortical relay and thalamic
 reticular cells), then full-word descriptions can be used, such as
 (`../soplata/thalamocortical`).
-
-# Creating new synapses
-
-## Understanding the `synapse` class
-
-# Creating new mechanisms
-
-## Understanding the `mechanism` class
 
 
 # Diving deeper: `cpplab`
