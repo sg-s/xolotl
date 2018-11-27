@@ -1,6 +1,6 @@
 In this document we will learn how to discover existing components in `xolotl`.
 
-### Hand-on exploration
+### Hands-on exploration
 
 Every component in `xolotl` exists a separate `C++` header file with a `*.hpp` extention. These files are organized in the `C++` folder in your `xolotl` folder. To know where this folder is, type this in your MATLAB terminal:
 
