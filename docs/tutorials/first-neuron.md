@@ -112,7 +112,7 @@ x.manipulate('*gbar')
 
 and a window like this should pop up:
 
-<video width="100%" autoplay loop>
+<video width="100%" autoplay loop muted>
   <source src="../../images/manipulate-neuron.mp4" type="video/mp4">
   <source src="../../images/manipulate-neuron.webm" type="video/webm">
 Your browser does not support the video tag.
