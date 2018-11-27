@@ -70,7 +70,7 @@ You can now use this conductance like any other, e.g. `x.comp.add('custom/condNa
 ## Creating new conductances by hand
 
 You can create a new conductance by hand by creating a new `.hpp` file in the
-[xolotl file tree](#whereshouldIputthem). You can find template files in
+[xolotl file tree](construct-models.md#whereshouldIputthem). You can find template files in
 `../xolotl/c++/conductances/templates/`.
 
 Conductances inherit from `../xolotl/c++/conductances.hpp` so if your novel conductance
@@ -79,6 +79,6 @@ can be used. Otherwise, you can write them yourself. Conductances can be arbitra
 complex because they are specified in their own header files.
 
 If you want to contribute your conductance to the xolotl project,
-[send us a pull request](#contributing).
+[send us a pull request](contributing.md).
 
 ## Creating new mechanisms

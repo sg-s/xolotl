@@ -8,7 +8,7 @@ Every component in `xolotl` exists a separate `C++` header file with a `*.hpp` e
 [fileparts(fileparts(which('xolotl'))) filesep 'c++']
 ```
 
-In this folder, you will find components [organized by type and then by first author](#whereshouldIputthem). For example, this is what the "conductances" folder looks like:
+In this folder, you will find components [organized by type and then by first author](construct-models.md#whereshouldIputthem). For example, this is what the "conductances" folder looks like:
 
 ![](../images/folder-components.png)
 
