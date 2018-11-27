@@ -101,3 +101,10 @@ We see that the neuron now spikes regularly.
 
 !!! Note "What's with the colors?"
     The voltage trace is coloured by the dominant current at that time. When the voltage is increasing, the color corresponds to the largest inward current. When the voltage is decreasing, the color corresponds to the largest outward current. Here, you can see that the upswing of each action potential is dominated by Sodium currents, while the repolarization is caused by Potassium currents.
+
+
+<video width="800" autoplay loop>
+  <source src="manipulate-neuron.mp4" type="video/mp4">
+  <source src="manipulate-neuron.webm" type="video/webm">
+Your browser does not support the video tag.
+</video>
