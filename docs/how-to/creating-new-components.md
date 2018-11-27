@@ -7,8 +7,7 @@ The `conductance` class exists to generate custom `C++` header files for novel
 conductances without leaving the `MATLAB` prompt.
 
 First, instantiate a `conductance` object. Remember that you can always see all the
-properties of the object by typing its name in to the command window, or
-`fieldnames(newCond)`.
+properties of the object by `properties(newCond)`.
 
 ```matlab
 newCond = conductance;
