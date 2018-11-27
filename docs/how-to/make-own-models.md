@@ -57,10 +57,18 @@ To generate the `C++` header file:
 temp.generateCPPFile('condName')
 ```
 
+where `'condName'` is what you want to name the conductance.
 A `C++` header file will be generated at `../xolotl/c++/conductances/custom/condName.hpp`.
 You can now use this conductance like any other, e.g. `x.comp.add('custom/condName', 'gbar', 10)`.
 
+!!! Note "Debugging `generateCPPFile`"
+  If the `../xolotl/c++/` folder and its subfolders are not on your MATLAB path,
+  sometimes `generateCPPFIle` will fail. You can add these folders with
+  `addpath(genpath(pathToCPPFolder))` where `pathToCPPFolder` is the full file path
+  to `../xolotl/c++/`.
 
 ## Creating new conductances by hand
+
+
 
 ## Creating new mechanisms
