@@ -68,7 +68,8 @@ You can now use this conductance like any other, e.g. `x.comp.add('custom/condNa
 
 ## Creating new conductances by hand
 
-You can create a new conductance by hand by creating a new `.hpp` file in the
+You can create a new conductance by hand by creating a new `.hpp` file anywhere on
+your MATLAB path. We organize our conductance files in the
 [xolotl file tree](construct-models.md#whereshouldIputthem). You can find template files in
 `../xolotl/c++/conductances/templates/`.
 
