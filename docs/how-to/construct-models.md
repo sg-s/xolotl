@@ -392,6 +392,7 @@ ans =
 ## Using the `conductance` class
 
 ## Where should I put them?
+<a name="whereshouldIputthem"></a>
 
 All conductances (and any other network component) are defined by
 an `.hpp` header file and live in the xolotl directory under `xolotl/c++/conductances/`.

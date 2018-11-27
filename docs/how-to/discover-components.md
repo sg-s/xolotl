@@ -1,6 +1,6 @@
-In this document we will learn how to discover existing components in `xolotl`. 
+In this document we will learn how to discover existing components in `xolotl`.
 
-### Hand-on exploration 
+### Hand-on exploration
 
 Every component in `xolotl` exists a separate `C++` header file with a `*.hpp` extention. These files are organized in the `C++` folder in your `xolotl` folder. To know where this folder is, type this in your MATLAB terminal:
 
@@ -8,14 +8,14 @@ Every component in `xolotl` exists a separate `C++` header file with a `*.hpp` e
 [fileparts(fileparts(which('xolotl'))) filesep 'c++']
 ```
 
-In this folder, you will find components organized by type and then by first author. For example, this is what the "conductances" folder looks like:
+In this folder, you will find components [organized by type and then by first author](#whereshouldIputthem). For example, this is what the "conductances" folder looks like:
 
 ![](../images/folder-components.png)
 
-Knowing what components are available is as simple as looking for yourself in this folder! `xolotl` was explicitly designed to make it easy to know *where* the C++ code your model was running was physically located on your computer, so that you can change it if you so choose. 
+Knowing what components are available is as simple as looking for yourself in this folder! `xolotl` was explicitly designed to make it easy to know *where* the C++ code your model was running was physically located on your computer, so that you can change it if you so choose.
 
 
-For example, the delayed rectifier potassium conductance published in Liu *et al.* 1998 can be found in `../xolotl/c++/conductances/liu/Kd.hpp`. 
+For example, the delayed rectifier potassium conductance published in Liu *et al.* 1998 can be found in `../xolotl/c++/conductances/liu/Kd.hpp`.
 
 ### Using `cpplab.search()`
 

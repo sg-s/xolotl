@@ -69,6 +69,7 @@ You can now use this conductance like any other, e.g. `x.comp.add('custom/condNa
 
 ## Creating new conductances by hand
 
-
+You can create a new conductance by hand by creating a new `.hpp` file in the
+[xolotl file tree](#whereshouldIputthem).
 
 ## Creating new mechanisms
