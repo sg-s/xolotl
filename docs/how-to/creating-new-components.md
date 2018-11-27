@@ -26,7 +26,7 @@ newCond.m_inf = @(V,Ca) 1.0 / (1.0 + exp((V-20.0)/5.0));
   scope, meaning that if you have `a = 5` defined, then you can use `a` in the function
   definition.
 
-You must also set whether this conductance fluxes Calcium.
+You must also set whether this is a Calcium conductance.
 
 ```matlab
 newCond.is_Ca = false;
