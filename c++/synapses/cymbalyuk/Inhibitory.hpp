@@ -98,8 +98,8 @@ void Inhibitory::connect(compartment *pcomp1_, compartment *pcomp2_) {
 
 
 // steady-state functions
-double m_inf(double Vpre) {return 1.0 / (1.0 + exp(-Vpre-0.01));}
-double x_inf(double Vpre) {return 0.1 + 0.9 / (1.0 + exp(-Vpre-0.04));}
+double Inhibitory::m_inf(double Vpre) {return 1.0 / (1.0 + exp(-Vpre-0.01));}
+double Inhibitory::x_inf(double Vpre) {return 0.1 + 0.9 / (1.0 + exp(-Vpre-0.04));}
 
 
 #endif
