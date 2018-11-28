@@ -26,7 +26,7 @@ compartments = x.find('compartment');
 for j = 1:length(compartments)
 
 	% add Calcium mechanism
-	x.(compartments{j}).add('CalciumMech1');
+	x.(compartments{j}).add('prinz/CalciumMech');
 
 	for i = 1:length(channels)
 		x.(compartments{j}).add([prefix channels{i}],'gbar',gbar(i,j),'E',E(i));
@@ -51,7 +51,7 @@ x.t_end = 5e3;
 
 
 
-x.integrate; 
+x.integrate;
 
 
 [V, ~, ~, currs, syns] = x.integrate;

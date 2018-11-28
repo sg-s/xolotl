@@ -1,4 +1,4 @@
-% this test tests every single conductance 
+% this test tests every single conductance
 
 all_cond = cpplab.search([fileparts(fileparts(which('xolotl'))) '/c++/conductances']);
 

@@ -11,7 +11,7 @@ phi = (2*f*F*vol)/tau_Ca;
 
 x = xolotl;
 x.add('compartment','AB','A',0.0628,'vol',NaN);
-x.AB.add('CalciumMech2','phi',phi);
+x.AB.add('bucholtz/CalciumMech','phi',phi);
 
 
 x.AB.add('liu/NaV','gbar',@() 115/x.AB.A,'E',30);

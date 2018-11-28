@@ -1,6 +1,6 @@
-% test script for matlab wrapper 
+% test script for matlab wrapper
 
-% this sets up the STG network 
+% this sets up the STG network
 % as in Fig 2e of this paper:
 % Prinz ... Marder Nat Neuro 2004
 % http://www.nature.com/neuro/journal/v7/n12/abs/nn1352.html
@@ -10,7 +10,7 @@
 x = xolotl;
 x.add('compartment','AB','A',0.0628);
 
-x.AB.add('CalciumMech1');
+x.AB.add('prinz/CalciumMech');
 
 x.AB.add('prinz-temperature/NaV','gbar',1000);
 x.AB.add('prinz-temperature/CaT','gbar',25);
