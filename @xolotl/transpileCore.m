@@ -126,19 +126,11 @@ lines = [lines(1:insert_here); channel_hookups(:); lines(insert_here+1:end)];
 
 
 synapse_add_lines = {};
-
-if length(self.synapses) == 1
-	% special case for when there is only
-	% one synapse
-
-	synapse_add_lines{1} = ['synapses.connect(&' self.synapse_pre{1} ', &' self.synapse_post{1} '); n_synapses ++; all_synapses.push_back(&synapses);'];
-else
-
-	for i = 1:length(self.synapses)
-		synapse_add_lines{i} = ['synapses' mat2str(i) '.connect(&' self.synapse_pre{i} ', &' self.synapse_post{i} '); n_synapses ++; all_synapses.push_back(&synapses' mat2str(i) ');'];
-	end
-
+for i = length(self.synapses):-1:1
+	syn_name = strrep(self.synapses(i).syn_name,'.','_');
+	synapse_add_lines{i} = [syn_name '.connect(&' self.synapses(i).pre_synapse ', &' self.synapses(i).post_synapse '); n_synapses ++; all_synapses.push_back(&' syn_name ');'];
 end
+
 
 insert_here = lineFind(lines,'//xolotl:add_synapses_here');
 assert(length(insert_here)==1,'Could not find insertion point for synapse->cell hookups')

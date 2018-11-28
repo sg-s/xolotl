@@ -46,7 +46,6 @@ x.connect('LP','PY','Glut','gbar',1);
 x.connect('PY','LP','Glut','gbar',30);
 x.connect('LP','AB','Glut','gbar',30);
 
-
 x.t_end = 5e3;
 
 

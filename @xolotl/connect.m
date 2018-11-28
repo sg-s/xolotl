@@ -60,60 +60,42 @@ assert(any(strcmp(comp2,properties(self))),'Unknown compartment')
 assert(~strcmp(comp1,comp2),'You cannot connect a compartment to itself')
 
 
-if isempty(self.synapse_pre)
-	self.synapse_pre = {};
-end
-if isempty(self.synapse_post)
-	self.synapse_post = {};
-end
 
-if isempty(varargin)
-	% default to an axial synapse with default parameters
-	
-	self.connect(comp1,comp2,NaN);
-	return
 
-elseif length(varargin) == 1 && isa(varargin{1},'double')
-	% default to an electrical synapses
-	% if either one of the compartments has a tree_idx,
-	% use Axial instead of Electrical
 
-	if ~isnan(self.(comp1).tree_idx) || ~isnan(self.(comp2).tree_idx)
-		synapse = cpplab('Axial','resistivity',varargin{1});
-	else
-		synapse = cpplab('Electrical','gbar',varargin{1});
-	end
-	
-	% need to add it twice because each electrical
-	% synapse is actually one way
-	self.synapses = [self.synapses; synapse; copy(synapse)];
-
-	self.synapse_pre = [self.synapse_pre; comp1];
-	self.synapse_post = [self.synapse_post; comp2];
-
-	self.synapse_pre = [self.synapse_pre; comp2];
-	self.synapse_post = [self.synapse_post; comp1];
-
-elseif length(varargin) == 1 && isa(varargin{1},'cpplab')
+if length(varargin) == 1 && isa(varargin{1},'cpplab')
 	% we are given an object. blindly use it
 	synapse = varargin{1};
-	self.synapses = [self.synapses; synapse];
+	self.(comp2).add([synapse.cpp_class_name comp1],synapse);
 
-	self.synapse_pre = [self.synapse_pre; comp1];
-	self.synapse_post = [self.synapse_post; comp2];
+	this_syn_info = struct;
+	this_syn_info.pre_synapse = comp1;
+	this_syn_info.post_synapse = comp2;
+	this_syn_info.syn_name = [comp2 '.' synapse.cpp_class_name comp1];
+
+	if isempty(self.synapses)
+		self.synapses = this_syn_info;
+	else
+		self.synapses = [self.synapses; this_syn_info];
+	end
 
 else
 
 	synapse = cpplab(varargin{:});
-	self.synapses = [self.synapses; synapse];
 
-	self.synapse_pre = [self.synapse_pre; comp1];
-	self.synapse_post = [self.synapse_post; comp2];
 
+	self.(comp2).add([synapse.cpp_class_name comp1],synapse);
+
+	this_syn_info = struct;
+	this_syn_info.pre_synapse = comp1;
+	this_syn_info.post_synapse = comp2;
+	this_syn_info.syn_name = [comp2 '.' synapse.cpp_class_name comp1];
+
+	if isempty(self.synapses)
+		self.synapses = this_syn_info;
+	else
+		self.synapses = [self.synapses; this_syn_info];
+	end
 
 end
 
-% because these objects are added within a method,
-% we need to update the hash
-
-self.md5hash;
