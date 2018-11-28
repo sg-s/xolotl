@@ -17,9 +17,8 @@ classdef xolotl <  cpplab & matlab.mixin.CustomDisplay
 
 properties (SetAccess = protected)
 	linked_binary@char
-	synapses
-    synapse_pre
-    synapse_post
+	synapses@struct
+    
 end  % end set protected props
 
 properties (Access = protected)
