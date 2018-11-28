@@ -230,11 +230,6 @@ methods
     end
 
 
-    function search(self,str)
-        idx = lineFind(self.hpp_files,str);
-        disp(unique(self.hpp_files(idx)))
-    end
-
 
 end % end methods 
 
@@ -249,12 +244,10 @@ methods (Static)
     [passed, total] = run_all_tests(cleanup);
 
     C = matrixCost(M1,M2);
-
     [M, V_lim, dV_lim] = V2matrix(V, V_lim, dV_lim);
 
     cleanup;
     curr_index = contributingCurrents(V,I);
-    C = coincidence(model_spiketimes, data_spiketimes, dt, Delta);
     spiketimes = findNSpikeTimes(V,n_spikes,on_off_thresh);
     f = findNSpikes(V, on_off_thresh);
     ax = show(conductance,ax);
