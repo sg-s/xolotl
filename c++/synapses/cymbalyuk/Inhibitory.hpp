@@ -23,7 +23,7 @@ public:
     {
 
         // wire up inputs
-        gbar    = g_;
+        gmax    = g_;
         s       = s_;
         tau_1   = tau_1_;
         tau_2   = tau_2_;
@@ -35,7 +35,7 @@ public:
         // defaults
         if (isnan (s)) { s = 0; }
         if (isnan (E)) { E = 0; }
-        if (isnan (gbar)) { gbar = 0; }
+        if (isnan (gmax)) { gmax = 0; }
         is_electrical = false;
     }
 
@@ -64,7 +64,7 @@ void Inhibitory::integrate(void) {
     x = x_inf(V_pre) + (x - x_inf(V_pre))*exp(-dt/tau_2); // do last b/c y depends on x
 
     s = m*y;
-    g = gbar*s;
+    g = gmax*s;
 
 }
 

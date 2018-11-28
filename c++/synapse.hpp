@@ -19,7 +19,7 @@ protected:
 public:
     compartment *post_syn; // pointer to pre-synaptic compartment
     compartment *pre_syn; // pointer to pre-synaptic compartment
-    double gbar = 0;
+    double gmax = 0;
     double g = 0;
     double E = 0;
     

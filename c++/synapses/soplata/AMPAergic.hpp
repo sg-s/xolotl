@@ -20,13 +20,13 @@ public:
     // specify parameters + initial conditions
     AMPAergic(double g_, double s_, double E_)
     {
-        gbar = g_;
+        gmax = g_;
         E = E_;
         s = s_;
 
         // defaults
         if (isnan (s)) { s = 0; }
-        if (isnan (gbar)) { gbar = 0; }
+        if (isnan (gmax)) { gmax = 0; }
         if (isnan (E)) { E = 0; }
         is_electrical = false;
     }
@@ -62,7 +62,7 @@ void AMPAergic::integrate(void)
     // integrate using forward Euler
     s = s + dt*sdot(V_pre, s);
 
-    g = gbar*s;
+    g = gmax*s;
 
 
 }
@@ -122,7 +122,7 @@ int AMPAergic::getFullState(double *syn_state, int idx)
     idx++;
 
     // also return the current from this synapse
-    syn_state[idx] = gbar*s*(post_syn->V - E);
+    syn_state[idx] = gmax*s*(post_syn->V - E);
     idx++;
     return idx;
 }

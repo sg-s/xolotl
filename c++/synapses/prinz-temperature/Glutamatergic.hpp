@@ -24,7 +24,7 @@ public:
     // specify parameters + initial conditions 
     Glutamatergic(double g_, double s_, double Q_tau_, double Q_g_)
     {
-        gbar = g_;
+        gmax = g_;
         Q_tau = Q_tau_;
         Q_g = Q_g_;
         E = -70.0;
@@ -33,7 +33,7 @@ public:
 
         // defaults
         if (isnan (s)) { s = 0; }
-        if (isnan (gbar)) { gbar = 0; }
+        if (isnan (gmax)) { gmax = 0; }
         is_electrical = false;
 
     }
@@ -82,7 +82,7 @@ void Glutamatergic::integrate(void)
     // integrate using exponential Euler
     s = sinf + (s - sinf)*exp(-pow_Q_tau_delta_temp/tau_s(sinf));
 
-    g = pow_Q_g*gbar*s;
+    g = pow_Q_g*gmax*s;
     
 }
 
@@ -136,7 +136,7 @@ int Glutamatergic::getFullState(double *syn_state, int idx) {
     idx++;
 
     // also return the current from this synapse
-    syn_state[idx] = gbar*s*(post_syn->V - E);
+    syn_state[idx] = gmax*s*(post_syn->V - E);
     idx++;
     return idx;
 }

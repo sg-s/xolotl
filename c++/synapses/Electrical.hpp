@@ -12,7 +12,7 @@ public:
     // specify parameters + initial conditions
     Electrical(double g_)
     {
-        gbar = g_;
+        gmax = g_;
         s = 1; // always active
         is_electrical = true;
     }
