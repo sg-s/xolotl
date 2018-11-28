@@ -1,10 +1,11 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
-// Subunit Noise generator 
+// Subunit Noise generator
 // as in Goldwyn and Shea-Brown PLoS Comp Bio
-// this affect a single conductance type 
+// https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002247
+// this affect a single conductance type
 
 #ifndef SUBUNITNOISE
 #define SUBUNITNOISE
@@ -22,11 +23,11 @@ public:
 
 
     // scale
-    double noise_amplitude = 0; 
+    double noise_amplitude = 0;
 
 
-    // specify parameters + initial conditions for 
-    // mechanism that controls a conductance 
+    // specify parameters + initial conditions for
+    // mechanism that controls a conductance
     SubunitNoise(double noise_amplitude_)
     {
         noise_amplitude = noise_amplitude_;
@@ -34,14 +35,14 @@ public:
 
     }
 
-    
+
     void integrate(void);
     void checkSolvers(int);
 
     void connect(compartment*);
     void connect(conductance*);
     void connect(synapse*);
-    
+
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
@@ -59,7 +60,7 @@ double SubunitNoise::getState(int idx)
 
 int SubunitNoise::getFullStateSize()
 {
-    return 0; 
+    return 0;
 }
 
 
@@ -77,7 +78,7 @@ void SubunitNoise::connect(conductance * channel_)
     channel = channel_;
     (channel->container)->addMechanism(this);
     controlling_class = (channel_->getClass()).c_str();
-    
+
 
 }
 
