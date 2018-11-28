@@ -1,4 +1,4 @@
-%{ 
+%{
            _       _   _
 __  _____ | | ___ | |_| |
 \ \/ / _ \| |/ _ \| __| |
@@ -13,16 +13,16 @@ a static method that converts a voltage trace into a LeMasson matrix.  Usage ::
 
 where V is a vector (a voltage time series), and ``V_lim`` and ``dV_lim`` are two-element vectors that specify the lower and upper bounds of ``V`` and ``dV``
 
-This static method allows you to create a delay-embedding of a voltage trace, and then discretize the space and count the number of points in each bin. The resultant matrix is sometimes called a LeMasson matrix. ``M`` is the LeMasson matrix, which is always of size ``101x101``. 
+This static method allows you to create a delay-embedding of a voltage trace, and then discretize the space and count the number of points in each bin. The resultant matrix is sometimes called a LeMasson matrix. ``M`` is the LeMasson matrix, which is always of size ``101x101``.
 
-If you do not specify ``V_lim`` and ``dV_lim``, they will be computed automatically and returned. 
+If you do not specify ``V_lim`` and ``dV_lim``, they will be computed automatically and returned.
 
 See Also
 --------
 
 LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
 
-- xolotl.matrixCost
+- xtools.matrixCost
 
 %}
 
@@ -89,7 +89,7 @@ M = zeros(101,101);
 % M(101,101) is used to collect overflow terms
 
 
-% other way 
+% other way
 for i = 1:length(V)
 	if isnan(V(i))
 		M(101,101) = M(101,101) + 1;
@@ -101,5 +101,3 @@ for i = 1:length(V)
 	end
 	M(V(i),dV(i)) = M(V(i),dV(i)) + 1;
 end
-
-
