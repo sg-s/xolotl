@@ -1,4 +1,4 @@
-%              _       _   _ 
+%              _       _   _
 %   __  _____ | | ___ | |_| |
 %   \ \/ / _ \| |/ _ \| __| |
 %    >  < (_) | | (_) | |_| |
@@ -8,26 +8,26 @@
 % that runs multi-compartment neuron/networks
 % it generates C++ files, compiles them, and runs them
 % based on pseudo-objects that you can define within it
-% 
+%
 % Srinivas Gorur-Shandilya
 % see https://github.com/sg-s/xolotl
-% for more information 
+% for more information
 
 classdef xolotl <  cpplab & matlab.mixin.CustomDisplay
 
 properties (SetAccess = protected)
 	linked_binary@char
 	synapses@struct
-    
+
 end  % end set protected props
 
 properties (Access = protected)
 	xolotl_folder
 	cpp_folder
 	OS_binary_ext % OS-specific
-	dyn_prop_handles % handles to dynamic properties 
+	dyn_prop_handles % handles to dynamic properties
 	illegal_names = {'xolotl_network','compartment','conductance','controller','synapse','network','x','self'}; % list of illegal names for compartments, synpases and other objects
-	
+
 
     snapshots
 
@@ -47,21 +47,21 @@ properties
 	% output delta t
 	dt@double = 50e-3; % ms
 
-	% simulation deltat 
+	% simulation deltat
 	sim_dt@double = 50e-3;
 	t_end@double = 5000; % ms
 
 	handles
 	closed_loop@logical = true;
-	temperature@double = 11; % centigrade 
-	temperature_ref@double = 11; % centigrade 
+	temperature@double = 11; % centigrade
+	temperature_ref@double = 11; % centigrade
 
     manipulate_plot_func@cell
 
     solver_order@double = 0;
 
     % should we approximate gating functions?
-    % 0 -- no approximations 
+    % 0 -- no approximations
     % 1 -- integer mV only (approx)
     approx_channels@double = 0;
 
@@ -70,10 +70,10 @@ properties
     pref
 
 
-    % what sort of output do you desire? 
+    % what sort of output do you desire?
     % 0 -- standard, V, Ca, etc. separated into variables
     % 1 -- a structure. all outputs included
-    % 2 -- structure, but only with spike times 
+    % 2 -- structure, but only with spike times
     output_type@double = 0
     spike_thresh@double = 0 % mV
 
@@ -85,7 +85,7 @@ methods (Access = protected)
     function displayScalarObject(self)
         url = 'https://github.com/sg-s/xolotl/';
         fprintf(['\b\b\b\b\b\b\b\b\b<a href="' url '">xolotl</a> object with '])
-        
+
         compartment_names = self.find('compartment');
 
         if length(compartment_names) > 20
@@ -129,7 +129,7 @@ methods (Access = protected)
 
 end % end protected methods
 
-methods 
+methods
 	function self = xolotl()
 		self.rebase;
 
@@ -171,7 +171,7 @@ methods
             self.V_clamp = V_clamp;
             return
         end
-        
+
         n_comp = length(self.find('compartment'));
         n_steps = floor(self.t_end/self.sim_dt);
 
@@ -184,14 +184,14 @@ methods
         d = dbstack;
 
         if any(strcmp({d.name},'xolotl.set.I_ext'))
-            % this is being called by setting I_ext, so 
+            % this is being called by setting I_ext, so
             % do nothing
         else
             % ignore I_ext, since it's being clamped
             self.I_ext = zeros(1,n_comp);
         end
 
-        
+
 
         self.V_clamp = V_clamp;
     end
@@ -223,7 +223,7 @@ methods
 
             % it's being called by V_clamp, so do nothing
         else
-            % this is being called by the user, so we need to 
+            % this is being called by the user, so we need to
             % cancel out V_clamp
             self.V_clamp = NaN(1,n_comp);
         end
@@ -236,10 +236,10 @@ methods
     end
 
 
-end % end methods 
+end % end methods
 
 methods (Static)
-    
+
 
     go_to_examples()
 
@@ -248,15 +248,9 @@ methods (Static)
 
     [passed, total] = run_all_tests(cleanup);
 
-    C = matrixCost(M1,M2);
-
-    [M, V_lim, dV_lim] = V2matrix(V, V_lim, dV_lim);
-
     cleanup;
     curr_index = contributingCurrents(V,I);
     C = coincidence(model_spiketimes, data_spiketimes, dt, Delta);
-    spiketimes = findNSpikeTimes(V,n_spikes,on_off_thresh);
-    f = findNSpikes(V, on_off_thresh);
     ax = show(conductance,ax);
     [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance);
 
@@ -264,4 +258,4 @@ methods (Static)
 
 
 end % end static methods
-end % end classdef 
+end % end classdef
