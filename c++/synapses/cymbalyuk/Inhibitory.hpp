@@ -59,9 +59,9 @@ void Inhibitory::integrate(void) {
     // figure out the voltage of the pre-synaptic neuron
     double V_pre = pre_syn->V;
 
-    m = m_inf(Vpre) + (m - m_inf(Vpre))*exp(-dt/0.2);
+    m = m_inf(V_pre) + (m - m_inf(V_pre))*exp(-dt/0.2);
     y = x + (y - x)*exp(-dt/tau_1);
-    x = x_inf(Vpre) + (x - x_inf(Vpre))*exp(-dt/tau_2); // do last b/c y depends on x
+    x = x_inf(V_pre) + (x - x_inf(V_pre))*exp(-dt/tau_2); // do last b/c y depends on x
 
     s = m*y;
     g = gbar*s;
