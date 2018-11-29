@@ -1,5 +1,5 @@
 %{
-              _       _   _ 
+              _       _   _
    __  _____ | | ___ | |_| |
    \ \/ / _ \| |/ _ \| __| |
     >  < (_) | | (_) | |_| |
@@ -8,17 +8,17 @@
 findNSpikeTimes
 ^^^^^^^^^^^^^^^
 
-static method of ``xolotl`` that returns a vector of spike times from a voltage trace. Spikes are defined as voltage crossings across a threshold. Example use ::
+static method of ``xtools`` that returns a vector of spike times from a voltage trace. Spikes are defined as voltage crossings across a threshold. Example use ::
 
    spiketimes = xolotl.findNSpikeTimes(V,n_spikes,on_off_thresh);
 
 
-``V`` is a vector of voltages, and ``on_off_thresh`` is an optional argument that determines the threshold above which a voltage fluctuation is considered a spikes. The default is 0. ``n_spikes`` is the number of spikes it should look for, and ``spiketimes`` will always be a vector ``n_spikes`` elments long. 
+``V`` is a vector of voltages, and ``on_off_thresh`` is an optional argument that determines the threshold above which a voltage fluctuation is considered a spikes. The default is 0. ``n_spikes`` is the number of spikes it should look for, and ``spiketimes`` will always be a vector ``n_spikes`` elments long.
 
 See Also
 --------
 
-- xolotl.findNSpikes
+- xtools.findNSpikes
 
 
 %}
