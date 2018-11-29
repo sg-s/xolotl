@@ -77,6 +77,9 @@ if isnan(self.sim_dt) || isempty(self.sim_dt)
 	self.sim_dt = self.dt;
 end
 
+% check that the simulation doesn't exceed C++ intmax
+assert(self.t_end/self.sim_dt<intmax,'Simulation is too long. The number of steps required exceeds INT_MAX')
+
 assert(rem(self.dt,self.sim_dt)==0,'Simulation & output dt are not compatible')
 
 if nargout == 0 & self.closed_loop == false
