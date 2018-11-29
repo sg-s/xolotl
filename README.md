@@ -41,7 +41,7 @@ That's it. To integrate it and see the time evolution of the voltage, type:
 ### It's fast
 
 
-Because ``xolotl`` is written in ``C++``, it's quite fast. Here are some benchmarks for a single-compartment Hodgkin-Huxley model with sodium, potassium, and passive leak conductances and another single-compartment model with [eight conductances](http://www.biology.emory.edu/research/Prinz/papers/article/5.pdf). The built-in benchmarking tool can benchmark any model configured in it:
+Because ``xolotl`` is written in ``C++``, it's quite fast. Here are some benchmarks for a single-compartment Hodgkin-Huxley model with sodium, potassium, and passive leak conductances and another single-compartment model with [eight conductances](https://www.ncbi.nlm.nih.gov/pubmed/12944532/). The built-in benchmarking tool can benchmark any model configured in it:
 
 ```matlab
    x.benchmark;
