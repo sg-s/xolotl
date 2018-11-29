@@ -1,10 +1,11 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
-// Current Noise generator 
+// Current Noise generator
 // as in Goldwyn and Shea-Brown PLoS Comp Bio
-// 
+// https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002247
+//
 
 #ifndef CURRENTNOISE
 #define CURRENTNOISE
@@ -25,11 +26,11 @@ public:
 
 
     // scale
-    double noise_amplitude = 0; 
+    double noise_amplitude = 0;
 
 
-    // specify parameters + initial conditions for 
-    // mechanism that controls a conductance 
+    // specify parameters + initial conditions for
+    // mechanism that controls a conductance
     CurrentNoise(double noise_amplitude_)
     {
         noise_amplitude = noise_amplitude_;
@@ -39,7 +40,7 @@ public:
 
     void integrate(void);
     void checkSolvers(int);
-    
+
     void connect(compartment*);
     void connect(conductance*);
     void connect(synapse*);

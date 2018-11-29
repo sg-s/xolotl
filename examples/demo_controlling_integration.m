@@ -1,13 +1,13 @@
 %%
-% In this example, we illustrate how we can control 
+% In this example, we illustrate how we can control
 % integration and request different forms of output
-% and how this can impact memory use 
+% and how this can impact memory use
 
 
-% making a simple integral control bursting model 
+% making a simple integral control bursting model
 x = xolotl;
 x.add('compartment','AB','A',0.0628,'Ca_target',7);
-x.AB.add('CalciumMech1','f',1.496);
+x.AB.add('prinz/CalciumMech','f',1.496);
 
 g0 = 1e-1+1e-1*rand(7,1);
 
@@ -21,13 +21,13 @@ x.AB.add('liu/HCurrent','gbar',g0(7),'E',-20);
 x.AB.add('Leak','gbar',.099,'E',-50);
 
 
-x.AB.NaV.add('IntegralController','tau_m',666);
-x.AB.CaT.add('IntegralController','tau_m',55555);
-x.AB.CaS.add('IntegralController','tau_m',45454);
-x.AB.ACurrent.add('IntegralController','tau_m',5000);
-x.AB.KCa.add('IntegralController','tau_m',1250);
-x.AB.Kd.add('IntegralController','tau_m',2000);
-x.AB.HCurrent.add('IntegralController','tau_m',125000);
+x.AB.NaV.add('oleary/IntegralController','tau_m',666);
+x.AB.CaT.add('oleary/IntegralController','tau_m',55555);
+x.AB.CaS.add('oleary/IntegralController','tau_m',45454);
+x.AB.ACurrent.add('oleary/IntegralController','tau_m',5000);
+x.AB.KCa.add('oleary/IntegralController','tau_m',1250);
+x.AB.Kd.add('oleary/IntegralController','tau_m',2000);
+x.AB.HCurrent.add('oleary/IntegralController','tau_m',125000);
 
 x.closed_loop = false;
 x.t_end = 1e6;
