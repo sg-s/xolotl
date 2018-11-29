@@ -26,6 +26,9 @@ pages:
     - xolotl Methods: 'reference/xolotl-methods.md'
     - cpplab Properties: 'reference/cpplab-properties.md'
     - cpplab Methods: 'reference/cpplab-methods.md'
+  - PERFORMANCE TIPS:
+    - Speed: 'performance/speed.md'
+    - Memory: 'performance/memory.md'
   - TROUBLESHOOTING: 
     - Fixes to common problems: troubleshooting.md
   - About: 'about.md'
