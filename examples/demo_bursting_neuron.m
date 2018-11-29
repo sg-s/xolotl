@@ -27,9 +27,9 @@ x.AB.add('Leak','gbar',@() 0.0622/x.AB.A,'E',-50);
 % this should fail since vol is NaN
 try
 	x.integrate;
-	error('Failed to catch an error where we set vol to NaN using CalciumMech2')
+	error('Failed to catch an error where we set vol to NaN using CalciumMech')
 catch err
-	if any(strfind(err.message,'CalciumMech2'))
+	if any(strfind(err.message,'CalciumMech'))
 		disp('Successfully caught error:')
 		disp(err.message)
 		x.AB.vol = x.AB.A;
