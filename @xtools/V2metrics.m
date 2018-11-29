@@ -70,8 +70,8 @@ assert(~any(isinf(V)),'V cannot have Inf')
 assert((isreal(V)),'V cannot be complex')
 
 % find spikes in voltage trace
-n_spikes = xolotl.findNSpikes(V);
-spiketimes = xolotl.findNSpikeTimes(V,n_spikes);
+n_spikes = xtools.findNSpikes(V);
+spiketimes = xtools.findNSpikeTimes(V,n_spikes);
 
 spiketimes(spiketimes > length(V)) = [];
 
