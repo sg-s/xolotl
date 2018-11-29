@@ -26,7 +26,7 @@ compartments = x.find('compartment');
 for j = 1:length(compartments)
 
 	% add Calcium mechanism
-	x.(compartments{j}).add('CalciumMech1');
+	x.(compartments{j}).add('prinz/CalciumMech');
 
 	for i = 1:length(channels)
 		x.(compartments{j}).add([prefix channels{i}],'gbar',gbar(i,j),'E',E(i));
@@ -38,20 +38,20 @@ x.PY.add('Leak','gbar',.1,'E',-50);
 
 
 % set up synapses as in Fig. 2e
-x.connect('AB','LP','Chol','gbar',30);
-x.connect('AB','PY','Chol','gbar',3);
-x.connect('AB','LP','Glut','gbar',30);
-x.connect('AB','PY','Glut','gbar',10);
-x.connect('LP','PY','Glut','gbar',1);
-x.connect('PY','LP','Glut','gbar',30);
-x.connect('LP','AB','Glut','gbar',30);
+x.connect('AB','LP','Chol','gmax',30);
+x.connect('AB','PY','Chol','gmax',3);
+x.connect('AB','LP','Glut','gmax',30);
+x.connect('AB','PY','Glut','gmax',10);
+x.connect('LP','PY','Glut','gmax',1);
+x.connect('PY','LP','Glut','gmax',30);
+x.connect('LP','AB','Glut','gmax',30);
 
 x.t_end = 5e3;
 
 
 
 
-x.integrate; 
+x.integrate;
 
 
 [V, ~, ~, currs, syns] = x.integrate;

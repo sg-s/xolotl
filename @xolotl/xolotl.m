@@ -230,32 +230,24 @@ methods
     end
 
 
-    function search(self,str)
-        idx = lineFind(self.hpp_files,str);
-        disp(unique(self.hpp_files(idx)))
-    end
-
 
 end % end methods
 
 methods (Static)
 
-
-    go_to_examples()
-
+    go_to_examples();
+    
     uninstall();
     update();
-
+    
     [passed, total] = run_all_tests(cleanup);
-
-
     cleanup;
-    curr_index = contributingCurrents(V,I);
+    
+    curr_index = contributingCurrents(V,I);    
     ax = show(conductance,ax);
     [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance);
-
+    
     setup();
-
 
 end % end static methods
 end % end classdef

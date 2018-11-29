@@ -2,7 +2,7 @@
 In this tutorial we will use the built-in demos in `xolotl` to see what
 it can do, and to play with some models. We assume that you have installed
 `xolotl` correctly, and have verified your installation. If you haven't
-done that already, [click here and complete the steps on that page first](../start-here.md).
+done that already, [click here and complete the steps on that page first](../tutorials/start-here.md).
 
 First, let's go to the folder that contains
 

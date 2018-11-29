@@ -8,7 +8,7 @@ A = 0.0628; % this can be anything, doesn't matter
 
 x = xolotl;
 x.add('compartment','AB','A',A);
-x.AB.add('CalciumMech1','f',1.496);
+x.AB.add('prinz/CalciumMech','f',1.496);
 
 x.AB.add('liu/NaV','gbar',@() 115/x.AB.A,'E',30);
 x.AB.add('liu/CaT','gbar',@() 1.44/x.AB.A,'E',30);
@@ -57,7 +57,7 @@ end
 
 x2 = xolotl;
 x2.add('compartment','AB','A',A);
-x2.AB.add('CalciumMech','f',1.496);
+x2.AB.add('prinz/CalciumMech','f',1.496);
 
 x2.AB.add('custom/NaV','gbar',@() 115/x.AB.A,'E',30);
 x2.AB.add('custom/CaT','gbar',@() 1.44/x.AB.A,'E',30);

@@ -15,7 +15,7 @@ public:
     // specify parameters + initial conditions
     Cholinergic(double g_, double s_)
     {
-        gbar = g_;
+        gmax = g_;
         E = -80.0;
 
 
@@ -24,7 +24,7 @@ public:
 
         // defaults
         if (isnan (s)) { s = 0; }
-        if (isnan (gbar)) { gbar = 0; }
+        if (isnan (gmax)) { gmax = 0; }
         is_electrical = false;
     }
 
@@ -73,7 +73,7 @@ void Cholinergic::integrate(void)
     // integrate using exponential Euler
     s = sinf + (s - sinf)*exp(-dt/tau_s(sinf));
 
-    g = gbar*s;
+    g = gmax*s;
 
 
 }
@@ -133,7 +133,7 @@ int Cholinergic::getFullState(double *syn_state, int idx)
     idx++;
 
     // also return the current from this synapse
-    syn_state[idx] = gbar*s*(post_syn->V - E);
+    syn_state[idx] = gmax*s*(post_syn->V - E);
     idx++;
     return idx;
 }

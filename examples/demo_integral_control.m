@@ -2,7 +2,7 @@
 
 
 A = 0.0628; % mm^2
-Ca_target = 7; % used only when we add in homeostatic control 
+Ca_target = 7; % used only when we add in homeostatic control
 
 x = xolotl;
 x.add('compartment','AB','A',A,'Ca_target',Ca_target);
@@ -20,13 +20,13 @@ x.AB.add('liu/HCurrent','gbar',g0(7),'E',-20);
 x.AB.add('Leak','gbar',.099,'E',-50);
 
 
-x.AB.NaV.add('IntegralController','tau_m',666);
-x.AB.CaT.add('IntegralController','tau_m',55555);
-x.AB.CaS.add('IntegralController','tau_m',45454);
-x.AB.ACurrent.add('IntegralController','tau_m',5000);
-x.AB.KCa.add('IntegralController','tau_m',1250);
-x.AB.Kd.add('IntegralController','tau_m',2000);
-x.AB.HCurrent.add('IntegralController','tau_m',125000);
+x.AB.NaV.add('oleary/IntegralController','tau_m',666);
+x.AB.CaT.add('oleary/IntegralController','tau_m',55555);
+x.AB.CaS.add('oleary/IntegralController','tau_m',45454);
+x.AB.ACurrent.add('oleary/IntegralController','tau_m',5000);
+x.AB.KCa.add('oleary/IntegralController','tau_m',1250);
+x.AB.Kd.add('oleary/IntegralController','tau_m',2000);
+x.AB.HCurrent.add('oleary/IntegralController','tau_m',125000);
 
 
 x.t_end = 5e5;

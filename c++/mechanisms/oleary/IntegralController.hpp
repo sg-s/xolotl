@@ -90,7 +90,7 @@ int IntegralController::getFullState(double *cont_state, int idx)
     }
     else if (syn)
     {
-        cont_state[idx] = syn->gbar;  
+        cont_state[idx] = syn->gmax;  
     }
     idx++;
     return idx;
@@ -203,13 +203,13 @@ void IntegralController::integrate(void)
             if (m < 0) {m = 0;}
 
             // copy the protein levels from this syn
-            double gdot = ((dt/tau_g)*(m - syn->gbar*1e-3));
+            double gdot = ((dt/tau_g)*(m - syn->gmax*1e-3));
 
             // make sure it doesn't go below zero
-            if (syn->gbar + gdot*1e3 < 0) {
-                syn->gbar = 0;
+            if (syn->gmax + gdot*1e3 < 0) {
+                syn->gmax = 0;
             } else {
-                syn->gbar += gdot*1e3;
+                syn->gmax += gdot*1e3;
             }
 
 

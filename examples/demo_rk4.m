@@ -17,7 +17,7 @@ x = xolotl;
 x.add('compartment','AB','Cm',10,'A',A);
 
 % add Calcium mechanism
-x.AB.add('CalciumMech1');
+x.AB.add('prinz/CalciumMech');
 
 for i = 1:length(channels)
 	x.AB.add([prefix channels{i}],'gbar',gbar(i),'E',E(i));

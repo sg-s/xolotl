@@ -10,7 +10,7 @@ public:
     // specify parameters + initial conditions
     Axon(double g_, double s_)
     {
-        gbar = g_;
+        gmax = g_;
         E = -70.0;
         Delta = 1.0;
         Vth = -25.0;
@@ -19,7 +19,7 @@ public:
 
         // defaults
         if (isnan (s)) { s = 0; }
-        if (isnan (gbar)) { gbar = 0; }
+        if (isnan (gmax)) { gmax = 0; }
         is_electrical = false;
 
     }
@@ -57,7 +57,7 @@ int Axon::getFullState(double *syn_state, int idx)
     idx++;
 
     // also return the current from this synapse
-    syn_state[idx] = gbar*s*(post_syn->V - E);
+    syn_state[idx] = gmax*s*(post_syn->V - E);
     idx++;
     return idx;
 }

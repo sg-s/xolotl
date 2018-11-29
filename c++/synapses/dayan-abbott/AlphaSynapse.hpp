@@ -23,7 +23,7 @@ public:
     {
 
         // wire up inputs
-        gbar = g_;
+        gmax = g_;
         s = s_;
         tau_s = tau_s_;
         V_thresh = V_thresh_;
@@ -36,7 +36,7 @@ public:
         // defaults
         if (isnan (s)) { s = 0; }
         if (isnan (E)) { E = 0; }
-        if (isnan (gbar)) { gbar = 0; }
+        if (isnan (gmax)) { gmax = 0; }
         is_electrical = false;
     }
     
@@ -67,7 +67,7 @@ void AlphaSynapse::integrate(void) {
     }
 
     s = (time_since_spike/tau_s)*exp(1-(time_since_spike/tau_s));
-    g = gbar*s;
+    g = gmax*s;
 
 }
 

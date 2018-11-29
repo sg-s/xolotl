@@ -504,8 +504,8 @@ void compartment::integrateMS(int k){
     //synapses 
     for (int i=0; i<n_syn; i++) {
         syn[i]->integrateMS(k, V_MS, Ca_MS);
-        sigma_g += (syn[i]->gbar)*(syn[i]->s)/(1000*A); // now uS/mm^2
-        sigma_gE += ((syn[i]->gbar)*(syn[i]->s)*(syn[i]->E)/(1000*A));
+        sigma_g += (syn[i]->gmax)*(syn[i]->s)/(1000*A); // now uS/mm^2
+        sigma_gE += ((syn[i]->gmax)*(syn[i]->s)*(syn[i]->E)/(1000*A));
     }
 
 
@@ -725,10 +725,10 @@ void compartment::resolveAxialConductances(void)
         if ((axial_syn[i]->pre_syn)->tree_idx > tree_idx)
         {
             // pre_syn of this axial synapse is downstream
-            downstream_g = axial_syn[i]->gbar;
+            downstream_g = axial_syn[i]->gmax;
         } else {
             // pre_syn of this axial synapse is upstream
-            upstream_g = axial_syn[i]->gbar;
+            upstream_g = axial_syn[i]->gmax;
         }
     }
 
