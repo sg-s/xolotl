@@ -44,7 +44,7 @@ V0 = self.integrate;
 all_speed(1) = toc;
 
 for j = size(V0,2):-1:1
-	[M0(:,:,j), V_lim(:,j), dV_lim(:,j)] = xolotl.V2matrix(V0(:,j));
+	[M0(:,:,j), V_lim(:,j), dV_lim(:,j)] = xtools.V2Matrix(V0(:,j));
 end
 
 
@@ -59,8 +59,8 @@ for i = 2:length(all_dt)
 
 	this_q = 0;
 	for j = 1:size(V0,2)
-		M(:,:,j) = xolotl.V2matrix(V(:,j),V_lim(:,j),dV_lim(:,j));
-		this_q =  this_q + xolotl.matrixCost(M(:,:,j),M0(:,:,j));
+		M(:,:,j) = xtools.V2Matrix(V(:,j),V_lim(:,j),dV_lim(:,j));
+		this_q =  this_q + xtools.matrixCost(M(:,:,j),M0(:,:,j));
 	end
 
 

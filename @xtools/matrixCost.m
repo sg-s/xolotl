@@ -13,7 +13,7 @@ Usage ::
 
 	C = matrixCost(M1,M2)
 
-where ``M1`` and ``M2`` are two matrices returned by xolotl.V2matrix() and represent discretized probability distributions of a derivative-embedded attractor of the voltage trace.
+where ``M1`` and ``M2`` are two matrices returned by xtools.V2matrix() and represent discretized probability distributions of a derivative-embedded attractor of the voltage trace.
 
 
 See Also

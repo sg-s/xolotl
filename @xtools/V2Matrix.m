@@ -28,7 +28,7 @@ LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting
 
 
 
-function [M, V_lim, dV_lim] = V2matrix(V, V_lim, dV_lim)
+function [M, V_lim, dV_lim] = V2Matrix(V, V_lim, dV_lim)
 
 assert(isvector(V),'V has to be a vector')
 
