@@ -78,7 +78,7 @@ can be used. Otherwise, you can write them yourself. Conductances can be arbitra
 complex because they are specified in their own header files.
 
 If you want to contribute your conductance to the xolotl project,
-[send us a pull request](contributing.md).
+[send us a pull request](../contributing.md).
 
 ## Where should I put them?
 <a name="whereshouldIputthem"></a>
