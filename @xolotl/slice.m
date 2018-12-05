@@ -34,6 +34,8 @@ See Also
 
 function slice(self, compartment, N_slices, axial_resistivity)
 
+error('Slice is temporarily not supported.')
+
 assert(any(strcmp(self.find('compartment'),compartment)),'Unknown compartment')
 
 

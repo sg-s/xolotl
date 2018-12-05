@@ -65,9 +65,10 @@ if nargin == 1
 	end
 
 	% reset all synapses 
-	for i = 1:length(self.synapses)
+	all_synapses = self.find('synapse');
+	for i = 1:length(all_synapses)
 		try
-			self.synapses(i).s = 0;
+			self.get(all_synapses{i}).s = 0;
 		catch
 		end
 	end
