@@ -28,8 +28,7 @@ protected:
     int control_type = 0;
 public:
     // timescales
-    double tau_m = std::numeric_limits<double>::infinity();
-    double tau_g = 5e3; 
+    double tau = std::numeric_limits<double>::infinity();
 
     // mRNA concentration 
     double m = 0;
@@ -43,8 +42,7 @@ public:
     {
 
         tau = tau_;
-
-        if (isnan(tau)) {tau = 10e3};
+        if (isnan(tau)) {tau = 10e3;};
     }
 
     
@@ -86,7 +84,7 @@ int ProportionalController::getFullState(double *cont_state, int idx)
     }
     else if (syn)
     {
-        cont_state[idx] = syn->gbar;  
+        cont_state[idx] = syn->gmax;  
     }
     idx++;
     return idx;
@@ -180,16 +178,16 @@ void ProportionalController::integrate(void) {
 
             double Ca_error = (syn->post_syn)->Ca_prev - (syn->post_syn)->Ca_target;
 
-            double g = (syn->gbar);
+            double g = (syn->gmax);
 
             double gdot = (dt/tau)*(Ca_error)*g/((syn->post_syn)->Ca_target);
 
 
             // make sure it doesn't go below zero
-            if (syn->gbar + gdot*1e3 < 0) {
-                syn->gbar = 0;
+            if (syn->gmax + gdot*1e3 < 0) {
+                syn->gmax = 0;
             } else {
-                syn->gbar += gdot*1e3;
+                syn->gmax += gdot*1e3;
             }
 
 
