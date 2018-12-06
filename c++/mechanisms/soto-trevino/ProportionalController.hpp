@@ -28,7 +28,7 @@ protected:
     int control_type = 0;
 public:
     // timescales
-    double tau = std::numeric_limits<double>::infinity();
+    double tau_m = std::numeric_limits<double>::infinity();
 
     // mRNA concentration 
     double m = 0;
@@ -38,11 +38,11 @@ public:
 
     // specify parameters + initial conditions for 
     // mechanism that controls a conductance 
-    ProportionalController(double tau_)
+    ProportionalController(double tau_m_)
     {
 
-        tau = tau_;
-        if (isnan(tau)) {tau = 10e3;};
+        tau_m = tau_m_;
+        if (isnan(tau_m)) {tau_m = 10e3;};
     }
 
     
@@ -155,7 +155,7 @@ void ProportionalController::integrate(void) {
 
             double g = (channel->gbar)*container_A;
 
-            double gdot = (dt/tau)*(Ca_error)*g/((channel->container)->Ca_target);
+            double gdot = (dt/tau_m)*(Ca_error)*g/((channel->container)->Ca_target);
 
             // make sure it doesn't go below zero
             if (channel->gbar_next + gdot < 0) {
@@ -180,7 +180,7 @@ void ProportionalController::integrate(void) {
 
             double g = (syn->gmax);
 
-            double gdot = (dt/tau)*(Ca_error)*g/((syn->post_syn)->Ca_target);
+            double gdot = (dt/tau_m)*(Ca_error)*g/((syn->post_syn)->Ca_target);
 
 
             // make sure it doesn't go below zero
