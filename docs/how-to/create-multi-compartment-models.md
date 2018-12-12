@@ -36,3 +36,21 @@ $$g_{max} = \frac{r_{pre} r_{post}^2}{\rho L_{pre} (L_{pre} r_{post}^2 + L_{post
 
 where $r$ is the axial radius and $L$ the length. $\rho$ is the axial resistivity in the
 presynaptic compartment. Subscripts "pre" and "post" refer to the presynaptic and postsynaptic compartments.
+
+
+## Size and shape of compartments
+
+In single-compartment models, or networks of these, it is acceptable to use the `A` and `V`
+properties of compartments to specify the surface area and volume respectively.
+
+In multi-compartment models in which the compartments are connected by `Axial` synapses, the
+`len` and `radius` properties, for the length and axial radius must be specified instead.
+The shape of the compartment is cylindrical, and the surface area is computed automatically,
+according to the "body" of the cylinder (i.e. $\pi r^2 L$).
+
+While the `A` and `V` compartment properties aren't used in this case, you can still set them to values.
+If you want them to automatically update, you can set them to anonymous functions:
+
+```matlab
+x.comp.A = @() x.comp.len * pi * x.comp.radius * x.comp.radius;
+```
