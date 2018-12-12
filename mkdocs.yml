@@ -20,6 +20,7 @@ pages:
     - Make plots: how-to/make-plots.md
     - Save configurations and use snapshots: how-to/snapshots.md
     - Make your own models: how-to/make-own-models.md
+    - Create multi-compartment models: how-to/create-multi-compartment-models.md
   - REFERENCE: 
     - Units: 'reference/units.md'
     - xolotl Properties: 'reference/xolotl-properties.md'
