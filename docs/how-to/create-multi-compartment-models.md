@@ -26,4 +26,13 @@ x.connect('Neurite01','Soma')
 
 Note that we're using the `slice` function to slice up a cylinder into shorter sections, which also automatically wires them up using `Axial` synapses.
 
-An example showing a mulit-compartment model is found in `demo_multi_compartment.m`
+An example showing a multi-compartment model is found in `demo_multi_compartment.m`
+
+## Maximal conductance of `Axial` synapses
+
+The maximal conductance of an `Axial` synapse from the presynaptic compartment to the postsynaptic compartment is computed using Equation 6.30 from Dayan & Abbott (2001).
+
+$$g_{max} = \frac{r_{pre} r_{post}^2}{\rho L_{pre} (L_{pre} r_{post}^2 + L_{post} r_pre}^2)}$$
+
+where $r$ is the axial radius and $L$ the length. $\rho$ is the axial resistivity in the
+presynaptic compartment. Subscripts "pre" and "post" refer to the presynaptic and postsynaptic compartments.
