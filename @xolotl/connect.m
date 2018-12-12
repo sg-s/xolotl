@@ -79,7 +79,7 @@ if length(varargin) == 1 && isa(varargin{1},'cpplab')
 		self.synapses = [self.synapses; this_syn_info];
 	end
 
-else
+elseif length(varargin) > 1
 
 	synapse = cpplab(varargin{:});
 
@@ -96,6 +96,16 @@ else
 	else
 		self.synapses = [self.synapses; this_syn_info];
 	end
+
+elseif length(varargin) == 0
+	% no synapse type specified, use Axial synapses to connect
+	synapse = cpplab('Axial');
+
+	self.connect(comp1,comp2,copy(synapse))
+	self.connect(comp2,comp1,copy(synapse))
+
+else
+	error('Unknown argument type')
 
 end
 

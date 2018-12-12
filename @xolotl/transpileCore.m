@@ -26,7 +26,9 @@ header_files{3} = joinPath(self.cpp_folder,'synapse.hpp');
 header_files{4} = joinPath(self.cpp_folder,'conductance.hpp');
 header_files{5} = joinPath(self.cpp_folder,'mechanism.hpp');
 temp = self.generateHeaders; temp = temp(:);
-header_files = [header_files(:); unique(temp(2:end))];
+temp(cellfun(@isempty,temp)) = [];
+header_files = [header_files(:); unique(temp(:))];
+
 
 for i = 1:length(header_files)
 	header_files{i} = strcat('#include "',header_files{i}, '"'); 
