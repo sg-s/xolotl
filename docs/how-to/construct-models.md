@@ -155,26 +155,39 @@ cpplab.search('conductances')
 ```
 
 ### Synapses
-Synapses connect compartments together. Synapses are stored in a vector of `cpplab` objects. Synapse objects contain the following properties:
+Synapses connect compartments together. All synapses are `cpplab` objects.
+In the xolotl tree, they should belong to the post-synaptic compartment.
+
+Synapse objects contain the following properties:
 
 * The MD5 `hash` of this object.
-* `gbar` contains the maximal conductance in $\mathrm{\mu S}$.
+* `gmax` contains the maximal conductance in $\mathrm{\mu S}$.
 * `s` contains the synaptic gating variable (unitless).
 
-Synapses are created between two compartments using the `connect` function:
+!!! Note "Why gmax?"
+  Synapse maximal conductances are measured in nS whereas conductance maximal conductances
+  are in $\mu S/mm^2$. The "bar" in $\bar{g}$ refers to the "specific" nature.
+  In addition, this difference helps while searching for conductances and synapses,
+  since you can find all maximal conductances of conductance objects with `'*gbar'`
+  and all maximal conductances of synapse objects with `'*gmax'`.
+
+Synapses are created between two compartments using the `connect` function. The first
+argument is the name of the pre-synaptic compartment the second is the name of the
+post-synaptic compartment. The function defaults to an electrical synapse and a
+maximal conductance of 0 if not otherwise specified.
 
 ```matlab
 % connect compartments AB and PD with an electrical synapse
 x.connect('AB', 'PD')
 % connect two compartments with an electrical synapse
 % and specify properties
-x.connect('AB', 'PD', 'gbar', 100)
+x.connect('AB', 'PD', 'gmax', 100)
 % connect two compartments with a glutamatergic synapse
 % kinetics from Prinz et al. 2004
 x.connect('AB', 'LP', 'prinz/Glut')
 % connect two compartments with a glutamatergic synapse
 % and specify properties
-x.connect('AB', 'LP', 'prinz/Glut', 'gbar', 100)
+x.connect('AB', 'LP', 'prinz/Glut', 'gmax', 100)
 ```
 
 #### What synapses are available?
