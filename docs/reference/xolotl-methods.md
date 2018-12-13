@@ -146,8 +146,8 @@ x.connect('AB', 'LP', syn_cpplab)
 
 The following properties can be specified
 
-|----------------------| -----------| 
 | Name                 |   PropertyName |
+|----------------------| -----------| 
 | Maximal conductance  |  `gmax`|
 | Reversal potential   |  `E`|
 | Activation variable  |  `s`|

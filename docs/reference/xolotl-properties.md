@@ -31,6 +31,7 @@ properties(xolotl)
 
 ## `verbosity`
 
+|  |  |
 | ------- | ----- |
 | Default | 0 |
 | Allowed values | +ve numbers |
