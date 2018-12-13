@@ -303,24 +303,24 @@ results_and_spiketimes = x.integrate;
 ```
 
 
-``integrate`` will return different outputs as shown above. 
+`integrate` will return different outputs as shown above. 
 Unless you need every output, it is recommended to skip it, 
 as it makes the integration faster (and reduces the memory footprint). 
 
 ### Explanation of outputs
 
 
-- ``V`` Voltage trace of every compartment. A matrix of size (nsteps, n_comps)
-- ``I_clamp`` also returned in the first argument, this is the clamping current when a compartment is being voltage clamped. This can be inter-leaved with the voltage of other, non-clamped compartments. 
-- ``Ca`` Calcium concentration in every cell and the corresponding ``E_Ca`` (reversal potential of Calcium). A matrix of size (nsteps, n_comps)
-- ``mech_state`` a matrix representing every dimension of every mechanism in the tree. This matrix has size (nsteps, NC), where NC depends on the precise controllers used, and is automatically determined. 
-- ``I`` the currents of every ion channel type in the model. This is a matrix of size (nsteps, n_cond)
+- `V` Voltage trace of every compartment. A matrix of size (nsteps, n_comps)
+- `I_clamp` also returned in the first argument, this is the clamping current when a compartment is being voltage clamped. This can be inter-leaved with the voltage of other, non-clamped compartments. 
+- `Ca` Calcium concentration in every cell and the corresponding `E_Ca` (reversal potential of Calcium). A matrix of size (nsteps, n_comps)
+- `mech_state` a matrix representing every dimension of every mechanism in the tree. This matrix has size (nsteps, NC), where NC depends on the precise controllers used, and is automatically determined. 
+- `I` the currents of every ion channel type in the model. This is a matrix of size (nsteps, n_cond)
 
 !!! info "See Also"
-    [xolotl.show](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#show)
-    [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
-    [xolotl.transpile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#transpile)
-    [xolotl.compile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#compile)
+    * [xolotl.show](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#show)
+    * [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
+    * [xolotl.transpile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#transpile)
+    * [xolotl.compile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#compile)
 
 
 
