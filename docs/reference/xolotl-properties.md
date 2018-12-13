@@ -1,9 +1,55 @@
-The `xolotl` object has many properties that govern overarching simulation and environment characteristics. You can access any of these properties using dot notation (e.g. `x.verbosity`).
+Every xolotl object has the following properties listen in this document. To access a property, use dot notation, i.e.:
 
-### Flags
-All flags unless otherwise specified and default to 0 or false. Generally, flags are logicals (false or true) unless they have to interact with the underlying `C++` code, in which case, they must be integers (0 or 1).
+```
+x.verbosity
+```
 
-* The `verbosity` flag (0 to 99) toggles the amount of text printed to the console during compiling and simulation. It's handy for debugging. The verbosity flag goes up to 99. The higher the number, the more verbose the printed output.
+You can view all the properties of a xolotl object using the built-in `properties` command:
+
+```
+properties(xolotl)
+% will display a list of properties
+```
+
+# Controlling simulation 
+
+## `V_clamp`
+
+## `approx_channels`
+
+## `I_ext`
+
+## `closed_loop`
+
+## `dt` and `sim_dt`
+
+## `t_end`
+
+## `output_type`
+
+# Controlling verbosity
+
+## `verbosity`
+
+| ------- | ----- |
+| Default | 0 |
+| Allowed values | +ve numbers |
+| Type | double | 
+
+`verbosity` is a positive integer that controls how verbose xolotl is when running simulations. Set to a large positive number to get more verbose output, useful for debugging. 
+
+# Customization 
+
+## `pref`
+
+# Exploring the model
+
+## `Children`
+
+
+
+
+
 * The `closed_loop` flag (false or true) determines whether initial conditions should be reset before a new simulation. If `closed_loop` is true, successive simulations will use the current state of the `xolotl` object (e.g. the end state of the previous simulation if you run `integrate` twice in a row).
 * The `approx_channels` flag (0 or 1) determines whether approximations to computing gating functions should be used. Look-up tables and approximations to the exponential function significantly increase computational speed, but decrease accuracy, especially at high temporal resolution in the data.
 * The `solver_order` flag takes the values 0 or 4. In the 0 case, standard solvers are used (exponential Euler). In the 4 case, a Runge-Kutta 4th order method is used instead. This method is slower but more accurate.
