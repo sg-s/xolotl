@@ -1,7 +1,7 @@
-This document describes how to run simulations using xolotl. 
+This document describes how to run simulations using xolotl.
 
 
-# Running simulations 
+# Running simulations
 `xolotl` is designed to solve for state variables of [conductance-based](http://www.scholarpedia.org/article/Conductance-based_models) neuronal and network models.
 The voltage across the membrane $V$ is given by the conservation of current equation.
 
@@ -39,13 +39,23 @@ V 			= x.integrate;
 ```
 
 ## Closed loop vs. open loop
-The `closed_loop` flag (false or true) determines whether initial conditions should be reset before a new simulation. If `closed_loop` is true, successive simulations will use the current state of the `xolotl` object (e.g. the end state of the previous simulation if you run `integrate` twice in a row). 
+The `closed_loop` flag (false or true) determines whether initial conditions should be reset before a new simulation. If `closed_loop` is true, successive simulations will use the current state of the `xolotl` object (e.g. the end state of the previous simulation if you run `integrate` twice in a row).
 
 ```matlab
 % use current state of model as initial conditions
 x.closed_loop = true
 V = x.integrate;
 ```
+
+You can set the initial conditions by setting the desired properties.
+
+```matlab
+% set the voltage to start at -50 mV in compartment 'comp'
+x.comp.V = -50;
+```
+
+To quickly save the state of a network and return back to it later (such as for running multiple simulations)
+you can use the [snapshot](snapshots.md) functionality.
 
 ## The outputs of `x.integrate`
 
