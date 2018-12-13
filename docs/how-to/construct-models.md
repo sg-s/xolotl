@@ -341,39 +341,6 @@ xolotl object with
 ---------------------
 ```
 
-## Hashing a model
-Each `xolotl` object is hashed by the MD5 algorithm to determine a unit alphanumeric identifier. Two `xolotl` objects are different only if their underlying structure (compartments, types of conductances, synapses) are different -- not if parameters are different.
-
-```matlab
-% hash a xolotl object
->> x
-
-xolotl object with
----------------------
-+ AB  
-  > ACurrent (g=5, E=-80)
-  > CaS (g=0.113, E=30)
-  > CaT (g=0.191, E=30)
-  > HCurrent (g=0.128, E=-20)
-  > KCa (g=0.163, E=-80)
-  > Kd (g=0.11, E=-80)
-  > Leak (g=0.099, E=-50)
-  > NaV (g=0.181, E=30)
----------------------
->> x.hash
-
-ans =
-
-    '6b3a55344dbd63074cfd703061f9ae4d'
->> % the hash doesn't change when you change the parameters
-
->> x.AB.ACurrent.gbar = 0;
-
->> x.hash
-
-ans =  
-    '6b3a55344dbd63074cfd703061f9ae4d'
-```
 
 # Multi-compartment models
 
@@ -406,19 +373,7 @@ x.verbosity = 99;
 Need a table to tell the user what each value of verbosity does.
 
 
-## Resetting the `cpplab` path cache
 
-You can rebuild the cache with:
-
-```matlab
-cpplab.rebuildCache()
-```
-
-If that doesn't work, you can forcibly delete the cache with:
-
-```matlab
-delete(which('paths.cpplab'))
-```
 
 # Limitations and gotchas
 

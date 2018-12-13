@@ -13,7 +13,7 @@ First, make sure you have XCode installed (not just the Command Line Tools -- th
 
 ### I ran the quickstart, but I don't see anything
 
-Are you using a tiny screen? Some UI elements may go out of the frame on very small screens. To fix this, acquire the handle to the figure and change the position property. For example ::
+Are you using a tiny screen? Some UI elements may go out of the frame on very small screens. To fix this, acquire the handle to the figure and change the position property. For example:
 
 ```
 x.manipulate;
@@ -34,3 +34,4 @@ It may be helpful to also see our advice on [compilers](how-to/install-configure
 * Does it exist somewhere on your MATLAB path, or in a subfolder?
 * Did you try running `cpplab.rebuildCache`? 
 * If you still run into errors, file an issue at [cpplab](https://github.com/sg-s/cpplab/issues/)
+

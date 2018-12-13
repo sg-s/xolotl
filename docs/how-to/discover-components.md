@@ -25,25 +25,26 @@ The `cpplab` system that underlies `xolotl` can also search for all C++ header f
 a = cpplab.search('prinz')
 
 a =
-
-  16×1 cell array
-
-    {'/home/alec/code/xolotl/c++/conductances/prinz/ACurrent.hpp'            }
-    {'/home/alec/code/xolotl/c++/conductances/prinz/CaS.hpp'                 }
-    {'/home/alec/code/xolotl/c++/conductances/prinz/CaT.hpp'                 }
-    {'/home/alec/code/xolotl/c++/conductances/prinz/HCurrent.hpp'            }
-    {'/home/alec/code/xolotl/c++/conductances/prinz/KCa.hpp'                 }
-    {'/home/alec/code/xolotl/c++/conductances/prinz/Kd.hpp'                  }
-    {'/home/alec/code/xolotl/c++/conductances/prinz/NaV.hpp'                 }
-    {'/home/alec/code/xolotl/c++/conductances/prinz-temperature/ACurrent.hpp'}
-    {'/home/alec/code/xolotl/c++/conductances/prinz-temperature/CaS.hpp'     }
-    {'/home/alec/code/xolotl/c++/conductances/prinz-temperature/CaT.hpp'     }
-    {'/home/alec/code/xolotl/c++/conductances/prinz-temperature/HCurrent.hpp'}
-    {'/home/alec/code/xolotl/c++/conductances/prinz-temperature/KCa.hpp'     }
-    {'/home/alec/code/xolotl/c++/conductances/prinz-temperature/Kd.hpp'      }
-    {'/home/alec/code/xolotl/c++/conductances/prinz-temperature/NaV.hpp'     }
-    {'/home/alec/code/xolotl/c++/synapses/prinz/Cholinergic.hpp'             }
-    {'/home/alec/code/xolotl/c++/synapses/prinz/Glutamatergic.hpp'           }
+  19×1 cell array
+    {'conductances/prinz/ACurrent.hpp'             }
+    {'conductances/prinz/CaS.hpp'                  }
+    {'conductances/prinz/CaT.hpp'                  }
+    {'conductances/prinz/HCurrent.hpp'             }
+    {'conductances/prinz/KCa.hpp'                  }
+    {'conductances/prinz/Kd.hpp'                   }
+    {'conductances/prinz/NaV.hpp'                  }
+    {'conductances/prinz-temperature/ACurrent.hpp' }
+    {'conductances/prinz-temperature/CaS.hpp'      }
+    {'conductances/prinz-temperature/CaT.hpp'      }
+    {'conductances/prinz-temperature/HCurrent.hpp' }
+    {'conductances/prinz-temperature/KCa.hpp'      }
+    {'conductances/prinz-temperature/Kd.hpp'       }
+    {'conductances/prinz-temperature/NaV.hpp'      }
+    {'mechanisms/prinz/CalciumMech.hpp'            }
+    {'synapses/prinz/Cholinergic.hpp'              }
+    {'synapses/prinz/Glutamatergic.hpp'            }
+    {'synapses/prinz-temperature/Cholinergic.hpp'  }
+    {'synapses/prinz-temperature/Glutamatergic.hpp'}
 ```
 
 Search for all fast, voltage-gated sodium channels.
@@ -52,25 +53,24 @@ Search for all fast, voltage-gated sodium channels.
 a = cpplab.search('NaV')
 
 a =
-
-  17×1 cell array
-
-    {'custom/NaV.hpp'           }
-    {'dethier/NaV.hpp'          }
-    {'kispersky/NaV.hpp'        }
-    {'liu/NaV.hpp'              }
-    {'liu-euler/NaV.hpp'        }
-    {'liu-temperature/NaV.hpp'  }
-    {'nadim98/int1/NaV.hpp'     }
-    {'nadim98/lg/NaV.hpp'       }
-    {'nadim98/mcn1/NaV.hpp'     }
-    {'odowd-aldrich/DmNaV.hpp'  }
-    {'prinz/NaV.hpp'            }
-    {'prinz-temperature/NaV.hpp'}
-    {'rodriguez/Int1/NaV.hpp'   }
-    {'soto-trevino05/NaV.hpp'   }
-    {'traub/NaV.hpp'            }
-    {'turrigiano/NaV.hpp'       }
-    {'wicher/DmNaV.hpp'         }
-
+  19×1 cell array
+    {'custom/NaV.hpp'                 }
+    {'dethier/NaV.hpp'                }
+    {'kispersky/NaV.hpp'              }
+    {'liu/NaV.hpp'                    }
+    {'liu-euler/NaV.hpp'              }
+    {'liu-temperature/NaV.hpp'        }
+    {'nadim98/int1/NaV.hpp'           }
+    {'nadim98/lg/NaV.hpp'             }
+    {'nadim98/mcn1/NaV.hpp'           }
+    {'odowd-aldrich/DmNaV.hpp'        }
+    {'prinz/NaV.hpp'                  }
+    {'prinz-temperature/NaV.hpp'      }
+    {'rodriguez/Int1/NaV.hpp'         }
+    {'soplata/reticular/NaV.hpp'      }
+    {'soplata/thalamocortical/NaV.hpp'}
+    {'soto-trevino05/NaV.hpp'         }
+    {'traub/NaV.hpp'                  }
+    {'turrigiano/NaV.hpp'             }
+    {'wicher/DmNaV.hpp'               }
 ```
