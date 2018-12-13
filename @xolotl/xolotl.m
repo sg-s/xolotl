@@ -52,7 +52,7 @@ properties
 	t_end@double = 5000; % ms
 
 	handles
-	closed_loop@logical = true;
+	closed_loop = true;
 	temperature@double = 11; % centigrade
 	temperature_ref@double = 11; % centigrade
 
