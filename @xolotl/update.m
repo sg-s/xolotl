@@ -5,12 +5,22 @@
    >  < (_) | | (_) | |_| |
   /_/\_\___/|_|\___/ \__|_|
 
-update
-^^^^^^
-A static method that updates your installation of xolotl in place. If you installed using git, ``xolotl`` will attempt to use git to update itself. Usage ::
+# update
 
-   xolotl.update
-   x.update
+A static method that updates your installation of 
+`xolotl` in place. If you installed using git, 
+`xolotl` will attempt to use git to update itself.
+
+Usage:
+
+
+```matlab
+xolotl.update()
+```
+
+### See also:
+
+xolotl.uninstall
 
 %}
 

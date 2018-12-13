@@ -5,30 +5,29 @@
     >  < (_) | | (_) | |_| |
    /_/\_\___/|_|\___/ \__|_|
 
-slice
-^^^^^
+# slice
 
-``slice`` partitions a cylindrical compartment into N slices.  Usage ::
-
-   x.slice('comp_name',N)
-
-The compartment to be sliced must explicitly be a cylindrical section, i.e., it must have a defined length and radius. ``slice`` cuts the cylinder along the axis, and connects each slice with ``Axial`` synapses. This object can then be treated as a multi-compartment model, and ``xolotl`` will integrate it using the Crank-Nicholson scheme reserved for multi-compartment models. 
+`slice` partitions a cylindrical compartment into N slices.  
 
 
-Example
--------
+Usage:
+
+```
+% assuming there is a compartment called 'Dendrite'
+x.slice('Dendrite',10)
+```
+
+The compartment to be sliced must explicitly be a cylindrical 
+section, i.e., it must have a defined length and radius. 
+`slice` cuts the cylinder along the axis, and connects each 
+slice with `Axial` synapses. This object can then be treated 
+as a multi-compartment model, and `xolotl` will integrate 
+it using the Crank-Nicholson scheme reserved for multi-compartment models. 
 
 
-:: 
+### See Also
 
-		% assuming there is a compartment called 'Dendrite'
-		xolotl.slice('Dendrite',10)
-	
-
-See Also
---------
-
-- xolotl.connect
+xolotl.connect
 
 %}
 

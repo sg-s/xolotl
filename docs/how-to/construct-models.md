@@ -165,11 +165,7 @@ Synapse objects contain the following properties:
 * `s` contains the synaptic gating variable (unitless).
 
 !!! Note "Why gmax?"
-  Synapse maximal conductances are measured in nS whereas conductance maximal conductances
-  are in $\mu S/mm^2$. The "bar" in $\bar{g}$ refers to the "specific" nature.
-  In addition, this difference helps while searching for conductances and synapses,
-  since you can find all maximal conductances of conductance objects with `'*gbar'`
-  and all maximal conductances of synapse objects with `'*gmax'`.
+    Synapse maximal conductances are measured in nS whereas conductance maximal conductances are in $\mu S/mm^2$. The "bar" in $\bar{g}$ refers to the "specific" nature. In addition, this difference helps while searching for conductances and synapses, since you can find all maximal conductances of conductance objects with `'*gbar'` and all maximal conductances of synapse objects with `'*gmax'`.
 
 Synapses are created between two compartments using the `connect` function. The first
 argument is the name of the pre-synaptic compartment the second is the name of the

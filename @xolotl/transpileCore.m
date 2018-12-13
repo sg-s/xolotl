@@ -1,12 +1,25 @@
-%              _       _   _
-%   __  _____ | | ___ | |_| |
-%   \ \/ / _ \| |/ _ \| __| |
-%    >  < (_) | | (_) | |_| |
-%   /_/\_\___/|_|\___/ \__|_|
-%
-% MATLAB -> C++ transpiler
-% creates a C++ file that can be compiled with mex
+%{   
+             _       _   _ 
+  __  _____ | | ___ | |_| |
+  \ \/ / _ \| |/ _ \| __| |
+   >  < (_) | | (_) | |_| |
+  /_/\_\___/|_|\___/ \__|_|
 
+# transpileCore
+
+method that writes C++ bridge code to set up
+and integrate your model based on the 
+objects configured in the xolotl tree. This is 
+internally called by xolotl.transpile()
+
+Do not call this method. It is not meant 
+to be user accessible. 
+
+### See also:
+
+xolotl.transpile
+
+%}
 
 function transpileCore(self,in_file,out_file)
 

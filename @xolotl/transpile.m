@@ -5,40 +5,29 @@
     >  < (_) | | (_) | |_| |
    /_/\_\___/|_|\___/ \__|_|
 
-transpile
-^^^^^^^^^
-
-Generate a C++ file that constructs the model, integrates it, and moves parameters and data from MATLAB to C++ and back. Usage ::
-
-   x.transpile;
+# transpile
 
 
-.. warning::
+Generate a C++ file that constructs the model, 
+integrates it, and moves parameters and data from 
+MATLAB to C++ and back. 
 
-  ``transpile`` assumes that your ``xolotl`` object has a valid hash. Empty hashes will throw an error. 
+
+Usage:
 
 
-Example
--------
+```
+x.transpile;
+```
 
-:: 
-
-    % assuming a xolotl object is set up
-    x.transpile;
-
-    % now view the transpiled code
-    x.viewCode;
-
-.. warning::
-
-  You should generally never use  ``transpile`` since ``xolotl`` will automatically transpile and compile code for you. Manually transpiling will hinder performance. 
+!!! warning 
+    Manually transpiling is discouraged. xolotl will automatically transpile code for you when needed. 
 	
 
-See Also
---------
+### See Also
 
-- xolotl.compile
-- xolotl.viewCode
+xolotl.compile
+xolotl.viewCode
 
 
 %}

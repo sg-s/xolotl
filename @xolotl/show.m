@@ -5,32 +5,25 @@
     >  < (_) | | (_) | |_| |
    /_/\_\___/|_|\___/ \__|_|
 
-show
-^^^^^
+# show
 
-shows activation functions and timescales of any conductance. Usage ::
+shows activation functions and timescales of any conductance. 
 
-   x.show('cond_name')
 
-'cond_name' must be a string that resolves to a valid C++ file that describes a conductance. 
+Usage example:
 
-Example
--------
+```
+xolotl.show('prinz/NaV')
+xolotl.show('prinz/Kd')
+xolotl.show('prinz/KCa')
+```
 
-:: 
 
-	% compare some channels from the Prinz et al. paper
-    xolotl.show('prinz/NaV')
-    xolotl.show('prinz/Kd')
-    xolotl.show('prinz/KCa')
+### See Also
 
-	
 
-See Also
---------
-
-- xolotl.plot
-- xolotl.getGatingFunctions
+xolotl.plot
+xolotl.getGatingFunctions
 
 %}
 

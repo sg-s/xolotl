@@ -5,14 +5,19 @@
    >  < (_) | | (_) | |_| |
   /_/\_\___/|_|\___/ \__|_|
 
-cleanup
-^^^^^^^
-A static method that cleans up all transpiled ``C++`` and compiled binary files. Usage ::
+# cleanup
 
-   xolotl.cleanup
-   x.cleanup
+A static method that cleans up all transpiled ``C++`` and compiled binary files. Usage:
 
-Use of this method will trigger a warning every time it is called. You do not need to use this in normal use, but can call this to force a recompile, or to delete old and unused binaries. 
+```
+xolotl.cleanup
+x.cleanup
+```
+
+Use of this method will trigger a warning every time it 
+is called. You do not need to use this in normal use, 
+but can call this to force a recompile, or to delete old 
+and unused binaries. 
 
 %}
 

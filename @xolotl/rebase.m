@@ -5,12 +5,26 @@
     >  < (_) | | (_) | |_| |
    /_/\_\___/|_|\___/ \__|_|
 
-rebase
-^^^^^^
+# rebase
 
-Configures some internal house-keeping settings. This is called every time a new object is created. You probably don't ever have to use this, unless you copy ``xolotl`` objects across computers with different file systems or operating systems. Usage ::
+rebase is an internal method that configures some 
+house-keeping settings. rebase is called every 
+time a new xolotl object is created. rebase:
 
-   x.rebase()
+1. configures the `xolotl_folder` property
+2. configures the `cpp_folder` property, which tells xolotl where its C++ files are located
+3. configures the `OS_binary_ext`, which is the extention of compiled binaries and is platform dependent. 
+4. calls the rebase method from the cpplab superclass.
+
+Usage:
+
+```
+x.rebase()
+```
+
+### See also:
+
+cpplab.rebase()
 
 %}
 

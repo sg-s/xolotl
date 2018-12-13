@@ -5,23 +5,34 @@
     >  < (_) | | (_) | |_| |
    /_/\_\___/|_|\___/ \__|_|
 
-plot
-^^^^
+# plot
 
-Makes a plot of voltage and calcium time series of all compartments. The default option is to color the voltage traces by the dominant current at that point using  ``contributingCurrents`` and to also show the Calcium concentration on the same plot. Usage ::
 
-   x.plot()
+Makes a plot of voltage and calcium time series of all 
+compartments. The default option is to color the voltage
+traces by the dominant current at that point using  
+`contributingCurrents` and to also show the Calcium 
+concentration on the same plot. 
 
-If you want to turn off the colouring, or to hide the Calcium concentration, change your preference using ::
+Usage:
 
-	setpref('xolotl','plot_color',false)
-	setpref('xolotl','show_Ca',false)
+```
+x.plot()
+```
 
-See Also
---------
+If you want to turn off the colouring, or to hide the 
+Calcium concentration, change your preference using:
 
-- xolotl.manipulate
-- xolotl.contributingCurrents
+
+```
+setpref('xolotl','plot_color',false)
+setpref('xolotl','show_Ca',false)
+```
+
+### See Also
+
+xolotl.manipulate
+xolotl.contributingCurrents
 
 %}
 

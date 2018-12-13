@@ -5,11 +5,13 @@
    >  < (_) | | (_) | |_| |
   /_/\_\___/|_|\___/ \__|_|
 
-### add
+# add
 
 adds a `cpplab` object to a `xolotl` object.
 
-The add method is the most important way you construct models. Usage
+The add method is the most important way you construct models. 
+
+Usage:
 
 ```matlab
 x.add(compartment,'comp_name')
@@ -17,7 +19,11 @@ x.add('compartment','comp_name')
 x.add('compartment','comp_name',...)
 ```
 
-There are two primary ways of using `add`. The first is to first construct a `cpplab` object (here called AB), and then add it to the `xolotl` object using `x.add(AB,'AB')`. `xolotl` requires that every compartment is named, and the name has to be specified as a string argument. 
+There are two primary ways of using `add`. The first is to 
+first construct a `cpplab` object (here called AB), and then
+ add it to the `xolotl` object using `x.add(AB,'AB')`. 
+`xolotl` requires that every compartment is named, and 
+the name has to be specified as a string argument. 
 
 
 %}

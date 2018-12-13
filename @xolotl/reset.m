@@ -5,37 +5,36 @@
     >  < (_) | | (_) | |_| |
    /_/\_\___/|_|\___/ \__|_|
 
-reset
-^^^^^
+# reset
 
-Resets a xolotl object to some default state. Usage ::
+Resets a xolotl object to some default state. 
 
-   x.reset()
-   x.reset('snap_name')
+Usage:
+
+```
+x.reset()
+x.reset('snap_name')
+```
 
 reset called without any arguments resets the model as best as it can -- voltages are set to -60 mV, Calcium in every compartment is set to the internal value, and the gating variables of every conductance are reset. 
 
 ``reset`` can also be called with a string argument, which is the name of a snapshot previously stored in the model object. Then, ``reset`` reconfigures the parameters of the model to match that snapshot. This is useful for working with a model, changing parameters, evolving it, and then coming back to where you started off from. 
 
-Example
--------
+### Example
 
-:: 
-
-	% assuming a xolotl object is set up
-	x.integrate;
-	x.snapshot('base');
-	x.set('*gbar') = 1e-3; % turn off all conductances
-	x.integrate;
-	% now go back to original state
-	x.reset('base')
-
+```
+% assuming a xolotl object is set up
+x.integrate;
+x.snapshot('base');
+x.set('*gbar') = 1e-3; % turn off all conductances
+x.integrate;
+% now go back to original state
+x.reset('base')
+```
 	
+### See Also
 
-See Also
---------
-
-- xolotl.snapshot
+xolotl.snapshot
 
 %}
 

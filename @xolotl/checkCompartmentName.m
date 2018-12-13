@@ -6,18 +6,22 @@
   /_/\_\___/|_|\___/ \__|_|
 
 
-### checkCompartmentName
+# checkCompartmentName
 
-is used internally by `xolotl` to verify that the compartment name you are using is valid and legal. This method is called every time you add a compartment to a `xolotl` object. Usage
+is used internally by `xolotl` to verify that the
+compartment name you are using is valid and legal. 
+This method is called every time you add a compartment
+to a `xolotl` object. 
+
+Usage:
 
 ```matlab
 ok = checkCompartmentName(self,comp_name)
 ```
 
-See Also
---------
+### See Also
 
-- xolotl.add
+xolotl.add
 
 %}
 

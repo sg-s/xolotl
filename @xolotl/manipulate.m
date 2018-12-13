@@ -5,16 +5,24 @@ __  _____ | | ___ | |_| |
 >  < (_) | | (_) | |_| |
 /_/\_\___/|_|\___/ \__|_|
 
-manipulate
-^^^^^^^^^^
+# manipulate
 
-method that allows you to manipulate some or all parameters in a model hile visualizing its behaviour. Usage ::
+method that allows you to manipulate some or all parameters in a model hile visualizing its behaviour. 
 
-   x.manipulate();
-   x.manipulate('some*pattern')
-   x.manipulate({'parameter1','parameter2'})
+Usage:
 
-The simplest way to use ``manipulate`` is to simply call it with no arguments. By default, all the parameters are linked to sliders that you can play with. In models with a large number of parameters, this can get messy. You can selectively only manipualte some parameters whose names match a pattern using ``x.manipulate('some*pattern')``
+```
+x.manipulate();
+x.manipulate('some*pattern')
+x.manipulate({'parameter1','parameter2'})
+```
+
+The simplest way to use ``manipulate`` is to simply call 
+it with no arguments. By default, all the parameters are 
+linked to sliders that you can play with. In models with 
+a large number of parameters, this can get messy. You can 
+selectively only manipualte some parameters whose names 
+match a pattern using ``x.manipulate('some*pattern')``
 
 
 %}

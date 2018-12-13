@@ -5,38 +5,35 @@
     >  < (_) | | (_) | |_| |
    /_/\_\___/|_|\___/ \__|_|
 
-snapshot
-^^^^^^^^
+# snapshot
 
 Saves the current state of a ``xolotl`` object for future use. Usage ::
 
-   x.snapshot('snap_name')
+
+```
+x.snapshot('snap_name')
+```
+
+!!! warning
+    Creating two snapshots with the same name will overwrite the first. 
 
 
-.. warning::
+Usage:
 
-Creating two snapshots with the same name will overwrite the first. 
-
-
-Example
--------
-
-::
-
-		% assuming a xolotl object is set up
-		x.integrate;
-		x.snapshot('base');
-		x.set('*gbar') = 1e-3; % turn off all conductances
-		x.integrate;
-		% now go back to original state
-		x.reset('base')
-
+```
+% assuming a xolotl object is set up
+x.integrate;
+x.snapshot('base');
+x.set('*gbar') = 1e-3; % turn off all conductances
+x.integrate;
+% now go back to original state
+x.reset('base')
+```
 	
 
-See Also
---------
+### See Also
 
-- xolotl.reset
+xolotl.reset
 
 %}
 

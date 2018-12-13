@@ -1,4 +1,27 @@
+%{   
+             _       _   _ 
+  __  _____ | | ___ | |_| |
+  \ \/ / _ \| |/ _ \| __| |
+   >  < (_) | | (_) | |_| |
+  /_/\_\___/|_|\___/ \__|_|
 
+# run_all_tests
+
+A static method that runs all tests (demos/examples)
+in xolotl/examples. If you've just installed this,
+it may be a good idea to run this using:
+
+```
+xolotl.run_all_tests
+```
+
+to make sure everything works. 
+
+This method is called during testing, and only if all 
+tests pass is a release published. 
+
+
+%}
 
 function [passed, total] = run_all_tests(cleanup)
 

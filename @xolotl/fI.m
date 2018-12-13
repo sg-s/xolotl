@@ -5,13 +5,16 @@
    >  < (_) | | (_) | |_| |
   /_/\_\___/|_|\___/ \__|_|
 
-setup
-^^^^^
-This method computes the f-I (firing-rate vs current) curve of a single compartment model. 
+# fI
 
-Usage ::
+This method computes the f-I (firing-rate vs current) 
+curve of a single compartment model. 
 
-   x.fI(I_min, I_max, n_steps)
+Usage:
+
+```
+x.fI(I_min, I_max, n_steps)
+```
 
 %}
 
