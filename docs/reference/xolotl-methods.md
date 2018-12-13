@@ -369,8 +369,7 @@ every time a slider is moved in the manipulate window.
 This is used internally in `xolotl.manipulate`. You 
 should not need to use this by itself. 
 
-### See Also
-
+!!! info "See Also"
     [xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
 
 
@@ -406,8 +405,7 @@ setpref('xolotl','plot_color',false)
 setpref('xolotl','show_Ca',false)
 ```
 
-### See Also
-
+!!! info "See Also"
     [xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
     [xolotl.contributingCurrents](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#contributingCurrents)
 
@@ -431,8 +429,7 @@ x.plotgbars('compartment_name');
 x.plotgbars(axes_handle,'compartment_name');
 ```
 
-### See also:
-
+!!! info "See Also"
     [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
     [xolotl.show](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#show)
     [xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
@@ -463,9 +460,8 @@ Usage:
 x.rebase()
 ```
 
-### See also:
-
-->cpplab.rebase()
+!!! info "See Also"
+    ->cpplab.rebase()
 
 
 
@@ -490,7 +486,7 @@ reset called without any arguments resets the model as best as it can -- voltage
 
 ``reset`` can also be called with a string argument, which is the name of a snapshot previously stored in the model object. Then, ``reset`` reconfigures the parameters of the model to match that snapshot. This is useful for working with a model, changing parameters, evolving it, and then coming back to where you started off from. 
 
-### Example
+Here's an example:
 
 ```
 % assuming a xolotl object is set up
@@ -502,8 +498,7 @@ x.integrate;
 x.reset('base')
 ```
 	
-### See Also
-
+!!! info "See Also"
     [xolotl.snapshot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#snapshot)
 
 
@@ -550,8 +545,7 @@ xolotl.setup
 x.setup
 ```
 
-### See also:
-
+!!! info "See Also"
     [xolotl.update](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#update)
     [xolotl.uninstall](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#uninstall)
 
@@ -577,9 +571,7 @@ xolotl.show('prinz/KCa')
 ```
 
 
-### See Also
-
-
+!!! info "See Also"
     [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
     [xolotl.getGatingFunctions](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#getGatingFunctions)
 
@@ -611,8 +603,7 @@ as a multi-compartment model, and `xolotl` will integrate
 it using the Crank-Nicholson scheme reserved for multi-compartment models. 
 
 
-### See Also
-
+!!! info "See Also"
     [xolotl.connect](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#connect)
 
 
@@ -648,8 +639,7 @@ x.reset('base')
 ```
 	
 
-### See Also
-
+!!! info "See Also"
     [xolotl.reset](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#reset)
 
 
@@ -679,8 +669,7 @@ x.transpile;
     Manually transpiling is discouraged. xolotl will automatically transpile code for you when needed. 
 	
 
-### See Also
-
+!!! info "See Also"
     [xolotl.compile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#compile)
     [xolotl.viewCode](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#viewCode)
 
@@ -703,8 +692,7 @@ internally called by xolotl.transpile()
 Do not call this method. It is not meant 
 to be user accessible. 
 
-### See also:
-
+!!! info "See Also"
     [xolotl.transpile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#transpile)
 
 
@@ -728,8 +716,7 @@ xolotl.uninstall
 x.uninstall
 ```
 
-### See also:
-
+!!! info "See Also"
     [xolotl.update](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#update)
 
 
@@ -752,8 +739,7 @@ Usage:
 xolotl.update()
 ```
 
-### See also:
-
+!!! info "See Also"
     [xolotl.uninstall](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#uninstall)
 
 
@@ -775,8 +761,7 @@ Usage:
 x.viewCode;
 ```
 
-### See Also:
-
+!!! info "See Also"
     [xolotl.transpile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#transpile)
 
 
