@@ -1,8 +1,8 @@
-This document describes how to create and work with multi compartment models in xolotl. 
+This document describes how to create and work with multi-compartment models in xolotl. 
 
 # Introduction and Limitations
 
-xolotl is limited in how it can work with mulit-compartment models:
+xolotl is limited in how it can work with multi-compartment models:
 
 1. The only type of multi-compartment models fully supported are linear cables, with the soma at one end and the neurite coming out of it. 
 2. You can in principle create arbitrary topologies with branching, but you are limited in the integration methods you can use (you can only use Exponential Euler, with no support for implicit solvers or multi-step solvers). 
@@ -18,12 +18,12 @@ The `Axial` synapse is a special type of electrical synapse that forces you to t
 Thus, the general recipe for creating a multi-compartment cable is:
 
 ```matlab
-x.add('compartment','Soma')
-x.add('compartment','Neurite')
-x.slice('Neurite',10)
-x.connect('Neurite01','Soma')
+x.add('compartment', 'Soma')
+x.add('compartment', 'Neurite')
+x.slice('Neurite', 10)
+x.connect('Neurite01', 'Soma', 'Axial', 'resistivity', 1.73);
 ```
 
 Note that we're using the `slice` function to slice up a cylinder into shorter sections, which also automatically wires them up using `Axial` synapses. 
 
-An example showing a mulit-compartment model is found in `demo_multi_compartment.m`
+An example showing a multi-compartment model is found in `demo_multi_compartment.m`
