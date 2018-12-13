@@ -13,60 +13,157 @@ properties(xolotl)
 
 # Controlling simulation 
 
-## `V_clamp`
-
 ## `approx_channels`
 
-## `I_ext`
+| Default | Allowed values | Type |
+| ------- | ----- | ----- |
+| 0  |     0, 1 | double | 
+
+`approx_channels`  determines whether approximations
+to computing gating functions should be used. 
+Look-up tables and approximations to the exponential 
+function significantly increase computational speed, 
+but decrease accuracy, especially at high temporal
+resolution in the data.
 
 ## `closed_loop`
 
+| Default | Allowed values | Type |
+| ------- | ----- | ----- |
+| true  |     true, false | logical | 
+
+`closed_loop`  determines whether initial conditions 
+should be reset before a new simulation. If `closed_loop`
+is true, successive simulations will use the current 
+state of the `xolotl` object (e.g. the end state of the
+previous simulation if you run `integrate` twice in a row).
+
 ## `dt` and `sim_dt`
+
+| Default | Allowed values | Type |
+| ------- | ----- | ----- |
+| .05  |     +ve numbers | double | 
+
+`dt` value stores the fixed time step for outputs from 
+simulation. Note that this is not the same as `sim_dt`. 
+This value determines the number of time steps in the 
+output vectors. If `dt` and `sim_dt` differ, the simulation
+vector is interpolated before being output -- useful for 
+running ultra-high definition simulations but not saving
+all that data.
+
+`dt` must be a integer multiple of `sim_dt`. If it is 
+not, an error will be thrown. 
+
+## `V_clamp`
+
+
+| Default | Allowed values | Type |
+| ------- | ----- | ----- |
+| NaN  |     matrix, vector, scalar | double | 
+
+When `V_clamp` is not a `NaN`, xolotl will assume that you are
+running the simulation in voltage clamp mode. `V_clamp` must be either:
+
+* a vector as long as `x.Children` (the # of compartments)
+* a matrix of size (n_steps,n_compartments) where n_steps is the number
+ of steps in the integration (which is x.t_end/x.sim_dt)
+
+Incorrectly sized `V_clamp` will throw an error. 
+
+You cannot simultaneously inject current and voltage clamp 
+any compartment. 
+
+## `I_ext`
+
+| Default | Allowed values | Type |
+| ------- | ----- | ----- |
+| 0  |     matrix, vector, scalar | double | 
+
+`I_ext` must be either:
+
+* a vector as long as `x.Children` (the # of compartments)
+* a matrix of size (n_steps,n_compartments) where n_steps is the number
+ of steps in the integration (which is x.t_end/x.sim_dt)
+
+Incorrectly sized `I_ext` will throw an error. 
+
+You cannot simultaneously inject current and voltage clamp 
+any compartment. 
+
+## `solver_order`
+
+| Default | Allowed values | Type |
+| ------- | ----- | ----- |
+| 0  |   0, 4 | double | 
+
+
+When `solver_order` is 0, standard solvers are used
+(exponential Euler). When it is 4, a Runge-Kutta 4th
+order method is used instead. This method is slower
+but more accurate.
+
 
 ## `t_end`
 
+| Default | Allowed values | Type |
+| ------- | ----- | ----- |
+| 5e3  |    +ve integers | double | 
+
+Specify the time, in ms, for which to simulate. Make sure
+that `t_end` is an integer multiple of `sim_dt`
+
+
 ## `output_type`
+
+| Default | Allowed values | Type |
+| ------- | ----- | ----- |
+| 0  |    0,1,2 | double | 
+
+`output_type` determines if outputs from the `integrate` 
+function should be separate matrices (0) or organized 
+in a structure (1), or organized in a structure and 
+enable spike-detection in C++ code (2). The 0 option is 
+useful when you only want a few outputs or don't care 
+about lots of variable names. The latter options are 
+useful when it's important to keep all the output data 
+organized. In addition, the 2 option saves memory at the 
+expense of detail.
+
+## `temperature` and `temperature_ref`
+
+`temperature` specifies the temperature at which you want
+to perform simulations. `temperature_ref` holds the "default" 
+temperature so that $Q_{10}$ values can be used. These
+values only affect components that are temperature sensitive. 
 
 # Controlling verbosity
 
 ## `verbosity`
 
-|  |  |
-| ------- | ----- |
-| Default | 0 |
-| Allowed values | +ve numbers |
-| Type | double | 
+| Default | Allowed values | Type |
+| ------- | ----- | ----- |
+| 0  |     +ve numbers | double | 
 
-`verbosity` is a positive integer that controls how verbose xolotl is when running simulations. Set to a large positive number to get more verbose output, useful for debugging. 
+`verbosity` is a positive integer that controls how verbose
+xolotl is when running simulations. Set to a large positive 
+number to get more verbose output, useful for debugging. 
 
 # Customization 
 
 ## `pref`
 
+`x.pref` contains a structure that contains settings that 
+determine the behaviour of some methods. You can change these 
+settings temporarily by modifying this structure. To make these
+changes persist across sessions, edit the `pref.m` file.
+
+You can also add your own data to `x.pref`, which your 
+functions can use. This is a way to pass metadata and other 
+data along with this model to other functions. 
+
 # Exploring the model
 
 ## `Children`
 
-
-
-
-
-* The `closed_loop` flag (false or true) determines whether initial conditions should be reset before a new simulation. If `closed_loop` is true, successive simulations will use the current state of the `xolotl` object (e.g. the end state of the previous simulation if you run `integrate` twice in a row).
-* The `approx_channels` flag (0 or 1) determines whether approximations to computing gating functions should be used. Look-up tables and approximations to the exponential function significantly increase computational speed, but decrease accuracy, especially at high temporal resolution in the data.
-* The `solver_order` flag takes the values 0 or 4. In the 0 case, standard solvers are used (exponential Euler). In the 4 case, a Runge-Kutta 4th order method is used instead. This method is slower but more accurate.
-* The `output_structure` flag (0, 1, or 2) determines if outputs from the `integrate` function should be separate matrices (0) or organized in a structure (1), or organized in a structure and enable spike-detection in C++ code (2). The 0 option is useful when you only want a few outputs or don't care about lots of variable names. The latter options are useful when it's important to keep all the output data organized. In addition, the 2 option saves memory at the expense of detail.
-
-### Numerical Properties
-
-* The `dt` value stores the fixed time step (default $50 \times 10^{-3}~\mathrm{ms}$) for outputs from simulation. Note that this is not the same as `sim_dt`. This value determines the number of time steps in the output vectors. If `dt` and `sim_dt` differ, the simulation vector is interpolated before being output -- useful for running ultra-high definition simulations but not saving all that data.
-* In contrast, `sim_dt` is the actual fixed time step for the simulation (default $50 \times 10^{-3}~\mathrm{ms}$).
-* `t_end` is the simulation time (default $5 \times 10^{3}~\mathrm{ms}$).
-
-* The `temperature` property holds the *in-silico* preparation temperature (default 11 deg. C). This property only matters when using temperature-sensitive conductances or mechanisms.
-* `temperature_ref` holds the "default" temperature so that $Q_{10}$ values can be used.
-* The `I_ext` property stores the current to be injected as a scalar, vector, or matrix.
-* The `V_clamp` property stores the voltage of clamped compartments as a matrix of `nSteps x nComps` where `nSteps` is the number of time-steps (`x.t_end * x.dt`) and `nComps` is the number of compartments in the `xolotl` object tree.
-
-### Non-Numerical Properties
-* The `manipulate_plot_func` property contains a cell of function handles which correspond to all plotting functions that are called when a property is changed while using the `manipulate` functionality. It defaults to the built-in `x.plot` function.
-* The `pref.m` file contains editable preferences for your `xolotl` installation.
+`Children` contains a list of all compartments in the current xolotl model. 
