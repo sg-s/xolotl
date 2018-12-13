@@ -2,7 +2,7 @@ This document describes how to create and work with multi compartment models in 
 
 # Introduction and Limitations
 
-xolotl is limited in how it can work with mulit-compartment models:
+xolotl is limited in how it can work with multi-compartment models:
 
 1. The only type of multi-compartment models fully supported are linear cables, with the soma at one end and the neurite coming out of it. 
 2. You can in principle create arbitrary topologies with branching, but you are limited in the integration methods you can use (you can only use Exponential Euler, with no support for implicit solvers or multi-step solvers). 
