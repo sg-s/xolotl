@@ -24,7 +24,7 @@ x.rebase()
 
 ### See also:
 
-cpplab.rebase()
+->cpplab.rebase()
 
 %}
 

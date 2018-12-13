@@ -42,6 +42,12 @@ as it makes the integration faster (and reduces the memory footprint).
 - ``mech_state`` a matrix representing every dimension of every mechanism in the tree. This matrix has size (nsteps, NC), where NC depends on the precise controllers used, and is automatically determined. 
 - ``I`` the currents of every ion channel type in the model. This is a matrix of size (nsteps, n_cond)
 
+### See also:
+
+->xolotl.show
+->xolotl.plot
+->xolotl.transpile
+->xolotl.compile
 
 
 %}

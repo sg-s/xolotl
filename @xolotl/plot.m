@@ -31,8 +31,8 @@ setpref('xolotl','show_Ca',false)
 
 ### See Also
 
-xolotl.manipulate
-xolotl.contributingCurrents
+->xolotl.manipulate
+->xolotl.contributingCurrents
 
 %}
 

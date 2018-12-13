@@ -20,8 +20,8 @@ x.skip_hash = true;
 ## See Also:
 ---------
 
-- xolotl.transpile
-- xolotl.cleanup
+->xolotl.transpile
+->xolotl.cleanup
 
 %}
 

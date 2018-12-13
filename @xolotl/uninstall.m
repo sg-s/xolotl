@@ -21,7 +21,7 @@ x.uninstall
 
 ### See also:
 
-xolotl.update
+->xolotl.update
 
 %}
 

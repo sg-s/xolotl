@@ -20,7 +20,7 @@ xolotl.update()
 
 ### See also:
 
-xolotl.uninstall
+->xolotl.uninstall
 
 %}
 

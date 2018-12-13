@@ -17,7 +17,7 @@ to be user accessible.
 
 ### See also:
 
-xolotl.transpile
+->xolotl.transpile
 
 %}
 

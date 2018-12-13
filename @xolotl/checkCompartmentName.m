@@ -21,7 +21,7 @@ ok = checkCompartmentName(self,comp_name)
 
 ### See Also
 
-xolotl.add
+->xolotl.add
 
 %}
 

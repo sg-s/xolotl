@@ -33,7 +33,7 @@ x.reset('base')
 
 ### See Also
 
-xolotl.reset
+->xolotl.reset
 
 %}
 

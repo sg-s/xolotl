@@ -34,7 +34,7 @@ x.reset('base')
 	
 ### See Also
 
-xolotl.snapshot
+->xolotl.snapshot
 
 %}
 

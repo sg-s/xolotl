@@ -19,7 +19,7 @@ x.viewCode;
 
 ### See Also:
 
-xolotl.transpile
+->xolotl.transpile
 
 %}
 

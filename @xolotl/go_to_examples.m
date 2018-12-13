@@ -15,6 +15,10 @@ Usage:
 xolotl.go_to_examples
 ```
 
+### See also:
+
+->xolotl.run_all_tests
+
 %}
 
 

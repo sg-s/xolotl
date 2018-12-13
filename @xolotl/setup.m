@@ -20,8 +20,8 @@ x.setup
 
 ### See also:
 
-xolotl.update
-xolotl.uninstall
+->xolotl.update
+->xolotl.uninstall
 
 %}
 

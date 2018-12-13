@@ -27,7 +27,7 @@ is used internally in `xolotl.show()`
 
 ### See Also
 
-xolotl.show
+->xolotl.show
 
 
 %}

@@ -27,7 +27,7 @@ it using the Crank-Nicholson scheme reserved for multi-compartment models.
 
 ### See Also
 
-xolotl.connect
+->xolotl.connect
 
 %}
 

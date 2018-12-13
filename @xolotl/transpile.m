@@ -26,8 +26,8 @@ x.transpile;
 
 ### See Also
 
-xolotl.compile
-xolotl.viewCode
+->xolotl.compile
+->xolotl.viewCode
 
 
 %}

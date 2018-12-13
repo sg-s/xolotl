@@ -22,8 +22,8 @@ xolotl.show('prinz/KCa')
 ### See Also
 
 
-xolotl.plot
-xolotl.getGatingFunctions
+->xolotl.plot
+->xolotl.getGatingFunctions
 
 %}
 

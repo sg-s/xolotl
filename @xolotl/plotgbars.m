@@ -19,9 +19,9 @@ x.plotgbars(axes_handle,'compartment_name');
 
 ### See also:
 
-xolotl.plot
-xolotl.show
-xolotl.manipulate
+->xolotl.plot
+->xolotl.show
+->xolotl.manipulate
 
 
 %}

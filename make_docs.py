@@ -1,17 +1,18 @@
-# get all files in methods directory 
-
+# this script converts all the markdown formatted
+# documentation at the top of every method
+# and links them together into a single 
+# markdown documentation
  
 
 import glob, os
 
-out_file = open('auto_methods.rst','w')
+out_file = open('docs/reference/xolotl-methods.md','w')
 
-header_str = '.. _method_name:'
 
 method_url_root = '<https://xolotl.readthedocs.io/en/latest/auto_methods.html#';
 
 
-for file in glob.glob("@xolotl/*.m"):
+for file in sorted(glob.glob("@xolotl/*.m")):
 
 	filename = file.replace('.m','')
 	filename = filename.strip()
@@ -31,7 +32,7 @@ for file in glob.glob("@xolotl/*.m"):
 
 	for i in range(0,len(lines)):
 		
-		thisline = lines[i].strip('%')
+		thisline = lines[i].strip('#')
 		thisline = thisline.strip()
 
 		if thisline == filename:
@@ -52,9 +53,6 @@ for file in glob.glob("@xolotl/*.m"):
 		continue
 
 	
-
-	this_header_str = header_str.replace('method_name',filename)
-	out_file.write(this_header_str)
 	out_file.write('\n\n')
 
 
@@ -62,12 +60,10 @@ for file in glob.glob("@xolotl/*.m"):
 		thisline = lines[i]
 		thisline = thisline.replace('%}','')
 
-
-
 		# insert hyperlinks to other methods 
-		if thisline.lower().find('- xolotl.') != -1:
+		if thisline.lower().find('->xolotl.') != -1:
 			# ok, there is something here...
-			method_name = thisline.replace('- xolotl.','')
+			method_name = thisline.replace('->xolotl.','')
 			method_name = method_name.strip()
 
 			out_file.write('\n - `' + method_name + ' ' + method_url_root + method_name.lower() + '>`_ \n')
@@ -76,17 +72,17 @@ for file in glob.glob("@xolotl/*.m"):
 		else:
 			out_file.write(thisline)
 
-	out_file.write('\n\nTest coverage\n')
-	out_file.write('--------------\n\n')
-	out_file.write('``' + filename + '`` is tested in: \n\n')
+	# out_file.write('\n\nTest coverage\n')
+	# out_file.write('--------------\n\n')
+	# out_file.write('``' + filename + '`` is tested in: \n\n')
 
-	# go over every file in /tests and check for this filename 
-	for testfile in glob.glob("./tests/*.m"):
-		if filename in open(testfile).read():
+	# # go over every file in /tests and check for this filename 
+	# for testfile in glob.glob("./tests/*.m"):
+	# 	if filename in open(testfile).read():
 
-			test_filename = os.path.basename(testfile)
+	# 		test_filename = os.path.basename(testfile)
 
-			out_file.write('- `' + test_filename + ' <https://github.com/sg-s/xolotl/blob/master/tests/' + test_filename + '>`_ \n')
+	# 		out_file.write('- `' + test_filename + ' <https://github.com/sg-s/xolotl/blob/master/tests/' + test_filename + '>`_ \n')
 			
 
 
