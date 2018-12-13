@@ -158,6 +158,14 @@ x.set('*gbar', [300, 0.1, 1000]);
 
 # Remove a component from a model
 
+You can remove any component from the model by calling its `destroy` method. For example:
+
+```
+x.CompName.CondName.destroy()
+```
+
+destroys an object called `CondName` from the compartment called `CompName`.
+
 # Add a new component to an existing model 
 
 Xolotl objects are MATLAB objects. You can add new network components on-the-fly
