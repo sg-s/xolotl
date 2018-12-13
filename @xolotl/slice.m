@@ -25,9 +25,8 @@ as a multi-compartment model, and `xolotl` will integrate
 it using the Crank-Nicholson scheme reserved for multi-compartment models. 
 
 
-### See Also
-
-->xolotl.connect
+!!! info "See Also"
+    ->xolotl.connect
 
 %}
 

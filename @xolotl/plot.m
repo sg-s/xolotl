@@ -29,10 +29,9 @@ setpref('xolotl','plot_color',false)
 setpref('xolotl','show_Ca',false)
 ```
 
-### See Also
-
-->xolotl.manipulate
-->xolotl.contributingCurrents
+!!! info "See Also"
+    ->xolotl.manipulate
+    ->xolotl.contributingCurrents
 
 %}
 

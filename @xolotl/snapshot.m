@@ -31,9 +31,8 @@ x.reset('base')
 ```
 	
 
-### See Also
-
-->xolotl.reset
+!!! info "See Also"
+    ->xolotl.reset
 
 %}
 

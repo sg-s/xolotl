@@ -16,8 +16,8 @@ Example use:
 
 
 ```
- [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance)
- ```
+[m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance)
+```
 
 
 where `conductance` is a string that specifies a

@@ -63,7 +63,8 @@ ok = checkCompartmentName(self,comp_name)
 ```
 
 !!! info "See Also"
-[xolotl.add](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#add)
+    [xolotl.add](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#add)
+
 
 
 
@@ -106,7 +107,10 @@ automatically compiles when t needs to. You can turn this
 
 Connects two compartments with a synapse. The basic syntax is ::
 
-   x.connect('Comp1', 'Comp2', 'SynapseType', ...)
+
+```
+x.connect('Comp1', 'Comp2', 'SynapseType', ...)
+```
 
 The first two arguments are the presynaptic and postsynaptic compartment names. For example ::
 
@@ -170,9 +174,10 @@ curr_index = xolotl.contributingCurrents(V, I)
 
 where V is a vector of voltages, I is the corresponding matrix of currents 
 
-### See Also
+!!! info "See Also"
+    [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
+    [xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
 
-[xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)[xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
 
 
 
@@ -233,8 +238,8 @@ Example use:
 
 
 ```
- [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance)
- ```
+[m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance)
+```
 
 
 where `conductance` is a string that specifies a
@@ -243,7 +248,8 @@ handles that can be evaluated independently. This method
 is used internally in `xolotl.show()`
 
 !!! info "See Also"
-[xolotl.show](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#show)
+    [xolotl.show](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#show)
+
 
 
 
@@ -263,7 +269,8 @@ xolotl.go_to_examples
 ```
 
 !!! info "See Also"
-[xolotl.run_all_tests](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#run_all_tests)
+    [xolotl.run_all_tests](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#run_all_tests)
+
 
 
 
@@ -310,7 +317,11 @@ as it makes the integration faster (and reduces the memory footprint).
 - ``I`` the currents of every ion channel type in the model. This is a matrix of size (nsteps, n_cond)
 
 !!! info "See Also"
-[xolotl.show](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#show)[xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)[xolotl.transpile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#transpile)[xolotl.compile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#compile)
+    [xolotl.show](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#show)
+    [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
+    [xolotl.transpile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#transpile)
+    [xolotl.compile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#compile)
+
 
 
 
@@ -340,7 +351,8 @@ selectively only manipualte some parameters whose names
 match a pattern using ``x.manipulate('some*pattern')``
 
 !!! info "See Also"
-[xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
+    [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
+
 
 
 
@@ -359,7 +371,8 @@ should not need to use this by itself.
 
 ### See Also
 
-[xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
+    [xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
+
 
 
 
@@ -395,7 +408,9 @@ setpref('xolotl','show_Ca',false)
 
 ### See Also
 
-[xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)[xolotl.contributingCurrents](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#contributingCurrents)
+    [xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
+    [xolotl.contributingCurrents](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#contributingCurrents)
+
 
 
 
@@ -418,7 +433,10 @@ x.plotgbars(axes_handle,'compartment_name');
 
 ### See also:
 
-[xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)[xolotl.show](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#show)[xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
+    [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
+    [xolotl.show](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#show)
+    [xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
+
 
 
 
@@ -486,7 +504,8 @@ x.reset('base')
 	
 ### See Also
 
-[xolotl.snapshot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#snapshot)
+    [xolotl.snapshot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#snapshot)
+
 
 
 
@@ -533,7 +552,9 @@ x.setup
 
 ### See also:
 
-[xolotl.update](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#update)[xolotl.uninstall](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#uninstall)
+    [xolotl.update](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#update)
+    [xolotl.uninstall](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#uninstall)
+
 
 
 
@@ -559,7 +580,9 @@ xolotl.show('prinz/KCa')
 ### See Also
 
 
-[xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)[xolotl.getGatingFunctions](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#getGatingFunctions)
+    [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
+    [xolotl.getGatingFunctions](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#getGatingFunctions)
+
 
 
 
@@ -590,7 +613,8 @@ it using the Crank-Nicholson scheme reserved for multi-compartment models.
 
 ### See Also
 
-[xolotl.connect](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#connect)
+    [xolotl.connect](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#connect)
+
 
 
 
@@ -626,7 +650,8 @@ x.reset('base')
 
 ### See Also
 
-[xolotl.reset](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#reset)
+    [xolotl.reset](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#reset)
+
 
 
 
@@ -656,7 +681,9 @@ x.transpile;
 
 ### See Also
 
-[xolotl.compile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#compile)[xolotl.viewCode](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#viewCode)
+    [xolotl.compile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#compile)
+    [xolotl.viewCode](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#viewCode)
+
 
 
 
@@ -678,7 +705,8 @@ to be user accessible.
 
 ### See also:
 
-[xolotl.transpile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#transpile)
+    [xolotl.transpile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#transpile)
+
 
 
 
@@ -702,7 +730,8 @@ x.uninstall
 
 ### See also:
 
-[xolotl.update](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#update)
+    [xolotl.update](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#update)
+
 
 
 
@@ -725,7 +754,8 @@ xolotl.update()
 
 ### See also:
 
-[xolotl.uninstall](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#uninstall)
+    [xolotl.uninstall](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#uninstall)
+
 
 
 
@@ -747,7 +777,8 @@ x.viewCode;
 
 ### See Also:
 
-[xolotl.transpile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#transpile)
+    [xolotl.transpile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#transpile)
+
 
 
 

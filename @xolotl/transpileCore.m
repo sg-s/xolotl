@@ -15,9 +15,8 @@ internally called by xolotl.transpile()
 Do not call this method. It is not meant 
 to be user accessible. 
 
-### See also:
-
-->xolotl.transpile
+!!! info "See Also"
+    ->xolotl.transpile
 
 %}
 

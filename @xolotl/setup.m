@@ -18,10 +18,9 @@ xolotl.setup
 x.setup
 ```
 
-### See also:
-
-->xolotl.update
-->xolotl.uninstall
+!!! info "See Also"
+    ->xolotl.update
+    ->xolotl.uninstall
 
 %}
 

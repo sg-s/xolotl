@@ -9,7 +9,10 @@
 
 Connects two compartments with a synapse. The basic syntax is ::
 
-   x.connect('Comp1', 'Comp2', 'SynapseType', ...)
+
+```
+x.connect('Comp1', 'Comp2', 'SynapseType', ...)
+```
 
 The first two arguments are the presynaptic and postsynaptic compartment names. For example ::
 

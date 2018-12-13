@@ -17,9 +17,8 @@ Usage:
 x.viewCode;
 ```
 
-### See Also:
-
-->xolotl.transpile
+!!! info "See Also"
+    ->xolotl.transpile
 
 %}
 

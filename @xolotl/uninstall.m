@@ -19,9 +19,8 @@ xolotl.uninstall
 x.uninstall
 ```
 
-### See also:
-
-->xolotl.update
+!!! info "See Also"
+    ->xolotl.update
 
 %}
 

@@ -18,9 +18,8 @@ Usage:
 xolotl.update()
 ```
 
-### See also:
-
-->xolotl.uninstall
+!!! info "See Also"
+    ->xolotl.uninstall
 
 %}
 

@@ -19,11 +19,9 @@ xolotl.show('prinz/KCa')
 ```
 
 
-### See Also
-
-
-->xolotl.plot
-->xolotl.getGatingFunctions
+!!! info "See Also"
+    ->xolotl.plot
+    ->xolotl.getGatingFunctions
 
 %}
 

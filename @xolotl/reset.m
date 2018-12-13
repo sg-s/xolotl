@@ -20,7 +20,7 @@ reset called without any arguments resets the model as best as it can -- voltage
 
 ``reset`` can also be called with a string argument, which is the name of a snapshot previously stored in the model object. Then, ``reset`` reconfigures the parameters of the model to match that snapshot. This is useful for working with a model, changing parameters, evolving it, and then coming back to where you started off from. 
 
-### Example
+Here's an example:
 
 ```
 % assuming a xolotl object is set up
@@ -32,9 +32,8 @@ x.integrate;
 x.reset('base')
 ```
 	
-### See Also
-
-->xolotl.snapshot
+!!! info "See Also"
+    ->xolotl.snapshot
 
 %}
 

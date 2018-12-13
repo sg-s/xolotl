@@ -22,9 +22,8 @@ Usage:
 x.rebase()
 ```
 
-### See also:
-
-->cpplab.rebase()
+!!! info "See Also"
+    ->cpplab.rebase()
 
 %}
 

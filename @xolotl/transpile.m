@@ -24,10 +24,9 @@ x.transpile;
     Manually transpiling is discouraged. xolotl will automatically transpile code for you when needed. 
 	
 
-### See Also
-
-->xolotl.compile
-->xolotl.viewCode
+!!! info "See Also"
+   ->xolotl.compile
+   ->xolotl.viewCode
 
 
 %}

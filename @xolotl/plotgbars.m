@@ -17,11 +17,10 @@ x.plotgbars('compartment_name');
 x.plotgbars(axes_handle,'compartment_name');
 ```
 
-### See also:
-
-->xolotl.plot
-->xolotl.show
-->xolotl.manipulate
+!!! info "See Also"
+    ->xolotl.plot
+    ->xolotl.show
+    ->xolotl.manipulate
 
 
 %}
