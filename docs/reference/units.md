@@ -15,5 +15,5 @@
 | Current injected into cell       | nA |
 | Axial resistivity                | MΩ mm |
 | Calcium concentration            | μM |
-| temperature                      | K |
+| temperature                      | deg C |
 
