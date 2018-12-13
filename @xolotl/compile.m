@@ -17,11 +17,9 @@ x.skip_hash = true;
 ```
 
 
-## See Also:
----------
-
-->xolotl.transpile
-->xolotl.cleanup
+!!! info "See Also"
+    ->xolotl.transpile
+    ->xolotl.cleanup
 
 %}
 

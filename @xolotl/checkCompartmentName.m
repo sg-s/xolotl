@@ -19,9 +19,8 @@ Usage:
 ok = checkCompartmentName(self,comp_name)
 ```
 
-### See Also
-
-->xolotl.add
+!!! info "See Also"
+    ->xolotl.add
 
 %}
 

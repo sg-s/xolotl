@@ -24,9 +24,8 @@ a large number of parameters, this can get messy. You can
 selectively only manipualte some parameters whose names 
 match a pattern using ``x.manipulate('some*pattern')``
 
-### See also
-
-->xolotl.plot
+!!! info "See Also"
+    ->xolotl.plot
 
 %}
 

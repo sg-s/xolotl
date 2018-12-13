@@ -14,10 +14,9 @@ curr_index = xolotl.contributingCurrents(V, I)
 
 where V is a vector of voltages, I is the corresponding matrix of currents 
 
-### See Also
-
-->xolotl.plot
-->xolotl.manipulate
+!!! info "See Also"
+    ->xolotl.plot
+    ->xolotl.manipulate
 
 %}
 

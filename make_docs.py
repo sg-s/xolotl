@@ -9,8 +9,8 @@ import glob, os
 out_file = open('docs/reference/xolotl-methods.md','w')
 
 
-method_url_root = '<https://xolotl.readthedocs.io/en/latest/auto_methods.html#';
-
+xolotl_method_root = 'https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#';
+cpplab_method_root = 'https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#';
 
 for file in sorted(glob.glob("@xolotl/*.m")):
 
@@ -62,11 +62,15 @@ for file in sorted(glob.glob("@xolotl/*.m")):
 
 		# insert hyperlinks to other methods 
 		if thisline.lower().find('->xolotl.') != -1:
-			# ok, there is something here...
+			# ok, this is a xolotl method
+			link_name = thisline.replace('->','')
+			link_name = link_name.strip()
 			method_name = thisline.replace('->xolotl.','')
 			method_name = method_name.strip()
+			link_url = '[' + link_name + '](' + xolotl_method_root + method_name + ')'
+			link_url = link_url.strip()
 
-			out_file.write('\n - `' + method_name + ' ' + method_url_root + method_name.lower() + '>`_ \n')
+			out_file.write(link_url)
 
 
 		else:

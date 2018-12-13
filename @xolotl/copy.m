@@ -11,7 +11,9 @@ copies a xolotl object. ``copy`` creates an identical copy of a xolotl object th
 
 Syntax:
 
-    x2 = copy(x);
+```
+x2 = copy(x);
+```
 
 !!! warning
     Some read-only properties in a xolotl object may not be copied over. 

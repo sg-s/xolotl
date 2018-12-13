@@ -25,9 +25,8 @@ conductance C++ header file. The outputs are function
 handles that can be evaluated independently. This method
 is used internally in `xolotl.show()`
 
-### See Also
-
-->xolotl.show
+!!! info "See Also"
+    ->xolotl.show
 
 
 %}

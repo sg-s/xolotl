@@ -36,7 +36,7 @@ The most common way to produce a synapse is to pass the synapse type and hen any
 x.connect('AB', 'LP', 'prinz/Glut', 'gbar', 100)
 ```
 
-Synapses can also be connected by passing a `cpplab` object to the `connect` method ::
+Synapses can also be connected by passing a `cpplab` object to the `connect` method:
 
 ```
 % create a synapse using the cpplab object 'syn_cpplab' 
