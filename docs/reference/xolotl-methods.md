@@ -406,7 +406,7 @@ setpref('xolotl','show_Ca',false)
 
 !!! info "See Also"
     * [xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
-    * [xolotl.contributingCurrents](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#contributingCurrents)
+    * [xolotl.contributingCurrents](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#contributingcurrents)
 
 
 
@@ -572,7 +572,7 @@ xolotl.show('prinz/KCa')
 
 !!! info "See Also"
     * [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
-    * [xolotl.getGatingFunctions](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#getGatingFunctions)
+    * [xolotl.getGatingFunctions](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#getgatingfunctions)
 
 
 
@@ -670,7 +670,7 @@ x.transpile;
 
 !!! info "See Also"
     * [xolotl.compile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#compile)
-    * [xolotl.viewCode](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#viewCode)
+    * [xolotl.viewCode](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#viewcode)
 
 
 

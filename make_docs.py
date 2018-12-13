@@ -67,6 +67,7 @@ for file in sorted(glob.glob("@xolotl/*.m")):
 			link_name = link_name.strip()
 			method_name = thisline.replace('->xolotl.','')
 			method_name = method_name.strip()
+			method_name = method_name.lower()
 			link_url = '[' + link_name + '](' + xolotl_method_root + method_name + ')'
 			link_url = link_url.strip()
 			link_url = '    * ' + link_url + '\n'
