@@ -13,13 +13,16 @@ pages:
   - HOW TO: 
     - Install and configure: how-to/install-configure.md
     - Construct models: how-to/construct-models.md
-    - Discover and explore existing components: how-to/discover-components.md
+    - Discover existing components: how-to/discover-components.md
+    - Specify initial conditions: how-to/specify-initial-conditions.md
     - Modify existing models: how-to/change-existing-models.md
     - Save and load models: how-to/save-load-models.md
     - Run simulations: how-to/run-simulations.md
+    - Voltage clamp a compartment: how-to/voltage-clamp.md
+    - Inject current: how-to/inject-current.md
     - Make plots: how-to/make-plots.md
     - Save configurations and use snapshots: how-to/snapshots.md
-    - Make your own models: how-to/make-own-models.md
+    - Make your own components: how-to/make-own-models.md
     - Create multi-compartment models: how-to/create-multi-compartment-models.md
   - REFERENCE: 
     - Units: 'reference/units.md'
