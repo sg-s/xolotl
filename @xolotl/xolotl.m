@@ -175,6 +175,12 @@ methods
         n_comp = length(self.find('compartment'));
         n_steps = floor(self.t_end/self.sim_dt);
 
+        if n_comp == 0
+            % probably loading from a file
+            self.V_clamp = V_clamp;
+            return
+        end
+
         % make sure that it's the right size
         assert(size(V_clamp,2) == n_comp,'Size of V_clamp is incorrect::2nd dimension size should be n_comp')
         if size(V_clamp,1) ~= 1
@@ -204,8 +210,16 @@ methods
             return
         end
 
+
+
         n_comp = length(self.find('compartment'));
         n_steps = floor(self.t_end/self.sim_dt);
+
+        if n_comp == 0
+            % probably loading from a file
+            self.I_ext = I_ext;
+            return
+        end
 
         if isvector(I_ext) && length(I_ext) == n_comp
             I_ext = I_ext(:)';
