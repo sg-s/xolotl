@@ -23,9 +23,13 @@ public:
         m = m_;
 
          // defaults
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = 0; }
+
+        p = 1;
+        // allow this channel to be approximated
+        approx_m = 1;        
 
     }
 
@@ -39,11 +43,6 @@ public:
 
 string Ap::getClass(){return "Ap";}
 
-void Ap::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    g = gbar*m;
-}
 
 
 double Ap::m_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)-12.0)/-11.0)));}

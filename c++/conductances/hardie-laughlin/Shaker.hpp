@@ -24,10 +24,17 @@ public:
         h = h_;
 
         // defaults 
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
         if (isnan (E)) { E = -80; }
+
+        p = 1;
+        q = 1;
+
+        // allow this channel to be approximated
+        approx_m = 1;
+        approx_h = 1;
 
     }
 
@@ -44,12 +51,6 @@ public:
 
 string Shaker::getClass(){return "Shaker";}
 
-void Shaker::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
-    g = gbar*m*h;
-}
 
 double Shaker::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+62.8)/-8.2)); }
 double Shaker::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+80.0)/5.23)); }

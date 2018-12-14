@@ -29,6 +29,13 @@ public:
         if (isnan (h)) { h = 1; }
         if (isnan (E)) { E = -80; }
 
+        p = 2;
+        q = 1;
+
+        // allow this channel to be approximated
+        approx_m = 1;
+        approx_h = 1;
+
     }
 
     void integrate(double, double);
@@ -42,13 +49,6 @@ public:
 };
 
 string Shab::getClass(){return "Shab";}
-
-void Shab::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    h = 0.7 * (h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca))) + (1 - 0.7) * (h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/3000.0));
-    g = gbar*m*m*h;
-}
 
 
 double Shab::m_inf(double V, double Ca) {return (1.0/(1.0+exp(sqrt((-1.0-V)/9.1))));}

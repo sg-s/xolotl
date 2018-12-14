@@ -23,9 +23,14 @@ public:
         m = m_;
 
          // defaults
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = 0; }
+
+        p = 4;
+
+        // allow this channel to be approximated
+        approx_m = 1;
 
     }
 
@@ -38,12 +43,6 @@ public:
 };
 
 string KCa::getClass(){return "KCa";}
-
-void KCa::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    g = gbar*m*m*m*m;
-}
 
 
 double KCa::m_inf(double V, double Ca) {return (Ca/(Ca+3))*(1.0/(1.0+exp(((V)+27.2)/-7.2)));}

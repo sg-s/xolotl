@@ -23,9 +23,14 @@ public:
         m = m_;
 
          // defaults
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = 0; }
+
+        p = 1;
+
+        // allow this channel to be approximated
+        approx_m = 1;
 
     }
 
@@ -39,11 +44,7 @@ public:
 
 string Proc::getClass(){return "Proc";}
 
-void Proc::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    g = gbar*m;
-}
+
 
 double Proc::m_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+57.0)/-5.0)));}
 double Proc::tau_m(double V, double Ca) {return 6.0;}

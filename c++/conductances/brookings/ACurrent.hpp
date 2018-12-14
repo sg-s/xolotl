@@ -22,9 +22,14 @@ public:
         m = m_;
 
         // defaults
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = -80; }
+
+        p = 3;
+
+        // allow this channel to be approximated
+        approx_m = 1;
     }
 
     void integrate(double, double);
@@ -40,11 +45,6 @@ string ACurrent::getClass(){
     return "ACurrent";
 }
 
-void ACurrent::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    g = gbar*m*m*m;
-}
 
 double ACurrent::m_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+12.3)/-11.8))); }
 double ACurrent::tau_m(double V, double Ca) {return 7.2- (6.4/(1.0+exp(((V)+28.3)/-19.2))); }
