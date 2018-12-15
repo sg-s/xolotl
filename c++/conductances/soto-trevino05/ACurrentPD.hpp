@@ -21,8 +21,11 @@ public:
         m = m_;
         h = h_;
 
-         // defaults 
- if (isnan(gbar)) { gbar = 0; }
+        p = 3;
+        q = 1;
+
+        // defaults
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
         if (isnan (E)) { E = -80; }
@@ -39,13 +42,6 @@ public:
 };
 
 string ACurrentPD::getClass(){return "ACurrentPD";}
-
-void ACurrentPD::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
-    g = gbar*m*m*m*m*h;
-}
 
 double ACurrentPD::m_inf(double V, double Ca) {return 1.0/(1.0+exp(-(V+27)/8.7)); }
 double ACurrentPD::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+56.9)/4.9)); }

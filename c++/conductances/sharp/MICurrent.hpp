@@ -22,7 +22,10 @@ public:
         E = E_;
         m = m_;
 
-         // defaults 
+        p = 1;
+        q = 0;
+
+         // defaults
  if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = -20; }
@@ -37,13 +40,6 @@ public:
 };
 
 string MICurrent::getClass(){return "MICurrent";}
-
-void MICurrent::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    g = gbar*m;
-}
-
 
 double MICurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+55.0)/-5));}
 double MICurrent::tau_m(double V, double Ca) {return 6.0;}

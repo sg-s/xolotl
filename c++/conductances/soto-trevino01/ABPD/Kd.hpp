@@ -23,6 +23,8 @@ public:
         E = E_;
         m = m_;
 
+        p = 1;
+
          // defaults
         if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
@@ -38,13 +40,6 @@ public:
 };
 
 string Kd::getClass(){return "Kd";}
-
-void Kd::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    g = gbar*m;
-}
-
 
 double Kd::m_inf(double V, double Ca) {return (0.5)*(1.0+tanh((V)+20.0)/8.0);}
 double Kd::tau_m(double V, double Ca) {return 1.0 / ( 0.0008*cosh((V + 5.0)/40.0) );}
