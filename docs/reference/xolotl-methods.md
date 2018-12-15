@@ -194,7 +194,7 @@ where V is a vector of voltages, I is the corresponding matrix of currents
 
 # copy
 
-copies a xolotl object. ``copy`` creates an identical copy of a xolotl object that can be manipulated seperately. Both copies will use the same binary to integrate, unless you add a new component to one of them. 
+copies a xolotl object. ``copy`` creates an identical copy of a xolotl object that can be manipulated separately. Both copies will use the same binary to integrate, unless you add a new component to one of them. 
 
 Syntax:
 
