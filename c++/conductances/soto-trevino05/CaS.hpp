@@ -22,7 +22,7 @@ public:
         h = h_;
 
         p = 3;
-        q = 0;
+
 
         // defaults
         if (isnan(gbar)) { gbar = 0; }

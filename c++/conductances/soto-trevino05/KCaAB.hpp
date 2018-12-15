@@ -21,7 +21,7 @@ public:
         m = m_;
 
         p = 4;
-        q = 0;
+
 
         // defaults
         if (isnan(gbar)) { gbar = 0; }

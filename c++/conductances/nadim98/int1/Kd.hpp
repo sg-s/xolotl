@@ -28,7 +28,7 @@ public:
         if (isnan (E)) { E = 0; }
 
         p = 4;
-        q = 0;
+
 
     }
 
