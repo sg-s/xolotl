@@ -36,9 +36,12 @@ end
 x.LP.add('Leak','gbar',.3,'E',-50);
 x.PY.add('Leak','gbar',.1,'E',-50);
 
+return
+
+x.connect('AB','LP','Chol');
 
 % set up synapses as in Fig. 2e
-x.connect('AB','LP','Chol','gmax',30);
+
 x.connect('AB','PY','Chol','gmax',3);
 x.connect('AB','LP','Glut','gmax',30);
 x.connect('AB','PY','Glut','gmax',10);
