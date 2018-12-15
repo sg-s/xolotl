@@ -28,6 +28,9 @@ public:
         if (isnan (h)) { h = 1; }
         if (isnan (E)) { E = 0; }
 
+        p = 3;
+        q = 1;
+
     }
 
     void integrate(double, double);

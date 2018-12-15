@@ -22,8 +22,11 @@ public:
         E = E_;
         m = m_;
 
-         // defaults
- if (isnan(gbar)) { gbar = 0; }
+        p = 4;
+        q = 0;
+
+        // defaults
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = 0; }
 
