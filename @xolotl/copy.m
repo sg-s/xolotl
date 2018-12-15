@@ -41,8 +41,11 @@ for i = 1:length(props)
 	end
 end
 
-% copy cpplab propoerties by recurisvely calling copy
 C = self.Children;
+N.Children = {};
+
+% copy cpplab properties by recursively calling copy
+
 for i = 1:length(C)
 	NN = self.(C{i}).copy;
 	N.add(NN,C{i});
