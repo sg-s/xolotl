@@ -42,18 +42,16 @@ public:
 
 string Cal::getClass(){return "Cal";}
 
-void Cal::integrate(double V, double Ca)
-{
-    // update E by copying E_Ca from the cell
+void Cal::integrate(double V, double Ca) {
     E = container->E_Ca;
+    conductance::integrate(V,Ca);
+    container->i_Ca += getCurrent(V);
+}
 
-    m = m_inf(V,Ca);
-    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
-    g = gbar*m*h;
-
-    // compute the specific calcium current and update it in the cell
-    double this_I = g*(V-E);
-    container->i_Ca += this_I;
+void Cal::integrateMS(int k, double V, double Ca) {
+    E = container->E_Ca;
+    conductance::integrateMS(k, V, Ca);
+    container->i_Ca += getCurrent(V);
 }
 
 
