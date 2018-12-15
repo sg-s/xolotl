@@ -39,13 +39,6 @@ public:
 
 string Kd::getClass(){return "Kd";}
 
-void Kd::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    g = gbar*m*m*m*m;
-}
-
-
 double Kd::m_inf(double V, double Ca) {return (1.0/(1.0+exp(-0.045*((V)+33.0))));}
 double Kd::tau_m(double V, double Ca) {return (104.0/(1.0+exp(0.065*((V)+5.0))));}
 

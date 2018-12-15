@@ -42,14 +42,6 @@ public:
 
 string NaV::getClass(){return "NaV";}
 
-void NaV::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
-    g = gbar*m*m*m*h;
-}
-
-
 double NaV::m_inf(double V, double Ca) {return (1.0/(1.0+exp(-0.08*((V)+21.0))));}
 double NaV::tau_m(double V, double Ca) {return 0.0;}
 double NaV::h_inf(double V, double Ca) {return (1.0/(1.0+exp(0.13*((V)+33.0))));}
