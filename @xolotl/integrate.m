@@ -7,10 +7,9 @@
 
 # integrate
 
-integrates a ``xolotl`` model. 
+integrates a `xolotl` model. 
 
-Usage:
-
+**Syntax**
 
 ```
 x.output_type = 0;
@@ -28,19 +27,28 @@ x.output_type = 2;
 results_and_spiketimes = x.integrate;
 ```
 
+**Description**
 
-``integrate`` will return different outputs as shown above. 
-Unless you need every output, it is recommended to skip it, 
-as it makes the integration faster (and reduces the memory footprint). 
+The outputs of integrate depend on the `output_type` property of `xolotl`.
 
-### Explanation of outputs
+| `output_type` value | outputs of `x.integrate` |
+| ------------------- | ------------------------ |
+| 0 (default) | up to 5 matrices of type double | 
+| 1 | only one output, a structure |
+| 2 | only one output, a structure | 
 
 
-- ``V`` Voltage trace of every compartment. A matrix of size (nsteps, n_comps)
-- ``I_clamp`` also returned in the first argument, this is the clamping current when a compartment is being voltage clamped. This can be inter-leaved with the voltage of other, non-clamped compartments. 
-- ``Ca`` Calcium concentration in every cell and the corresponding ``E_Ca`` (reversal potential of Calcium). A matrix of size (nsteps, n_comps)
-- ``mech_state`` a matrix representing every dimension of every mechanism in the tree. This matrix has size (nsteps, NC), where NC depends on the precise controllers used, and is automatically determined. 
-- ``I`` the currents of every ion channel type in the model. This is a matrix of size (nsteps, n_cond)
+**Explanation of outputs**
+
+When `output_type` is 0, 
+
+- `V` Voltage trace of every compartment. A matrix of size (nsteps, n_comps)
+- `I_clamp` also returned in the first argument, this is the clamping current when a compartment is being voltage clamped. This can be inter-leaved with the voltage of other, non-clamped compartments. 
+- `Ca` Calcium concentration in every cell and the corresponding `E_Ca` (reversal potential of Calcium). A matrix of size (nsteps, n_comps)
+- `mech_state` a matrix representing every dimension of every mechanism in the tree. This matrix has size (nsteps, NC), where NC depends on the precise controllers used, and is automatically determined. 
+- `I` the currents of every ion channel type in the model. This is a matrix of size (nsteps, n_cond)
+
+When `output_type` is 1 or 2, the integration is performed requesting all outputs, and these outputs are organized in a structure and named to match the names of the components in the model. 
 
 !!! info "See Also"
     ->xolotl.show
@@ -202,7 +210,12 @@ if self.output_type == 2
 end
 
 for i = 1:n_comp
-	data.(comp_names{i}).V = V(:,i);
+	if isnan(sum(self.V_clamp(:,i)))
+		data.(comp_names{i}).V = V(:,i);
+	else
+		data.(comp_names{i}).I_clamp = V(:,i);
+		data.(comp_names{i}).V_clamp = self.V_clamp(:,i);
+	end
 end
 
 

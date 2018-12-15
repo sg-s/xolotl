@@ -82,7 +82,11 @@ if isempty(self.handles) || ~isfield(self.handles,'fig') || ~isvalid(self.handle
 		end
 
 		xlabel(self.handles.ax(i),'Time (s)')
-		ylabel(self.handles.ax(i),['V_{ ' comp_names{i} '} (mV)'])
+		if isnan(sum(self.V_clamp(:,i)))
+			ylabel(self.handles.ax(i),['V_{ ' comp_names{i} '} (mV)'])
+		else
+			ylabel(self.handles.ax(i),['I_{clamp, ' comp_names{i} '} (nA)'])
+		end
 
 		% make calcium dummy plots
 		
