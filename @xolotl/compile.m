@@ -40,10 +40,19 @@ if ispc
 else
 	ipath = ['-I"' self.xolotl_folder '/c++/"'];
 end
+
+if isunix && ~ismac
+	warning('off','MATLAB:mex:GccVersion');
+end
+
 if self.verbosity > 1
 	mex('-v',ipath,mexBridge_name,'-outdir',self.xolotl_folder)
 else
 	mex('-silent',ipath,mexBridge_name,'-outdir',self.xolotl_folder)
+end
+
+if isunix && ~ismac
+	warning('on','MATLAB:mex:GccVersion');
 end
 
 
