@@ -43,13 +43,13 @@ public:
 
 string CaTAB::getClass(){return "CaTAB";}
 
-void CaS::integrate(double V, double Ca) {
+void CaTAB::integrate(double V, double Ca) {
     E = container->E_Ca;
     conductance::integrate(V,Ca);
     container->i_Ca += getCurrent(V);
 }
 
-void CaS::integrateMS(int k, double V, double Ca) {
+void CaTAB::integrateMS(int k, double V, double Ca) {
     E = container->E_Ca;
     conductance::integrateMS(k, V, Ca);
     container->i_Ca += getCurrent(V);
