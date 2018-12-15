@@ -16,6 +16,7 @@ pages:
     - Discover existing components: how-to/discover-components.md
     - Specify initial conditions: how-to/specify-initial-conditions.md
     - Modify existing models: how-to/change-existing-models.md
+    - Copy a model: how-to/copy-models.md
     - Save and load models: how-to/save-load-models.md
     - Run simulations: how-to/run-simulations.md
     - Voltage clamp a compartment: how-to/voltage-clamp.md
