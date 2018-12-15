@@ -2,24 +2,30 @@
 
 # add
 
-adds a `cpplab` object to a `xolotl` object.
 
-The add method is the most important way you construct models. 
-
-Usage:
+**Syntax**
 
 ```matlab
-x.add(compartment,'comp_name')
 x.add('compartment','comp_name')
+x.add(compartment,'comp_name')
 x.add('compartment','comp_name',...)
 ```
 
-There are two primary ways of using `add`. The first is to 
-first construct a `cpplab` object (here called AB), and then
- add it to the `xolotl` object using `x.add(AB,'AB')`. 
-`xolotl` requires that every compartment is named, and 
-the name has to be specified as a string argument. 
+**Description**
 
+adds a `cpplab` object to a `xolotl` object.
+
+The `add` method is the most important way you construct models. 
+
+`x.add('compartment','comp_name')` adds a compartment to the xolotl object and names it `comp_name`.
+
+`x.add(compartment,'comp_name')` adds a compartment object (a cpplab object) to the xolotl object `x` and names it `comp_name`. Note that compartment is a cpplab object sourced from the `compartment.hpp` C++ file, and can contain children and be extensively modified. 
+
+`x.add('compartment','comp_name',...)` adds a compartment to the xolotl object and names it `comp_name`. The compartment is then additionally configured using the parameters specified using Name Value syntax. 
+
+
+!!! info "See Also"
+    -->cpplab.add()
 
 
 
