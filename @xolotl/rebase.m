@@ -13,7 +13,7 @@ time a new xolotl object is created. rebase:
 
 1. configures the `xolotl_folder` property
 2. configures the `cpp_folder` property, which tells xolotl where its C++ files are located
-3. configures the `OS_binary_ext`, which is the extention of compiled binaries and is platform dependent. 
+3. configures the `OS_binary_ext`, which is the extension of compiled binaries and is platform dependent. 
 4. calls the rebase method from the cpplab superclass.
 
 Usage:

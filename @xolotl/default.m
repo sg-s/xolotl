@@ -4,7 +4,7 @@
 
 %% ~~~~~~~~~~    plotting  ~~~~~~~~~~
 
-% colour voltage traces by the dominant 
+% color voltage traces by the dominant 
 % current? 
 plot_color = true;
 

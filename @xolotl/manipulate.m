@@ -7,7 +7,7 @@ __  _____ | | ___ | |_| |
 
 # manipulate
 
-method that allows you to manipulate some or all parameters in a model hile visualizing its behaviour. 
+method that allows you to manipulate some or all parameters in a model while visualizing its behavior. 
 
 Usage:
 
@@ -21,7 +21,7 @@ The simplest way to use ``manipulate`` is to simply call
 it with no arguments. By default, all the parameters are 
 linked to sliders that you can play with. In models with 
 a large number of parameters, this can get messy. You can 
-selectively only manipualte some parameters whose names 
+selectively only manipulate some parameters whose names 
 match a pattern using ``x.manipulate('some*pattern')``
 
 !!! info "See Also"

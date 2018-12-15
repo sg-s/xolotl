@@ -194,7 +194,10 @@ where V is a vector of voltages, I is the corresponding matrix of currents
 
 # copy
 
-copies a xolotl object. ``copy`` creates an identical copy of a xolotl object that can be manipulated seperately. Both copies will use the same binary to integrate, unless you add a new component to one of them. 
+copies a xolotl object. ``copy`` creates an identical 
+copy of a xolotl object that can be manipulated separately.
+Both copies will use the same binary to integrate, 
+unless you add a new component to one of them. 
 
 Syntax:
 
@@ -340,7 +343,7 @@ as it makes the integration faster (and reduces the memory footprint).
 
 # manipulate
 
-method that allows you to manipulate some or all parameters in a model hile visualizing its behaviour. 
+method that allows you to manipulate some or all parameters in a model while visualizing its behavior. 
 
 Usage:
 
@@ -354,7 +357,7 @@ The simplest way to use ``manipulate`` is to simply call
 it with no arguments. By default, all the parameters are 
 linked to sliders that you can play with. In models with 
 a large number of parameters, this can get messy. You can 
-selectively only manipualte some parameters whose names 
+selectively only manipulate some parameters whose names 
 match a pattern using ``x.manipulate('some*pattern')``
 
 !!! info "See Also"
@@ -403,7 +406,7 @@ Usage:
 x.plot()
 ```
 
-If you want to turn off the colouring, or to hide the 
+If you want to turn off the coloring, or to hide the 
 Calcium concentration, change your preference using:
 
 
@@ -458,7 +461,7 @@ time a new xolotl object is created. rebase:
 
 1. configures the `xolotl_folder` property
 2. configures the `cpp_folder` property, which tells xolotl where its C++ files are located
-3. configures the `OS_binary_ext`, which is the extention of compiled binaries and is platform dependent. 
+3. configures the `OS_binary_ext`, which is the extension of compiled binaries and is platform dependent. 
 4. calls the rebase method from the cpplab superclass.
 
 Usage:

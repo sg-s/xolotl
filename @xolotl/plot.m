@@ -20,7 +20,7 @@ Usage:
 x.plot()
 ```
 
-If you want to turn off the colouring, or to hide the 
+If you want to turn off the coloring, or to hide the 
 Calcium concentration, change your preference using:
 
 
