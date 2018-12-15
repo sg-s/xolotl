@@ -24,8 +24,11 @@ public:
         m = m_;
         h = h_;
 
-         // defaults
- if (isnan(gbar)) { gbar = 0; }
+        p = 1;
+        q = 1;
+
+        // defaults
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 0; }
         if (isnan (E)) { E = -80; }
