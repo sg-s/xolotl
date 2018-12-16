@@ -26,8 +26,9 @@ Adds a `cpplab` object to a `xolotl` object. The `add` method is the most import
 `xolotl.add` checks that the compartment being added has a legal name using `checkCompartmentName`. If so, it calls the `add` method in the `cpplab` superclass. 
 
 !!! info "See Also"
-    ->cpplab.add
+    * [cpplab.add](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#add)
     * [xolotl.checkCompartmentName](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#checkcompartmentname)
+    ->xolotl.checkCompartmentName
 
 
 
@@ -84,6 +85,7 @@ to a `xolotl` object.
 
 !!! info "See Also"
     * [xolotl.add](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#add)
+    ->xolotl.add
 
 
 
@@ -197,7 +199,9 @@ where V is a vector of voltages, I is the corresponding matrix of currents
 
 !!! info "See Also"
     * [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
+    ->xolotl.plot
     * [xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
+    ->xolotl.manipulate
 
 
 
@@ -224,7 +228,7 @@ unless you add a new component to one of them.
     * Do not make vectors of ``xolotl`` objects, as it may lead to undefined behavior. 
 
 !!! info "See Also"
-    ->cpplab.copy()
+    * [cpplab.copy()](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#copy())
 
     * [How to copy models](https://xolotl.readthedocs.io/en/master/how-to/copy-models/)
 
@@ -294,6 +298,7 @@ is used internally in `xolotl.show()`
 
 !!! info "See Also"
     * [xolotl.show](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#show)
+    ->xolotl.show
 
 
 
@@ -318,6 +323,7 @@ A static method that goes to the folder that contains xolotl examples.
 
 !!! info "See Also"
     * [xolotl.run_all_tests](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#run_all_tests)
+    ->xolotl.run_all_tests
 
 
 
@@ -374,9 +380,13 @@ When `output_type` is 1 or 2, the integration is performed requesting all output
 
 !!! info "See Also"
     * [xolotl.show](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#show)
+    ->xolotl.show
     * [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
+    ->xolotl.plot
     * [xolotl.transpile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#transpile)
+    ->xolotl.transpile
     * [xolotl.compile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#compile)
+    ->xolotl.compile
 
 
 
@@ -410,6 +420,7 @@ x.manipulate({'parameter1','parameter2'})
 
 !!! info "See Also"
     * [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
+    ->xolotl.plot
 
 
 
@@ -429,6 +440,7 @@ should not need to use this by itself.
 
 !!! info "See Also"
     * [xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
+    ->xolotl.manipulate
 
 
 
@@ -467,7 +479,9 @@ setpref('xolotl','show_Ca',false)
 
 !!! info "See Also"
     * [xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
+    ->xolotl.manipulate
     * [xolotl.contributingCurrents](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#contributingcurrents)
+    ->xolotl.contributingCurrents
 
 
 
@@ -494,8 +508,11 @@ Makes a stem plot of conductance densities in a given compartment. If the first 
 
 !!! info "See Also"
     * [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
+    ->xolotl.plot
     * [xolotl.show](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#show)
+    ->xolotl.show
     * [xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
+    ->xolotl.manipulate
 
 
 
@@ -530,7 +547,7 @@ If you move a xolotl object across computers (for example, by saving it to a fil
 
 
 !!! info "See Also"
-    ->cpplab.rebase()
+    * [cpplab.rebase()](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#rebase())
 
 
 
@@ -575,6 +592,7 @@ x.reset('base')
 	
 !!! info "See Also"
     * [xolotl.snapshot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#snapshot)
+    ->xolotl.snapshot
 
 
 
@@ -629,7 +647,9 @@ once. If xolotl works, there is no need to run this.
 
 !!! info "See Also"
     * [xolotl.update](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#update)
+    ->xolotl.update
     * [xolotl.uninstall](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#uninstall)
+    ->xolotl.uninstall
 
 
 
@@ -653,7 +673,9 @@ This method displays activation functions and timescales of any conductance. Sub
 
 !!! info "See Also"
     * [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
+    ->xolotl.plot
     * [xolotl.getGatingFunctions](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#getgatingfunctions)
+    ->xolotl.getGatingFunctions
 
 
 
@@ -686,6 +708,7 @@ it using the Crank-Nicholson scheme reserved for multi-compartment models.
 
 !!! info "See Also"
     * [xolotl.connect](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#connect)
+    ->xolotl.connect
 
 
 
@@ -726,6 +749,7 @@ x.reset('base')
 
 !!! info "See Also"
     * [xolotl.reset](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#reset)
+    ->xolotl.reset
     * [How to: save configurations and use snapshots](https://xolotl.readthedocs.io/en/master/how-to/snapshots/)
 
 
@@ -759,7 +783,9 @@ MATLAB to C++ and back.
 
 !!! info "See Also"
     * [xolotl.compile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#compile)
+   ->xolotl.compile
     * [xolotl.viewCode](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#viewcode)
+   ->xolotl.viewCode
 
 
 
@@ -790,6 +816,7 @@ to be user accessible.
 
 !!! info "See Also"
     * [xolotl.transpile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#transpile)
+    ->xolotl.transpile
 
 
 
@@ -819,6 +846,7 @@ itself.
 
 !!! info "See Also"
     * [xolotl.update](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#update)
+    ->xolotl.update
 
 
 
@@ -847,6 +875,7 @@ A static method that updates your installation of
 
 !!! info "See Also"
     * [xolotl.uninstall](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#uninstall)
+    ->xolotl.uninstall
 
 
 
@@ -874,6 +903,7 @@ that constructs the model and integrates it
 
 !!! info "See Also"
     * [xolotl.transpile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#transpile)
+    ->xolotl.transpile
 
 
 

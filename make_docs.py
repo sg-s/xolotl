@@ -5,6 +5,7 @@
  
 
 import glob, os
+from shutil import copyfile
 
 out_file = open('docs/reference/xolotl-methods.md','w')
 
@@ -72,30 +73,27 @@ for file in sorted(glob.glob("@xolotl/*.m")):
 			link_url = link_url.strip()
 			link_url = '    * ' + link_url + '\n'
 			out_file.write(link_url)
+		if thisline.lower().find('->cpplab.') != -1:
+			# ok, this is a cpplab method
+			link_name = thisline.replace('->','')
+			link_name = link_name.strip()
+			method_name = thisline.replace('->cpplab.','')
+			method_name = method_name.strip()
+			method_name = method_name.lower()
+			link_url = '[' + link_name + '](' + cpplab_method_root + method_name + ')'
+			link_url = link_url.strip()
+			link_url = '    * ' + link_url + '\n'
+			out_file.write(link_url)
 
 
 		else:
 			out_file.write(thisline)
 
-	# out_file.write('\n\nTest coverage\n')
-	# out_file.write('--------------\n\n')
-	# out_file.write('``' + filename + '`` is tested in: \n\n')
-
-	# # go over every file in /tests and check for this filename 
-	# for testfile in glob.glob("./tests/*.m"):
-	# 	if filename in open(testfile).read():
-
-	# 		test_filename = os.path.basename(testfile)
-
-	# 		out_file.write('- `' + test_filename + ' <https://github.com/sg-s/xolotl/blob/master/tests/' + test_filename + '>`_ \n')
-			
-
 
 	out_file.write('\n\n\n')
-
-
-
 
 out_file.close()
 
 
+# now copy over the docs from cpplab (assuming it exists)
+copyfile('../cpplab/docs/reference/cpplab-methods.md','docs/reference/cpplab-methods.md')
