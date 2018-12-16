@@ -22,7 +22,8 @@ public:
         h = h_;
 
         p = 3;
-
+        // allow this channel to be approximated
+        approx_m = 1;
 
         // defaults
         if (isnan(gbar)) { gbar = 0; }

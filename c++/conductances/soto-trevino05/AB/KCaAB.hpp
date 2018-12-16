@@ -22,7 +22,6 @@ public:
 
         p = 4;
 
-
         // defaults
         if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
