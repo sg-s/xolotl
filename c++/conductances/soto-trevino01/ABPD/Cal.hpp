@@ -23,6 +23,11 @@ public:
         E = E_;
         m = m_;
 
+        p = 1;
+
+        // allow this channel to be approximated
+        approx_m = 1;
+
          // defaults
         if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
@@ -38,19 +43,17 @@ public:
 
 string Cal::getClass(){return "Cal";}
 
-void Cal::integrate(double V, double Ca)
-{
-    // update E by copying E_Ca from the cell
+void Cal::integrate(double V, double Ca) {
     E = container->E_Ca;
-
-    m = m_inf(V,Ca);
-    g = gbar*m;
-
-    // compute the specific calcium current and update it in the cell
-    double this_I = g*(V-E);
-    container->i_Ca += this_I;
+    conductance::integrate(V,Ca);
+    container->i_Ca += getCurrent(V);
 }
 
+void Cal::integrateMS(int k, double V, double Ca) {
+    E = container->E_Ca;
+    conductance::integrateMS(k, V, Ca);
+    container->i_Ca += getCurrent(V);
+}
 
 double Cal::m_inf(double V, double Ca) {return (0.5)*(1.0+tanh((V)+20.0)/8.0);}
 

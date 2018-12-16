@@ -23,6 +23,13 @@ public:
         m = m_;
         h = h_;
 
+        p = 1;
+        q = 1;
+
+        // allow this channel to be approximated
+        approx_m = 1;
+        approx_h = 1;
+
         // defaults
  if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
@@ -42,13 +49,6 @@ public:
 };
 
 string TransLTS::getClass(){return "TransLTS";}
-
-void TransLTS::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
-    g = gbar*m*h;
-}
 
 double TransLTS::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+55.0)/-3.0));}
 double TransLTS::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+63.0)/0.8));}

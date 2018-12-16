@@ -20,8 +20,10 @@ public:
         E = E_;
         m = m_;
 
-         // defaults 
- if (isnan(gbar)) { gbar = 0; }
+        p = 4;
+
+        // defaults
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = -80; }
     }
@@ -34,12 +36,6 @@ public:
 };
 
 string KCaAB::getClass(){return "KCaAB";}
-
-void KCaAB::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    g = gbar*m*m*m*m;
-}
 
 double KCaAB::m_inf(double V, double Ca) { return (Ca/(Ca+30))/(1.0+exp(-(V+51.0)/4)); }
 double KCaAB::tau_m(double V, double Ca) {return 90.3 - 75.09/(1.0+exp(-(V+46.0)/22.7));}

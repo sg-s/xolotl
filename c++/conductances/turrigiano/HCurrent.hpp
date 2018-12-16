@@ -21,7 +21,12 @@ public:
         E = E_;
         m = m_;
 
-        // defaults 
+        p = 1;
+
+        // allow this channel to be approximated
+        approx_m = 1;
+
+        // defaults
  if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = -20; }
@@ -38,13 +43,6 @@ public:
 string HCurrent::getClass(){
     return "HCurrent";
 }
-
-void HCurrent::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    g = gbar*m;
-}
-
 
 double HCurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+78.3)/6.5));}
 double HCurrent::tau_m(double V, double Ca) {return (272.0 + 1499.0/(1.0+exp((V+42.2)/-8.73)));}

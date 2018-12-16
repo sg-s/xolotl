@@ -29,6 +29,13 @@ public:
         if (isnan (h)) { h = 1; }
         if (isnan (E)) { E = 0; }
 
+        p = 3;
+        h = 1;
+
+        // allow this channel to be approximated
+        approx_m = 1;
+        approx_h = 1;
+
     }
 
     void integrate(double, double);
@@ -42,13 +49,6 @@ public:
 };
 
 string NaV::getClass(){return "NaV";}
-
-void NaV::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
-    g = gbar*m*m*m*h;
-}
 
 
 double NaV::m_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+25.5)/-5.29)));}

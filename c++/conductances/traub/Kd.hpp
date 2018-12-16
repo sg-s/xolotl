@@ -22,8 +22,13 @@ public:
         E = E_;
         m = m_;
 
+        p = 4;
+
+        // allow this channel to be approximated
+        approx_m = 1;
+
         // defaults
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (E)) { E = -80; }
     }
@@ -39,12 +44,6 @@ public:
 
 string Kd::getClass(){
     return "Kd";
-}
-
-void Kd::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    g = gbar*m;
 }
 
 double Kd::m_inf(double V, double Ca) {return (0.016*(35.1-V)/(exp((35.1-V)/5.0)-1.0))/((0.016*(35.1-V)/(exp((35.1-V)/5.0)-1.0))+(0.25*exp((20.0-V)/40.0))); }

@@ -21,7 +21,7 @@ public:
         m = m_;
         h = h_;
 
-        // defaults 
+        // defaults
         if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
@@ -29,6 +29,10 @@ public:
 
         p = 3;
         q = 1;
+
+        // allow this channel to be approximated
+        approx_m = 1;
+        approx_h = 1;
     }
 
     double m_inf(double, double);

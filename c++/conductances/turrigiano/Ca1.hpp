@@ -23,8 +23,15 @@ public:
         m = m_;
         h = h_;
 
-        // defaults 
- if (isnan(gbar)) { gbar = 0; }
+        p = 3;
+        q = 1;
+
+        // allow this channel to be approximated
+        approx_m = 1;
+        approx_h = 1;
+
+        // defaults
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
         if (isnan (E)) { E = 120; }
@@ -44,18 +51,16 @@ string Ca1::getClass(){
     return "Ca1";
 }
 
-void Ca1::integrate(double V, double Ca)
-{
-    // update E by copying E_Ca from the cell
+void Ca1::integrate(double V, double Ca) {
     E = container->E_Ca;
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-dt/tau_m(V,Ca));
-    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-dt/tau_h(V,Ca));
-    g = gbar*m*m*m*h;
+    conductance::integrate(V,Ca);
+    container->i_Ca += getCurrent(V);
+}
 
-    // compute the specific calcium current and update it in the cell
-    double this_I = g*(V-E);
-    container->i_Ca += this_I;
-
+void Ca1::integrateMS(int k, double V, double Ca) {
+    E = container->E_Ca;
+    conductance::integrateMS(k, V, Ca);
+    container->i_Ca += getCurrent(V);
 }
 
 double Ca1::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+27.1)/-7.18));}

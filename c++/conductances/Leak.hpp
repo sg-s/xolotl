@@ -35,10 +35,10 @@ string Leak::getClass(){return "Leak";}
 
 void Leak::integrate(double V, double Ca) {
     // do nothing
-    // because there is nothing to integrate 
+    // because there is nothing to integrate
 }
 
-// Runge-Kutta 4 integrator 
+// Runge-Kutta 4 integrator
 void Leak::integrateMS(int k, double V, double Ca)
 {
 
