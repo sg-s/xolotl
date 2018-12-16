@@ -7,17 +7,25 @@
 
 # benchmark
 
+**Syntax**
+
+```
+x.benchmark;
+```
+
+**Description**
+
 performs a quick benchmarking of a given `xolotl` model. 
 `benchmark` first varies the simulation time step, and 
 measures how quickly the model integrates. It then 
 varies `t_end`, and measures how fast it integrates 
 at a fixed `sim_dt`. 
 
-Usage:
+It should produce a figure that looks something like this 
+(the exact figure will depend on the model and your hardware):
 
-```
-x.benchmark;
-```
+![](https://user-images.githubusercontent.com/6005346/50046554-1714f800-0073-11e9-9b1f-f136baff7976.png)
+
 
 %}
 
@@ -30,6 +38,7 @@ original_t_end = self.t_end;
 original_state = self.closed_loop;
 
 self.t_end = 10e3;
+x.closed_loop = true;
 self.integrate;
 
 self.closed_loop = false;

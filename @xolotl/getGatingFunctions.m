@@ -8,19 +8,20 @@
 # getGatingFunctions
 
 
-static method of `xolotl` that returns function handles
-that represent the gating and activation functions of a
-particular conductance. 
-
-Example use:
-
+**Syntax**
 
 ```
 [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance)
 ```
 
+**Description**
 
-where `conductance` is a string that specifies a
+static method of `xolotl` that returns function handles
+that represent the gating and activation functions of a
+particular conductance. 
+
+
+`conductance` is a string that specifies a
 conductance C++ header file. The outputs are function 
 handles that can be evaluated independently. This method
 is used internally in `xolotl.show()`

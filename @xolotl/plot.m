@@ -7,18 +7,20 @@
 
 # plot
 
+**Syntax**
 
-Makes a plot of voltage and calcium time series of all 
+```
+x.plot()
+```
+
+** Description**
+
+`x.plot` makes a plot of voltage and calcium time series of all 
 compartments. The default option is to color the voltage
 traces by the dominant current at that point using  
 `contributingCurrents` and to also show the Calcium 
 concentration on the same plot. 
 
-Usage:
-
-```
-x.plot()
-```
 
 If you want to turn off the coloring, or to hide the 
 Calcium concentration, change your preference using:

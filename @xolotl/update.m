@@ -7,16 +7,21 @@
 
 # update
 
-A static method that updates your installation of 
-`xolotl` in place. If you installed using git, 
-`xolotl` will attempt to use git to update itself.
-
-Usage:
+**Syntax**
 
 
 ```matlab
 xolotl.update()
 ```
+
+
+**Description**
+
+A static method that updates your installation of 
+`xolotl` in place. If you installed using git, 
+`xolotl` will attempt to use git to update itself.
+
+
 
 !!! info "See Also"
     ->xolotl.uninstall

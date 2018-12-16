@@ -18,19 +18,21 @@ x.add('compartment','comp_name',...)
 
 **Description**
 
-adds a `cpplab` object to a `xolotl` object.
+Adds a `cpplab` object to a `xolotl` object. The `add` method is the most important way you construct models. 
 
-The `add` method is the most important way you construct models. 
+- **`x.add('compartment','comp_name')`** adds a compartment to the xolotl object and names it `comp_name`.
 
-- `x.add('compartment','comp_name')` adds a compartment to the xolotl object and names it `comp_name`.
+- **`x.add(compartment,'comp_name')`** adds a compartment object (a cpplab object) to the xolotl object `x` and names it `comp_name`. Note that compartment is a cpplab object sourced from the `compartment.hpp` C++ file, and can contain children and be extensively modified. 
 
-- `x.add(compartment,'comp_name')` adds a compartment object (a cpplab object) to the xolotl object `x` and names it `comp_name`. Note that compartment is a cpplab object sourced from the `compartment.hpp` C++ file, and can contain children and be extensively modified. 
+- **`x.add('compartment','comp_name',...)`** adds a compartment to the xolotl object and names it `comp_name`. The compartment is then additionally configured using the parameters specified using Name Value syntax. 
 
-- `x.add('compartment','comp_name',...)` adds a compartment to the xolotl object and names it `comp_name`. The compartment is then additionally configured using the parameters specified using Name Value syntax. 
+**Technical Details**
 
+`xolotl.add` checks that the compartment being added has a legal name using `checkCompartmentName`. If so, it calls the `add` method in the `cpplab` superclass. 
 
 !!! info "See Also"
-    -->cpplab.add()
+    ->cpplab.add
+    ->xolotl.checkCompartmentName
 
 %}
 

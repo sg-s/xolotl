@@ -7,6 +7,14 @@
 
 # transpileCore
 
+**Syntax**
+
+```
+x.transpileCore(in_file,out_file)
+```
+
+**Description**
+
 method that writes C++ bridge code to set up
 and integrate your model based on the 
 objects configured in the xolotl tree. This is 

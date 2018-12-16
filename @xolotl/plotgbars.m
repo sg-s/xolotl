@@ -7,15 +7,18 @@
 
 # plotgbars
 
-makes a stem plot of conductance densities in a given compartment. 
 
-
-Usage:
+**Syntax**
 
 ```
 x.plotgbars('compartment_name');
 x.plotgbars(axes_handle,'compartment_name');
 ```
+
+**Description**
+
+Makes a stem plot of conductance densities in a given compartment. If the first argument is a handle to a valid axis, plots will be made there. 
+
 
 !!! info "See Also"
     ->xolotl.plot

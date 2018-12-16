@@ -7,9 +7,9 @@ __  _____ | | ___ | |_| |
 
 # manipulate
 
-method that allows you to manipulate some or all parameters in a model while visualizing its behavior. 
 
-Usage:
+
+**Syntax**
 
 ```
 x.manipulate();
@@ -17,12 +17,14 @@ x.manipulate('some*pattern')
 x.manipulate({'parameter1','parameter2'})
 ```
 
-The simplest way to use ``manipulate`` is to simply call 
-it with no arguments. By default, all the parameters are 
-linked to sliders that you can play with. In models with 
-a large number of parameters, this can get messy. You can 
-selectively only manipulate some parameters whose names 
-match a pattern using ``x.manipulate('some*pattern')``
+**Description**
+
+`manipulate` is a method that allows you to manipulate some or all parameters in a model while visualizing its behavior. 
+
+- **`x.manipulate()`** manipulates all the parameters in a xolotl model. It wires up sliders to all parameters, and moving these sliders causes the model to integrate, and a plot to update. 
+- **`x.manipulate('some*pattern')`** creates sliders only for parameters specified by 'some*pattern'. 
+- **`x.manipulate({'parameter1','parameter2'})`** creates sliders only for the parameters specified in the cell array. Parameters should resolve to valid properties of cpplab objects in the tree. 
+
 
 !!! info "See Also"
     ->xolotl.plot

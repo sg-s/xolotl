@@ -7,7 +7,15 @@
 
 # rebase
 
-rebase is an internal method that configures some 
+**Syntax**
+
+```
+x.rebase()
+```
+
+**Description**
+
+`rebase` is an internal method that configures some 
 house-keeping settings. rebase is called every 
 time a new xolotl object is created. rebase:
 
@@ -16,11 +24,9 @@ time a new xolotl object is created. rebase:
 3. configures the `OS_binary_ext`, which is the extension of compiled binaries and is platform dependent. 
 4. calls the rebase method from the cpplab superclass.
 
-Usage:
 
-```
-x.rebase()
-```
+If you move a xolotl object across computers (for example, by saving it to a file and loading it in a different computer), you must call `rebase` to link it to the C++ files it needs.  
+
 
 !!! info "See Also"
     ->cpplab.rebase()

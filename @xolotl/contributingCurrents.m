@@ -2,15 +2,17 @@
 
 # contributingCurrents
 
-This static method calculates the contributions of each
-current at every point in a voltage race. This is used 
-internally in ``xolotl.plot`` to color voltage traces. 
-The syntax is:
-
+**Syntax**
 
 ```
 curr_index = xolotl.contributingCurrents(V, I)
 ```
+
+**Description**
+
+This static method calculates the contributions of each
+current at every point in a voltage race. This is used 
+internally in `xolotl.plot` to color voltage traces. 
 
 where V is a vector of voltages, I is the corresponding matrix of currents 
 

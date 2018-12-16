@@ -8,20 +8,22 @@
 # transpile
 
 
-Generate a C++ file that constructs the model, 
-integrates it, and moves parameters and data from 
-MATLAB to C++ and back. 
-
-
-Usage:
-
+**Syntax**
 
 ```
 x.transpile;
 ```
 
+*8Description**
+
+Generate a C++ file that constructs the model, 
+integrates it, and moves parameters and data from 
+MATLAB to C++ and back. 
+
+
+
 !!! warning 
-    Manually transpiling is discouraged. xolotl will automatically transpile code for you when needed. 
+    Manual transpiling is discouraged. xolotl will automatically transpile code for you when needed. 
 	
 
 !!! info "See Also"

@@ -7,16 +7,19 @@
 
 # setup
 
-A static method that allows you to set up compilers 
-on some operating systems. You need to run this only 
-once. If xolotl works, there is no need to run this. 
-
-Usage:
+**Syntax**
 
 ```
 xolotl.setup
 x.setup
 ```
+
+**Description**
+
+A static method that allows you to set up compilers 
+on some operating systems. You need to run this only 
+once. If xolotl works, there is no need to run this. 
+
 
 !!! info "See Also"
     ->xolotl.update

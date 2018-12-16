@@ -7,15 +7,16 @@
 
 # slice
 
-`slice` partitions a cylindrical compartment into N slices.  
-
-
-Usage:
+**Syntax**
 
 ```
 % assuming there is a compartment called 'Dendrite'
 x.slice('Dendrite',10)
 ```
+
+**Description**
+
+`slice` partitions a cylindrical compartment into N slices.  
 
 The compartment to be sliced must explicitly be a cylindrical 
 section, i.e., it must have a defined length and radius. 

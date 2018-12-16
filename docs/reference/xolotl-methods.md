@@ -13,19 +13,21 @@ x.add('compartment','comp_name',...)
 
 **Description**
 
-adds a `cpplab` object to a `xolotl` object.
+Adds a `cpplab` object to a `xolotl` object. The `add` method is the most important way you construct models. 
 
-The `add` method is the most important way you construct models. 
+- **`x.add('compartment','comp_name')`** adds a compartment to the xolotl object and names it `comp_name`.
 
-- `x.add('compartment','comp_name')` adds a compartment to the xolotl object and names it `comp_name`.
+- **`x.add(compartment,'comp_name')`** adds a compartment object (a cpplab object) to the xolotl object `x` and names it `comp_name`. Note that compartment is a cpplab object sourced from the `compartment.hpp` C++ file, and can contain children and be extensively modified. 
 
-- `x.add(compartment,'comp_name')` adds a compartment object (a cpplab object) to the xolotl object `x` and names it `comp_name`. Note that compartment is a cpplab object sourced from the `compartment.hpp` C++ file, and can contain children and be extensively modified. 
+- **`x.add('compartment','comp_name',...)`** adds a compartment to the xolotl object and names it `comp_name`. The compartment is then additionally configured using the parameters specified using Name Value syntax. 
 
-- `x.add('compartment','comp_name',...)` adds a compartment to the xolotl object and names it `comp_name`. The compartment is then additionally configured using the parameters specified using Name Value syntax. 
+**Technical Details**
 
+`xolotl.add` checks that the compartment being added has a legal name using `checkCompartmentName`. If so, it calls the `add` method in the `cpplab` superclass. 
 
 !!! info "See Also"
-    -->cpplab.add()
+    ->cpplab.add
+    * [xolotl.checkCompartmentName](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#checkcompartmentname)
 
 
 
@@ -36,17 +38,25 @@ The `add` method is the most important way you construct models.
 
 # benchmark
 
+**Syntax**
+
+```
+x.benchmark;
+```
+
+**Description**
+
 performs a quick benchmarking of a given `xolotl` model. 
 `benchmark` first varies the simulation time step, and 
 measures how quickly the model integrates. It then 
 varies `t_end`, and measures how fast it integrates 
 at a fixed `sim_dt`. 
 
-Usage:
+It should produce a figure that looks something like this 
+(the exact figure will depend on the model and your hardware):
 
-```
-x.benchmark;
-```
+![](https://user-images.githubusercontent.com/6005346/50046554-1714f800-0073-11e9-9b1f-f136baff7976.png)
+
 
 
 
@@ -57,16 +67,20 @@ x.benchmark;
 
 # checkCompartmentName
 
-is used internally by `xolotl` to verify that the
-compartment name you are using is valid and legal. 
-This method is called every time you add a compartment
-to a `xolotl` object. 
-
-Usage:
+**Syntax**
 
 ```matlab
 ok = checkCompartmentName(self,comp_name)
 ```
+
+**Description**
+
+`checkCompartmentName` is used internally by `xolotl` 
+to verify that the compartment name you are using is valid and legal.  This method is called every time you add a compartment
+to a `xolotl` object. 
+
+!!! warning 
+    Do not use `checkCompartmentName`, as it may be removed in a future release.
 
 !!! info "See Also"
     * [xolotl.add](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#add)
@@ -80,17 +94,19 @@ ok = checkCompartmentName(self,comp_name)
 
 # cleanup
 
-A static method that cleans up all transpiled ``C++`` and compiled binary files. Usage:
+**Syntax**
 
 ```
 xolotl.cleanup
 x.cleanup
 ```
 
-Use of this method will trigger a warning every time it 
-is called. You do not need to use this in normal use, 
-but can call this to force a recompile, or to delete old 
-and unused binaries. 
+**Description**
+
+A static method that cleans up all transpiled ``C++`` and compiled binary files.
+
+!!! warning 
+    Use of this method will trigger a warning every time it is called. You do not need to use this in normal use, but can call this to force a recompile, or to delete old and unused binaries. 
 
 
 
@@ -100,6 +116,14 @@ and unused binaries.
 
 
 # compile
+
+**Syntax**
+
+```matlab
+x.skip_hash = true;
+```
+
+**Description**
 
 compiles a executable binary form a transpiled ``C++`` file. 
 These are stored in your ``xolotl`` directory. ``xolotl`` 
@@ -111,51 +135,33 @@ automatically compiles when t needs to. You can turn this
 
 # connect
 
+
+**Syntax**
+
+```
+x.connect('Comp1', 'Comp2')
+x.connect('Comp1', 'Comp2',resistivity)
+x.connect('Comp1', 'Comp2', SynapseObj)
+x.connect('Comp1', 'Comp2', 'path/to/synapse.hpp')
+x.connect('Comp1', 'Comp2', 'path/to/synapse.hpp','Parameter',Value...)
+```
+
+**Description**
+
 Connects two compartments with a synapse. 
 
-Syntax
 
-```
-x.connect('Comp1', 'Comp2')
-x.connect('Comp1', 'Comp2',resistivity)
-x.connect('Comp1', 'Comp2', SynapseObj)
-x.connect('Comp1', 'Comp2', 'path/to/synapse.hpp')
-x.connect('Comp1', 'Comp2', 'path/to/synapse.hpp','Parameter',Value...)
-```
-
-Description
-
-```
-x.connect('Comp1', 'Comp2')
-```
-
-connects two compartments, `Comp1` and `Comp2`, using reciprocal `Axial` synapses. 
+- **`x.connect('Comp1', 'Comp2')`** connects two compartments, `Comp1` and `Comp2`, using reciprocal `Axial` synapses. 
 
 
-```
-x.connect('Comp1', 'Comp2',resistivity)
-```
+- **`x.connect('Comp1', 'Comp2',resistivity)`** connects two compartments, `Comp1` and `Comp2`, using reciprocal `Axial` synapses and specifies the axial resistivity. 
 
-connects two compartments, `Comp1` and `Comp2`, using reciprocal `Axial` synapses and specifies the axial resistivity. 
+- **`x.connect('Comp1', 'Comp2', SynapseObj)`** makes a synapse with presynaptic compartment `Comp1` and post-synaptic compartment `Comp2` using the synapse object `SynapseObj`. SynapseObj is a cpplab object that corresponds to a synapse. 
 
-```
-x.connect('Comp1', 'Comp2', SynapseObj)
-```
-
-makes a synapse with presynaptic compartment `Comp1` and post-synaptic compartment `Comp2` using the synapse object `SynapseObj`. SynapseObj is a cpplab object that corresponds to a synapse. 
-
-```
-x.connect('Comp1', 'Comp2', 'path/to/synapse.hpp')
-```
-
-makes a synapse with presynaptic compartment `Comp1` and post-synaptic compartment `Comp2` using a synapse object that is generated on the fly using the C++ header file specified by `'path/to/synapse.hpp'`
+- **`x.connect('Comp1', 'Comp2', 'path/to/synapse.hpp')`** makes a synapse with presynaptic compartment `Comp1` and post-synaptic compartment `Comp2` using a synapse object that is generated on the fly using the C++ header file specified by `'path/to/synapse.hpp'`
 
 
-```
-x.connect('Comp1', 'Comp2', 'path/to/synapse.hpp','Parameter',Value...)
-```
-
-makes a synapse with presynaptic compartment `Comp1` and post-synaptic compartment `Comp2` using a synapse object that is generated on the fly using the C++ header file specified by `'path/to/synapse.hpp'`, additionally configuring that object with parameters and values using name-value notation. 
+- **`x.connect('Comp1', 'Comp2', 'path/to/synapse.hpp','Parameter',Value...)`** makes a synapse with presynaptic compartment `Comp1` and post-synaptic compartment `Comp2` using a synapse object that is generated on the fly using the C++ header file specified by `'path/to/synapse.hpp'`, additionally configuring that object with parameters and values using name-value notation. 
 
 
 The following properties can be specified for most synapses:
@@ -175,15 +181,17 @@ The following properties can be specified for most synapses:
 
 # contributingCurrents
 
-This static method calculates the contributions of each
-current at every point in a voltage race. This is used 
-internally in ``xolotl.plot`` to color voltage traces. 
-The syntax is:
-
+**Syntax**
 
 ```
 curr_index = xolotl.contributingCurrents(V, I)
 ```
+
+**Description**
+
+This static method calculates the contributions of each
+current at every point in a voltage race. This is used 
+internally in `xolotl.plot` to color voltage traces. 
 
 where V is a vector of voltages, I is the corresponding matrix of currents 
 
@@ -200,23 +208,25 @@ where V is a vector of voltages, I is the corresponding matrix of currents
 
 # copy
 
-copies a xolotl object. ``copy`` creates an identical 
-copy of a xolotl object that can be manipulated separately.
-Both copies will use the same binary to integrate, 
-unless you add a new component to one of them. 
-
 Syntax:
 
 ```
 x2 = copy(x);
 ```
 
-!!! warning
-    Some read-only properties in a xolotl object may not be copied over. 
+copies a xolotl object. ``copy`` creates an identical 
+copy of a xolotl object that can be manipulated separately.
+Both copies will use the same binary to integrate, 
+unless you add a new component to one of them. 
 
-
 !!! warning
-    Do not make vectors of ``xolotl`` objects, as it may lead to undefined behavior. 
+    * Some read-only properties in a xolotl object may not be copied over. 
+    * Do not make vectors of ``xolotl`` objects, as it may lead to undefined behavior. 
+
+!!! info "See Also"
+    ->cpplab.copy()
+
+    * [How to copy models](https://xolotl.readthedocs.io/en/master/how-to/copy-models/)
 
 
 
@@ -227,14 +237,32 @@ x2 = copy(x);
 
 # fI
 
+**Syntax**
+
+```
+data = x.fI()
+data = x.fI('Name',value...)
+```
+
+**Description**
+
 This method computes the f-I (firing-rate vs current) 
-curve of a single compartment model. 
+curve of a single compartment model. `data` is a structure containing the following fields:
 
-Usage:
+* `I` vector of injected currents
+* `f_up` firing rates when going up the curve
+* `f_down` firing rates when going down the curve
+* `CV_ISI_up` coefficient of variation of inter-spike intervals when going up the curve 
+* `CV_ISI_down` coefficient of variation of inter-spike intervals when going down the curve 
 
-```
-x.fI(I_min, I_max, n_steps)
-```
+The following optional parameters may be specified in name-value syntax:
+
+| Name | Allowed Values | Default |
+| ----- | ----------- | ---------- |
+| I_min | any scalar | - .1 |
+| I_max | any scalar | 1 | 
+| n_steps | +ve integer | 10 |
+| t_end | +ve integers | 1e4 | 
 
 
 
@@ -246,19 +274,20 @@ x.fI(I_min, I_max, n_steps)
 # getGatingFunctions
 
 
-static method of `xolotl` that returns function handles
-that represent the gating and activation functions of a
-particular conductance. 
-
-Example use:
-
+**Syntax**
 
 ```
 [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance)
 ```
 
+**Description**
 
-where `conductance` is a string that specifies a
+static method of `xolotl` that returns function handles
+that represent the gating and activation functions of a
+particular conductance. 
+
+
+`conductance` is a string that specifies a
 conductance C++ header file. The outputs are function 
 handles that can be evaluated independently. This method
 is used internally in `xolotl.show()`
@@ -276,13 +305,16 @@ is used internally in `xolotl.show()`
 
 # go_to_examples
 
-A static method that goes to the folder that contains xolotl examples. 
 
-Usage:
+**Syntax**
 
 ```
 xolotl.go_to_examples
 ```
+
+**Description**
+
+A static method that goes to the folder that contains xolotl examples. 
 
 !!! info "See Also"
     * [xolotl.run_all_tests](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#run_all_tests)
@@ -357,9 +389,9 @@ When `output_type` is 1 or 2, the integration is performed requesting all output
 
 # manipulate
 
-method that allows you to manipulate some or all parameters in a model while visualizing its behavior. 
 
-Usage:
+
+**Syntax**
 
 ```
 x.manipulate();
@@ -367,12 +399,14 @@ x.manipulate('some*pattern')
 x.manipulate({'parameter1','parameter2'})
 ```
 
-The simplest way to use ``manipulate`` is to simply call 
-it with no arguments. By default, all the parameters are 
-linked to sliders that you can play with. In models with 
-a large number of parameters, this can get messy. You can 
-selectively only manipulate some parameters whose names 
-match a pattern using ``x.manipulate('some*pattern')``
+**Description**
+
+`manipulate` is a method that allows you to manipulate some or all parameters in a model while visualizing its behavior. 
+
+- **`x.manipulate()`** manipulates all the parameters in a xolotl model. It wires up sliders to all parameters, and moving these sliders causes the model to integrate, and a plot to update. 
+- **`x.manipulate('some*pattern')`** creates sliders only for parameters specified by 'some*pattern'. 
+- **`x.manipulate({'parameter1','parameter2'})`** creates sliders only for the parameters specified in the cell array. Parameters should resolve to valid properties of cpplab objects in the tree. 
+
 
 !!! info "See Also"
     * [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
@@ -407,18 +441,20 @@ should not need to use this by itself.
 
 # plot
 
+**Syntax**
 
-Makes a plot of voltage and calcium time series of all 
+```
+x.plot()
+```
+
+** Description**
+
+`x.plot` makes a plot of voltage and calcium time series of all 
 compartments. The default option is to color the voltage
 traces by the dominant current at that point using  
 `contributingCurrents` and to also show the Calcium 
 concentration on the same plot. 
 
-Usage:
-
-```
-x.plot()
-```
 
 If you want to turn off the coloring, or to hide the 
 Calcium concentration, change your preference using:
@@ -443,15 +479,18 @@ setpref('xolotl','show_Ca',false)
 
 # plotgbars
 
-makes a stem plot of conductance densities in a given compartment. 
 
-
-Usage:
+**Syntax**
 
 ```
 x.plotgbars('compartment_name');
 x.plotgbars(axes_handle,'compartment_name');
 ```
+
+**Description**
+
+Makes a stem plot of conductance densities in a given compartment. If the first argument is a handle to a valid axis, plots will be made there. 
+
 
 !!! info "See Also"
     * [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
@@ -469,7 +508,15 @@ x.plotgbars(axes_handle,'compartment_name');
 
 # rebase
 
-rebase is an internal method that configures some 
+**Syntax**
+
+```
+x.rebase()
+```
+
+**Description**
+
+`rebase` is an internal method that configures some 
 house-keeping settings. rebase is called every 
 time a new xolotl object is created. rebase:
 
@@ -478,11 +525,9 @@ time a new xolotl object is created. rebase:
 3. configures the `OS_binary_ext`, which is the extension of compiled binaries and is platform dependent. 
 4. calls the rebase method from the cpplab superclass.
 
-Usage:
 
-```
-x.rebase()
-```
+If you move a xolotl object across computers (for example, by saving it to a file and loading it in a different computer), you must call `rebase` to link it to the C++ files it needs.  
+
 
 !!! info "See Also"
     ->cpplab.rebase()
@@ -497,18 +542,24 @@ x.rebase()
 
 # reset
 
-Resets a xolotl object to some default state. 
 
-Usage:
+
+
+
+**Syntax**
 
 ```
 x.reset()
 x.reset('snap_name')
 ```
 
+**Description**
+
+Resets a xolotl object to some default state. 
+
 reset called without any arguments resets the model as best as it can -- voltages are set to -60 mV, Calcium in every compartment is set to the internal value, and the gating variables of every conductance are reset. 
 
-``reset`` can also be called with a string argument, which is the name of a snapshot previously stored in the model object. Then, ``reset`` reconfigures the parameters of the model to match that snapshot. This is useful for working with a model, changing parameters, evolving it, and then coming back to where you started off from. 
+`reset` can also be called with a string argument, which is the name of a snapshot previously stored in the model object. Then, `reset` reconfigures the parameters of the model to match that snapshot. This is useful for working with a model, changing parameters, evolving it, and then coming back to where you started off from. 
 
 Here's an example:
 
@@ -535,15 +586,19 @@ x.reset('base')
 
 # run_all_tests
 
-A static method that runs all tests (demos/examples)
-in xolotl/examples. If you've just installed this,
-it may be a good idea to run this using:
+
+
+**Syntax**
 
 ```
 xolotl.run_all_tests
 ```
 
-to make sure everything works. 
+**Description**
+
+A static method that runs all tests (demos/examples)
+in xolotl/examples. If you've just installed this,
+it may be a good idea to run this to make sure everything works. 
 
 This method is called during testing, and only if all 
 tests pass is a release published. 
@@ -558,16 +613,19 @@ tests pass is a release published.
 
 # setup
 
-A static method that allows you to set up compilers 
-on some operating systems. You need to run this only 
-once. If xolotl works, there is no need to run this. 
-
-Usage:
+**Syntax**
 
 ```
 xolotl.setup
 x.setup
 ```
+
+**Description**
+
+A static method that allows you to set up compilers 
+on some operating systems. You need to run this only 
+once. If xolotl works, there is no need to run this. 
+
 
 !!! info "See Also"
     * [xolotl.update](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#update)
@@ -583,16 +641,14 @@ x.setup
 
 # show
 
-shows activation functions and timescales of any conductance. 
-
-
-Usage example:
+**Syntax**
 
 ```
-xolotl.show('prinz/NaV')
-xolotl.show('prinz/Kd')
-xolotl.show('prinz/KCa')
+xolotl.show('path/to/conductance/file')
 ```
+
+
+This method displays activation functions and timescales of any conductance. Subsequent calls to `show` will update the plot, plotting the new activation curves over the old ones, allowing you to compare different channels. 
 
 
 !!! info "See Also"
@@ -609,15 +665,16 @@ xolotl.show('prinz/KCa')
 
 # slice
 
-`slice` partitions a cylindrical compartment into N slices.  
-
-
-Usage:
+**Syntax**
 
 ```
 % assuming there is a compartment called 'Dendrite'
 x.slice('Dendrite',10)
 ```
+
+**Description**
+
+`slice` partitions a cylindrical compartment into N slices.  
 
 The compartment to be sliced must explicitly be a cylindrical 
 section, i.e., it must have a defined length and radius. 
@@ -639,18 +696,22 @@ it using the Crank-Nicholson scheme reserved for multi-compartment models.
 
 # snapshot
 
-Saves the current state of a ``xolotl`` object for future use. Usage ::
-
+**Syntax**
 
 ```
 x.snapshot('snap_name')
 ```
 
+**Description**
+
+Saves the current state of a ``xolotl`` object for future use. 
+
+
 !!! warning
     Creating two snapshots with the same name will overwrite the first. 
 
 
-Usage:
+**Example**
 
 ```
 % assuming a xolotl object is set up
@@ -665,6 +726,7 @@ x.reset('base')
 
 !!! info "See Also"
     * [xolotl.reset](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#reset)
+    * [How to: save configurations and use snapshots](https://xolotl.readthedocs.io/en/master/how-to/snapshots/)
 
 
 
@@ -677,20 +739,22 @@ x.reset('base')
 # transpile
 
 
-Generate a C++ file that constructs the model, 
-integrates it, and moves parameters and data from 
-MATLAB to C++ and back. 
-
-
-Usage:
-
+**Syntax**
 
 ```
 x.transpile;
 ```
 
+*8Description**
+
+Generate a C++ file that constructs the model, 
+integrates it, and moves parameters and data from 
+MATLAB to C++ and back. 
+
+
+
 !!! warning 
-    Manually transpiling is discouraged. xolotl will automatically transpile code for you when needed. 
+    Manual transpiling is discouraged. xolotl will automatically transpile code for you when needed. 
 	
 
 !!! info "See Also"
@@ -707,6 +771,14 @@ x.transpile;
 
 
 # transpileCore
+
+**Syntax**
+
+```
+x.transpileCore(in_file,out_file)
+```
+
+**Description**
 
 method that writes C++ bridge code to set up
 and integrate your model based on the 
@@ -728,17 +800,22 @@ to be user accessible.
 
 # uninstall
 
-A static method that uninstalls your installation 
-of xolotl in place. If you installed using git, 
-`xolotl` will attempt to use git to uninstall 
-itself. 
-
-Usage:
+**Syntax**
 
 ```matlab
 xolotl.uninstall
 x.uninstall
 ```
+
+
+**Description**
+
+A static method that uninstalls your installation 
+of xolotl in place. If you installed using git, 
+`xolotl` will attempt to use git to uninstall 
+itself. 
+
+
 
 !!! info "See Also"
     * [xolotl.update](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#update)
@@ -752,16 +829,21 @@ x.uninstall
 
 # update
 
-A static method that updates your installation of 
-`xolotl` in place. If you installed using git, 
-`xolotl` will attempt to use git to update itself.
-
-Usage:
+**Syntax**
 
 
 ```matlab
 xolotl.update()
 ```
+
+
+**Description**
+
+A static method that updates your installation of 
+`xolotl` in place. If you installed using git, 
+`xolotl` will attempt to use git to update itself.
+
+
 
 !!! info "See Also"
     * [xolotl.uninstall](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#uninstall)
@@ -775,15 +857,20 @@ xolotl.update()
 
 # viewCode
 
-view the C++ code generated by `xolotl.transpile()` 
-that constructs the model and integrates it
-
-
-Usage:
+**Syntax**
 
 ```
 x.viewCode;
 ```
+
+
+**Description**
+
+view the C++ code generated by `xolotl.transpile()` 
+that constructs the model and integrates it
+
+
+
 
 !!! info "See Also"
     * [xolotl.transpile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#transpile)

@@ -7,16 +7,14 @@
 
 # show
 
-shows activation functions and timescales of any conductance. 
-
-
-Usage example:
+**Syntax**
 
 ```
-xolotl.show('prinz/NaV')
-xolotl.show('prinz/Kd')
-xolotl.show('prinz/KCa')
+xolotl.show('path/to/conductance/file')
 ```
+
+
+This method displays activation functions and timescales of any conductance. Subsequent calls to `show` will update the plot, plotting the new activation curves over the old ones, allowing you to compare different channels. 
 
 
 !!! info "See Also"

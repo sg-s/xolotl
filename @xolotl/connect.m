@@ -7,51 +7,33 @@
 
 # connect
 
+
+**Syntax**
+
+```
+x.connect('Comp1', 'Comp2')
+x.connect('Comp1', 'Comp2',resistivity)
+x.connect('Comp1', 'Comp2', SynapseObj)
+x.connect('Comp1', 'Comp2', 'path/to/synapse.hpp')
+x.connect('Comp1', 'Comp2', 'path/to/synapse.hpp','Parameter',Value...)
+```
+
+**Description**
+
 Connects two compartments with a synapse. 
 
-Syntax
 
-```
-x.connect('Comp1', 'Comp2')
-x.connect('Comp1', 'Comp2',resistivity)
-x.connect('Comp1', 'Comp2', SynapseObj)
-x.connect('Comp1', 'Comp2', 'path/to/synapse.hpp')
-x.connect('Comp1', 'Comp2', 'path/to/synapse.hpp','Parameter',Value...)
-```
-
-Description
-
-```
-x.connect('Comp1', 'Comp2')
-```
-
-connects two compartments, `Comp1` and `Comp2`, using reciprocal `Axial` synapses. 
+- **`x.connect('Comp1', 'Comp2')`** connects two compartments, `Comp1` and `Comp2`, using reciprocal `Axial` synapses. 
 
 
-```
-x.connect('Comp1', 'Comp2',resistivity)
-```
+- **`x.connect('Comp1', 'Comp2',resistivity)`** connects two compartments, `Comp1` and `Comp2`, using reciprocal `Axial` synapses and specifies the axial resistivity. 
 
-connects two compartments, `Comp1` and `Comp2`, using reciprocal `Axial` synapses and specifies the axial resistivity. 
+- **`x.connect('Comp1', 'Comp2', SynapseObj)`** makes a synapse with presynaptic compartment `Comp1` and post-synaptic compartment `Comp2` using the synapse object `SynapseObj`. SynapseObj is a cpplab object that corresponds to a synapse. 
 
-```
-x.connect('Comp1', 'Comp2', SynapseObj)
-```
-
-makes a synapse with presynaptic compartment `Comp1` and post-synaptic compartment `Comp2` using the synapse object `SynapseObj`. SynapseObj is a cpplab object that corresponds to a synapse. 
-
-```
-x.connect('Comp1', 'Comp2', 'path/to/synapse.hpp')
-```
-
-makes a synapse with presynaptic compartment `Comp1` and post-synaptic compartment `Comp2` using a synapse object that is generated on the fly using the C++ header file specified by `'path/to/synapse.hpp'`
+- **`x.connect('Comp1', 'Comp2', 'path/to/synapse.hpp')`** makes a synapse with presynaptic compartment `Comp1` and post-synaptic compartment `Comp2` using a synapse object that is generated on the fly using the C++ header file specified by `'path/to/synapse.hpp'`
 
 
-```
-x.connect('Comp1', 'Comp2', 'path/to/synapse.hpp','Parameter',Value...)
-```
-
-makes a synapse with presynaptic compartment `Comp1` and post-synaptic compartment `Comp2` using a synapse object that is generated on the fly using the C++ header file specified by `'path/to/synapse.hpp'`, additionally configuring that object with parameters and values using name-value notation. 
+- **`x.connect('Comp1', 'Comp2', 'path/to/synapse.hpp','Parameter',Value...)`** makes a synapse with presynaptic compartment `Comp1` and post-synaptic compartment `Comp2` using a synapse object that is generated on the fly using the C++ header file specified by `'path/to/synapse.hpp'`, additionally configuring that object with parameters and values using name-value notation. 
 
 
 The following properties can be specified for most synapses:

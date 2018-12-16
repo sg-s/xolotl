@@ -7,23 +7,25 @@
 
 # copy
 
-copies a xolotl object. ``copy`` creates an identical 
-copy of a xolotl object that can be manipulated separately.
-Both copies will use the same binary to integrate, 
-unless you add a new component to one of them. 
-
 Syntax:
 
 ```
 x2 = copy(x);
 ```
 
-!!! warning
-    Some read-only properties in a xolotl object may not be copied over. 
+copies a xolotl object. ``copy`` creates an identical 
+copy of a xolotl object that can be manipulated separately.
+Both copies will use the same binary to integrate, 
+unless you add a new component to one of them. 
 
-
 !!! warning
-    Do not make vectors of ``xolotl`` objects, as it may lead to undefined behavior. 
+    * Some read-only properties in a xolotl object may not be copied over. 
+    * Do not make vectors of ``xolotl`` objects, as it may lead to undefined behavior. 
+
+!!! info "See Also"
+    ->cpplab.copy()
+
+    * [How to copy models](https://xolotl.readthedocs.io/en/master/how-to/copy-models/)
 
 %}
 

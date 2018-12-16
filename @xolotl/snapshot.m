@@ -7,18 +7,22 @@
 
 # snapshot
 
-Saves the current state of a ``xolotl`` object for future use. Usage ::
-
+**Syntax**
 
 ```
 x.snapshot('snap_name')
 ```
 
+**Description**
+
+Saves the current state of a ``xolotl`` object for future use. 
+
+
 !!! warning
     Creating two snapshots with the same name will overwrite the first. 
 
 
-Usage:
+**Example**
 
 ```
 % assuming a xolotl object is set up
@@ -33,6 +37,7 @@ x.reset('base')
 
 !!! info "See Also"
     ->xolotl.reset
+    * [How to: save configurations and use snapshots](https://xolotl.readthedocs.io/en/master/how-to/snapshots/)
 
 %}
 

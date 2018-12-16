@@ -7,13 +7,16 @@
 
 # go_to_examples
 
-A static method that goes to the folder that contains xolotl examples. 
 
-Usage:
+**Syntax**
 
 ```
 xolotl.go_to_examples
 ```
+
+**Description**
+
+A static method that goes to the folder that contains xolotl examples. 
 
 !!! info "See Also"
     ->xolotl.run_all_tests

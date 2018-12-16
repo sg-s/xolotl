@@ -7,14 +7,32 @@
 
 # fI
 
+**Syntax**
+
+```
+data = x.fI()
+data = x.fI('Name',value...)
+```
+
+**Description**
+
 This method computes the f-I (firing-rate vs current) 
-curve of a single compartment model. 
+curve of a single compartment model. `data` is a structure containing the following fields:
 
-Usage:
+* `I` vector of injected currents
+* `f_up` firing rates when going up the curve
+* `f_down` firing rates when going down the curve
+* `CV_ISI_up` coefficient of variation of inter-spike intervals when going up the curve 
+* `CV_ISI_down` coefficient of variation of inter-spike intervals when going down the curve 
 
-```
-x.fI(I_min, I_max, n_steps)
-```
+The following optional parameters may be specified in name-value syntax:
+
+| Name | Allowed Values | Default |
+| ----- | ----------- | ---------- |
+| I_min | any scalar | - .1 |
+| I_max | any scalar | 1 | 
+| n_steps | +ve integer | 10 |
+| t_end | +ve integers | 1e4 | 
 
 %}
 
@@ -88,8 +106,13 @@ self.t_end = options.t_end*length(all_I_ext);
 
 self.I_ext = I_ext;
 
+original_approx_state = self.approx_channels;
+self.approx_channels = 0;
+
 V = self.integrate;
 V = (reshape(V,length(V)/(length(all_I_ext)),length(all_I_ext)));
+
+self.approx_channels = original_approx_state;
 
 idx = 0;
 
