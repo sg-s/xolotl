@@ -18,44 +18,24 @@ ParentObject.add('path/to/ChildObject.hpp','Property',Value...)
 
 **Description**
 
-* ParentObject.add(ChildObject)
-
-adds `ChildObject`, a `cpplab` object to `ParentObject`, another 
+- **`ParentObject.add(ChildObject)`** adds `ChildObject`, a `cpplab` object to `ParentObject`, another 
 `cpplab` object. The ChildObject is automatically named with the 
 name of the C++ class it refers to, so you can access it using ParentObject.(ChildObject.cpp_class_name) 
-
-* ParentObject.add(ChildObject,'name')
-
-adds `ChildObject`, a `cpplab` object to `ParentObject`, another 
-`cpplab` object. The ChildObject is assigned the name 'name' in the 
-tree, so you can access it using `ParentObject.name`
-
-* ParentObject.add('path/to/ChildObject.hpp')
-
-adds `ChildObject`, a `cpplab` object to `ParentObject`, another 
+- **`ParentObject.add(ChildObject,'name')`** adds `ChildObject`, a `cpplab` object to `ParentObject`, another 
+`cpplab` object. The ChildObject is assigned the name 'name' in the  tree, so you can access it using `ParentObject.name`
+- **`ParentObject.add('path/to/ChildObject.hpp')`** adds `ChildObject`, a `cpplab` object to `ParentObject`, another 
 `cpplab` object. The ChildObject is created on the fly using the 
 path specified, and is  automatically named with the 
 name of the C++ class it refers to, so you can access it using ParentObject.(ChildObject.cpp_class_name) 
-
-* ParentObject.add('path/to/ChildObject.hpp','name')
-
-adds `ChildObject`, a `cpplab` object to `ParentObject`, another 
+- **`ParentObject.add('path/to/ChildObject.hpp','name')`** adds `ChildObject`, a `cpplab` object to `ParentObject`, another 
 `cpplab` object. The ChildObject is created on the fly using the 
 path specified, and is assigned the name 'name' in the tree, so 
 you can access it using `ParentObject.name`
-
-
-* ParentObject.add('path/to/ChildObject.hpp','name','Property',Value...)
-
-adds `ChildObject`, a `cpplab` object to `ParentObject`, another 
+- **`ParentObject.add('path/to/ChildObject.hpp','name','Property',Value...)`** adds `ChildObject`, a `cpplab` object to `ParentObject`, another 
 `cpplab` object. The ChildObject is created on the fly using the 
 path specified, and is assigned the name 'name' in the tree, so 
 you can access it using `ParentObject.name`. In addition, the ChildObject is configured on-the-fly with the properties you specify before addition to ParentObject. 
-
-
-* ParentObject.add('path/to/ChildObject.hpp','Property',Value...)
-
-adds `ChildObject`, a `cpplab` object to `ParentObject`, another 
+- **`ParentObject.add('path/to/ChildObject.hpp','Property',Value...)` ** adds `ChildObject`, a `cpplab` object to `ParentObject`, another 
 `cpplab` object. The ChildObject is created on the fly using the 
 path specified, and is  automatically named with the 
 name of the C++ class it refers to, so you can access it using ParentObject.(ChildObject.cpp_class_name). In addition, the ChildObject is configured on-the-fly with the properties you specify before addition to ParentObject. 
