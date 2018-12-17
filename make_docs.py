@@ -96,4 +96,20 @@ out_file.close()
 
 
 # now copy over the docs from cpplab (assuming it exists)
-copyfile('../cpplab/docs/reference/cpplab-methods.md','docs/reference/cpplab-methods.md')
+copyfile('../cpplab/docs/reference/cpplab-methods.md','docs/reference/cpplab-methods.temp')
+
+# replace all links to cpplab.readthedocs with xolotl.readthedocs
+lines = tuple(open('docs/reference/cpplab-methods.temp', 'r'))
+
+out_file = open('docs/reference/cpplab-methods.md','w')
+
+for i in range(0,len(lines)):
+	thisline = lines[i]
+
+	thisline = thisline.replace('https://cpplab.readthedocs.io','https://xolotl.readthedocs.io')
+
+	out_file.write(thisline)
+
+out_file.close()
+
+os.remove("docs/reference/cpplab-methods.temp")
