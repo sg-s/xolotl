@@ -4,7 +4,7 @@ Code equivalent to this tutorial can be found in `../xolotl/examples/demo_stg.m`
 
 ### A high-level view of the network
 
-We will make a model of the pyloric network in the [stomatogastric ganglion in crustaceans](http://www.scholarpedia.org/article/Stomatogastric_ganglion). In our model of this network, there will be three cells called AB/PD, LP and PY, and they will be interconnected using two different types of inhibitory synapses: Cholinergic and Gluatamatergic. 
+We will make a model of the pyloric network in the [stomatogastric ganglion in crustaceans](http://www.scholarpedia.org/article/Stomatogastric_ganglion). In our model of this network, there will be three cells called AB/PD, LP and PY, and they will be interconnected using two different types of inhibitory synapses: Cholinergic and Gluatamatergic.
 
 This is what it looks like:
 
@@ -44,7 +44,7 @@ xolotl object with
 
 We have now constructed our three compartments (with nothing in them).
 
-### Adding conductances 
+### Adding conductances
 
 Each compartment in our model will have eight conductances:
 
@@ -57,7 +57,7 @@ Each compartment in our model will have eight conductances:
 * `HCurrent`, a hyperpolarization-activated rectifying conductance; and
 * `Leak`, the passive leak current.
 
-In xolotl, these conductances exist within the `../c++/conductances/prinz/` folder. We can add them each one by on, or we can get fancy and write a small script to add them. Let's do that, since this approach can scale well. 
+In xolotl, these conductances exist within the `../c++/conductances/prinz/` folder. We can add them each one by on, or we can get fancy and write a small script to add them. Let's do that, since this approach can scale well.
 
 The conductances we want are:
 
@@ -130,27 +130,27 @@ xolotl object with
 ---------------------
 ```
 
-Notice that we didn't specify what the reversal potentials should be, but they were automatically configured. That's because they have defined default values. 
+Notice that we didn't specify what the reversal potentials should be, but they were automatically configured. That's because they have defined default values.
 
 Let's change the `Leak` reversal potential a little bit:
 
 ```
-x.AB.Leak.E = -50; % mV
-x.LP.Leak.E = -50; % mV
-x.PY.Leak.E = -50; % mV
+x.AB.Leak.E = -55; % mV
+x.LP.Leak.E = -55; % mV
+x.PY.Leak.E = -55; % mV
 ```
 
-At this point, we have created three neurons, and inserted channels into them. 
+At this point, we have created three neurons, and inserted channels into them.
 
 ### Adding calcium dynamics
 
-What we haven't considered so far is the dynamics of Calcium. Some channels (like `CaT` and `CaS`) change the intracellular Calcium concentration (by allowing Calcium in), and others (like `KCa`) change their activity based on the intracellular Calcium concentration. Therefore, we need a calcium mechanism for each compartment.
+What we haven't considered so far is the dynamics of calcium. Some channels (like `CaT` and `CaS`) change the intracellular calcium concentration (by allowing calcium in), and others (like `KCa`) change their activity based on the intracellular calcium concentration. Therefore, we need a calcium mechanism for each compartment.
 
 Let's add one to each compartment.
 
 ```matlab
 for i = 1:length(comps)
-	x.(comps{i}).add('CalciumMech1');
+	x.(comps{i}).add('prinz/CalciumMech');
 end
 ```
 
@@ -159,32 +159,36 @@ end
 Synapses connect our compartments together. In the stomatogastric circuit, there are two inhibitory synapse types, one that is glutamatergic, and one that is cholinergic. We can use the `connect` function to create synapses and wire up cells. For example,
 
 ```matlab
-x.connect('AB', 'LP', 'prinz/Cholinergic', 'gbar', 30);
+x.connect('AB', 'LP', 'prinz/Cholinergic', 'gmax', 30);
 ```
 creates a cholinergic synapse from `AB` to `LP` with a specified maximal conductance of $30~\mathrm{\mu S}$.
 
 Let's add the rest of the synapses:
 
 ```matlab
-x.connect('AB','PY','prinz/Chol','gbar',3);
-x.connect('AB','LP','prinz/Glut','gbar',30);
-x.connect('AB','PY','prinz/Glut','gbar',10);
-x.connect('LP','PY','prinz/Glut','gbar',1);
-x.connect('PY','LP','prinz/Glut','gbar',30);
-x.connect('LP','AB','prinz/Glut','gbar',30);
+x.connect('AB','PY','prinz/Chol','gmax',3);
+x.connect('AB','LP','prinz/Glut','gmax',30);
+x.connect('AB','PY','prinz/Glut','gmax',10);
+x.connect('LP','PY','prinz/Glut','gmax',1);
+x.connect('PY','LP','prinz/Glut','gmax',30);
+x.connect('LP','AB','prinz/Glut','gmax',30);
 ```
 
-You can inspect synapses by viewing `x.synapses` which is a vector of `cpplab` objects.
+Note that we didn't have to type out the full path to the synapse `.hpp` file to
+create the synapse. You can use any part of a network component header file path so
+long as it uniquely specifies the network component.
+
+Synapses are added to the post-synaptic compartment as `synapse` objects.
 
 ### Simulating the model
 
 Let's simulate the model for 5 seconds.
 
 ```matlab
-x.t_end = 5000;
+x.t_end = 5000; % milliseconds
 ```
 
-Let's integrate the model and plot the voltage trace and the Calcium concentration:
+Let's integrate the model and plot the voltage trace and the calcium concentration:
 
 ```
 x.plot
@@ -195,4 +199,4 @@ You should see something like this:
 ![](../images/stg-trace.png)
 
 !!! Note "A shortcut through this tutorial"
-    You can reproduce the model we created here by running the `demo_stg` script. Make sure you run `xolotl.go_to_examples` first so that you're in the right folder. 
+    You can reproduce the model we created here by running the `demo_stg` script. Make sure you run `xolotl.go_to_examples` first so that you're in the right folder.
