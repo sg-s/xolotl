@@ -17,7 +17,7 @@ x = xolotl;
 3. `synapse` Objects of this type represent populations of synapses. They connect two different compartments together.
 4. `mechanism` Objects of this type can represent any arbitrary (typically intracellular) mechanism. For example, Calcium buffering is represented as a mechanism.
 
-# Create a compartment 
+# Create a compartment
 
 
 The first thing we want to do is create a compartment. A compartment is a piece of neural tissue that shares a common voltage. A compartment can represent a whole neuron, or a small part of one.
@@ -49,7 +49,7 @@ x
 
 # Add channels to a compartment
 
-OK, let's now add a set of channels to our compartment. 
+OK, let's now add a set of channels to our compartment.
 
 ```matlab
 x.AB.add('prinz/NaV','gbar',1000);
@@ -67,12 +67,22 @@ Note that, in each line, we are:
 2. adding it to the compartment "AB"
 3. Configuring the `gbar` parameter in that conductance
 
+The first argument is a character vector that represents a unique path to the C++
+header file. For example, if your conductance is specified in
+
+```matlab
+'~/code/xolotl/c++/conductances/prinz/NaV.hpp'
+```
+
+but there are other `'prinz'` and `'NaV'` conductances, then the character vector
+`'prinz/NaV'` suitably indicates which conductance you mean.
+
 Now, if we look at our model, we see:
 
 ```
 x
 
->xolotl object with 
+>xolotl object with
 ---------------------
 + AB  
   > ACurrent (g=500, E=-80)
@@ -90,7 +100,7 @@ x
 
 # Add a mechanism
 
-So far, the model consists of a compartment and some channels. There is no mechanism for modeling the influx of Calcium, and its buffering. Let's add a Calcium mechanism: 
+So far, the model consists of a compartment and some channels. There is no mechanism for modeling the influx of Calcium, and its buffering. Let's add a Calcium mechanism:
 
 ```
 x.AB.add('prinz/CalciumMech');
@@ -110,7 +120,7 @@ we should see something like this:
 
 # Wire up compartments using synapses
 
-Let's create another compartment, and connect the two compartements using a synapse
+Let's create another compartment, and connect the two compartments using a synapse
 
 ```
 x.add('compartment','LP','A',0.0628)
@@ -125,13 +135,13 @@ Now we can connect the two compartments using a synapse:
 x.connect('AB','LP','AlphaSynapse')
 ```
 
-# Discover parameters and structure of the model 
+# Discover parameters and structure of the model
 
 We've just added a new synapse. Let's explore it to understand where it is and what parameters it has. If we look inside the LP compartment, we see:
 
 ```
 x.LP
-ans = 
+ans =
  compartment object (9f24f53) with:
 
               vol : NaN
@@ -156,7 +166,7 @@ We see that the AlphaSynapse is included inside the LP neuron. By drilling down 
 
 ```
 x.LP.AlphaSynapseAB
-ans = 
+ans =
  AlphaSynapse object (5f2921a) with:
 
           gmax : 0
@@ -167,10 +177,10 @@ ans =
 
 ```
 
-We see that its `gmax` value, or strength in `nS` is 0. 
+We see that its `gmax` value, or strength in `nS` is 0.
 
 
-# Specify initial conditions 
+# Specify initial conditions
 
 Let's set a larger value for the synapse strength. Changing any parameter of the model is as simple as using dot notation:
 
