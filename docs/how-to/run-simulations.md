@@ -65,9 +65,24 @@ When the `x.V_clamp` property is not set, the first output of `x.integrate` is t
 ### (2) Calcium
 The calcium trace is in the form of a `nSteps x 2*nComps` matrix where `nSteps` is the number of time steps and `nComps` is the number of compartments in the model. The first `nComps` columns are the intracellular calcium concentration (in $\mu$M) for each compartment in the serialized `xolotl` object tree. The next set of `nComps` columns are the calcium reversal potential (in mV).
 
-### (3) Currents
+### (3) Mechanism variables
 
-### (4) Mechanism variables
+Mechanisms such as integral controllers produce output traces. All mechanism
+traces are stored in an $n \times m$ matrix where $n$ is the number of time steps
+(`x.t_end / x.dt`) and $m$ is the number of mechanisms producing traces. Mechanism
+traces are ordered exactly the same as in the `xolotl` object, meaning by compartment
+and then by conductance.
+
+### (4) Currents
+
+Currents are stored in an $n \times c$ matrix where $n$ is the number of time steps
+(`x.t_end / x.dt`) and $c$ is the number of conductances in the network. Currents
+are ordered exactly the same as in the `xolotl` object, meaning by compartment and
+then alphabetically.
+
+!!! Note "Plotting mechanisms and currents"
+  The example script `demo_stg` contains code that plots currents vs. time and
+  `demo_integral_control` contains code that plots mechanisms vs. time.
 
 ## Inject current into compartments
 Injected current is mediated by the `I_ext` property of the `xolotl` object.
