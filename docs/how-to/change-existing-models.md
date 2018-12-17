@@ -4,16 +4,16 @@ have a xolotl model set up. Here, we will learn how to
 * modify parameters of a model one by one
 * modify parameters of a model using pattern matching
 * remove components from a model
-* add new components to a model 
+* add new components to a model
 
 
 # Modify model parameter manually
 
 Numerical parameters of xolotl objects, such as maximal
 conductances can be changed by setting the value of
-the parameter to the new parameter. For example, to 
-change the maximal conductance `gbar` of the `NaV` 
-conductance in the `AB` compartment of the `x` xolotl 
+the parameter to the new parameter. For example, to
+change the maximal conductance `gbar` of the `NaV`
+conductance in the `AB` compartment of the `x` xolotl
 object to $10~\mathrm{\mu S / mm^2}$, you can do:
 
 ```matlab
@@ -106,7 +106,8 @@ ans =
     {'NaV.gbar'     }
 ```
 
-Get the values of some arbitrary properties.
+Get the values of some arbitrary properties. In this case, we find the reversal
+potentials of the `ACurrent` and the `HCurrent` conductances in the `AB` compartment.
 
 ```matlab
 >> x.get('AB*Current.E')
@@ -166,7 +167,7 @@ x.CompName.CondName.destroy()
 
 destroys an object called `CondName` from the compartment called `CompName`.
 
-# Add a new component to an existing model 
+# Add a new component to an existing model
 
 Xolotl objects are MATLAB objects. You can add new network components on-the-fly
 by using the `add` function for compartments, conductances, and mechanisms, and
@@ -185,4 +186,3 @@ you can treat the expression `x.AB.NaV.gbar` just like any other variable.
 % The fast sodium maximal conductance is: 10
 disp(['The fast sodium maximal conductance is: ' num2str(x.AB.NaV.gbar)])
 ```
-
