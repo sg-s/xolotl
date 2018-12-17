@@ -73,7 +73,7 @@ for file in sorted(glob.glob("@xolotl/*.m")):
 			link_url = link_url.strip()
 			link_url = '    * ' + link_url + '\n'
 			out_file.write(link_url)
-		if thisline.lower().find('->cpplab.') != -1:
+		elif thisline.lower().find('->cpplab.') != -1:
 			# ok, this is a cpplab method
 			link_name = thisline.replace('->','')
 			link_name = link_name.strip()
