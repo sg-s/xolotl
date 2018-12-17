@@ -59,12 +59,15 @@ if nargin == 1
 
 	% reset all conductances
 	all_channels = self.find('conductance');
+
 	for i = 1:length(all_channels)
-		if self.exist([all_channels{i} '.m'])
+		try
 			self.set([all_channels{i} '.m'],0)
+		catch
 		end
-		if self.exist([all_channels{i} '.h'])
+		try
 			self.set([all_channels{i} '.h'],1)
+		catch
 		end
 	end
 

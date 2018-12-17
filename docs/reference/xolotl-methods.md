@@ -94,6 +94,44 @@ to a `xolotl` object.
 
 
 
+# checkTree
+
+**Syntax**
+
+```
+x.checkTree
+```
+
+**Description**
+
+This method checks that objects in the xolotl tree make sense
+and are contained by objects that are allowed to contain them
+
+The following rules are enforced:
+
+| Object |   Legal container | 
+| ------- | --------------- |
+| compartment | xolotl object |
+| mechanism | any |
+| conductance | compartment | 
+| synapse | compartment | 
+
+This method is called in xolotl.transpile() before 
+transpiling takes place
+
+!!! info "See Also"
+    * [xolotl.transpile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#transpile)
+    ->xolotl.transpile
+    * [xolotl.compile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#compile)
+    ->xolotl.compile
+
+
+
+
+
+
+
+
 # cleanup
 
 **Syntax**

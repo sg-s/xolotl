@@ -40,7 +40,6 @@ end  % end protected props
 properties
 	verbosity@double = 0;
 
-
     I_ext@double;
     V_clamp@double;
 
@@ -163,6 +162,7 @@ methods
             error('xolotl::closed_loop must be a logical scalar, either "True" or "False"')
         end
     end % set.closed_loop
+
 
     function self = set.V_clamp(self,V_clamp)
 
