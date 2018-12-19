@@ -46,17 +46,25 @@ assert(isa(axes_handle,'matlab.graphics.axis.Axes'),'Expected first argument to 
 assert(any(strcmp(self.Children,compartment_name)),'compartment_name does not resolve to a known compartment')
 
 channel_names = self.(compartment_name).find('conductance');
-g = NaN(length(channel_names),1);
+g = self.(compartment_name).get('*gbar');
 
-for i = 1:length(g)
-	g(i) = self.(compartment_name).(channel_names{i}).gbar();
+if ~isfield(self.handles,'gbar_plot') || ~isvalid(self.handles.gbar_plot(1))
+
+	for j = 1:length(g)
+	    self.handles.gbar_plot(j) = stem(axes_handle,j,g(j));
+	end
+
+
+	set(axes_handle,'XTick',1:length(g),'XTickLabel',channel_names,'XTickLabelRotation',45,'YScale','log','XLim',[.5 length(g)+.5])
+	ylabel(axes_handle,'g (uS/mm^2)')
+
+
+else
+	% plot already exists, just update it
+	for j = 1:length(g)
+		self.handles.gbar_plot(j).YData = g(j);
+	end
 end
 
 
-for j = 1:length(g)
-    stem(axes_handle,j,g(j))
-end
 
-
-set(axes_handle,'XTick',1:length(g),'XTickLabel',channel_names,'XTickLabelRotation',45,'YScale','log','XLim',[.5 length(g)+.5])
-ylabel(axes_handle,'g (uS/mm^2)')

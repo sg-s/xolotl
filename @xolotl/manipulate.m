@@ -89,13 +89,19 @@ else
 	real_names = manipulate_these;
 	values = NaN*ones(length(real_names),1);
 	% check that these exist
+
+
 	for i = 1:length(real_names)
-		assert(self.exist(real_names{i}),'Unknown parameter to manipulate')
-		temp = self.get(real_names{i});
-		if isa(temp,'function_handle')
-			temp = temp();
+
+		try
+			temp =  self.get(real_names{i});
+			if isa(temp,'function_handle')
+				temp = temp();
+			end
+			values(i) = temp;
+		catch
+			error(['This parameter could not be resolved: ' real_names{i}])
 		end
-		values(i) = temp;
 	end
 end
 

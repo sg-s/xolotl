@@ -22,7 +22,6 @@ should not need to use this by itself.
 function manipulateEvaluate(self,names,values)
 
 self.reset('manipulate_zero')
-
 self.set(names,values)
 
 original_approx_state = self.approx_channels;
