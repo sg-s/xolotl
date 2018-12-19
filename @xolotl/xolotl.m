@@ -24,7 +24,7 @@ end  % end set protected props
 properties (Access = protected)
 	xolotl_folder
 	cpp_folder
-	OS_binary_ext % OS-specific
+	OS_binary_ext % OS-specific, not used any more
 	dyn_prop_handles % handles to dynamic properties
 	illegal_names = {'xolotl_network','compartment','conductance','controller','synapse','network','x','self'}; % list of illegal names for compartments, synpases and other objects
 

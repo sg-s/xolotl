@@ -69,7 +69,7 @@ if isempty(self.linked_binary)
 	end
 	h = self.hash;
 	mexBridge_name = [joinPath(self.xolotl_folder,'X_') h '.cpp'];
-	self.linked_binary = ['X_' h '.' self.OS_binary_ext];
+	self.linked_binary = ['X_' h '.' mexext];
 end
 
 

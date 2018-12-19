@@ -557,9 +557,8 @@ house-keeping settings. rebase is called every
 time a new xolotl object is created. rebase:
 
 1. configures the `xolotl_folder` property
-2. configures the `cpp_folder` property, which tells xolotl where its C++ files are located
-3. configures the `OS_binary_ext`, which is the extension of compiled binaries and is platform dependent. 
-4. calls the rebase method from the cpplab superclass.
+2. configures the `cpp_folder` property, which tells xolotl where its C++ files are located 
+3. calls the rebase method from the cpplab superclass.
 
 
 If you move a xolotl object across computers (for example, by saving it to a file and loading it in a different computer), you must call `rebase` to link it to the C++ files it needs.  

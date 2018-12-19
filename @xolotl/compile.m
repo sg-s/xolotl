@@ -62,7 +62,7 @@ end
 
 
 % update linked_binary
-self.linked_binary = ['X_' h '.' self.OS_binary_ext];
+self.linked_binary = ['X_' h '.' mexext];
 
 if self.verbosity > 0
 	disp(['[INFO] compilation successful!'])
