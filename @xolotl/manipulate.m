@@ -84,6 +84,18 @@ if nargin < 2
 	values(rm_this) = [];
 	real_names(rm_this) = [];
 
+	% remove some parameters of xolotl
+	rm_this = [];
+	rm_this = [rm_this; find(strcmp(real_names,'verbosity'))];
+	rm_this = [rm_this; find(strcmp(real_names,'solver_order'))];
+	rm_this = [rm_this; find(strcmp(real_names,'output_type'))];
+	rm_this = [rm_this; find(strcmp(real_names,'approx_channels'))];
+	rm_this = [rm_this; find(strcmp(real_names,'approx_channels'))];
+	rm_this = [rm_this;  lineFind(real_names,'tree_idx')];
+	
+	values(rm_this) = [];
+	real_names(rm_this) = [];
+
 	% add in I_ext for every neuron
 	I_ext_names = self.Children;
 	for i = 1:length(I_ext_names)
