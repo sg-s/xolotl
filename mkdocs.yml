@@ -26,6 +26,7 @@ pages:
     - Make your own components: how-to/make-own-models.md
     - Manipulate a model: how-to/manipulate.md
     - Create multi-compartment models: how-to/create-multi-compartment-models.md
+    - Create a new conductance using the conductance class: how-to/create-new-conductance.md
   - REFERENCE: 
     - Units: 'reference/units.md'
     - xolotl Properties: 'reference/xolotl-properties.md'
