@@ -20,4 +20,7 @@ show_Ca = true;
 % do you want to use approximate
 % channels to speed up model interactions
 % when using manipulate? 
-use_approx = true;
+% using approximations speeds up the integration
+% and makes manipulate more responsive,
+% but it can cause a seg fault
+use_approx = false;

@@ -21,7 +21,16 @@ should not need to use this by itself.
 
 function manipulateEvaluate(self,names,values)
 
-self.set(names,values)
+if any(strfind(names{1},'I_ext_'))
+	comp_name = strrep(names{1},'I_ext_','');
+	comp_idx = find(strcmp(self.Children,comp_name));
+
+	self.I_ext(comp_idx) = values(1);
+
+else
+	self.set(names,values)
+end
+
 
 original_approx_state = self.approx_channels;
 
