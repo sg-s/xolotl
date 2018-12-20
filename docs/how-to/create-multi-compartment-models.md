@@ -22,7 +22,11 @@ x.add('compartment','Soma')
 x.add('compartment','Neurite')
 x.slice('Neurite',10)
 x.connect('Neurite01','Soma')
+x.Soma.tree_idx = 0; % mark this as the cell body
 ```
+
+!!! info 
+    `tree_idx`, and the presence of `Axial` synapses, is how xolotl "knows" a model is a multi-compartment model vs a set of a individual neurons that are electrically coupled. You must specify some compartment as the cell body using `tree_idx`, otherwise, xolotl will not consider it a multi-compartment model. 
 
 Note that we're using the `slice` function to slice up a cylinder into shorter sections, which also automatically wires them up using `Axial` synapses.
 
