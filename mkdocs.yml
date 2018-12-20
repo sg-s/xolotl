@@ -2,7 +2,8 @@ site_name: xolotl
 repo_url: https://github.com/sg-s/xolotl/
 site_author: Srinivas Gorur-Shandilya
 docs_dir: 'docs'
-theme: 'readthedocs'
+theme: 'material'
+
 pages:
   - Home: index.md
   - TUTORIALS:
@@ -49,6 +50,8 @@ markdown_extensions:
   - admonition
   - mdx_math:
       enable_dollar_delimiter: True #for use of inline $..$
+  - toc:
+      permalink: true
    
 # Required to load the MathJax javascript for the mdx_math.py
 extra_javascript: ['https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML']
