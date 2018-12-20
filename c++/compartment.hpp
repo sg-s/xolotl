@@ -447,7 +447,7 @@ double compartment::getBCDF(int idx){
 
     } else if (idx == 4) {
         // return F
-       return (sigma_gE/Cm + I_ext/A);
+       return (sigma_gE + I_ext/A)/Cm;
 
     } else  {
         return 0;
