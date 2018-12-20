@@ -447,8 +447,7 @@ double compartment::getBCDF(int idx){
 
     } else if (idx == 4) {
         // return F
-       return (sigma_gE/Cm);
-       // TODO; allow for current injection (see eq. 6.45 Dayan & Abbott)
+       return (sigma_gE/Cm + I_ext/A);
 
     } else  {
         return 0;
