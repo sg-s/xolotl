@@ -113,11 +113,9 @@ else
 
 	real_names = manipulate_these;
 	values = NaN*ones(length(real_names),1);
+	
 	% check that these exist
-
-
 	for i = 1:length(real_names)
-
 		try
 			temp =  self.get(real_names{i});
 			if isa(temp,'function_handle')
