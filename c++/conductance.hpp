@@ -19,7 +19,7 @@ class compartment;
 
 class conductance {
 protected:
-
+    int V_idx = 0;
 public:
     compartment *container; // pointer to compartment that contains this
     double gbar;
@@ -135,6 +135,11 @@ void conductance::buildLUT(double approx_channels)
 // Exponential Euler integrator 
 void conductance::integrate(double V, double Ca) {   
 
+
+    V_idx = (int) round(V+99);
+    if (V_idx < 0) {V_idx = 0;};
+    if (V_idx > 200) {V_idx = 200;};
+
     // assume that p > 0
     switch (approx_m)
     {
@@ -143,7 +148,12 @@ void conductance::integrate(double V, double Ca) {
             m = minf + (m - minf)*exp(-dt/tau_m(V,Ca));
             break;
         default:
-            m = m_inf_cache[(int) round(V+99)] + (m - m_inf_cache[(int) round(V+99)])*fast_exp(-(dt/tau_m_cache[(int) round(V+99)]));
+            
+            
+
+            m = m_inf_cache[V_idx] + (m - m_inf_cache[V_idx])*fast_exp(-(dt/tau_m_cache[V_idx]));
+            
+            
             break;
     }
     
@@ -164,7 +174,10 @@ void conductance::integrate(double V, double Ca) {
                     h = hinf + (h - hinf)*exp(-dt/tau_h(V,Ca));
                     break;
                 default:
-                    h = h_inf_cache[(int) round(V+99)] + (h - h_inf_cache[(int) round(V+99)])*fast_exp(-(dt/tau_h_cache[(int) round(V+99)]));
+
+
+
+                    h = h_inf_cache[V_idx] + (h - h_inf_cache[V_idx])*fast_exp(-(dt/tau_h_cache[V_idx]));
                     break;
             }
 

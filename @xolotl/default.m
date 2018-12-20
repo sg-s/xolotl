@@ -23,4 +23,4 @@ show_Ca = true;
 % using approximations speeds up the integration
 % and makes manipulate more responsive,
 % but it can cause a seg fault
-use_approx = false;
+use_approx = true;
