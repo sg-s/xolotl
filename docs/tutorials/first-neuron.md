@@ -102,7 +102,7 @@ We see that the neuron now spikes regularly.
 !!! Note "What's with the colors?"
     The voltage trace is coloured by the dominant current at that time. When the voltage is increasing, the color corresponds to the largest inward current. When the voltage is decreasing, the color corresponds to the largest outward current. Here, you can see that the upswing of each action potential is dominated by Sodium currents, while the repolarization is caused by Potassium currents.
 
-# Interacting with the simulation
+### Interacting with the simulation
 
 `xolotl` allows you to manipulate every single parameter in the model and view what effect it has on your model. For example, if we wanted to manipulate the maximal conductances of every channel in this neuron, we can do so using:
 

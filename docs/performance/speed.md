@@ -1,3 +1,5 @@
+![](../images/Xspeed.jpg)
+
 xolotl is designed to be as fast as possible. In our testing, it is the fastest simulator out there, and these tips will help you make your simulations run as fast as possible. 
 
 We will use a single compartment bursting neuron and show what parameters increase or decrease speed of simulation. You can create this bursting neuron model using:
@@ -30,8 +32,9 @@ ans =
 
 Out of the box, our model is running around `60X` real-time. Let's see what we can do to speed this up. 
 
+## Strategies to increase speed
 
-## Increase `sim_dt`
+### Increase `sim_dt`
 
 The simplest way to make your simulation run faster is to increase the `sim_dt`. Speed should be linear with `sim_dt`, as shown in this plot:
 
@@ -40,7 +43,7 @@ The simplest way to make your simulation run faster is to increase the `sim_dt`.
 !!! warning 
      Remember that the accuracy of the simulation decreases with increasing `sim_dt`!
 
-## Use approximations 
+### Use approximations 
 
 
 Many channels in xolotl can construct look-up tables (`LUT`s) for some functions. This can dramatically speed up your code, at the cost of accuracy. 
@@ -57,7 +60,7 @@ ans =
 Here, using approximations made the simulation run twice as fast. 
 
 
-## Use simple solvers
+### Use simple solvers
 
 The ODEs in this model can be solved using two different methods:
 
@@ -86,12 +89,12 @@ ans =
 
 ```
 
-## Use the simplest version of the model 
+### Use the simplest version of the model 
 
 There are multiple versions of many components in xolotl. For example, there are temperature-sensitive versions of the channels we used here. If you don't need a feature, don't use it. 
 
 
-## Don't create outputs
+### Don't create outputs
 
 
 Skipping outputs technically makes the simulation run faster, but this effect is negligible. 
@@ -106,7 +109,7 @@ ans =
 ```
 
 
-## Turn off `closed_loop`
+### Turn off `closed_loop`
 
 Turning off `closed_loop` can make things go a little faster, though in most cases this effect is negligible. When `closed_loop` is `false`, `cpplab.deserialize` is not called, so that's where the savings comes from. 
 

@@ -1,7 +1,7 @@
 
 ![](../images/construct-hero.png)
 
-In this page we will learn how to construct neuron and network models in `xolotl` from scratch. The first step to constructing any model in `xolotl` is to create a container for everything we create in it. In this section (and anywhere else), we will use the variable `x` to hold the `xolotl` object.
+In this page we will learn how to construct neuron and network models in `xolotl` from scratch. The first step to constructing any model in `xolotl` is to create a container for everything we create in it. In this section (and everywhere else), we will use the variable `x` to hold the `xolotl` object.
 
 ```matlab
 % create a xolotl object
@@ -17,7 +17,7 @@ x = xolotl;
 3. `synapse` Objects of this type represent populations of synapses. They connect two different compartments together.
 4. `mechanism` Objects of this type can represent any arbitrary (typically intracellular) mechanism. For example, Calcium buffering is represented as a mechanism.
 
-# Create a compartment
+## Create a compartment
 
 
 The first thing we want to do is create a compartment. A compartment is a piece of neural tissue that shares a common voltage. A compartment can represent a whole neuron, or a small part of one.
@@ -47,7 +47,7 @@ To inspect your `xolotl` object at any time, simply type its name. Here, since w
 x
 ```
 
-# Add channels to a compartment
+## Add channels to a compartment
 
 OK, let's now add a set of channels to our compartment.
 
@@ -98,7 +98,7 @@ x
 
 
 
-# Add a mechanism
+## Add a mechanism
 
 So far, the model consists of a compartment and some channels. There is no mechanism for modeling the influx of Calcium, and its buffering. Let's add a Calcium mechanism:
 
@@ -118,7 +118,7 @@ we should see something like this:
 ![](https://user-images.githubusercontent.com/6005346/49969670-1c4d3800-fef7-11e8-97ff-8350cc487a7b.png)
 
 
-# Wire up compartments using synapses
+## Wire up compartments using synapses
 
 Let's create another compartment, and connect the two compartments using a synapse
 
@@ -135,7 +135,7 @@ Now we can connect the two compartments using a synapse:
 x.connect('AB','LP','AlphaSynapse')
 ```
 
-# Discover parameters and structure of the model
+## Discover parameters and structure of the model
 
 We've just added a new synapse. Let's explore it to understand where it is and what parameters it has. If we look inside the LP compartment, we see:
 
@@ -180,7 +180,7 @@ ans =
 We see that its `gmax` value, or strength in `nS` is 0.
 
 
-# Specify initial conditions
+## Specify initial conditions
 
 Let's set a larger value for the synapse strength. Changing any parameter of the model is as simple as using dot notation:
 
@@ -189,9 +189,17 @@ x.LP.AlphaSynapseAB.gmax = 20;
 
 ```
 
-# Integrate
+## Integrate
 
 We can now integrate and plot the model, and we should see something like this:
 
 
 ![](https://user-images.githubusercontent.com/6005346/49970181-82868a80-fef8-11e8-8887-cad414a6dcb5.png)
+
+
+## See Also
+
+* [xolotl.add](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#add)
+* [cpplab.add](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#add)
+* [xolotl.connnect](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#connect)
+

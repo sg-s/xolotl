@@ -1,5 +1,5 @@
 
-![](../images/install-hero.png)
+![](../images/install-hero.jpg)
 
 Here, we will learn how to install and configure `xolotl`. There are two ways to install `xolotl`, based on your level of expertise:
 
@@ -10,7 +10,9 @@ Here, we will learn how to install and configure `xolotl`. There are two ways to
 | OS support | All common OSes | Probably won't work on Windows| 
 
 
-# Installing using a MATLAB toolbox
+## Installing
+
+### Using a MATLAB toolbox
 
 `xolotl` is available as a MATLAB toolbox. Click [here](https://github.com/sg-s/xolotl/releases/download/latest/xolotl.mltbx) to download it, and drag the downloaded file onto your MATLAB terminal to install it. You should get a popup that looks like this: 
 
@@ -19,7 +21,7 @@ Here, we will learn how to install and configure `xolotl`. There are two ways to
 
 Click on the "Install" button and you should be all set! 
 
-# Install using `git`
+### Using `git`
 
 
 If you are comfortable with `git`, you can clone all the code and dependencies yourself:
@@ -34,9 +36,9 @@ git clone https://github.com/sg-s/cpplab
 You will have to manually set your `MATLAB` paths. Make sure you add the main folder for `puppeteer`, `cpplab`, and `xolotl`, and all subfolders of `srinivas.gs_mtools/src`.
 
 
-# Updating 
+## Updating 
 
-In most cases, `xolotl` can update itself to the latest version using ::
+In most cases, `xolotl` can update itself to the latest version using
 
 ```matlab
 xolotl.update()
@@ -45,7 +47,7 @@ xolotl.update()
 If you installed using `git`, `xolotl` will attempt to do a `git pull` and update itself. If you installed it as a MATLAB toolbox, `xolotl` will delete the old toolbox, download the new one, and install that. 
 
 
-# Uninstalling
+## Uninstalling
 
 If you installed `xolotl` as a MATLAB toolbox, you can easily uninstall it using:
 
@@ -55,7 +57,7 @@ xolotl.uninstall()
 
 Note that this doesn't do anything if you installed using `git`, or if you manually downloaded the files and linked them. 
 
-# Compilers on GNU/Linux
+## Compilers on GNU/Linux
 
 There are a couple of quirks specific to using the `MEX` compiler on Linux machines.
 
@@ -103,3 +105,10 @@ The problem is fixed if you see something like this in `MATLAB`:
            MexOpt: '/home/alec/.matlab/R2018a/mex_C++_glnxa64.xml'
 ```
 
+
+
+## See Also
+
+* [xolotl.install](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#copy)
+* [xolotl.uninstall](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#uninstall)
+* [xolotl.update](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#update)

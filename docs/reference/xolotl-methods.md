@@ -1,6 +1,7 @@
 
 
-# add
+-------
+## add
 
 
 **Syntax**
@@ -36,7 +37,8 @@ Adds a `cpplab` object to a `xolotl` object. The `add` method is the most import
 
 
 
-# benchmark
+-------
+## benchmark
 
 **Syntax**
 
@@ -65,7 +67,8 @@ It should produce a figure that looks something like this
 
 
 
-# checkCompartmentName
+-------
+## checkCompartmentName
 
 **Syntax**
 
@@ -92,7 +95,8 @@ to a `xolotl` object.
 
 
 
-# checkTree
+-------
+## checkTree
 
 **Syntax**
 
@@ -128,7 +132,8 @@ transpiling takes place
 
 
 
-# cleanup
+-------
+## cleanup
 
 **Syntax**
 
@@ -151,7 +156,8 @@ A static method that cleans up all transpiled ``C++`` and compiled binary files.
 
 
 
-# compile
+-------
+## compile
 
 **Syntax**
 
@@ -169,7 +175,8 @@ automatically compiles when t needs to. You can turn this
 
 
 
-# connect
+-------
+## connect
 
 
 **Syntax**
@@ -215,7 +222,8 @@ The following properties can be specified for most synapses:
 
 
 
-# contributingCurrents
+-------
+## contributingCurrents
 
 **Syntax**
 
@@ -242,7 +250,8 @@ where V is a vector of voltages, I is the corresponding matrix of currents
 
 
 
-# copy
+-------
+## copy
 
 Syntax:
 
@@ -271,7 +280,8 @@ unless you add a new component to one of them.
 
 
 
-# fI
+-------
+## fI
 
 **Syntax**
 
@@ -307,7 +317,8 @@ The following optional parameters may be specified in name-value syntax:
 
 
 
-# getGatingFunctions
+-------
+## getGatingFunctions
 
 
 **Syntax**
@@ -339,7 +350,8 @@ is used internally in `xolotl.show()`
 
 
 
-# go_to_examples
+-------
+## go_to_examples
 
 
 **Syntax**
@@ -363,7 +375,8 @@ A static method that goes to the folder that contains xolotl examples.
 
 
 
-# integrate
+-------
+## integrate
 
 integrates a `xolotl` model. 
 
@@ -423,7 +436,8 @@ When `output_type` is 1 or 2, the integration is performed requesting all output
 
 
 
-# manipulate
+-------
+## manipulate
 
 
 
@@ -456,7 +470,8 @@ x.manipulate({'parameter1','parameter2'})
 
 
 
-# manipulateEvaluate
+-------
+## manipulateEvaluate
 
 This method is used to update the `xolotl` object 
 every time a slider is moved in the manipulate window. 
@@ -475,7 +490,8 @@ should not need to use this by itself.
 
 
 
-# plot
+-------
+## plot
 
 **Syntax**
 
@@ -513,7 +529,8 @@ setpref('xolotl','show_Ca',false)
 
 
 
-# plotgbars
+-------
+## plotgbars
 
 
 **Syntax**
@@ -542,7 +559,8 @@ Makes a stem plot of conductance densities in a given compartment. If the first 
 
 
 
-# rebase
+-------
+## rebase
 
 **Syntax**
 
@@ -575,7 +593,8 @@ If you move a xolotl object across computers (for example, by saving it to a fil
 
 
 
-# reset
+-------
+## reset
 
 
 
@@ -619,7 +638,8 @@ x.reset('base')
 
 
 
-# run_all_tests
+-------
+## run_all_tests
 
 
 
@@ -646,7 +666,8 @@ tests pass is a release published.
 
 
 
-# setup
+-------
+## setup
 
 **Syntax**
 
@@ -674,7 +695,8 @@ once. If xolotl works, there is no need to run this.
 
 
 
-# show
+-------
+## show
 
 **Syntax**
 
@@ -698,7 +720,8 @@ This method displays activation functions and timescales of any conductance. Sub
 
 
 
-# slice
+-------
+## slice
 
 **Syntax**
 
@@ -729,7 +752,8 @@ it using the Crank-Nicholson scheme reserved for multi-compartment models.
 
 
 
-# snapshot
+-------
+## snapshot
 
 **Syntax**
 
@@ -771,7 +795,8 @@ x.reset('base')
 
 
 
-# transpile
+-------
+## transpile
 
 
 **Syntax**
@@ -780,7 +805,7 @@ x.reset('base')
 x.transpile;
 ```
 
-*8Description**
+**Description**
 
 Generate a C++ file that constructs the model, 
 integrates it, and moves parameters and data from 
@@ -805,7 +830,8 @@ MATLAB to C++ and back.
 
 
 
-# transpileCore
+-------
+## transpileCore
 
 **Syntax**
 
@@ -833,7 +859,8 @@ to be user accessible.
 
 
 
-# uninstall
+-------
+## uninstall
 
 **Syntax**
 
@@ -862,7 +889,8 @@ itself.
 
 
 
-# update
+-------
+## update
 
 **Syntax**
 
@@ -890,7 +918,8 @@ A static method that updates your installation of
 
 
 
-# viewCode
+-------
+## viewCode
 
 **Syntax**
 

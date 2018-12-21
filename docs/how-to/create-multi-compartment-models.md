@@ -1,6 +1,6 @@
 This document describes how to create and work with multi compartment models in xolotl.
 
-# Introduction and Limitations
+## Introduction and Limitations
 
 xolotl is limited in how it can work with multi-compartment models:
 
@@ -11,7 +11,7 @@ xolotl is limited in how it can work with multi-compartment models:
 
 With this out of the way, let's understand how multi-compartment models can be specified in xolotl.
 
-# Making a cable using the `Axial` synapse type
+## Making a cable using the `Axial` synapse type
 
 The `Axial` synapse is a special type of electrical synapse that forces you to think of compartments as cylinders, that have a radius and a length. When two compartments are connected using the a Axial synapse, they are assumed to be part of a cable, and xolotl will attempt to use the Crank-Nicholson scheme to solve for the voltage in all compartments on the cable implicitly.
 

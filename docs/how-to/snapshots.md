@@ -16,3 +16,8 @@ x.snapshot('added_current');
 % return to the previously saved 'initial' state
 x.reset('initial');
 ```
+## See Also
+
+
+* [xolotl.snapshot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#snapshot)
+* [xolotl.reset](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#reset)

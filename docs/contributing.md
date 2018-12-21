@@ -1,5 +1,4 @@
 
-# Contributing to xolotl
 
 `xolotl` is far from feature complete, and your contributions are welcome.
 
@@ -10,13 +9,13 @@
 * Describe what the expected behavior is, and what the actual behavior was
 
 
-# Requesting Features
+### Requesting Features
 
 * Describe what you want
 * Describe why you want it
 * List papers that describe this mechanism, or original research that describes the feature you want
 
-# Adding New Conductances/Synapses/Controllers
+### Adding New Conductances/Synapses/Controllers
 
 * Look at existing conductances/synapses/controllers and use them as a guideline
 * If you're making a new conductance, put them in ``c++/conductances/<first_author_name>``

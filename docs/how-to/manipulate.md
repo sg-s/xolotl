@@ -1,6 +1,6 @@
 This document describes how to manipulate a xolotl model. Here, we assume you have a simple (one or a few compartments) model whose parameters you want to explore. 
 
-# Manipulating a model out of the box
+## Manipulating a model out of the box
 
 All xolotl models can be manipulated out of the box. If you run
 
@@ -26,7 +26,7 @@ x.manipulate('AB.NaV.E')
 
 ```
 
-# Writing a custom plot function
+## Writing a custom plot function
 
 You can also write your own functions that will make a plot that will update
 as you vary the sliders created by x.manipulate. Your custom function should
@@ -101,3 +101,11 @@ xolotl.go_to_examples
 demo_manipulate
 
 ```
+
+
+## See Also
+
+
+* [xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
+* [xolotl.manipulateEvaluate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulateEvaluate)
+* [puppeteer](https://github.com/sg-s/puppeteer)

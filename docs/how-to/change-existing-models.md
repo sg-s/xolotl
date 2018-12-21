@@ -7,7 +7,9 @@ have a xolotl model set up. Here, we will learn how to
 * add new components to a model
 
 
-# Modify model parameter manually
+## Modifying the parameters of an existing model
+
+### Modify model parameter manually
 
 Numerical parameters of xolotl objects, such as maximal
 conductances can be changed by setting the value of
@@ -20,7 +22,7 @@ object to $10~\mathrm{\mu S / mm^2}$, you can do:
 x.AB.NaV.gbar = 10;
 ```
 
-# Modify model parameters using pattern matching
+### Modify model parameters using pattern matching
 
 
 The `find` and `get` functions are robust searching tools for accessing parameters in `xolotl`. They are especially useful when you want to change many parameters at once.
@@ -33,7 +35,9 @@ These functions also work "down the tree," meaning that they are functions of ea
 
 Get all conductances in all compartments.
 ```matlab
->> x.find('cond') % x.find('condu'), x.find('conduct'), ... x.find('conductance') also work too
+>> x.find('cond') 
+% x.find('condu'), x.find('conduct'), 
+% ... x.find('conductance') also work 
 
 ans =
 
@@ -157,7 +161,7 @@ x.set('*gbar', [300, 0.1, 1000]);
 ```
 
 
-# Remove a component from a model
+## Remove a component from a model
 
 You can remove any component from the model by calling its `destroy` method. For example:
 
@@ -167,7 +171,7 @@ x.CompName.CondName.destroy()
 
 destroys an object called `CondName` from the compartment called `CompName`.
 
-# Add a new component to an existing model
+## Add a new component to an existing model
 
 Xolotl objects are MATLAB objects. You can add new network components on-the-fly
 by using the `add` function for compartments, conductances, and mechanisms, and
@@ -186,3 +190,13 @@ you can treat the expression `x.AB.NaV.gbar` just like any other variable.
 % The fast sodium maximal conductance is: 10
 disp(['The fast sodium maximal conductance is: ' num2str(x.AB.NaV.gbar)])
 ```
+
+
+## See Also
+
+* [cpplab.set](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#set)
+* [cpplab.get](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#get)
+* [cpplab.find](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#find)
+* [cpplab.destroy](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#destroy)
+* [cpplab.add](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#add)
+* [xolotl.add](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#add)

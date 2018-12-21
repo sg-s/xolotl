@@ -15,7 +15,9 @@ where $g_i(V)$ is the instantaneous conductance and $E_i$ the ionic reversal pot
 
 $$g_i(V) = \bar{g}_i m_i^{p_i} h_i^{q_i}$$
 
-where $\bar{g}_i$ is the maximal conductance in Siemens per unit area and $m$ and $h$ are gating variables $\in[0, 1]$. The gating variables themselves are defined by differential equations which depend on the membrane potential. These equations are nonlinear and usually quite stiff. For these reasons, numerical simulations are required to adequately solve them.
+
+where $\bar{g} i$ is the maximal conductance in Siemens per unit area and $m$ and $h$ are gating variables $\in[0, 1]$. The gating variables themselves are defined by differential equations which depend on the membrane potential. These equations are nonlinear and usually quite stiff. For these reasons, numerical simulations are required to adequately solve them.
+
 
 ## Changing the time step and duration
 
@@ -81,8 +83,7 @@ are ordered exactly the same as in the `xolotl` object, meaning by compartment a
 then alphabetically.
 
 !!! Note "Plotting mechanisms and currents"
-  The example script `demo_stg` contains code that plots currents vs. time and
-  `demo_integral_control` contains code that plots mechanisms vs. time.
+    The example script `demo_stg` contains code that plots currents vs. time and `demo_integral_control` contains code that plots mechanisms vs. time.
 
 ## Inject current into compartments
 Injected current is mediated by the `I_ext` property of the `xolotl` object.
@@ -111,7 +112,6 @@ I_ext(:, 1) = 0.2 * rand(nSteps, 1);
 x.I_ext 	= I_ext;
 ```
 
-## Voltage clamping compartments
 
 ## Switching solvers
 
@@ -162,8 +162,19 @@ $$k_2 = f\Big(V + k_1 \frac{\Delta t}{2}, ~t  + \frac{\Delta t}{2}\Big)$$
 $$k_3 = f\Big(V + k_2 \frac{\Delta t}{2}, ~t  + \frac{\Delta t}{2}\Big)$$
 $$k_4 = f\Big(V + k_3 \Delta t, ~t  + \Delta t \Big)$$
 
+
 The time-evolution formula for the Runge-Kutta fourth order method is
 
 $$V(t + \Delta t) = V(t) + \frac{k_1 + 2k_2 + 2k_3 + k_4}{6} \Delta t$$
 
 The method is more accurate because slope approximations at fractions of $\Delta t$ are being taken and averaged. The method is slower because the four coefficients must be computed during each integration step.
+
+
+
+
+## See Also
+
+* [xolotl.integrate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#integrate)
+* [xolotl.approx_channels](https://xolotl.readthedocs.io/en/master/reference/xolotl-properties/#approx_channels)
+* [xolotl.closed_loop](https://xolotl.readthedocs.io/en/master/reference/xolotl-properties/#closed_loop)
+* [xolotl.output_type](https://xolotl.readthedocs.io/en/master/reference/xolotl-properties/#output_type)

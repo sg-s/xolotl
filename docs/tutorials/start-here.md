@@ -28,7 +28,7 @@ Then we need to install a C/C++ compiler, and get MATLAB to work with that. Foll
 1. Use your favorite package manager to install a C and C++ compiler. For example, on Debian-based systems, use `sudo apt install gcc & sudo apt install g++`
 2. Verify that your compiler is on the MATLAB path by running `system('which gcc')` from within MATLAB
 
-## Configure MATLAB to use compilers
+### Configure MATLAB to use compilers
 
 Run this in your MATLAB terminal:
 
@@ -46,7 +46,7 @@ MEX configured to use 'Xcode Clang++' for C++ language compilation.
 MEX configured to use 'Xcode with Clang' for C language compilation.
 ```
 
-# Verify your installation
+### Verify your installation
 
 OK, let's make sure everything works. Copy and paste the following code into your MATLAB terminal:
 

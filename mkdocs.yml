@@ -2,8 +2,12 @@ site_name: xolotl
 repo_url: https://github.com/sg-s/xolotl/
 site_author: Srinivas Gorur-Shandilya
 docs_dir: 'docs'
-theme: 'material'
-
+theme: 
+  name: 'material' 
+  logo: 'images/Xlogo.png'
+  palette:
+    primary: 'deep-purple'
+    accent: 'deep-purple'
 pages:
   - Home: index.md
   - TUTORIALS:
@@ -27,13 +31,13 @@ pages:
     - Make your own components: how-to/make-own-models.md
     - Manipulate a model: how-to/manipulate.md
     - Create multi-compartment models: how-to/create-multi-compartment-models.md
-    - Create a new conductance using the conductance class: how-to/create-new-conductance.md
   - REFERENCE: 
     - Units: 'reference/units.md'
     - xolotl Properties: 'reference/xolotl-properties.md'
     - xolotl Methods: 'reference/xolotl-methods.md'
     - cpplab Properties: 'reference/cpplab-properties.md'
     - cpplab Methods: 'reference/cpplab-methods.md'
+    - conductance: reference/conductance.md
   - PERFORMANCE TIPS:
     - Speed: 'performance/speed.md'
     - Memory: 'performance/memory.md'

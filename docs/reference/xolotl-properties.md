@@ -4,16 +4,16 @@ Every xolotl object has the following properties listen in this document. To acc
 x.verbosity
 ```
 
-You can view all the properties of a xolotl object using the built-in `properties` command:
+You can view all the properties of a xolotl object using the built-in [properties](https://www.mathworks.com/help/matlab/ref/properties.html) command:
 
 ```
 properties(xolotl)
 % will display a list of properties
 ```
 
-# Controlling simulation 
+## Controlling simulation 
 
-## `approx_channels`
+### `approx_channels`
 
 | Default | Allowed values | Type |
 | ------- | ----- | ----- |
@@ -26,7 +26,7 @@ function significantly increase computational speed,
 but decrease accuracy, especially at high temporal
 resolution in the data.
 
-## `closed_loop`
+### `closed_loop`
 
 | Default | Allowed values | Type |
 | ------- | ----- | ----- |
@@ -38,7 +38,7 @@ is true, successive simulations will use the current
 state of the `xolotl` object (e.g. the end state of the
 previous simulation if you run `integrate` twice in a row).
 
-## `dt` and `sim_dt`
+### `dt` and `sim_dt`
 
 | Default | Allowed values | Type |
 | ------- | ----- | ----- |
@@ -55,7 +55,7 @@ all that data.
 `dt` must be a integer multiple of `sim_dt`. If it is 
 not, an error will be thrown. 
 
-## `V_clamp`
+### `V_clamp`
 
 
 | Default | Allowed values | Type |
@@ -74,7 +74,7 @@ Incorrectly sized `V_clamp` will throw an error.
 You cannot simultaneously inject current and voltage clamp 
 any compartment. 
 
-## `I_ext`
+### `I_ext`
 
 | Default | Allowed values | Type |
 | ------- | ----- | ----- |
@@ -91,7 +91,7 @@ Incorrectly sized `I_ext` will throw an error.
 You cannot simultaneously inject current and voltage clamp 
 any compartment. 
 
-## `solver_order`
+### `solver_order`
 
 | Default | Allowed values | Type |
 | ------- | ----- | ----- |
@@ -104,7 +104,7 @@ order method is used instead. This method is slower
 but more accurate.
 
 
-## `t_end`
+### `t_end`
 
 | Default | Allowed values | Type |
 | ------- | ----- | ----- |
@@ -114,7 +114,7 @@ Specify the time, in ms, for which to simulate. Make sure
 that `t_end` is an integer multiple of `sim_dt`
 
 
-## `output_type`
+### `output_type`
 
 | Default | Allowed values | Type |
 | ------- | ----- | ----- |
@@ -130,16 +130,16 @@ useful when it's important to keep all the output data
 organized. In addition, the 2 option saves memory at the 
 expense of detail.
 
-## `temperature` and `temperature_ref`
+### `temperature` and `temperature_ref`
 
 `temperature` specifies the temperature at which you want
 to perform simulations. `temperature_ref` holds the "default" 
 temperature so that $Q_{10}$ values can be used. These
 values only affect components that are temperature sensitive. 
 
-# Controlling verbosity
+## Controlling verbosity
 
-## `verbosity`
+### `verbosity`
 
 | Default | Allowed values | Type |
 | ------- | ----- | ----- |
@@ -149,9 +149,9 @@ values only affect components that are temperature sensitive.
 xolotl is when running simulations. Set to a large positive 
 number to get more verbose output, useful for debugging. 
 
-# Customization 
+## Customization 
 
-## `pref`
+### `pref`
 
 `x.pref` contains a structure that contains settings that 
 determine the behaviour of some methods. You can change these 
@@ -162,8 +162,8 @@ You can also add your own data to `x.pref`, which your
 functions can use. This is a way to pass metadata and other 
 data along with this model to other functions. 
 
-# Exploring the model
+## Exploring the model
 
-## `Children`
+### `Children`
 
 `Children` contains a list of all compartments in the current xolotl model. 

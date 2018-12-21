@@ -5,7 +5,7 @@
     >  < (_) | | (_) | |_| |
    /_/\_\___/|_|\___/ \__|_|
 
-# transpile
+## transpile
 
 
 **Syntax**
@@ -14,7 +14,7 @@
 x.transpile;
 ```
 
-*8Description**
+**Description**
 
 Generate a C++ file that constructs the model, 
 integrates it, and moves parameters and data from 
