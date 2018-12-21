@@ -10,12 +10,12 @@ theme:
     accent: 'deep-purple'
 pages:
   - Home: index.md
-  - TUTORIALS:
+  - Tutorials:
     - Getting Started: 'tutorials/start-here.md'
     - Demos: 'tutorials/built-in-demos.md'
     - Your first neuron: 'tutorials/first-neuron.md'
     - Your first network: 'tutorials/first-network.md'
-  - HOW TO: 
+  - How to: 
     - Install and configure: how-to/install-configure.md
     - Construct models: how-to/construct-models.md
     - Discover existing components: how-to/discover-components.md
@@ -31,17 +31,17 @@ pages:
     - Make your own components: how-to/make-own-models.md
     - Manipulate a model: how-to/manipulate.md
     - Create multi-compartment models: how-to/create-multi-compartment-models.md
-  - REFERENCE: 
+  - Reference: 
     - Units: 'reference/units.md'
     - xolotl Properties: 'reference/xolotl-properties.md'
     - xolotl Methods: 'reference/xolotl-methods.md'
     - cpplab Properties: 'reference/cpplab-properties.md'
     - cpplab Methods: 'reference/cpplab-methods.md'
     - conductance: reference/conductance.md
-  - PERFORMANCE TIPS:
+  - Performance tips:
     - Speed: 'performance/speed.md'
     - Memory: 'performance/memory.md'
-  - TROUBLESHOOTING: 
+  - Troubleshooting: 
     - Fixes to common problems: troubleshooting.md
   - About: 'about.md'
   - FAQ: 'faq.md'
