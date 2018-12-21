@@ -1,6 +1,7 @@
 
 
-# add
+-------
+## add
 
 The add method allows you to add cpplab objects to other cpplab objects
 and build a tree of cpplab objects. 
@@ -53,7 +54,8 @@ name of the C++ class it refers to, so you can access it using ParentObject.(Chi
 
 
 
-# addNoHash
+-------
+## addNoHash
 
 adds a cpplab object to another, but does not 
 update the hashes of the object being added to.
@@ -69,7 +71,8 @@ Do not use this method, use `add()` instead.
 
 
 
-# copy
+-------
+## copy
 
 makes a copy of a cpplab object
 
@@ -100,7 +103,8 @@ changes in `C2`, and vice versa.
 
 
 
-# deserialize
+-------
+## deserialize
 
 **Syntax**
 
@@ -125,7 +129,8 @@ C.deserialize(V)
 
 
 
-# destroy
+-------
+## destroy
 
 **Syntax**
 
@@ -147,7 +152,8 @@ removes a cpplab object that is contained within another and destroys it. This i
 
 
 
-# exist
+-------
+## exist
 
 **Syntax**
 
@@ -174,7 +180,8 @@ removes a cpplab object that is contained within another and destroys it. This i
 
 
 
-# find
+-------
+## find
 
 **Syntax**
 
@@ -207,7 +214,8 @@ of nested objects.
 
 
 
-# generateConstructors
+-------
+## generateConstructors
 
 **Syntax**
 
@@ -227,7 +235,8 @@ Do not use this method.
 
 
 
-# generateHeaders
+-------
+## generateHeaders
 
 **Syntax**
 
@@ -246,7 +255,41 @@ Do not use this method.
 
 
 
-# getAllHashes
+-------
+## get
+
+**Syntax**
+
+```
+V = C.get('child_parameter')
+V = C.set('*wildcard*string')
+V = C.set('*wildcard*string')
+```
+
+**Description**
+
+`get` is a method that allows you to quickly read values from 
+multiple objects and parameters in a nested cpplab tree. 
+
+- **`V = C.get('child_parameter')`** gets the value of the parameter specified by the character vector. 'child_parameter' must be a resolvable name, i.e., C.child_parameter should exist as a scalar. 
+- **`V = C.set('*wildcard*string')`** gets the values of all parameters in the cpplab object tree found using the wild card search string to the scalar value provided.
+- **`V = C.set('*wildcard*string')`** gets the values of all parameters in the cpplab object tree found using the wild card search string. 
+
+
+!!! info "See Also"
+    * [cpplab.find](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#find)
+    * [cpplab.get](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#get)
+
+
+
+
+
+
+
+
+
+-------
+## getAllHashes
 
 **Syntax**
 
@@ -266,7 +309,8 @@ Do not use this method.
 
 
 
-# hashSource
+-------
+## hashSource
 
 **Syntax**
 
@@ -288,7 +332,8 @@ C.hashSource
 
 
 
-# readCPPClass
+-------
+## readCPPClass
 
 **Syntax**
 
@@ -308,7 +353,8 @@ Do not use this method.
 
 
 
-# readChildFunctions
+-------
+## readChildFunctions
 
 **Syntax**
 
@@ -328,7 +374,8 @@ Do not use this method.
 
 
 
-# rebase
+-------
+## rebase
 
 **Syntax**
 
@@ -353,7 +400,8 @@ You will need to call this method if you save a cpplab object to disk, move it t
 
 
 
-# rebuildCache
+-------
+## rebuildCache
 
 **Syntax**
 
@@ -382,7 +430,8 @@ If you find that you are getting errors where cpplab complains it can't find cer
 
 
 
-# replicate
+-------
+## replicate
 
 
 **Description**
@@ -397,7 +446,8 @@ Do not use this method.
 
 
 
-# resolvePath
+-------
+## resolvePath
 
 **Syntax**
 
@@ -429,7 +479,8 @@ file_loc = cpplab.resolvePath('search_string')
 
 
 
-# search
+-------
+## search
 
 **Syntax**
 
@@ -459,7 +510,8 @@ objects = cpplab.search('*search*pattern*');
 
 
 
-# serialize
+-------
+## serialize
 
 **Syntax**
 
@@ -492,7 +544,8 @@ values = C.serialize;
 
 
 
-# set
+-------
+## set
 
 **Syntax**
 
@@ -524,7 +577,8 @@ multiple objects and parameters in a nested cpplab tree.
 
 
 
-# shallowHash
+-------
+## shallowHash
 
 **Syntax**
 
@@ -550,7 +604,8 @@ using GetMD5
 
 
 
-# subsasgn
+-------
+## subsasgn
 
 **Syntax**
 
@@ -579,7 +634,8 @@ from nesting vectors when it expects scalars.
 
 
 
-# viewCode
+-------
+## viewCode
 
 **Syntax**
 
