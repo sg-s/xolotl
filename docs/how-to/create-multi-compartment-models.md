@@ -51,11 +51,11 @@ properties of compartments to specify the surface area and volume respectively.
 In multi-compartment models in which the compartments are connected by `Axial` synapses, the
 `len` and `radius` properties, for the length and axial radius must be specified instead.
 The shape of the compartment is cylindrical, and the surface area is computed automatically,
-according to the "body" of the cylinder (i.e. $\pi r^2 L$).
+according to the "body" of the cylinder (i.e. $2 \pi r L$).
 
 While the `A` and `V` compartment properties aren't used in this case, you can still set them to values.
 If you want them to automatically update, you can set them to anonymous functions:
 
 ```matlab
-x.comp.A = @() x.comp.len * pi * x.comp.radius * x.comp.radius;
+x.comp.A = @() x.comp.len * 2 * pi * x.comp.radius;
 ```
