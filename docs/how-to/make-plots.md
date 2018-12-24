@@ -16,11 +16,8 @@ permanent for all xolotl objects, edit the `pref.m` file in the xolotl directory
 set `x.pref.show_Ca = false`. To make this change
 permanent for all xolotl objects, edit the `pref.m` file in the xolotl directory.
 
-!!! Note "What's a contributing current?
-    The voltage trace is colored by the dominant current at that time. When the voltage
-    is increasing, the color corresponds to the largest positive (inward cation or outward anion)
-    current. Inversely, when the voltage is decreasing, the color corresponds to the largest
-    negative (outward cation or inward anion) current.
+!!! Note "What's a contributing current?"
+    The voltage trace is colored by the dominant current at that time. When the voltage is increasing, the color corresponds to the largest positive (inward cation or outward anion) current. Inversely, when the voltage is decreasing, the color corresponds to the largest negative (outward cation or inward anion) current.
 
 
 
