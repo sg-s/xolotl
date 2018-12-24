@@ -38,8 +38,10 @@ Adds a `cpplab` object to a `xolotl` object. The `add` method is the most import
 
 function add(self,obj_type, obj_name,varargin)
 
-assert(nargin > 2,'No label! You have to label every compartment')
-assert(ischar(obj_name),'The name of the object has to be a character vector')
+assert(nargin > 2,'xolotl:add:no_label','No label! You have to label every compartment')
+assert(ischar(obj_name),'xolotl:add:name_type_mismatch','The name of the object has to be a character vector')
+assert(self.checkCompartmentName(obj_name),'xolotl:add:illegal_name',['Illegal compartment name: ' obj_name])
+
 if isa(obj_type,'cpplab')
 	% we're adding a cpplab object
 	% if so, then the convention is 
@@ -55,11 +57,14 @@ else
 
 end
 
-assert(self.checkCompartmentName(obj_name),['Illegal compartment name: ' obj_name])
+
+% object should be a compartment object
+assert(strcmp(obj.cpp_class_name,'compartment'),'xolotl:add:not_compartment' ,'You can only add objects of type "compartment" to a xolotl object')
+
 
 add@cpplab(self,obj, obj_name);
 
 % reset I_ext and V_clamp
-N = length(self.find('compartment'));
+N = length(self.Children);
 self.I_ext = zeros(1,N);
 self.V_clamp = NaN(1,N);
