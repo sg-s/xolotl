@@ -46,6 +46,8 @@ end
 methods (Test)
     
     testXolotlAdd(self)
+    testGoToExamples(self)
+    testRebase(self)
 
 
 end % test

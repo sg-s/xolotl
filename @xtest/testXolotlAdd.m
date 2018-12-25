@@ -1,7 +1,6 @@
 % this test should test xolotl.add
 function testXolotlAdd(self)
 
-self.createSingleCompartment()
 
 % make sure we can't create a compartment without a label
 self.assertError(@() self.x.add('compartment'),'xolotl:add:no_label')

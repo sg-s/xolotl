@@ -33,13 +33,12 @@ If you move a xolotl object across computers (for example, by saving it to a fil
 %}
 
 
-function [] = rebase(self)
+function rebase(self)
 
-	self.xolotl_folder = fileparts(fileparts(which('xolotl')));
-	self.cpp_folder = joinPath(self.xolotl_folder,'c++');
+self.xolotl_folder = fileparts(fileparts(which('xolotl')));
+self.cpp_folder = joinPath(self.xolotl_folder,'c++');
 
-	% update all C++ class paths 
-	rebase@cpplab(self);
+% update all C++ class paths 
+rebase@cpplab(self);
 
 
-end
