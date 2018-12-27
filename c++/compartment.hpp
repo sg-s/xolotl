@@ -606,23 +606,10 @@ void compartment::integrateCNFirstPass(void) {
 
     b = getBCDF(1)*.5*dt;
 
-    // mexPrintf("-------------------\n");
-    // mexPrintf("tree_idx = %f\n", tree_idx);
-    // if (upstream) {
-    //     mexPrintf("upstream exists, g = %f\n", upstream_g);
-    // }
-    // if (downstream) {
-    //     mexPrintf("downstream exists, g = %f\n", downstream_g);
-    // }
-    // mexPrintf("B = %f\n",getBCDF(1));
-    // mexPrintf("C = %f\n",getBCDF(2));
-    // mexPrintf("D = %f\n",getBCDF(3));
-    // mexPrintf("F = %f\n",getBCDF(4));
 
     // compute c_
     c_ = .5*dt*getBCDF(2);
-    if (upstream)
-    {
+    if (upstream) {
 
         d = (upstream->getBCDF(3))*dt*.5;
 
@@ -634,36 +621,27 @@ void compartment::integrateCNFirstPass(void) {
     // compute f_
     // first compute f
     double f = getBCDF(4) + getBCDF(2)*V;
-    if (upstream)
-    {
+    if (upstream) {
         f += getBCDF(1)*(upstream->V);
     }
-    if (downstream)
-    {
+    if (downstream) {
         f += getBCDF(3)*(downstream->V);
     }
     f = f*dt;
 
     f_ = f;
 
-    if (upstream)
-    {
+    if (upstream) {
         // downstream exists. append terms
         // (eq. 6.55 in Dayan & Abbott)
         f_ += (b*(upstream->f_))/(1 - upstream->c_);
     }
 
-    // debug
-    // mexPrintf("------------------\n");
-    // mexPrintf("c_ is %f\n", c_);
-    // mexPrintf("f_ is %f\n", f_);
-
 }
 
 void compartment::integrateCNSecondPass(void) {
     delta_V = f_;
-    if (downstream)
-    {
+    if (downstream) {
         // downstream exists, use full eq (6.53)
         delta_V += getBCDF(3)*.5*dt*(downstream->delta_V);
     }

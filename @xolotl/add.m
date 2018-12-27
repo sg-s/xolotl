@@ -38,16 +38,24 @@ Adds a `cpplab` object to a `xolotl` object. The `add` method is the most import
 
 function add(self,obj_type, obj_name,varargin)
 
-assert(nargin > 2,'xolotl:add:no_label','No label! You have to label every compartment')
-assert(ischar(obj_name),'xolotl:add:name_type_mismatch','The name of the object has to be a character vector')
-assert(self.checkCompartmentName(obj_name),'xolotl:add:illegal_name',['Illegal compartment name: ' obj_name])
+msg = ['You tried to add a compartment without a label, which is not allowed. Every compartment must be labeled. \n\n<a href="https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#add">Click here to read the documentation on how to use this method</a>'];
+assert(nargin > 2,'xolotl:add:no_label',msg)
+
+msg = ['The name of the object you are trying to add must be a character vector. \n\n<a href="https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#add">Click here to read the documentation on how to use this method</a>'];
+assert(ischar(obj_name),'xolotl:add:name_type_mismatch',msg)
+
+msg = ['Illegal compartment name: ' obj_name '\n\n<a href="https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#add">Click here to read the documentation on how to use this method</a>'];
+assert(self.checkCompartmentName(obj_name),'xolotl:add:illegal_name',msg)
 
 if isa(obj_type,'cpplab')
 	% we're adding a cpplab object
 	% if so, then the convention is 
 	% self.add(obj, obj_name)
 
-	assert(length(varargin) == 0, 'You are attempting to add a cpplab object to a xolotl object. To do so, the convention is "self.add(obj, obj_name)" ')
+
+	msg = ['You are attempting to add a cpplab object to a xolotl object. To do so, the convention is "self.add(obj, obj_name)". \n\n<a href="https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#add">Click here to read the documentation on how to use this method</a>'];
+
+	assert(length(varargin) == 0,'xolotl:add:cpplab_object' ,msg)
 
 	obj = obj_type;
 	
