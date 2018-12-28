@@ -53,12 +53,12 @@ This is what it looks like:
 # xolotl lets you do **this**
 
 <video width="100%" autoplay loop muted>
-  <source src="../../images/manipulate-neuron.mp4" type="video/mp4">
-  <source src="../../images/manipulate-neuron.webm" type="video/webm">
+  <source src="../images/manipulate-neuron.mp4" type="video/mp4">
+  <source src="../images/manipulate-neuron.webm" type="video/webm">
 Your browser does not support the video tag.
 </video>
 
-xolotl lets you manipualte *any* parameter in *any* model and 
+xolotl lets you manipulate *any* parameter in *any* model and 
 view the effects of changing that parameter **in real time**
 
 
