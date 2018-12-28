@@ -45,7 +45,7 @@ x.plot;
 ## xolotl has *documentation*
 
 Unlike certain widely used NEURON simulators that 
-shall remain nameless, xolotl has [documentation](xolotl.readthedocs.io) that actually...
+shall remain nameless, xolotl has [documentation](https://xolotl.readthedocs.io) that actually...
 exists. 
 
 This is what it looks like:
