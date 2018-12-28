@@ -52,19 +52,6 @@ This is what it looks like:
 
 ![](https://user-images.githubusercontent.com/6005346/50499847-e3df4b00-0a1a-11e9-8aba-b3be57c3e784.png)
 
-----------------
-
-## xolotl lets you do **this**
-
-<video width="100%" autoplay loop muted>
-  <source src="../images/manipulate-neuron.mp4" type="video/mp4">
-  <source src="../images/manipulate-neuron.webm" type="video/webm">
-Your browser does not support the video tag.
-</video>
-
-xolotl lets you manipulate *any* parameter in *any* model and 
-view the effects of changing that parameter **in real time**
-
 
 ----------------
 ## xolotl is fully *programmable*
