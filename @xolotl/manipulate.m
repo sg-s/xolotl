@@ -55,11 +55,12 @@ n = length(compartment_names);
 
 
 % I-ext cannot be a matrix
-if size(self.I_ext,1) > 1
-	warning('Dynamic I_ext not allowed while manipulating model. Resetting I_ext...')
-	self.I_ext = zeros(1,length(self.Children));
+if self.pref.use_I_ext
+	if size(self.I_ext,1) > 1
+		warning('Dynamic I_ext not allowed while manipulating model. Resetting I_ext...')
+		self.I_ext = zeros(1,length(self.Children));
+	end
 end
-
 
 
 if nargin < 2
@@ -97,12 +98,14 @@ if nargin < 2
 	real_names(rm_this) = [];
 
 	% add in I_ext for every neuron
-	I_ext_names = self.Children;
-	for i = 1:length(I_ext_names)
-		I_ext_names{i} = ['I_ext_', I_ext_names{i}];
+	if self.pref.use_I_ext
+		I_ext_names = self.Children;
+		for i = 1:length(I_ext_names)
+			I_ext_names{i} = ['I_ext_', I_ext_names{i}];
+		end
+		values = [values; zeros(length(self.Children),1)];
+		real_names = [real_names; I_ext_names(:)];
 	end
-	values = [values; zeros(length(self.Children),1)];
-	real_names = [real_names; I_ext_names(:)];
 
 else
 

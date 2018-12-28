@@ -24,3 +24,6 @@ show_Ca = true;
 % and makes manipulate more responsive,
 % but it can cause a seg fault
 use_approx = true;
+
+
+use_I_ext = true;
