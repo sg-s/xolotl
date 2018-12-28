@@ -5,7 +5,7 @@
 
 `xolotl` is a fast single-compartment and 
 multi-compartment simulator  written in `C++` with 
-a `MATLAB` interface that you'll actually enjoy using.
+a [MATLAB](https://www.mathworks.com/products/matlab.html) interface that you'll actually enjoy using.
 
 Why use xolotl? This is why:
 
@@ -53,8 +53,8 @@ This is what it looks like:
 # xolotl lets you do **this**
 
 <video width="100%" autoplay loop muted>
-  <source src="../images/manipulate-neuron.mp4" type="video/mp4">
-  <source src="../images/manipulate-neuron.webm" type="video/webm">
+  <source src="https://xolotl.readthedocs.io/en/master/images/manipulate-neuron.mp4" type="video/mp4">
+  <source src="https://xolotl.readthedocs.io/en/master/images/manipulate-neuron.webm" type="video/webm">
 Your browser does not support the video tag.
 </video>
 
