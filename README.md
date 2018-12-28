@@ -5,69 +5,92 @@
 
 ![](https://user-images.githubusercontent.com/6005346/41205222-30b6f3d4-6cbd-11e8-983b-9125585d629a.png)
 
-`xolotl` is a fast single-compartment and multi-compartment simulator written in `C++` with a `MATLAB` interface. Designed with a focus on ease-of-use, flexibility and speed, `xolotl` simulates conductance-based neuron models and networks.
-
-## Why Use `xolotl`?
 
 
-### It's easy to use
+# xolotl: a fast and flexible neuronal simulator 
 
-You can set up complex models of neurons and networks very efficiently, using an intuitive language that is tightly coupled to the object-based architecture of the underlying `C++` code.
+![](https://user-images.githubusercontent.com/6005346/41205222-30b6f3d4-6cbd-11e8-983b-9125585d629a.png)
 
-For example, here, we set up a compartment with some channels in it:
+`xolotl` is a fast single-compartment and 
+multi-compartment simulator  written in `C++` with 
+a `MATLAB` interface that you'll actually enjoy using.
 
-```matlab
+Why use xolotl? This is why:
 
-  x = xolotl;
-  x.add('compartment', 'HH', 'Cm', 10, 'A', 0.01);
-  x.HH.add('liu/NaV', 'gbar', 1000);
-  x.HH.add('liu/Kd', 'gbar', 300);
-  x.HH.add('Leak', 'gbar', 0.1);
-  x.I_ext = 0.1;
-  x.t_end = 300; % ms
+-----------------
 
-```
+## xolotl is *FAST*
 
-That's it. To integrate it and see the time evolution of the voltage, type:
+xolotl is written in C++, and it's **fast**. In our testing, it's 
+more than **3 times** faster than NEURON for single
+compartment neurons. 
 
-```matlab
-   x.plot
-```
+![](https://user-images.githubusercontent.com/6005346/50499683-9c0bf400-0a19-11e9-9375-92a1fdefa2fc.png)
 
-![](https://user-images.githubusercontent.com/6005346/44669694-24e53580-aa10-11e8-9bd0-5b0378d33342.png)
+----------------
+## xolotl is *easy to use*
 
-``xolotl`` handles all of the compilation/linking/etc. for you.
-
-### It's fast
-
-
-Because ``xolotl`` is written in ``C++``, it's quite fast. Here are some benchmarks for a single-compartment Hodgkin-Huxley model with sodium, potassium, and passive leak conductances and another single-compartment model with [eight conductances](https://www.ncbi.nlm.nih.gov/pubmed/12944532/). The built-in benchmarking tool can benchmark any model configured in it:
+Want to set up a Hodgkin-Huxley model, inject current, 
+integrate it and plot the voltage trace? This is all you need:
 
 ```matlab
-   x.benchmark;
+x = xolotl;
+x.add('compartment', 'HH','A', 0.01);
+x.HH.add('liu/NaV', 'gbar', 1000);
+x.HH.add('liu/Kd', 'gbar', 300);
+x.HH.add('Leak', 'gbar', 1);
+x.I_ext = .2;
+x.plot;
 ```
 
-![](https://camo.githubusercontent.com/c3275e7444b646e4a39cbc206f25da66efdae815/68747470733a2f2f7777772e66726f6e7469657273696e2e6f72672f66696c65732f41727469636c65732f3431393934312f666e696e662d31322d30303038372d48544d4c2f696d6167655f6d2f666e696e662d31322d30303038372d673030372e6a7067)
 
-### Manipulate models in real time
+----------------
 
-Neurons and networks in ``xolotl`` can be manipulated in real-time using the graphical interface. Any parameter in ``xolotl`` can be accessed by a slider. Simulations are displayed by a chosen visualization function. Here, we manipulate the maximal conductances and reversal potentials of a Hodgkin-Huxley neuron model, simulate over a range of injected currents, and display using the ``xolotl`` ``plot`` function, and a firing rate over input (`fI`) function.
+## xolotl has *documentation*
+
+Unlike certain widely used NEURON simulators that 
+shall remain nameless, xolotl has [documentation](xolotl.readthedocs.io) that actually...
+exists. 
+
+This is what it looks like:
+
+![](https://user-images.githubusercontent.com/6005346/50499847-e3df4b00-0a1a-11e9-8aba-b3be57c3e784.png)
+
+----------------
+
+## xolotl lets you do **this**
+
+<video width="100%" autoplay loop muted>
+  <source src="../../images/manipulate-neuron.mp4" type="video/mp4">
+  <source src="../../images/manipulate-neuron.webm" type="video/webm">
+Your browser does not support the video tag.
+</video>
+
+xolotl lets you manipualte *any* parameter in *any* model and 
+view the effects of changing that parameter **in real time**
 
 
-![](https://user-images.githubusercontent.com/30243182/49184986-b83f4700-f32e-11e8-9899-cd7e20e95fa9.gif)
+----------------
+## xolotl is fully *programmable*
 
+xolotl is designed to be used from **within MATLAB**. It 
+gives you the best of both worlds: the high performance 
+of C++ compiled code with the rich power of all the toolboxes
+MATLAB has to offer. You can:
 
-### It's free to use, free to copy, and free to improve
+* write functions that pass models as arguments
+* optimize parameters of neuron models using the [Global Optimization Toolbox](https://www.mathworks.com/products/global-optimization.html)
+* run simulations in parallel across multiple computers
+* have a single script to run the simulation and analyze results
 
-`xolotl` is released under a permissive GPL license. `xolotl` is meant to make working with neuron models easier, and will always be free to use.
+--------------------
+
+Hooked? Check out the [quickstart](./tutorials/start-here.md) to see how easy it is to use. 
 
 # Where do I get this?
 
 Click [here](https://github.com/sg-s/xolotl/releases/download/latest/xolotl.mltbx) to download, and click on the downloaded file to install.
 
-# How do I learn about this?
-
-We use [Read the Docs](https://xolotl.readthedocs.io/en/master/) for our documentation.
 
 # How do I cite this?
 
