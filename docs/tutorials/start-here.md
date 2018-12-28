@@ -54,7 +54,7 @@ MEX configured to use 'Xcode with Clang' for C language compilation.
 
 OK, let's make sure everything works. Copy and paste the following code into your MATLAB terminal:
 
-```
+```matlab
 xolotl.go_to_examples
 demo_bursting_neuron
 ```

@@ -10,12 +10,12 @@
 // mechanisms are stored in compartments, and are
 // asked to integrate by the compartment they are in
 // which provides them the calcium error signal
-// and the timestep
+// and the time step
 //
 // mechanisms can thus connect to 3 different types
 // of objects: compartments, conductances or synapses
 // mechanisms can do anything they want, and can 
-// read and modify any public propoerty they can
+// read and modify any public property they can
 // get their hands on 
 
 

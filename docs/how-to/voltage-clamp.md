@@ -15,14 +15,14 @@ xolotl allows you to voltage clamp compartments with the following limitations:
 
 Here, we will use a single-compartment model of a bursting neuron. You can create this model using:
 
-```
+```matlab
 xolotl.go_to_examples;
 demo_bursting_neuron
 ```
 
 Now, if we inspect the `V_clamp` property, we see:
 
-```
+```matlab
 x.V_clamp
 ans =
    NaN
@@ -30,13 +30,13 @@ ans =
 
 that it is a `NaN` value. This means that the simulation will not run in voltage clamp mode. To voltage clamp the cell to -20mV, use:
 
-```
+```matlab
 x.V_clamp = -20;
 ```
 
 Now, we can integrate the model to obtain the clamping current and plot that:
 
-```
+```matlab
 I = x.integrate;
 time = (1:length(I))*x.dt*1e-3;
 plot(time,I)
@@ -54,7 +54,7 @@ We see something like this:
 
 We can also clamp a cell to a time-varying signal, for example, a sawtooth wave:
 
-```
+```matlab
 V_clamp = rem(linspace(0,100,length(I)),20)-10;
 x.V_clamp = V_clamp(:);
 ```
@@ -68,14 +68,14 @@ Integrating and plotting this yeilds a different current required to clamp the c
 
 We can also voltage clamp a single cell in a network. To demonstrate this, we will use a 3-cell network of the pyloric circuit:
 
-```
+```matlab
 xolotl.go_to_examples
 demo_stg
 ```
 
 Here, let's voltage clamp one cell to another cell's voltage dynamics.
 
-```
+```matlab
 V = x.integrate;
 x.V_clamp  = V*NaN;
 x.V_clamp(:,2) = V(:,1);
@@ -83,7 +83,7 @@ x.V_clamp(:,2) = V(:,1);
 
 Now, when we integrate it using:
 
-```
+```matlab
 data = x.integrate;
 ```
 
@@ -92,8 +92,8 @@ data = x.integrate;
 
 Let's tease them apart and plot them:
 
-```
-figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
+```matlab
+figure; hold on
 time = (1:length(data))*x.dt*1e-3;
 subplot(3,1,1); hold on
 ylabel('V_{AB} (mV)')

@@ -134,7 +134,7 @@ Notice that we didn't specify what the reversal potentials should be, but they w
 
 Let's change the `Leak` reversal potential a little bit:
 
-```
+```matlab
 x.AB.Leak.E = -55; % mV
 x.LP.Leak.E = -55; % mV
 x.PY.Leak.E = -55; % mV
@@ -190,7 +190,7 @@ x.t_end = 5000; % milliseconds
 
 Let's integrate the model and plot the voltage trace and the calcium concentration:
 
-```
+```matlab
 x.plot
 ```
 

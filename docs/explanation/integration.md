@@ -16,12 +16,11 @@ where $g_i(V)$ is the instantaneous conductance and $E_i$ the ionic reversal pot
 $$g_i(V) = \bar{g}_i m_i^{p_i} h_i^{q_i}$$
 
 
-where $\bar{g} i$ is the maximal conductance in Siemens per unit area and $m$ and $h$ are gating variables $\in[0, 1]$. The gating variables themselves are defined by differential equations which depend on the membrane potential. These equations are nonlinear and usually quite stiff. For these reasons, bespoke integration schemes are typically used to solve them. 
+where $\bar{g}_{i}$ is the maximal conductance in Siemens per unit area and $m$ and $h$ are gating variables $\in[0, 1]$. The gating variables themselves are defined by differential equations which depend on the membrane potential. These equations are nonlinear and usually quite stiff. For these reasons, bespoke integration schemes are typically used to solve them. 
 
 ## The Exponential Euler method
 
 
-### The exponential Euler method
 The exponential Euler method is a time-discrete solution to differential equations of the form:
 
 $$\tau_V \frac{dV}{dt} = V_\infty - V$$

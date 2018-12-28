@@ -8,13 +8,13 @@ done that already, [click here and complete the steps on that page first](../tut
 
 First, let's go to the folder that contains the demos:
 
-```
+```matlab
 xolotl.go_to_examples
 ```
 
 Once there, you can run any of the scripts there to launch that demo. For example:
 
-```
+```matlab
 demo_bursting_neuron
 ```
 
@@ -24,7 +24,7 @@ You should see this plot appear:
 
 You can see what effect changing the maximal conductances has on the voltage dynamics by running:
 
-```
+```matlab
 x.manipulate('*gbar')
 ```
 

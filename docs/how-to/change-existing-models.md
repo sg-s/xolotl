@@ -165,7 +165,7 @@ x.set('*gbar', [300, 0.1, 1000]);
 
 You can remove any component from the model by calling its `destroy` method. For example:
 
-```
+```matlab
 x.CompName.CondName.destroy()
 ```
 

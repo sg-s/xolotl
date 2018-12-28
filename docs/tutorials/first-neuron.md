@@ -16,7 +16,7 @@ See that the `compartment` object contains the three populations of ion channels
 
 To set up this model, the first thing we will do is create a new xolotl object:
 
-```
+```matlab
 x = xolotl;
 ```
 
@@ -25,7 +25,7 @@ x = xolotl;
 By convention, this variable will be called `x`, though you can call it whatever you want. Now, let's build up out model from the outside in. First, let's make a new compartment and add it:
 
 
-```
+```matlab
 x.add('compartment','HH','A',.01);
 ```
 
@@ -48,7 +48,7 @@ A compartment is pretty boring by itself. Let's add some voltage-gated channels 
 
 To do this, we type:
 
-```
+```matlab
 x.HH.add('liu/NaV','gbar',1e3,'E',30);
 x.HH.add('liu/Kd','gbar',300,'E',-80);
 x.HH.add('Leak','gbar',1);
@@ -79,7 +79,7 @@ That's it! Let's integrate it and see what it does.
 
 To integrate the model and plot the voltage, we type:
 
-```
+```matlab
 x.t_end = 100; % ms
 x.plot;
 ```
@@ -90,7 +90,7 @@ You should see something like this:
 
 Hmm. That's very boring. This neuron isn't doing anything. Let's inject some current into it and see if it does something.
 
-```
+```matlab
 x.I_ext = .2; %nA
 x.plot
 ```
@@ -106,7 +106,7 @@ We see that the neuron now spikes regularly.
 
 `xolotl` allows you to manipulate every single parameter in the model and view what effect it has on your model. For example, if we wanted to manipulate the maximal conductances of every channel in this neuron, we can do so using:
 
-```
+```matlab
 x.manipulate('*gbar')
 ```
 

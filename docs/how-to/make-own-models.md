@@ -73,9 +73,209 @@ You can now use this conductance like any other, e.g. `x.comp.add('custom/condNa
 
 ### Creating a new conductance by hand
 
+It is reasonably straightforward to create your own conductance
+by hand (i.e., to create the C++ file yourself). A good starting
+point is typically to look at the C++ files for existing
+conductances to get a sense of what the class looks like. 
+
+This is what a skeleton of a new conductance file would look like:
+
+```C++
+
+#ifndef NEWCOND
+#define NEWCOND
+#include "conductance.hpp"
+
+//inherit conductance class spec
+class NewCond: public conductance {
+
+public:
+
+    // specify parameters + initial conditions
+    NewCond(double g_, double E_, double m_, double h_)
+    {
+        gbar = g_;
+        E = E_;
+        m = m_;
+        h = h_;
+
+        // defaults 
+        if (isnan(gbar)) { gbar = 0; }
+        if (isnan (m)) { m = 0; }
+        if (isnan (h)) { h = 1; }
+        if (isnan (E)) { E = 30; }
+
+        // specify exponents of m and h
+        p = 3;
+        q = 1;
+
+        // allow this channel to be approximated?
+        approx_m = 1; // or 0 if not
+        approx_h = 1;
+    }
+
+    double m_inf(double, double);
+    double h_inf(double, double);
+    double tau_m(double, double);
+    double tau_h(double, double);
+    string getClass(void);
+};
+
+string NewCond::getClass(){return "NewCond";}
+
+
+double NewCond::m_inf(double V, double Ca) {return ...;}
+double NewCond::h_inf(double V, double Ca) {return ...;}
+double NewCond::tau_m(double V, double Ca) {return ...;}
+double NewCond::tau_h(double V, double Ca) {return ...;}
+
+
+#endif
+
+
+```
+
+!!! warning "conductance vs. conductance"
+    Note that there are two different conductance classes that have little to do with each other. One of them is an abstract C++ class that all object of type conductance must inherit from. The other is a MATLAB class that is used to generate conductances automatically. When we're talking about C++ code, we're referring to the abstract C++ class. 
+
+
+#### Why aren't there any integration routines? 
+
+Because models for conductances are so stereotyped, integration
+routines for them are specified in the conductance class. If we look at the [code for the conductance class](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp), we see this:
+
+```C++
+    virtual void integrate(double, double);
+    virtual void integrateMS(int, double, double);
+```
+
+which means that while the conductance class can integrate
+models on its own, you can also override it with your own 
+integration routines if you so which, and that will be used. 
+
+
 ## Creating new mechanisms
 
-## Creating new synapses 
+Because mechanisms are so generic, the only way to make new
+mechanisms is to write new C++ files. As with conductances, 
+new mechanisms inherit from the abstract C++ class called "mechanism" and it is typically straightforward to write a new mechanism. 
+
+Here's what a skeleton for a new mechanism would look like:
+
+```C++
+
+#ifndef NEWMECH
+#define NEWMECH
+#include "mechanism.hpp"
+#include <limits>
+
+
+//inherit controller class spec
+class NewMech: public mechanism {
+
+protected:
+public:
+
+    // parameters
+    double A = 0;
+    double B = 1;
+
+    // constructor 
+    NewMech(double A_, B_)
+    {
+        A = A_;
+        B = B_;
+        controlling_class = "unset";
+    }
+
+    // declare methods
+    void checkSolvers(int);
+
+    void integrate(void);
+    void integrateMS(int, double, double);
+
+    double NewMechCustomMethod(double);
+
+    // these connector methods are needed so that
+    // we know how the mechanism interacts with other
+    // components 
+    void connect(compartment*);
+    void connect(conductance*);
+    void connect(synapse*);
+
+    // these methods allow reading out of the mechanism
+    // state 
+    int getFullStateSize(void);
+    int getFullState(double * mech_state, int idx);
+    double getState(int);
+
+};
+
+
+double NewMech::getState(int idx){return std::numeric_limits<double>::quiet_NaN();}
+
+// specify the dimensions of your mechanism
+// this size must match the getState method
+int NewMech::getFullStateSize(){return 0; }
+
+// this does nothing since our state size is 0
+// otherwise we should increment idx, and 
+// fill in values in the mech_state array
+int NewMech::getFullState(double *mech_state, int idx) {
+    return idx;
+}
+
+// connection methods
+// we allow the mechanism to connect to a compartment 
+void NewMech::connect(compartment* comp_) {
+    comp = comp_;
+    comp->addMechanism(this);
+}
+
+// disallow other connections 
+void NewMech::connect(conductance* cond_) {
+    mexErrMsgTxt("[NewMech] This mechanism cannot connect to a conductance object");
+}
+
+void NewMech::connect(synapse* syn_) {
+    mexErrMsgTxt("[NewMech] This mechanism cannot connect to a synapse object");
+}
+
+
+// specify how we integrate it with the default
+// solver order (a single-step integration)
+void NewMech::integrate(void) {
+    // insert integration routine here
+}
+
+// this method can hold anything, and you can have
+// as many custom methods as you want
+double NewMech::NewMechCustomMethod(double X_) {
+    // insert your code here
+}
+
+// Runge-Kutta 4 integrator
+// you don't have to code this...see checkSolvers
+void NewMech::integrateMS(int k, double V, double Ca_) {
+    if (k == 4){return;}
+   // insert RK4 code here
+}
+
+// throw an error to disallow solver_orders
+// 0 must always work, though
+void NewMech::checkSolvers(int k) {
+    if (k == 0){
+        return;
+    } else if (k == 4){
+        return;
+    } else {
+        mexErrMsgTxt("[CalciumMech] unsupported solver order\n");
+    }
+}
+
+#endif
+
+```
 
 ## Where should I put them?
 <a name="whereshouldIputthem"></a>

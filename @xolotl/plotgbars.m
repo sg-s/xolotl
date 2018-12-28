@@ -31,13 +31,19 @@ Makes a stem plot of conductance densities in a given compartment. If the first 
 
 function plotgbars(self,varargin)
 
+
+if length(varargin) == 0
+	error('Not enough input arguments. You need to specify which compartment to plot maximal conductances for. ')
+end
+
+
 if length(varargin) == 2
 	axes_handle = varargin{1};
 	hold(axes_handle,'on')
 	compartment_name = varargin{2};
-else
+elseif length(varargin) > 0
 	axes_handle = gca; hold on
-	compartment_name = varargin{1};
+	compartment_name = varargin{1};	
 end
 
 

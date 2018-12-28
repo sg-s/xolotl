@@ -79,7 +79,7 @@ but there are other `'prinz'` and `'NaV'` conductances, then the character vecto
 
 Now, if we look at our model, we see:
 
-```
+```matlab
 x
 
 >xolotl object with
@@ -102,14 +102,14 @@ x
 
 So far, the model consists of a compartment and some channels. There is no mechanism for modeling the influx of Calcium, and its buffering. Let's add a Calcium mechanism:
 
-```
+```matlab
 x.AB.add('prinz/CalciumMech');
 
 ```
 
 If we integrate and plot the model now, using
 
-```
+```matlab
 x.plot()
 ```
 
@@ -122,7 +122,7 @@ we should see something like this:
 
 Let's create another compartment, and connect the two compartments using a synapse
 
-```
+```matlab
 x.add('compartment','LP','A',0.0628)
 x.LP.add('prinz/NaV','gbar',1000);
 x.LP.add('prinz/Kd','gbar',1000);
@@ -131,7 +131,7 @@ x.LP.add('prinz/Kd','gbar',1000);
 Now we can connect the two compartments using a synapse:
 
 
-```
+```matlab
 x.connect('AB','LP','AlphaSynapse')
 ```
 
@@ -139,7 +139,7 @@ x.connect('AB','LP','AlphaSynapse')
 
 We've just added a new synapse. Let's explore it to understand where it is and what parameters it has. If we look inside the LP compartment, we see:
 
-```
+```matlab
 x.LP
 ans =
  compartment object (9f24f53) with:
@@ -164,7 +164,7 @@ ans =
 
 We see that the AlphaSynapse is included inside the LP neuron. By drilling down into the synapse, we can look at its properties:
 
-```
+```matlab
 x.LP.AlphaSynapseAB
 ans =
  AlphaSynapse object (5f2921a) with:
@@ -184,7 +184,7 @@ We see that its `gmax` value, or strength in `nS` is 0.
 
 Let's set a larger value for the synapse strength. Changing any parameter of the model is as simple as using dot notation:
 
-```
+```matlab
 x.LP.AlphaSynapseAB.gmax = 20;
 
 ```
