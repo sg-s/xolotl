@@ -68,7 +68,7 @@ MATLAB has to offer. You can:
 
 --------------------
 
-Hooked? Check out the [quickstart](./tutorials/start-here.md) to see how easy it is to use. 
+Hooked? [Get started here](https://xolotl.readthedocs.io/en/master/).
 
 # Where do I get this?
 
