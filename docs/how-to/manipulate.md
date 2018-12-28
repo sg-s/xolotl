@@ -102,6 +102,9 @@ demo_manipulate
 
 ```
 
+!!! warning 
+    The bigger your model is, the more sluggish manipulating it can appear. Try to use the simplest possible model to manipulate.
+
 
 ## See Also
 

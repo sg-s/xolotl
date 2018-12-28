@@ -66,7 +66,7 @@ This is what it looks like:
 Your browser does not support the video tag.
 </video>
 
-xolotl lets you manipualte *any* parameter in *any* model and 
+xolotl lets you manipulate *any* parameter in *any* model and 
 view the effects of changing that parameter **in real time**
 
 

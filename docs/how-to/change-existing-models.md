@@ -169,6 +169,9 @@ You can remove any component from the model by calling its `destroy` method. For
 x.CompName.CondName.destroy()
 ```
 
+!!! warning
+    There is an inconsistency in how objects are handled across cpplab and xolotl that means that unexpected behavior may arise when compartments are removed from a xolotl object. This is a [known issue](https://github.com/sg-s/xolotl/issues/329) and will be fixed soon.
+
 destroys an object called `CondName` from the compartment called `CompName`.
 
 ## Add a new component to an existing model
