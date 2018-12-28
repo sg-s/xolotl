@@ -7,8 +7,6 @@
 
 
 
-# xolotl: a fast and flexible neuronal simulator 
-
 `xolotl` is a fast single-compartment and 
 multi-compartment simulator  written in `C++` with 
 a `MATLAB` interface that you'll actually enjoy using.
