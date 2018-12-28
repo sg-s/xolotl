@@ -67,3 +67,7 @@ for i = length(all_tests):-1:1
 		disp('TEST FAILED')	
 	end	
 end 
+
+
+% now run the actual tests
+xt = xtest; run(xt)

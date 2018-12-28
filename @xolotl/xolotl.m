@@ -16,20 +16,20 @@
 classdef xolotl <  cpplab & matlab.mixin.CustomDisplay
 
 properties (SetAccess = protected)
-	linked_binary@char
-	synapses@struct
+	linked_binary@char % binary to run when integrate is called
+	synapses@struct % structure containing synapses in model
+    illegal_names = {'xolotl_network','compartment','conductance','controller','synapse','network','x','self'}; % list of illegal names for compartments, synpases and other objects
 
 end  % end set protected props
 
 properties (Access = protected)
-	xolotl_folder
-	cpp_folder
-	OS_binary_ext % OS-specific, not used any more
-	dyn_prop_handles % handles to dynamic properties
-	illegal_names = {'xolotl_network','compartment','conductance','controller','synapse','network','x','self'}; % list of illegal names for compartments, synpases and other objects
+	xolotl_folder % full path to folder that contains xolotl code
+	cpp_folder % full path to folder that contains c++ code
+	OS_binary_ext % this property is not used any more
+	dyn_prop_handles % this property is not used any more
 
 
-    snapshots
+    snapshots % saves snapshots of models 
 
 
     hpp_files
