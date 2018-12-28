@@ -61,8 +61,8 @@ This is what it looks like:
 ## xolotl lets you do **this**
 
 <video width="100%" autoplay loop muted>
-  <source src="../../images/manipulate-neuron.mp4" type="video/mp4">
-  <source src="../../images/manipulate-neuron.webm" type="video/webm">
+  <source src="../images/manipulate-neuron.mp4" type="video/mp4">
+  <source src="../images/manipulate-neuron.webm" type="video/webm">
 Your browser does not support the video tag.
 </video>
 
