@@ -9,7 +9,7 @@
 
 **Syntax**
 
-```
+```matlab
 data = x.fI()
 data = x.fI('Name',value...)
 ```

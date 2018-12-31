@@ -10,7 +10,7 @@
 
 **Syntax**
 
-```
+```matlab
 x = xolotl.make_bursting_neuron('liu');
 x = xolotl.make_bursting_neuron('prinz');
 ```

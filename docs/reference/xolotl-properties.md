@@ -1,12 +1,12 @@
 Every xolotl object has the following properties listen in this document. To access a property, use dot notation, i.e.:
 
-```
+```matlab
 x.verbosity
 ```
 
 You can view all the properties of a xolotl object using the built-in [properties](https://www.mathworks.com/help/matlab/ref/properties.html) command:
 
-```
+```matlab
 properties(xolotl)
 % will display a list of properties
 ```
@@ -166,4 +166,8 @@ data along with this model to other functions.
 
 ### `Children`
 
-`Children` contains a list of all compartments in the current xolotl model. 
+`Children` contains a list of all compartments in the 
+current xolotl model. xolotl only allows you to add 
+objects of type "compartment" to it. Therefore, 
+`x.Children` will give you a list of compartments in 
+the model.

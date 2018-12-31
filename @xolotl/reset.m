@@ -13,7 +13,7 @@
 
 **Syntax**
 
-```
+```matlab
 x.reset()
 x.reset('snap_name')
 ```

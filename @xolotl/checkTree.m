@@ -4,7 +4,7 @@
 
 **Syntax**
 
-```
+```matlab
 x.checkTree
 ```
 

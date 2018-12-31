@@ -9,7 +9,7 @@
 
 Syntax:
 
-```
+```matlab
 x2 = copy(x);
 ```
 

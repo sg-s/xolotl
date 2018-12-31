@@ -10,7 +10,7 @@
 
 **Syntax**
 
-```
+```matlab
 x.plotgbars('compartment_name');
 x.plotgbars(axes_handle,'compartment_name');
 ```

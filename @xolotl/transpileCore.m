@@ -9,7 +9,7 @@
 
 **Syntax**
 
-```
+```matlab
 x.transpileCore(in_file,out_file)
 ```
 

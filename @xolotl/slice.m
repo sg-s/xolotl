@@ -9,7 +9,7 @@
 
 **Syntax**
 
-```
+```matlab
 % assuming there is a compartment called 'Dendrite'
 x.slice('Dendrite',10)
 ```

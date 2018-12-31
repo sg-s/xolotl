@@ -10,7 +10,7 @@
 
 **Syntax**
 
-```
+```matlab
 x.transpile;
 ```
 

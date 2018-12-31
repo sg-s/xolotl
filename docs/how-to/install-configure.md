@@ -109,6 +109,6 @@ The problem is fixed if you see something like this in `MATLAB`:
 
 ## See Also
 
-* [xolotl.install](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#copy)
+* [xolotl.install](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#install)
 * [xolotl.uninstall](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#uninstall)
 * [xolotl.update](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#update)

@@ -9,7 +9,7 @@
 
 **Syntax**
 
-```
+```matlab
 xolotl.setup
 x.setup
 ```

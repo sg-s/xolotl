@@ -42,7 +42,7 @@ Adds a `cpplab` object to a `xolotl` object. The `add` method is the most import
 
 **Syntax**
 
-```
+```matlab
 x.benchmark;
 ```
 
@@ -100,7 +100,7 @@ to a `xolotl` object.
 
 **Syntax**
 
-```
+```matlab
 x.checkTree
 ```
 
@@ -137,7 +137,7 @@ transpiling takes place
 
 **Syntax**
 
-```
+```matlab
 xolotl.cleanup
 x.cleanup
 ```
@@ -181,7 +181,7 @@ automatically compiles when t needs to. You can turn this
 
 **Syntax**
 
-```
+```matlab
 x.connect('Comp1', 'Comp2')
 x.connect('Comp1', 'Comp2',resistivity)
 x.connect('Comp1', 'Comp2', SynapseObj)
@@ -227,7 +227,7 @@ The following properties can be specified for most synapses:
 
 **Syntax**
 
-```
+```matlab
 curr_index = xolotl.contributingCurrents(V, I)
 ```
 
@@ -255,7 +255,7 @@ where V is a vector of voltages, I is the corresponding matrix of currents
 
 Syntax:
 
-```
+```matlab
 x2 = copy(x);
 ```
 
@@ -285,7 +285,7 @@ unless you add a new component to one of them.
 
 **Syntax**
 
-```
+```matlab
 data = x.fI()
 data = x.fI('Name',value...)
 ```
@@ -323,7 +323,7 @@ The following optional parameters may be specified in name-value syntax:
 
 **Syntax**
 
-```
+```matlab
 [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance)
 ```
 
@@ -356,7 +356,7 @@ is used internally in `xolotl.show()`
 
 **Syntax**
 
-```
+```matlab
 xolotl.go_to_examples
 ```
 
@@ -382,7 +382,7 @@ integrates a `xolotl` model.
 
 **Syntax**
 
-```
+```matlab
 x.output_type = 0;
 V = x.integrate;
 I_clamp = x.integrate;
@@ -441,7 +441,7 @@ When `output_type` is 1 or 2, the integration is performed requesting all output
 
 **Syntax**
 
-```
+```matlab
 x = xolotl.make_bursting_neuron('liu');
 x = xolotl.make_bursting_neuron('prinz');
 ```
@@ -467,7 +467,7 @@ channels from Liu et al. or Prinz et al.
 
 **Syntax**
 
-```
+```matlab
 x.manipulate();
 x.manipulate('some*pattern')
 x.manipulate({'parameter1','parameter2'})
@@ -519,7 +519,7 @@ should not need to use this by itself.
 
 **Syntax**
 
-```
+```matlab
 x.plot()
 ```
 
@@ -536,9 +536,9 @@ If you want to turn off the coloring, or to hide the
 Calcium concentration, change your preference using:
 
 
-```
-setpref('xolotl','plot_color',false)
-setpref('xolotl','show_Ca',false)
+```matlab
+x.pref.plot_color = false;
+x.pref.show_Ca = false;
 ```
 
 !!! info "See Also"
@@ -559,7 +559,7 @@ setpref('xolotl','show_Ca',false)
 
 **Syntax**
 
-```
+```matlab
 x.plotgbars('compartment_name');
 x.plotgbars(axes_handle,'compartment_name');
 ```
@@ -588,7 +588,7 @@ Makes a stem plot of conductance densities in a given compartment. If the first 
 
 **Syntax**
 
-```
+```matlab
 x.rebase()
 ```
 
@@ -626,7 +626,7 @@ If you move a xolotl object across computers (for example, by saving it to a fil
 
 **Syntax**
 
-```
+```matlab
 x.reset()
 x.reset('snap_name')
 ```
@@ -669,7 +669,7 @@ x.reset('base')
 
 **Syntax**
 
-```
+```matlab
 xolotl.run_all_tests
 ```
 
@@ -695,7 +695,7 @@ tests pass is a release published.
 
 **Syntax**
 
-```
+```matlab
 xolotl.setup
 x.setup
 ```
@@ -724,7 +724,7 @@ once. If xolotl works, there is no need to run this.
 
 **Syntax**
 
-```
+```matlab
 xolotl.show('path/to/conductance/file')
 ```
 
@@ -749,7 +749,7 @@ This method displays activation functions and timescales of any conductance. Sub
 
 **Syntax**
 
-```
+```matlab
 % assuming there is a compartment called 'Dendrite'
 x.slice('Dendrite',10)
 ```
@@ -781,7 +781,7 @@ it using the Crank-Nicholson scheme reserved for multi-compartment models.
 
 **Syntax**
 
-```
+```matlab
 x.snapshot('snap_name')
 ```
 
@@ -825,7 +825,7 @@ x.reset('base')
 
 **Syntax**
 
-```
+```matlab
 x.transpile;
 ```
 
@@ -859,7 +859,7 @@ MATLAB to C++ and back.
 
 **Syntax**
 
-```
+```matlab
 x.transpileCore(in_file,out_file)
 ```
 
@@ -947,7 +947,7 @@ A static method that updates your installation of
 
 **Syntax**
 
-```
+```matlab
 x.viewCode;
 ```
 

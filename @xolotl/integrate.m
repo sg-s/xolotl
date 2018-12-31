@@ -11,7 +11,7 @@ integrates a `xolotl` model.
 
 **Syntax**
 
-```
+```matlab
 x.output_type = 0;
 V = x.integrate;
 I_clamp = x.integrate;

@@ -9,7 +9,7 @@
 
 **Syntax**
 
-```
+```matlab
 xolotl.show('path/to/conductance/file')
 ```
 

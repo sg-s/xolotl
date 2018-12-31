@@ -11,7 +11,7 @@
 
 **Syntax**
 
-```
+```matlab
 xolotl.run_all_tests
 ```
 

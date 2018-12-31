@@ -10,7 +10,7 @@
 
 **Syntax**
 
-```
+```matlab
 xolotl.go_to_examples
 ```
 

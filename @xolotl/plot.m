@@ -9,7 +9,7 @@
 
 **Syntax**
 
-```
+```matlab
 x.plot()
 ```
 
@@ -26,9 +26,9 @@ If you want to turn off the coloring, or to hide the
 Calcium concentration, change your preference using:
 
 
-```
-setpref('xolotl','plot_color',false)
-setpref('xolotl','show_Ca',false)
+```matlab
+x.pref.plot_color = false;
+x.pref.show_Ca = false;
 ```
 
 !!! info "See Also"

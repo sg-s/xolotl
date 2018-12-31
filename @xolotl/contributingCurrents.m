@@ -4,7 +4,7 @@
 
 **Syntax**
 
-```
+```matlab
 curr_index = xolotl.contributingCurrents(V, I)
 ```
 

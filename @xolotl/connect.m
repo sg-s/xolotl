@@ -10,7 +10,7 @@
 
 **Syntax**
 
-```
+```matlab
 x.connect('Comp1', 'Comp2')
 x.connect('Comp1', 'Comp2',resistivity)
 x.connect('Comp1', 'Comp2', SynapseObj)

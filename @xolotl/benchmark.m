@@ -9,7 +9,7 @@
 
 **Syntax**
 
-```
+```matlab
 x.benchmark;
 ```
 

@@ -11,7 +11,7 @@ __  _____ | | ___ | |_| |
 
 **Syntax**
 
-```
+```matlab
 x.manipulate();
 x.manipulate('some*pattern')
 x.manipulate({'parameter1','parameter2'})

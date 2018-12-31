@@ -9,7 +9,7 @@
 
 **Syntax**
 
-```
+```matlab
 x.snapshot('snap_name')
 ```
 

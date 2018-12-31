@@ -5,7 +5,7 @@ This document describes how to manipulate a xolotl model. Here, we assume you ha
 All xolotl models can be manipulated out of the box. If you run
 
 
-```
+```matlab
 x.manipulate
 ```
 
@@ -17,7 +17,7 @@ auto-update as you move the sliders around.
 To manipulate only a few parameters, you can call 
 [manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate) with specific arguments:
 
-```
+```matlab
 % only manipulate maximal conductances
 x.manipulate('*gbar')
 
@@ -41,20 +41,20 @@ Let's assume your custom function is called `foo(x)`.
 To configure xolotl to use your custom function, use this syntax:
 
 
-```
+```matlab
 x.manipulate_plot_func = {@foo};
 ```
 
 Note that you can use this syntax to specify more than one plot function:
 
-```
+```matlab
 x.manipulate_plot_func = {@foo, @bar};
 ```
 
 Your custom function should look something like this:
 
 
-```
+```matlab
 % note: no outputs, and only one input,
 % which is a xolotl object
 function foo(x)
@@ -96,7 +96,7 @@ To see an example of this working, look at this
 [example file](https://github.com/sg-s/xolotl/blob/master/examples/demo_manipulate.m) that you can run using:
 
 
-```
+```matlab
 xolotl.go_to_examples
 demo_manipulate
 
