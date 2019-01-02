@@ -22,6 +22,14 @@ This means that while simple code in MATLAB can be dramatically more efficient w
 
 ## Philosophy
 
+Xolotl solves the problem of ease-of-use vs. computational efficiency by designing the integration environment "under-the-hood" in C++ and adding a robust simulation environment in MATLAB on top. This isn't just a pretty interface -- adding a compartment in xolotl actually changes C++ code. Then the code is compiled, and when the `integrate` function is called in MATLAB, parameters are passed to the C++ function which is then run and the results returned in MATLAB.
+
+While the C++ code can be compiled and run by itself, it's so much better with the MATLAB interface. The user never has to leave MATLAB-land. A model can be written and inspected in the command window and integrated, with top-tier C++ speed, without the user having to touch any C++ code. All the transpiling and compiling happens beneath the surface.
+
+The main limitation of this approach is that only model components which have been pre-specified can be used. This means someone has to write out all the C++ code beforehand, so that models can be constructed from these building blocks. A lot of work has already been done to provide hundreds of network components, and several functions and templates exist to auto-generate, or at least, vastly simplify, the process of creating new components.
+
+We hope that as our user-base grows, users will be willing to contribute their custom network components, especially ones from published papers, which will be added to the growing database of components available for any xolotl model.
+
 ## How cpplab works
 
 ### How cpplab reads a C++ header file
