@@ -45,15 +45,21 @@ $$V(t + \Delta t) = V_\infty + (V(t) - V_\infty) \exp \Big(-\frac{\Delta t}{\tau
 This approximation is more accurate than a first order Euler method approximation, and is significantly faster than higher order (*viz.* Runge-Kutta) methods.
 
 !!! info "For more information"
-  See Ch. 5, Dayan, P. and Abbott, LF (2001) Theoretical Neuroscience, MIT Press.
+    See Ch. 5, Dayan, P. and Abbott, LF (2001) Theoretical Neuroscience, MIT Press. You can read the full book [here](http://www.gatsby.ucl.ac.uk/~lmate/biblio/dayanabbott.pdf)
 
 ### Where this method is used
 
-The exponential Euler method is very accurate compared to its speed. It is suitable for conditions in which each contributing factor to the membrane potential is approximately linear and slowly-varying. In conditions of coarse time-resolution or quickly varying applied current, this method can diverge.
+The exponential Euler method is used (when [`solver_order`](https://xolotl.readthedocs.io/en/master/reference/xolotl-properties/#solver_order) = 0) 
+
+* to integrate the gating variables (`m` and `h` in every conductance). This method is defined in the conductance class.
+* to integrate the voltage in compartments (for compartments that are not part of multi-compartment models)
+* to integrate the Calcium levels in compartments (defined in some mechanisms)
 
 ## The Runge-Kutta fourth-order method
 
-The [Runge-Kutta methods](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods) are extensions of forward Euler to higher derivative orders. Given a differential equation in the form
+The [Runge-Kutta methods](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods) 
+are extensions of forward Euler to higher derivative orders.
+Given a differential equation in the form
 
 $$\frac{dV}{dt} = V'(t) = f(V, t)$$
 
@@ -80,10 +86,15 @@ $$V(t + \Delta t) = V(t) + \frac{k_1 + 2k_2 + 2k_3 + k_4}{6} \Delta t$$
 The method is more accurate because slope approximations at fractions of $\Delta t$ are being taken and averaged. The method is slower because the four coefficients must be computed during each integration step.
 
 ### Where this method is used
-The Runge-Kutta 4th order method is the workhorse of applied mathematicians and scientists the world over. The total accumulated error is on the order of $\mathcal{O}(\Delta t^4)$. This method is suitable for conditions in which you want greater accuracy over speed, or for particularly tricky simulations where the exponential Euler is unsuitable (such as highly-variable applied current). RK4 is also very well-studied, which can simplify approximations and justifications.
+
+The Runge-Kutta 4th order method is used when (when [`solver_order`](https://xolotl.readthedocs.io/en/master/reference/xolotl-properties/#solver_order) = 4) for components that support this method. If any component does not support it, an error will be thrown. 
 
 ## The Euler method
-Euler's method is the most basic explicit method for solving numerical integration problems of ordinary differential equations, and is the simplest Runge-Kutta method (i.e. it's 1st order). It is blazing fast and terribly inaccurate. Given a differential equation
+
+Euler's method is the most basic explicit method for 
+solving numerical integration problems of ordinary 
+differential equations, and is the simplest Runge-Kutta
+method (i.e. it's 1st order). It is fast but inaccurate and unstable. Given a differential equation
 
 $$\frac{dV}{dt} = f(V)$$
 
@@ -94,7 +105,8 @@ $$V(t + \Delta t) = V(t) + \Delta t f(V(t))$$
 This process can be iterated to determine the trajectory of $V$ with accuracy on the order of $\mathcal{O}(\Delta t)$.
 
 ### Where this method is used
-Euler's method is only used for conditions in which exponential Euler is called for but is difficult or impossible to implement. Certain conductance and synapse models with idiosyncratic equations don't fit well into the form required for the exponential Euler assumptions, and so in those situations, the explict Euler method is used.
+
+Some mechanisms may implement this method. 
 
 ## The Crank-Nicholson Method
 

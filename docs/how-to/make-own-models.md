@@ -278,9 +278,15 @@ void NewMech::checkSolvers(int k) {
 ```
 
 ## Creating new synapses
-Creating synapses is just as straightforward as creating conductances. New synapses inherit from the `C++` class `synapse`.
 
-```matlab
+Creating new synapses is similar to the process of 
+creating new conductances. New synapses inherit 
+from the abstract `C++` class `synapse`. 
+
+Here is a skeleton for a new synapse class that you
+can fill out for yourself. 
+
+```C++
 // here is an example of a synapse named NewSynapse
 // we define the header file and include the synapse class
 #ifndef NEWSYNAPSE
@@ -292,19 +298,11 @@ class NewSynapse: public synapse {
 
 public:
 
-    // synapse models are somewhat varied
-    // often there are many parameters determined by fitting the model to data
-    // variables needed for integration can be stored here
-    double Delta = 5.0;
-    double k_ = 0.01;
-    double Vth = -35.0;
-
 
     // here is the constructor function
     // it accepts the maximal conductance and a single state variable
     NewSynapse(double g_, double s_)
     {
-        // renaming for convenience
         gmax = g_;
         s = s_;
 
@@ -336,98 +334,45 @@ public:
 };
 
 // this function returns the state size of the synapse
-// which should be the number of state variables from this synapse plus one
-int NewSynapse::getFullStateSize()
-{
+// which should be the number of state variables 
+// from this synapse plus one (for the synaptic current)
+int NewSynapse::getFullStateSize() {
     return 2;
 }
 
 // define the steady-state gating function for this synapse
-double NewSynapse::s_inf(double V_pre)
-{
+double NewSynapse::s_inf(double V_pre) {
     return 1.0/(1.0+exp((Vth - V_pre)/Delta));
 }
 
-// define the time constant for this synapse
-double NewSynapse::tau_s(double sinf_)
-{
-    return (1 - sinf_)/k_;
+
+double NewSynapse::tau_s(double sinf_) {
+    // this could hold some arbitrary function
 }
 
-// define the equation of state for this synapse
-// V_pre represents the pre-synaptic membrane potential
-double NewSynapse::sdot(double V_pre, double s_)
-{
-    double sinf = s_inf(V_pre);
-    return (sinf - s_)/tau_s(sinf);
+
+double NewSynapse::sdot(double V_pre, double s_) {
+    // define your own function here
 }
 
-// define the integrate functions
-// here we have defined an exponential Euler integration
-// we return the effective conductance, which is gmax * s here
-void NewSynapse::integrate(void)
-{
-    // figure out the voltage of the pre-synaptic neuron
-    double V_pre = pre_syn->V;
-    double sinf = s_inf(V_pre);
 
-    // integrate using exponential Euler
-    s = sinf + (s - sinf)*exp(-dt/tau_s(sinf));
-
-    g = gmax*s;
-
+void NewSynapse::integrate(void) {
+    // define your integration routing here
 
 }
 
-// define the multi-step integration scheme
-void NewSynapse::integrateMS(int k, double V, double Ca)
-{
-
-    double V_pre;
-
-    if (k == 0) {
-        V_pre = pre_syn->V_prev;
-        k_s[0] = dt*(sdot(V_pre, s));
-
-    } else if (k == 1) {
-
-        V_pre = pre_syn->V_prev + pre_syn->k_V[0]/2;
-        k_s[1] = dt*(sdot(V_pre, s + k_s[0]/2));
-
-
-    } else if (k == 2) {
-
-        V_pre = pre_syn->V_prev + pre_syn->k_V[1]/2;
-        k_s[2] = dt*(sdot(V_pre, s + k_s[1]/2));
-
-    } else if (k == 3) {
-        V_pre = pre_syn->V_prev + pre_syn->k_V[2];
-        k_s[3] = dt*(sdot(V_pre, s + k_s[2]));
-
-    } else {
-        // last step
-
-        s = s + (k_s[0] + 2*k_s[1] + 2*k_s[2] + k_s[3])/6;
-
-        if (s < 0) {s = 0;}
-        if (s > 1) {s = 1;}
-    }
-
-}
 
 // determine which solver to use
+// 0 should always be supported
 void NewSynapse::checkSolvers(int k){
     if (k == 0) {
-        return;
-    } else if (k == 4) {
         return;
     }
     mexErrMsgTxt("[NewSynapse] Unsupported solver order\n");
 }
 
-// this function is important for ordering the outputs
-int NewSynapse::getFullState(double *syn_state, int idx)
-{
+// return the state variable, and the current
+int NewSynapse::getFullState(double *syn_state, int idx) {
     // give it the current synapse variable
     syn_state[idx] = s;
 
@@ -440,9 +385,9 @@ int NewSynapse::getFullState(double *syn_state, int idx)
     return idx;
 }
 
-// the connect function defines how to wire two compartments together
-void NewSynapse::connect(compartment *pcomp1_, compartment *pcomp2_)
-{
+// the connect function defines how to wire
+// two compartments together
+void NewSynapse::connect(compartment *pcomp1_, compartment *pcomp2_) {
     pre_syn = pcomp1_;
     post_syn = pcomp2_;
 
