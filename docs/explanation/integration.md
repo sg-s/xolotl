@@ -1,7 +1,7 @@
-This document describes how xolotl solves the [Ordinary Differential Equations](https://en.wikipedia.org/wiki/Ordinary_differential_equation) (ODEs) in its models. 
+This document describes how xolotl solves the [Ordinary Differential Equations](https://en.wikipedia.org/wiki/Ordinary_differential_equation) (ODEs) in its models.
 
 
-`xolotl` is designed to solve for state variables of 
+`xolotl` is designed to solve for state variables of
 [conductance-based](http://www.scholarpedia.org/article/Conductance-based_models) neuronal and network models.
 The voltage across the membrane $V$ is given by
 
@@ -16,7 +16,7 @@ where $g_i(V)$ is the instantaneous conductance and $E_i$ the ionic reversal pot
 $$g_i(V) = \bar{g}_i m_i^{p_i} h_i^{q_i}$$
 
 
-where $\bar{g}_{i}$ is the maximal conductance in Siemens per unit area and $m$ and $h$ are gating variables $\in[0, 1]$. The gating variables themselves are defined by differential equations which depend on the membrane potential. These equations are nonlinear and usually quite stiff. For these reasons, bespoke integration schemes are typically used to solve them. 
+where $\bar{g}_{i}$ is the maximal conductance in Siemens per unit area and $m$ and $h$ are gating variables $\in[0, 1]$. The gating variables themselves are defined by differential equations which depend on the membrane potential. These equations are nonlinear and usually quite stiff. For these reasons, bespoke integration schemes are typically used to solve them.
 
 ## The Exponential Euler method
 
@@ -43,10 +43,13 @@ For a time step $\Delta t$, the voltage $V$ at time $t + \Delta t$ can be approx
 $$V(t + \Delta t) = V_\infty + (V(t) - V_\infty) \exp \Big(-\frac{\Delta t}{\tau_V}\Big)$$
 
 This approximation is more accurate than a first order Euler method approximation, and is significantly faster than higher order (*viz.* Runge-Kutta) methods.
-> See Ch. 5, Dayan, P. and Abbott, LF (2001) Theoretical Neuroscience, MIT Press for more information
+
+!!! info "For more information"
+  See Ch. 5, Dayan, P. and Abbott, LF (2001) Theoretical Neuroscience, MIT Press.
 
 ### Where this method is used
 
+The exponential Euler method is very accurate compared to its speed. It is suitable for conditions in which each contributing factor to the membrane potential is approximately linear and slowly-varying. In conditions of coarse time-resolution or quickly varying applied current, this method can diverge.
 
 ## The Runge-Kutta fourth-order method
 
@@ -58,10 +61,10 @@ with some initial condition $V(t_0) = V_0$. The first order (Euler) approximatio
 
 $$V(t + \Delta t) = V(t) + f(V, t) \Delta t$$
 
-Euler's method is accurate $\propto \Delta t$ per step. 
+Euler's method is accurate $\propto \Delta t$ per step.
 The Runge-Kutta fourth-order method uses four coefficients
-$k_1, k_2, ...$ to extend this method to accuracy of 
-$\propto (\Delta t) ^4$ per step at the cost of speed. 
+$k_1, k_2, ...$ to extend this method to accuracy of
+$\propto (\Delta t) ^4$ per step at the cost of speed.
 The coefficients are, for $V = V(t)$,
 
 $$ k_1 = f(V, t)$$
@@ -76,18 +79,28 @@ $$V(t + \Delta t) = V(t) + \frac{k_1 + 2k_2 + 2k_3 + k_4}{6} \Delta t$$
 
 The method is more accurate because slope approximations at fractions of $\Delta t$ are being taken and averaged. The method is slower because the four coefficients must be computed during each integration step.
 
+### Where this method is used
+The Runge-Kutta 4th order method is the workhorse of applied mathematicians and scientists the world over. The total accumulated error is on the order of $\mathcal{O}(\Delta t^4)$. This method is suitable for conditions in which you want greater accuracy over speed, or for particularly tricky simulations where the exponential Euler is unsuitable (such as highly-variable applied current). RK4 is also very well-studied, which can simplify approximations and justifications.
+
+## The Euler method
+Euler's method is the most basic explicit method for solving numerical integration problems of ordinary differential equations, and is the simplest Runge-Kutta method (i.e. it's 1st order). It is blazing fast and terribly inaccurate. Given a differential equation
+
+$$\frac{dV}{dt} = f(V)$$
+
+with a known initial condition $V(t)$, the next step is determined by the evolution equation
+
+$$V(t + \Delta t) = V(t) + \Delta t f(V(t))$$
+
+This process can be iterated to determine the trajectory of $V$ with accuracy on the order of $\mathcal{O}(\Delta t)$.
+
+### Where this method is used
+Euler's method is only used for conditions in which exponential Euler is called for but is difficult or impossible to implement. Certain conductance and synapse models with idiosyncratic equations don't fit well into the form required for the exponential Euler assumptions, and so in those situations, the explict Euler method is used.
+
+## The Crank-Nicholson Method
 
 ### Where this method is used
 
-## The Euler method 
 
-### Where this method is used
-
-## The Crank-Nicholson Method 
-
-### Where this method is used 
-
-
-## Bibliography 
+## Bibliography
 
 * Theoretical Neuroscience. Dayan and Abbott. You can read the full book [here](http://www.gatsby.ucl.ac.uk/~lmate/biblio/dayanabbott.pdf)
