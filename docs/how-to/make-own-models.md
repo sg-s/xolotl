@@ -1,10 +1,10 @@
 
-This document will describe how to create your own 
+This document will describe how to create your own
 components in xolotl. Currently, you can create your
-own conductances, mechanisms and synapses. 
+own conductances, mechanisms and synapses.
 
 
-## Creating new conductances 
+## Creating new conductances
 
 ### Create a new conductance using the [`conductance`](../../reference/conductance) class
 
@@ -12,19 +12,19 @@ own conductances, mechanisms and synapses.
     A worked example showing how the `conductance` class can be used to generate new channels exists in `../xolotl/examples/demo_conductance`.
 
 
-First, create a `conductance` object. 
+First, create a `conductance` object.
 
 ```matlab
 newCond = conductance;
 ```
 
-Remember that you  can always see all the 
+Remember that you  can always see all the
 properties of the object  using `properties(newCond)`.
 
-Then, the activation steady-state function `m_inf`, 
-the inactivation steady-state function `h_inf`, 
-the activation time constant function `tau_m`, and 
-the inactivation time constant function `tau_h` 
+Then, the activation steady-state function `m_inf`,
+the inactivation steady-state function `h_inf`,
+the activation time constant function `tau_m`, and
+the inactivation time constant function `tau_h`
 must be defined, as function handles.
 
 For example,
@@ -40,7 +40,7 @@ You must also set whether this is a Calcium conductance.
 newCond.is_Ca = false;
 ```
 
-Specify the exponents of the activation 
+Specify the exponents of the activation
 `p` and (de)inactivation `q` gating variables
 in the current equation.
 
@@ -55,7 +55,7 @@ Finally, you must set the default reversal potential.
 newCond.default_E = -80;
 ```
 
-You can also set the default activation and 
+You can also set the default activation and
 inactivation gating variable values with
 `newCond.default_m` and `newCond.default_h`.
 
@@ -76,7 +76,7 @@ You can now use this conductance like any other, e.g. `x.comp.add('custom/condNa
 It is reasonably straightforward to create your own conductance
 by hand (i.e., to create the C++ file yourself). A good starting
 point is typically to look at the C++ files for existing
-conductances to get a sense of what the class looks like. 
+conductances to get a sense of what the class looks like.
 
 This is what a skeleton of a new conductance file would look like:
 
@@ -99,7 +99,7 @@ public:
         m = m_;
         h = h_;
 
-        // defaults 
+        // defaults
         if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
@@ -136,10 +136,10 @@ double NewCond::tau_h(double V, double Ca) {return ...;}
 ```
 
 !!! warning "conductance vs. conductance"
-    Note that there are two different conductance classes that have little to do with each other. One of them is an abstract C++ class that all object of type conductance must inherit from. The other is a MATLAB class that is used to generate conductances automatically. When we're talking about C++ code, we're referring to the abstract C++ class. 
+    Note that there are two different conductance classes that have little to do with each other. One of them is an abstract C++ class that all object of type conductance must inherit from. The other is a MATLAB class that is used to generate conductances automatically. When we're talking about C++ code, we're referring to the abstract C++ class.
 
 
-#### Why aren't there any integration routines? 
+#### Why aren't there any integration routines?
 
 Because models for conductances are so stereotyped, integration
 routines for them are specified in the conductance class. If we look at the [code for the conductance class](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp), we see this:
@@ -150,15 +150,15 @@ routines for them are specified in the conductance class. If we look at the [cod
 ```
 
 which means that while the conductance class can integrate
-models on its own, you can also override it with your own 
-integration routines if you so which, and that will be used. 
+models on its own, you can also override it with your own
+integration routines if you so which, and that will be used.
 
 
 ## Creating new mechanisms
 
 Because mechanisms are so generic, the only way to make new
-mechanisms is to write new C++ files. As with conductances, 
-new mechanisms inherit from the abstract C++ class called "mechanism" and it is typically straightforward to write a new mechanism. 
+mechanisms is to write new C++ files. As with conductances,
+new mechanisms inherit from the abstract C++ class called "mechanism" and it is typically straightforward to write a new mechanism.
 
 Here's what a skeleton for a new mechanism would look like:
 
@@ -180,7 +180,7 @@ public:
     double A = 0;
     double B = 1;
 
-    // constructor 
+    // constructor
     NewMech(double A_, B_)
     {
         A = A_;
@@ -198,13 +198,13 @@ public:
 
     // these connector methods are needed so that
     // we know how the mechanism interacts with other
-    // components 
+    // components
     void connect(compartment*);
     void connect(conductance*);
     void connect(synapse*);
 
     // these methods allow reading out of the mechanism
-    // state 
+    // state
     int getFullStateSize(void);
     int getFullState(double * mech_state, int idx);
     double getState(int);
@@ -219,20 +219,20 @@ double NewMech::getState(int idx){return std::numeric_limits<double>::quiet_NaN(
 int NewMech::getFullStateSize(){return 0; }
 
 // this does nothing since our state size is 0
-// otherwise we should increment idx, and 
+// otherwise we should increment idx, and
 // fill in values in the mech_state array
 int NewMech::getFullState(double *mech_state, int idx) {
     return idx;
 }
 
 // connection methods
-// we allow the mechanism to connect to a compartment 
+// we allow the mechanism to connect to a compartment
 void NewMech::connect(compartment* comp_) {
     comp = comp_;
     comp->addMechanism(this);
 }
 
-// disallow other connections 
+// disallow other connections
 void NewMech::connect(conductance* cond_) {
     mexErrMsgTxt("[NewMech] This mechanism cannot connect to a conductance object");
 }
@@ -277,28 +277,149 @@ void NewMech::checkSolvers(int k) {
 
 ```
 
+## Creating new synapses
+
+Creating new synapses is similar to the process of 
+creating new conductances. New synapses inherit 
+from the abstract `C++` class `synapse`. 
+
+Here is a skeleton for a new synapse class that you
+can fill out for yourself. 
+
+```C++
+// here is an example of a synapse named NewSynapse
+// we define the header file and include the synapse class
+#ifndef NEWSYNAPSE
+#define NEWSYNAPSE
+#include "synapse.hpp"
+
+// define the class for the specific synapse here
+class NewSynapse: public synapse {
+
+public:
+
+
+    // here is the constructor function
+    // it accepts the maximal conductance and a single state variable
+    NewSynapse(double g_, double s_)
+    {
+        gmax = g_;
+        s = s_;
+
+        // we could make it accept the reversal potential too
+        // but here we have set it within the function definition
+        E = -80.0;
+
+        // set up defaults in case g_ and s_ aren't specified in MATLAB during construction
+        if (isnan (s)) { s = 0; }
+        if (isnan (gmax)) { gmax = 0; }
+        is_electrical = false;
+    }
+
+    // all of these functions are needed for all synapses
+    void integrate(void);
+    void integrateMS(int, double, double);
+    void checkSolvers(int);
+
+    int getFullStateSize(void);
+    void connect(compartment *pcomp1_, compartment *pcomp2_);
+    double getCurrent(double V_post);
+    int getFullState(double*, int);
+
+    // these functions are specific to this synapse
+    double s_inf(double);
+    double tau_s(double);
+    double sdot(double, double);
+
+};
+
+// this function returns the state size of the synapse
+// which should be the number of state variables 
+// from this synapse plus one (for the synaptic current)
+int NewSynapse::getFullStateSize() {
+    return 2;
+}
+
+// define the steady-state gating function for this synapse
+double NewSynapse::s_inf(double V_pre) {
+    return 1.0/(1.0+exp((Vth - V_pre)/Delta));
+}
+
+
+double NewSynapse::tau_s(double sinf_) {
+    // this could hold some arbitrary function
+}
+
+
+double NewSynapse::sdot(double V_pre, double s_) {
+    // define your own function here
+}
+
+
+void NewSynapse::integrate(void) {
+    // define your integration routing here
+
+}
+
+
+// determine which solver to use
+// 0 should always be supported
+void NewSynapse::checkSolvers(int k){
+    if (k == 0) {
+        return;
+    }
+    mexErrMsgTxt("[NewSynapse] Unsupported solver order\n");
+}
+
+// return the state variable, and the current
+int NewSynapse::getFullState(double *syn_state, int idx) {
+    // give it the current synapse variable
+    syn_state[idx] = s;
+
+    idx++;
+
+    // the synaptic current in the post-synaptic compartment
+    // is also computed here
+    syn_state[idx] = gmax*s*(post_syn->V - E);
+    idx++;
+    return idx;
+}
+
+// the connect function defines how to wire
+// two compartments together
+void NewSynapse::connect(compartment *pcomp1_, compartment *pcomp2_) {
+    pre_syn = pcomp1_;
+    post_syn = pcomp2_;
+
+    // tell the post-synaptic cell that we're connecting to it
+    post_syn->addSynapse(this);
+}
+
+#endif
+```
+
 ## Where should I put them?
 <a name="whereshouldIputthem"></a>
 
 All conductances (and any other network component) are
-defined by an `.hpp` header file. You can save your 
+defined by an `.hpp` header file. You can save your
 new conductance anywhere within your MATLAB path.
 
-We organize our conductance files in the xolotl 
-directory under `xolotl/c++/conductances/`. Within that 
+We organize our conductance files in the xolotl
+directory under `xolotl/c++/conductances/`. Within that
 directory, conductances are grouped by the surname of the
-first author on the paper from where they were sourced. 
-For example, conductances from Liu *et al.* 1998 can 
+first author on the paper from where they were sourced.
+For example, conductances from Liu *et al.* 1998 can
 be found in `xolotl/c++/conductances/liu/`.
 
 If an author, such as Farzan Nadim or Cristina Soto-Trevino,
 happens to have written more than one paper from which we have
 extracted models, the last two digits of the paper publishing year
-are appended to the author name (*e.g.* `../nadim98`). 
+are appended to the author name (*e.g.* `../nadim98`).
 If there are multiple papers in a single year, lowercase alphabetical indices are used (*e.g.* `../golowasch01a`).
 
-If a paper, such as Soplata *et al.* 2017 describes 
-multiple channels of a single type in different cell 
+If a paper, such as Soplata *et al.* 2017 describes
+multiple channels of a single type in different cell
 types (*e.g.* thalamocortical relay and thalamic reticular
  cells), then full-word descriptions can be used, such as
 (`../soplata/thalamocortical`).
