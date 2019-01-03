@@ -33,11 +33,22 @@ pages:
     - Create multi-compartment models: how-to/create-multi-compartment-models.md
   - Reference: 
     - Units: 'reference/units.md'
-    - xolotl Properties: 'reference/xolotl-properties.md'
-    - xolotl Methods: 'reference/xolotl-methods.md'
-    - cpplab Properties: 'reference/cpplab-properties.md'
-    - cpplab Methods: 'reference/cpplab-methods.md'
-    - conductance: reference/conductance.md
+    - C++ classes: 
+      - conductance: 'reference/c++/conductance.md'
+      - compartment: 'reference/c++/compartment.md'
+      - synapse: 'reference/c++/synapse.md'
+      - network: 'reference/c++/network.md'
+      - mechanism: 'reference/c++/mechanism.md'
+    - MATLAB classes:
+      - conductance: reference/matlab/conductance.md
+      - xtools: reference/matlab/xtools.md
+      - xtest: reference/matlab/xtest.md
+      - xolotl:
+        - properties: 'reference/xolotl-properties.md'
+        - methods: 'reference/xolotl-methods.md'
+      - cpplab:
+        - properties: 'reference/cpplab-properties.md'
+        - methods: 'reference/cpplab-methods.md'
   - How xolotl works:
     - How cpplab binds code: explanation/cpplab.md
     - How equations are integrated: explanation/integration.md
@@ -49,7 +60,10 @@ pages:
     - Memory: 'performance/memory.md'
   - Troubleshooting: 
     - Fixes to common problems: troubleshooting.md
-  - About: 'about.md'
+  - Meta: 
+    - Development and future: 'meta/future.md'
+    - Documentation: 'meta/documentation.md'
+    - Testing: 'meta/testing.md'
   - FAQ: 'faq.md'
   - Contributing: 'contributing.md'
   - License: 'license.md'
