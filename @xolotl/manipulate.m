@@ -139,7 +139,7 @@ ub = values*3;
 % create a puppeteer instance and configure
 warning('off','MATLAB:hg:uicontrol:ValueMustBeInRange')
 warning('off','MATLAB:hg:uicontrol:MinMustBeLessThanMax')
-p = puppeteer(real_names,values,lb,ub,[],true);
+p = puppeteer(real_names,values,lb,ub,[]);
 self.handles.puppeteer_object = p;
 
 
@@ -152,6 +152,6 @@ end
 warning('on','MATLAB:hg:uicontrol:MinMustBeLessThanMax')
 warning('on','MATLAB:hg:uicontrol:ValueMustBeInRange')
 
-p.callback_function = @self.manipulateEvaluate;
+p.continuous_callback_function = @self.manipulateEvaluate;
 
 
