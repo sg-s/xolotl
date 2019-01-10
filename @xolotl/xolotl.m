@@ -20,6 +20,8 @@ properties (SetAccess = protected)
 	synapses@struct % structure containing synapses in model
     illegal_names = {'xolotl_network','compartment','conductance','controller','synapse','network','x','self'}; % list of illegal names for compartments, synpases and other objects
 
+    snapshots % saves snapshots of models 
+
 end  % end set protected props
 
 properties (Access = protected)
@@ -27,9 +29,6 @@ properties (Access = protected)
 	cpp_folder % full path to folder that contains c++ code
 	OS_binary_ext % this property is not used any more
 	dyn_prop_handles % this property is not used any more
-
-
-    snapshots % saves snapshots of models 
 
 
     hpp_files

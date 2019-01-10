@@ -1,0 +1,37 @@
+{
+    "xolotl.show":
+    {
+        "inputs":
+        [
+            {"name":"conductance", "kind":"required", "type":"choices=cpplab.search('conductances')"}
+        ]
+    },
+
+    "xolotl.connect":
+    {
+        "inputs":
+        [
+        	{"name":"x","kind":"required","type":"xolotl"},
+            {"name":"comp1", "kind":"required", "type":"choices=x.Children"},
+            {"name":"comp2", "kind":"required", "type":"choices=x.Children"}
+        ]
+    },
+
+    "xolotl.reset":
+    {
+        "inputs":
+        [
+        	{"name":"x","kind":"required","type":"xolotl"},
+            {"name":"snap_name", "kind":"required", "type":"choices={x.snapshots.name}"}
+        ]
+    },
+
+    "xolotl.getGatingFunctions":
+    {
+        "inputs":
+        [
+            {"name":"conductance", "kind":"required", "type":"choices=cpplab.search('conductances')"}
+        ]
+    }
+
+}

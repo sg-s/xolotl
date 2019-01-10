@@ -13,9 +13,13 @@
 xolotl.show('path/to/conductance/file')
 ```
 
-
 This method displays activation functions and timescales of any conductance. Subsequent calls to `show` will update the plot, plotting the new activation curves over the old ones, allowing you to compare different channels. 
 
+
+This method also supports tab-completion. You should be able to 
+press the `tab` key and get a list of conductances you can show, like this:
+
+![](https://user-images.githubusercontent.com/6005346/50981138-5135b600-14c8-11e9-9be7-b01203716a10.png)
 
 !!! info "See Also"
     ->xolotl.plot

@@ -44,6 +44,9 @@ The following properties can be specified for most synapses:
 | Reversal potential   |  `E`|
 | Activation variable  |  `s`|
 
+This method supports tab completion. You should be able to press
+tab to get a list of compartments to connect. 
+
 %}
 
 function connect(self,comp1,comp2,varargin)

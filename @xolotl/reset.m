@@ -37,6 +37,10 @@ x.integrate;
 % now go back to original state
 x.reset('base')
 ```
+
+This method supports tab completion. You should be able to 
+press tab and get a list of snapshots that you want to 
+reset to. 
 	
 !!! info "See Also"
     ->xolotl.snapshot
