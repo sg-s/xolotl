@@ -403,8 +403,9 @@ void network::integrateClamp(double *V_clamp) {
                 temp_comp->integrateCNSecondPass();
                 
             } else {
-                // do nothing
-                temp_comp->V = temp_comp->V_clamp;
+                // try to compute the clamping current
+                // this is probably only approximately correct
+                temp_comp->integrateV_clamp(temp_comp->V_clamp);
             }
 
 

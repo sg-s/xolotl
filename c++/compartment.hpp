@@ -593,7 +593,6 @@ void compartment::integrateV_clamp(double V_clamp) {
     // voltage
     double E = exp(-dt/(Cm/(sigma_g)));
     V_inf = (V_clamp - V*E)/(1 - E);
-    //mexPrintf("sigma_g=  %f\n",sigma_g);
     I_clamp =  A*(V_inf*sigma_g - sigma_gE);
 
     V = V_clamp;
