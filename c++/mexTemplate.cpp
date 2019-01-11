@@ -257,9 +257,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         mexErrMsgTxt("[xolotl] multi-compartment models cannot be integrated with multi-step methods yet. \n");
     }
 
-    if (is_multi_comp & is_voltage_clamped){
-        mexErrMsgTxt("[xolotl] multi-compartment models cannot be integrated when something is clamped yet. \n");
-    }
+    // if (is_multi_comp & is_voltage_clamped){
+    //     mexErrMsgTxt("[xolotl] multi-compartment models cannot be integrated when something is clamped yet. \n");
+    // }
 
 
     int output_idx = 0; 

@@ -3,22 +3,13 @@
 % integration and request different forms of output
 % and how this can impact memory use
 
+x = xolotl.examples.BurstingNeuron;
 
-% making a simple integral control bursting model
-x = xolotl;
-x.add('compartment','AB','A',0.0628,'Ca_target',7);
-x.AB.add('prinz/CalciumMech','f',1.496);
+g0 = 1e-1+1e-1*rand(8,1);
+x.set('*gbar',g0);
+x.AB.Leak.gbar = .099;
 
-g0 = 1e-1+1e-1*rand(7,1);
-
-x.AB.add('liu/NaV','gbar',g0(1),'E',30);
-x.AB.add('liu/CaT','gbar',g0(2),'E',30);
-x.AB.add('liu/CaS','gbar',g0(3),'E',30);
-x.AB.add('liu/ACurrent','gbar',g0(4),'E',-80);
-x.AB.add('liu/KCa','gbar',g0(5),'E',-80);
-x.AB.add('liu/Kd','gbar',g0(6),'E',-80);
-x.AB.add('liu/HCurrent','gbar',g0(7),'E',-20);
-x.AB.add('Leak','gbar',.099,'E',-50);
+x.AB.Ca_target = 7;
 
 
 x.AB.NaV.add('oleary/IntegralController','tau_m',666);
@@ -48,6 +39,7 @@ figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[120
 subplot(2,3,1)
 mtools.neuro.raster(xtools.findNSpikeTimes(V,xtools.findNSpikes(V)),'Color','k')
 set(gca,'XLim',[0 10],'YTick',[])
+drawnow
 
 
 subplot(2,3,2)
@@ -77,3 +69,4 @@ b = bar(1,memory_usage(1),'FaceColor','k');
 b = bar(2,memory_usage(2),'FaceColor','r');
 set(gca,'YScale','log','XTick',[1 2],'XLim',[0 3],'XTickLabel',{'Normal mode','spikes detected in C++'},'YLim',[1e7 1e9],'XTickLabelRotation',45)
 ylabel('Memory used (bytes)')
+drawnow

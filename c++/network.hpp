@@ -241,8 +241,7 @@ void network::integrateMS(double * I_ext_now) {
 // multiple compartments under normal
 // conditions. Don't use if something is
 // being voltage clamped!
-void network::integrate(double * I_ext_now)
-{
+void network::integrate(double * I_ext_now) {
 
     // we will use Exponential Euler for single-compartment
     // models and networks, and Crank-Nicholson for 
@@ -253,8 +252,7 @@ void network::integrate(double * I_ext_now)
     // as single compartments and integrated normally 
 
     // integrate all channels in all compartments
-    for (int i = 0; i < n_comp; i++)
-    {
+    for (int i = 0; i < n_comp; i++) {
 
         // move current values to previous values
         comp[i]->V_prev = comp[i]->V;
@@ -281,8 +279,7 @@ void network::integrate(double * I_ext_now)
 
     // integrate voltages in all single compartments
     // and calcium in all compartments
-    for (int i = 0; i < n_comp; i++)
-    {
+    for (int i = 0; i < n_comp; i++) {
         if (isnan(comp[i]->neuron_idx)) {
             comp[i]->integrateVoltage();
         } else {
@@ -293,9 +290,6 @@ void network::integrate(double * I_ext_now)
         }
         
     }
-
-
-
 
     // OK, now we have integrated all single compartments,
     // but in multi compartment models, the 
@@ -309,17 +303,14 @@ void network::integrate(double * I_ext_now)
     // down the cable
 
     // for each cable 
-    for (int nidx = 0; nidx < n_soma; nidx++)
-    {
+    for (int nidx = 0; nidx < n_soma; nidx++) {
 
         
         temp_comp = soma_comp[nidx];
 
-
         // go down the cable -- away from soma
         // to terminal, increasing in tree_idx
-        while (temp_comp)
-        {
+        while (temp_comp) {
             temp_comp->integrateCNFirstPass();
             last_valid_comp = temp_comp;
             temp_comp = temp_comp->downstream;
@@ -332,8 +323,7 @@ void network::integrate(double * I_ext_now)
 
         // go up the cable -- towards soma
         // away from terminal, decreasing in tree_idx
-        while (temp_comp)
-        {
+        while (temp_comp) {
             temp_comp->integrateCNSecondPass();
             temp_comp = temp_comp->upstream;
             // nothing after this, becaue temp_comp may be NULL
@@ -342,43 +332,88 @@ void network::integrate(double * I_ext_now)
 }
 
 // integrate while voltage clamping some compartments 
-void network::integrateClamp(double *V_clamp)
-{
+void network::integrateClamp(double *V_clamp) {
 
     // integrate all channels in all compartments
-    for (int i = 0; i < n_comp; i++)
-    {
+    for (int i = 0; i < n_comp; i++) {
 
         // move current values to previous values
         comp[i]->V_prev = comp[i]->V;
         comp[i]->Ca_prev = comp[i]->Ca;
         comp[i]->i_Ca_prev = comp[i]->i_Ca;
 
-
+        // reset values
         comp[i]->i_Ca = 0;
         comp[i]->I_ext = 0;
         comp[i]->I_clamp = 0;
 
+        comp[i]->integrateMechanisms();
         comp[i]->integrateChannels();
 
         // integrate synapses
-        comp[i]->integrateSynapses();
-    }
-
-    // integrate all voltages and Ca in all compartments
-    for (int i = 0; i < n_comp; i++)
-    {
-        
-        if (isnan(V_clamp[i])){
-
-            comp[i]->integrateVoltage();
-        } else {
-            comp[i]->integrateV_clamp(V_clamp[i]);
+        if (isnan(comp[i]->neuron_idx)) {
+            comp[i]->integrateSynapses();
         }
+    }
 
+
+    // set V_clamp in all the compartments
+    for (int i = 0; i < n_comp; i++) {
+        comp[i]->V_clamp = V_clamp[i];
+    }
+
+
+
+    // integrate all voltages in all single compartments
+    for (int i = 0; i < n_comp; i++) {
+        if (isnan(comp[i]->neuron_idx)) {
+            if (isnan(V_clamp[i])){
+                // not being clamped
+                comp[i]->integrateVoltage();
+            } else {
+                comp[i]->integrateV_clamp(V_clamp[i]);
+            }
+        }
+    } // end for loop over compartments
+
+
+    // now integrate the multi-compartments
+    // for each cable 
+    for (int nidx = 0; nidx < n_soma; nidx++) {
+
+        temp_comp = soma_comp[nidx];
+
+        // go down the cable -- away from soma
+        // to terminal, increasing in tree_idx
+        while (temp_comp) {
+            temp_comp->integrateCNFirstPass();
+            last_valid_comp = temp_comp;
+            temp_comp = temp_comp->downstream;
+            // nothing after this--temp_comp may be NULL
+        }
+        
+
+        temp_comp = last_valid_comp;
+
+        // go up the cable -- towards soma
+        // away from terminal, decreasing in tree_idx
+        while (temp_comp) {
+            if (isnan(temp_comp->V_clamp)) {
+                
+                temp_comp->integrateCNSecondPass();
+                
+            } else {
+                // do nothing
+                temp_comp->V = temp_comp->V_clamp;
+            }
+
+
+            temp_comp = temp_comp->upstream;
+            // nothing after this, because temp_comp may be NULL
+        }
     }
         
-}
+} // integrateClamp
 
 
 #endif

@@ -445,30 +445,6 @@ When `output_type` is 1 or 2, the integration is performed requesting all output
 
 
 -------
-## make_bursting_neuron
-
-**Syntax**
-
-```matlab
-x = xolotl.make_bursting_neuron('liu');
-x = xolotl.make_bursting_neuron('prinz');
-```
-
-**Description**
-
-makes a single-compartment neuron that bursts, using
-channels from Liu et al. or Prinz et al. 
-
-
-
-
-
-
-
-
-
-
--------
 ## manipulate
 
 
