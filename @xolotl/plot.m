@@ -172,6 +172,7 @@ for i = 1:N
 
 end
 
+
 if strcmp(self.handles.ax(1).XLimMode,'auto')
 	set(self.handles.ax(1),'XLim',[0 max(time)]);
 	self.handles.ax(1).XLimMode = 'auto';
