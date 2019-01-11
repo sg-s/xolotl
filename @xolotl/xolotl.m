@@ -259,8 +259,7 @@ methods (Static)
     curr_index = contributingCurrents(V,I);    
     ax = show(conductance,ax);
     [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance);
-    
-    x = make_bursting_neuron(prefix);
+
 
     setup();
 

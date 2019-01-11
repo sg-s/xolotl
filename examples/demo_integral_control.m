@@ -1,23 +1,12 @@
 % tests a neuron that reproduces Fig 3 in Tim's paper
 
+x = xolotl.examples.BurstingNeuron;
 
-A = 0.0628; % mm^2
-Ca_target = 7; % used only when we add in homeostatic control
+g0 = 1e-1+1e-1*rand(8,1);
+x.set('*gbar',g0);
+x.AB.Leak.gbar = .099;
 
-x = xolotl;
-x.add('compartment','AB','A',A,'Ca_target',Ca_target);
-x.AB.add('prinz/CalciumMech','f',1.496);
-
-g0 = 1e-1+1e-1*rand(7,1);
-
-x.AB.add('liu/NaV','gbar',g0(1),'E',30);
-x.AB.add('liu/CaT','gbar',g0(2),'E',30);
-x.AB.add('liu/CaS','gbar',g0(3),'E',30);
-x.AB.add('liu/ACurrent','gbar',g0(4),'E',-80);
-x.AB.add('liu/KCa','gbar',g0(5),'E',-80);
-x.AB.add('liu/Kd','gbar',g0(6),'E',-80);
-x.AB.add('liu/HCurrent','gbar',g0(7),'E',-20);
-x.AB.add('Leak','gbar',.099,'E',-50);
+x.AB.Ca_target = 7;
 
 
 x.AB.NaV.add('oleary/IntegralController','tau_m',666);

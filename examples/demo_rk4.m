@@ -1,27 +1,9 @@
 
 
-xolotl.cleanup;
 close all
 
 
-% conversion from Prinz to phi
-A = 0.0628;
-
-channels = {'NaV','CaT','CaS','ACurrent','KCa','Kd','HCurrent'};
-prefix = 'prinz/';
-gbar(:,1) = [1000 25  60 500  50  1000 .1];
-E =         [50   30  30 -80 -80 -80   -20];
-
-x = xolotl;
-
-x.add('compartment','AB','Cm',10,'A',A);
-
-% add Calcium mechanism
-x.AB.add('prinz/CalciumMech');
-
-for i = 1:length(channels)
-	x.AB.add([prefix channels{i}],'gbar',gbar(i),'E',E(i));
-end
+x = xolotl.examples.BurstingNeuron('prinz',14.96);
 
 x.t_end = 1e4;
 x.integrate;

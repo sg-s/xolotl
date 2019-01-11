@@ -30,7 +30,7 @@ tests pass is a release published.
 function [passed, total] = run_all_tests(cleanup)
 
 if nargin < 1
-	cleanup = false;
+	cleanup = true;
 end
 
 if cleanup

@@ -61,6 +61,8 @@ public:
     double Ca_prev;
     double V_prev;
 
+    double V_clamp = 0; // stores the voltage that it is clamped to
+
     double verbosity = 0;
 
     double RT_by_nF;
@@ -591,7 +593,6 @@ void compartment::integrateV_clamp(double V_clamp) {
     // voltage
     double E = exp(-dt/(Cm/(sigma_g)));
     V_inf = (V_clamp - V*E)/(1 - E);
-    //mexPrintf("sigma_g=  %f\n",sigma_g);
     I_clamp =  A*(V_inf*sigma_g - sigma_gE);
 
     V = V_clamp;
@@ -600,7 +601,7 @@ void compartment::integrateV_clamp(double V_clamp) {
 
 
 void compartment::integrateCNFirstPass(void) {
-    // intermiediate variables
+    // intermediate variables
     double b; // b is b for this compartment
     double d; // d is d for the prev compartment
 
