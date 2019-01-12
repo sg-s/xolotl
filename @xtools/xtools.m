@@ -1,6 +1,10 @@
-% the xtools class bundles some useful
-% tools to convert measure metrics of
-% spiketimes and voltage traces
+%{
+
+The "xtools" MATLAB class bundles some useful tools to convert measured metrics
+of spike-times and voltage traces. It contains only static methods, which can be
+called by `xtools.MethodName`.
+
+%}
 
 classdef xtools
 
