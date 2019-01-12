@@ -27,11 +27,7 @@ end  % end set protected props
 properties (Access = protected)
 	xolotl_folder % full path to folder that contains xolotl code
 	cpp_folder % full path to folder that contains c++ code
-	OS_binary_ext % this property is not used any more
-	dyn_prop_handles % this property is not used any more
 
-
-    hpp_files
 
 end  % end protected props
 
@@ -135,7 +131,7 @@ methods
 
         % append all classnames to illegal names
         [~,hpp_files] = self.resolvePath('');
-        self.hpp_files = hpp_files;
+
         for i = 1:length(hpp_files)
             try
                 [~,hpp_files{i}] = fileparts(hpp_files{i});
