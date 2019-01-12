@@ -1,5 +1,5 @@
 %{
-              _       _   _ 
+              _       _   _
    __  _____ | | ___ | |_| |
    \ \/ / _ \| |/ _ \| __| |
     >  < (_) | | (_) | |_| |
@@ -20,11 +20,11 @@ x.reset('snap_name')
 
 **Description**
 
-Resets a xolotl object to some default state. 
+Resets a xolotl object to some default state.
 
-reset called without any arguments resets the model as best as it can -- voltages are set to -60 mV, Calcium in every compartment is set to the internal value, and the gating variables of every conductance are reset. 
+reset called without any arguments resets the model as best as it can -- voltages are set to -60 mV, Calcium in every compartment is set to the internal value, and the gating variables of every conductance are reset.
 
-`reset` can also be called with a string argument, which is the name of a snapshot previously stored in the model object. Then, `reset` reconfigures the parameters of the model to match that snapshot. This is useful for working with a model, changing parameters, evolving it, and then coming back to where you started off from. 
+`reset` can also be called with a string argument, which is the name of a snapshot previously stored in the model object. Then, `reset` reconfigures the parameters of the model to match that snapshot. This is useful for working with a model, changing parameters, evolving it, and then coming back to where you started off from.
 
 Here's an example:
 
@@ -38,10 +38,10 @@ x.integrate;
 x.reset('base')
 ```
 
-This method supports tab completion. You should be able to 
-press tab and get a list of snapshots that you want to 
-reset to. 
-	
+This method supports tab completion. You should be able to
+press tab and get a list of snapshots that you want to
+reset to.
+
 !!! info "See Also"
     ->xolotl.snapshot
 
@@ -52,8 +52,8 @@ function reset(self, snap_name)
 
 if nargin == 1
 
-	% reset all compartments 
-	% reset the Ca_average of every compartment 
+	% reset all compartments
+	% reset the Ca_average of every compartment
 	all_compartments = self.find('compartment');
 	for i = 1:length(all_compartments)
 		self.(all_compartments{i}).V = -60;
@@ -75,7 +75,7 @@ if nargin == 1
 		end
 	end
 
-	% reset all synapses 
+	% reset all synapses
 	all_synapses = self.find('synapse');
 	for i = 1:length(all_synapses)
 		try
