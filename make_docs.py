@@ -7,11 +7,15 @@
 import glob, os
 from shutil import copyfile
 
-out_file = open('docs/reference/xolotl-methods.md','w')
 
 
-xolotl_method_root = 'https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#';
-cpplab_method_root = 'https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#';
+copyfile('docs/reference/matlab/xolotl-head.md', 'docs/reference/matlab/xolotl.md')
+
+out_file = open('docs/reference/matlab/xolotl.md','a+')
+
+
+xolotl_method_root = '#';
+cpplab_method_root = '../cpplab/#';
 
 for file in sorted(glob.glob("@xolotl/*.m")):
 
@@ -96,21 +100,15 @@ for file in sorted(glob.glob("@xolotl/*.m")):
 out_file.close()
 
 
-# now copy over the docs from cpplab (assuming it exists)
-copyfile('../cpplab/docs/reference/cpplab-methods.md','docs/reference/cpplab-methods.temp')
+# now the cpplab methods
 
-# replace all links to cpplab.readthedocs with xolotl.readthedocs
-lines = tuple(open('docs/reference/cpplab-methods.temp', 'r'))
+copyfile('docs/reference/matlab/cpplab-head.md', 'docs/reference/matlab/cpplab.md')
 
-out_file = open('docs/reference/cpplab-methods.md','w')
 
-for i in range(0,len(lines)):
-	thisline = lines[i]
+f = open('../cpplab/docs/reference/cpplab-methods.md', "r")
+cpplab_methods = f.read()
+f.close()
 
-	thisline = thisline.replace('https://cpplab.readthedocs.io','https://xolotl.readthedocs.io')
-
-	out_file.write(thisline)
-
-out_file.close()
-
-os.remove("docs/reference/cpplab-methods.temp")
+fout = open('docs/reference/matlab/cpplab.md','a+')
+fout.write(cpplab_methods)
+fout.close()

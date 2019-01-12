@@ -1,3 +1,12 @@
+
+# The xolotl class
+
+This document describes the "xolotl" class. This is a MATLAB
+class and the primary way you will interact with your
+simulations. 
+
+## Properties
+
 Every xolotl object has the following properties listen in this document. To access a property, use dot notation, i.e.:
 
 ```matlab
@@ -10,8 +19,6 @@ You can view all the properties of a xolotl object using the built-in [propertie
 properties(xolotl)
 % will display a list of properties
 ```
-
-## Controlling simulation 
 
 ### `approx_channels`
 
@@ -137,7 +144,6 @@ to perform simulations. `temperature_ref` holds the "default"
 temperature so that $Q_{10}$ values can be used. These
 values only affect components that are temperature sensitive. 
 
-## Controlling verbosity
 
 ### `verbosity`
 
@@ -149,7 +155,6 @@ values only affect components that are temperature sensitive.
 xolotl is when running simulations. Set to a large positive 
 number to get more verbose output, useful for debugging. 
 
-## Customization 
 
 ### `pref`
 
@@ -162,7 +167,6 @@ You can also add your own data to `x.pref`, which your
 functions can use. This is a way to pass metadata and other 
 data along with this model to other functions. 
 
-## Exploring the model
 
 ### `Children`
 
@@ -171,3 +175,5 @@ current xolotl model. xolotl only allows you to add
 objects of type "compartment" to it. Therefore, 
 `x.Children` will give you a list of compartments in 
 the model.
+
+## Methods

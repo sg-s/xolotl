@@ -6,7 +6,7 @@
   /_/\_\___/|_|\___/ \__|_|
 
 
-## checkCompartmentName
+### checkCompartmentName
 
 **Syntax**
 

@@ -5,7 +5,7 @@
     >  < (_) | | (_) | |_| |
    /_/\_\___/|_|\___/ \__|_|
 
-## integrate
+### integrate
 
 integrates a `xolotl` model. 
 

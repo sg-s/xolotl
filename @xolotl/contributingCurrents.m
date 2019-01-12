@@ -1,6 +1,6 @@
 %{
 
-## contributingCurrents
+### contributingCurrents
 
 **Syntax**
 

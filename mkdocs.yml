@@ -43,12 +43,8 @@ pages:
       - conductance: reference/matlab/conductance.md
       - xtools: reference/matlab/xtools.md
       - xtest: reference/matlab/xtest.md
-      - xolotl:
-        - properties: 'reference/xolotl-properties.md'
-        - methods: 'reference/xolotl-methods.md'
-      - cpplab:
-        - properties: 'reference/cpplab-properties.md'
-        - methods: 'reference/cpplab-methods.md'
+      - xolotl: reference/matlab/xolotl.md
+      - cpplab: reference/matlab/cpplab.md
   - How xolotl works:
     - How cpplab binds code: explanation/cpplab.md
     - How equations are integrated: explanation/integration.md

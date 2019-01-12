@@ -5,7 +5,7 @@
     >  < (_) | | (_) | |_| |
    /_/\_\___/|_|\___/ \__|_|
 
-## manipulateEvaluate
+### manipulateEvaluate
 
 This method is used to update the `xolotl` object 
 every time a slider is moved in the manipulate window. 

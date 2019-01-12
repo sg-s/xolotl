@@ -1,6 +1,6 @@
 %{
 
-## checkTree
+### checkTree
 
 **Syntax**
 

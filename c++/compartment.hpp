@@ -1,8 +1,16 @@
-// _  _ ____ _    ____ ___ _
-//  \/  |  | |    |  |  |  |
-// _/\_ |__| |___ |__|  |  |___
-//
-// class defining one compartment
+/*
+
+This document describes the "compartment" C++ class.
+This class describes objects that are compartments, and 
+can be used to represent neurons and parts of neurons. 
+
+| Abstract | can contain | contained in |
+| --------  | ------ | -------  |
+| no |  conductance, mechanism, synapse | network |
+
+
+
+*/
 
 #ifndef COMPARTMENT
 #define COMPARTMENT
@@ -172,8 +180,7 @@ public:
 
         // if (isnan (Ca_target)) { Ca_target = Ca_in; }
 
-        if (!isnan(len) && !isnan(radius))
-        {
+        if (!isnan(len) && !isnan(radius)) {
             // radius and length
             // are provided, and use
             // cylindrical geometry
@@ -254,18 +261,43 @@ public:
 
 };
 
-// methods are arranged alphabetically
 
-// add axial to this compartment
-void compartment::addAxial(synapse *syn_)
-{
+/*
+This method adds an axial synapse to this compartment. 
+It updates the `n_axial_syn` property of this class
+so that every compartment can keep track of how many
+axial synapses are connected to it. 
+
+**See Also**
+
+* [addSynapse](./compartment.md#addsynapse)
+* [addSynapse](./compartment.md#addmechanism)
+* [addConductance](./compartment.md#addconductance)
+
+
+*/
+void compartment::addAxial(synapse *syn_) {
     axial_syn.push_back(syn_);
     n_axial_syn++;
 }
 
-// add conductance and provide pointer back to compartment
-void compartment::addConductance(conductance *cond_)
-{
+/*
+This method adds a conductance object to this compartment. 
+It does the following things:
+
+1. Adds a pointer to the conductance to a vector of pointers called `cond`
+2. Updates various attributes of the conductance like verbosity, etc.
+3. Runs some initializaiton code (e.g. building look-up-tables in the conductance)
+4. Calls the `connect` method of that conductance with a pointer to this compartment. 
+
+**See Also**
+
+* [addSynapse](./compartment.md#addaxial)
+* [addSynapse](./compartment.md#addmechanism)
+* [addConductance](./compartment.md#addconductance)
+
+*/
+void compartment::addConductance(conductance *cond_) {
     cond.push_back(cond_);
     cond_->verbosity = verbosity;
     cond_->buildLUT(approx_channels);
@@ -276,15 +308,29 @@ void compartment::addConductance(conductance *cond_)
 
     n_cond++;
 
-    if (verbosity > 0)
-    {
+    if (verbosity > 0) {
         mexPrintf("[C++] adding conductance of type: %s\n", cond_->getClass().c_str());
     }
 }
 
-// add mechanism to this compartment
-void compartment::addMechanism(mechanism *mech_)
-{
+
+/*
+This method adds a mechanism object to this compartment. 
+It does the following things:
+
+1. Adds a pointer to the conductance to a vector of pointers called `cont` 
+2. Updates various attributes of the conductance like verbosity, etc.
+3. Tells the mechanism what its ordering in `cont` is by updating `mechanism_idx` in that mechanism object
+4. Determines the data frame size of this object by calling `getFullStateSize` and storing this in `mechanism_sizes`
+
+**See Also**
+
+* [addSynapse](./compartment.md#addsynapse)
+* [addConductance](./compartment.md#addconductance)
+
+*/
+
+void compartment::addMechanism(mechanism *mech_) {
     // mexPrintf("adding mechanism @  %p\n",mech_);
     mech_->dt = dt;
     // mech_->verbosity = verbosity;
@@ -296,10 +342,19 @@ void compartment::addMechanism(mechanism *mech_)
 
     // also store the mechanism's full state size
     mechanism_sizes.push_back(mech_->getFullStateSize());
-
 }
 
-// add synapse to this compartment (this compartment is after synapse)
+/*
+This method adds a synapse to this compartment. A
+pointer to this synapse is stored in the vector `syn` 
+
+**See Also**
+
+* [addSynapse](./compartment.md#addaxial)
+* [addSynapse](./compartment.md#addmechanism)
+* [addConductance](./compartment.md#addconductance)
+
+*/
 void compartment::addSynapse(synapse *syn_) {
     syn_->dt = dt;
     syn_->verbosity = verbosity;
@@ -310,7 +365,18 @@ void compartment::addSynapse(synapse *syn_) {
     synapse_sizes.push_back(syn_->getFullStateSize());
 }
 
+/*
 
+This method is called when a non-default solver order
+is requested. The compartment checks that it can support
+this solver order, and then asks every component contained
+in it if they can support this solver order. This ensures
+that the solver order can actually be used, because if
+any component cannot support this solver order (because
+those integration routines have not been written), then
+they can throw an error, aborting the simulation. 
+
+*/
 void compartment::checkSolvers(int solver_order) {
 
     if (solver_order == 0){
@@ -333,89 +399,11 @@ void compartment::checkSolvers(int solver_order) {
     }
 }
 
-conductance* compartment::getConductancePointer(const char* cond_class) {
-    conductance* req_cond = NULL;
-
-    for (int i = 0; i < n_cond; i ++)
-    {
-        if ((cond[i]->getClass()) == cond_class)
-        {
-            req_cond = cond[i];
-        }
-    }
-
-    return req_cond;
-}
-
-synapse * compartment::getSynapsePointer(int syn_idx){
-    if (syn_idx < n_syn) { return syn[syn_idx];} 
-    else { return NULL; } 
-}
-
-conductance * compartment::getConductancePointer(int cond_idx){
-    if (cond_idx < n_cond) { return cond[cond_idx];} 
-    else { return NULL; } 
-}
-
-
-mechanism * compartment::getMechanismPointer(int mech_idx){
-    if (mech_idx < n_cont) { return cont[mech_idx];} 
-    else { return NULL; }   
-}
-
-mechanism* compartment::getMechanismPointer(const char* cond_class){
-    mechanism* req_cont = NULL;
-
-    for (int i = 0; i < n_cont; i ++)
-    {
-        // mexPrintf("this class = %s\n", (cont[i]->controlling_class).c_str());
-        if ((cont[i]->controlling_class) == cond_class)
-        {
-            req_cont = cont[i];
-        }
-    }
-
-    return req_cont;
-}
-
-
-// returns a list of connected compartments.
-// this function returns only one pointer at a time
-// to get them all, iterative over the integer argument
-compartment* compartment::getConnectedCompartment(int idx) {
-    compartment* neighbour = NULL;
-    if (idx > n_axial_syn) {return neighbour;}
-    neighbour = axial_syn[idx]->pre_syn;
-    return neighbour;
-}
-
-// returns the size of data frame for all synapses 
-// in this compartment
-// includes synaptic currents interleaved
-// with state variables of each synapse
-int compartment::getFullSynapseSize(void) {
-    int full_size = 0;
-    for (int i=0; i<n_syn; i++)
-    {
-        full_size += syn[i]->getFullStateSize();
-    }
-    return full_size;
-}
-
-
-int compartment::getFullMechanismSize(void) {
-    int full_size = 0;
-    for (int i=0; i<n_cont; i++)
-    {
-        full_size += cont[i]->getFullStateSize();
-    }
-    return full_size;
-}
-
-
-// helper function used in the Crank-Nicholson scheme
-// and returns B, C, D and F values as defined in eq.
-// 6.45 of Dayan and Abbott
+/*
+This method is a helper function used in the Crank-Nicholson 
+scheme and returns B, C, D and F values as defined in eq.
+6.45 of "Theoretical Neuroscience" by Dayan and Abbott
+*/
 double compartment::getBCDF(int idx){
     if (idx == 0) {
         return 0;
@@ -458,6 +446,344 @@ double compartment::getBCDF(int idx){
 }
 
 
+/*
+This method returns the pointer to a conductance stored 
+in this compartment, identified by its class name.
+
+!!! warning 
+    Note that there is another method with the same name that can be called using a integer argument.
+
+*/
+conductance* compartment::getConductancePointer(const char* cond_class) {
+    conductance* req_cond = NULL;
+
+    for (int i = 0; i < n_cond; i ++)
+    {
+        if ((cond[i]->getClass()) == cond_class)
+        {
+            req_cond = cond[i];
+        }
+    }
+
+    return req_cond;
+}
+
+/*
+This method returns the pointer to a conductance contained
+in this compartment, identified by its numeric index. 
+
+!!! warning 
+    Note that there is another method with the same name that can be called using a char argument.
+
+*/
+conductance * compartment::getConductancePointer(int cond_idx){
+    if (cond_idx < n_cond) { return cond[cond_idx];} 
+    else { return NULL; } 
+}
+
+
+/*
+This method returns a pointer to a compartment that is linked
+via axial synapses to this compartment. 
+*/
+compartment* compartment::getConnectedCompartment(int idx) {
+    compartment* neighbour = NULL;
+    if (idx > n_axial_syn) {return neighbour;}
+    neighbour = axial_syn[idx]->pre_syn;
+    return neighbour;
+}
+
+/*
+This method is used to read out the full dynamical state of 
+all channels, and to store it in a large array for output. 
+
+Since  C++ doesn't support returning multiple values, this function 
+works like this:
+
+* it is first called with a pointer to the array, and an integer
+specifying where it should write values to
+* it writes as many values as it wants to, to the array, and returns a new integer indicating the next empty location in the array
+
+**See Also**
+
+* [getFullSynapseState](./compartment.md#getfullsynapsestate)
+
+*/
+int compartment::getFullCurrentState(double *cond_state, int idx)
+{
+    for (int i = 0; i < n_cond; i ++)
+    {
+        cond_state[idx] = cond[i]->getCurrent(V);
+        idx ++;
+    }
+    return idx;
+}
+
+/*
+This method returns the full dimension size of all the mechanisms
+in this compartment. The full size is calculated on the fly
+by recursively asking all the mechanisms in this compartment
+what their data dimension is, and adding up all those numbers. 
+
+**See Also**
+
+* [getFullSynapseSize](./compartment.md#getFullSynapseSize)
+
+*/
+int compartment::getFullMechanismSize(void) {
+    int full_size = 0;
+    for (int i=0; i<n_cont; i++)
+    {
+        full_size += cont[i]->getFullStateSize();
+    }
+    return full_size;
+}
+
+
+/*
+This method is used to read out the full dynamical state of 
+all mechanisms, and to store it in a large array for output. 
+
+Since  C++ doesn't support returning multiple values, this function 
+works like this:
+
+* it is first called with a pointer to the array, and an integer
+specifying where it should write values to
+* it writes as many values as it wants to, to the array, and returns a new integer indicating the next empty location in the array
+
+**See Also**
+
+* [getFullSynapseState](./compartment.md#getfullsynapsestate)
+* [getFullCurrentState](./compartment.md#getfullcurrentstate)
+
+*/
+int compartment::getFullMechanismState(double *mech_state, int idx)
+{
+    for (int i = 0; i < n_cont; i ++)
+    {
+
+        cont[i]->getFullState(mech_state, idx);
+        idx += mechanism_sizes[i];
+
+    }
+    return idx;
+}
+
+
+/*
+This method returns the full dimension size of all the synapses
+in this compartment. The full size is calculated on the fly
+by recursively asking all the synapses in this compartment
+what their data dimension is, and adding up all those numbers. 
+
+**See Also**
+
+* [getFullMechanismSize](./compartment.md#getFullMechanismSize)
+
+*/
+int compartment::getFullSynapseSize(void) {
+    int full_size = 0;
+    for (int i=0; i<n_syn; i++)
+    {
+        full_size += syn[i]->getFullStateSize();
+    }
+    return full_size;
+}
+
+
+/*
+This method is used to read out the full dynamical state of all 
+synapses, and to store it in a large array for output. 
+
+Since C++ doesn't support returning multiple values, this function 
+works like this:
+
+* it is first called with a pointer to the array, and an integer
+specifying where it should write values to
+* it writes as many values as it wants to, to the array, and returns a new integer indicating the next empty location in the array
+
+**See Also**
+
+* [getFullCurrentState](./compartment.md#getfullcurrentstate)
+
+*/
+int compartment::getFullSynapseState(double *syn_state, int idx) {
+    for (int i = 0; i < n_syn; i ++) {
+        idx = syn[i]->getFullState(syn_state,idx);
+    }
+    return idx;
+}
+
+
+/*
+This method returns a pointer to a mechanism stored in this
+compartment, identified by its numerical index.
+*/
+mechanism * compartment::getMechanismPointer(int mech_idx){
+    if (mech_idx < n_cont) { return cont[mech_idx];} 
+    else { return NULL; }   
+}
+
+/*
+This method returns a pointer to a mechanism that is contained
+by this compartment, that is linked to a conductance of a certain
+type, also in this compartment. 
+*/
+
+mechanism* compartment::getMechanismPointer(const char* cond_class){
+    mechanism* req_cont = NULL;
+
+    for (int i = 0; i < n_cont; i ++) {
+        if ((cont[i]->controlling_class) == cond_class) {
+            req_cont = cont[i];
+        }
+    }
+
+    return req_cont;
+}
+
+
+
+
+/*
+This method returns a pointer to a synapse contained by
+this compartment, where this synapse is identified by the 
+numerical index it was added to this compartment.
+
+*/
+synapse * compartment::getSynapsePointer(int syn_idx){
+    if (syn_idx < n_syn) { return syn[syn_idx];} 
+    else { return NULL; } 
+}
+
+
+
+/*
+This method integrates all the channels in the compartment. This
+method is only used when this compartment is not part of a 
+multi-compartment model. It simply asks every conductance
+object in this compartment to integrate by calling their 
+`integrate` methods. 
+
+*/
+void compartment::integrateChannels(void) {
+
+    sigma_g = 0.0;
+    sigma_gE = 0.0;
+
+
+    // compute E_Ca
+    E_Ca = RT_by_nF*log((Ca_out)/(Ca_prev));
+
+    // integrate all channels
+    for (int i=0; i<n_cond; i++)
+    {
+        cond[i]->integrate(V_prev, Ca_prev);
+        sigma_g += cond[i]->g;
+        sigma_gE += (cond[i]->g)*(cond[i]->E);
+    }
+
+    // update the running total Ca
+    Ca_average += Ca;
+}
+
+
+/*
+This method is part of the Crank-Nicholson method to solve
+for the voltages in a multi-compartment neuron. This is the 
+"first pass" down a cable. In simulations, this is called before
+integrateCNSecondPass. 
+
+**See Also**
+
+* [integrateCNSecondPass](./compartment.md#integratecnsecondpass)
+* [The Crank-Nicholson Method](../../explanation/integration.md)
+
+*/
+void compartment::integrateCNFirstPass(void) {
+    // intermediate variables
+    double b; // b is b for this compartment
+    double d; // d is d for the prev compartment
+
+    b = getBCDF(1)*.5*dt;
+
+
+    // compute c_
+    c_ = .5*dt*getBCDF(2);
+    if (upstream) {
+
+        d = (upstream->getBCDF(3))*dt*.5;
+
+        // full expression for c_ (eq. 6.54)
+        c_ += b*d/(1 - upstream->c_);
+
+    }
+
+    // compute f_
+    // first compute f
+    double f = getBCDF(4) + getBCDF(2)*V;
+    if (upstream) {
+        f += getBCDF(1)*(upstream->V);
+    }
+    if (downstream) {
+        f += getBCDF(3)*(downstream->V);
+    }
+    f = f*dt;
+
+    f_ = f;
+
+    if (upstream) {
+        // downstream exists. append terms
+        // (eq. 6.55 in Dayan & Abbott)
+        f_ += (b*(upstream->f_))/(1 - upstream->c_);
+    }
+
+}
+
+
+/*
+This method is part of the Crank-Nicholson method to solve
+for the voltages in a multi-compartment neuron. This is the 
+"second pass" up a cable. In simulations, this is called after
+integrateCNFirstPass. 
+
+**See Also**
+
+* [integrateCNFirstPass](./compartment.md#integratecnFirstpass)
+* [The Crank-Nicholson Method](../../explanation/integration.md)
+*/
+void compartment::integrateCNSecondPass(void) {
+    delta_V = f_;
+    if (downstream) {
+        // downstream exists, use full eq (6.53)
+        delta_V += getBCDF(3)*.5*dt*(downstream->delta_V);
+    }
+
+    // divide by common denominator
+    delta_V = delta_V/(1 - c_);
+
+
+    V += delta_V;
+}
+
+/*
+This method integrates all mechanisms in this compartment. It 
+simply calls the integrate method on every mechanism in the 
+compartment. 
+*/
+void compartment::integrateMechanisms(void) {
+    for (int i=0; i<n_cont; i++) {
+        cont[i]->integrate();
+    }
+}
+
+/*
+This method integrates the voltage in this compartment,
+and all components contained by this compartment, using 
+the Runge-Kutta 4 solver. It iteratively calls the 
+`integrateMS` method of all components contained within
+this compartment. 
+*/
 void compartment::integrateMS(int k){
 
 
@@ -523,41 +849,20 @@ void compartment::integrateMS(int k){
 
     k_V[k] = dt*(sigma_gE - sigma_g*V_MS)/Cm;
     
-    // mexPrintf("V_MS =  %f\n", V_MS);
 
 }
 
 
-void compartment::integrateChannels(void) {
-
-    sigma_g = 0.0;
-    sigma_gE = 0.0;
-
-
-    // compute E_Ca
-    E_Ca = RT_by_nF*log((Ca_out)/(Ca_prev));
-
-    // integrate all channels
-    for (int i=0; i<n_cond; i++)
-    {
-        cond[i]->integrate(V_prev, Ca_prev);
-        sigma_g += cond[i]->g;
-        sigma_gE += (cond[i]->g)*(cond[i]->E);
-    }
-
-    // update the running total Ca
-    Ca_average += Ca;
-}
 
 
 
-void compartment::integrateMechanisms(void) {
-    for (int i=0; i<n_cont; i++) {
-        cont[i]->integrate();
-    }
-}
+/*
+This method integrates all synapses in this compartment.
+All that this method does is "ask" every synapse to integrate
+(by calling their integrate method), and keep track of how they
+contribute to `sigma_g` and `sigma_gE`. 
 
-
+*/
 void compartment::integrateSynapses(void) {
     // we treat synapses identically to any other conductance
     for (int i=0; i<n_syn; i++) {
@@ -568,6 +873,33 @@ void compartment::integrateSynapses(void) {
 }
 
 
+/*
+This integration method is called when a compartment is 
+voltage clamped. Here, the voltage is updated to the clamp
+voltage, and the current required to do so is computed and
+stored in `I_clamp`.
+*/
+void compartment::integrateV_clamp(double V_clamp) {
+
+    // calculate I_clamp, and set voltage to the clamped
+    // voltage
+    double E = exp(-dt/(Cm/(sigma_g)));
+    V_inf = (V_clamp - V*E)/(1 - E);
+    I_clamp =  A*(V_inf*sigma_g - sigma_gE);
+
+    V = V_clamp;
+
+}
+
+
+/*
+This method integrates the voltage in this compartment, 
+assuming this compartment is not part of a multi-compartment 
+neuron model, and default solver orders are being used. 
+
+This method implements the exponential Euler method to 
+update the voltages in this compartment. 
+*/
 void compartment::integrateVoltage(void) {
 
     // compute infinity values for V and Ca
@@ -584,115 +916,21 @@ void compartment::integrateVoltage(void) {
 }
 
 
-// assumes the cell is being clamped, and 
-// integrates and solves for I_clamp
-
-void compartment::integrateV_clamp(double V_clamp) {
-
-    // calculate I_clamp, and set voltage to the clamped
-    // voltage
-    double E = exp(-dt/(Cm/(sigma_g)));
-    V_inf = (V_clamp - V*E)/(1 - E);
-    I_clamp =  A*(V_inf*sigma_g - sigma_gE);
-
-    V = V_clamp;
-
-}
 
 
-void compartment::integrateCNFirstPass(void) {
-    // intermediate variables
-    double b; // b is b for this compartment
-    double d; // d is d for the prev compartment
-
-    b = getBCDF(1)*.5*dt;
 
 
-    // compute c_
-    c_ = .5*dt*getBCDF(2);
-    if (upstream) {
+/*
+This method is used to "resolve" a multi-compartment model, i.e.,
+to figure out which end is which in a cable. Compartments in a multi-compartment model are linked together using `Axial` synapses
+and the `tree_idx` property of the compartment is used to indicate
+its distance from the soma. 
 
-        d = (upstream->getBCDF(3))*dt*.5;
+This method sets the `downstream_g` and `upstream_g` properties
+of this compartment based on the other compartments in the model. 
 
-        // full expression for c_ (eq. 6.54)
-        c_ += b*d/(1 - upstream->c_);
-
-    }
-
-    // compute f_
-    // first compute f
-    double f = getBCDF(4) + getBCDF(2)*V;
-    if (upstream) {
-        f += getBCDF(1)*(upstream->V);
-    }
-    if (downstream) {
-        f += getBCDF(3)*(downstream->V);
-    }
-    f = f*dt;
-
-    f_ = f;
-
-    if (upstream) {
-        // downstream exists. append terms
-        // (eq. 6.55 in Dayan & Abbott)
-        f_ += (b*(upstream->f_))/(1 - upstream->c_);
-    }
-
-}
-
-void compartment::integrateCNSecondPass(void) {
-    delta_V = f_;
-    if (downstream) {
-        // downstream exists, use full eq (6.53)
-        delta_V += getBCDF(3)*.5*dt*(downstream->delta_V);
-    }
-
-    // divide by common denominator
-    delta_V = delta_V/(1 - c_);
-
-
-    V += delta_V;
-}
-
-// returns a vector of the state of every mechanism
-// mech_state is a pointer to a matrix that is hopefully of
-// the right size
-int compartment::getFullMechanismState(double *mech_state, int idx)
-{
-    for (int i = 0; i < n_cont; i ++)
-    {
-
-        cont[i]->getFullState(mech_state, idx);
-        idx += mechanism_sizes[i];
-
-    }
-    return idx;
-}
-
-// for ionic currents
-int compartment::getFullCurrentState(double *cond_state, int idx)
-{
-    for (int i = 0; i < n_cond; i ++)
-    {
-        cond_state[idx] = cond[i]->getCurrent(V);
-        idx ++;
-    }
-    return idx;
-}
-
-// for synaptic currents
-int compartment::getFullSynapseState(double *syn_state, int idx)
-{
-    for (int i = 0; i < n_syn; i ++)
-    {
-        idx = syn[i]->getFullState(syn_state,idx);
-    }
-    return idx;
-}
-
-
-void compartment::resolveAxialConductances(void)
-{
+*/
+void compartment::resolveAxialConductances(void) {
 
     if (n_axial_syn == 0) {return;}
 
@@ -709,13 +947,6 @@ void compartment::resolveAxialConductances(void)
             upstream_g = axial_syn[i]->gmax;
         }
     }
-
-    // debug info
-    // mexPrintf("===========\n");
-    // mexPrintf("tree_idx of this compartment: %f\n",tree_idx);
-    // mexPrintf("downstream_g = %f\n",downstream_g);
-    // mexPrintf("upstream_g = %f\n",upstream_g);
-
 }
 
 

@@ -1,22 +1,18 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
-//
-// Abstract class for defining mechanisms 
-// mechanisms are tied to specific conductances, 
-// synapses or compartments. You can't have 
-// "naked" mechanisms that have nothing to control. 
-// 
-// mechanisms are stored in compartments, and are
-// asked to integrate by the compartment they are in
-// which provides them the calcium error signal
-// and the time step
-//
-// mechanisms can thus connect to 3 different types
-// of objects: compartments, conductances or synapses
-// mechanisms can do anything they want, and can 
-// read and modify any public property they can
-// get their hands on 
+/*
+
+This document describes the "mechanism" C++ class.
+This class describes objects that are mechanisms, and 
+can be used to represent any sort of mechanism or dynamical
+system that affects compartments, conductances or synapses,
+or even other mechanisms. 
+
+| Abstract | can contain | contained in |
+| --------  | ------ | -------  |
+| yes |  nothing | compartment |
+
+
+
+*/
 
 
 #ifndef MECHANISM
@@ -83,13 +79,23 @@ public:
 
 };
 
-
+/*
+Since mechanisms can be just about anything, the abstract
+mechanism class only implements two methods. 
+This method is used to integrate the mechanism under default 
+conditions (single-step integration). 
+*/
 void mechanism::integrate() {
     mexErrMsgTxt("[mechanism] Unimplemented integration method\n");
 }
 
 
-
+/*
+Since mechanisms can be just about anything, the abstract
+mechanism class only implements two methods. 
+This method is used to integrate the mechanism when a multi-step
+solver is requested. 
+*/
 void mechanism::integrateMS(int k, double V, double Ca) {
     mexErrMsgTxt("[mechanism] Unimplemented multi-step integration method\n");
 }   

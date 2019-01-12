@@ -1,14 +1,90 @@
-// _  _ ____ _    ____ ___ _
-//  \/  |  | |    |  |  |  |
-// _/\_ |__| |___ |__|  |  |___
-//
-//Abstract class for defining conductances
-// This class includes the following integration
-// methods:
-// exponential Euler (default)
-// Runge-Kutta 4 (can be chosen using 
-//      solver_order = 4)
-// 
+/*
+
+This document describes the "conductance" C++ class.
+This class describes objects that are conductances, or
+populations of ion channels.
+
+This is an abstract class, and concrete implementations
+of ion channel types need to inherit from this class and
+define certain attributes like their activation functions. 
+
+| Abstract | can contain | contained in |
+| --------  | ------ | -------  |
+| yes |  nothing | compartment |
+
+## Properties 
+
+### `container`
+
+| type | default | user-accessible |
+| --------  | ------ | -------  |
+| compartment* |  NULL | no |
+
+### `gbar`
+
+| type | default | user-accessible |
+| --------  | ------ | -------  |
+| double |  0 | yes |
+
+The maximal conductance of this channel type (in $uS/mm^2$). This
+is typically exposed to the user as a parameter to set and modify. 
+
+
+### `gbar_next`
+
+| type | default | user-accessible |
+| --------  | ------ | -------  |
+| double |  0 | no |
+
+### `g`
+
+| type | default | user-accessible |
+| --------  | ------ | -------  |
+| double |  0 | no |
+
+The instantaneous conductance of this channel type. 
+This is a product of `gbar` and the activation and 
+inactivation variables. 
+
+$$g = \bar{g} m^p h^q$$
+
+### `E`
+
+| type | default | user-accessible |
+| --------  | ------ | -------  |
+| double |  0 | yes |
+
+The reversal potential of this channel type.
+
+### `m`
+
+| type | default | user-accessible |
+| --------  | ------ | -------  |
+| double |  0 | no |
+
+The activation variable of this channel type.
+
+### `h`
+
+| type | default | user-accessible |
+| --------  | ------ | -------  |
+| double |  1 | no |
+
+
+The inactivation variable of this channel type.
+
+### `verbosity`
+
+| type | default | user-accessible |
+| --------  | ------ | -------  |
+| double |  0 | no |
+
+
+A flag that tells this channel how verbose it should be.
+This should not be exposed to the user, since it it 
+broadcast to all components from `xolotl.verbosity`.
+
+*/
 #ifndef CONDUCTANCE
 #define CONDUCTANCE
 #include <cmath>
@@ -25,7 +101,7 @@ public:
     double gbar;
     double gbar_next;
     double g;
-    double E;
+    double E = 0;
     double m = 0;
     double h = 1;
 
@@ -91,21 +167,27 @@ public:
 };
 
 
-// build look-up table
-void conductance::buildLUT(double approx_channels)
-{
-    if (approx_channels == 0)
-    {
+/*
+This method constructs a look up table (LUT)
+that is used to estimate $m_{inf}$ and other
+functions of the voltage. Since these functions 
+are repeatedly evaluated, it is often faster to compute
+them for some values of the voltage once, store these
+values in a table, and use this table subsequently. 
+This is an approximation since the voltage is rounded
+off to the nearest value in the look-up table, uses
+a little more memory, but can be much faster. 
+*/
+void conductance::buildLUT(double approx_channels) {
+    if (approx_channels == 0) {
         // turn off approximations
         approx_m = 0;
         approx_h = 0;
         return;
     }
 
-    if (approx_m == 1)
-    {
-        if (verbosity > 0)
-        {
+    if (approx_m == 1) {
+        if (verbosity > 0) {
             mexPrintf("%s using approximate activation functions\n", getClass().c_str());  
         }
         
@@ -116,8 +198,7 @@ void conductance::buildLUT(double approx_channels)
     }
 
     if (approx_h == 1) {
-        if (verbosity > 0)
-        {
+        if (verbosity > 0) {
            mexPrintf("%s using approximate in-activation functions\n", getClass().c_str()); 
         }
         
@@ -125,14 +206,30 @@ void conductance::buildLUT(double approx_channels)
             h_inf_cache[(int) round(V+99)] = h_inf(V,0);
             tau_h_cache[(int) round(V+99)] = tau_h(V,0);
         }
-
     }
+} // buildLUT
 
 
-}
+/*
+This method integrates the conductance object using
+the exponential Euler method. This is the default
+integration method used by xolotl. If an exact solution
+is to be calculated (i.e.,`approx_m = 0` and `approx_h=0`)
+then `m` and `h` are updated using the exponential Euler
+equation using function evaluations of the activation 
+functions at this voltage and Calcium.
 
+Otherwise, the lookup table is used to update `m` and `h`
+in this channel. 
 
-// Exponential Euler integrator 
+Note that this method is defined as virtual, so it can be
+overridden by integration methods specified in a specific
+conductance. 
+
+**See Also** 
+
+* [virtual methods in C++](http://www.cplusplus.com/doc/tutorial/polymorphism/)
+*/
 void conductance::integrate(double V, double Ca) {   
 
 
@@ -141,56 +238,50 @@ void conductance::integrate(double V, double Ca) {
     if (V_idx > 200) {V_idx = 200;};
 
     // assume that p > 0
-    switch (approx_m)
-    {
+    switch (approx_m) {
         case 0:
             minf = m_inf(V,Ca);
             m = minf + (m - minf)*exp(-dt/tau_m(V,Ca));
             break;
+
         default:
-            
-            
-
             m = m_inf_cache[V_idx] + (m - m_inf_cache[V_idx])*fast_exp(-(dt/tau_m_cache[V_idx]));
-            
-            
             break;
-    }
+    } // switch approx_m
     
-
-
     g = gbar*fast_pow(m,p);
 
-    switch (q)
-    {
+    switch (q) {
         case 0:
             break;
         default:
-
-            switch (approx_h)
-            {
+            switch (approx_h) {
                 case 0:
                     hinf = h_inf(V,Ca);
                     h = hinf + (h - hinf)*exp(-dt/tau_h(V,Ca));
                     break;
                 default:
-
-
-
                     h = h_inf_cache[V_idx] + (h - h_inf_cache[V_idx])*fast_exp(-(dt/tau_h_cache[V_idx]));
                     break;
             }
 
             g = g*fast_pow(h,q);            
             break;
-    }
+    } // switch q
 
     gbar = gbar_next;
 
 }
 
-inline double conductance::fast_pow(double x, int a)
-{
+
+/*
+
+This method is a dirty hack to speed up computing
+exponents in C++. This requires that the power that a 
+number is raised to be an integer (0-8)
+
+*/
+inline double conductance::fast_pow(double x, int a) {
     switch (a)
     {
         case 0:
@@ -224,7 +315,11 @@ inline double conductance::fast_pow(double x, int a)
     return x;
 }
 
-
+/*
+This method constitutes a dirty hack which 
+is a faster way to compute exp(x)
+but is less precise
+*/
 inline double conductance::fast_exp(double x) {
     x = 1.0 + x / 256.0;
     x *= x; x *= x; x *= x; x *= x;
@@ -233,12 +328,28 @@ inline double conductance::fast_exp(double x) {
 }
 
 
-// Runge-Kutta 4 integrator 
+/*
+
+This method integrates a channel object using a multi-step
+solver (MS = "multi-step"). The "sub-step" is indicated in 
+the integer k, which is the first input to this method. 
+
+The multi-step solver that is used here is a Runge-Kutta 4th
+order solver. Thus, k can have values up to 4. 
+
+Based on `k`, different elements of the arrays `k_m` and `k_h`
+are calculated and stored. At each step, the derivative functions
+`mdot` and `hdot` are computed. 
+
+**See Also**
+
+* [The Runge Kutta Method](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods)
+
+*/
 void conductance::integrateMS(int k, double V, double Ca) {
 
-
-    if (q == 0)
-    {
+    if (q == 0) {
+        // q= 0 means channel does not inactivate
         switch (k)
         {
             case 0:
@@ -263,10 +374,7 @@ void conductance::integrateMS(int k, double V, double Ca) {
                 break;
         }
             
-
-
     } else {
-
 
         switch (k)
         {
@@ -301,15 +409,26 @@ void conductance::integrateMS(int k, double V, double Ca) {
     gbar = gbar_next;
 }
 
+/*
 
+The method returns the current that flows through
+this channel at this moment. 
+
+*/
 double conductance::getCurrent(double V) { return g * (V - E); }
 
+/*
+This method "connects" a conductance object to a compartment
+object. This sets the `container` property of the conductance,
+so the channel knows which compartment contains it. 
+*/
 void conductance::connect(compartment *pcomp_) {
     container = pcomp_;
     gbar_next = gbar;
 }
 
-// asks each conductance if they have a solver with this order
+/*
+*/
 void conductance::checkSolvers(int solver_order) {
     if (solver_order == 0){
         return;
@@ -321,21 +440,50 @@ void conductance::checkSolvers(int solver_order) {
     }
 }
 
-double conductance::mdot(double V, double Ca, double m_)
-{
+/*
+This method defines the rate of change of the `m` variable
+of this conductance. This definition is used when `integrateMS` is used. 
+*/
+double conductance::mdot(double V, double Ca, double m_) {
     return (m_inf(V,Ca) - m_)/tau_m(V,Ca);
 }
 
-double conductance::hdot(double V, double Ca, double h_)
-{
+/*
+This method defines the rate of change of the `h` variable
+of this conductance. This definition is used when `integrateMS` is used. 
+*/
+double conductance::hdot(double V, double Ca, double h_) {
     return (h_inf(V,Ca) - h_)/tau_h(V,Ca);
 }
 
-// placeholder functions, these should be ovewritten
-// as needed
+/*
+This method defines the activation curve of this channel.
+This is a virtual method, and is meant to be defined in 
+the channel object. 
+*/
 double conductance::m_inf(double V, double Ca){return 0;}
+
+/*
+This method defines the inactivation curve of this channel.
+This is a virtual method, and is meant to be defined in 
+the channel object. 
+*/
 double conductance::h_inf(double V, double Ca){return 1;}
+
+/*
+This method defines the dependence of the timescale 
+of the activation variable on the voltage of this channel.
+This is a virtual method, and is meant to be defined in 
+the channel object. 
+*/
 double conductance::tau_m(double V, double Ca){return 1;}
+
+/*
+This method defines the dependence of the timescale 
+of the inactivation variable on the voltage of this channel.
+This is a virtual method, and is meant to be defined in 
+the channel object. 
+*/
 double conductance::tau_h(double V, double Ca){return 1;}
 
 #endif

@@ -1,7 +1,185 @@
 
+# The xolotl class
+
+This document describes the "xolotl" class. This is a MATLAB
+class and the primary way you will interact with your
+simulations. 
+
+## Properties
+
+Every xolotl object has the following properties listen in this document. To access a property, use dot notation, i.e.:
+
+```matlab
+x.verbosity
+```
+
+You can view all the properties of a xolotl object using the built-in [properties](https://www.mathworks.com/help/matlab/ref/properties.html) command:
+
+```matlab
+properties(xolotl)
+% will display a list of properties
+```
+
+### `approx_channels`
+
+| Default | Allowed values | Type |
+| ------- | ----- | ----- |
+| 0  |     0, 1 | double | 
+
+`approx_channels`  determines whether approximations
+to computing gating functions should be used. 
+Look-up tables and approximations to the exponential 
+function significantly increase computational speed, 
+but decrease accuracy, especially at high temporal
+resolution in the data.
+
+### `closed_loop`
+
+| Default | Allowed values | Type |
+| ------- | ----- | ----- |
+| true  |     true, false | logical | 
+
+`closed_loop`  determines whether initial conditions 
+should be reset before a new simulation. If `closed_loop`
+is true, successive simulations will use the current 
+state of the `xolotl` object (e.g. the end state of the
+previous simulation if you run `integrate` twice in a row).
+
+### `dt` and `sim_dt`
+
+| Default | Allowed values | Type |
+| ------- | ----- | ----- |
+| .05  |     +ve numbers | double | 
+
+`dt` value stores the fixed time step for outputs from 
+simulation. Note that this is not the same as `sim_dt`. 
+This value determines the number of time steps in the 
+output vectors. If `dt` and `sim_dt` differ, the simulation
+vector is interpolated before being output -- useful for 
+running ultra-high definition simulations but not saving
+all that data.
+
+`dt` must be a integer multiple of `sim_dt`. If it is 
+not, an error will be thrown. 
+
+### `V_clamp`
+
+
+| Default | Allowed values | Type |
+| ------- | ----- | ----- |
+| NaN  |     matrix, vector, scalar | double | 
+
+When `V_clamp` is not a `NaN`, xolotl will assume that you are
+running the simulation in voltage clamp mode. `V_clamp` must be either:
+
+* a vector as long as `x.Children` (the # of compartments)
+* a matrix of size (n_steps,n_compartments) where n_steps is the number
+ of steps in the integration (which is x.t_end/x.sim_dt)
+
+Incorrectly sized `V_clamp` will throw an error. 
+
+You cannot simultaneously inject current and voltage clamp 
+any compartment. 
+
+### `I_ext`
+
+| Default | Allowed values | Type |
+| ------- | ----- | ----- |
+| 0  |     matrix, vector, scalar | double | 
+
+`I_ext` must be either:
+
+* a vector as long as `x.Children` (the # of compartments)
+* a matrix of size (n_steps,n_compartments) where n_steps is the number
+ of steps in the integration (which is x.t_end/x.sim_dt)
+
+Incorrectly sized `I_ext` will throw an error. 
+
+You cannot simultaneously inject current and voltage clamp 
+any compartment. 
+
+### `solver_order`
+
+| Default | Allowed values | Type |
+| ------- | ----- | ----- |
+| 0  |   0, 4 | double | 
+
+
+When `solver_order` is 0, standard solvers are used
+(exponential Euler). When it is 4, a Runge-Kutta 4th
+order method is used instead. This method is slower
+but more accurate.
+
+
+### `t_end`
+
+| Default | Allowed values | Type |
+| ------- | ----- | ----- |
+| 5e3  |    +ve integers | double | 
+
+Specify the time, in ms, for which to simulate. Make sure
+that `t_end` is an integer multiple of `sim_dt`
+
+
+### `output_type`
+
+| Default | Allowed values | Type |
+| ------- | ----- | ----- |
+| 0  |    0,1,2 | double | 
+
+`output_type` determines if outputs from the `integrate` 
+function should be separate matrices (0) or organized 
+in a structure (1), or organized in a structure and 
+enable spike-detection in C++ code (2). The 0 option is 
+useful when you only want a few outputs or don't care 
+about lots of variable names. The latter options are 
+useful when it's important to keep all the output data 
+organized. In addition, the 2 option saves memory at the 
+expense of detail.
+
+### `temperature` and `temperature_ref`
+
+`temperature` specifies the temperature at which you want
+to perform simulations. `temperature_ref` holds the "default" 
+temperature so that $Q_{10}$ values can be used. These
+values only affect components that are temperature sensitive. 
+
+
+### `verbosity`
+
+| Default | Allowed values | Type |
+| ------- | ----- | ----- |
+| 0  |     +ve numbers | double | 
+
+`verbosity` is a positive integer that controls how verbose
+xolotl is when running simulations. Set to a large positive 
+number to get more verbose output, useful for debugging. 
+
+
+### `pref`
+
+`x.pref` contains a structure that contains settings that 
+determine the behaviour of some methods. You can change these 
+settings temporarily by modifying this structure. To make these
+changes persist across sessions, edit the `pref.m` file.
+
+You can also add your own data to `x.pref`, which your 
+functions can use. This is a way to pass metadata and other 
+data along with this model to other functions. 
+
+
+### `Children`
+
+`Children` contains a list of all compartments in the 
+current xolotl model. xolotl only allows you to add 
+objects of type "compartment" to it. Therefore, 
+`x.Children` will give you a list of compartments in 
+the model.
+
+## Methods
 
 -------
-## add
+### add
 
 
 **Syntax**
@@ -27,8 +205,8 @@ Adds a `cpplab` object to a `xolotl` object. The `add` method is the most import
 `xolotl.add` checks that the compartment being added has a legal name using `checkCompartmentName`. If so, it calls the `add` method in the `cpplab` superclass. 
 
 !!! info "See Also"
-    * [cpplab.add](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#add)
-    * [xolotl.checkCompartmentName](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#checkcompartmentname)
+    * [cpplab.add](../cpplab/#add)
+    * [xolotl.checkCompartmentName](#checkcompartmentname)
 
 
 
@@ -38,7 +216,7 @@ Adds a `cpplab` object to a `xolotl` object. The `add` method is the most import
 
 
 -------
-## benchmark
+###  benchmark
 
 **Syntax**
 
@@ -68,7 +246,7 @@ It should produce a figure that looks something like this
 
 
 -------
-## checkCompartmentName
+### checkCompartmentName
 
 **Syntax**
 
@@ -86,7 +264,7 @@ to a `xolotl` object.
     Do not use `checkCompartmentName`, as it may be removed in a future release.
 
 !!! info "See Also"
-    * [xolotl.add](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#add)
+    * [xolotl.add](#add)
 
 
 
@@ -96,7 +274,7 @@ to a `xolotl` object.
 
 
 -------
-## checkTree
+### checkTree
 
 **Syntax**
 
@@ -122,8 +300,8 @@ This method is called in xolotl.transpile() before
 transpiling takes place
 
 !!! info "See Also"
-    * [xolotl.transpile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#transpile)
-    * [xolotl.compile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#compile)
+    * [xolotl.transpile](#transpile)
+    * [xolotl.compile](#compile)
 
 
 
@@ -133,7 +311,7 @@ transpiling takes place
 
 
 -------
-## cleanup
+### cleanup
 
 **Syntax**
 
@@ -157,7 +335,7 @@ A static method that cleans up all transpiled ``C++`` and compiled binary files.
 
 
 -------
-## compile
+### compile
 
 **Syntax**
 
@@ -176,7 +354,7 @@ automatically compiles when t needs to. You can turn this
 
 
 -------
-## connect
+### connect
 
 
 **Syntax**
@@ -226,7 +404,7 @@ tab to get a list of compartments to connect.
 
 
 -------
-## contributingCurrents
+### contributingCurrents
 
 **Syntax**
 
@@ -243,8 +421,8 @@ internally in `xolotl.plot` to color voltage traces.
 where V is a vector of voltages, I is the corresponding matrix of currents 
 
 !!! info "See Also"
-    * [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
-    * [xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
+    * [xolotl.plot](#plot)
+    * [xolotl.manipulate](#manipulate)
 
 
 
@@ -254,7 +432,7 @@ where V is a vector of voltages, I is the corresponding matrix of currents
 
 
 -------
-## copy
+### copy
 
 Syntax:
 
@@ -272,7 +450,7 @@ unless you add a new component to one of them.
     * Do not make vectors of ``xolotl`` objects, as it may lead to undefined behavior. 
 
 !!! info "See Also"
-    * [cpplab.copy()](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#copy())
+    * [cpplab.copy()](../cpplab/#copy())
 
     * [How to copy models](https://xolotl.readthedocs.io/en/master/how-to/copy-models/)
 
@@ -284,7 +462,7 @@ unless you add a new component to one of them.
 
 
 -------
-## fI
+### fI
 
 **Syntax**
 
@@ -321,7 +499,7 @@ The following optional parameters may be specified in name-value syntax:
 
 
 -------
-## getGatingFunctions
+### getGatingFunctions
 
 
 **Syntax**
@@ -348,7 +526,7 @@ tab to get a list of conductances you can get the
 gating function of.
 
 !!! info "See Also"
-    * [xolotl.show](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#show)
+    * [xolotl.show](#show)
 
 
 
@@ -359,7 +537,7 @@ gating function of.
 
 
 -------
-## go_to_examples
+### go_to_examples
 
 
 **Syntax**
@@ -373,7 +551,7 @@ xolotl.go_to_examples
 A static method that goes to the folder that contains xolotl examples. 
 
 !!! info "See Also"
-    * [xolotl.run_all_tests](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#run_all_tests)
+    * [xolotl.run_all_tests](#run_all_tests)
 
 
 
@@ -384,7 +562,7 @@ A static method that goes to the folder that contains xolotl examples.
 
 
 -------
-## integrate
+### integrate
 
 integrates a `xolotl` model. 
 
@@ -430,10 +608,10 @@ When `output_type` is 0,
 When `output_type` is 1 or 2, the integration is performed requesting all outputs, and these outputs are organized in a structure and named to match the names of the components in the model. 
 
 !!! info "See Also"
-    * [xolotl.show](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#show)
-    * [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
-    * [xolotl.transpile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#transpile)
-    * [xolotl.compile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#compile)
+    * [xolotl.show](#show)
+    * [xolotl.plot](#plot)
+    * [xolotl.transpile](#transpile)
+    * [xolotl.compile](#compile)
 
 
 
@@ -445,7 +623,7 @@ When `output_type` is 1 or 2, the integration is performed requesting all output
 
 
 -------
-## manipulate
+### manipulate
 
 
 
@@ -467,7 +645,7 @@ x.manipulate({'parameter1','parameter2'})
 
 
 !!! info "See Also"
-    * [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
+    * [xolotl.plot](#plot)
 
 
 
@@ -479,7 +657,7 @@ x.manipulate({'parameter1','parameter2'})
 
 
 -------
-## manipulateEvaluate
+### manipulateEvaluate
 
 This method is used to update the `xolotl` object 
 every time a slider is moved in the manipulate window. 
@@ -487,7 +665,7 @@ This is used internally in `xolotl.manipulate`. You
 should not need to use this by itself. 
 
 !!! info "See Also"
-    * [xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
+    * [xolotl.manipulate](#manipulate)
 
 
 
@@ -499,7 +677,7 @@ should not need to use this by itself.
 
 
 -------
-## plot
+### plot
 
 **Syntax**
 
@@ -526,8 +704,8 @@ x.pref.show_Ca = false;
 ```
 
 !!! info "See Also"
-    * [xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
-    * [xolotl.contributingCurrents](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#contributingcurrents)
+    * [xolotl.manipulate](#manipulate)
+    * [xolotl.contributingCurrents](#contributingcurrents)
 
 
 
@@ -538,7 +716,7 @@ x.pref.show_Ca = false;
 
 
 -------
-## plotgbars
+### plotgbars
 
 
 **Syntax**
@@ -554,9 +732,9 @@ Makes a stem plot of conductance densities in a given compartment. If the first 
 
 
 !!! info "See Also"
-    * [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
-    * [xolotl.show](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#show)
-    * [xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
+    * [xolotl.plot](#plot)
+    * [xolotl.show](#show)
+    * [xolotl.manipulate](#manipulate)
 
 
 
@@ -568,7 +746,7 @@ Makes a stem plot of conductance densities in a given compartment. If the first 
 
 
 -------
-## rebase
+### rebase
 
 **Syntax**
 
@@ -591,7 +769,7 @@ If you move a xolotl object across computers (for example, by saving it to a fil
 
 
 !!! info "See Also"
-    * [cpplab.rebase()](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#rebase())
+    * [cpplab.rebase()](../cpplab/#rebase())
 
 
 
@@ -602,7 +780,7 @@ If you move a xolotl object across computers (for example, by saving it to a fil
 
 
 -------
-## reset
+### reset
 
 
 
@@ -640,7 +818,7 @@ press tab and get a list of snapshots that you want to
 reset to. 
 	
 !!! info "See Also"
-    * [xolotl.snapshot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#snapshot)
+    * [xolotl.snapshot](#snapshot)
 
 
 
@@ -651,7 +829,7 @@ reset to.
 
 
 -------
-## run_all_tests
+### run_all_tests
 
 
 
@@ -679,7 +857,7 @@ tests pass is a release published.
 
 
 -------
-## setup
+### setup
 
 **Syntax**
 
@@ -696,8 +874,8 @@ once. If xolotl works, there is no need to run this.
 
 
 !!! info "See Also"
-    * [xolotl.update](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#update)
-    * [xolotl.uninstall](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#uninstall)
+    * [xolotl.update](#update)
+    * [xolotl.uninstall](#uninstall)
 
 
 
@@ -708,7 +886,7 @@ once. If xolotl works, there is no need to run this.
 
 
 -------
-## show
+### show
 
 **Syntax**
 
@@ -725,8 +903,8 @@ press the `tab` key and get a list of conductances you can show, like this:
 ![](https://user-images.githubusercontent.com/6005346/50981138-5135b600-14c8-11e9-9be7-b01203716a10.png)
 
 !!! info "See Also"
-    * [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
-    * [xolotl.getGatingFunctions](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#getgatingfunctions)
+    * [xolotl.plot](#plot)
+    * [xolotl.getGatingFunctions](#getgatingfunctions)
 
 
 
@@ -737,7 +915,7 @@ press the `tab` key and get a list of conductances you can show, like this:
 
 
 -------
-## slice
+### slice
 
 **Syntax**
 
@@ -759,7 +937,7 @@ it using the Crank-Nicholson scheme reserved for multi-compartment models.
 
 
 !!! info "See Also"
-    * [xolotl.connect](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#connect)
+    * [xolotl.connect](#connect)
 
 
 
@@ -769,7 +947,7 @@ it using the Crank-Nicholson scheme reserved for multi-compartment models.
 
 
 -------
-## snapshot
+### snapshot
 
 **Syntax**
 
@@ -800,7 +978,7 @@ x.reset('base')
 	
 
 !!! info "See Also"
-    * [xolotl.reset](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#reset)
+    * [xolotl.reset](#reset)
     * [How to: save configurations and use snapshots](https://xolotl.readthedocs.io/en/master/how-to/snapshots/)
 
 
@@ -812,7 +990,7 @@ x.reset('base')
 
 
 -------
-## transpile
+### transpile
 
 
 **Syntax**
@@ -834,8 +1012,8 @@ MATLAB to C++ and back.
 	
 
 !!! info "See Also"
-    * [xolotl.compile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#compile)
-    * [xolotl.viewCode](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#viewcode)
+    * [xolotl.compile](#compile)
+    * [xolotl.viewCode](#viewcode)
 
 
 
@@ -847,7 +1025,7 @@ MATLAB to C++ and back.
 
 
 -------
-## transpileCore
+### transpileCore
 
 **Syntax**
 
@@ -866,7 +1044,7 @@ Do not call this method. It is not meant
 to be user accessible. 
 
 !!! info "See Also"
-    * [xolotl.transpile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#transpile)
+    * [xolotl.transpile](#transpile)
 
 
 
@@ -876,7 +1054,7 @@ to be user accessible.
 
 
 -------
-## uninstall
+### uninstall
 
 **Syntax**
 
@@ -896,7 +1074,7 @@ itself.
 
 
 !!! info "See Also"
-    * [xolotl.update](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#update)
+    * [xolotl.update](#update)
 
 
 
@@ -906,7 +1084,7 @@ itself.
 
 
 -------
-## update
+### update
 
 **Syntax**
 
@@ -925,7 +1103,7 @@ A static method that updates your installation of
 
 
 !!! info "See Also"
-    * [xolotl.uninstall](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#uninstall)
+    * [xolotl.uninstall](#uninstall)
 
 
 
@@ -935,7 +1113,7 @@ A static method that updates your installation of
 
 
 -------
-## viewCode
+### viewCode
 
 **Syntax**
 
@@ -953,7 +1131,7 @@ that constructs the model and integrates it
 
 
 !!! info "See Also"
-    * [xolotl.transpile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#transpile)
+    * [xolotl.transpile](#transpile)
 
 
 
