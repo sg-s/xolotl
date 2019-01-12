@@ -5,21 +5,27 @@
     >  < (_) | | (_) | |_| |
    /_/\_\___/|_|\___/ \__|_|
 
-findNSpikes
-^^^^^^^^^^^
+### findNSpikes
 
-static method of ``xtools`` that computes the number of spikes in a voltage trace. Example use ::
 
-   N = xolotl.findNSpikes(V);
-   N = xolotl.findNSpikes(V, on_off_thresh)
 
-``V`` is a vector of voltages, and ``on_off_thresh`` is an optional argument that determines the threshold above which a voltage fluctuation is considered a spikes. The default is 0 mV.
 
-See Also
---------
 
-- xtools.findNSpikeTimes
+**Syntax**
 
+```matlab
+	N = xolotl.findNSpikes(V);
+	N = xolotl.findNSpikes(V, on_off_thresh)
+```
+
+**Description**
+
+Computes the number of spikes in a voltage trace. `V` is an n x 1 voltage trace
+and `on_off_thresh` is a membrane potential threshhold at which spikes should be
+counted (default = 0 mV).
+
+!!! info "See Also"
+    ->xtools.findNSpikeTimes
 
 %}
 
