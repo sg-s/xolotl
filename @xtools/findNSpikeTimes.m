@@ -5,33 +5,36 @@
     >  < (_) | | (_) | |_| |
    /_/\_\___/|_|\___/ \__|_|
 
-findNSpikeTimes
-^^^^^^^^^^^^^^^
-
-static method of ``xtools`` that returns a vector of spike times from a voltage trace. Spikes are defined as voltage crossings across a threshold. Example use ::
-
-   spiketimes = xolotl.findNSpikeTimes(V,n_spikes,on_off_thresh);
+### findNSpikeTimes
 
 
-``V`` is a vector of voltages, and ``on_off_thresh`` is an optional argument that determines the threshold above which a voltage fluctuation is considered a spikes. The default is 0. ``n_spikes`` is the number of spikes it should look for, and ``spiketimes`` will always be a vector ``n_spikes`` elments long.
 
-See Also
---------
 
-- xtools.findNSpikes
 
+**Syntax**
+
+```matlab
+	spike_times = xtools.findNSpikeTimes(V, n_spikes, on_off_thresh)
+```
+
+**Description**
+
+Computes the number of spikes in a voltage trace. `V` is an n x 1 voltage trace
+Spikes are defined as voltage crossings across a threshold, `on_off_thresh` (default = 0 mV).
+
+!!! info "See Also"
+    ->xtools.findNSpikeTimes
 
 %}
 
 
-
-function spiketimes = findNSpikeTimes(V,n_spikes,on_off_thresh)
+function spike_times = findNSpikeTimes(V,n_spikes,on_off_thresh)
 
 if nargin < 3
 	on_off_thresh = 0;
 end
 
-spiketimes = NaN(n_spikes,1);
+spike_times = NaN(n_spikes,1);
 [ons, offs] = computeOnsOffs(V > on_off_thresh);
 if isempty(offs) || isempty(ons)
 	return
@@ -41,5 +44,5 @@ stop_here = min([length(ons) n_spikes]);
 
 for j = 1:stop_here
   [~,idx] = max(V(ons(j):offs(j)));
-  spiketimes(j) = ons(j) + idx;
+  spike_times(j) = ons(j) + idx;
 end
