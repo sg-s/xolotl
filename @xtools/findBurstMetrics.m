@@ -1,47 +1,96 @@
-% _       _   _
-% __  _____ | | ___ | |_| |
-% \ \/ / _ \| |/ _ \| __| |
-% >  < (_) | | (_) | |_| |
-% /_/\_\___/|_|\___/ \__|_|
-%
-% Explanation of outputs
-% ======================
-%
-% findBurstMetrics finds the following things,
-% which are returned in a 10-element vector
-% (1)  burst period (in units of dt)
-% (2)  # of spikes / burst
-% (3)  time of first spike relative to Ca peak (in units of dt)
-% (4)  time of last spike relative to Ca peak (in units of dt)
-% (5)  mean height of calcium peak (uM)
-% (6)  mean minimum of Calcium minimum (uM)
-% (7)  variability of Calcium peaks (CV)
-% (8)  variability of burst periods (CV)
-% (9)  duty cycle
-% (10) error code (see below for details)
-%
-% in addition, it returns the time of every spike,
-% the times of the calcium peaks, and the times
-% of the calcium minimums in additional outputs
-%
-% minimal usage:
-% ==============
-%
-% [burst_metrics, spike_times, Ca_peaks, Ca_mins] = xtools.findBurstMetrics(V,Ca)
-%
-% note that while burst_metrics is always 10 elements long,
-% the other three outputs can have variable lengths
-%
-% Explanation of error codes
-% ==========================
-%
-% 0 	No error
-% 1		Fewer than 5 Calcium peaks
-% 2 	Calcium peaks not similar enough
-% 3 	Burst periods too variable
-% 4 	No spikes
+%{
+              _       _   _
+   __  _____ | | ___ | |_| |
+   \ \/ / _ \| |/ _ \| __| |
+    >  < (_) | | (_) | |_| |
+   /_/\_\___/|_|\___/ \__|_|
 
-function [burst_metrics, spike_times, Ca_peaks, Ca_mins] = findBurstMetrics(V,Ca,Ca_peak_similarity, burst_duration_variability,on_off_thresh)
+### findBurstMetrics
+
+
+
+
+
+**Syntax**
+
+```matlab
+xtools.findBurstMetrics(V, Ca)
+[burst_metrics, spike_times, Ca_peaks, Ca_troughs] = xtools.findBurstMetrics(V, Ca)
+[burst_metrics, spike_times, Ca_peaks, Ca_troughs] = xtools.findBurstMetrics(V, Ca, Ca_peak_similarity)
+[burst_metrics, spike_times, Ca_peaks, Ca_troughs] = xtools.findBurstMetrics(V, Ca, Ca_peak_similarity, burst_duration_variability)
+[burst_metrics, spike_times, Ca_peaks, Ca_troughs] = xtools.findBurstMetrics(V, Ca, Ca_peak_similarity, burst_duration_variability, on_off_thresh)
+```
+
+**Description**
+
+Computes burst metrics, spike times, and peaks and troughs of calcium wave.
+
+**Arguments**
+
+`V` is an n x 1 vector describing the membrane potential of a compartment over time.
+
+`Ca` is an n x 1 vector describing the intracellular calcium concentration of the
+same compartment over time.
+
+| Optional Positional Argument | Default Value |
+| --------  | ------ |
+| `Ca_peak_similarity` | 0.3
+| `burst_duration_variability` | 0.1 |
+| `on_off_thresh` | 0 |
+
+`Ca_peak_similarity` sets the maximum acceptable coefficient of variation (CV) between
+the intracellular calcium peaks. This function will exit with an error code if this limit is
+exceeded. To ignore this limit, set it to `Inf`.
+
+`burst_duration_variability` sets the maximum acceptable CV between the burst periods.
+This function will exit with an error code if this limit is exceeded. To ignore this
+limit, set it to `Inf`.
+
+`on_off_thresh` determines the horizontal crossing line (in units of mV) at which
+spikes should be counted. For example, if the `on_off_thresh` is set to 10 mV, then
+only when the membrane potential crosses 10 mV will a spike be counted.
+
+**Outputs**
+
+With no outputs, the burst period, mean number of spikes per burst, and duty cycle
+are printed to the command window.
+
+`burst-metrics` is a 10x1 vector which contains the
+
+1.  burst period (in units of dt)
+2.  mean number of spikes per burst (unitless)
+3.  time of first spike within a burst relative to  the burst's Ca peak (in units of dt)
+4.  time of last spike within a burst relative to  the burst's Ca peak (in units of dt)
+5.  mean of calcium peaks ($\mu M$)
+6.  mean of Calcium troughs ($\mu M$)
+7.  variability of Calcium peaks (coefficient of variation)
+8.  variability of burst periods (coefficient of variation)
+9.  duty cycle (unitless)
+10. error code
+
+The error code is a digit between 0 and 4 that describes the success of the function.
+
+0. 	No error
+1.	Fewer than 5 Calcium peaks
+2. 	Calcium peaks not similar enough
+3. 	Burst periods too variable
+4. 	No spikes
+
+`spike_times` is an n x 1 vector containing the times (in units of dt) of each spike
+in the trace defined by V.
+
+`Ca_peaks` is an n x 1 vector containing the times (in units of dt) of each peak
+of the calcium wave.
+
+`Ca_troughs` is an n x 1 vector containing the times (in units of dt) of each trough
+of the calcium wave.
+
+!!! info "Dependencies"
+    This function requires the Signal Processing Toolbox for MATLAB.
+
+%}
+
+function [burst_metrics, spike_times, Ca_peaks, Ca_troughs] = findBurstMetrics(V,Ca,Ca_peak_similarity, burst_duration_variability,on_off_thresh)
 
 assert(isvector(V),'Voltage trace has to be a vector')
 assert(isvector(Ca),'Calcium trace has to be a vector')
@@ -59,7 +108,7 @@ end
 burst_metrics = -ones(10,1);
 Ca_peaks = [];
 spike_times = [];
-Ca_mins = [];
+Ca_troughs = [];
 
 Ca_prom = std(Ca);
 [peak_Ca,burst_peak_loc] = findpeaks(Ca,'MinPeakProminence',Ca_prom);
@@ -174,7 +223,7 @@ for i = 2:length(burst_peak_loc-1)
 
 end
 
-Ca_mins = cal_min;
+Ca_troughs = cal_min;
 
 burst_metrics(1) = mean_burst_period;
 burst_metrics(2) = mean(n_spikes(2:end-1));
