@@ -785,7 +785,7 @@ of this compartment based on the other compartments in the model.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L932)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L934)
 
 -------
 

@@ -905,6 +905,8 @@ void compartment::integrateVoltage(void) {
     // compute infinity values for V and Ca
     if (sigma_g == 0) {
         V_inf = V_prev;
+        V = V_inf;
+        return;
     }
     else {
         V_inf = (sigma_gE + (I_ext/A))/sigma_g;

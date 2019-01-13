@@ -19,20 +19,20 @@ protected:
 public:
 
     // default parameter values
-    double gbar_Leak    = 0;
-    double gbar_Ca      = 0;
-    double gbar_Kd      = 0;
-    double E_Leak       = -50;
-    double E_Ca         = 120;
-    double E_Kd         = -80;
-    double phi          = 1;
-    double v1;
-    double v2;
-    double v3;
-    double v4;
+    double gbar_Leak = 20;
+    double gbar_Ca = 44;
+    double gbar_Kd = 80;
+    double E_Leak = -50;
+    double E_Ca = 120;
+    double E_Kd = -80;
+    double phi = .04;
+    double v1 = -1.2;
+    double v2 = 18;
+    double v3 = 2;
+    double v4 = 30;
 
     // default state variable values
-    double n            = 0;
+    double n = 0;
 
     // constructor
     MorrisLecar(double gbar_Leak_, double gbar_Kd_, double gbar_Ca_, double E_Kd_, double E_Ca_, double E_Leak_, double phi_, double v1_, double v2_, double v3_, double v4_, double n_)
@@ -52,6 +52,8 @@ public:
 
         // state variables
         n       = n_;
+
+        if (isnan(n)) {n = 0;}
     }
 
     void checkSolvers(int);
@@ -68,69 +70,73 @@ public:
     int getFullState(double* cont_state, int idx);
     int getFullStateSize(void);
 
+    double getState(int);
+
 };
 
 // bookkeeping methods
-double MorrisLecar::getState(int idx)
-{
-    return std::numeric_limits<double>::quiet_NaN();
+double MorrisLecar::getState(int idx) {
+    return n;
 }
 
-int MorrisLecar::getFullStateSize()
-{
-    return 0;
+int MorrisLecar::getFullStateSize() {
+    return 1;
 }
 
-int MorrisLecar::getFullState(double *cont_state, int idx)
-{
-    // do nothing
+int MorrisLecar::getFullState(double *cont_state, int idx) {
+    // return n, the state variable
+    cont_state[idx] = n;
+    idx++;
     return idx;
 }
 
 // connection methods
-void MorrisLecar::connect(compartment* comp_)
-{
+void MorrisLecar::connect(compartment* comp_) {
     comp = comp_;
     comp->addMechanism(this);
 }
 
-void MorrisLecar::connect(conductance* cond_)
-{
-    mexErrMsgTxt("[MorrisLecar] This mechanism cannot connect to a conductance object")
+void MorrisLecar::connect(conductance* cond_) {
+    mexErrMsgTxt("[MorrisLecar] This mechanism cannot connect to a conductance object");
 }
 
-void MorrisLecar::connect(synapse* syn_)
-{
+void MorrisLecar::connect(synapse* syn_) {
     mexErrMsgTxt("[MorrisLecar] This mechanism cannot connect to a synapse object\n");
 }
 
-double MorrisLecar::Vdot(double v, double n)
-{
-    double m_inf = 0.5 * (1 + tanh((V - v1)/v2));
+double MorrisLecar::Vdot(double v, double n) {
+    double m_inf = 0.5 * (1 + tanh((v - v1)/v2));
     return - gbar_Leak * (v - E_Leak) - gbar_Ca * m_inf *  (v - E_Ca) - gbar_Kd * n * (v - E_Kd);
 }
 
-double MorrisLecar::Ndot(double v, double n)
-{
+double MorrisLecar::Ndot(double v, double n) {
     double n_inf = 0.5 * (1 + tanh((v - v1)/v2));
-    double n_tau = 1.0 / (phi * cosh((V - v3)/(2*v4)));
+    double n_tau = 1.0 / (phi * cosh((v - v3)/(2*v4)));
     return (n_inf - n) / n_tau;
 }
 
 // integration methods
-void MorrisLecar::integrate(void)
-{
+void MorrisLecar::integrate(void) {
     // euler's method
     double v    = comp->V;
     n           = n + Ndot(v, n) * dt;
     v           = v + Vdot(v, n) * dt;
-    comp->V     = v;
+    comp->V_prev     = v;
 }
 
-void MorrisLecar::integrateMS(int k, double v, double Ca_)
-{
+void MorrisLecar::integrateMS(int k, double v, double Ca_) {
     mexErrMsgTxt("[MorrisLecar] This integration method isn't supported for this mechanism yet\n");
 }
+
+void MorrisLecar::checkSolvers(int k) {
+    if (k == 0){
+        // all ok
+    } else {
+        mexErrMsgTxt("[MorrisLecar] This integration method isn't supported for this mechanism yet\n");
+    }
+}
+
+
 
 
 #endif
