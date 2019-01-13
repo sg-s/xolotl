@@ -13,22 +13,23 @@
 **Syntax**
 
 ```matlab
-	options = xtools.V2metrics
-	metrics = xtools.V2metrics(V)
-	metrics = xtools.V2metrics(V, options)
-	metrics = xtools.V2metrics(V, 'PropertyName', PropertyValue, ...)
+options = xtools.V2metrics
+metrics = xtools.V2metrics(V)
+metrics = xtools.V2metrics(V, options)
+metrics = xtools.V2metrics(V, 'PropertyName', PropertyValue, ...)
 ```
 
 **Description**
 
-Computes metrics from a raw time sereis of voltage, whcih can be experimental
-or simulated data.
+Computes metrics from a raw time series of voltage, 
+which can be experimental or simulated data.
 
-If called without arguments or outputs, a struct containing fields for all optional
-arguments, `options`, is created.
+If called without arguments or outputs, a struct
+containing fields for all optional arguments, `options`, 
+is created.
 
-`V2metrics` can be called using a struct to specify options, or with individual
-options specified as name, value keyword pairs. Options with a `NaN` value are ignored
+`V2metrics` can be called using a struct to specify 
+options, or with individual options specified as name, value keyword pairs. Options with a `NaN` value are ignored
 and the default option value is used instead.
 
 | Option Name | Default Value | Units |
@@ -60,9 +61,9 @@ and the default option value is used instead.
 
 !!! info "See Also"
     ->xtools.findNSpikes
-		->xtools.findNSpikeTimes
-		->xtools.findBurstMetrics
-		LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
+	->xtools.findNSpikeTimes
+	->xtools.findBurstMetrics
+	LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
 
 
 %}

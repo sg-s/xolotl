@@ -14,7 +14,7 @@
 **Syntax**
 
 ```matlab
-	spike_times = xtools.findNSpikeTimes(V, n_spikes, on_off_thresh)
+spike_times = xtools.findNSpikeTimes(V, n_spikes, on_off_thresh)
 ```
 
 **Description**

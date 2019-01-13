@@ -14,8 +14,8 @@
 **Syntax**
 
 ```matlab
-	N = xolotl.findNSpikes(V);
-	N = xolotl.findNSpikes(V, on_off_thresh)
+N = xolotl.findNSpikes(V);
+N = xolotl.findNSpikes(V, on_off_thresh)
 ```
 
 **Description**

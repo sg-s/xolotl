@@ -10,7 +10,7 @@
 **Syntax**
 
 ```matlab
-	C = xtools.matrixCost(M1, M2)
+C = xtools.matrixCost(M1, M2)
 ```
 
 **Description**
