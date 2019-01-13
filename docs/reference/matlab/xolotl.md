@@ -795,11 +795,11 @@ x.reset('snap_name')
 
 **Description**
 
-Resets a xolotl object to some default state. 
+Resets a xolotl object to some default state.
 
-reset called without any arguments resets the model as best as it can -- voltages are set to -60 mV, Calcium in every compartment is set to the internal value, and the gating variables of every conductance are reset. 
+reset called without any arguments resets the model as best as it can -- voltages are set to -60 mV, Calcium in every compartment is set to the internal value, and the gating variables of every conductance are reset.
 
-`reset` can also be called with a string argument, which is the name of a snapshot previously stored in the model object. Then, `reset` reconfigures the parameters of the model to match that snapshot. This is useful for working with a model, changing parameters, evolving it, and then coming back to where you started off from. 
+`reset` can also be called with a string argument, which is the name of a snapshot previously stored in the model object. Then, `reset` reconfigures the parameters of the model to match that snapshot. This is useful for working with a model, changing parameters, evolving it, and then coming back to where you started off from.
 
 Here's an example:
 
@@ -813,10 +813,10 @@ x.integrate;
 x.reset('base')
 ```
 
-This method supports tab completion. You should be able to 
-press tab and get a list of snapshots that you want to 
-reset to. 
-	
+This method supports tab completion. You should be able to
+press tab and get a list of snapshots that you want to
+reset to.
+
 !!! info "See Also"
     * [xolotl.snapshot](#snapshot)
 
