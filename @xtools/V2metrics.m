@@ -1,26 +1,69 @@
 %{
 
-;;     ;; ;;;;;;;;  ;;;;;;;   ;;;;;;;  ;;        ;;;;;;  
- ;;   ;;     ;;    ;;     ;; ;;     ;; ;;       ;;    ;; 
-  ;; ;;      ;;    ;;     ;; ;;     ;; ;;       ;;       
-   ;;;       ;;    ;;     ;; ;;     ;; ;;        ;;;;;;  
-  ;; ;;      ;;    ;;     ;; ;;     ;; ;;             ;; 
- ;;   ;;     ;;    ;;     ;; ;;     ;; ;;       ;;    ;; 
-;;     ;;    ;;     ;;;;;;;   ;;;;;;;  ;;;;;;;;  ;;;;;;  
+;;     ;; ;;;;;;;;  ;;;;;;;   ;;;;;;;  ;;        ;;;;;;
+ ;;   ;;     ;;    ;;     ;; ;;     ;; ;;       ;;    ;;
+  ;; ;;      ;;    ;;     ;; ;;     ;; ;;       ;;
+   ;;;       ;;    ;;     ;; ;;     ;; ;;        ;;;;;;
+  ;; ;;      ;;    ;;     ;; ;;     ;; ;;             ;;
+ ;;   ;;     ;;    ;;     ;; ;;     ;; ;;       ;;    ;;
+;;     ;;    ;;     ;;;;;;;   ;;;;;;;  ;;;;;;;;  ;;;;;;
 
-V2metrics.m
+### V2metrics
 
-computes metrics from a raw time series of voltage
-should work with either simulations or real data 
+**Syntax**
 
-usage
-=====
+```matlab
+	options = xtools.V2metrics
+	metrics = xtools.V2metrics(V)
+	metrics = xtools.V2metrics(V, options)
+	metrics = xtools.V2metrics(V, 'PropertyName', PropertyValue, ...)
+```
 
-metrics = xtools.V2metrics(V);
-metrics = xtools.V2metrics(V,'sampling_rate',20); % n samples/ms
-metrics = xtools.V2metrics(V,'ibi_thresh',300); % 300 ms defines a inter-burst interval
-metrics = xtools.V2metrics(V,'debug',true); % make plots
-metrics = xtools.V2metrics(V,'spike_threshold',0); % excurions above this are considered a spike 
+**Description**
+
+Computes metrics from a raw time sereis of voltage, whcih can be experimental
+or simulated data.
+
+If called without arguments or outputs, a struct containing fields for all optional
+arguments, `options`, is created.
+
+`V2metrics` can be called using a struct to specify options, or with individual
+options specified as name, value keyword pairs. Options with a `NaN` value are ignored
+and the default option value is used instead.
+
+| Option Name | Default Value | Units |
+| ----------- | ------------- |
+| `sampling_rate` | 20 | 1/ms |
+| `ibi_thresh` | 300 | ms |
+| `spike_threshold` | 0 | mV |
+| `debug` | false | |
+
+| Metric Name | Units |
+| ----------- | ----- |
+| `firing_rate` | NaN | ? |
+| `burst_period` | NaN | ? |
+| `ibi_mean` | NaN | ? |
+| `ibi_std` | NaN | ? |
+| `isi_std` | NaN | ? |
+| `burst_period_std` | NaN | ? |
+| `isi_std` | NaN | ? |
+| `duty_cycle_mean` | NaN | ? |
+| `n_spikes_per_burst_mean` | NaN | ? |
+| `n_spikes_per_burst_std` | NaN | ? |
+| `min_V_mean` | NaN | ? |
+| `min_V_std` | NaN | ? |
+| `min_V_in_burst_mean` | NaN | ? |
+| `min_V_in_burst_std` | NaN | ? |
+| `spike_peak_mean`  | NaN | ? |
+| `spike_peak_std` | NaN | ? |
+
+
+!!! info "See Also"
+    ->xtools.findNSpikes
+		->xtools.findNSpikeTimes
+		->xtools.findBurstMetrics
+		LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
+
 
 %}
 
@@ -32,10 +75,10 @@ metrics = orderfields(struct('firing_rate',NaN,'burst_period',NaN,'ibi_mean',NaN
 % options and defaults
 options.sampling_rate = 20; % samples per millisecond
 options.ibi_thresh = 3e2; % inter-burst interval in ms
-options.spike_threshold = 0; % mV 
+options.spike_threshold = 0; % mV
 options.debug = false;
 
-if nargout && ~nargin 
+if nargout && ~nargin
 	varargout{1} = options;
     return
 end
@@ -80,7 +123,7 @@ if n_spikes == 0
 	return
 end
 
-% compute firing rate 
+% compute firing rate
 metrics.firing_rate = (1e3*n_spikes)/(length(V)/options.sampling_rate);
 
 % find ISI
@@ -88,7 +131,7 @@ metrics.isi_mean = mean(diff(spiketimes))/options.sampling_rate;
 metrics.isi_std = std(diff(spiketimes))/options.sampling_rate;
 
 
-% measure some statistics about the extrema of 
+% measure some statistics about the extrema of
 % the voltage trace
 metrics.min_V_mean = min(V);
 
@@ -103,7 +146,7 @@ metrics.spike_peak_std = std(V(spiketimes));
 % begin burst-related metrics
 
 
-% find burst starts and stops 
+% find burst starts and stops
 metrics.ibi_thresh = options.ibi_thresh;
 ibi = options.ibi_thresh*options.sampling_rate;
 burst_ends = spiketimes(find(diff(spiketimes) > ibi));
@@ -136,7 +179,7 @@ metrics.burst_period = mean(diff(burst_ends))/options.sampling_rate;
 metrics.burst_period_std = std(diff(burst_ends))/options.sampling_rate;
 
 
-% align burst_starts and burst_stops so we 
+% align burst_starts and burst_stops so we
 % have one for every identified burst
 if burst_starts(1) > burst_ends(1)
 	burst_ends(1) = [];
