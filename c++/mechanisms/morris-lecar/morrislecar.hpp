@@ -34,6 +34,10 @@ public:
     // default state variable values
     double n = 0;
 
+    // containers for multi-step integration
+    double k_n[4] = {0,0,0,0};
+    double k_v[4] = {0,0,0,0};
+
     // constructor
     MorrisLecar(double gbar_Leak_, double gbar_Kd_, double gbar_Ca_, double E_Kd_, double E_Ca_, double E_Leak_, double phi_, double v1_, double v2_, double v3_, double v4_, double n_)
     {
@@ -125,14 +129,34 @@ void MorrisLecar::integrate(void) {
 }
 
 void MorrisLecar::integrateMS(int k, double v, double Ca_) {
-    mexErrMsgTxt("[MorrisLecar] This integration method isn't supported for this mechanism yet\n");
+    switch (k)
+    {
+        case 0:
+            k_n[0] = dt * Ndot(v, n);
+            k_v[0] = dt * Vdot(v, n);
+        case 1:
+            k_n[1] = dt * Ndot(v, n + k_n[0]/2);
+            k_v[1] = dt * Vdot(v + k_v[0]/2, n);
+        case 2:
+            k_n[2] = dt * Ndot(v, n + k_n[1]/2);
+            k_v[2] = dt * Vdot(v + k_v[1]/2, n);
+        case 3:
+            k_n[3] = dt * Ndot(v, n + k_n[2]);
+            k_v[3] = dt * Vdot(v + k_v[2], n);
+        case 4:
+            // last step
+            n = n + (k_n[0] + 2*k_n[1] + 2*k_n[2] + k_n[3])/6;
+            v = v + (k_v[0] + 2*k_v[1] + 2*k_v[2] + k_v[3])/6;
+    }
 }
 
 void MorrisLecar::checkSolvers(int k) {
     if (k == 0){
-        // all ok
+        return;
+    } else if (k == 4){
+        return;
     } else {
-        mexErrMsgTxt("[MorrisLecar] This integration method isn't supported for this mechanism yet\n");
+        mexErrMsgTxt("[MorrisLecar] unsupported solver order\n");
     }
 }
 
