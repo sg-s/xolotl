@@ -111,7 +111,8 @@ void MorrisLecar::connect(synapse* syn_) {
 double MorrisLecar::Vdot(double v, double n) {
     double m_inf = 0.5 * (1 + tanh((v - v1)/v2));
     double Cm = comp->Cm;
-    return (-gbar_Leak * (v - E_Leak) - gbar_Ca * m_inf *  (v - E_Ca) - gbar_Kd * n * (v - E_Kd))/Cm;
+    double I_ext = comp->I_ext;
+    return (I_ext - gbar_Leak * (v - E_Leak) - gbar_Ca * m_inf *  (v - E_Ca) - gbar_Kd * n * (v - E_Kd))/Cm;
 }
 
 double MorrisLecar::Ndot(double v, double n) {
