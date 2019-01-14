@@ -110,7 +110,7 @@ void MorrisLecar::connect(synapse* syn_) {
 
 double MorrisLecar::Vdot(double v, double n) {
     double m_inf = 0.5 * (1 + tanh((v - v1)/v2));
-    return - gbar_Leak * (v - E_Leak) - gbar_Ca * m_inf *  (v - E_Ca) - gbar_Kd * n * (v - E_Kd);
+    return (-gbar_Leak * (v - E_Leak) - gbar_Ca * m_inf *  (v - E_Ca) - gbar_Kd * n * (v - E_Kd))/Cm;
 }
 
 double MorrisLecar::Ndot(double v, double n) {
@@ -145,8 +145,8 @@ void MorrisLecar::integrateMS(int k, double v, double Ca_) {
             k_v[3] = dt * Vdot(v + k_v[2], n);
         case 4:
             // last step
-            n = n + (k_n[0] + 2*k_n[1] + 2*k_n[2] + k_n[3])/6;
-            v = v + (k_v[0] + 2*k_v[1] + 2*k_v[2] + k_v[3])/6;
+            n = n + (k_n[0] + 2*k_n[1] + 2*k_n[2] + k)
+            m = m + (k_m[0] + 2*k_m[1] + 2*k_m[2] + k_m[3])/6;
     }
 }
 
