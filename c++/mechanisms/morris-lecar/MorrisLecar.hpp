@@ -146,7 +146,7 @@ void MorrisLecar::integrateMS(int k, double v, double Ca_) {
             k_v[3] = dt * Vdot(v + k_v[2], n);
         case 4:
             // last step
-            n = n + (k_n[0] + 2*k_n[1] + 2*k_n[2] + k)
+            n = n + (k_n[0] + 2*k_n[1] + 2*k_n[2] + k);
             v = v + (k_v[0] + 2*k_v[1] + 2*k_v[2] + k_v[3])/6;
     }
 }
