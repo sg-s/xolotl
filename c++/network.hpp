@@ -435,7 +435,7 @@ void network::integrateClamp(double *V_clamp) {
             } else {
                 // try to compute the clamping current
                 // this is probably only approximately correct
-                temp_comp->integrateV_clamp(temp_comp->V_clamp);
+                temp_comp->computeClampingCurrent(temp_comp->V_clamp);
             }
 
 

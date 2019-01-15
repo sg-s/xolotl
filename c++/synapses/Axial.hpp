@@ -18,39 +18,42 @@ public:
 
         if (isnan(resistivity)) {resistivity = 1e-3;}
 
-        if (resistivity == 0)
-        {
+        if (resistivity == 0) {
             mexErrMsgIdAndTxt("xolotl:Axial", "resistivity cannot be zero.");
         }
     }
     
-    void integrate(double dt);
+    void integrate(void);
     void connect(compartment *pcomp1_, compartment *pcomp2_);
 
     int getFullState(double*, int);
     int getFullStateSize(void);
+
+    void checkSolvers(int k);
 };
 
-void Axial::integrate(double dt)
-{       
+void Axial::integrate(void) {       
     // set E to V_pre
     E = (pre_syn->V);
 }
 
 
-int Axial::getFullStateSize()
-{
-    return 0; 
-}
+int Axial::getFullStateSize() {return 0; }
 
-int Axial::getFullState(double *syn_state, int idx)
-{
+int Axial::getFullState(double *syn_state, int idx){
     return idx;
 }
 
+void Axial::checkSolvers(int k){
+    if (k == 0) {
+        return;
+    }
+    mexErrMsgTxt("[Axial] Unsupported solver order\n");
+}
 
-void Axial::connect(compartment *pcomp1_, compartment *pcomp2_) 
-{
+
+
+void Axial::connect(compartment *pcomp1_, compartment *pcomp2_) {
     pre_syn = pcomp1_; 
     post_syn = pcomp2_; 
 
