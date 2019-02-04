@@ -1,4 +1,4 @@
-%{
+
 % 
 % ### contributingCurrents
 %
@@ -20,7 +20,7 @@
 %     ->xolotl.plot
 %     ->xolotl.manipulate
 
-%}
+
 
 function curr_index = contributingCurrents(V, I)
 

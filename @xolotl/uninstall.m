@@ -1,4 +1,4 @@
-%{
+
 %              _       _   _
 %   __  _____ | | ___ | |_| |
 %   \ \/ / _ \| |/ _ \| __| |
@@ -27,7 +27,7 @@
 % !!! info "See Also"
 %     ->xolotl.update
 %
-%}
+
 
 function uninstall()
 

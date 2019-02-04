@@ -1,4 +1,4 @@
-%{
+
 %               _       _   _
 %    __  _____ | | ___ | |_| |
 %    \ \/ / _ \| |/ _ \| __| |
@@ -27,7 +27,7 @@
 % ![](https://user-images.githubusercontent.com/6005346/50046554-1714f800-0073-11e9-9b1f-f136baff7976.png)
 %
 
-%}
+
 
 function benchmark(self)
 

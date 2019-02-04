@@ -1,4 +1,4 @@
-%{
+
 %              _       _   _ 
 %   __  _____ | | ___ | |_| |
 %   \ \/ / _ \| |/ _ \| __| |
@@ -25,7 +25,7 @@
 % tests pass is a release published.
 %
 
-%}
+
 
 function [passed, total] = run_all_tests(cleanup)
 

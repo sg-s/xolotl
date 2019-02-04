@@ -1,4 +1,4 @@
-%{
+
 %               _       _   _ 
 %    __  _____ | | ___ | |_| |
 %    \ \/ / _ \| |/ _ \| __| |
@@ -16,7 +16,7 @@
 %     ->xolotl.manipulate
 %
 
-%}
+
 
 
 function manipulateEvaluate(self,names,values)

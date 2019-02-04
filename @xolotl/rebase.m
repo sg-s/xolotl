@@ -1,4 +1,4 @@
-%{
+
 %               _       _   _ 
 %    __  _____ | | ___ | |_| |
 %    \ \/ / _ \| |/ _ \| __| |
@@ -30,7 +30,7 @@
 % !!! info "See Also"
 %     ->cpplab.rebase()
 
-%}
+
 
 
 function rebase(self)

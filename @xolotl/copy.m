@@ -1,4 +1,4 @@
-%{
+
 %               _       _   _ 
 %    __  _____ | | ___ | |_| |
 %    \ \/ / _ \| |/ _ \| __| |
@@ -27,7 +27,7 @@
 %
 %     * [How to copy models](https://xolotl.readthedocs.io/en/master/how-to/copy-models/)
 
-%}
+
 
 function N = copy(self)
 

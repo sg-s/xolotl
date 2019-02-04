@@ -1,4 +1,4 @@
-%{
+
 %              _       _   _ 
 %   __  _____ | | ___ | |_| |
 %   \ \/ / _ \| |/ _ \| __| |
@@ -21,7 +21,7 @@
 % !!! info "See Also"
 %     ->xolotl.run_all_tests
 
-%}
+
 
 
 function go_to_examples()

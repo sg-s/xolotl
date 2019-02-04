@@ -1,4 +1,4 @@
-%{
+
 %              _       _   _ 
 %   __  _____ | | ___ | |_| |
 %   \ \/ / _ \| |/ _ \| __| |
@@ -25,7 +25,7 @@
 %     ->xolotl.update
 %     ->xolotl.uninstall
 
-%}
+
 
 
 function setup()

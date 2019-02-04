@@ -1,4 +1,4 @@
-%{
+
 %               _       _   _ 
 %    __  _____ | | ___ | |_| |
 %    \ \/ / _ \| |/ _ \| __| |
@@ -39,7 +39,7 @@
 %     ->xolotl.reset
 %     * [How to: save configurations and use snapshots](https://xolotl.readthedocs.io/en/master/how-to/snapshots/)
 
-%}
+
 
 
 function snapshot(self, snap_name)

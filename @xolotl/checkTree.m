@@ -1,4 +1,4 @@
-%{
+
 % 
 % ### checkTree
 %
@@ -29,7 +29,7 @@
 %     ->xolotl.transpile
 %     ->xolotl.compile
 
-%}
+
 
 function checkTree(self)
 

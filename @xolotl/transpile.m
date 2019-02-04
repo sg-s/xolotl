@@ -1,4 +1,4 @@
-%{
+
 %               _       _   _ 
 %    __  _____ | | ___ | |_| |
 %    \ \/ / _ \| |/ _ \| __| |
@@ -31,7 +31,7 @@
 %    ->xolotl.viewCode
 %
 
-%}
+
 
 
 function transpile(self)

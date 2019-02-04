@@ -1,4 +1,4 @@
-%{
+
 %               _       _   _ 
 %    __  _____ | | ___ | |_| |
 %    \ \/ / _ \| |/ _ \| __| |
@@ -35,7 +35,7 @@
 %     ->xolotl.show
 %
 
-%}
+
 
 function [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance)
 

@@ -1,4 +1,4 @@
-%{
+
 %               _       _   _ 
 %    __  _____ | | ___ | |_| |
 %    \ \/ / _ \| |/ _ \| __| |
@@ -57,7 +57,7 @@
 %     ->xolotl.compile
 %
 
-%}
+
 
 
 function varargout = integrate(self)

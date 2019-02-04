@@ -1,5 +1,5 @@
-%{
-%              _       _   _ 
+
+%              _       _   _
 %   __  _____ | | ___ | |_| |
 %   \ \/ / _ \| |/ _ \| __| |
 %    >  < (_) | | (_) | |_| |
@@ -34,7 +34,7 @@
 %     ->cpplab.add
 %     ->xolotl.checkCompartmentName
 
-%}
+
 
 function add(self,obj_type, obj_name,varargin)
 

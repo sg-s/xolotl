@@ -1,5 +1,5 @@
-%{
-%               _       _   _ 
+
+%               _       _   _
 %    __  _____ | | ___ | |_| |
 %    \ \/ / _ \| |/ _ \| __| |
 %     >  < (_) | | (_) | |_| |
@@ -26,7 +26,7 @@
 %     ->xolotl.manipulate
 %
 
-%}
+
 
 
 function plotgbars(self,varargin)

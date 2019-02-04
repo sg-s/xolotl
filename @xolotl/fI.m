@@ -1,4 +1,4 @@
-%{
+
 %              _       _   _ 
 %   __  _____ | | ___ | |_| |
 %   \ \/ / _ \| |/ _ \| __| |
@@ -34,7 +34,7 @@
 % | n_steps | +ve integer | 10 |
 % | t_end | +ve integers | 1e4 |
 
-%}
+
 
 function data = fI(self, varargin)
 

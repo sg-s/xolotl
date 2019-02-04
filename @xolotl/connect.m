@@ -1,4 +1,4 @@
-%{
+
 %               _       _   _ 
 %    __  _____ | | ___ | |_| |
 %    \ \/ / _ \| |/ _ \| __| |
@@ -47,7 +47,7 @@
 % This method supports tab completion. You should be able to press
 % tab to get a list of compartments to connect.
 
-%}
+
 
 function connect(self,comp1,comp2,varargin)
 
