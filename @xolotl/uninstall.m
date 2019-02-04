@@ -1,32 +1,32 @@
-%{   
-             _       _   _ 
-  __  _____ | | ___ | |_| |
-  \ \/ / _ \| |/ _ \| __| |
-   >  < (_) | | (_) | |_| |
-  /_/\_\___/|_|\___/ \__|_|
-
-### uninstall
-
-**Syntax**
-
-```matlab
-xolotl.uninstall
-x.uninstall
-```
-
-
-**Description**
-
-A static method that uninstalls your installation 
-of xolotl in place. If you installed using git, 
-`xolotl` will attempt to use git to uninstall 
-itself. 
-
-
-
-!!! info "See Also"
-    ->xolotl.update
-
+%{
+%              _       _   _
+%   __  _____ | | ___ | |_| |
+%   \ \/ / _ \| |/ _ \| __| |
+%    >  < (_) | | (_) | |_| |
+%   /_/\_\___/|_|\___/ \__|_|
+%
+% ### uninstall
+%
+% **Syntax**
+%
+% ```matlab
+% xolotl.uninstall
+% x.uninstall
+% ```
+%
+%
+% **Description**
+%
+% A static method that uninstalls your installation
+% of xolotl in place. If you installed using git,
+% `xolotl` will attempt to use git to uninstall
+% itself.
+%
+%
+%
+% !!! info "See Also"
+%     ->xolotl.update
+%
 %}
 
 function uninstall()

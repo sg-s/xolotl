@@ -1,38 +1,38 @@
 %{
-             _       _   _ 
-  __  _____ | | ___ | |_| |
-  \ \/ / _ \| |/ _ \| __| |
-   >  < (_) | | (_) | |_| |
-  /_/\_\___/|_|\___/ \__|_|
-
-### add
-
-
-**Syntax**
-
-```matlab
-x.add('compartment','comp_name')
-x.add(compartment,'comp_name')
-x.add('compartment','comp_name',...)
-```
-
-**Description**
-
-Adds a `cpplab` object to a `xolotl` object. The `add` method is the most important way you construct models. 
-
-- **`x.add('compartment','comp_name')`** adds a compartment to the xolotl object and names it `comp_name`.
-
-- **`x.add(compartment,'comp_name')`** adds a compartment object (a cpplab object) to the xolotl object `x` and names it `comp_name`. Note that compartment is a cpplab object sourced from the `compartment.hpp` C++ file, and can contain children and be extensively modified. 
-
-- **`x.add('compartment','comp_name',...)`** adds a compartment to the xolotl object and names it `comp_name`. The compartment is then additionally configured using the parameters specified using Name Value syntax. 
-
-**Technical Details**
-
-`xolotl.add` checks that the compartment being added has a legal name using `checkCompartmentName`. If so, it calls the `add` method in the `cpplab` superclass. 
-
-!!! info "See Also"
-    ->cpplab.add
-    ->xolotl.checkCompartmentName
+%              _       _   _ 
+%   __  _____ | | ___ | |_| |
+%   \ \/ / _ \| |/ _ \| __| |
+%    >  < (_) | | (_) | |_| |
+%   /_/\_\___/|_|\___/ \__|_|
+%
+% ### add
+%
+%
+% **Syntax**
+%
+% ```matlab
+% x.add('compartment','comp_name')
+% x.add(compartment,'comp_name')
+% x.add('compartment','comp_name',...)
+% ```
+%
+% **Description**
+%
+% Adds a `cpplab` object to a `xolotl` object. The `add` method is the most important way you construct models.
+%
+% - **`x.add('compartment','comp_name')`** adds a compartment to the xolotl object and names it `comp_name`.
+%
+% - **`x.add(compartment,'comp_name')`** adds a compartment object (a cpplab object) to the xolotl object `x` and names it `comp_name`. Note that compartment is a cpplab object sourced from the `compartment.hpp` C++ file, and can contain children and be extensively modified.
+%
+% - **`x.add('compartment','comp_name',...)`** adds a compartment to the xolotl object and names it `comp_name`. The compartment is then additionally configured using the parameters specified using Name Value syntax.
+%
+% **Technical Details**
+%
+% `xolotl.add` checks that the compartment being added has a legal name using `checkCompartmentName`. If so, it calls the `add` method in the `cpplab` superclass.
+%
+% !!! info "See Also"
+%     ->cpplab.add
+%     ->xolotl.checkCompartmentName
 
 %}
 
@@ -49,7 +49,7 @@ assert(self.checkCompartmentName(obj_name),'xolotl:add:illegal_name',msg)
 
 if isa(obj_type,'cpplab')
 	% we're adding a cpplab object
-	% if so, then the convention is 
+	% if so, then the convention is
 	% self.add(obj, obj_name)
 
 
@@ -58,9 +58,9 @@ if isa(obj_type,'cpplab')
 	assert(length(varargin) == 0,'xolotl:add:cpplab_object' ,msg)
 
 	obj = obj_type;
-	
+
 else
-	
+
 	obj = cpplab(obj_type, varargin{:});
 
 end

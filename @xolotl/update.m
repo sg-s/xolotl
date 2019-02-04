@@ -1,36 +1,36 @@
-%{   
-             _       _   _ 
-  __  _____ | | ___ | |_| |
-  \ \/ / _ \| |/ _ \| __| |
-   >  < (_) | | (_) | |_| |
-  /_/\_\___/|_|\___/ \__|_|
-
-### update
-
-**Syntax**
-
-
-```matlab
-xolotl.update()
-```
-
-
-**Description**
-
-A static method that updates your installation of 
-`xolotl` in place. If you installed using git, 
-`xolotl` will attempt to use git to update itself.
-
-
-
-!!! info "See Also"
-    ->xolotl.uninstall
+%{
+%              _       _   _ 
+%   __  _____ | | ___ | |_| |
+%   \ \/ / _ \| |/ _ \| __| |
+%    >  < (_) | | (_) | |_| |
+%   /_/\_\___/|_|\___/ \__|_|
+%
+% ### update
+%
+% **Syntax**
+%
+%
+% ```matlab
+% xolotl.update()
+% ```
+%
+%
+% **Description**
+%
+% A static method that updates your installation of
+% `xolotl` in place. If you installed using git,
+% `xolotl` will attempt to use git to update itself.
+%
+%
+%
+% !!! info "See Also"
+%     ->xolotl.uninstall
 
 %}
 
 function update()
 
-% check if we are in a git repo 
+% check if we are in a git repo
 
 
 
@@ -56,7 +56,7 @@ else
 		% xolotl installed as a toolbox
 		xolotl.uninstall();
 
-		% download the new toolbox 
+		% download the new toolbox
 		websave('xolotl.mltbx','https://github.com/sg-s/xolotl/releases/download/latest/xolotl.mltbx');
 
 		assert(exist('xolotl.mltbx') == 2,'Failed to download toolbox')
@@ -71,4 +71,3 @@ else
 		error('Xolotl is not in a git repo, nor is it in a toolbox. Cannot update')
 	end
 end
-

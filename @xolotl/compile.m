@@ -1,29 +1,29 @@
 %{
-              _       _   _ 
-   __  _____ | | ___ | |_| |
-   \ \/ / _ \| |/ _ \| __| |
-    >  < (_) | | (_) | |_| |
-   /_/\_\___/|_|\___/ \__|_|
-
-### compile
-
-**Syntax**
-
-```matlab
-x.skip_hash = true;
-```
-
-**Description**
-
-compiles a executable binary form a transpiled ``C++`` file. 
-These are stored in your ``xolotl`` directory. ``xolotl`` 
-automatically compiles when t needs to. You can turn this 
-functionality off by setting
-
-
-!!! info "See Also"
-    ->xolotl.transpile
-    ->xolotl.cleanup
+%               _       _   _ 
+%    __  _____ | | ___ | |_| |
+%    \ \/ / _ \| |/ _ \| __| |
+%     >  < (_) | | (_) | |_| |
+%    /_/\_\___/|_|\___/ \__|_|
+%
+% ### compile
+%
+% **Syntax**
+%
+% ```matlab
+% x.skip_hash = true;
+% ```
+%
+% **Description**
+%
+% compiles a executable binary form a transpiled ``C++`` file.
+% These are stored in your ``xolotl`` directory. ``xolotl``
+% automatically compiles when t needs to. You can turn this
+% functionality off by setting
+%
+%
+% !!! info "See Also"
+%     ->xolotl.transpile
+%     ->xolotl.cleanup
 
 %}
 

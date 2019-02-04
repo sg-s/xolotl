@@ -1,30 +1,30 @@
 %{
-              _       _   _ 
-   __  _____ | | ___ | |_| |
-   \ \/ / _ \| |/ _ \| __| |
-    >  < (_) | | (_) | |_| |
-   /_/\_\___/|_|\___/ \__|_|
-
-### plotgbars
-
-
-**Syntax**
-
-```matlab
-x.plotgbars('compartment_name');
-x.plotgbars(axes_handle,'compartment_name');
-```
-
-**Description**
-
-Makes a stem plot of conductance densities in a given compartment. If the first argument is a handle to a valid axis, plots will be made there. 
-
-
-!!! info "See Also"
-    ->xolotl.plot
-    ->xolotl.show
-    ->xolotl.manipulate
-
+%               _       _   _ 
+%    __  _____ | | ___ | |_| |
+%    \ \/ / _ \| |/ _ \| __| |
+%     >  < (_) | | (_) | |_| |
+%    /_/\_\___/|_|\___/ \__|_|
+%
+% ### plotgbars
+%
+%
+% **Syntax**
+%
+% ```matlab
+% x.plotgbars('compartment_name');
+% x.plotgbars(axes_handle,'compartment_name');
+% ```
+%
+% **Description**
+%
+% Makes a stem plot of conductance densities in a given compartment. If the first argument is a handle to a valid axis, plots will be made there.
+%
+%
+% !!! info "See Also"
+%     ->xolotl.plot
+%     ->xolotl.show
+%     ->xolotl.manipulate
+%
 
 %}
 
@@ -43,7 +43,7 @@ if length(varargin) == 2
 	compartment_name = varargin{2};
 elseif length(varargin) > 0
 	axes_handle = gca; hold on
-	compartment_name = varargin{1};	
+	compartment_name = varargin{1};
 end
 
 
@@ -71,6 +71,3 @@ else
 		self.handles.gbar_plot(j).YData = g(j);
 	end
 end
-
-
-

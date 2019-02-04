@@ -1,38 +1,38 @@
-%{   
-             _       _   _ 
-  __  _____ | | ___ | |_| |
-  \ \/ / _ \| |/ _ \| __| |
-   >  < (_) | | (_) | |_| |
-  /_/\_\___/|_|\___/ \__|_|
-
-### fI
-
-**Syntax**
-
-```matlab
-data = x.fI()
-data = x.fI('Name',value...)
-```
-
-**Description**
-
-This method computes the f-I (firing-rate vs current) 
-curve of a single compartment model. `data` is a structure containing the following fields:
-
-* `I` vector of injected currents
-* `f_up` firing rates when going up the curve
-* `f_down` firing rates when going down the curve
-* `CV_ISI_up` coefficient of variation of inter-spike intervals when going up the curve 
-* `CV_ISI_down` coefficient of variation of inter-spike intervals when going down the curve 
-
-The following optional parameters may be specified in name-value syntax:
-
-| Name | Allowed Values | Default |
-| ----- | ----------- | ---------- |
-| I_min | any scalar | - .1 |
-| I_max | any scalar | 1 | 
-| n_steps | +ve integer | 10 |
-| t_end | +ve integers | 1e4 | 
+%{
+%              _       _   _ 
+%   __  _____ | | ___ | |_| |
+%   \ \/ / _ \| |/ _ \| __| |
+%    >  < (_) | | (_) | |_| |
+%   /_/\_\___/|_|\___/ \__|_|
+%
+% ### fI
+%
+% **Syntax**
+%
+% ```matlab
+% data = x.fI()
+% data = x.fI('Name',value...)
+% ```
+%
+% **Description**
+%
+% This method computes the f-I (firing-rate vs current)
+% curve of a single compartment model. `data` is a structure containing the following fields:
+%
+% * `I` vector of injected currents
+% * `f_up` firing rates when going up the curve
+% * `f_down` firing rates when going down the curve
+% * `CV_ISI_up` coefficient of variation of inter-spike intervals when going up the curve
+% * `CV_ISI_down` coefficient of variation of inter-spike intervals when going down the curve
+%
+% The following optional parameters may be specified in name-value syntax:
+%
+% | Name | Allowed Values | Default |
+% | ----- | ----------- | ---------- |
+% | I_min | any scalar | - .1 |
+% | I_max | any scalar | 1 |
+% | n_steps | +ve integer | 10 |
+% | t_end | +ve integers | 1e4 |
 
 %}
 
@@ -46,7 +46,7 @@ options.I_max = 1;
 options.n_steps = 10;
 options.t_end = 10e3;
 
-if nargout && ~nargin 
+if nargout && ~nargin
 	varargout{1} = options;
     return
 end

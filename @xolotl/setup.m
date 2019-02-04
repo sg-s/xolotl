@@ -1,29 +1,29 @@
-%{   
-             _       _   _ 
-  __  _____ | | ___ | |_| |
-  \ \/ / _ \| |/ _ \| __| |
-   >  < (_) | | (_) | |_| |
-  /_/\_\___/|_|\___/ \__|_|
-
-### setup
-
-**Syntax**
-
-```matlab
-xolotl.setup
-x.setup
-```
-
-**Description**
-
-A static method that allows you to set up compilers 
-on some operating systems. You need to run this only 
-once. If xolotl works, there is no need to run this. 
-
-
-!!! info "See Also"
-    ->xolotl.update
-    ->xolotl.uninstall
+%{
+%              _       _   _ 
+%   __  _____ | | ___ | |_| |
+%   \ \/ / _ \| |/ _ \| __| |
+%    >  < (_) | | (_) | |_| |
+%   /_/\_\___/|_|\___/ \__|_|
+%
+% ### setup
+%
+% **Syntax**
+%
+% ```matlab
+% xolotl.setup
+% x.setup
+% ```
+%
+% **Description**
+%
+% A static method that allows you to set up compilers
+% on some operating systems. You need to run this only
+% once. If xolotl works, there is no need to run this.
+%
+%
+% !!! info "See Also"
+%     ->xolotl.update
+%     ->xolotl.uninstall
 
 %}
 
@@ -40,7 +40,7 @@ elseif ismac
 	mex -setup C
 	mex -setup C++
 
-else 
+else
 
 	% guess if this is Ubuntu
 	[e,o] = system('lsb_release -a');
@@ -60,4 +60,3 @@ else
 
 
 end
-
