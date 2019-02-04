@@ -140,6 +140,7 @@ end
 % semi-intelligently make the upper and lower bounds
 lb = values/3;
 ub = values*3;
+ub(values==0) = 1;
 
 % create a puppeteer instance and configure
 warning('off','MATLAB:hg:uicontrol:ValueMustBeInRange')

@@ -1,4 +1,33 @@
-function activation_func_plot_func(x)
+function refractory_period_callback(names,values)
+
+
+% get x from somewhere
+global x
+global pulse_width
+global pulse_amp_1
+global pulse_amp_2
+global pulse_delay
+
+if nargin > 1
+	names = names{1};
+	try
+		x.get(names);
+		x.set(names,values)
+	catch
+		switch names
+		case 'pulse_delay'
+			pulse_delay = values;
+		case 'pulse_width'
+			pulse_width = values;
+		case 'pulse_amp_2'
+			pulse_amp_2 = values;
+		case 'pulse_amp_1'
+			pulse_amp_1 = values;
+		end
+	end
+end
+
+
 
 
 % let's figure out if we need to make the plot or not
@@ -52,10 +81,6 @@ if ~isfield(x.handles,'AM') || ~isvalid(x.handles.AM.main_fig')
 
 
 
-	% attach to puppeteer so that it can be closed automatically
-	x.handles.puppeteer_object.attachFigure(AM.main_fig)
-
-
 	% labels
 	x.handles.AM = AM;
 
@@ -63,6 +88,8 @@ if ~isfield(x.handles,'AM') || ~isvalid(x.handles.AM.main_fig')
 	time = (1:length(V))*x.dt;
 	AM.I_trace.XLim = [min(time) max(time)];
 	linkaxes([AM.I_trace AM.v_trace],'x')
+
+
 	
 
 end
@@ -134,11 +161,13 @@ AM.plots.NaV_tauh.YData = tau_h1(Vspace).*tau_h2(Vspace);
 
 
 % switch the I_ext to a pulse
-if length(x.I_ext) == 1
-	I_ext = zeros(x.t_end/x.sim_dt,1);
-	I_ext(1e3:2e3) = x.I_ext;
-	x.I_ext = I_ext;
-end
+pulse_width = round(pulse_width);
+pulse_delay = round(pulse_delay);
+I_ext = zeros(x.t_end/x.sim_dt,1);
+I_ext(1e3:1e3+pulse_width) = pulse_amp_1;
+I_ext(1e3+pulse_width+pulse_delay:1e3+2*pulse_width+pulse_delay) = pulse_amp_2;
+x.I_ext = I_ext;
+
 
 % integrate
 [V,~,~,I] = x.integrate;
@@ -158,13 +187,3 @@ AM.plots.I_Kd.YData = I(:,1);
 AM.plots.I_Leak.XData = time;
 AM.plots.I_Leak.YData = I(:,2);
 
-% center spike if it exists
-idx = find(V>0,1,'first');
-
-if any(idx)
-	a = max([idx-100 1]);
-	z = min([idx+300 length(V)]);
-	AM.v_trace.XLim = [time(a) time(z)];
-else
-	AM.v_trace.XLim = [time(1) time(end)];
-end
