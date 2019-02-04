@@ -1,38 +1,41 @@
-%{
-              _       _   _
-   __  _____ | | ___ | |_| |
-   \ \/ / _ \| |/ _ \| __| |
-    >  < (_) | | (_) | |_| |
-   /_/\_\___/|_|\___/ \__|_|
+%
+%
+% ;;     ;; ;;;;;;;;  ;;;;;;;   ;;;;;;;  ;;        ;;;;;;
+%  ;;   ;;     ;;    ;;     ;; ;;     ;; ;;       ;;    ;;
+%   ;; ;;      ;;    ;;     ;; ;;     ;; ;;       ;;
+%    ;;;       ;;    ;;     ;; ;;     ;; ;;        ;;;;;;
+%   ;; ;;      ;;    ;;     ;; ;;     ;; ;;             ;;
+%  ;;   ;;     ;;    ;;     ;; ;;     ;; ;;       ;;    ;;
+% ;;     ;;    ;;     ;;;;;;;   ;;;;;;;  ;;;;;;;;  ;;;;;;
+%
+% ### V2matrix
+%
+% **Syntax**
+%
+% ```matlab
+% 	[M, V_lim, dV_lim] = xtools.V2matrix(V)
+% 	[M, V_lim, dV_lim] = xtools.V2matrix(V, V_lim, dV_lim)
+% ```
+%
+% **Description**
+%
+% Embeds a voltage trace in a LeMasson matrix, where `V` is a voltage time series
+% as a vector, and `V_lim` and `dV_lim` are 2x1 vectors which specify the lower
+% and upper bounds of `V` and its derivative.
+%
+% If `V_lim` and `dV_lim` are not specified, they will be computed automatically.
+%
+% This static method allows you to create a delay-embedding of a voltage trace,
+% and then discretize the space and count the number of points in each bin.
+% The resultant matrix is sometimes called a LeMasson matrix.
+% `M` is the LeMasson matrix, which is always of size `101x101`.
+%
+% !!! info "See Also"
+%     ->xtools.matrixCost
+% 		LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
+%
 
-### V2matrix
 
-**Syntax**
-
-```matlab
-	[M, V_lim, dV_lim] = xtools.V2matrix(V)
-	[M, V_lim, dV_lim] = xtools.V2matrix(V, V_lim, dV_lim)
-```
-
-**Description**
-
-Embeds a voltage trace in a LeMasson matrix, where `V` is a voltage time series
-as a vector, and `V_lim` and `dV_lim` are 2x1 vectors which specify the lower
-and upper bounds of `V` and its derivative.
-
-If `V_lim` and `dV_lim` are not specified, they will be computed automatically.
-
-This static method allows you to create a delay-embedding of a voltage trace,
-and then discretize the space and count the number of points in each bin.
-The resultant matrix is sometimes called a LeMasson matrix.
-`M` is the LeMasson matrix, which is always of size `101x101`.
-
-!!! info "See Also"
-    ->xtools.matrixCost
-		LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
-
-
-%}
 
 
 function [M, V_lim, dV_lim] = V2Matrix(V, V_lim, dV_lim)

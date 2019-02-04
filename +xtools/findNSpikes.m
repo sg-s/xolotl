@@ -1,33 +1,36 @@
-%{
-              _       _   _
-   __  _____ | | ___ | |_| |
-   \ \/ / _ \| |/ _ \| __| |
-    >  < (_) | | (_) | |_| |
-   /_/\_\___/|_|\___/ \__|_|
 
-### findNSpikes
-
-
-
-
-
-**Syntax**
-
-```matlab
-N = xtools.findNSpikes(V);
-N = xtools.findNSpikes(V, on_off_thresh)
-```
-
-**Description**
-
-Computes the number of spikes in a voltage trace. `V` is an n x 1 voltage trace
-and `on_off_thresh` is a membrane potential threshhold at which spikes should be
-counted (default = 0 mV).
-
-!!! info "See Also"
-    ->xtools.findNSpikeTimes
-
-%}
+%
+% ;;     ;; ;;;;;;;;  ;;;;;;;   ;;;;;;;  ;;        ;;;;;;
+%  ;;   ;;     ;;    ;;     ;; ;;     ;; ;;       ;;    ;;
+%   ;; ;;      ;;    ;;     ;; ;;     ;; ;;       ;;
+%    ;;;       ;;    ;;     ;; ;;     ;; ;;        ;;;;;;
+%   ;; ;;      ;;    ;;     ;; ;;     ;; ;;             ;;
+%  ;;   ;;     ;;    ;;     ;; ;;     ;; ;;       ;;    ;;
+% ;;     ;;    ;;     ;;;;;;;   ;;;;;;;  ;;;;;;;;  ;;;;;;
+%
+% ### findNSpikes
+%
+%
+%
+%
+%
+% **Syntax**
+%
+% ```matlab
+% N = xtools.findNSpikes(V);
+% N = xtools.findNSpikes(V, on_off_thresh)
+% ```
+%
+% **Description**
+%
+% Computes the number of spikes in a voltage trace. `V` is an n x 1 voltage trace
+% and `on_off_thresh` is a membrane potential threshhold at which spikes should be
+% counted (default = 0 mV).
+%
+% !!! info "See Also"
+%     ->xtools.findNSpikeTimes
+%
+%
 
 
 function f = findNSpikes(V, on_off_thresh)

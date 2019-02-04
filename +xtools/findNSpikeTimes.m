@@ -1,31 +1,34 @@
-%{
-              _       _   _
-   __  _____ | | ___ | |_| |
-   \ \/ / _ \| |/ _ \| __| |
-    >  < (_) | | (_) | |_| |
-   /_/\_\___/|_|\___/ \__|_|
 
-### findNSpikeTimes
-
-
-
-
-
-**Syntax**
-
-```matlab
-spike_times = xtools.findNSpikeTimes(V, n_spikes, on_off_thresh)
-```
-
-**Description**
-
-Computes the number of spikes in a voltage trace. `V` is an n x 1 voltage trace
-Spikes are defined as voltage crossings across a threshold, `on_off_thresh` (default = 0 mV).
-
-!!! info "See Also"
-    ->xtools.findNSpikeTimes
-
-%}
+%
+% ;;     ;; ;;;;;;;;  ;;;;;;;   ;;;;;;;  ;;        ;;;;;;
+%  ;;   ;;     ;;    ;;     ;; ;;     ;; ;;       ;;    ;;
+%   ;; ;;      ;;    ;;     ;; ;;     ;; ;;       ;;
+%    ;;;       ;;    ;;     ;; ;;     ;; ;;        ;;;;;;
+%   ;; ;;      ;;    ;;     ;; ;;     ;; ;;             ;;
+%  ;;   ;;     ;;    ;;     ;; ;;     ;; ;;       ;;    ;;
+% ;;     ;;    ;;     ;;;;;;;   ;;;;;;;  ;;;;;;;;  ;;;;;;
+%
+% ### findNSpikeTimes
+%
+%
+%
+%
+%
+% **Syntax**
+%
+% ```matlab
+% spike_times = xtools.findNSpikeTimes(V, n_spikes, on_off_thresh)
+% ```
+%
+% **Description**
+%
+% Computes the number of spikes in a voltage trace. `V` is an n x 1 voltage trace
+% Spikes are defined as voltage crossings across a threshold, `on_off_thresh` (default = 0 mV).
+%
+% !!! info "See Also"
+%     ->xtools.findNSpikeTimes
+%
+%
 
 
 function spike_times = findNSpikeTimes(V,n_spikes,on_off_thresh)
