@@ -259,5 +259,7 @@ methods (Static)
 
     setup();
 
+    b = loadobj(a);
+
 end % end static methods
 end % end classdef
