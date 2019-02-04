@@ -25,6 +25,9 @@ if any(strfind(names{1},'I_ext_'))
 	comp_name = strrep(names{1},'I_ext_','');
 	comp_idx = find(strcmp(self.Children,comp_name));
 
+	if size(self.I_ext,1) > 1
+		self.I_ext = zeros(1,length(self.Children));
+	end
 	self.I_ext(comp_idx) = values(1);
 
 else

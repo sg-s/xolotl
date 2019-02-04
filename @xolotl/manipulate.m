@@ -120,13 +120,18 @@ else
 	% check that these exist
 	for i = 1:length(real_names)
 		try
+
 			temp =  self.get(real_names{i});
 			if isa(temp,'function_handle')
 				temp = temp();
 			end
 			values(i) = temp;
 		catch
-			error(['This parameter could not be resolved: ' real_names{i}])
+			if any(strfind(real_names{i},'I_ext'))
+				values(i) = 0;
+			else
+				error(['This parameter could not be resolved: ' real_names{i}])
+			end
 		end
 	end
 end

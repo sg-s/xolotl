@@ -9,9 +9,13 @@ if ~isfield(x.handles,'AM') || ~isvalid(x.handles.AM.main_fig')
 
 
 	% make the subplots
-	AM.v_trace = subplot(2,3,4:5); hold on
+	AM.v_trace = subplot(2,4,5:6); hold on
 	xlabel(AM.v_trace,'Time (ms)')
 	ylabel(AM.v_trace,'V_m (mV)')
+
+	AM.I_trace = subplot(2,4,7:8); hold on
+	xlabel(AM.I_trace,'Time (ms)')
+	ylabel(AM.I_trace,'I (nA)')
 
 	AM.NaV = subplot(2,3,1); hold on
 	xlabel(AM.NaV,'V_m (mV)')
@@ -37,6 +41,10 @@ if ~isfield(x.handles,'AM') || ~isvalid(x.handles.AM.main_fig')
 
 	AM.plots.V = plot(AM.v_trace,NaN,NaN,'k');
 
+	AM.plots.I_NaV = plot(AM.I_trace,NaN,NaN,'r');
+	AM.plots.I_Kd = plot(AM.I_trace,NaN,NaN,'b');
+	AM.plots.I_Leak = plot(AM.I_trace,NaN,NaN,'k');
+
 	AM.plots.NaV_taum = plot(AM.tau,NaN,NaN,'LineWidth',2);
 	AM.plots.NaV_tauh = plot(AM.tau,NaN,NaN,'LineWidth',2);
 	AM.plots.Kd_taum = plot(AM.tau,NaN,NaN,'LineWidth',2);
@@ -50,6 +58,11 @@ if ~isfield(x.handles,'AM') || ~isvalid(x.handles.AM.main_fig')
 
 	% labels
 	x.handles.AM = AM;
+
+	[V,~,~,I] = x.integrate;
+	time = (1:length(V))*x.dt;
+	AM.I_trace.XLim = [min(time) max(time)];
+	linkaxes([AM.I_trace AM.v_trace],'x')
 	
 
 end
@@ -120,8 +133,38 @@ AM.plots.NaV_tauh.XData = Vspace;
 AM.plots.NaV_tauh.YData = tau_h1(Vspace).*tau_h2(Vspace);
 
 
+% switch the I_ext to a pulse
+if length(x.I_ext) == 1
+	I_ext = zeros(x.t_end/x.sim_dt,1);
+	I_ext(1e3:2e3) = x.I_ext;
+	x.I_ext = I_ext;
+end
+
 % integrate
-V = x.integrate;
+[V,~,~,I] = x.integrate;
 time = (1:length(V))*x.dt;
+
+
+
 AM.plots.V.XData = time;
 AM.plots.V.YData = V;
+
+AM.plots.I_NaV.XData = time;
+AM.plots.I_NaV.YData = I(:,3);
+
+AM.plots.I_Kd.XData = time;
+AM.plots.I_Kd.YData = I(:,1);
+
+AM.plots.I_Leak.XData = time;
+AM.plots.I_Leak.YData = I(:,2);
+
+% center spike if it exists
+idx = find(V>0,1,'first');
+
+if any(idx)
+	a = max([idx-300 1]);
+	z = min([idx+300 length(V)]);
+	AM.v_trace.XLim = [time(a) time(z)];
+else
+	AM.v_trace.XLim = [time(1) time(end)];
+end
