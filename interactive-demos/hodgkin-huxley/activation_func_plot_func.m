@@ -168,3 +168,5 @@ if any(idx)
 else
 	AM.v_trace.XLim = [time(1) time(end)];
 end
+
+AM.v_trace.YLim = [min([-80 x.AB.Kd.E]) max([30 x.AB.NaV.E])];

@@ -1,17 +1,16 @@
 
 global x
-x = xolotl;
+load hh_examples.mat
 x.handles = struct;
-x.add('compartment','AB','A',0.0628,'vol',.0628);
-
-
-x.AB.add('GenericKdLike','Kd','gbar',610);
-x.AB.add('Leak','gbar',.99,'E',-50);
-x.AB.add('GenericNaVLike','NaV','gbar',1831,'E',30);
+% x = xolotl;
+% x.add('compartment','AB','A',0.0628,'vol',.0628);
+% x.AB.add('GenericKdLike','Kd','gbar',610);
+% x.AB.add('Leak','gbar',.99,'E',-50);
+% x.AB.add('GenericNaVLike','NaV','gbar',1831,'E',30);
 x.AB.NaV.h_tau_B1 = .33;
 
 
-
+x.closed_loop = true;
 x.t_end = 1e3;
 x.integrate;
 x.t_end = .5e3;
