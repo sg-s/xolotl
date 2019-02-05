@@ -40,7 +40,6 @@ Xolotl comes with several example scripts that illustrate various features of th
 
 | Demo name | What this demonstrates |
 | --------- | ---------------------- |
-| [demo_activation_functions](https://github.com/sg-s/xolotl/blob/master/examples/demo_activation_functions.m) | Using manipulate, this demo sets up a Hodgkin-Huxley model using generic conductances whose activation functions and timescales can be changed on the fly | 
 | [demo_approx](https://github.com/sg-s/xolotl/blob/master/examples/demo_approx.m) | This example shows you how to use the [`appox_channels`](https://xolotl.readthedocs.io/en/master/reference/xolotl-properties/#approx_channels) property to speed up code execution |
 | [demo_bursting_neuron](https://github.com/sg-s/xolotl/blob/master/examples/demo_bursting_neuron.m) | This example sets up a simple bursting neuron. It demonstrates how to use relational parameters to specify parameters that depend on other parameters in the model. |
 | [demo_clamp](https://github.com/sg-s/xolotl/blob/master/examples/demo_clamp.m) | This example shows you how to voltage clamp a compartment, and simulate the process of estimating the I-V curve of a conductance |
