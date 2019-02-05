@@ -23,4 +23,9 @@ function b = loadobj(a)
 
 a.xolotl_folder = fileparts(fileparts(which('xolotl')));
 a.cpp_folder = [fileparts(fileparts(which('xolotl'))) filesep 'c++'];
+
+% update linked_binary extention 
+[~,binary_name]=fileparts(a.linked_binary);
+a.linked_binary = [binary_name '.' mexext];
+
 b = a;
