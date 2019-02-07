@@ -76,6 +76,8 @@ AM = x.handles.AM;
 %  NaV activation functions
 Vspace = linspace(-80,50,1e3);
 
+
+
 V_half = x.AB.NaV.m_V_half;
 V_slope = x.AB.NaV.m_V_slope;
 m_inf = @(V) 1./(1 + exp((V - V_half)./V_slope));
@@ -98,6 +100,11 @@ AM.plots.Kd_minf.YData = m_inf(Vspace);
 
 
 % timescale plots
+
+tau_min = -Inf;
+tau_max = Inf;
+
+
 m_tau_A = x.AB.NaV.m_tau_A;
 m_tau_B = x.AB.NaV.m_tau_B;
 m_tau_V_half = x.AB.NaV.m_tau_V_half;
@@ -105,7 +112,8 @@ m_tau_V_slope = x.AB.NaV.m_tau_V_slope;
 tau_m = @(V) m_tau_A + m_tau_B./(1+exp((V - m_tau_V_half)./m_tau_V_slope));
 AM.plots.NaV_taum.XData = Vspace;
 AM.plots.NaV_taum.YData = tau_m(Vspace);
-
+tau_min = max([tau_min min(tau_m(Vspace))]);
+tau_max = min([tau_max max(tau_m(Vspace))]);
 
 m_tau_A = x.AB.Kd.m_tau_A;
 m_tau_B = x.AB.Kd.m_tau_B;
@@ -114,6 +122,8 @@ m_tau_V_slope = x.AB.Kd.m_tau_V_slope;
 tau_m = @(V) m_tau_A + m_tau_B./(1+exp((V - m_tau_V_half)./m_tau_V_slope));
 AM.plots.Kd_taum.XData = Vspace;
 AM.plots.Kd_taum.YData = tau_m(Vspace);
+tau_min = min([tau_min min(tau_m(Vspace))]);
+tau_max = max([tau_max max(tau_m(Vspace))]);
 
 % NaV tau_h
 h_tau_A = x.AB.NaV.h_tau_A1;
@@ -121,7 +131,6 @@ h_tau_B = x.AB.NaV.h_tau_B1;
 h_tau_V_half = x.AB.NaV.h_tau_V_half1;
 h_tau_V_slope = x.AB.NaV.h_tau_V_slope1;
 tau_h1 = @(V) h_tau_A + h_tau_B./(1+exp((V - h_tau_V_half)./h_tau_V_slope));
-
 
 h_tau_A = x.AB.NaV.h_tau_A2;
 h_tau_B = x.AB.NaV.h_tau_B2;
@@ -131,6 +140,8 @@ tau_h2 = @(V) h_tau_A + h_tau_B./(1+exp((V - h_tau_V_half)./h_tau_V_slope));
 
 AM.plots.NaV_tauh.XData = Vspace;
 AM.plots.NaV_tauh.YData = tau_h1(Vspace).*tau_h2(Vspace);
+tau_min = min([tau_min min(AM.plots.NaV_tauh.YData)]);
+tau_max = max([tau_max max(AM.plots.NaV_tauh.YData)]);
 
 
 % switch the I_ext to a pulse
@@ -172,5 +183,10 @@ end
 AM.v_trace.YLim = [min([-80 x.AB.Kd.E]) max([30 x.AB.NaV.E])];
 m = min(I(:)); M = max(I(:));
 AM.I_trace.YLim = [m - (M-m)/10 M + (M-m)/10];
+
+
+AM.tau.YTick = 10.^(floor(log10(tau_min)):ceil(log10(tau_max)));
+AM.tau_YLim = [10.^(floor(log10(tau_min))) 10.^(ceil(log10(tau_min)))];
+
 
 prettyFig('plw',2);

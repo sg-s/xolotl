@@ -187,3 +187,8 @@ AM.plots.I_Kd.YData = I(:,1);
 AM.plots.I_Leak.XData = time;
 AM.plots.I_Leak.YData = I(:,2);
 
+AM.v_trace.YLim = [min([-80 x.AB.Kd.E]) max([30 x.AB.NaV.E])];
+m = min(I(:)); M = max(I(:));
+AM.I_trace.YLim = [m - (M-m)/10 M + (M-m)/10];
+
+prettyFig('plw',2);
