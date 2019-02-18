@@ -37,12 +37,17 @@ for file in sorted(glob.glob("@xolotl/*.m")):
 
 	for i in range(0,len(lines)):
 		
-		thisline = lines[i].strip('#')
+		thisline = lines[i].replace('#','')
+		thisline = thisline.replace(' ','')
+		thisline = thisline.replace('%','')
 		thisline = thisline.strip()
 
 		if thisline == filename:
 			a = i
 			break
+
+
+
 
 	for i in range(0,len(lines)):
 		
@@ -59,12 +64,13 @@ for file in sorted(glob.glob("@xolotl/*.m")):
 
 	
 	out_file.write('\n\n')
-	out_file.write('-------\n')
+	out_file.write('-------\n\n')
 
 
 	for i in range(a,z):
 		thisline = lines[i]
 		thisline = thisline.replace('%}','')
+		thisline = thisline.strip('%')
 
 		# insert hyperlinks to other methods 
 		if thisline.lower().find('->xolotl.') != -1:
