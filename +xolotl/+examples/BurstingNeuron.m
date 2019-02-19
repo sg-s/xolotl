@@ -49,6 +49,7 @@ case 'liu'
 	x.AB.add([prefix '/KCa'],'gbar',@() 61.54/x.AB.A,'E',-80);
 	x.AB.add([prefix '/Kd'],'gbar',@() 38.31/x.AB.A,'E',-80);
 	x.AB.add([prefix '/HCurrent'],'gbar',@() .6343/x.AB.A,'E',-20);
+	x.AB.add('Leak','gbar',@() 0.0622/x.AB.A,'E',-50);
 case 'prinz'
 	channels = {'NaV','CaT','CaS','ACurrent','KCa','Kd','HCurrent'};
 
@@ -64,7 +65,7 @@ case 'prinz'
 
 end
 
-x.AB.add('Leak','gbar',@() 0.0622/x.AB.A,'E',-50);
+
 
 x.t_end = 2e3;
 x.integrate;

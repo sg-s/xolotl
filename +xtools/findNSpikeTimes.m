@@ -35,7 +35,7 @@ if nargin < 3
 end
 
 spike_times = NaN(n_spikes,1);
-[ons, offs] = computeOnsOffs(V > on_off_thresh);
+[ons, offs] = mtools.timeseries.computeOnsOffs(V > on_off_thresh);
 if isempty(offs) || isempty(ons)
 	return
 end
