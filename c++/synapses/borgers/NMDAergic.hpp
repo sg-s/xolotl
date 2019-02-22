@@ -37,7 +37,7 @@ public:
     double ss_core(double);
     double s_inf(double);
     double tau_s(double);
-    double sdot(double, double);
+    double sdot(double, double, double);
     void integrate(void);
     void integrateMS(int, double, double);
     int getFullStateSize(void);
@@ -86,7 +86,7 @@ void NMDAergic::integrate(void)
     g = gmax*s;
 }
 
-void NMDAergic::integrate(int k, double V, double Ca)
+void NMDAergic::integrateMS(int k, double V, double Ca)
 {
 
     double V_pre;
@@ -125,24 +125,6 @@ void NMDAergic::integrate(int k, double V, double Ca)
         if (s < 0) {s = 0;}
         if (s > 1) {s = 1;}
     }
-
-}
-
-// // //
-
-void NMDAergic::integrate(void)
-{
-    // figure out the voltage of the pre-synaptic neuron
-    double V_pre = pre_syn->V;
-    double V_post = post_syn->V;
-
-    // find s_inf
-    double s_inf = ((1.0 + tanh(V_pre/10.0))/2.0) / ( ((1.0 + tanh(V_pre/10.0))/2.0) + tau_r / tau_d );
-
-    // integrate using exponential Euler
-    double tau_s = tau_r / ( ((1.0 + tanh(V_pre/10.0))/2.0) + tau_r / tau_d );
-
-    s = s_inf + (s - s_inf)*exp(-dt/tau_s) * 1.0 / (1.0 + Mg / 3.57 * exp(-0.062*V_post));
 
 }
 
