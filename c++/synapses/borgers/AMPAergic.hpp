@@ -80,7 +80,7 @@ void AMPAergic::integrate(void)
     g = gmax*s;
 }
 
-void AMPAergic::integrate(int k, double V, double Ca)
+void AMPAergic::integrateMS(int k, double V, double Ca)
 {
 
     double V_pre;
