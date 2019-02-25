@@ -1,33 +1,33 @@
-%{
-              _       _   _
-   __  _____ | | ___ | |_| |
-   \ \/ / _ \| |/ _ \| __| |
-    >  < (_) | | (_) | |_| |
-   /_/\_\___/|_|\___/ \__|_|
 
-###  benchmark
+%               _       _   _
+%    __  _____ | | ___ | |_| |
+%    \ \/ / _ \| |/ _ \| __| |
+%     >  < (_) | | (_) | |_| |
+%    /_/\_\___/|_|\___/ \__|_|
+%
+% ###  benchmark
+%
+% **Syntax**
+%
+% ```matlab
+% x.benchmark;
+% ```
+%
+% **Description**
+%
+% performs a quick benchmarking of a given `xolotl` model.
+% `benchmark` first varies the simulation time step, and
+% measures how quickly the model integrates. It then
+% varies `t_end`, and measures how fast it integrates
+% at a fixed `sim_dt`.
+%
+% It should produce a figure that looks something like this
+% (the exact figure will depend on the model and your hardware):
+%
+% ![](https://user-images.githubusercontent.com/6005346/50046554-1714f800-0073-11e9-9b1f-f136baff7976.png)
+%
 
-**Syntax**
 
-```matlab
-x.benchmark;
-```
-
-**Description**
-
-performs a quick benchmarking of a given `xolotl` model. 
-`benchmark` first varies the simulation time step, and 
-measures how quickly the model integrates. It then 
-varies `t_end`, and measures how fast it integrates 
-at a fixed `sim_dt`. 
-
-It should produce a figure that looks something like this 
-(the exact figure will depend on the model and your hardware):
-
-![](https://user-images.githubusercontent.com/6005346/50046554-1714f800-0073-11e9-9b1f-f136baff7976.png)
-
-
-%}
 
 function benchmark(self)
 
@@ -43,7 +43,7 @@ self.integrate;
 
 self.closed_loop = false;
 
-max_dt = 1000; 
+max_dt = 1000;
 K = 1:max_dt;
 all_dt = K(rem(max_dt,K) == 0);
 all_dt = all_dt/1e3;
@@ -102,7 +102,7 @@ set(gca,'YScale','log','XScale','log')
 drawnow
 
 
-% now vary t_end to see the overhead costs 
+% now vary t_end to see the overhead costs
 self.sim_dt = .1;
 self.closed_loop = true;
 all_t_end = round(logspace(1,6,20));

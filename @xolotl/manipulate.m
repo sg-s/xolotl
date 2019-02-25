@@ -1,35 +1,35 @@
-%{ 
-           _       _   _
-__  _____ | | ___ | |_| |
-\ \/ / _ \| |/ _ \| __| |
->  < (_) | | (_) | |_| |
-/_/\_\___/|_|\___/ \__|_|
 
-### manipulate
+%            _       _   _
+% __  _____ | | ___ | |_| |
+% \ \/ / _ \| |/ _ \| __| |
+% >  < (_) | | (_) | |_| |
+% /_/\_\___/|_|\___/ \__|_|
+%
+% ### manipulate
+%
+%
+%
+% **Syntax**
+%
+% ```matlab
+% x.manipulate();
+% x.manipulate('some*pattern')
+% x.manipulate({'parameter1','parameter2'})
+% ```
+%
+% **Description**
+%
+% `manipulate` is a method that allows you to manipulate some or all parameters in a model while visualizing its behavior.
+%
+% - **`x.manipulate()`** manipulates all the parameters in a xolotl model. It wires up sliders to all parameters, and moving these sliders causes the model to integrate, and a plot to update.
+% - **`x.manipulate('some*pattern')`** creates sliders only for parameters specified by 'some*pattern'.
+% - **`x.manipulate({'parameter1','parameter2'})`** creates sliders only for the parameters specified in the cell array. Parameters should resolve to valid properties of cpplab objects in the tree.
+%
+%
+% !!! info "See Also"
+%     ->xolotl.plot
 
 
-
-**Syntax**
-
-```matlab
-x.manipulate();
-x.manipulate('some*pattern')
-x.manipulate({'parameter1','parameter2'})
-```
-
-**Description**
-
-`manipulate` is a method that allows you to manipulate some or all parameters in a model while visualizing its behavior. 
-
-- **`x.manipulate()`** manipulates all the parameters in a xolotl model. It wires up sliders to all parameters, and moving these sliders causes the model to integrate, and a plot to update. 
-- **`x.manipulate('some*pattern')`** creates sliders only for parameters specified by 'some*pattern'. 
-- **`x.manipulate({'parameter1','parameter2'})`** creates sliders only for the parameters specified in the cell array. Parameters should resolve to valid properties of cpplab objects in the tree. 
-
-
-!!! info "See Also"
-    ->xolotl.plot
-
-%}
 
 
 
@@ -93,7 +93,7 @@ if nargin < 2
 	rm_this = [rm_this; find(strcmp(real_names,'approx_channels'))];
 	rm_this = [rm_this; find(strcmp(real_names,'approx_channels'))];
 	rm_this = [rm_this;  lineFind(real_names,'tree_idx')];
-	
+
 	values(rm_this) = [];
 	real_names(rm_this) = [];
 
@@ -116,7 +116,7 @@ else
 
 	real_names = manipulate_these;
 	values = NaN*ones(length(real_names),1);
-	
+
 	% check that these exist
 	for i = 1:length(real_names)
 		try
@@ -159,5 +159,3 @@ warning('on','MATLAB:hg:uicontrol:MinMustBeLessThanMax')
 warning('on','MATLAB:hg:uicontrol:ValueMustBeInRange')
 
 p.continuous_callback_function = @self.manipulateEvaluate;
-
-

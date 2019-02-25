@@ -1,31 +1,34 @@
-%{
-              _       _   _
-   __  _____ | | ___ | |_| |
-   \ \/ / _ \| |/ _ \| __| |
-    >  < (_) | | (_) | |_| |
-   /_/\_\___/|_|\___/ \__|_|
 
-### matrixCost
+%
+% ;;     ;; ;;;;;;;;  ;;;;;;;   ;;;;;;;  ;;        ;;;;;;
+%  ;;   ;;     ;;    ;;     ;; ;;     ;; ;;       ;;    ;;
+%   ;; ;;      ;;    ;;     ;; ;;     ;; ;;       ;;
+%    ;;;       ;;    ;;     ;; ;;     ;; ;;        ;;;;;;
+%   ;; ;;      ;;    ;;     ;; ;;     ;; ;;             ;;
+%  ;;   ;;     ;;    ;;     ;; ;;     ;; ;;       ;;    ;;
+% ;;     ;;    ;;     ;;;;;;;   ;;;;;;;  ;;;;;;;;  ;;;;;;
+%
+% ### matrixCost
+%
+% **Syntax**
+%
+% ```matlab
+% C = xtools.matrixCost(M1, M2)
+% ```
+%
+% **Description**
+%
+% Compute the norm-squared distance between two matrices. If the matrices are LeMasson
+% matrices, which represent discretized probability distributions of a derivative-embedded
+% attractor of a voltage trace, then this distance serves as a measure of how dissimilar
+% the two voltage traces are.
+%
+% !!! info "See Also"
+%     ->xtools.V2Matrix
+% 		LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
+%
 
-**Syntax**
 
-```matlab
-C = xtools.matrixCost(M1, M2)
-```
-
-**Description**
-
-Compute the norm-squared distance between two matrices. If the matrices are LeMasson
-matrices, which represent discretized probability distributions of a derivative-embedded
-attractor of a voltage trace, then this distance serves as a measure of how dissimilar
-the two voltage traces are.
-
-!!! info "See Also"
-    ->xtools.V2Matrix
-		LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
-
-
-%}
 
 
 function C = matrixCost(M1,M2)

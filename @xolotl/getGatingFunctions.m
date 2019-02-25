@@ -1,41 +1,41 @@
-%{
-              _       _   _ 
-   __  _____ | | ___ | |_| |
-   \ \/ / _ \| |/ _ \| __| |
-    >  < (_) | | (_) | |_| |
-   /_/\_\___/|_|\___/ \__|_|
 
-### getGatingFunctions
+%               _       _   _ 
+%    __  _____ | | ___ | |_| |
+%    \ \/ / _ \| |/ _ \| __| |
+%     >  < (_) | | (_) | |_| |
+%    /_/\_\___/|_|\___/ \__|_|
+%
+% ### getGatingFunctions
+%
+%
+% **Syntax**
+%
+% ```matlab
+% [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance)
+% ```
+%
+% **Description**
+%
+% static method of `xolotl` that returns function handles
+% that represent the gating and activation functions of a
+% particular conductance.
+%
+%
+% `conductance` is a string that specifies a
+% conductance C++ header file. The outputs are function
+% handles that can be evaluated independently. This method
+% is used internally in `xolotl.show()`
+%
+%
+% This method supports tab-completion. You should be able to press
+% tab to get a list of conductances you can get the
+% gating function of.
+%
+% !!! info "See Also"
+%     ->xolotl.show
+%
 
 
-**Syntax**
-
-```matlab
-[m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance)
-```
-
-**Description**
-
-static method of `xolotl` that returns function handles
-that represent the gating and activation functions of a
-particular conductance. 
-
-
-`conductance` is a string that specifies a
-conductance C++ header file. The outputs are function 
-handles that can be evaluated independently. This method
-is used internally in `xolotl.show()`
-
-
-This method supports tab-completion. You should be able to press
-tab to get a list of conductances you can get the 
-gating function of.
-
-!!! info "See Also"
-    ->xolotl.show
-
-
-%}
 
 function [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance)
 

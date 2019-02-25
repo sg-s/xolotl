@@ -1,72 +1,72 @@
-%{
 
-;;     ;; ;;;;;;;;  ;;;;;;;   ;;;;;;;  ;;        ;;;;;;
- ;;   ;;     ;;    ;;     ;; ;;     ;; ;;       ;;    ;;
-  ;; ;;      ;;    ;;     ;; ;;     ;; ;;       ;;
-   ;;;       ;;    ;;     ;; ;;     ;; ;;        ;;;;;;
-  ;; ;;      ;;    ;;     ;; ;;     ;; ;;             ;;
- ;;   ;;     ;;    ;;     ;; ;;     ;; ;;       ;;    ;;
-;;     ;;    ;;     ;;;;;;;   ;;;;;;;  ;;;;;;;;  ;;;;;;
+%
+% ;;     ;; ;;;;;;;;  ;;;;;;;   ;;;;;;;  ;;        ;;;;;;
+%  ;;   ;;     ;;    ;;     ;; ;;     ;; ;;       ;;    ;;
+%   ;; ;;      ;;    ;;     ;; ;;     ;; ;;       ;;
+%    ;;;       ;;    ;;     ;; ;;     ;; ;;        ;;;;;;
+%   ;; ;;      ;;    ;;     ;; ;;     ;; ;;             ;;
+%  ;;   ;;     ;;    ;;     ;; ;;     ;; ;;       ;;    ;;
+% ;;     ;;    ;;     ;;;;;;;   ;;;;;;;  ;;;;;;;;  ;;;;;;
+%
+% ### V2metrics
+%
+% **Syntax**
+%
+% ```matlab
+% options = xtools.V2metrics
+% metrics = xtools.V2metrics(V)
+% metrics = xtools.V2metrics(V, options)
+% metrics = xtools.V2metrics(V, 'PropertyName', PropertyValue, ...)
+% ```
+%
+% **Description**
+%
+% Computes metrics from a raw time series of voltage,
+% which can be experimental or simulated data.
+%
+% If called without arguments or outputs, a struct
+% containing fields for all optional arguments, `options`,
+% is created.
+%
+% `V2metrics` can be called using a struct to specify
+% options, or with individual options specified as name, value keyword pairs. Options with a `NaN` value are ignored
+% and the default option value is used instead.
+%
+% | Option Name | Default Value | Units |
+% | ----------- | ------------- |
+% | `sampling_rate` | 20 | 1/ms |
+% | `ibi_thresh` | 300 | ms |
+% | `spike_threshold` | 0 | mV |
+% | `debug` | false | |
+%
+% | Metric Name | Units |
+% | ----------- | ----- |
+% | `firing_rate` | NaN | ? |
+% | `burst_period` | NaN | ? |
+% | `ibi_mean` | NaN | ? |
+% | `ibi_std` | NaN | ? |
+% | `isi_std` | NaN | ? |
+% | `burst_period_std` | NaN | ? |
+% | `isi_std` | NaN | ? |
+% | `duty_cycle_mean` | NaN | ? |
+% | `n_spikes_per_burst_mean` | NaN | ? |
+% | `n_spikes_per_burst_std` | NaN | ? |
+% | `min_V_mean` | NaN | ? |
+% | `min_V_std` | NaN | ? |
+% | `min_V_in_burst_mean` | NaN | ? |
+% | `min_V_in_burst_std` | NaN | ? |
+% | `spike_peak_mean`  | NaN | ? |
+% | `spike_peak_std` | NaN | ? |
+%
+%
+% !!! info "See Also"
+%     ->xtools.findNSpikes
+% 	->xtools.findNSpikeTimes
+% 	->xtools.findBurstMetrics
+% 	LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
+%
 
-### V2metrics
 
-**Syntax**
-
-```matlab
-options = xtools.V2metrics
-metrics = xtools.V2metrics(V)
-metrics = xtools.V2metrics(V, options)
-metrics = xtools.V2metrics(V, 'PropertyName', PropertyValue, ...)
-```
-
-**Description**
-
-Computes metrics from a raw time series of voltage, 
-which can be experimental or simulated data.
-
-If called without arguments or outputs, a struct
-containing fields for all optional arguments, `options`, 
-is created.
-
-`V2metrics` can be called using a struct to specify 
-options, or with individual options specified as name, value keyword pairs. Options with a `NaN` value are ignored
-and the default option value is used instead.
-
-| Option Name | Default Value | Units |
-| ----------- | ------------- |
-| `sampling_rate` | 20 | 1/ms |
-| `ibi_thresh` | 300 | ms |
-| `spike_threshold` | 0 | mV |
-| `debug` | false | |
-
-| Metric Name | Units |
-| ----------- | ----- |
-| `firing_rate` | NaN | ? |
-| `burst_period` | NaN | ? |
-| `ibi_mean` | NaN | ? |
-| `ibi_std` | NaN | ? |
-| `isi_std` | NaN | ? |
-| `burst_period_std` | NaN | ? |
-| `isi_std` | NaN | ? |
-| `duty_cycle_mean` | NaN | ? |
-| `n_spikes_per_burst_mean` | NaN | ? |
-| `n_spikes_per_burst_std` | NaN | ? |
-| `min_V_mean` | NaN | ? |
-| `min_V_std` | NaN | ? |
-| `min_V_in_burst_mean` | NaN | ? |
-| `min_V_in_burst_std` | NaN | ? |
-| `spike_peak_mean`  | NaN | ? |
-| `spike_peak_std` | NaN | ? |
-
-
-!!! info "See Also"
-    ->xtools.findNSpikes
-	->xtools.findNSpikeTimes
-	->xtools.findBurstMetrics
-	LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
-
-
-%}
 
 function metrics = V2metrics(V, varargin)
 

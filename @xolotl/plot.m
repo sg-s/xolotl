@@ -1,41 +1,41 @@
-%{
-              _       _   _ 
-   __  _____ | | ___ | |_| |
-   \ \/ / _ \| |/ _ \| __| |
-    >  < (_) | | (_) | |_| |
-   /_/\_\___/|_|\___/ \__|_|
 
-### plot
+% 							_       _   _
+%    __  _____ | | ___ | |_| |
+%    \ \/ / _ \| |/ _ \| __| |
+%     >  < (_) | | (_) | |_| |
+%    /_/\_\___/|_|\___/ \__|_|
+%
+% ### plot
+%
+% **Syntax**
+%
+% ```matlab
+% x.plot()
+% ```
+%
+% ** Description**
+%
+% `x.plot` makes a plot of voltage and calcium time series of all
+% compartments. The default option is to color the voltage
+% traces by the dominant current at that point using
+% `contributingCurrents` and to also show the Calcium
+% concentration on the same plot.
+%
+%
+% If you want to turn off the coloring, or to hide the
+% Calcium concentration, change your preference using:
+%
+%
+% ```matlab
+% x.pref.plot_color = false;
+% x.pref.show_Ca = false;
+% ```
+%
+% !!! info "See Also"
+%     ->xolotl.manipulate
+%     ->xolotl.contributingCurrents
+%
 
-**Syntax**
-
-```matlab
-x.plot()
-```
-
-** Description**
-
-`x.plot` makes a plot of voltage and calcium time series of all 
-compartments. The default option is to color the voltage
-traces by the dominant current at that point using  
-`contributingCurrents` and to also show the Calcium 
-concentration on the same plot. 
-
-
-If you want to turn off the coloring, or to hide the 
-Calcium concentration, change your preference using:
-
-
-```matlab
-x.pref.plot_color = false;
-x.pref.show_Ca = false;
-```
-
-!!! info "See Also"
-    ->xolotl.manipulate
-    ->xolotl.contributingCurrents
-
-%}
 
 
 function plot(self, ~)
@@ -65,13 +65,13 @@ if isempty(self.handles) || ~isfield(self.handles,'fig') || ~isvalid(self.handle
 	end
 
 	% make all dummy plots
-	
+
 	for i = 1:N
 
 		if self.pref.show_Ca
 			yyaxis(self.handles.ax(i),'left')
 		end
-		
+
 		cond_names = self.(comp_names{i}).find('conductance');
 
 		if self.pref.plot_color
@@ -91,7 +91,7 @@ if isempty(self.handles) || ~isfield(self.handles,'fig') || ~isvalid(self.handle
 		end
 
 		% make calcium dummy plots
-		
+
 		if self.pref.show_Ca
 			yyaxis(self.handles.ax(i),'right')
 			self.handles.Ca_trace(i) = plot(self.handles.ax(i),NaN,NaN,'Color','k');
@@ -112,7 +112,7 @@ if isempty(self.handles) || ~isfield(self.handles,'fig') || ~isvalid(self.handle
 
 		set(self.handles.ax(1),'XLim',[0 max(self.t_end*1e-3)]);
 
-		% attach this figure to the puppeteer instance 
+		% attach this figure to the puppeteer instance
 		try
 			self.handles.puppeteer_object.attachFigure(self.handles.fig);
 		catch

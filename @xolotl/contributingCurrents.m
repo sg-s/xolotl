@@ -1,26 +1,26 @@
-%{
 
-### contributingCurrents
+% 
+% ### contributingCurrents
+%
+% **Syntax**
+%
+% ```matlab
+% curr_index = xolotl.contributingCurrents(V, I)
+% ```
+%
+% **Description**
+%
+% This static method calculates the contributions of each
+% current at every point in a voltage race. This is used
+% internally in `xolotl.plot` to color voltage traces.
+%
+% where V is a vector of voltages, I is the corresponding matrix of currents
+%
+% !!! info "See Also"
+%     ->xolotl.plot
+%     ->xolotl.manipulate
 
-**Syntax**
 
-```matlab
-curr_index = xolotl.contributingCurrents(V, I)
-```
-
-**Description**
-
-This static method calculates the contributions of each
-current at every point in a voltage race. This is used 
-internally in `xolotl.plot` to color voltage traces. 
-
-where V is a vector of voltages, I is the corresponding matrix of currents 
-
-!!! info "See Also"
-    ->xolotl.plot
-    ->xolotl.manipulate
-
-%}
 
 function curr_index = contributingCurrents(V, I)
 

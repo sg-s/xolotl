@@ -1,35 +1,35 @@
-%{
-              _       _   _ 
-   __  _____ | | ___ | |_| |
-   \ \/ / _ \| |/ _ \| __| |
-    >  < (_) | | (_) | |_| |
-   /_/\_\___/|_|\___/ \__|_|
 
-### slice
+%               _       _   _ 
+%    __  _____ | | ___ | |_| |
+%    \ \/ / _ \| |/ _ \| __| |
+%     >  < (_) | | (_) | |_| |
+%    /_/\_\___/|_|\___/ \__|_|
+%
+% ### slice
+%
+% **Syntax**
+%
+% ```matlab
+% % assuming there is a compartment called 'Dendrite'
+% x.slice('Dendrite',10)
+% ```
+%
+% **Description**
+%
+% `slice` partitions a cylindrical compartment into N slices.
+%
+% The compartment to be sliced must explicitly be a cylindrical
+% section, i.e., it must have a defined length and radius.
+% `slice` cuts the cylinder along the axis, and connects each
+% slice with `Axial` synapses. This object can then be treated
+% as a multi-compartment model, and `xolotl` will integrate
+% it using the Crank-Nicholson scheme reserved for multi-compartment models.
+%
+%
+% !!! info "See Also"
+%     ->xolotl.connect
 
-**Syntax**
 
-```matlab
-% assuming there is a compartment called 'Dendrite'
-x.slice('Dendrite',10)
-```
-
-**Description**
-
-`slice` partitions a cylindrical compartment into N slices.  
-
-The compartment to be sliced must explicitly be a cylindrical 
-section, i.e., it must have a defined length and radius. 
-`slice` cuts the cylinder along the axis, and connects each 
-slice with `Axial` synapses. This object can then be treated 
-as a multi-compartment model, and `xolotl` will integrate 
-it using the Crank-Nicholson scheme reserved for multi-compartment models. 
-
-
-!!! info "See Also"
-    ->xolotl.connect
-
-%}
 
 function slice(self, compartment, N_slices, axial_resistivity)
 
@@ -67,7 +67,7 @@ end
 
 % we assume cylindrical geometry
 % so make sure that the radius and length
-% fields are filled out 
+% fields are filled out
 
 assert(~isnan(self.(compartment).radius),'Radius of compartment must be specified')
 assert(~isnan(self.(compartment).len),'Length of compartment must be specified')
@@ -94,7 +94,7 @@ all_comps = {};
 
 
 for i = 1:N_slices
-	
+
 	padding_length = n_digits - length(mat2str(i));
 	new_comp_name = [compartment_root_name repmat('0',1,padding_length) mat2str(i)];
 

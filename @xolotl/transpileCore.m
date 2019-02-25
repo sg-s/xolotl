@@ -1,32 +1,32 @@
-%{   
-             _       _   _ 
-  __  _____ | | ___ | |_| |
-  \ \/ / _ \| |/ _ \| __| |
-   >  < (_) | | (_) | |_| |
-  /_/\_\___/|_|\___/ \__|_|
 
-### transpileCore
+%              _       _   _ 
+%   __  _____ | | ___ | |_| |
+%   \ \/ / _ \| |/ _ \| __| |
+%    >  < (_) | | (_) | |_| |
+%   /_/\_\___/|_|\___/ \__|_|
+%
+% ### transpileCore
+%
+% **Syntax**
+%
+% ```matlab
+% x.transpileCore(in_file,out_file)
+% ```
+%
+% **Description**
+%
+% method that writes C++ bridge code to set up
+% and integrate your model based on the
+% objects configured in the xolotl tree. This is
+% internally called by xolotl.transpile()
+%
+% Do not call this method. It is not meant
+% to be user accessible.
+%
+% !!! info "See Also"
+%     ->xolotl.transpile
 
-**Syntax**
 
-```matlab
-x.transpileCore(in_file,out_file)
-```
-
-**Description**
-
-method that writes C++ bridge code to set up
-and integrate your model based on the 
-objects configured in the xolotl tree. This is 
-internally called by xolotl.transpile()
-
-Do not call this method. It is not meant 
-to be user accessible. 
-
-!!! info "See Also"
-    ->xolotl.transpile
-
-%}
 
 function transpileCore(self,in_file,out_file)
 
@@ -51,7 +51,7 @@ header_files = [header_files(:); unique(temp(:))];
 
 
 for i = 1:length(header_files)
-	header_files{i} = strcat('#include "',header_files{i}, '"'); 
+	header_files{i} = strcat('#include "',header_files{i}, '"');
 end
 
 insert_here = lineFind(lines,'//xolotl:include_headers_here');
@@ -76,7 +76,7 @@ lines = [lines(1:insert_here); input_hookups(:); lines(insert_here+1:end)];
 
 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-% make all the C++ objects 
+% make all the C++ objects
 [constructors, class_parents, obj_names] = self.generateConstructors;
 
 
@@ -90,7 +90,7 @@ lines = [lines(1:insert_here); constructors(:); lines(insert_here+1:end)];
 
 % sort all objects by length of object name
 % this is to make sure we find the longest object
-% string in names later on 
+% string in names later on
 [~,sort_idx] = sort(cellfun(@(x) length(x), obj_names));
 obj_names = obj_names(sort_idx);
 class_parents = class_parents(sort_idx);
@@ -99,7 +99,7 @@ class_parents = class_parents(sort_idx);
 output_hookups = {};
 for j = length(real_names):-1:1
 	% try to figure out what the object is
-	% that contains this variable 
+	% that contains this variable
 
 	last_dot_idx = max(strfind(real_names{j},'.'));
 
@@ -161,15 +161,15 @@ lines = [lines(1:insert_here); synapse_add_lines(:); lines(insert_here+1:end)];
 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % add the mechanisms here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-% mechanisms work like this: every mechanism must have a pointer to a 
+% mechanisms work like this: every mechanism must have a pointer to a
 % a conductance, and in addition, must be handed over to the containing
-% compartment using .addMechanism 
-% 
+% compartment using .addMechanism
+%
 
 mechanism_add_lines = {};
 
 
-% first, we need to add mechanism to the 
+% first, we need to add mechanism to the
 % channels/synapses they control and then
 % we need to add them to the compartment they are in
 all_mechanisms = self.find('mechanism');
@@ -178,7 +178,7 @@ for i = 1:length(all_mechanisms)
 	% connect to synapse/conductance
 	idx = max(strfind(all_mechanisms{i},'.'));
 	cond_name = 'NULL';
-	syn_name = 'NULL'; 
+	syn_name = 'NULL';
 
 	parent_name = strrep(all_mechanisms{i}(1:idx-1),'.','_');
 	mechanism_name = strrep(all_mechanisms{i},'.','_');
