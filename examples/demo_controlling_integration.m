@@ -70,3 +70,5 @@ b = bar(2,memory_usage(2),'FaceColor','r');
 set(gca,'YScale','log','XTick',[1 2],'XLim',[0 3],'XTickLabel',{'Normal mode','spikes detected in C++'},'YLim',[1e7 1e9],'XTickLabelRotation',45)
 ylabel('Memory used (bytes)')
 drawnow
+
+mtools.fig.pretty()

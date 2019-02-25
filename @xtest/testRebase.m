@@ -12,6 +12,6 @@ conds = x.find('conductance');
 for i = 1:length(conds)
 	this_cond = x.get(conds{i});
 
-	self.assertTrue(strcmp(GetMD5(this_cond.cpp_class_path,'File'),this_cond.hash),'Hashes did not match; rebase failed')
+	self.assertTrue(strcmp(mtools.crypto.md5hash(this_cond.cpp_class_path,'File'),this_cond.hash),'Hashes did not match; rebase failed')
 
 end

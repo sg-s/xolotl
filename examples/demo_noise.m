@@ -33,3 +33,6 @@ x.AB.HCurrent.add('SubunitNoise','noise_amplitude',.002);
 V = x.integrate;
 plot(time,V,'b')
 drawnow
+
+
+mtools.fig.pretty()

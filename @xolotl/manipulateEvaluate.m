@@ -21,15 +21,22 @@
 
 function manipulateEvaluate(self,names,values)
 
-if any(strfind(names{1},'I_ext_'))
-	comp_name = strrep(names{1},'I_ext_','');
-	comp_idx = find(strcmp(self.Children,comp_name));
+for i = 1:length(names)
+	if any(strfind(names{i},'I_ext_'))
+		comp_name = strrep(names{i},'I_ext_','');
+		comp_idx = find(strcmp(self.Children,comp_name));
 
-	self.I_ext(comp_idx) = values(1);
+		if size(self.I_ext,1) > 1
+			self.I_ext = zeros(1,length(self.Children));
+		end
+		self.I_ext(comp_idx) = values(i);
 
-else
-	self.set(names,values)
+	else
+		self.set(names{i},values(i))
+	end
 end
+
+
 
 
 original_approx_state = self.approx_channels;

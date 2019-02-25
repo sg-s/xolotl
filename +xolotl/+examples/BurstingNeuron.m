@@ -61,6 +61,11 @@ case 'prinz'
 		x.AB.add([prefix filesep channels{i}],'gbar',gbar(i),'E',E(i));
 	end
 
+	x.AB.CalciumMech.f = 14.96;
+
 end
+
+
+
 x.t_end = 2e3;
 x.integrate;

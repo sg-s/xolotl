@@ -637,6 +637,26 @@ the model.
 
 -------
 
+
+### loadobj
+
+**Description**
+
+A static method that overloads the built-in loadobj method. This sets 
+local parameters, and is useful when xolotl objects are saved to
+disk and loaded. 
+
+!!! warning 
+    Do not use this method.
+
+
+
+
+
+-------
+### manipulate
+
+
  ### manipulate
 
 

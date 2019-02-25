@@ -101,12 +101,12 @@ methods (Access = protected)
         		if isa(self.(compartment).(C{j}).gbar,'function_handle')
         			g = strrep(func2str(self.(compartment).(C{j}).gbar),'@()','');
         		else
-        			g = oval(self.(compartment).(C{j}).gbar);
+        			g = mtools.string.oval(self.(compartment).(C{j}).gbar);
         		end
         		if isa(self.(compartment).(C{j}).E,'function_handle')
         			E = strrep(func2str(self.(compartment).(C{j}).E),'@()','');
         		else
-        			E = oval(self.(compartment).(C{j}).E);
+        			E = mtools.string.oval(self.(compartment).(C{j}).E);
         		end
         		info_str = [' (g=' g ', E=' E ')'];
 
@@ -258,6 +258,8 @@ methods (Static)
 
 
     setup();
+
+    b = loadobj(a);
 
 end % end static methods
 end % end classdef

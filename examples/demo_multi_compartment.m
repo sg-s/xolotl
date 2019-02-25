@@ -21,3 +21,5 @@ plot(time,V(:,end),'k')
 xlabel('Time (s)')
 ylabel('Voltage in axon (mV)')
 set(gca,'YLim',[-80 50])
+
+mtools.fig.pretty()
