@@ -22,4 +22,4 @@ xlabel('Time (s)')
 ylabel('Voltage in axon (mV)')
 set(gca,'YLim',[-80 50])
 
-mtools.fig.pretty()
+figlib.pretty('plw',1,'lw',1)

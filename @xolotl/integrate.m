@@ -68,13 +68,13 @@ if isempty(self.linked_binary)
 		disp(['[INFO] No linked binary, hashing...'])
 	end
 	h = self.hash;
-	mexBridge_name = [joinPath(self.xolotl_folder,'X_') h '.cpp'];
+	mexBridge_name = [pathlib.join(self.xolotl_folder,'X_') h '.cpp'];
 	self.linked_binary = ['X_' h '.' mexext];
 end
 
 
 % does the binary exist?
-if exist(joinPath(self.xolotl_folder,self.linked_binary),'file') == 3
+if exist(pathlib.join(self.xolotl_folder,self.linked_binary),'file') == 3
 	% does the hash match up?
 
 	if self.verbosity > 0

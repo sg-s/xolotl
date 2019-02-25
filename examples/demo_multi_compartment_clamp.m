@@ -73,4 +73,4 @@ figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[120
 plot(V_clamp,'k')
 plot(V(:,1),'r')
 
-mtools.fig.pretty()
+figlib.pretty()

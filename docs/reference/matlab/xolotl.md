@@ -637,7 +637,6 @@ the model.
 
 -------
 
-
 ### loadobj
 
 **Description**
@@ -653,9 +652,10 @@ disk and loaded.
 
 
 
--------
-### manipulate
 
+
+
+-------
 
  ### manipulate
 

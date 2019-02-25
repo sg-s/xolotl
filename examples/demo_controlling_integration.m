@@ -37,13 +37,13 @@ memory_usage(1) = sum([temp.bytes]);
 
 figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
 subplot(2,3,1)
-mtools.neuro.raster(xtools.findNSpikeTimes(V,xtools.findNSpikes(V)),'Color','k')
+neurolib.raster(xtools.findNSpikeTimes(V,xtools.findNSpikes(V)),'Color','k')
 set(gca,'XLim',[0 10],'YTick',[])
 drawnow
 
 
 subplot(2,3,2)
-mtools.neuro.raster(xtools.findNSpikeTimes(V,xtools.findNSpikes(V)),'Color','k')
+neurolib.raster(xtools.findNSpikeTimes(V,xtools.findNSpikes(V)),'Color','k')
 set(gca,'XLim',[1e3-1 1e3],'YTick',[])
 
 % now use C++ spike finding
@@ -55,12 +55,12 @@ temp = whos('data');
 memory_usage(2) = temp.bytes;
 
 subplot(2,3,4)
-mtools.neuro.raster(data.AB.spiketimes,'Color','r')
+neurolib.raster(data.AB.spiketimes,'Color','r')
 set(gca,'XLim',[0 10],'YTick',[])
 xlabel('Time (s)')
 
 subplot(2,3,5)
-mtools.neuro.raster(data.AB.spiketimes,'Color','r')
+neurolib.raster(data.AB.spiketimes,'Color','r')
 set(gca,'XLim',[1e3-1 1e3],'YTick',[])
 xlabel('Time (s)')
 
@@ -71,4 +71,4 @@ set(gca,'YScale','log','XTick',[1 2],'XLim',[0 3],'XTickLabel',{'Normal mode','s
 ylabel('Memory used (bytes)')
 drawnow
 
-mtools.fig.pretty()
+figlib.pretty('fs',12)

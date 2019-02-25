@@ -44,6 +44,6 @@ xlabel('Time (s)')
 ylabel('V_{m} (mV)')
 legend({'11C','22C'})
 set(gca,'XLim',[0 6],'YLim',[-80 50])
-mtools.fig.pretty('plw',1,'lw',1)
+figlib.pretty('plw',1,'lw',1)
 drawnow
 

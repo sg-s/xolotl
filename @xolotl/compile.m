@@ -31,7 +31,7 @@ function compile(self)
 
 h = self.hash;
 
-mexBridge_name = [joinPath(self.xolotl_folder,'X_') h '.cpp'];
+mexBridge_name = [pathlib.join(self.xolotl_folder,'X_') h '.cpp'];
 assert(exist(mexBridge_name,'file')==2,'C++ file to compile does not exist. Use "transpile" before compiling')
 
 if self.verbosity > 0

@@ -23,4 +23,4 @@ x.solver_order = 4;
 [V, Ca] = x.integrate;
 plot(V,'r')
 
-mtools.fig.pretty()
+figlib.pretty('plw',1,'lw',1)

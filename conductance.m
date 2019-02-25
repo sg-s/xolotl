@@ -49,14 +49,14 @@ methods
 
 
 		if self.is_Ca  
-			lines = lineRead([this_dir 'Ca_exact.hpp']);
+			lines = filelib.read([this_dir 'Ca_exact.hpp']);
 		else
-			lines = lineRead([this_dir 'generic_exact.hpp']);
+			lines = filelib.read([this_dir 'generic_exact.hpp']);
 		end
 
 
 		for i = 1:length(props)
-			idx = lineFind(lines,['$' props{i}]);
+			idx = filelib.find(lines,['$' props{i}]);
 			if any(idx)
 
 				this_line = lines{idx};
@@ -96,7 +96,7 @@ methods
 		end
 
 
-		lineWrite([fileparts(fileparts(this_dir)) filesep 'custom' filesep name '.hpp'],lines);
+		filelib.write([fileparts(fileparts(this_dir)) filesep 'custom' filesep name '.hpp'],lines);
 
 
 

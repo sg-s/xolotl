@@ -41,12 +41,12 @@ end
 cpplab.rebuildCache;
 
 % compile GetMD5
-mtools.crypto.md5compile;
+hashlib.md5compile;
 
 this_dir = fileparts(fileparts(which(mfilename)));
-all_tests = dir(joinPath(this_dir,'examples','demo*.m'));
+all_tests = dir(pathlib.join(this_dir,'examples','demo*.m'));
 
-cd(joinPath(this_dir,'examples'))
+cd(pathlib.join(this_dir,'examples'))
 
 
 passed = 0;
@@ -61,10 +61,10 @@ for i = length(all_tests):-1:1
 		pause(1)
 		close all
 		% clearvars -except all_tests i
-		disp('TEST PASSED')
+		corelib.cprintf('green','TEST PASSED\n')
 		passed = passed + 1;
 	catch err
-		disp('TEST FAILED')
+		corelib.cprintf('red','TEST FAILED\n')
 	end
 end
 

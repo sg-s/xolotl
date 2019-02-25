@@ -20,14 +20,14 @@ x.dt = .1;
 figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
 x.t_end = 100e3; x.sim_dt = .05; tic; V = x.integrate; t =  toc;
 x.t_end = 5e3; V = x.integrate;
-disp(['Exact speed = ' mtools.string.oval(100/t) 'X'])
+disp(['Exact speed = ' strlib.oval(100/t) 'X'])
 plot(V,'k')
 
 x.approx_channels = 1;
 x.t_end = 100e3; x.sim_dt = .05; tic; V = x.integrate; t =  toc;
 x.t_end = 5e3; V = x.integrate;
-disp(['Approximate speed = ' mtools.string.oval(100/t) 'X'])
+disp(['Approximate speed = ' strlib.oval(100/t) 'X'])
 plot(V,'r')
 legend({'Exact','Approximate'})
 
-mtools.fig.pretty()
+figlib.pretty()

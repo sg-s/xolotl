@@ -21,7 +21,7 @@ options.axial_resitivity = 1e-3; % MOhm mm;
 
 
 % validate and accept options
-if iseven(length(varargin))
+if mathlib.iseven(length(varargin))
 	for ii = 1:2:length(varargin)-1
 	temp = varargin{ii};
     if ischar(temp)

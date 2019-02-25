@@ -84,6 +84,6 @@ figure, hold on
 plot(V)
 plot(V2)
 
-mtools.fig.pretty()
+figlib.pretty()
 
 assert(sum(V2 - V)==0,'Something went wrong')

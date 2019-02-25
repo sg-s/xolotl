@@ -94,4 +94,4 @@ title('synaptic currents')
 drawnow
 
 
-mtools.fig.pretty()
+figlib.pretty()

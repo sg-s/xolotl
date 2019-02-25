@@ -45,4 +45,4 @@ ylabel('V_m (mV)')
 xlabel('Time (s)')
 drawnow
 
-mtools.fig.pretty('plw',1.5,'lw',1.5)
+figlib.pretty('plw',1.5,'lw',1.5)

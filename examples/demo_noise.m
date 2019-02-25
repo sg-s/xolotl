@@ -35,4 +35,4 @@ plot(time,V,'b')
 drawnow
 
 
-mtools.fig.pretty()
+figlib.pretty()

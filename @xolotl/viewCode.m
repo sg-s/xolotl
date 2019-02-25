@@ -32,7 +32,7 @@ function viewCode(self)
 
 h = self.hash;
 c = ['X_' h '.cpp'];
-c = joinPath(self.xolotl_folder,c);
+c = pathlib.join(self.xolotl_folder,c);
 if exist(c,'file') == 2
 	edit(c);
 else
