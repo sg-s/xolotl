@@ -51,7 +51,7 @@ MEX configured to use 'Xcode Clang++' for C++ language compilation.
 MEX configured to use 'Xcode with Clang' for C language compilation.
 ```
 
-## Verify your installation
+### Verify your installation
 
 OK, let's make sure everything works. Copy and paste the following code into your MATLAB terminal:
 
