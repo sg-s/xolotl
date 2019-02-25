@@ -6,11 +6,13 @@ and make sure everything works well. You will need:
 1. [MATLAB](https://www.mathworks.com/products/matlab.html) 	(`xolotl` will not work on GNU Octave)
 2. An internet connection
 
+## Installing xolotl
+
 Download [xolotl here](https://github.com/sg-s/xolotl/releases/download/latest/xolotl.mltbx) and drag the downloaded file (`xolotl.mltbx`) onto your MATLAB workspace. MATLAB should automatically open a prompt asking you if you want to install it.
 
 Then we need to install a C/C++ compiler, and get MATLAB to work with that. Follow these instructions based on your operating system:
 
-## Installing
+## Installing a compiler
 
 ### macOS
 
