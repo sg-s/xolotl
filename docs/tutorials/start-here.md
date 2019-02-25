@@ -22,7 +22,8 @@ Then we need to install a C/C++ compiler, and get MATLAB to work with that. Foll
 
 1. Download and install the [MinGW compiler](https://www.mathworks.com/matlabcentral/fileexchange/52848-matlab-support-for-mingw-w64-c-c-compiler) from the Mathworks FileExchange. You'll need to log in using a Mathworks account. This ridiculous restriction is Mathworks' fault.
 
-> You can also get the compiler as a MATLAB "add-on."
+!!! note
+    You can also get the compiler as a MATLAB "add-on."
 
 
 ### GNU/Linux
