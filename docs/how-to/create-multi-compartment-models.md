@@ -26,8 +26,8 @@ x.Soma.tree_idx = 0; % mark this as the cell body
 ```
 
 
-!!! warning 
-    `tree_idx`, and the presence of `Axial` synapses, is how xolotl "knows" a model is a multi-compartment model vs a set of a individual neurons that are electrically coupled. You must specify some compartment as the cell body using `tree_idx`, otherwise, xolotl will not consider it a multi-compartment model. 
+!!! warning
+    `tree_idx`, and the presence of `Axial` synapses, is how xolotl "knows" a model is a multi-compartment model vs a set of a individual neurons that are electrically coupled. You must specify some compartment as the cell body using `tree_idx`, otherwise, xolotl will not consider it a multi-compartment model.
 
 Note that we're using the `slice` function to slice up a cylinder into shorter sections, which also automatically wires them up using `Axial` synapses.
 
@@ -37,7 +37,7 @@ An example showing a multi-compartment model is found in `demo_multi_compartment
 
 The maximal conductance of an `Axial` synapse from the presynaptic compartment to the postsynaptic compartment is computed using Equation 6.30 from Dayan & Abbott (2001).
 
-$$g_{max} = \frac{r_{pre} r_{post}^2}{\rho L_{pre} (L_{pre} r_{post}^2 + L_{post} r_pre}^2)$$
+$$g_{max} = \frac{r_{pre} r_{post}^2}{\rho L_{pre} (L_{pre} r_{post}^2 + L_{post} r_pre^2)}$$
 
 where $r$ is the axial radius and $L$ the length. $\rho$ is the axial resistivity in the
 presynaptic compartment. Subscripts "pre" and "post" refer to the presynaptic and postsynaptic compartments.
