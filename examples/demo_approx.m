@@ -29,3 +29,5 @@ x.t_end = 5e3; V = x.integrate;
 disp(['Approximate speed = ' mtools.string.oval(100/t) 'X'])
 plot(V,'r')
 legend({'Exact','Approximate'})
+
+mtools.fig.pretty()

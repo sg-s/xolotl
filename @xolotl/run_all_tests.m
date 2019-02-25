@@ -41,7 +41,7 @@ end
 cpplab.rebuildCache;
 
 % compile GetMD5
-ok = InstallMex('GetMD5.c');
+mtools.crypto.md5compile;
 
 this_dir = fileparts(fileparts(which(mfilename)));
 all_tests = dir(joinPath(this_dir,'examples','demo*.m'));	

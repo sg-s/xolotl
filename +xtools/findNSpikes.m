@@ -44,7 +44,7 @@ assert(isscalar(on_off_thresh),'on_off_thresh must be a scalar')
 
 V = V(:);
 
-[ons, offs] = mtools.timeseries.computeOnsOffs(V > on_off_thresh);
+[ons, offs] = mtools.vector.computeOnsOffs(V > on_off_thresh);
 if isempty(offs) || isempty(ons)
 	f = 0;
 	return

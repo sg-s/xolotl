@@ -92,3 +92,6 @@ ylabel('I (nA)')
 title('synaptic currents')
 
 drawnow
+
+
+mtools.fig.pretty()
