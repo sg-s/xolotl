@@ -125,7 +125,7 @@ set(gca,'XScale','log','YScale','log','XTick',logspace(1,6,6))
 ylabel('Speed (X realtime)')
 
 try
-	prettyFig();
+	figlib.pretty();
 catch
 end
 
