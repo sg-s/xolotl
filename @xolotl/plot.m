@@ -179,7 +179,7 @@ if strcmp(self.handles.ax(1).XLimMode,'auto')
 end
 
 try
-	prettyFig('plw',1,'lw',1);
+	figlib.pretty('plw',1,'lw',1);
 catch
 end
 

@@ -118,7 +118,7 @@ plot(ax(find(strcmp({ax.Tag},'tau_m'))),V,taum,'DisplayName',conductance);
 plot(ax(find(strcmp({ax.Tag},'tau_h'))),V,tauh,'DisplayName',conductance);
 
 try
-	prettyFig();
+	figlib.pretty();
 catch
 end
 

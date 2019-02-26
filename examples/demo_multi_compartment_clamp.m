@@ -23,7 +23,7 @@
 % plot(V_clamp,'k')
 % plot(V,'r')
 
-% prettyFig();
+% figlib.pretty();
 
 % if being_published
 % 	snapnow
