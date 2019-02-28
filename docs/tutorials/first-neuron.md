@@ -29,7 +29,7 @@ By convention, this variable will be called `x`, though you can call it whatever
 x.add('compartment','HH','A',.01);
 ```
 
-Here, we are creating a new object of type `compartment`, setting its surface area `A` to .01 mm^2, naming it `HH` (for Hodgkin-Huxley), and adding it to our xolotl object, all in one line.
+Here, we are creating a new object of type `compartment`, setting its surface area `A` to .01 $mm^2$, naming it `HH` (for Hodgkin-Huxley), and adding it to our xolotl object, all in one line.
 
 If you look at your xolotl object by typing `x` in the MATLAB prompt, you should see something like this:
 
@@ -49,9 +49,9 @@ A compartment is pretty boring by itself. Let's add some voltage-gated channels 
 To do this, we type:
 
 ```matlab
-x.HH.add('liu/NaV','gbar',1e3,'E',30);
-x.HH.add('liu/Kd','gbar',300,'E',-80);
-x.HH.add('Leak','gbar',1);
+x.HH.add('liu/NaV', 'gbar', 1e3, 'E', 30);
+x.HH.add('liu/Kd', 'gbar', 300, 'E', -80);
+x.HH.add('Leak', 'gbar', 1);
 ```
 
 What's going on here? In each line, we are specifying the thing that we want to add to `HH`, and we are specifying some parameters of the thing we're adding using name value syntax.
