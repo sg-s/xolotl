@@ -44,6 +44,8 @@ If you're still having a problem, we might have fixed it already! Reinstall or u
 Remember that if you're using `git` you should be sure to pull all the dependencies as well
 (`srinivas.gs_mtools`, `cpplab`, `puppeteer`).
 
+You can also check our [troubleshooting](troubleshooting.md) page for known fixes to common problems.
+
 
 ## How do I cite this?
 
