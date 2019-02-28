@@ -37,8 +37,14 @@ function manipulate(self, manipulate_these)
 
 
 if isempty(self.linked_binary)
-	self.transpile;
-	self.compile;
+
+	if exist(['X_' self.hash '.' mexext],'file') == 3
+		self.linked_binary = ['X_' self.hash '.' mexext];
+	else
+
+		self.transpile;
+		self.compile;
+	end
 end
 
 % disable closed loop
