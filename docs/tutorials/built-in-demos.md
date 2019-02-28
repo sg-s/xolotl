@@ -24,6 +24,7 @@ You should see this plot appear:
 
 !!! info Something Went Wrong
     If this didn't work, see our [troubleshooting](../troubleshooting.md) page.
+    You can also try running: `cpplab.rebuildCache; x = xolotl; x.rebase` in MATLAB. 
 
 You can see what effect changing the maximal conductances has on the voltage dynamics by running:
 
