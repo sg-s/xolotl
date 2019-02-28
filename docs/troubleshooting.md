@@ -27,11 +27,16 @@ manip.Position = [0 0 300 100];
 ### I get an error saying I don't have a compiler
 
 You need a C/C++ compiler. You need to follow MATLAB's
-on how to get one, how to install one, and how to configure one. 
+[instructions](https://www.mathworks.com/support/compilers.html)
+on how to get one, how to install one, and how to configure one.
 It may be helpful to also see our advice on [compilers](how-to/install-configure.md)
 
 ### I created a new component, but `cpplab` can't find it
 
+This typically appears as a `cpplab::resolvePath` error. Here are some things to check:
+
 * Are you sure that your named it `*****.hpp` and not `*****.cpp`?
 * Does it exist somewhere on your MATLAB path, or in a subfolder?
+* Did you try running `cpplab.rebuildCache`?
+* Did you try `x = xolotl; x.rebase`?
 * If you still run into errors, file an issue at [cpplab](https://github.com/sg-s/cpplab/issues/)
