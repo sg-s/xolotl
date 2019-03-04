@@ -85,7 +85,7 @@ assert(options.n_steps > 2, 'n_steps too small::At least two points needed')
 
 assert(length(self.find('compartment')) == 1,' You can only compute the f-I curve for single compartment models')
 
-assert(isint(options.n_steps),'n_steps must be an integer')
+assert(mathlib.isint(options.n_steps),'n_steps must be an integer')
 
 
 
