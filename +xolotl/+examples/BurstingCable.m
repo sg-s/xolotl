@@ -86,6 +86,6 @@ if options.N > 1
 		end
 	end
 
-	x.connect('Neurite01','CellBody');
+	x.connect(x.Children{2},'CellBody');
 end
 
