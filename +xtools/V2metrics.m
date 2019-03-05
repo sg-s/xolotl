@@ -71,7 +71,7 @@
 function metrics = V2metrics(V, varargin)
 
 
-metrics = orderfields(struct('firing_rate',NaN,'burst_period',NaN,'ibi_mean',NaN,'ibi_std',NaN,'isi_mean',NaN,'burst_period_std',NaN,'isi_std',NaN,'duty_cycle_mean',NaN,'duty_cycle_std',NaN,'n_spikes_per_burst_mean',NaN,'n_spikes_per_burst_std',NaN,'min_V_mean',NaN,'min_V_std',NaN,'min_V_in_burst_mean',NaN,'min_V_in_burst_std',NaN,'spike_peak_mean',NaN,'spike_peak_std',NaN,'ibi_thresh',NaN));
+metrics = orderfields(struct('firing_rate',NaN,'burst_period',NaN,'ibi_mean',NaN,'ibi_std',NaN,'isi_mean',NaN,'burst_period_std',NaN,'isi_std',NaN,'duty_cycle_mean',NaN,'duty_cycle_std',NaN,'n_spikes_per_burst_mean',NaN,'n_spikes_per_burst_std',NaN,'min_V_mean',NaN,'min_V_std',NaN,'min_V_in_burst_mean',NaN,'min_V_in_burst_std',NaN,'spike_peak_mean',NaN,'spike_peak_std',NaN,'ibi_thresh',NaN,'isi_max',NaN,'isi_min',NaN));
 
 % options and defaults
 options.sampling_rate = 20; % samples per millisecond
@@ -130,7 +130,8 @@ metrics.firing_rate = (1e3*n_spikes)/(length(V)/options.sampling_rate);
 % find ISI
 metrics.isi_mean = mean(diff(spiketimes))/options.sampling_rate;
 metrics.isi_std = std(diff(spiketimes))/options.sampling_rate;
-
+metrics.isi_max = max(diff(spiketimes))/options.sampling_rate;
+metrics.isi_min = min(diff(spiketimes))/options.sampling_rate;
 
 % measure some statistics about the extrema of
 % the voltage trace
