@@ -52,6 +52,12 @@ assert(isa(axes_handle,'matlab.graphics.axis.Axes'),'Expected first argument to 
 assert(any(strcmp(self.Children,compartment_name)),'compartment_name does not resolve to a known compartment')
 
 channel_names = self.(compartment_name).find('conductance');
+
+% clean up the channel_names a bit
+for i = 1:length(channel_names)
+	channel_names{i} = strrep(channel_names{i},'Current','');
+end
+
 g = self.(compartment_name).get('*gbar');
 
 if ~isfield(self.handles,'gbar_plot') || ~isvalid(self.handles.gbar_plot(1))
