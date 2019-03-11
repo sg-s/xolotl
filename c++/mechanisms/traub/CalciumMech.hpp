@@ -23,7 +23,7 @@ public:
     double tau_Ca = 13.33;  // milliseconds
 
     // parameter to convert from i_Ca to uM
-    double f = 14.96;
+    double f = 5941;
 
     // specify parameters + initial conditions for
     // mechanism that controls a conductance
