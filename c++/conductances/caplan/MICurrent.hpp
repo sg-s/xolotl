@@ -31,12 +31,11 @@ public:
         approx_m = 1;
     }
 
-    void integrate(double, double);
-    //
-    double m_inf(double, double);
-    double tau_m(double, double);
+    double m_inf(double V, double Ca);
+    double h_inf(double V, double Ca);
+    double tau_m(double V, double Ca);
+    double tau_h(double V, double Ca);
     string getClass(void);
-    //
 
 };
 
@@ -46,5 +45,7 @@ string MICurrent::getClass(){return "MICurrent";}
 
 double MICurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+12.0)/-5));}
 double MICurrent::tau_m(double V, double Ca) {return 0.5;}
+double MICurrent::h_inf(double V, double Ca) {return   0;}
+double MICurrent::tau_h(double V, double Ca) {return   0;}
 
 #endif
