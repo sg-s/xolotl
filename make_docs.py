@@ -71,6 +71,7 @@ for file in sorted(glob.glob("@xolotl/*.m")):
 		thisline = lines[i]
 		thisline = thisline.replace('%}','')
 		thisline = thisline.strip('%')
+		thisline = thisline.lstrip()
 
 		# insert hyperlinks to other methods 
 		if thisline.lower().find('->xolotl.') != -1:
