@@ -35,7 +35,7 @@ component contained in every compartment.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L79)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L80)
 
 -------
 
@@ -67,7 +67,7 @@ somewhere in the network, and `false` otherwise.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L102)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L103)
 
 -------
 
@@ -104,7 +104,7 @@ bool network::resolveTree(void) {
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L106)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L107)
 
 -------
 
@@ -130,7 +130,7 @@ This method adds a compartment to the network. It does the following things:
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L214)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L215)
 
 -------
 
@@ -155,7 +155,7 @@ no compartment is being voltage clamped.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L236)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L237)
 
 -------
 
@@ -185,7 +185,7 @@ This method assumes that no compartment anywhere is being voltage clamped.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L263)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L264)
 
 -------
 
@@ -216,7 +216,7 @@ and also assumes that no current is being injected into any compartment.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L364)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L365)
 
 -------
 

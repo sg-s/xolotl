@@ -89,7 +89,6 @@ broadcast to all components from `xolotl.verbosity`.
 #define CONDUCTANCE
 #include <cmath>
 #include <string>
-// #include "mechanism.hpp"
 using std::string;
 class compartment;
 
@@ -158,6 +157,8 @@ public:
     inline double fast_exp(double);
 
     void buildLUT(double);
+
+    void readV(void);
 
 
     // housekeeping, temp variables
@@ -231,7 +232,6 @@ conductance.
 * [virtual methods in C++](http://www.cplusplus.com/doc/tutorial/polymorphism/)
 */
 void conductance::integrate(double V, double Ca) {   
-
 
     V_idx = (int) round(V+99);
     if (V_idx < 0) {V_idx = 0;};

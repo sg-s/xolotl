@@ -16,15 +16,16 @@ can be used to represent neurons and parts of neurons.
 #define COMPARTMENT
 #include <cmath>
 #include <vector>
-#include "conductance.hpp"
-#include "synapse.hpp"
-#include "mechanism.hpp"
-class network;
 
 #define F 96485
 #define pi 3.1416
 
 using namespace std;
+
+class synapse;
+class mechanism;
+class conductance;
+class network;
 
 class compartment
 {
@@ -273,7 +274,7 @@ axial synapses are connected to it.
 **See Also**
 
 * [addSynapse](./compartment.md#addsynapse)
-* [addSynapse](./compartment.md#addmechanism)
+* [addMechanism](./compartment.md#addmechanism)
 * [addConductance](./compartment.md#addconductance)
 
 
@@ -294,8 +295,8 @@ It does the following things:
 
 **See Also**
 
-* [addSynapse](./compartment.md#addaxial)
-* [addSynapse](./compartment.md#addmechanism)
+* [addAxial](./compartment.md#addaxial)
+* [addMechanism](./compartment.md#addmechanism)
 * [addConductance](./compartment.md#addconductance)
 
 */
@@ -353,7 +354,7 @@ pointer to this synapse is stored in the vector `syn`
 **See Also**
 
 * [addSynapse](./compartment.md#addaxial)
-* [addSynapse](./compartment.md#addmechanism)
+* [addMechanism](./compartment.md#addmechanism)
 * [addConductance](./compartment.md#addconductance)
 
 */
@@ -475,7 +476,7 @@ This method returns the pointer to a conductance contained
 in this compartment, identified by its numeric index. 
 
 !!! warning 
-    Note that there is another method with the same name that can be called using a char argument.
+    Note that there is another method with the same name that can be called using a `char` argument.
 
 */
 conductance * compartment::getConductancePointer(int cond_idx){

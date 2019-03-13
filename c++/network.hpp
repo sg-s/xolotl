@@ -17,8 +17,9 @@ as an entry point for all other objects.
 #define NETWORK
 #include <cmath>
 #include <vector>
-#include "compartment.hpp"
-#include "mex.h"
+
+class compartment;
+
 
 using namespace std;
 

@@ -40,11 +40,15 @@ cppfilename = pathlib.join(self.cpp_folder,in_file);
 lines = filelib.read(cppfilename);
 
 % insert network header and other critical headers
-header_files{1} = pathlib.join(self.cpp_folder,'network.hpp');
-header_files{2} = pathlib.join(self.cpp_folder,'compartment.hpp');
-header_files{3} = pathlib.join(self.cpp_folder,'synapse.hpp');
-header_files{4} = pathlib.join(self.cpp_folder,'conductance.hpp');
-header_files{5} = pathlib.join(self.cpp_folder,'mechanism.hpp');
+% the specific ordering here is EXTREMELY importnat
+% and goes a long way in resolving circular dependencies 
+header_files{1} = pathlib.join(self.cpp_folder,'conductance.hpp');
+header_files{2} = pathlib.join(self.cpp_folder,'synapse.hpp');
+header_files{3} = pathlib.join(self.cpp_folder,'mechanism.hpp');
+header_files{4} = pathlib.join(self.cpp_folder,'compartment.hpp');
+header_files{5} = pathlib.join(self.cpp_folder,'network.hpp');
+header_files{6} = pathlib.join(self.cpp_folder,'conductance2.hpp');
+
 temp = self.generateHeaders; temp = temp(:);
 temp(cellfun(@isempty,temp)) = [];
 
