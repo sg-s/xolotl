@@ -71,3 +71,7 @@ end
 
 % now run the actual tests
 xt = xtest; run(xt)
+
+
+% then test all the channels
+xolotl.testConductances;
