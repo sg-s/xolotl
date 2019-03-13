@@ -37,7 +37,6 @@ public:
 
     }
 
-    void integrate(double, double);
 
     double m_inf(double, double);
     double h_inf(double, double);

@@ -32,13 +32,11 @@ public:
         approx_h = 1;
 
         // defaults
- if (isnan(gbar)) { gbar = 0; }
+        if (isnan(gbar)) { gbar = 0; }
         if (isnan (m)) { m = 0; }
         if (isnan (h)) { h = 1; }
         if (isnan (E)) { E = -20; }
     }
-
-    void integrate(double, double);
 
     double m_inf(double, double);
     double h_inf(double, double);

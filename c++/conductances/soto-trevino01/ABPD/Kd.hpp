@@ -34,7 +34,6 @@ public:
         if (isnan (E)) { E = -80; }
     }
 
-    void integrate(double, double);
 
     double m_inf(double, double);
     double tau_m(double, double);

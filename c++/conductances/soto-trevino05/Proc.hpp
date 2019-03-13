@@ -33,8 +33,6 @@ public:
     }
 
 
-    void integrate(double, double);
-
     double m_inf(double, double);
     string getClass(void);
 

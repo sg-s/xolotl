@@ -39,6 +39,7 @@ public:
     }
 
     void integrate(double, double);
+    void integrateMS(int, double, double);
 
     double m_inf(double, double);
     double h_inf(double, double);
@@ -50,13 +51,13 @@ public:
 
 string Cal::getClass(){return "Cal";}
 
-void CaT::integrate(double V, double Ca) {
+void Cal::integrate(double V, double Ca) {
     E = container->E_Ca;
     conductance::integrate(V,Ca);
     container->i_Ca += getCurrent(V);
 }
 
-void CaT::integrateMS(int k, double V, double Ca) {
+void Cal::integrateMS(int k, double V, double Ca) {
     E = container->E_Ca;
     conductance::integrateMS(k, V, Ca);
     container->i_Ca += getCurrent(V);

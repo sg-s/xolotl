@@ -5,6 +5,6 @@
 
 
 void conductance::readV() {
-    container->V;
+    double temp = container->V;
 }
 

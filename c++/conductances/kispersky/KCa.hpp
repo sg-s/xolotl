@@ -31,8 +31,6 @@ public:
 
     }
 
-    void integrate(double, double);
-
     double m_inf(double V, double Ca);
     double tau_m(double, double);
     string getClass(void);

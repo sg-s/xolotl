@@ -33,6 +33,7 @@ public:
     }
 
     void integrate(double, double);
+    void integrateMS(int,double, double);
 
     double m_inf(double, double);
     double h_inf(double, double);

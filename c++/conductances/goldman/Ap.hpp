@@ -33,7 +33,6 @@ public:
 
     }
 
-    void integrate(double, double);
 
     double m_inf(double, double);
     double tau_m(double, double);
