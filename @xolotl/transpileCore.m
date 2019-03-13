@@ -47,7 +47,21 @@ header_files{4} = pathlib.join(self.cpp_folder,'conductance.hpp');
 header_files{5} = pathlib.join(self.cpp_folder,'mechanism.hpp');
 temp = self.generateHeaders; temp = temp(:);
 temp(cellfun(@isempty,temp)) = [];
-header_files = [header_files(:); unique(temp(:))];
+
+temp = unique(temp(:));
+
+% make sure no header files are duplicated
+rm_this = false(length(temp),1);
+for i = 1:length(rm_this)
+	for j = 1:length(header_files)
+		if strcmp(temp{i},header_files{j})
+			rm_this(i) = true;
+		end
+	end
+end
+temp(rm_this) = [];
+
+header_files = [header_files(:); temp];
 
 
 for i = 1:length(header_files)
