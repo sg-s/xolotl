@@ -47,6 +47,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     xolotl_network.verbosity = verbosity;
     xolotl_network.approx_channels = approx_channels;
 
+    int nsteps = (int) floor(t_end/sim_dt);
+    xolotl_network.steps_left = nsteps;
+
     //xolotl:insert_constructors
 
 
@@ -64,7 +67,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     
 
     //xolotl:call_methods_here
-    int nsteps = (int) floor(t_end/sim_dt);
     int progress_report = (int) floor(nsteps/10);
 
     int nsteps_out = (int) floor(t_end/dt);
@@ -257,10 +259,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         mexErrMsgTxt("[xolotl] multi-compartment models cannot be integrated with multi-step methods yet. \n");
     }
 
-    // if (is_multi_comp & is_voltage_clamped){
-    //     mexErrMsgTxt("[xolotl] multi-compartment models cannot be integrated when something is clamped yet. \n");
-    // }
-
 
     int output_idx = 0; 
     int cont_idx = 0;
@@ -271,10 +269,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         mexPrintf("[C++] %i outputs requested\n", nlhs);
     }
     
-
-    // tell all components about some core 
-    // parameters
-    // xolotl_network.broadcast(sim_dt, temperature);
+    xolotl_network.startThreads();
 
     if (!is_voltage_clamped & !is_multi_step){
  
@@ -562,6 +557,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     } else  {
         mexErrMsgTxt("[xolotl] Unknown integration mode. \n");
     }
+
+
+    xolotl_network.waitForThreads();
 
 
 

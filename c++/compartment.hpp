@@ -31,7 +31,7 @@ class compartment
 {
 protected:
 
-    vector<conductance*> cond; // pointers to all conductances in compartment
+    
     vector<synapse*> syn; // pointers to synapses onto this neuron.
     vector<mechanism*> cont; // pointers to mechanisms
     vector<int> mechanism_sizes; // stores sizes of each mechanism's full state
@@ -46,6 +46,10 @@ protected:
     double V_inf;
 
 public:
+
+    vector<conductance*> cond; // pointers to all conductances in compartment
+
+    int steps_left = 0;
 
 
     // core dynamic variables
@@ -67,8 +71,8 @@ public:
     double f_;
     double delta_V;
     double i_Ca_prev = 0;
-    double Ca_prev;
-    double V_prev;
+    double Ca_prev = 0.05;
+    double V_prev = 0;
 
     double V_clamp = 0; // stores the voltage that it is clamped to
 
@@ -308,6 +312,9 @@ void compartment::addConductance(conductance *cond_) {
     cond_->temperature_ref = temperature_ref;
     cond_->temperature = temperature;
     cond_->connect(this);
+    cond_->steps_left = steps_left;
+
+    mexPrintf("setting steps_left in conductance to %i\n", steps_left);
 
     n_cond++;
 
@@ -674,14 +681,17 @@ void compartment::integrateChannels(void) {
     sigma_g = 0.0;
     sigma_gE = 0.0;
 
+    steps_left--;
+
+
+    // mexPrintf("steps_left = %i\n",steps_left);
 
     // compute E_Ca
     E_Ca = RT_by_nF*log((Ca_out)/(Ca_prev));
 
     // integrate all channels
-    for (int i=0; i<n_cond; i++)
-    {
-        cond[i]->integrate(V_prev, Ca_prev);
+    for (int i=0; i<n_cond; i++) {
+        // cond[i]->integrate(V_prev, Ca_prev);
         sigma_g += cond[i]->g;
         sigma_gE += (cond[i]->g)*(cond[i]->E);
     }

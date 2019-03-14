@@ -96,6 +96,10 @@ class conductance {
 protected:
     int V_idx = 0;
 public:
+
+    int steps_left = 0;
+
+
     compartment *container; // pointer to compartment that contains this
     double gbar;
     double gbar_next;
@@ -158,7 +162,7 @@ public:
 
     void buildLUT(double);
 
-    void readV(void);
+    void integrateMT(void);
 
 
     // housekeeping, temp variables

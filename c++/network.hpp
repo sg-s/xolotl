@@ -17,6 +17,7 @@ as an entry point for all other objects.
 #define NETWORK
 #include <cmath>
 #include <vector>
+#include <thread>
 
 class compartment;
 
@@ -36,11 +37,15 @@ protected:
 
     // keeps track of the # of terminals in terminal_comp
     int n_terminals; 
+
+    std::vector<std::thread> all_threads;
+
 public:
 
 
     double dt;
     double sim_dt;
+    int steps_left = 0;
 
      // pointers to all compartments in network
     vector<compartment*> comp;
@@ -68,6 +73,9 @@ public:
     void addCompartment(compartment*);
     bool resolveTree(void);
     void checkSolvers(void);
+
+    void startThreads(void);
+    void waitForThreads(void);
 };
 
 
@@ -207,6 +215,27 @@ bool network::resolveTree(void) {
 }
 
 
+void network::startThreads(void) {
+
+    for (int i = 0; i < n_comp; i++) {
+        for (int j = 0; j < comp[i]->n_cond; j++) {
+            mexPrintf("network:: starting thread...\n");
+            all_threads.push_back(std::thread (&conductance::integrateMT,comp[i]->cond[j]));
+        }
+    }
+
+   
+
+}
+
+
+void network::waitForThreads(void) {
+    for (int i = 0; i < all_threads.size(); i ++) {
+        mexPrintf("network:: waiting for thread %i\n",i);
+        all_threads[i].join();
+    }
+}
+
 /*
 This method adds a compartment to the network. It does the following things:
 1. adds a pointer to the compartment being added to a vector called `comp`
@@ -222,6 +251,7 @@ void network::addCompartment(compartment *comp_) {
     comp_->RT_by_nF = (0.0431)*(temperature + 273.15);
     comp_->temperature = temperature;
     comp_->temperature_ref = temperature_ref;
+    comp_->steps_left = steps_left;
 
     if (verbosity > 0){
         mexPrintf("[C++] adding compartment to network. \n");
