@@ -250,7 +250,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
 
-    mexEvalString("drawnow;");
+    
 
     int percent_complete = 10;
 
@@ -270,6 +270,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
     
     xolotl_network.startThreads();
+    mexEvalString("drawnow;");
 
     if (!is_voltage_clamped & !is_multi_step){
  

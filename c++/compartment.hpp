@@ -312,9 +312,6 @@ void compartment::addConductance(conductance *cond_) {
     cond_->temperature_ref = temperature_ref;
     cond_->temperature = temperature;
     cond_->connect(this);
-    cond_->steps_left = steps_left;
-
-    mexPrintf("setting steps_left in conductance to %i\n", steps_left);
 
     n_cond++;
 
