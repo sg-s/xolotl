@@ -902,7 +902,44 @@ current needed for that compartment, and takes into
 account current flows between compartments
 */
 void compartment::computeClampingCurrent(double V_clamp) {
-    
+
+
+    // // // synapses
+    // // for (int i = 0; i < n_axial_syn; i++) {
+    // //     axial_syn[i]->integrate();
+    // //     sigma_g += (axial_syn[i]->gmax)/(1000*A); // now uS/mm^2
+    // //     sigma_gE += ((axial_syn[i]->gmax)*(axial_syn[i]->E))/(1000*A); // now uS/mm^2
+    // 
+    // // }
+    //
+    // // // calculate I_clamp, and set voltage to the clamped
+    // // // voltage
+    // // double E = exp(-dt/(Cm/(sigma_g)));
+    // // V_inf = (V_clamp - V*E)/(1 - E);
+    // // I_clamp =  A*(V_inf*sigma_g - sigma_gE);
+    //
+    //
+    // // calculate I_clamp, and set voltage to the clamped
+    // // voltage
+    // I_clamp = 0;
+    //
+    // // conductances
+    // for (int i = 0; i < n_cond; i++) {
+    //     I_clamp += cond[i]->g*(V_clamp - cond[i]->E)*A;
+    // }
+    //
+    //
+    // // synapses
+    // for (int i = 0; i < n_axial_syn; i++) {
+    //     axial_syn[i]->integrate();
+    //     I_clamp += axial_syn[i]->gmax*(V_clamp - axial_syn[i]->E)/1e3;
+    //
+    //
+    // }
+    //
+    //
+    // V = V_clamp;
+
 }
 
 
