@@ -63,7 +63,9 @@ public:
     // some housekeeping parameters
     // that will be useful in the
     // Crank-Nicholson integration scheme
+    double b_;
     double c_;
+    double d_;
     double f_;
     double delta_V;
     double i_Ca_prev = 0;
@@ -201,20 +203,24 @@ public:
 
 
         // housekeeping
-        E_Ca = 0; // because this will be computed from the Nernst eq.
-        i_Ca = 0; // this is the current density (nA/mm^2)
-        n_cond = 0;
-        n_cont = 0;
-        n_syn = 0;
-        n_axial_syn = 0;
-        upstream = NULL;
-        downstream = NULL;
-        upstream_g = 0;
-        downstream_g = 0;
+        E_Ca = 0;           // because this will be computed from the Nernst eq.
+        i_Ca = 0;           // this is the current density (nA/mm^2)
+        n_cond = 0;         // number of conductances
+        n_cont = 0;         // number of controllers
+        n_syn = 0;          // number of synapses
+        n_axial_syn = 0;    // number of axial synapses
+        delta_V = 0;        // instantaneous change in voltage
 
-        f_ = 0;
-        c_ = 0;
-        delta_V = 0;
+        // housekeeping: multi-compartment models
+        upstream = NULL;    // pointer to upstream compartment
+        downstream = NULL;  // pointer to downstream compartment
+        upstream_g = 0;     // instantaneous axial conductance from upstream compartment
+        downstream_g = 0;   // instantaneous axial conductance from downstream compartment
+        b_ = 0;             // used for Crank-Nicolson integration
+        c_ = 0;             // used for Crank-Nicolson integration
+        d_ = 0;             // used for Crank-Nicolson integration
+        f_ = 0;             // used for Crank-Nicolson integration
+
 
     }
 
@@ -903,13 +909,18 @@ account current flows between compartments
 */
 void compartment::computeClampingCurrent(double V_clamp) {
 
+    // calculate the clamping current I_clamp
+    // set voltage to the clamped voltage
+
+    I_clamp = 0;
+
 
     // // // synapses
     // // for (int i = 0; i < n_axial_syn; i++) {
     // //     axial_syn[i]->integrate();
     // //     sigma_g += (axial_syn[i]->gmax)/(1000*A); // now uS/mm^2
     // //     sigma_gE += ((axial_syn[i]->gmax)*(axial_syn[i]->E))/(1000*A); // now uS/mm^2
-    // 
+    //
     // // }
     //
     // // // calculate I_clamp, and set voltage to the clamped
