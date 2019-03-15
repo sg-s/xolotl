@@ -238,8 +238,9 @@ public:
     void integrateChannels(void);
     void integrateSynapses(void);
     void integrateVoltage(void);
+    // for single-compartment voltage-clamp
     void integrateV_clamp(double);
-
+    // for multi-compartment voltage-clamp
     void computeClampingCurrent(double);
 
     // methods for integrating using Crank-Nicholson
