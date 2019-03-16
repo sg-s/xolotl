@@ -742,7 +742,7 @@ void compartment::integrateCNFirstPass(void) {
     if (upstream) {
         // downstream exists. append terms
         // (eq. 6.55 in Dayan & Abbott)
-        f_ += (b*(upstream->f_))/(1 - upstream->c_);
+        f_ += (b_*(upstream->f_))/(1 - upstream->c_);
     }
 
 }
