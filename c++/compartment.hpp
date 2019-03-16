@@ -62,7 +62,7 @@ public:
 
     // some housekeeping parameters
     // that will be useful in the
-    // Crank-Nicholson integration scheme
+    // Crank-Nicolson integration scheme
     double b_;
     double c_;
     double d_;
@@ -243,7 +243,7 @@ public:
     // for multi-compartment voltage-clamp
     void computeClampingCurrent(double);
 
-    // methods for integrating using Crank-Nicholson
+    // methods for integrating using Crank-Nicolson
     // and methods for multi-compartment models
     double getBCDF(int);
     void integrateCNFirstPass(void);
@@ -410,7 +410,7 @@ void compartment::checkSolvers(int solver_order) {
 }
 
 /*
-This method is a helper function used in the Crank-Nicholson
+This method is a helper function used in the Crank-Nicolson
 scheme and returns B, C, D and F values as defined in eq.
 6.45 of "Theoretical Neuroscience" by Dayan and Abbott
 */
@@ -699,7 +699,7 @@ void compartment::integrateChannels(void) {
 
 
 /*
-This method is part of the Crank-Nicholson method to solve
+This method is part of the Crank-Nicolson method to solve
 for the voltages in a multi-compartment neuron. This is the
 "first pass" down a cable. In simulations, this is called before
 integrateCNSecondPass.
@@ -707,7 +707,7 @@ integrateCNSecondPass.
 **See Also**
 
 * [integrateCNSecondPass](./compartment.md#integratecnsecondpass)
-* [The Crank-Nicholson Method](../../explanation/integration.md)
+* [The Crank-Nicolson Method](../../explanation/integration.md)
 
 */
 void compartment::integrateCNFirstPass(void) {
@@ -749,7 +749,7 @@ void compartment::integrateCNFirstPass(void) {
 
 
 /*
-This method is part of the Crank-Nicholson method to solve
+This method is part of the Crank-Nicolson method to solve
 for the voltages in a multi-compartment neuron. This is the
 "second pass" up a cable. In simulations, this is called after
 integrateCNFirstPass.
@@ -757,7 +757,7 @@ integrateCNFirstPass.
 **See Also**
 
 * [integrateCNFirstPass](./compartment.md#integratecnFirstpass)
-* [The Crank-Nicholson Method](../../explanation/integration.md)
+* [The Crank-Nicolson Method](../../explanation/integration.md)
 */
 void compartment::integrateCNSecondPass(void) {
     delta_V = f_;
