@@ -711,18 +711,15 @@ integrateCNSecondPass.
 
 */
 void compartment::integrateCNFirstPass(void) {
-    // intermediate variables
-    double b; // b is b for this compartment
-    double d; // d is d for the prev compartment
 
-    b = getBCDF(1)*.5*dt;
+    b_ = getBCDF(1)*.5*dt;
 
 
     // compute c_
     c_ = .5*dt*getBCDF(2);
     if (upstream) {
 
-        d = (upstream->getBCDF(3))*dt*.5;
+        d_ = (upstream->getBCDF(3))*dt*.5;
 
         // full expression for c_ (eq. 6.54)
         c_ += b*d/(1 - upstream->c_);
