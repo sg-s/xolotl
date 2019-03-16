@@ -70,7 +70,11 @@ x.I_ext = I_ext;
 V = x.integrate;
 
 figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
-plot(V_clamp,'k')
-plot(V(:,1),'r')
+plot(time,V_clamp,'k')
+plot(time,V(:,1),'r')
+xlabel('Time (s)')
+ylabel('V_m (mV)')
+legend({'Clamped voltage','Voltage when clamped current is injected'},'Location','southeast')
+set(gca,'YLim',[-80 20])
 
 figlib.pretty()
