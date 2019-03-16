@@ -917,7 +917,21 @@ void compartment::computeClampingCurrent(double V_clamp) {
     f_ = getBCDF(4);
 
     // eq. 6.44 in "Theoretical Neuroscience" by Dayan & Abbott
-    I_clamp = - Cm * A * (b_ * upstream->V + c_ * V + d_ * downstream->V + sigma_gE);
+    // this is performed piecemeal to prevent dereferencing null pointers
+    I_clamp = c_ * V + sigma_gE;
+
+    if (upstream)
+    {
+        I_clamp += b_ * upstream->V;
+    }
+
+    if (downstream)
+    {
+        I_clamp += d_ * downstream->V
+    }
+
+    // perform final scaling & clamp voltage
+    I_clamp = - Cm * A * I_clamp;
     V = V_clamp;
 
 }
