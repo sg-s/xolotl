@@ -918,7 +918,7 @@ void compartment::computeClampingCurrent(double V_clamp) {
 
     // eq. 6.44 in "Theoretical Neuroscience" by Dayan & Abbott
     // this is performed piecemeal to prevent dereferencing null pointers
-    I_clamp = c_ * V + sigma_gE;
+    I_clamp = c_ * V + f_;
 
     if (upstream)
     {
