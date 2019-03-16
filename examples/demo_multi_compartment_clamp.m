@@ -39,8 +39,8 @@
 x = xolotl.examples.BurstingCable();
 x.set('*HCurrent.gbar',0)
 x.set('*NaV.gbar',0)
-x.dt = .1;
-x.sim_dt = .1;
+x.dt = .01;
+x.sim_dt = .01;
 
 x.closed_loop = false;
 
@@ -52,7 +52,7 @@ time = (1:length(V))*x.dt*1e-3;
 
 
 % create a sine wave clamp 
-V_clamp = sin((1:length(V))/1e3)*30 - 50;
+V_clamp = sin((1:length(V))/1e4)*30 - 50;
 V_clamp = V_clamp + linspace(0,30,length(V_clamp));
 
 
