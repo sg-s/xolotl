@@ -483,7 +483,7 @@ unless you add a new component to one of them.
 
 !!! info "See Also"
     * [cpplab.copy](../cpplab/#copy)
-    * [* [How to copy models](https://xolotl.readthedocs.io/en/master/how-to/copy-models/)](#* [how to copy models](https://readthedocs.io/en/master/how-to/copy-models/))
+    * [How to copy models](https://xolotl.readthedocs.io/en/master/how-to/copy-models/)
 
 
 
@@ -1081,7 +1081,7 @@ x.reset('base')
 
 !!! info "See Also"
     * [xolotl.reset](#reset)
-    * [* [How to: save configurations and use snapshots](https://xolotl.readthedocs.io/en/master/how-to/snapshots/)](#* [how to: save configurations and use snapshots](https://readthedocs.io/en/master/how-to/snapshots/))
+    * [How to: save configurations and use snapshots](https://xolotl.readthedocs.io/en/master/how-to/snapshots/)
 
 
 

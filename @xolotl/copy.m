@@ -24,7 +24,7 @@
 %
 % See Also: 
 % cpplab.copy
-% * [How to copy models](https://xolotl.readthedocs.io/en/master/how-to/copy-models/)
+%     * [How to copy models](https://xolotl.readthedocs.io/en/master/how-to/copy-models/)
 
 
 

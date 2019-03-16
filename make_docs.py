@@ -91,7 +91,12 @@ for file in sorted(glob.glob("@xolotl/*.m")):
 
 
 		# insert hyperlinks to other methods 
-		if thisline.lower().find('xolotl.') != -1 and format_link:
+
+		if thisline.find('* [') != -1 and format_link:
+			# pre-formatted link, just write it
+			out_file.write('    ' + thisline)
+
+		elif thisline.lower().find('xolotl.') != -1 and format_link:
 			# ok, this is a xolotl method
 			link_name = thisline
 			link_name = link_name.strip()
