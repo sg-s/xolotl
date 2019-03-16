@@ -38,6 +38,7 @@
 %
 % The following properties can be specified for most synapses:
 %
+% 
 % | Name                 |   PropertyName |
 % |----------------------| -----------|
 % | Maximal conductance  |  `gmax`|

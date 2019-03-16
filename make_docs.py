@@ -75,6 +75,10 @@ for file in sorted(glob.glob("@xolotl/*.m")):
 		thisline = thisline.strip('%')
 		thisline = thisline.lstrip()
 
+		if not thisline:
+			out_file.write('\n')
+			continue
+
 		# make the "see also" into a nice box
 		if thisline.lower().find('see also') != -1:
 			out_file.write('\n\n')
