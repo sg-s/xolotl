@@ -87,4 +87,4 @@ makes a plot like this:
 * [xolotl.show](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#show)
 * [xolotl.plotgbars](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#plotgbars)
 * [xolotl.integrate](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#integrate)
-* [xolotl.pref](https://xolotl.readthedocs.io/en/master/reference/xolotl-properties/#pref)
+* [xolotl.pref](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#pref)

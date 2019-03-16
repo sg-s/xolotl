@@ -114,6 +114,6 @@ We see something like this:
 ## See Also
 
 
-* [xolotl.V_clamp](https://xolotl.readthedocs.io/en/master/reference/xolotl-properties/#v_clamp)
-* [xolotl.I_ext](https://xolotl.readthedocs.io/en/master/reference/xolotl-properties/#i_ext)
+* [xolotl.V_clamp](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#v_clamp)
+* [xolotl.I_ext](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#i_ext)
 * [xolotl.integrate](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#integrate)

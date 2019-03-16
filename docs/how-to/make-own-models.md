@@ -402,8 +402,11 @@ void NewSynapse::connect(compartment *pcomp1_, compartment *pcomp2_) {
 <a name="whereshouldIputthem"></a>
 
 All conductances (and any other network component) are
-defined by an `.hpp` header file. You can save your
-new conductance anywhere within your MATLAB path.
+defined by an `.hpp` header file. **You can save your
+new conductance anywhere within your MATLAB path.**
+
+
+## How are built-in C++ files organized?
 
 We organize our conductance files in the xolotl
 directory under `xolotl/c++/conductances/`. Within that

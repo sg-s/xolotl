@@ -190,8 +190,7 @@ you can treat the expression `x.AB.NaV.gbar` just like any other variable.
 
 ```matlab
 % print to the console
-% The fast sodium maximal conductance is: 10
-disp(['The fast sodium maximal conductance is: ' num2str(x.AB.NaV.gbar)])
+x.AB.NaV.gbar
 ```
 
 

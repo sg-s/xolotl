@@ -49,7 +49,7 @@ This approximation is more accurate than a first order Euler method approximatio
 
 ### Where this method is used
 
-The exponential Euler method is used (when [`solver_order`](https://xolotl.readthedocs.io/en/master/reference/xolotl-properties/#solver_order) = 0) 
+The exponential Euler method is used (when [`solver_order`](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#solver_order) = 0) 
 
 * to integrate the gating variables (`m` and `h` in every conductance). This method is defined in the conductance class.
 * to integrate the voltage in compartments (for compartments that are not part of multi-compartment models)
@@ -87,7 +87,7 @@ The method is more accurate because slope approximations at fractions of $\Delta
 
 ### Where this method is used
 
-The Runge-Kutta 4th order method is used when (when [`solver_order`](https://xolotl.readthedocs.io/en/master/reference/xolotl-properties/#solver_order) = 4) for components that support this method. If any component does not support it, an error will be thrown. 
+The Runge-Kutta 4th order method is used when (when [`solver_order`](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#solver_order) = 4) for components that support this method. If any component does not support it, an error will be thrown. 
 
 ## The Euler method
 

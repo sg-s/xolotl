@@ -33,9 +33,9 @@ When a change is performed to the xolotl object in MATLAB, a new compiled C++ bi
 is created _only_ if the hash changes (i.e. the structure of the model changed). This means
 that running models that only differ by parameters is extremely fast and easy.
 
-When the [`integrate`](../reference/matlab/xolotl/#integrate) method is called, the hash of the xolotl object is compared
+When the [`integrate`](../../reference/matlab/xolotl/#integrate) method is called, the hash of the xolotl object is compared
 with the hash of the compiled binaries and the correct one is chosen. The xolotl
-object is [`serialize`](../reference/matlab/cpplab/#serialize)d to get a list of parameters, which are passed as function arguments.
+object is [`serialize`](../../reference/matlab/cpplab/#serialize)d to get a list of parameters, which are passed as function arguments.
 This way, you only need one compiled binary per unique xolotl structure. Parameters can
 change freely.
 

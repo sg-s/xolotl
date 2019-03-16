@@ -110,6 +110,6 @@ x.solver_order = 0; % default, uses exponential Euler
 ## See Also
 
 * [xolotl.integrate](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#integrate)
-* [xolotl.approx_channels](https://xolotl.readthedocs.io/en/master/reference/xolotl-properties/#approx_channels)
-* [xolotl.closed_loop](https://xolotl.readthedocs.io/en/master/reference/xolotl-properties/#closed_loop)
-* [xolotl.output_type](https://xolotl.readthedocs.io/en/master/reference/xolotl-properties/#output_type)
+* [xolotl.approx_channels](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#approx_channels)
+* [xolotl.closed_loop](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#closed_loop)
+* [xolotl.output_type](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#output_type)
