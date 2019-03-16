@@ -722,7 +722,7 @@ void compartment::integrateCNFirstPass(void) {
         d_ = (upstream->getBCDF(3))*dt*.5;
 
         // full expression for c_ (eq. 6.54)
-        c_ += b*d/(1 - upstream->c_);
+        c_ += b_*d_/(1 - upstream->c_);
 
     }
 
