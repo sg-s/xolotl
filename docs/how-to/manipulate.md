@@ -10,12 +10,12 @@ x.manipulate
 ```
 
 a window will pop up with sliders for every parameter, and 
-[x.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
+[x.plot](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#plot)
 is used to generate plots of voltage and calcium dynamics that will
 auto-update as you move the sliders around.
 
 To manipulate only a few parameters, you can call 
-[manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate) with specific arguments:
+[manipulate](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#manipulate) with specific arguments:
 
 ```matlab
 % only manipulate maximal conductances
@@ -109,6 +109,6 @@ demo_manipulate
 ## See Also
 
 
-* [xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
-* [xolotl.manipulateEvaluate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulateEvaluate)
+* [xolotl.manipulate](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#manipulate)
+* [xolotl.manipulateEvaluate](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#manipulateEvaluate)
 * [puppeteer](https://github.com/sg-s/puppeteer)

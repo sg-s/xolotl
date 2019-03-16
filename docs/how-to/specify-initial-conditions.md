@@ -17,7 +17,7 @@ You can set any property or initial condition of any component in your xolotl ob
 x.CompName.V = -60; % mV
 ```
 
-### Specify multiple initial conditions using the [`set`](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#set) method
+### Specify multiple initial conditions using the [`set`](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#set) method
 
 In the model we created here, there are four channels that inactivate. We can set the inactivation variable in all four channels using:
 
@@ -27,6 +27,6 @@ x.set('AB.*h',0)
 
 ## See Also
 
-* [cpplab.set](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#set)
-* [cpplab.get](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#get)
-* [cpplab.find](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#find)
+* [cpplab.set](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#set)
+* [cpplab.get](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#get)
+* [cpplab.find](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#find)

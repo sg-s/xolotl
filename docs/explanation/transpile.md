@@ -27,6 +27,6 @@ MATLAB.
 ## See Also
 
 
-* [xolotl.transpile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#transpile)
-* [xolotl.transpileCore](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#transpileCore)
-* [xolotl.compile](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#compile)
+* [xolotl.transpile](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#transpile)
+* [xolotl.transpileCore](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#transpileCore)
+* [xolotl.compile](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#compile)

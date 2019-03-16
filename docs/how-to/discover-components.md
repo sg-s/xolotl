@@ -17,7 +17,7 @@ Knowing what components are available is as simple as looking for yourself in th
 
 For example, the delayed rectifier potassium conductance published in Liu *et al.* 1998 can be found in `../xolotl/c++/conductances/liu/Kd.hpp`.
 
-### Using [`cpplab.search()`](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#search)
+### Using [`cpplab.search()`](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#search)
 
 The `cpplab` system that underlies `xolotl` can also search for all C++ header files using wildcards. For example, to find all components that are sourced from papers authored by Astrid Prinz, we can use:
 
@@ -79,5 +79,5 @@ a =
 ## See Also
 
 
-* [cpplab.search](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#search)
+* [cpplab.search](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#search)
 

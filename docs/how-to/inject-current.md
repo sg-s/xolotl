@@ -54,13 +54,13 @@ x.I_ext = randn(x.t_end/x.sim_dt,1);
 
 ### Injecting constant current 
 
-By default, manipulating a model using [x.manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate) allows you to vary the amount
+By default, manipulating a model using [x.manipulate](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#manipulate) allows you to vary the amount
 of constant current applied to the neuron: 
 
 ![](https://user-images.githubusercontent.com/6005346/50518461-bd092f00-0a83-11e9-8869-cbe39ffc00ee.png)
 
 This also means that if you specify a time-varying current, that
-I_ext is overwritten with a constant value when you call [x.manipulate()](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
+I_ext is overwritten with a constant value when you call [x.manipulate()](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#manipulate)
 
 ### Injecting time-varying current 
 
@@ -72,12 +72,12 @@ x.pref.use_I_ext = false;
 ```
 
 Now, your custom I_ext will be used, and sliders for I_ext will
-not be shown when [manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate) is called. 
+not be shown when [manipulate](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#manipulate) is called. 
 
 
 ## See Also
 
-* [manipulate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#manipulate)
+* [manipulate](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#manipulate)
 * [sim_dt](https://xolotl.readthedocs.io/en/master/reference/xolotl-properties/#dt-and-sim_dt)
 * [dt](https://xolotl.readthedocs.io/en/master/reference/xolotl-properties/#dt-and-sim_dt)
 * [I_ext](https://xolotl.readthedocs.io/en/master/reference/xolotl-properties/#i_ext)

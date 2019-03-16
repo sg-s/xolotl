@@ -197,9 +197,9 @@ disp(['The fast sodium maximal conductance is: ' num2str(x.AB.NaV.gbar)])
 
 ## See Also
 
-* [cpplab.set](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#set)
-* [cpplab.get](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#get)
-* [cpplab.find](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#find)
-* [cpplab.destroy](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#destroy)
-* [cpplab.add](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#add)
-* [xolotl.add](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#add)
+* [cpplab.set](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#set)
+* [cpplab.get](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#get)
+* [cpplab.find](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#find)
+* [cpplab.destroy](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#destroy)
+* [cpplab.add](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#add)
+* [xolotl.add](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#add)

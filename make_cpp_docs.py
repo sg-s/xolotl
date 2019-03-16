@@ -6,8 +6,8 @@ import glob, os
 from shutil import copyfile
 
 
-xolotl_method_root = 'https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#';
-cpplab_method_root = 'https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#';
+xolotl_method_root = 'https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#';
+cpplab_method_root = 'https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#';
 
 for file in sorted(glob.glob("c++/*.hpp")):
 

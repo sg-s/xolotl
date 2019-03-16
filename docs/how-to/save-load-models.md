@@ -16,5 +16,5 @@ load('myModelFile.mat');
 
 ## See Also
 
-* [cpplab.rebase](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#rebase)
-* [xolotl.rebase](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#rebase)
+* [cpplab.rebase](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#rebase)
+* [xolotl.rebase](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#rebase)

@@ -19,5 +19,5 @@ x.reset('initial');
 ## See Also
 
 
-* [xolotl.snapshot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#snapshot)
-* [xolotl.reset](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#reset)
+* [xolotl.snapshot](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#snapshot)
+* [xolotl.reset](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#reset)

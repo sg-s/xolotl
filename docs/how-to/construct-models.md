@@ -199,7 +199,7 @@ We can now integrate and plot the model, and we should see something like this:
 
 ## See Also
 
-* [xolotl.add](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#add)
-* [cpplab.add](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#add)
-* [xolotl.connnect](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#connect)
+* [xolotl.add](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#add)
+* [cpplab.add](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#add)
+* [xolotl.connnect](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#connect)
 

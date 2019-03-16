@@ -11,7 +11,7 @@ x2 = x; % x2 and x are actually the same thing
 
 and changes in `x2` will automatically change `x` and vice versa.
 
-Therefore, if you want to make a true copy of a xolotl object, you must use its [`copy` method](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#copy):
+Therefore, if you want to make a true copy of a xolotl object, you must use its [`copy` method](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#copy):
 
 ```matlab
 x2 = copy(x);
@@ -20,5 +20,5 @@ x2 = copy(x);
 ### See Also
 
 
-* [xolotl.copy](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#copy)
-* [cpplab.copy](https://xolotl.readthedocs.io/en/master/reference/cpplab-methods/#copy)
+* [xolotl.copy](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#copy)
+* [cpplab.copy](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#copy)

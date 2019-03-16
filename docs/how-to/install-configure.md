@@ -33,7 +33,7 @@ git clone https://github.com/sg-s/xolotl
 git clone https://github.com/sg-s/cpplab
 ```
 
-You will have to manually set your `MATLAB` paths. Make sure you add the main folder for `puppeteer`, `cpplab`, and `xolotl`, and all subfolders of `srinivas.gs_mtools/src`.
+You will have to manually set your `MATLAB` paths. Make sure you add the main folder for `puppeteer`, `cpplab`, `xolotl` and `srinivas.gs_mtools`.
 
 
 ## Updating 
@@ -109,6 +109,6 @@ The problem is fixed if you see something like this in `MATLAB`:
 
 ## See Also
 
-* [xolotl.install](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#install)
-* [xolotl.uninstall](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#uninstall)
-* [xolotl.update](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#update)
+* [xolotl.install](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#install)
+* [xolotl.uninstall](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#uninstall)
+* [xolotl.update](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#update)

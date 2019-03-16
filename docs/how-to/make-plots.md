@@ -17,8 +17,8 @@ makes this figure:
 ![](https://user-images.githubusercontent.com/6005346/50520183-e11d3e00-0a8c-11e9-8f87-74eb6a98e672.png)
 
 
-## Making plots using the [`plot`](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot) function
-The [`plot`](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot) function will generate a figure, simulate the model, and plot the
+## Making plots using the [`plot`](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#plot) function
+The [`plot`](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#plot) function will generate a figure, simulate the model, and plot the
 voltage traces. Here are a few important features to note:
 
 * If a figure handle is set up in `x.handles.fig` it will use it. Otherwise, it will
@@ -48,7 +48,7 @@ makes this figure:
 ## Show activation curves of channels 
 
 The activation curves and timescale dependence on any channel can be 
-plotted using the [show](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#show) method. 
+plotted using the [show](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#show) method. 
 
 ### Example
 
@@ -83,8 +83,8 @@ makes a plot like this:
 ## See Also
 
 
-* [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plot)
-* [xolotl.show](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#show)
-* [xolotl.plotgbars](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#plotgbars)
-* [xolotl.integrate](https://xolotl.readthedocs.io/en/master/reference/xolotl-methods/#integrate)
+* [xolotl.plot](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#plot)
+* [xolotl.show](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#show)
+* [xolotl.plotgbars](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#plotgbars)
+* [xolotl.integrate](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#integrate)
 * [xolotl.pref](https://xolotl.readthedocs.io/en/master/reference/xolotl-properties/#pref)
