@@ -26,9 +26,9 @@
 %     Manual transpiling is discouraged. xolotl will automatically transpile code for you when needed.
 %
 %
-% !!! info "See Also"
-%    ->xolotl.compile
-%    ->xolotl.viewCode
+% See Also: 
+% xolotl.compile
+% xolotl.viewCode
 %
 
 

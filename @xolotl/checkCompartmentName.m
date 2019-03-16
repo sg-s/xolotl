@@ -23,8 +23,8 @@
 % !!! warning
 %     Do not use `checkCompartmentName`, as it may be removed in a future release.
 %
-% !!! info "See Also"
-%     ->xolotl.add
+% See Also: 
+% xolotl.add
 
 
 

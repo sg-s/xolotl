@@ -23,8 +23,9 @@
 % Do not call this method. It is not meant
 % to be user accessible.
 %
-% !!! info "See Also"
-%     ->xolotl.transpile
+% See Also: 
+% xolotl.transpile
+% 
 
 
 

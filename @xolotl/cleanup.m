@@ -20,7 +20,11 @@
 %
 % !!! warning
 %     Use of this method will trigger a warning every time it is called. You do not need to use this in normal use, but can call this to force a recompile, or to delete old and unused binaries.
-
+%
+%
+% See Also: 
+% xolotl.compile
+% xolotl.transpile
 
 
 function cleanup()

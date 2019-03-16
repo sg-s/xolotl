@@ -12,8 +12,8 @@
 % This is used internally in `xolotl.manipulate`. You
 % should not need to use this by itself.
 %
-% !!! info "See Also"
-%     ->xolotl.manipulate
+% See Also: 
+% xolotl.manipulate
 %
 
 

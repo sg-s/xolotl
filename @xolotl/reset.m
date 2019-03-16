@@ -42,8 +42,9 @@
 % press tab and get a list of snapshots that you want to
 % reset to.
 %
-% !!! info "See Also"
-%     ->xolotl.snapshot
+% See Also: 
+% xolotl.snapshot
+% 
 
 
 

@@ -21,9 +21,9 @@
 % functionality off by setting
 %
 %
-% !!! info "See Also"
-%     ->xolotl.transpile
-%     ->xolotl.cleanup
+% See Also: 
+% xolotl.transpile
+% xolotl.cleanup
 
 
 

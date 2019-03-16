@@ -33,6 +33,9 @@
 % | I_max | any scalar | 1 |
 % | n_steps | +ve integer | 10 |
 % | t_end | +ve integers | 1e4 |
+%
+% See Also:
+% xolotl.integrate
 
 
 

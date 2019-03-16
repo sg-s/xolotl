@@ -31,8 +31,8 @@
 % tab to get a list of conductances you can get the
 % gating function of.
 %
-% !!! info "See Also"
-%     ->xolotl.show
+% See Also: 
+% xolotl.show
 %
 
 

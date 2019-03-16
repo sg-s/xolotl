@@ -50,12 +50,13 @@
 %
 % When `output_type` is 1 or 2, the integration is performed requesting all outputs, and these outputs are organized in a structure and named to match the names of the components in the model.
 %
-% !!! info "See Also"
-%     ->xolotl.show
-%     ->xolotl.plot
-%     ->xolotl.transpile
-%     ->xolotl.compile
 %
+% See Also: 
+% xolotl.show
+% xolotl.plot
+% xolotl.transpile
+% xolotl.compile
+ 
 
 
 

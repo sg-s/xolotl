@@ -16,9 +16,9 @@
 %
 % where V is a vector of voltages, I is the corresponding matrix of currents
 %
-% !!! info "See Also"
-%     ->xolotl.plot
-%     ->xolotl.manipulate
+% See Also: 
+% xolotl.plot
+% xolotl.manipulate
 
 
 

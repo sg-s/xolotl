@@ -35,9 +35,9 @@
 % ```
 %
 %
-% !!! info "See Also"
-%     ->xolotl.reset
-%     * [How to: save configurations and use snapshots](https://xolotl.readthedocs.io/en/master/how-to/snapshots/)
+% See Also: 
+% xolotl.reset
+% * [How to: save configurations and use snapshots](https://xolotl.readthedocs.io/en/master/how-to/snapshots/)
 
 
 

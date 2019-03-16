@@ -31,9 +31,9 @@
 % x.pref.show_Ca = false;
 % ```
 %
-% !!! info "See Also"
-%     ->xolotl.manipulate
-%     ->xolotl.contributingCurrents
+% See Also: 
+% xolotl.manipulate
+% xolotl.contributingCurrents
 %
 
 

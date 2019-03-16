@@ -18,8 +18,8 @@
 %
 % A static method that goes to the folder that contains xolotl examples.
 %
-% !!! info "See Also"
-%     ->xolotl.run_all_tests
+% See Also: 
+% xolotl.run_all_tests
 
 
 

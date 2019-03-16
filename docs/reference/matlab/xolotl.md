@@ -194,6 +194,8 @@ Adds a `cpplab` object to a `xolotl` object. The `add` method is the most import
 - **`x.add('compartment','comp_name',...)`** adds a compartment to the xolotl object and names it `comp_name`. The compartment is then additionally configured using the parameters specified using Name Value syntax.
 **Technical Details**
 `xolotl.add` checks that the compartment being added has a legal name using `checkCompartmentName`. If so, it calls the `add` method in the `cpplab` superclass.
+
+
 !!! info "See Also"
     * [cpplab.add](../cpplab/#add)
     * [xolotl.checkCompartmentName](#checkcompartmentname)
@@ -236,6 +238,8 @@ to verify that the compartment name you are using is valid and legal.  This meth
 to a `xolotl` object.
 !!! warning
 Do not use `checkCompartmentName`, as it may be removed in a future release.
+
+
 !!! info "See Also"
     * [xolotl.add](#add)
 
@@ -262,6 +266,8 @@ The following rules are enforced:
 | synapse | compartment |
 This method is called in xolotl.transpile() before
 transpiling takes place
+
+
 !!! info "See Also"
     * [xolotl.transpile](#transpile)
     * [xolotl.compile](#compile)
@@ -282,6 +288,11 @@ x.cleanup
 A static method that cleans up all transpiled ``C++`` and compiled binary files.
 !!! warning
 Use of this method will trigger a warning every time it is called. You do not need to use this in normal use, but can call this to force a recompile, or to delete old and unused binaries.
+
+
+!!! info "See Also"
+    * [xolotl.compile](#compile)
+    * [xolotl.transpile](#transpile)
 
 
 
@@ -331,6 +342,10 @@ This method supports tab completion. You should be able to press
 tab to get a list of compartments to connect.
 
 
+!!! info "See Also"
+    * [xolotl.add](#add)
+
+
 
 
 
@@ -346,6 +361,8 @@ This static method calculates the contributions of each
 current at every point in a voltage race. This is used
 internally in `xolotl.plot` to color voltage traces.
 where V is a vector of voltages, I is the corresponding matrix of currents
+
+
 !!! info "See Also"
     * [xolotl.plot](#plot)
     * [xolotl.manipulate](#manipulate)
@@ -368,9 +385,11 @@ unless you add a new component to one of them.
 !!! warning
 * Some read-only properties in a xolotl object may not be copied over.
 * Do not make vectors of ``xolotl`` objects, as it may lead to undefined behavior.
+
+
 !!! info "See Also"
-    * [cpplab.copy()](../cpplab/#copy())
-* [How to copy models](https://xolotl.readthedocs.io/en/master/how-to/copy-models/)
+    * [cpplab.copy](../cpplab/#copy)
+    * [* [How to copy models](https://xolotl.readthedocs.io/en/master/how-to/copy-models/)](#* [how to copy models](https://readthedocs.io/en/master/how-to/copy-models/))
 
 
 
@@ -401,6 +420,10 @@ The following optional parameters may be specified in name-value syntax:
 | t_end | +ve integers | 1e4 |
 
 
+!!! info "See Also"
+    * [xolotl.integrate](#integrate)
+
+
 
 
 
@@ -422,6 +445,8 @@ is used internally in `xolotl.show()`
 This method supports tab-completion. You should be able to press
 tab to get a list of conductances you can get the
 gating function of.
+
+
 !!! info "See Also"
     * [xolotl.show](#show)
 
@@ -438,6 +463,8 @@ xolotl.go_to_examples
 ```
 **Description**
 A static method that goes to the folder that contains xolotl examples.
+
+
 !!! info "See Also"
     * [xolotl.run_all_tests](#run_all_tests)
 
@@ -478,6 +505,8 @@ When `output_type` is 0,
 - `mech_state` a matrix representing every dimension of every mechanism in the tree. This matrix has size (nsteps, NC), where NC depends on the precise controllers used, and is automatically determined.
 - `I` the currents of every ion channel type in the model. This is a matrix of size (nsteps, n_cond)
 When `output_type` is 1 or 2, the integration is performed requesting all outputs, and these outputs are organized in a structure and named to match the names of the components in the model.
+
+
 !!! info "See Also"
     * [xolotl.show](#show)
     * [xolotl.plot](#plot)
@@ -516,8 +545,11 @@ x.manipulate({'parameter1','parameter2'})
 - **`x.manipulate()`** manipulates all the parameters in a xolotl model. It wires up sliders to all parameters, and moving these sliders causes the model to integrate, and a plot to update.
 - **`x.manipulate('some*pattern')`** creates sliders only for parameters specified by 'some*pattern'.
 - **`x.manipulate({'parameter1','parameter2'})`** creates sliders only for the parameters specified in the cell array. Parameters should resolve to valid properties of cpplab objects in the tree.
+
+
 !!! info "See Also"
     * [xolotl.plot](#plot)
+    * [xolotl.show](#show)
 
 
 
@@ -530,6 +562,8 @@ This method is used to update the `xolotl` object
 every time a slider is moved in the manipulate window.
 This is used internally in `xolotl.manipulate`. You
 should not need to use this by itself.
+
+
 !!! info "See Also"
     * [xolotl.manipulate](#manipulate)
 
@@ -556,6 +590,8 @@ Calcium concentration, change your preference using:
 x.pref.plot_color = false;
 x.pref.show_Ca = false;
 ```
+
+
 !!! info "See Also"
     * [xolotl.manipulate](#manipulate)
     * [xolotl.contributingCurrents](#contributingcurrents)
@@ -574,6 +610,8 @@ x.plotgbars(axes_handle,'compartment_name');
 ```
 **Description**
 Makes a stem plot of conductance densities in a given compartment. If the first argument is a handle to a valid axis, plots will be made there.
+
+
 !!! info "See Also"
     * [xolotl.plot](#plot)
     * [xolotl.show](#show)
@@ -598,8 +636,10 @@ time a new xolotl object is created. rebase:
 2. configures the `cpp_folder` property, which tells xolotl where its C++ files are located
 3. calls the rebase method from the cpplab superclass.
 If you move a xolotl object across computers (for example, by saving it to a file and loading it in a different computer), you must call `rebase` to link it to the C++ files it needs.
+
+
 !!! info "See Also"
-    * [cpplab.rebase()](../cpplab/#rebase())
+    * [cpplab.rebase](../cpplab/#rebase)
 
 
 
@@ -630,6 +670,8 @@ x.reset('base')
 This method supports tab completion. You should be able to
 press tab and get a list of snapshots that you want to
 reset to.
+
+
 !!! info "See Also"
     * [xolotl.snapshot](#snapshot)
 
@@ -667,6 +709,8 @@ x.setup
 A static method that allows you to set up compilers
 on some operating systems. You need to run this only
 once. If xolotl works, there is no need to run this.
+
+
 !!! info "See Also"
     * [xolotl.update](#update)
     * [xolotl.uninstall](#uninstall)
@@ -686,6 +730,8 @@ This method displays activation functions and timescales of any conductance. Sub
 This method also supports tab-completion. You should be able to
 press the `tab` key and get a list of conductances you can show, like this:
 ![](https://user-images.githubusercontent.com/6005346/50981138-5135b600-14c8-11e9-9be7-b01203716a10.png)
+
+
 !!! info "See Also"
     * [xolotl.plot](#plot)
     * [xolotl.getGatingFunctions](#getgatingfunctions)
@@ -710,6 +756,8 @@ section, i.e., it must have a defined length and radius.
 slice with `Axial` synapses. This object can then be treated
 as a multi-compartment model, and `xolotl` will integrate
 it using the Crank-Nicholson scheme reserved for multi-compartment models.
+
+
 !!! info "See Also"
     * [xolotl.connect](#connect)
 
@@ -738,9 +786,11 @@ x.integrate;
 % now go back to original state
 x.reset('base')
 ```
+
+
 !!! info "See Also"
     * [xolotl.reset](#reset)
-* [How to: save configurations and use snapshots](https://xolotl.readthedocs.io/en/master/how-to/snapshots/)
+    * [* [How to: save configurations and use snapshots](https://xolotl.readthedocs.io/en/master/how-to/snapshots/)](#* [how to: save configurations and use snapshots](https://readthedocs.io/en/master/how-to/snapshots/))
 
 
 
@@ -759,6 +809,8 @@ integrates it, and moves parameters and data from
 MATLAB to C++ and back.
 !!! warning
 Manual transpiling is discouraged. xolotl will automatically transpile code for you when needed.
+
+
 !!! info "See Also"
     * [xolotl.compile](#compile)
     * [xolotl.viewCode](#viewcode)
@@ -781,6 +833,8 @@ objects configured in the xolotl tree. This is
 internally called by xolotl.transpile()
 Do not call this method. It is not meant
 to be user accessible.
+
+
 !!! info "See Also"
     * [xolotl.transpile](#transpile)
 
@@ -801,8 +855,11 @@ A static method that uninstalls your installation
 of xolotl in place. If you installed using git,
 `xolotl` will attempt to use git to uninstall
 itself.
+
+
 !!! info "See Also"
     * [xolotl.update](#update)
+    * [xolotl.setup](#setup)
 
 
 
@@ -819,6 +876,8 @@ xolotl.update()
 A static method that updates your installation of
 `xolotl` in place. If you installed using git,
 `xolotl` will attempt to use git to update itself.
+
+
 !!! info "See Also"
     * [xolotl.uninstall](#uninstall)
 
@@ -836,8 +895,11 @@ x.viewCode;
 **Description**
 view the C++ code generated by `xolotl.transpile()`
 that constructs the model and integrates it
+
+
 !!! info "See Also"
     * [xolotl.transpile](#transpile)
+    * [xolotl.compile](#compile)
 
 
 

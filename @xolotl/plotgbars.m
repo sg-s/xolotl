@@ -20,10 +20,10 @@
 % Makes a stem plot of conductance densities in a given compartment. If the first argument is a handle to a valid axis, plots will be made there.
 %
 %
-% !!! info "See Also"
-%     ->xolotl.plot
-%     ->xolotl.show
-%     ->xolotl.manipulate
+% See Also: 
+% xolotl.plot
+% xolotl.show
+% xolotl.manipulate
 %
 
 

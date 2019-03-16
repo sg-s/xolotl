@@ -26,8 +26,8 @@
 % it using the Crank-Nicholson scheme reserved for multi-compartment models.
 %
 %
-% !!! info "See Also"
-%     ->xolotl.connect
+% See Also: 
+% xolotl.connect
 
 
 

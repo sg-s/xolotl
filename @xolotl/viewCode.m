@@ -22,8 +22,10 @@
 %
 %
 %
-% !!! info "See Also"
-%     ->xolotl.transpile
+% See Also:
+% xolotl.transpile
+% xolotl.compile
+% 
 
 
 

@@ -67,29 +67,42 @@ for file in sorted(glob.glob("@xolotl/*.m")):
 	out_file.write('-------\n\n')
 
 
+	format_link = False
+
 	for i in range(a,z):
 		thisline = lines[i]
 		thisline = thisline.replace('%}','')
 		thisline = thisline.strip('%')
 		thisline = thisline.lstrip()
 
+		# make the "see also" into a nice box
+		if thisline.lower().find('see also') != -1:
+			out_file.write('\n\n')
+			thisline = '!!! info "See Also"\n'
+			format_link = True
+			out_file.write(thisline)
+			continue
+
+		
+
+
 		# insert hyperlinks to other methods 
-		if thisline.lower().find('->xolotl.') != -1:
+		if thisline.lower().find('xolotl.') != -1 and format_link:
 			# ok, this is a xolotl method
-			link_name = thisline.replace('->','')
+			link_name = thisline
 			link_name = link_name.strip()
-			method_name = thisline.replace('->xolotl.','')
+			method_name = thisline.replace('xolotl.','')
 			method_name = method_name.strip()
 			method_name = method_name.lower()
 			link_url = '[' + link_name + '](' + xolotl_method_root + method_name + ')'
 			link_url = link_url.strip()
 			link_url = '    * ' + link_url + '\n'
 			out_file.write(link_url)
-		elif thisline.lower().find('->cpplab.') != -1:
+		elif thisline.lower().find('cpplab.') != -1 and format_link:
 			# ok, this is a cpplab method
-			link_name = thisline.replace('->','')
+			link_name = thisline
 			link_name = link_name.strip()
-			method_name = thisline.replace('->cpplab.','')
+			method_name = thisline.replace('cpplab.','')
 			method_name = method_name.strip()
 			method_name = method_name.lower()
 			link_url = '[' + link_name + '](' + cpplab_method_root + method_name + ')'
@@ -100,6 +113,7 @@ for file in sorted(glob.glob("@xolotl/*.m")):
 
 		else:
 			out_file.write(thisline)
+
 
 
 	out_file.write('\n\n\n')

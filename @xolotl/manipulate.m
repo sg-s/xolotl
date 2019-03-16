@@ -26,8 +26,10 @@
 % - **`x.manipulate({'parameter1','parameter2'})`** creates sliders only for the parameters specified in the cell array. Parameters should resolve to valid properties of cpplab objects in the tree.
 %
 %
-% !!! info "See Also"
-%     ->xolotl.plot
+% See Also: 
+% xolotl.plot
+% xolotl.show
+% 
 
 
 

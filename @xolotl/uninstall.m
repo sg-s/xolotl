@@ -24,8 +24,9 @@
 %
 %
 %
-% !!! info "See Also"
-%     ->xolotl.update
+% See Also: 
+% xolotl.update
+% xolotl.setup
 %
 
 

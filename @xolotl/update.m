@@ -23,8 +23,9 @@
 %
 %
 %
-% !!! info "See Also"
-%     ->xolotl.uninstall
+% See Also: 
+% xolotl.uninstall
+% 
 
 
 

@@ -21,9 +21,9 @@
 %
 % ![](https://user-images.githubusercontent.com/6005346/50981138-5135b600-14c8-11e9-9be7-b01203716a10.png)
 %
-% !!! info "See Also"
-%     ->xolotl.plot
-%     ->xolotl.getGatingFunctions
+% See Also: 
+% xolotl.plot
+% xolotl.getGatingFunctions
 
 
 

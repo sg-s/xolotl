@@ -25,9 +25,10 @@
 % This method is called in xolotl.transpile() before
 % transpiling takes place
 %
-% !!! info "See Also"
-%     ->xolotl.transpile
-%     ->xolotl.compile
+%
+% See Also: 
+% xolotl.transpile
+% xolotl.compile
 
 
 

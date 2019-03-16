@@ -27,8 +27,9 @@
 % If you move a xolotl object across computers (for example, by saving it to a file and loading it in a different computer), you must call `rebase` to link it to the C++ files it needs.
 %
 %
-% !!! info "See Also"
-%     ->cpplab.rebase()
+% See Also: 
+% cpplab.rebase
+% 
 
 
 

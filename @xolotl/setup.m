@@ -21,9 +21,9 @@
 % once. If xolotl works, there is no need to run this.
 %
 %
-% !!! info "See Also"
-%     ->xolotl.update
-%     ->xolotl.uninstall
+% See Also: 
+% xolotl.update
+% xolotl.uninstall
 
 
 
