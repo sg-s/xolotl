@@ -123,10 +123,10 @@ public:
     int approx_m = 0;
     int approx_h  = 0;
 
-    double m_inf_cache[200];
-    double h_inf_cache[200];
-    double tau_m_cache[200];
-    double tau_h_cache[200];
+    double m_inf_cache[2000];
+    double h_inf_cache[2000];
+    double tau_m_cache[2000];
+    double tau_h_cache[2000];
 
 
 
@@ -187,14 +187,19 @@ void conductance::buildLUT(double approx_channels) {
         return;
     }
 
+    double V = 0;
+
     if (approx_m == 1) {
         if (verbosity > 0) {
             mexPrintf("%s using approximate activation functions\n", getClass().c_str());  
         }
         
-        for (double V = -99; V < 101; V++) {
-            m_inf_cache[(int) round(V+99)] = m_inf(V,0);
-            tau_m_cache[(int) round(V+99)] = tau_m(V,0);
+
+
+        for (int V_int = -999; V_int < 1001; V_int++) {
+            V = ((double) V_int)/10;
+            m_inf_cache[V_int+999] = m_inf(V,0);
+            tau_m_cache[V_int+999] = tau_m(V,0);
         }
     }
 
@@ -203,9 +208,10 @@ void conductance::buildLUT(double approx_channels) {
            mexPrintf("%s using approximate in-activation functions\n", getClass().c_str()); 
         }
         
-        for (double V = -99; V < 101; V++) {
-            h_inf_cache[(int) round(V+99)] = h_inf(V,0);
-            tau_h_cache[(int) round(V+99)] = tau_h(V,0);
+        for (int V_int = -999; V_int < 1001; V_int++) {
+            V = ((double) V_int)/10;
+            h_inf_cache[V_int+999] = h_inf(V,0);
+            tau_h_cache[V_int+999] = tau_h(V,0);
         }
     }
 } // buildLUT
@@ -233,9 +239,9 @@ conductance.
 */
 void conductance::integrate(double V, double Ca) {   
 
-    V_idx = (int) round(V+99);
+    V_idx = (int) round((V*10)+999);
     if (V_idx < 0) {V_idx = 0;};
-    if (V_idx > 200) {V_idx = 200;};
+    if (V_idx > 2000) {V_idx = 2000;};
 
     // assume that p > 0
     switch (approx_m) {
