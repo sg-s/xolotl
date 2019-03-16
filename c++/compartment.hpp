@@ -927,7 +927,7 @@ void compartment::computeClampingCurrent(double V_clamp) {
 
     if (downstream)
     {
-        I_clamp += d_ * downstream->V
+        I_clamp += d_ * downstream->V;
     }
 
     // perform final scaling & clamp voltage
