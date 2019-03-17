@@ -53,6 +53,9 @@ MEX configured to use 'Xcode Clang++' for C++ language compilation.
 MEX configured to use 'Xcode with Clang' for C language compilation.
 ```
 
+!!! note
+    Setting up a compiler for MATLAB can be tricky. See our more detailed advice [here](https://xolotl.readthedocs.io/en/master/how-to/install-configure/#compilers-on-gnulinux).
+
 ### Verify your installation
 
 OK, let's make sure everything works. Copy and paste the following code into your MATLAB terminal:
