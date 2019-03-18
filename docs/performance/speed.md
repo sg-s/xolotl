@@ -143,7 +143,7 @@ tic; V2 = x.integrate; t = toc; (x.t_end*1e-3)/t
 
 ```
 
-The slow-but-accurate simulation rat at `24X` while the fast simulation ran at around `235X`, or around **ten times faster**
+The slow-but-accurate simulation ran at `22X` while the fast simulation ran at around `340X`, or around **fifteen times faster**
 
 Let's compare the outputs of the two simulations:
 
