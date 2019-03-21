@@ -49,7 +49,7 @@ This approximation is more accurate than a first order Euler method approximatio
 
 ### Where this method is used
 
-The exponential Euler method is used (when [`solver_order`](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#solver_order) = 0) 
+The exponential Euler method is used (when [`solver_order`](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#solver_order) = 0)
 
 * to integrate the gating variables (`m` and `h` in every conductance). This method is defined in the conductance class.
 * to integrate the voltage in compartments (for compartments that are not part of multi-compartment models)
@@ -57,7 +57,7 @@ The exponential Euler method is used (when [`solver_order`](https://xolotl.readt
 
 ## The Runge-Kutta fourth-order method
 
-The [Runge-Kutta methods](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods) 
+The [Runge-Kutta methods](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods)
 are extensions of forward Euler to higher derivative orders.
 Given a differential equation in the form
 
@@ -87,12 +87,12 @@ The method is more accurate because slope approximations at fractions of $\Delta
 
 ### Where this method is used
 
-The Runge-Kutta 4th order method is used when (when [`solver_order`](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#solver_order) = 4) for components that support this method. If any component does not support it, an error will be thrown. 
+The Runge-Kutta 4th order method is used when (when [`solver_order`](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#solver_order) = 4) for components that support this method. If any component does not support it, an error will be thrown.
 
 ## The Euler method
 
-Euler's method is the most basic explicit method for 
-solving numerical integration problems of ordinary 
+Euler's method is the most basic explicit method for
+solving numerical integration problems of ordinary
 differential equations, and is the simplest Runge-Kutta
 method (i.e. it's 1st order). It is fast but inaccurate and unstable. Given a differential equation
 
@@ -106,11 +106,42 @@ This process can be iterated to determine the trajectory of $V$ with accuracy on
 
 ### Where this method is used
 
-Some mechanisms may implement this method. 
+Some mechanisms may implement this method.
 
-## The Crank-Nicholson Method
+## The Crank-Nicolson Method
+
+The Crank-Nicolson method ([Crank & Nicolson 1947](https://link.springer.com/article/10.1007%2FBF02127704)) is based on the trapezoidal rule. It gives second-order convergence in time by using a combination of the forward Euler method at time $t$ and a backward Euler method at $t+\Delta t$.
+
+For a compartment $n$ with upstream compartment $n-1$ and downstream compartment $n+1$ (it is part of a multi-compartment cable), the equation of state is
+
+$$ \frac{d V_n}{dt} = B_n V_{n-1} + C_n V_n + D_n V_{n+1} + F_n $$
+
+where
+
+$$ B_n = C_m^{-1} g_{n-1, n} $$
+$$ C_n = -C_m^{-1} \sum g_n^{(i)} + g_{n-1, n} + g_{n, n+1} $$
+$$ D_n = C_m^{-1} g_{n, n+1} $$
+$$ F_n = C_m^{-1} \sum g_n^{(i)} E^{(i)} + \frac{I_{ext}}{A_n} $$
+
+Here, $C_m$ is the membrane capacitance of compartment $n$, $g_{n, m}$ is the axial conductance from compartment $n$ to compartment $m$,
+$g_n^{(i)}$ is the conductance of conductance $i$ in compartment $n$ and $E^{(i)}$ is the reversal potential of conductance $i$. Additionally,
+$I_{ext}$ is the injected current, which here is scaled by the surface area $A_n$ of compartment $n$.
+
+By defining,
+
+$$ V_n (t + \Delta t) = V_n + \Delta t $$
+
+the equation of state above can be rewritten in the implicit form
+
+$$ \Delta V_n = \left( B_n V_{n-1}(t + z \Delta t) + C_n V_{n}(t + z \Delta t) + D_n V_{n+1}(t + z \Delta t) \Delta t \right) $$
+
+where $z = 0.5$ for the Crank-Nicolson method. This equation must be solved to determine $\Delta V_n$. For multi-compartment models, this involves writing an algebraic expression that sequentially solves starting at one end of the cable and proceeding to the other end(s). Then, a second sweep from the tips back to the soma allows for explicit solving at the next time point.
+
+For branching morphologies that do not branch back into itself (that is, there is only one path with backtracking from soma to tip for each tip), tridiagonal matrix solvers (viz. Thomas algorithm, Hines matrix solvers), can be used to dramatically speed up the calculations. Currently, xolotl does not support solving branching morphologies.
 
 ### Where this method is used
+
+The Crank-Nicolson method is the default for multi-compartment models. The Runge-Kutta method, while sufficient to integrate multi-compartment models accurately is orders of magnitude slower than the Crank-Nicolson method.
 
 
 ## Bibliography
