@@ -49,7 +49,7 @@ This approximation is more accurate than a first order Euler method approximatio
 
 ### Where this method is used
 
-The exponential Euler method is used (when [`solver_order`](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#solver_order) = 0) 
+The exponential Euler method is used (when [`solver_order`](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#solver_order) = 0)
 
 * to integrate the gating variables (`m` and `h` in every conductance). This method is defined in the conductance class.
 * to integrate the voltage in compartments (for compartments that are not part of multi-compartment models)
@@ -57,7 +57,7 @@ The exponential Euler method is used (when [`solver_order`](https://xolotl.readt
 
 ## The Runge-Kutta fourth-order method
 
-The [Runge-Kutta methods](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods) 
+The [Runge-Kutta methods](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods)
 are extensions of forward Euler to higher derivative orders.
 Given a differential equation in the form
 
@@ -87,12 +87,12 @@ The method is more accurate because slope approximations at fractions of $\Delta
 
 ### Where this method is used
 
-The Runge-Kutta 4th order method is used when (when [`solver_order`](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#solver_order) = 4) for components that support this method. If any component does not support it, an error will be thrown. 
+The Runge-Kutta 4th order method is used when (when [`solver_order`](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#solver_order) = 4) for components that support this method. If any component does not support it, an error will be thrown.
 
 ## The Euler method
 
-Euler's method is the most basic explicit method for 
-solving numerical integration problems of ordinary 
+Euler's method is the most basic explicit method for
+solving numerical integration problems of ordinary
 differential equations, and is the simplest Runge-Kutta
 method (i.e. it's 1st order). It is fast but inaccurate and unstable. Given a differential equation
 
@@ -106,9 +106,11 @@ This process can be iterated to determine the trajectory of $V$ with accuracy on
 
 ### Where this method is used
 
-Some mechanisms may implement this method. 
+Some mechanisms may implement this method.
 
-## The Crank-Nicholson Method
+## The Crank-Nicolson Method
+
+
 
 ### Where this method is used
 
