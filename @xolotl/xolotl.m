@@ -13,7 +13,7 @@
 % see https://github.com/sg-s/xolotl
 % for more information
 
-classdef xolotl <  cpplab & matlab.mixin.CustomDisplay
+classdef xolotl <  cpplab & matlab.mixin.CustomDisplay & ConstructableHandle
 
 properties (SetAccess = protected)
 	linked_binary@char % binary to run when integrate is called
@@ -57,7 +57,7 @@ properties
     % should we approximate gating functions?
     % 0 -- no approximations
     % 1 -- integer mV only (approx)
-    approx_channels@double = 0;
+    approx_channels@double = 1;
 
     % structure that stores preferences
     % edit pref.m to change these
@@ -124,7 +124,8 @@ methods (Access = protected)
 end % end protected methods
 
 methods
-	function self = xolotl()
+	function self = xolotl(varargin)
+        self = self@ConstructableHandle(varargin{:});   
 		self.rebase;
 
         self.pref = corelib.readPref(which(mfilename));
