@@ -1,11 +1,13 @@
 
 
 global x
+
 if exist('hh_examples.mat','file') == 2
 	load('hh_examples.mat')
 else
 
 	x = xolotl;
+	x.handles = struct;
 	x.add('compartment','AB','A',0.0628,'vol',.0628);
 
 
@@ -16,7 +18,7 @@ else
 end
 
 
-x.handles = struct;
+
 x.AB.NaV.h_tau_B1 = .33;
 
 
