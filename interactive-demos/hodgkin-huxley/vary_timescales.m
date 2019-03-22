@@ -5,15 +5,20 @@
 % that we can manipulate 
 
 
+if exist('hh_examples.mat','file') == 2
+	load('hh_examples.mat')
+else
 
-load hh_examples.mat
-% x = xolotl;
-% x.add('compartment','AB','A',0.0628,'vol',.0628);
+	x = xolotl;
+	x.add('compartment','AB','A',0.0628,'vol',.0628);
 
 
-% x.AB.add('GenericKdLike','Kd','gbar',610);
-% x.AB.add('Leak','gbar',.99,'E',-50);
-% x.AB.add('GenericNaVLike','NaV','gbar',1831,'E',30);
+	x.AB.add('GenericKdLike','Kd','gbar',610);
+	x.AB.add('Leak','gbar',.99,'E',-50);
+	x.AB.add('GenericNaVLike','NaV','gbar',1831,'E',30);
+
+end
+
 x.AB.NaV.h_tau_B1 = .33;
 
 
