@@ -72,11 +72,13 @@ x2.AB.add('Leak','gbar',@() 0.0622/x.AB.A,'E',-50);
 x.sim_dt = .1;
 x.dt = .1;
 x.reset;
+x.approx_channels = 0;
 V = x.integrate;
 
 x2.t_end = x.t_end;
 x2.sim_dt = .1;
 x2.dt = .1;
+x2.approx_channels = 0;
 x2.reset;
 V2 = x2.integrate;
 
