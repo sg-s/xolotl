@@ -18,6 +18,7 @@ x.sim_dt = .05;
 x.dt = .1;
 
 figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
+x.approx_channels = 0;
 x.t_end = 100e3; x.sim_dt = .05; tic; V = x.integrate; t =  toc;
 x.t_end = 5e3; V = x.integrate;
 time = (1:length(V))*x.dt*1e-3;
