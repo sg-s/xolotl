@@ -118,7 +118,7 @@ for file in sorted(glob.glob("c++/*.hpp")):
 
 
 		outfile.write('\n\n **Code**\n\n')
-		outfile.write("[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/" + classname + ".hpp#L" + str(line_no) + ")")
+		outfile.write("[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/" + classname + ".hpp#L" + str(line_no+1) + ")")
 		outfile.write('\n\n-------\n\n')
 
 	outfile.close()

@@ -36,7 +36,7 @@ synapse type.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/synapse.hpp#L69)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/synapse.hpp#L70)
 
 -------
 
@@ -64,7 +64,7 @@ synapse type.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/synapse.hpp#L81)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/synapse.hpp#L82)
 
 -------
 
@@ -89,7 +89,7 @@ should throw an error.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/synapse.hpp#L91)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/synapse.hpp#L92)
 
 -------
 
