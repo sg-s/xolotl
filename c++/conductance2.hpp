@@ -102,6 +102,9 @@ void conductance::integrateLangevin(double V, double Ca) {
     // calculate the number of channels 
     N = round((gbar*(container->A))/unitary_conductance);
 
+    // if there are no channels, abort
+    if (N < 1) { return;}
+
     // mexPrintf("N = %i\n",N);
 
     // assume that p > 0
