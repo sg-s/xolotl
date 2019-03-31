@@ -166,7 +166,6 @@ public:
 
     void buildLUT(double);
 
-    void readV(void);
 
     // fast random number generator
     double gaussrand(void);
@@ -365,10 +364,16 @@ the channel object.
 double conductance::tau_h(double V, double Ca){return 1;}
 
 
+/*
+This method implements a very fast Gaussian random
+number generator. This is much faster than the 
+built-in generators in the C++ `<random>` header, and
+is copied from Knuth and Marsaglia.
 
-// originally from Knuth and Marsaglia
-// see "A Convenient Method for Generating Normal Variables"
-// SIAM Rev., 6(3), 260–264.
+For the original source, see
+"A Convenient Method for Generating Normal Variables"
+SIAM Rev., 6(3), 260–264.
+*/
 double conductance::gaussrand() {
     static double V1, V2, S;
     static int phase = 0;

@@ -1,6 +1,25 @@
-# this script automatically 
-# generates documentation from C++ header
-# classes
+# WHAT THIS IS 
+#
+# This is a python script that generates documentation
+# in markdown format from source C++ files that explains
+# methods in C++ files in /xolotl/c++/
+#
+# HOW TO USE THIS
+#
+# In a terminal, go to the xolotl root folder and type:
+# python make_cpp_docs.py
+#
+#
+# WHO SHOULD USE THIS
+# 
+# Use this only if you want to regenerate documentation
+# from source C++ files. Only maintainers of xolotl
+# should want to run this
+#
+# SEE ALSO
+#
+# make_docs.py
+
 
 import glob, os
 from shutil import copyfile
@@ -15,6 +34,9 @@ for file in sorted(glob.glob("c++/*.hpp")):
 	classname = classname.strip()
 	classname = classname.replace('c++/','')
 
+	# does this classname end with a number? if so, skip
+	if classname[-1].isnumeric():
+		continue
 
 	print(classname)
 
@@ -24,7 +46,18 @@ for file in sorted(glob.glob("c++/*.hpp")):
 	if len(classname) == 0:
 		continue
 
-	lines = tuple(open(file, 'r'))
+	# is there another file with the same name, but with
+	# a number tacked on? 
+	ext_files = sorted(glob.glob("c++/" + classname + "*.hpp"))
+	for ef in ext_files:
+		efname = ef.replace('.hpp','')
+		efname = efname.strip()
+		efname = efname.replace('c++/','')
+		if efname != classname:
+			lines = tuple(open(file, 'r')) + tuple(open(ef,'r'))
+		else:
+			lines = tuple(open(file, 'r')) 
+
 
 	# show the initial comment, if any
 	if lines[0].find('/*') >= 0:

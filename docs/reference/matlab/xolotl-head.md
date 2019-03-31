@@ -98,6 +98,26 @@ Incorrectly sized `I_ext` will throw an error.
 You cannot simultaneously inject current and voltage clamp 
 any compartment. 
 
+### `stochastic_channels`
+
+| Default | Allowed values | Type |
+| ------- | ----- | ----- |
+| 0  |   0, 1 | double | 
+
+When `stochastic_channels` is 0, it is assumed that
+there are sufficiently many channels of every conductance
+type, and that we can use a deterministic ODE to integrate
+the gating kinetics of every channel. 
+
+When `stochastic_channels` is 1, the deterministic ODE
+governing channel gating is replaced by a stochastic
+equation that is integrated using the [Euler-Maruyama](https://en.wikipedia.org/wiki/Euler%E2%80%93Maruyama_method)
+following the approximate Langevin formulation. With 
+this flag, the size of the neuron determines the number
+of channels in every population, and thus determines the
+noise added onto the deterministic dynamics. 
+
+
 ### `solver_order`
 
 | Default | Allowed values | Type |

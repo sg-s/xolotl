@@ -4,11 +4,6 @@
 
 
 
-void conductance::readV() {
-    double temp = container->V;
-}
-
-
 
 /*
 This method integrates the conductance object using
@@ -82,11 +77,24 @@ void conductance::integrate(double V, double Ca) {
 }
 
 
+/*
+This method integrates the conductance object using
+the Euler-Maruyama method. The integration method
+used here is consistent with the methods used in
+[Goldwyn and Shea-Brown 2011](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002247)
+and with [Sengupta, Laughlin and Niven](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.81.011918)
 
+Briefly, this method follows the approximate Langevin
+formulation of the underlying stochastic system
+formed by N independent channels that have 
+independent gating kinetics. It can be thought of
+as the deterministic ODE, with an additive noise term
+whose variance scales with the inverse square root of
+the number of channels. The number of channels is 
+computed automatically from the channel density
+and the area of the compartment. 
 
-// uses the Euler-Maruyama method
-// and is consistent with Goldwyn, Shea-Brown and with
-// Sengupta, Laughlin and Niven
+*/
 void conductance::integrateLangevin(double V, double Ca) {
 
 
@@ -127,7 +135,7 @@ void conductance::integrateLangevin(double V, double Ca) {
         mexPrintf("m is NaN, taum = %f\n", taum);
         mexPrintf("m is NaN, minf = %f\n", minf);
         mexPrintf("m is NaN, V = %f\n", V);
-        mexErrMsgTxt("stopping!");
+        mexErrMsgTxt("[error] stopping because NaNs appeared in integration!");
     }
     if (m<0) {m = 0;}
     if (m>1) {m = 1;}

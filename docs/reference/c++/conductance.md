@@ -113,7 +113,7 @@ a little more memory, but can be much faster.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L194)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L193)
 
 -------
 
@@ -140,7 +140,7 @@ number is raised to be an integer (0-8)
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L241)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L240)
 
 -------
 
@@ -165,7 +165,7 @@ but is less precise
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L280)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L279)
 
 -------
 
@@ -191,7 +191,7 @@ this channel at this moment.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L295)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L294)
 
 -------
 
@@ -216,7 +216,7 @@ so the channel knows which compartment contains it.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L302)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L301)
 
 -------
 
@@ -238,7 +238,7 @@ void checkSolvers(int solver_order)
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L309)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L308)
 
 -------
 
@@ -262,7 +262,7 @@ of this conductance. This definition is used when `integrateMS` is used.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L324)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L323)
 
 -------
 
@@ -286,7 +286,7 @@ of this conductance. This definition is used when `integrateMS` is used.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L332)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L331)
 
 -------
 
@@ -311,7 +311,7 @@ the channel object.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L341)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L340)
 
 -------
 
@@ -336,7 +336,7 @@ the channel object.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L348)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L347)
 
 -------
 
@@ -362,7 +362,7 @@ the channel object.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L356)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L355)
 
 -------
 
@@ -388,7 +388,7 @@ the channel object.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L364)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L363)
 
 -------
 
@@ -405,23 +405,136 @@ double gaussrand()
 **Description**
 
 
-This method defines the dependence of the timescale 
-of the inactivation variable on the voltage of this channel.
-This is a virtual method, and is meant to be defined in 
-the channel object. 
+This method implements a very fast Gaussian random
+number generator. This is much faster than the 
+built-in generators in the C++ `<random>` header, and
+is copied from Knuth and Marsaglia.
 
-double conductance::tau_h(double V, double Ca){return 1;}
+For the original source, see
+"A Convenient Method for Generating Normal Variables"
+SIAM Rev., 6(3), 260–264.
 
-
-
-// originally from Knuth and Marsaglia
-// see "A Convenient Method for Generating Normal Variables"
-// SIAM Rev., 6(3), 260–264.
 
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L371)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L376)
+
+-------
+
+
+
+### integrate
+
+**Function Signature**
+
+```C++
+void integrate(double V, double Ca) 
+```
+
+**Description**
+
+
+This method integrates the conductance object using
+the exponential Euler method. This is the default
+integration method used by xolotl. If an exact solution
+is to be calculated (i.e.,`approx_m = 0` and `approx_h=0`)
+then `m` and `h` are updated using the exponential Euler
+equation using function evaluations of the activation 
+functions at this voltage and Calcium.
+
+Otherwise, the lookup table is used to update `m` and `h`
+in this channel. 
+
+Note that this method is defined as virtual, so it can be
+overridden by integration methods specified in a specific
+conductance. 
+
+**See Also** 
+
+* [virtual methods in C++](http://www.cplusplus.com/doc/tutorial/polymorphism/)
+
+
+
+ **Code**
+
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L429)
+
+-------
+
+
+
+### integrateLangevin
+
+**Function Signature**
+
+```C++
+void integrateLangevin(double V, double Ca) 
+```
+
+**Description**
+
+
+This method integrates the conductance object using
+the Euler-Maruyama method. The integration method
+used here is consistent with the methods used in
+[Goldwyn and Shea-Brown 2011](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002247)
+and with [Sengupta, Laughlin and Niven](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.81.011918)
+
+Briefly, this method follows the approximate Langevin
+formulation of the underlying stochastic system
+formed by N independent channels that have 
+independent gating kinetics. It can be thought of
+as the deterministic ODE, with an additive noise term
+whose variance scales with the inverse square root of
+the number of channels. The number of channels is 
+computed automatically from the channel density
+and the area of the compartment. 
+
+
+
+
+ **Code**
+
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L499)
+
+-------
+
+
+
+### integrateMS
+
+**Function Signature**
+
+```C++
+void integrateMS(int k, double V, double Ca) 
+```
+
+**Description**
+
+
+
+This method integrates a channel object using a multi-step
+solver (MS = "multi-step"). The "sub-step" is indicated in 
+the integer k, which is the first input to this method. 
+
+The multi-step solver that is used here is a Runge-Kutta 4th
+order solver. Thus, k can have values up to 4. 
+
+Based on `k`, different elements of the arrays `k_m` and `k_h`
+are calculated and stored. At each step, the derivative functions
+`mdot` and `hdot` are computed. 
+
+**See Also**
+
+* [The Runge Kutta Method](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods)
+
+
+
+
+ **Code**
+
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L602)
 
 -------
 
