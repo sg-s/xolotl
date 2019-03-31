@@ -108,7 +108,7 @@ This process can be iterated to determine the trajectory of $V$ with accuracy on
 
 Some mechanisms may implement this method.
 
-## The Crank-Nicolson Method
+## The Crank-Nicolson method
 
 The Crank-Nicolson method ([Crank & Nicolson 1947](https://link.springer.com/article/10.1007%2FBF02127704)) is based on the trapezoidal rule. It gives second-order convergence in time by using a combination of the forward Euler method at time $t$ and a backward Euler method at $t+\Delta t$.
 
@@ -143,6 +143,64 @@ For branching morphologies that do not branch back into itself (that is, there i
 
 The Crank-Nicolson method is the default for multi-compartment models. The Runge-Kutta method, while sufficient to integrate multi-compartment models accurately is orders of magnitude slower than the Crank-Nicolson method.
 
+## Euler-Maruyama method
+
+The [Euler-Maruyama method](https://en.wikipedia.org/wiki/Euler%E2%80%93Maruyama_method) approximates the numerical solution of a stochastic differential equation.
+It is a generalization of the first-order Euler method for ordinary differential equations.
+
+The equation of state
+
+$$ C_m \frac{dV}{dt} = \sum_i I_i = \sum_i g_i (V) (V - E_i) $$
+
+becomes
+
+$$ C_m \frac{dV}{dt} = \sum_i g_i (V, \xi_i) (V - E_i) $$
+
+The fluctuation term in the current, $\xi_V (t)$, could be from variation introduced by the opening and closing of channels in response to thermal noise.
+The core assumption is that the noise is Gaussian and uncorrelated with itself (a Wiener process).
+
+Since $g_i(V, \xi_i) is understood to be some product of gating variables, the noise is included in the gating variable equation of state (subunit noise).
+Assuming a generic gating variable $x$, without noise the equation of state is
+
+$$ f(x) = \frac{dx}{dt} = \frac{m_{\infty}(V) - m}{\tau_x}(V) $$
+
+and with noise
+
+$$ f(x, \xi_x) = \frac{dx}{dt} = \frac{m_{\infty}(V) - m + \xi_i(t)}{\tau_x(V)} $$
+
+For a time step $\Delta t$, the Euler approximation to the ordinary differential equation is
+
+$$ x(t + \Delta t) = x(t) + \Delta t \cdot f(x(t)) $$
+
+The Euler-Maruyama approximation to the stochastic differential equation is
+
+$$ x(t + \Delta t) = x(t) + \Delta t \cdot f(x(t)) + \frac{1}{\tau_x(V)} \cdot \Delta \xi_x(t) $$
+
+Since we are solving these equations numerically with a fixed time step, at each time step,
+we fetch a new independent and identically distributed Gaussian random number,
+such that $\Delta \xi_x(t) \propto \xi_x(t)$.
+
+Since the noise is per-channel, we calculate the number of channels using an approximation.
+
+$$ N = \mathrm{round} \left( \frac{\bar{g}_i A}{g_0} \right) $$
+
+Here, $N$ is the estimated number of channels (rounded to a natural number),
+$\bar{g}_i$ is the maximal conductance of the $i$th channel,
+$A$ is the surface area of the compartment,
+and $g_0 = 20 \times 10^{-6}$ microsiemens, the unitary conductance (for normalization).
+
+Then, the Euler-Maruyama approximation for the stochastic gating variable as a function of time is
+
+$$ m(t + \Delta t) = m(t) + \Delta t \cdot \frac{m_{\infty}(V) - m(t)}{\tau_x(V)} + \sqrt \left( \Delta t \cdot N \cdot \frac{m_{\infty}(V) - m(t) - 2 m(t) \cdot m_{\infty}(V)}{\tau_x(V)} \xi_x(t) \right) $$
+
+### Where this method is used
+
+This method is automatically used when a model includes "conductance" noise,
+that is, noise caused by fluctuations in the opening and closing of ion channels.
+For "current" noise, use current clamp with a pseudorandom injected current constructed prior to simulation.
+
+This method is consistent with [Goldwyn & Shea-Brown](https://journals.plos.org/ploscompbiol/article/file?id=10.1371/journal.pcbi.1002247&type=printable)
+and [Sengupta, Laughlin, and Niven](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.81.011918).
 
 ## Bibliography
 
