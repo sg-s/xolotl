@@ -59,6 +59,11 @@ properties
     % 1 -- integer mV only (approx)
     approx_channels@double = 1;
 
+    % should we integrate channels deterministically?
+    % 0 -- deterministic
+    % 1 -- Langevin approximation
+    stochastic_channels@double = 0; 
+
     % structure that stores preferences
     % edit pref.m to change these
     pref

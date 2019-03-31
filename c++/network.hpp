@@ -54,6 +54,7 @@ public:
     int n_soma = 0; // will be used in the Crank-Nicholson scheme
 
     int solver_order = 0;
+    int stochastic_channels = 0;
 
     double verbosity;
     double approx_channels = 0;
@@ -215,7 +216,10 @@ This method adds a compartment to the network. It does the following things:
 */
 void network::addCompartment(compartment *comp_) {
     comp.push_back(comp_);
+
+
     n_comp++;
+    comp_->stochastic_channels = stochastic_channels;
     comp_->approx_channels = approx_channels;
     comp_->dt = sim_dt;
     comp_->verbosity = verbosity;

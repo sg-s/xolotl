@@ -34,10 +34,10 @@ public:
         approx_m = 1;
         approx_h = 1;
 
+        is_calcium = true;
+
     }
 
-    void integrate(double, double);
-    void integrateMS(int, double, double);
 
     double m_inf(double, double);
     double h_inf(double, double);
@@ -52,17 +52,6 @@ string CaT::getClass(){
     return "CaT";
 }
 
-void CaT::integrate(double V, double Ca) {
-    E = container->E_Ca;
-    conductance::integrate(V,Ca);
-    container->i_Ca += getCurrent(V);
-}
-
-void CaT::integrateMS(int k, double V, double Ca) {
-    E = container->E_Ca;
-    conductance::integrateMS(k, V, Ca);
-    container->i_Ca += getCurrent(V);
-}
 
 double CaT::m_inf(double V, double Ca) {return 1.0/(1.0 + exp((V+27.1)/-7.2));}
 double CaT::h_inf(double V, double Ca) {return 1.0/(1.0 + exp((V+32.1)/5.5));}

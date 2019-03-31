@@ -8,3 +8,256 @@ void conductance::readV() {
     double temp = container->V;
 }
 
+
+
+/*
+This method integrates the conductance object using
+the exponential Euler method. This is the default
+integration method used by xolotl. If an exact solution
+is to be calculated (i.e.,`approx_m = 0` and `approx_h=0`)
+then `m` and `h` are updated using the exponential Euler
+equation using function evaluations of the activation 
+functions at this voltage and Calcium.
+
+Otherwise, the lookup table is used to update `m` and `h`
+in this channel. 
+
+Note that this method is defined as virtual, so it can be
+overridden by integration methods specified in a specific
+conductance. 
+
+**See Also** 
+
+* [virtual methods in C++](http://www.cplusplus.com/doc/tutorial/polymorphism/)
+*/
+void conductance::integrate(double V, double Ca) {   
+
+
+    if (is_calcium) {
+        E = container->E_Ca;
+    }
+
+    V_idx = (int) round((V*10)+999);
+    if (V_idx < 0) {V_idx = 0;};
+    if (V_idx > 2000) {V_idx = 2000;};
+
+    // assume that p > 0
+    switch (approx_m) {
+        case 0:
+            minf = m_inf(V,Ca);
+            m = minf + (m - minf)*exp(-dt/tau_m(V,Ca));
+            break;
+
+        default:
+            m = m_inf_cache[V_idx] + (m - m_inf_cache[V_idx])*fast_exp(-(dt/tau_m_cache[V_idx]));
+            break;
+    } // switch approx_m
+    
+    g = gbar*fast_pow(m,p);
+
+    switch (q) {
+        case 0:
+            break;
+        default:
+            switch (approx_h) {
+                case 0:
+                    hinf = h_inf(V,Ca);
+                    h = hinf + (h - hinf)*exp(-dt/tau_h(V,Ca));
+                    break;
+                default:
+                    h = h_inf_cache[V_idx] + (h - h_inf_cache[V_idx])*fast_exp(-(dt/tau_h_cache[V_idx]));
+                    break;
+            }
+
+            g = g*fast_pow(h,q);            
+            break;
+    } // switch q
+
+    gbar = gbar_next;
+
+    if (is_calcium) {
+        container->i_Ca += getCurrent(V);
+    }
+
+}
+
+
+
+
+// uses the Euler-Maruyama method
+// and is consistent with Goldwyn, Shea-Brown and with
+// Sengupta, Laughlin and Niven
+void conductance::integrateLangevin(double V, double Ca) {
+
+
+    if (is_calcium) {
+        E = container->E_Ca;
+    }
+
+
+    V_idx = (int) round((V*10)+999);
+    if (V_idx < 0) {V_idx = 0;};
+    if (V_idx > 2000) {V_idx = 2000;};
+
+    // calculate the number of channels 
+    N = round((gbar*(container->A))/unitary_conductance);
+
+    // mexPrintf("N = %i\n",N);
+
+    // assume that p > 0
+    switch (approx_m) {
+        case 0:
+            minf = m_inf(V,Ca);
+            taum = tau_m(V,Ca);
+            m += (dt/taum)*(minf - m) + sqrt((dt/(taum*N))*(m + minf - 2*m*minf))*gaussrand();
+            break;
+
+        default:
+            m += (dt/tau_m_cache[V_idx])*(m_inf_cache[V_idx] - m) + sqrt((dt/(tau_m_cache[V_idx]*N))*(m + m_inf_cache[V_idx] - 2*m*m_inf_cache[V_idx]))*gaussrand();
+            break;
+    } // switch approx_m
+
+    // stay within bounds!
+    // mexPrintf("m = %f\n", m);
+    if (isnan(m)) {
+        mexPrintf("m is NaN, N = %i\n", N);
+        mexPrintf("m is NaN, taum = %f\n", taum);
+        mexPrintf("m is NaN, minf = %f\n", minf);
+        mexPrintf("m is NaN, V = %f\n", V);
+        mexErrMsgTxt("stopping!");
+    }
+    if (m<0) {m = 0;}
+    if (m>1) {m = 1;}
+    
+    g = gbar*fast_pow(m,p);
+
+    switch (q) {
+        case 0:
+            break;
+        default:
+            switch (approx_h) {
+                case 0:
+                    hinf = h_inf(V,Ca);
+                    tauh = tau_h(V,Ca);
+                    h += (dt/tauh)*(hinf - h) + sqrt((dt/(tauh*N))*(h + hinf - 2*h*hinf))*gaussrand();
+                    break;
+                default:
+                    h += (dt/tau_h_cache[V_idx])*(h_inf_cache[V_idx] - m) + sqrt((dt/(tau_h_cache[V_idx]*N))*(h + h_inf_cache[V_idx] - 2*h*h_inf_cache[V_idx]))*gaussrand();
+                    break;
+            }
+
+            // stay within bounds!
+            if (h<0) {h = 0;}
+            if (h>1) {h = 1;}
+
+            g = g*fast_pow(h,q);  
+
+    
+            break;
+
+    } // switch q
+
+    gbar = gbar_next;
+
+
+    if (is_calcium) {
+        container->i_Ca += getCurrent(V);
+    }
+
+}
+
+
+
+
+/*
+
+This method integrates a channel object using a multi-step
+solver (MS = "multi-step"). The "sub-step" is indicated in 
+the integer k, which is the first input to this method. 
+
+The multi-step solver that is used here is a Runge-Kutta 4th
+order solver. Thus, k can have values up to 4. 
+
+Based on `k`, different elements of the arrays `k_m` and `k_h`
+are calculated and stored. At each step, the derivative functions
+`mdot` and `hdot` are computed. 
+
+**See Also**
+
+* [The Runge Kutta Method](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods)
+
+*/
+void conductance::integrateMS(int k, double V, double Ca) {
+
+
+    if (is_calcium) {
+        E = container->E_Ca;
+    }
+
+
+    if (q == 0) {
+        // q= 0 means channel does not inactivate
+        switch (k)
+        {
+            case 0:
+                k_m[0] = dt*(mdot(V, Ca, m));
+                g = gbar*fast_pow(m,p);
+                break;
+            case 1:
+                k_m[1] = dt*(mdot(V, Ca, m + k_m[0]/2));
+                g = gbar*fast_pow(m + k_m[0]/2,p);
+                break;
+            case 2:
+                k_m[2] = dt*(mdot(V, Ca, m + k_m[1]/2));
+                g = gbar*fast_pow(m + k_m[1]/2,p);
+                break;
+            case 3:
+                k_m[3] = dt*(mdot(V, Ca, m + k_m[2]));
+                g = gbar*fast_pow(m + k_m[2],p);
+                break;
+            case 4:
+                // last step
+                m = m + (k_m[0] + 2*k_m[1] + 2*k_m[2] + k_m[3])/6;
+                break;
+        }
+            
+    } else {
+
+        switch (k)
+        {
+            case 0:
+                k_m[0] = dt*(mdot(V, Ca, m));
+                k_h[0] = dt*(hdot(V, Ca, h));
+                g = gbar*fast_pow(m,p)*fast_pow(h,q);
+                break;
+            case 1:
+                k_m[1] = dt*(mdot(V, Ca, m + k_m[0]/2));
+                k_h[1] = dt*(hdot(V, Ca, h + k_h[0]/2));
+                g = gbar*fast_pow(m + k_m[0]/2,p)*fast_pow(h + k_h[0]/2,q);
+                break;
+            case 2:
+                k_m[2] = dt*(mdot(V, Ca, m + k_m[1]/2));
+                k_h[2] = dt*(hdot(V, Ca, h + k_h[1]/2));
+                g = gbar*fast_pow(m + k_m[1]/2,p)*fast_pow(h + k_h[1]/2,q);
+                break;
+            case 3:
+                k_m[3] = dt*(mdot(V, Ca, m + k_m[2]));
+                k_h[3] = dt*(hdot(V, Ca, h + k_h[2]));
+                g = gbar*fast_pow(m + k_m[2],p)*fast_pow(h + k_h[2],q);
+                break;
+            case 4:
+                m = m + (k_m[0] + 2*k_m[1] + 2*k_m[2] + k_m[3])/6;
+                h = h + (k_h[0] + 2*k_h[1] + 2*k_h[2] + k_h[3])/6;
+                break;
+        }
+
+    }
+
+    gbar = gbar_next;
+
+    if (is_calcium) {
+        container->i_Ca += getCurrent(V);
+    }
+
+}
+

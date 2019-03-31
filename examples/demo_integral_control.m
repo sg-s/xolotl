@@ -1,4 +1,7 @@
-% tests a neuron that reproduces Fig 3 in Tim's paper
+
+close all
+
+% tests a neuron that reproduces Fig 3 in Tim O'Leary's paper
 
 x = xolotl.examples.BurstingNeuron;
 
