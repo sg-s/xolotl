@@ -113,47 +113,7 @@ a little more memory, but can be much faster.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L191)
-
--------
-
-
-
-### integrate
-
-**Function Signature**
-
-```C++
-void integrate(double V, double Ca) 
-```
-
-**Description**
-
-
-This method integrates the conductance object using
-the exponential Euler method. This is the default
-integration method used by xolotl. If an exact solution
-is to be calculated (i.e.,`approx_m = 0` and `approx_h=0`)
-then `m` and `h` are updated using the exponential Euler
-equation using function evaluations of the activation 
-functions at this voltage and Calcium.
-
-Otherwise, the lookup table is used to update `m` and `h`
-in this channel. 
-
-Note that this method is defined as virtual, so it can be
-overridden by integration methods specified in a specific
-conductance. 
-
-**See Also** 
-
-* [virtual methods in C++](http://www.cplusplus.com/doc/tutorial/polymorphism/)
-
-
-
- **Code**
-
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L249)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L193)
 
 -------
 
@@ -180,7 +140,7 @@ number is raised to be an integer (0-8)
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L299)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L240)
 
 -------
 
@@ -205,45 +165,7 @@ but is less precise
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L338)
-
--------
-
-
-
-### integrateMS
-
-**Function Signature**
-
-```C++
-void integrateMS(int k, double V, double Ca) 
-```
-
-**Description**
-
-
-
-This method integrates a channel object using a multi-step
-solver (MS = "multi-step"). The "sub-step" is indicated in 
-the integer k, which is the first input to this method. 
-
-The multi-step solver that is used here is a Runge-Kutta 4th
-order solver. Thus, k can have values up to 4. 
-
-Based on `k`, different elements of the arrays `k_m` and `k_h`
-are calculated and stored. At each step, the derivative functions
-`mdot` and `hdot` are computed. 
-
-**See Also**
-
-* [The Runge Kutta Method](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods)
-
-
-
-
- **Code**
-
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L364)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L279)
 
 -------
 
@@ -269,7 +191,7 @@ this channel at this moment.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L433)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L294)
 
 -------
 
@@ -294,7 +216,7 @@ so the channel knows which compartment contains it.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L440)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L301)
 
 -------
 
@@ -316,7 +238,7 @@ void checkSolvers(int solver_order)
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L447)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L308)
 
 -------
 
@@ -340,7 +262,7 @@ of this conductance. This definition is used when `integrateMS` is used.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L462)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L323)
 
 -------
 
@@ -364,7 +286,7 @@ of this conductance. This definition is used when `integrateMS` is used.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L470)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L331)
 
 -------
 
@@ -389,7 +311,7 @@ the channel object.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L479)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L340)
 
 -------
 
@@ -414,7 +336,7 @@ the channel object.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L486)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L347)
 
 -------
 
@@ -440,7 +362,7 @@ the channel object.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L494)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L355)
 
 -------
 
@@ -466,7 +388,7 @@ the channel object.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L502)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L363)
 
 -------
 
