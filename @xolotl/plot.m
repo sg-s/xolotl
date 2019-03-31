@@ -57,6 +57,7 @@ if isempty(self.handles) || ~isfield(self.handles,'fig') || ~isvalid(self.handle
 
 	for i = 1:N
 		self.handles.ax(i) = subplot(N,1,i); hold on
+		self.handles.ax(i).YLim = [-80 50];
 	end
 
 	try

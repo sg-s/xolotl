@@ -46,6 +46,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     xolotl_network.verbosity = verbosity;
     xolotl_network.approx_channels = approx_channels;
+    xolotl_network.stochastic_channels = (int) stochastic_channels;
 
     //xolotl:insert_constructors
 
@@ -227,6 +228,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     bool is_voltage_clamped = false;
     bool is_multi_comp = xolotl_network.resolveTree();
     bool is_multi_step = false;
+
     if (solver_order > 0) {
         is_multi_step = true;
         xolotl_network.solver_order = (int) solver_order;

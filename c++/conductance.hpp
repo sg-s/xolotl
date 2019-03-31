@@ -89,12 +89,15 @@ broadcast to all components from `xolotl.verbosity`.
 #define CONDUCTANCE
 #include <cmath>
 #include <string>
+#include <random>
 using std::string;
 class compartment;
 
 class conductance {
 protected:
     int V_idx = 0;
+    std::random_device generator;
+    std::normal_distribution<double> distribution;
 public:
     compartment *container; // pointer to compartment that contains this
     double gbar;
@@ -116,6 +119,10 @@ public:
     double temperature = 11;
     double temperature_ref = 11;
 
+
+    // how many channels are we modelling?
+    double unitary_conductance = 20e-6; // uS
+    int N = 1;
 
     // switches to tell xolotl
     // if channel supports approximation 
@@ -139,6 +146,7 @@ public:
 
     virtual void integrate(double, double);
     virtual void integrateMS(int, double, double);
+    virtual void integrateLangevin(double, double);
 
     virtual void connect(compartment*); 
     virtual string getClass(void) = 0;
@@ -164,6 +172,8 @@ public:
     // housekeeping, temp variables
     double minf = 0;
     double hinf = 1;
+    double taum = 1;
+    double tauh = 1;
 
 };
 

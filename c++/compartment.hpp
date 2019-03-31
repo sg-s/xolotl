@@ -138,6 +138,8 @@ public:
 
     int solver_order = 0;
 
+    int stochastic_channels = 0;
+
     // constructor with all parameters
     compartment(double V_, double Ca_, double Cm_, double A_, double vol_,  double Ca_target_, double Ca_average_, double tree_idx_, double neuron_idx_, double radius_, double len_, double shell_thickness_, double Ca_out_)
     {
@@ -681,17 +683,42 @@ void compartment::integrateChannels(void) {
     sigma_g = 0.0;
     sigma_gE = 0.0;
 
-
     // compute E_Ca
     E_Ca = RT_by_nF*log((Ca_out)/(Ca_prev));
 
-    // integrate all channels
-    for (int i=0; i<n_cond; i++)
-    {
-        cond[i]->integrate(V_prev, Ca_prev);
-        sigma_g += cond[i]->g;
-        sigma_gE += (cond[i]->g)*(cond[i]->E);
+    switch (stochastic_channels) {
+        case 0:
+            // integrate all channels
+            for (int i=0; i<n_cond; i++) {
+                cond[i]->integrate(V_prev, Ca_prev);
+                sigma_g += cond[i]->g;
+                sigma_gE += (cond[i]->g)*(cond[i]->E);
+            }
+            break;
+        case 1:
+
+            // mexPrintf("Langevin\n");
+
+            for (int i=0; i<n_cond; i++) {
+                cond[i]->integrateLangevin(V_prev, Ca_prev);
+                sigma_g += cond[i]->g;
+                sigma_gE += (cond[i]->g)*(cond[i]->E);
+            }
+            break;
+
+        default:
+            // fall back onto simply integrating 
+            // integrate all channels
+            for (int i=0; i<n_cond; i++) {
+                cond[i]->integrate(V_prev, Ca_prev);
+                sigma_g += cond[i]->g;
+                sigma_gE += (cond[i]->g)*(cond[i]->E);
+            }
+            break;
+        
     }
+
+
 
     // update the running total Ca
     Ca_average += Ca;
