@@ -26,7 +26,7 @@ channels from Liu et al. or Prinz et al.
 
 function x = HodgkinHuxley(varargin)
 
-x = xolotl(varargin{:})
+x = xolotl(varargin{:});
 
 x.add('compartment','AB','A',1e-5)
 

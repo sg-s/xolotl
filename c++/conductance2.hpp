@@ -109,17 +109,25 @@ void conductance::integrateLangevin(double V, double Ca) {
         case 0:
             minf = m_inf(V,Ca);
             taum = tau_m(V,Ca);
-            m += (dt/taum)*(minf - m) + sqrt((dt/(taum*N))*(m + minf - 2*m*minf))*distribution(generator);
+            m += (dt/taum)*(minf - m) + sqrt((dt/(taum*N))*(m + minf - 2*m*minf))*gaussrand();
             break;
 
         default:
-            m += (dt/tau_m_cache[V_idx])*(m_inf_cache[V_idx] - m) + sqrt((dt/(tau_m_cache[V_idx]*N))*(m + m_inf_cache[V_idx] - 2*m*m_inf_cache[V_idx]))*distribution(generator);
+            m += (dt/tau_m_cache[V_idx])*(m_inf_cache[V_idx] - m) + sqrt((dt/(tau_m_cache[V_idx]*N))*(m + m_inf_cache[V_idx] - 2*m*m_inf_cache[V_idx]))*gaussrand();
             break;
     } // switch approx_m
 
     // stay within bounds!
+    // mexPrintf("m = %f\n", m);
+    if (isnan(m)) {
+        mexPrintf("m is NaN, N = %i\n", N);
+        mexPrintf("m is NaN, taum = %f\n", taum);
+        mexPrintf("m is NaN, minf = %f\n", minf);
+        mexPrintf("m is NaN, V = %f\n", V);
+        mexErrMsgTxt("stopping!");
+    }
     if (m<0) {m = 0;}
-    if (m>1) {m=1;}
+    if (m>1) {m = 1;}
     
     g = gbar*fast_pow(m,p);
 
@@ -131,10 +139,10 @@ void conductance::integrateLangevin(double V, double Ca) {
                 case 0:
                     hinf = h_inf(V,Ca);
                     tauh = tau_h(V,Ca);
-                    h += (dt/tauh)*(hinf - h) + sqrt((dt/(tauh*N))*(h + hinf - 2*h*hinf))*distribution(generator);
+                    h += (dt/tauh)*(hinf - h) + sqrt((dt/(tauh*N))*(h + hinf - 2*h*hinf))*gaussrand();
                     break;
                 default:
-                    h += (dt/tau_h_cache[V_idx])*(h_inf_cache[V_idx] - m) + sqrt((dt/(tau_h_cache[V_idx]*N))*(h + h_inf_cache[V_idx] - 2*h*h_inf_cache[V_idx]))*distribution(generator);
+                    h += (dt/tau_h_cache[V_idx])*(h_inf_cache[V_idx] - m) + sqrt((dt/(tau_h_cache[V_idx]*N))*(h + h_inf_cache[V_idx] - 2*h*h_inf_cache[V_idx]))*gaussrand();
                     break;
             }
 
@@ -252,3 +260,4 @@ void conductance::integrateMS(int k, double V, double Ca) {
     }
 
 }
+

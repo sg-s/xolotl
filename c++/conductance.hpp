@@ -96,8 +96,6 @@ class compartment;
 class conductance {
 protected:
     int V_idx = 0;
-    std::random_device generator;
-    std::normal_distribution<double> distribution;
 public:
     compartment *container; // pointer to compartment that contains this
     double gbar;
@@ -169,6 +167,9 @@ public:
     void buildLUT(double);
 
     void readV(void);
+
+    // fast random number generator
+    double gaussrand(void);
 
 
     // housekeeping, temp variables
@@ -362,5 +363,35 @@ This is a virtual method, and is meant to be defined in
 the channel object. 
 */
 double conductance::tau_h(double V, double Ca){return 1;}
+
+
+
+// originally from Knuth and Marsaglia
+// see "A Convenient Method for Generating Normal Variables"
+// SIAM Rev., 6(3), 260–264.
+double conductance::gaussrand() {
+    static double V1, V2, S;
+    static int phase = 0;
+    double X;
+
+    if(phase == 0) {
+        do {
+            double U1 = (double)rand() / RAND_MAX;
+            double U2 = (double)rand() / RAND_MAX;
+
+            V1 = 2 * U1 - 1;
+            V2 = 2 * U2 - 1;
+            S = V1 * V1 + V2 * V2;
+            } while(S >= 1 || S == 0);
+
+        X = V1 * sqrt(-2 * log(S) / S);
+    } else
+        X = V2 * sqrt(-2 * log(S) / S);
+
+    phase = 1 - phase;
+
+    return X;
+}
+
 
 #endif
