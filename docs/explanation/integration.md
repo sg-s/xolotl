@@ -158,12 +158,15 @@ When $N$ is small, stochasticity arising from finite numbers of channels can be 
 
 $$ C_m \frac{dV}{dt} = \sum_i g_i (V, \xi_i) (V - E_i) $$
 
-The fluctuation term $\xi_i$ is understood to be an uncorrelated Gaussian random variable with zero mean and unit variance.
-Since $g_i(V, \xi_i) is understood to be some product of gating variables, the noise is included in the gating variable equation of state (subunit noise).
+The fluctuation term $\xi_i$ is understood to be an uncorrelated Gaussian 
+random variable with zero mean and unit variance.
+Since $g_i(V, \xi_i)$ is understood to be some product of gating variables, 
+the noise is included in the gating variable equation of state (subunit noise).
 
-For a generic gating variable $x = x(t)$ for some (temporarily) fixed $V = V(t)$, the equation of state without noise is an ordinary differential equation (ODE)
+For a generic gating variable $x = x(t)$ for some (temporarily) fixed $V = V(t)$,
+the equation of state without noise is an ordinary differential equation (ODE)
 
-$$ f(x) = \frac{dx}{dt} = \frac{x_{\infty}(V) - x}{\tau_x}(V) $$
+$$ f(x) = \frac{dx}{dt} = \frac{x_{\infty}(V) - x}{\tau_x(V)} $$
 
 and with noise, it is a stochastic differential equation (SDE)
 
