@@ -108,7 +108,7 @@ This process can be iterated to determine the trajectory of $V$ with accuracy on
 
 Some mechanisms may implement this method.
 
-## The Crank-Nicolson Method
+## The Crank-Nicolson method
 
 The Crank-Nicolson method ([Crank & Nicolson 1947](https://link.springer.com/article/10.1007%2FBF02127704)) is based on the trapezoidal rule. It gives second-order convergence in time by using a combination of the forward Euler method at time $t$ and a backward Euler method at $t+\Delta t$.
 
@@ -143,7 +143,73 @@ For branching morphologies that do not branch back into itself (that is, there i
 
 The Crank-Nicolson method is the default for multi-compartment models. The Runge-Kutta method, while sufficient to integrate multi-compartment models accurately is orders of magnitude slower than the Crank-Nicolson method.
 
+## Euler-Maruyama method
+
+The [Euler-Maruyama method](https://en.wikipedia.org/wiki/Euler%E2%80%93Maruyama_method) approximates the numerical solution of a stochastic differential equation.
+It is a generalization of the first-order Euler method for ordinary differential equations.
+
+The equation of state for conductance-based models is
+
+$$ C_m \frac{dV}{dt} = \sum_i I_i = \sum_i g_i (V) (V - E_i) $$
+
+This equation is deterministic, and is an approximation of the more realistic case, which is a stochastic system with $N$ independent ion channels.
+When $N$ is very large, this is a good approximation, since the law of large numbers implies that the standard error in the proportion of channels open is very small.
+When $N$ is small, stochasticity arising from finite numbers of channels can be modeled by an approximate Langevin formulation proposed by [Fox & Lu 1994](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.49.3421).
+
+$$ C_m \frac{dV}{dt} = \sum_i g_i (V, \xi_i) (V - E_i) $$
+
+The fluctuation term $\xi_i$ is understood to be an uncorrelated Gaussian random variable with zero mean and unit variance.
+Since $g_i(V, \xi_i) is understood to be some product of gating variables, the noise is included in the gating variable equation of state (subunit noise).
+
+For a generic gating variable $x = x(t)$ for some (temporarily) fixed $V = V(t)$, the equation of state without noise is an ordinary differential equation (ODE)
+
+$$ f(x) = \frac{dx}{dt} = \frac{x_{\infty}(V) - x}{\tau_x}(V) $$
+
+and with noise, it is a stochastic differential equation (SDE)
+
+$$ f(x | \xi_x) = \frac{dx}{dt} = \frac{x_{\infty}(V) - x}{\tau_x(V)} + \xi_i(t) = f(x) + \xi_x(t) $$
+
+The solution to the SDE can be approximated using the Euler-Maruyama method, which is a modified version of Euler's method for ODEs.
+
+For a time step $\Delta t$ and V = V(t), the Euler approximation to the solution of the ODE is
+
+$$ x(t + \Delta t) = x(t) + \Delta t \cdot f(x(t)) $$
+
+The Euler-Maruyama approximation to the solution of the SDE is
+
+$$ x(t + \Delta t) = x(t) + \Delta t \cdot f(x(t)) + \Delta \xi_x(t) $$
+
+Since we are solving these equations numerically with a fixed time step,
+we fetch a new independent and identically distributed Gaussian random number at each time step,
+such that $\Delta \xi_x(t) = h(V, t) \cdot \xi_x(t)$.
+$h$ is some function that returns a unitless scaling coefficient to determine the magnitude of the noise.
+Intuitively, it will incorporate the time step, the number of channels, and the dynamics of $x$.
+
+Since the noise is per-channel, we calculate the number of channels using an approximation.
+
+$$ N = \mathrm{round} \left( \frac{\bar{g}_i A}{g_0} \right) $$
+
+Here, $N$ is the estimated number of channels (rounded to a natural number),
+$\bar{g}_i$ is the maximal conductance of the $i$th channel,
+$A$ is the surface area of the compartment,
+and $g_0 = 20 \times 10^{-6}$ microsiemens, the conductance of a single channel.
+
+Then, the Euler-Maruyama approximation for the stochastic gating variable as a function of time is
+
+$$ x(t + \Delta t) = x(t) + \Delta t \frac{x_{\infty}(V) - x(t)}{\tau_x(V)} + \sqrt{ \frac{\Delta t}{\tau_x(V)} \cdot \left( \frac{x + x_{\infty}(V)- 2 x \cdot x_{\infty}(V)}{N} \right) \xi_x(t) } $$
+
+### Where this method is used
+
+This method is automatically used when a model includes "conductance" noise,
+that is, noise caused by fluctuations in the opening and closing of ion channels.
+For "current" noise, use current clamp with a pseudorandom injected current constructed prior to simulation.
+
+This method is consistent with [Goldwyn & Shea-Brown 2011](https://journals.plos.org/ploscompbiol/article/file?id=10.1371/journal.pcbi.1002247&type=printable)
+and [Sengupta, Laughlin, and Niven 2010](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.81.011918).
 
 ## Bibliography
 
 * Theoretical Neuroscience. Dayan and Abbott. You can read the full book [here](http://www.gatsby.ucl.ac.uk/~lmate/biblio/dayanabbott.pdf)
+* Crank-Nicolson Method. [Crank & Nicolson 1947](https://link.springer.com/article/10.1007%2FBF02127704).
+* Langevin formulation of subunit noise. [Fox & Lu 1994](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.49.3421).
+* Discussion of noise in Hodgkin-Huxley models. [Goldwyn & Shea-Brown 2011](https://journals.plos.org/ploscompbiol/article/file?id=10.1371/journal.pcbi.1002247&type=printable) & [Sengupta, Laughlin, and Niven 2010](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.81.011918).
