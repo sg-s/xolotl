@@ -62,7 +62,7 @@ pages:
     - Testing: 'meta/testing.md'
   - FAQ: 'faq.md'
   - Contributing: 'contributing.md'
-  - Bibliography: 'bibiography.md'
+  - Bibliography: 'bibliography.md'
   - License: 'license.md'
 
 use_directory_urls: true

@@ -24,7 +24,7 @@ You should see this plot appear:
 
 !!! info Something Went Wrong
     If this didn't work, see our [troubleshooting](../troubleshooting.md) page.
-    You can also try running: `cpplab.rebuildCache; x = xolotl; x.rebase` in MATLAB. 
+    You can also try running: `cpplab.rebuildCache` in MATLAB. 
 
 You can see what effect changing the maximal conductances has on the voltage dynamics by running:
 
@@ -52,7 +52,7 @@ Xolotl comes with several example scripts that illustrate various features of th
 | [demo_integral_control](https://github.com/sg-s/xolotl/blob/master/examples/demo_integral_control.m) | This example shows you how to work with `mechanism` objects by adding homeostatic controllers to conductances and letting them tune the channel spectrum of a neuron |
 | [demo_manipulate](https://github.com/sg-s/xolotl/blob/master/examples/demo_manipulate.m) | This demo shows you how to use the [manipulate](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#manipulate) method |
 | [demo_multi_compartment](https://github.com/sg-s/xolotl/blob/master/examples/demo_multi_compartment.m) | This example sets up a multi-compartment model, where different compartments have different levels of channels |
-| [demo_noise](https://github.com/sg-s/xolotl/blob/master/examples/demo_noise.m) | This example uses `mechanism` objects to introduce noise into a neuron simulation |
+| [demo_finite_size](https://github.com/sg-s/xolotl/blob/master/examples/demo_finite_size.m) | This example varies the size of a neuron, and shows that smaller neurons are more dominated by noise due to the finite number of ion channels |
 | [demo_rk4](https://github.com/sg-s/xolotl/blob/master/examples/demo_rk4.m) | This demo shows you how to use the [`solver_order`](https://xolotl.readthedocs.io/en/master/reference/xolotl/#solver_order) property of xolotl to use a Runge-Kutta 4 ODE solver to simulate the model|
 | [demo_stg](https://github.com/sg-s/xolotl/blob/master/examples/demo_stg.m) | In this example, we set up a small network of three neurons, demonstrating how synapses work in xolotl |
 | [demo_stg_temperature](https://github.com/sg-s/xolotl/blob/master/examples/demo_stg_temperature.m)  | Here, we vary the temperature of the simulation, showing how we can make the model sensitive to temperature. |
