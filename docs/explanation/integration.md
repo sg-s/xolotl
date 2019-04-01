@@ -158,9 +158,9 @@ When $N$ is small, stochasticity arising from finite numbers of channels can be 
 
 $$ C_m \frac{dV}{dt} = \sum_i g_i (V, \xi_i) (V - E_i) $$
 
-The fluctuation term $\xi_i$ is understood to be an uncorrelated Gaussian 
+The fluctuation term $\xi_i$ is understood to be an uncorrelated Gaussian
 random variable with zero mean and unit variance.
-Since $g_i(V, \xi_i)$ is understood to be some product of gating variables, 
+Since $g_i(V, \xi_i)$ is understood to be some product of gating variables,
 the noise is included in the gating variable equation of state (subunit noise).
 
 For a generic gating variable $x = x(t)$ for some (temporarily) fixed $V = V(t)$,
@@ -184,9 +184,8 @@ $$ x(t + \Delta t) = x(t) + \Delta t \cdot f(x(t)) + \Delta \xi_x(t) $$
 
 Since we are solving these equations numerically with a fixed time step,
 we fetch a new independent and identically distributed Gaussian random number at each time step,
-such that $\Delta \xi_x(t) = h(V, t) \cdot \xi_x(t)$.
-$h$ is some function that returns a unitless scaling coefficient to determine the magnitude of the noise.
-Intuitively, it will incorporate the time step, the number of channels, and the dynamics of $x$.
+such that $\Delta \xi_x(t)$ is some function of $\xi_x(t)$.
+Intuitively, $\Delta \xi_i(t)$ will incorporate the time step, the number of channels, and the dynamics of $x$.
 
 Since the noise is per-channel, we calculate the number of channels using an approximation.
 
