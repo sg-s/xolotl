@@ -210,3 +210,6 @@ and [Sengupta, Laughlin, and Niven 2010](https://journals.aps.org/pre/abstract/1
 ## Bibliography
 
 * Theoretical Neuroscience. Dayan and Abbott. You can read the full book [here](http://www.gatsby.ucl.ac.uk/~lmate/biblio/dayanabbott.pdf)
+* Crank-Nicolson Method. [Crank & Nicolson 1947](https://link.springer.com/article/10.1007%2FBF02127704).
+* Langevin formulation of subunit noise. [Fox & Lu 1994](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.49.3421).
+* Discussion of noise in Hodgkin-Huxley models. [Goldwyn & Shea-Brown 2011](https://journals.plos.org/ploscompbiol/article/file?id=10.1371/journal.pcbi.1002247&type=printable) & [Sengupta, Laughlin, and Niven 2010](https://journals.aps.org/pre/abstract/10.1103/PhysRevE.81.011918).
