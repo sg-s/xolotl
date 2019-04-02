@@ -19,7 +19,7 @@
 %
 %
 % !!! warning
-%     Creating two snapshots with the same name will overwrite the first.
+%    Creating two snapshots with the same name will overwrite the first.
 %
 %
 % **Example**
