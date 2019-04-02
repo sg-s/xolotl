@@ -1,5 +1,5 @@
 
-%               _       _   _ 
+%               _       _   _
 %    __  _____ | | ___ | |_| |
 %    \ \/ / _ \| |/ _ \| __| |
 %     >  < (_) | | (_) | |_| |
@@ -16,7 +16,8 @@
 % **Description**
 %
 % Saves the current state of a ``xolotl`` object for future use.
-%
+% Snapshots act as properties of the ``xolotl`` object, so can be reset to anytime,
+% including within other function and scopes.
 %
 % !!! warning
 %    Creating two snapshots with the same name will overwrite the first.
@@ -35,7 +36,7 @@
 % ```
 %
 %
-% See Also: 
+% See Also:
 % xolotl.reset
 % * [How to: save configurations and use snapshots](https://xolotl.readthedocs.io/en/master/how-to/snapshots/)
 
