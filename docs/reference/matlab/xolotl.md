@@ -223,7 +223,9 @@ Adds a `cpplab` object to a `xolotl` object. The `add` method is the most import
 
 **Technical Details**
 
-`xolotl.add` checks that the compartment being added has a legal name using `checkCompartmentName`. If so, it calls the `add` method in the `cpplab` superclass.
+`xolotl.add` checks that the compartment being added has a legal name
+using `checkCompartmentName`. If so, it calls the `add` method 
+in the `cpplab` superclass.
 
 
 
@@ -286,7 +288,7 @@ to verify that the compartment name you are using is valid and legal.  This meth
 to a `xolotl` object.
 
 !!! warning
-Do not use `checkCompartmentName`, as it may be removed in a future release.
+    Do not use `checkCompartmentName`, as it may be removed in a future release.
 
 
 
@@ -357,7 +359,7 @@ x.cleanup
 A static method that cleans up all transpiled ``C++`` and compiled binary files.
 
 !!! warning
-Use of this method will trigger a warning every time it is called. You do not need to use this in normal use, but can call this to force a recompile, or to delete old and unused binaries.
+    Use of this method will trigger a warning every time it is called. You do not need to use this in normal use, but can call this to force a recompile, or to delete old and unused binaries.
 
 
 
@@ -496,8 +498,8 @@ Both copies will use the same binary to integrate,
 unless you add a new component to one of them.
 
 !!! warning
-* Some read-only properties in a xolotl object may not be copied over.
-* Do not make vectors of ``xolotl`` objects, as it may lead to undefined behavior.
+    * Some read-only properties in a xolotl object may not be copied over.
+    * Do not make vectors of ``xolotl`` objects, as it may lead to undefined behavior.
 
 
 
@@ -700,7 +702,7 @@ local parameters, and is useful when xolotl objects are saved to
 disk and loaded. 
 
 !!! warning 
-Do not use this method.
+    Do not use this method. This method exists so that MATLAB knows how to load xolotl objects correctly
 
 
 
@@ -1082,7 +1084,7 @@ Snapshots act as properties of the ``xolotl`` object, so can be reset to anytime
 including within other function and scopes.
 
 !!! warning
-Creating two snapshots with the same name will overwrite the first.
+    Creating two snapshots with the same name will overwrite the first.
 
 
 **Example**
@@ -1132,7 +1134,7 @@ MATLAB to C++ and back.
 
 
 !!! warning
-Manual transpiling is discouraged. xolotl will automatically transpile code for you when needed.
+    Manual transpiling is discouraged. xolotl will automatically transpile code for you when needed.
 
 
 

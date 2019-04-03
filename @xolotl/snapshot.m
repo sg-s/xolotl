@@ -20,7 +20,7 @@
 % including within other function and scopes.
 %
 % !!! warning
-%    Creating two snapshots with the same name will overwrite the first.
+% XXXXCreating two snapshots with the same name will overwrite the first.
 %
 %
 % **Example**

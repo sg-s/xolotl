@@ -75,6 +75,8 @@ for file in sorted(glob.glob("@xolotl/*.m")):
 		thisline = thisline.strip('%')
 		thisline = thisline.lstrip()
 
+		thisline = thisline.replace('XXXX','    ')
+
 		if not thisline:
 			out_file.write('\n')
 			continue

@@ -21,7 +21,7 @@
 % to a `xolotl` object.
 %
 % !!! warning
-%     Do not use `checkCompartmentName`, as it may be removed in a future release.
+% XXXXDo not use `checkCompartmentName`, as it may be removed in a future release.
 %
 % See Also: 
 % xolotl.add

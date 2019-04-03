@@ -23,7 +23,7 @@
 %
 %
 % !!! warning
-%     Manual transpiling is discouraged. xolotl will automatically transpile code for you when needed.
+% XXXXManual transpiling is discouraged. xolotl will automatically transpile code for you when needed.
 %
 %
 % See Also: 

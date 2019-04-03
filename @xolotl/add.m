@@ -28,7 +28,9 @@
 %
 % **Technical Details**
 %
-% `xolotl.add` checks that the compartment being added has a legal name using `checkCompartmentName`. If so, it calls the `add` method in the `cpplab` superclass.
+% `xolotl.add` checks that the compartment being added has a legal name
+%  using `checkCompartmentName`. If so, it calls the `add` method 
+% in the `cpplab` superclass.
 %
 % See Also: 
 % cpplab.add

@@ -19,8 +19,8 @@
 % unless you add a new component to one of them.
 %
 % !!! warning
-%     * Some read-only properties in a xolotl object may not be copied over.
-%     * Do not make vectors of ``xolotl`` objects, as it may lead to undefined behavior.
+% XXXX* Some read-only properties in a xolotl object may not be copied over.
+% XXXX* Do not make vectors of ``xolotl`` objects, as it may lead to undefined behavior.
 %
 % See Also: 
 % cpplab.copy
