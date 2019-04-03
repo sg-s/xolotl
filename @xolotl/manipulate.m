@@ -76,7 +76,7 @@ if nargin < 2
 	[values, ~, ~, real_names] = self.serialize;
 
 	% skip some dynamical values
-	rm_this = [filelib.find(real_names,'*dt'); filelib.find(real_names,'*.m'); filelib.find(real_names,'*.h'); filelib.find(real_names,'synapses*.s')];
+	rm_this = [filelib.find(real_names,'*dt'); filelib.find(real_names,'.m'); filelib.find(real_names,'.h')];
 
 	% manually remove all the V, Ca for each neuron
 	for i = 1:length(real_names)
@@ -89,6 +89,7 @@ if nargin < 2
 			end
 		end
 	end
+
 
 	values(rm_this) = [];
 	real_names(rm_this) = [];

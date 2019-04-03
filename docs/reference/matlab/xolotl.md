@@ -1078,7 +1078,8 @@ x.snapshot('snap_name')
 **Description**
 
 Saves the current state of a ``xolotl`` object for future use.
-
+Snapshots act as properties of the ``xolotl`` object, so can be reset to anytime,
+including within other function and scopes.
 
 !!! warning
 Creating two snapshots with the same name will overwrite the first.
