@@ -153,7 +153,7 @@ void conductance::integrateLangevin(double V, double Ca) {
                     h += (dt/tauh)*(hinf - h) + sqrt((dt/(tauh*N))*(h + hinf - 2*h*hinf))*gaussrand();
                     break;
                 default:
-                    h += (dt/tau_h_cache[V_idx])*(h_inf_cache[V_idx] - m) + sqrt((dt/(tau_h_cache[V_idx]*N))*(h + h_inf_cache[V_idx] - 2*h*h_inf_cache[V_idx]))*gaussrand();
+                    h += (dt/tau_h_cache[V_idx])*(h_inf_cache[V_idx] - h) + sqrt((dt/(tau_h_cache[V_idx]*N))*(h + h_inf_cache[V_idx] - 2*h*h_inf_cache[V_idx]))*gaussrand();
                     break;
             }
 
