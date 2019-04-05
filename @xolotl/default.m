@@ -15,6 +15,10 @@ plot_color = true;
 show_Ca = true;
 
 
+% should I plot gbars in a polar plot?
+use_polar_gbar = true;
+
+
 %% ~~~~~~~~~~  manipulate  ~~~~~~~~~~
 
 % do you want to use approximate

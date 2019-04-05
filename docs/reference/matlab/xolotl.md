@@ -825,6 +825,7 @@ x.pref.show_Ca = false;
 ```matlab
 x.plotgbars('compartment_name');
 x.plotgbars(axes_handle,'compartment_name');
+axes_handle = x.plotgbars(axes_handle,'compartment_name');
 ```
 
 **Description**
