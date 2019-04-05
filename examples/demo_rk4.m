@@ -3,7 +3,7 @@
 close all
 
 
-x = xolotl.examples.BurstingNeuron('prinz',14.96);
+x = xolotl.examples.BurstingNeuron('prefix','prinz');
 
 x.t_end = 1e4;
 x.integrate;

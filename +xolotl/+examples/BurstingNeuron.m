@@ -24,21 +24,39 @@ channels from Liu et al. or Prinz et al.
 %}
 
 
-function x = BurstingNeuron(prefix, f)
+function x = BurstingNeuron(varargin)
 
-if nargin == 0
-	prefix = 'liu';
-	f = 1.496;
+
+options.prefix = 'prinz';
+options.CalciumMech = 'prinz';
+options.f = [];
+
+options = corelib.parseNameValueArguments(options, varargin{:});
+
+if isempty(options.f) && strcmp(options.prefix,'prinz')
+	options.f = 14.96;
+elseif isempty(options.f) && strcmp(options.prefix,'liu')
+	options.f = 1.496;
 end
 
-if nargin == 1
-	f = 1.496;
-end
 
 x = xolotl;
-x.add('compartment','AB','A',0.0628,'vol',.0628);
-x.AB.add('prinz/CalciumMech','f',f);
+A = 0.0628;
+vol = A;
+x.add('compartment','AB','A',A,'vol',vol);
 
+switch options.CalciumMech
+case 'prinz'
+
+	x.AB.add('prinz/CalciumMech','f',options.f);
+case 'bucholtz'
+	phi = options.f*1.9297e+05*vol/200;
+	x.AB.add('bucholtz/CalciumMech','phi',phi);
+otherwise
+	error('Unknown Calcium Mechanism')
+end
+
+prefix = options.prefix;
 switch prefix
 
 case 'liu'
@@ -61,7 +79,6 @@ case 'prinz'
 		x.AB.add([prefix filesep channels{i}],'gbar',gbar(i),'E',E(i));
 	end
 
-	x.AB.CalciumMech.f = 14.96;
 
 end
 

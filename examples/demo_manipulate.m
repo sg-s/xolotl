@@ -3,7 +3,7 @@
 % and use it while manipulating parameters
 
 
-x = xolotl.examples.BurstingNeuron;
+x = xolotl.examples.BurstingNeuron('prefix','liu');
 
 x.t_end = 1e4;
 x.integrate;

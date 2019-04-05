@@ -6,13 +6,13 @@
     >  < (_) | | (_) | |_| |
    /_/\_\___/|_|\___/ \__|_|
 
-## BurstingNeuron
+## HodgkinHuxley
 
 **Syntax**
 
 ```matlab
-x = xolotl.examples.BurstingNeuron('liu');
-x = xolotl.examples.BurstingNeuron('prinz');
+x = xolotl.examples.HodgkinHuxley('liu');
+x = xolotl.examples.HodgkinHuxley('prinz');
 ```
 
 **Description**

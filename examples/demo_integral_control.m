@@ -3,7 +3,7 @@ close all
 
 % tests a neuron that reproduces Fig 3 in Tim O'Leary's paper
 
-x = xolotl.examples.BurstingNeuron;
+x = xolotl.examples.BurstingNeuron('prefix','liu');
 
 g0 = 1e-1+1e-1*rand(8,1);
 x.set('*gbar',g0);
