@@ -34,9 +34,10 @@ end
 
 figure('outerposition',[300 300 1200 901],'PaperUnits','points','PaperSize',[1200 901]); hold on
 
-show_area = corelib.logrange(min(all_area),max(all_area),4);
+show_area = corelib.logrange(min(all_area)*5,max(all_area),4);
+clear ax
 for i = 1:4
-	subplot(4,2,(i-1)*2+1); hold on
+	ax(i) = subplot(4,2,(i-1)*2+1); hold on
 	x.reset;
 	x.AB.A = show_area(i);
 
@@ -44,16 +45,20 @@ for i = 1:4
 	time = (1:length(V))*1e-3*x.dt;
 	plot(time,V,'k')
 	set(gca,'YLim',[-80 50])
-	title(['Area = ' strlib.oval(x.AB.A) 'mm^2'])
+	th = title(['Area = ' strlib.oval(x.AB.A) 'mm^2']);
+	th.FontWeight = 'normal';
+	
 end
 
 
-ax = subplot(1,2,2); hold on
+axf = subplot(1,2,2); hold on
 errorbar(all_area,mean(all_f,2),corelib.sem(all_f'),'k')
 set(gca,'XScale','log','YScale','linear')
 xlabel('Area (mm^2)')
 ylabel('Firing rate (Hz)')
 
-ax.Position = [.6 .3 .25 .4];
+axf.Position = [.6 .3 .25 .4];
 
-figlib.pretty('plw',1,'lw',1)
+figlib.pretty()
+
+axlib.makeEphys(ax)
