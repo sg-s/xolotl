@@ -1,6 +1,6 @@
 # xolotl: a fast and flexible neuronal simulator
 
-![](https://readthedocs.org/projects/sphinx-rtd-theme/badge/?version=latest)
+[![Documentation Status](https://readthedocs.org/projects/xolotl/badge/?version=master)](https://xolotl.readthedocs.io/en/master/?badge=master)
 ![](https://img.shields.io/github/last-commit/sg-s/xolotl.svg)
 
 ![](https://user-images.githubusercontent.com/6005346/41205222-30b6f3d4-6cbd-11e8-983b-9125585d629a.png)
