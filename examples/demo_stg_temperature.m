@@ -20,8 +20,7 @@ x.AB.add('prinz-temperature/KCa','gbar',50);
 x.AB.add('prinz-temperature/Kd','gbar',1000);
 x.AB.add('prinz-temperature/HCurrent','gbar',.1);
 
-x.set('*Q_g',2)
-x.set('*Q_h',2)
+x.set('*Q_g',1)
 x.set('*Q_tau_m',2)
 x.set('*Q_tau_h',2)
 

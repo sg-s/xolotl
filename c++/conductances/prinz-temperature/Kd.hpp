@@ -40,9 +40,13 @@ public:
         if (isnan (Q_g)) { Q_g = 1; }
         if (isnan (Q_tau_m)) { Q_tau_m = 2; }
         if (isnan (E)) { E = -80; }
+
+        p = 4;
+
     }
 
     void integrate(double, double);
+    void integrateLangevin(double, double);
     void connect(compartment*);
 
     double m_inf(double, double);
@@ -59,21 +63,23 @@ void Kd::connect(compartment *pcomp_) {
 
     // also set up some useful things
     delta_temp = (temperature - temperature_ref)/10;
-    pow_Q_tau_m_delta_temp = (dt*pow(Q_tau_m, delta_temp));
+    pow_Q_tau_m_delta_temp = (pow(Q_tau_m, delta_temp));
     pow_Q_g = pow(Q_g, delta_temp);
 }
 
-void Kd::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-pow_Q_tau_m_delta_temp/tau_m(V,Ca));
-    g = pow_Q_g*gbar*m*m*m*m;
+void Kd::integrate(double V, double Ca) {
+    conductance::integrate(V,Ca);
+    g = pow_Q_g*g;
+}
 
+void Kd::integrateLangevin(double V, double Ca) {
+    conductance::integrateLangevin(V,Ca);
+    g = pow_Q_g*g;
 }
 
 
-
 double Kd::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+12.3)/-11.8));}
-double Kd::tau_m(double V, double Ca) {return 14.4 - 12.8/(1.0+exp((V+28.3)/-19.2));}
+double Kd::tau_m(double V, double Ca) {return (1/pow_Q_tau_m_delta_temp)*(14.4 - 12.8/(1.0+exp((V+28.3)/-19.2)));}
 
 
 #endif

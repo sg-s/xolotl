@@ -45,9 +45,14 @@ public:
         if (isnan (Q_tau_m)) { Q_tau_m = 2; }
         if (isnan (Q_tau_h)) { Q_tau_h = 2; }
         if (isnan (E)) { E = 30; }
+
+        is_calcium = true;
+        p = 3;
+        q = 1;
     }
 
     void integrate(double, double);
+    void integrateLangevin(double, double);
     void connect(compartment*);
 
     double m_inf(double, double);
@@ -65,29 +70,25 @@ void CaS::connect(compartment *pcomp_) {
 
     // also set up some useful things
     delta_temp = (temperature - temperature_ref)/10;
-    pow_Q_tau_m_delta_temp = (dt*pow(Q_tau_m, delta_temp));
-    pow_Q_tau_h_delta_temp = (dt*pow(Q_tau_h, delta_temp));
+    pow_Q_tau_m_delta_temp = 1/(pow(Q_tau_m, delta_temp));
+    pow_Q_tau_h_delta_temp = 1/(pow(Q_tau_h, delta_temp));
     pow_Q_g = pow(Q_g, delta_temp);
 }
 
-void CaS::integrate(double V, double Ca)
-{
-
-    // update E by copying E_Ca from the cell
-    E = container->E_Ca;
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-pow_Q_tau_m_delta_temp/tau_m(V,Ca));
-    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-pow_Q_tau_h_delta_temp/tau_h(V,Ca));
-    g = pow_Q_g*gbar*m*m*m*h;
-
-    // compute the specific calcium current and update it in the cell
-    double this_I = g*(V-E);
-    container->i_Ca += this_I;
-
+void CaS::integrate(double V, double Ca) {
+    conductance::integrate(V,Ca);
+    g = pow_Q_g*g;
 }
+
+void CaS::integrateLangevin(double V, double Ca) {
+    conductance::integrateLangevin(V,Ca);
+    g = pow_Q_g*g;
+}
+
 
 double CaS::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+33.0)/-8.1));}
 double CaS::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+60.0)/6.2));}
-double CaS::tau_m(double V, double Ca) {return 2.8 + 14.0/(exp((V+27.0)/10.0) + exp((V+70.0)/-13.0));}
-double CaS::tau_h(double V, double Ca) {return 120.0 + 300.0/(exp((V+55.0)/9.0) + exp((V+65.0)/-16.0));}
+double CaS::tau_m(double V, double Ca) {return pow_Q_tau_m_delta_temp*(2.8 + 14.0/(exp((V+27.0)/10.0) + exp((V+70.0)/-13.0)));}
+double CaS::tau_h(double V, double Ca) {return pow_Q_tau_h_delta_temp*(120.0 + 300.0/(exp((V+55.0)/9.0) + exp((V+65.0)/-16.0)));}
 
 #endif

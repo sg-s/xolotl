@@ -47,9 +47,13 @@ public:
         if (isnan (Q_tau_m)) { Q_tau_m = 2; }
         if (isnan (Q_tau_h)) { Q_tau_h = 2; }
         if (isnan (E)) { E = -80; }
+
+        p = 3;
+        q = 1;
     }
 
     void integrate(double, double);
+    void integrateLangevin(double, double);
 
     void connect(compartment*);
 
@@ -68,23 +72,26 @@ void ACurrent::connect(compartment *pcomp_) {
 
     // also set up some useful things
     delta_temp = (temperature - temperature_ref)/10;
-    pow_Q_tau_m_delta_temp = (dt*pow(Q_tau_m, delta_temp));
-    pow_Q_tau_h_delta_temp = (dt*pow(Q_tau_h, delta_temp));
+    pow_Q_tau_m_delta_temp = 1/(pow(Q_tau_m, delta_temp));
+    pow_Q_tau_h_delta_temp = 1/(pow(Q_tau_h, delta_temp));
     pow_Q_g = pow(Q_g, delta_temp);
 }
 
-void ACurrent::integrate(double V, double Ca)
-{
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-pow_Q_tau_m_delta_temp/tau_m(V,Ca));
-    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-pow_Q_tau_h_delta_temp/tau_h(V,Ca));
-    g = pow_Q_g*gbar*m*m*m*h;
+void ACurrent::integrateLangevin(double V, double Ca) {
+    conductance::integrateLangevin(V,Ca);
+    g = pow_Q_g*g;
+}
 
+
+void ACurrent::integrate(double V, double Ca) {
+    conductance::integrate(V,Ca);
+    g = pow_Q_g*g;
 }
 
 double ACurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+27.2)/-8.7)); }
 double ACurrent::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+56.9)/4.9)); }
-double ACurrent::tau_m(double V, double Ca) {return 23.2 - 20.8/(1.0+exp((V+32.9)/-15.2));}
-double ACurrent::tau_h(double V, double Ca) {return 77.2 - 58.4/(1.0+exp((V+38.9)/-26.5));}
+double ACurrent::tau_m(double V, double Ca) {return pow_Q_tau_m_delta_temp*(23.2 - 20.8/(1.0+exp((V+32.9)/-15.2)));}
+double ACurrent::tau_h(double V, double Ca) {return pow_Q_tau_h_delta_temp*(77.2 - 58.4/(1.0+exp((V+38.9)/-26.5)));}
 
 
 #endif

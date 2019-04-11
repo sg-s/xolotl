@@ -39,14 +39,19 @@ public:
         if (isnan (Q_g)) { Q_g = 1; }
         if (isnan (Q_tau_m)) { Q_tau_m = 2; }
         if (isnan (E)) { E = -80; }
+
+
+        p = 4;
     }
 
     void integrate(double, double);
+    void integrateLangevin(double, double);
     void connect(compartment*);
 
     double m_inf(double V, double Ca);
     double tau_m(double, double);
     string getClass(void);
+
 };
 
 string KCa::getClass(){return "KCa";}
@@ -57,20 +62,25 @@ void KCa::connect(compartment *pcomp_) {
 
     // also set up some useful things
     delta_temp = (temperature - temperature_ref)/10;
-    pow_Q_tau_m_delta_temp = (dt*pow(Q_tau_m, delta_temp));
+    pow_Q_tau_m_delta_temp = 1/(pow(Q_tau_m, delta_temp));
     pow_Q_g = pow(Q_g, delta_temp);
 }
 
-void KCa::integrate(double V, double Ca)
-{
 
-    m = m_inf(V, Ca) + (m - m_inf(V, Ca))*exp(-pow_Q_tau_m_delta_temp/tau_m(V,Ca));
-    g = pow_Q_g*gbar*m*m*m*m;
-
+void KCa::integrate(double V, double Ca) {
+    conductance::integrate(V,Ca);
+    g = pow_Q_g*g;
 }
 
+
+void KCa::integrateLangevin(double V, double Ca) {
+    conductance::integrateLangevin(V,Ca);
+    g = pow_Q_g*g;
+}
+
+
 double KCa::m_inf(double V, double Ca) { return (Ca/(Ca+3.0))/(1.0+exp((V+28.3)/-12.6)); }
-double KCa::tau_m(double V, double Ca) {return 180.6 - 150.2/(1.0+exp((V+46.0)/-22.7));}
+double KCa::tau_m(double V, double Ca) {return pow_Q_tau_m_delta_temp*(180.6 - 150.2/(1.0+exp((V+46.0)/-22.7)));}
 
 
 #endif
