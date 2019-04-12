@@ -227,9 +227,6 @@ void network::addCompartment(compartment *comp_) {
     comp_->temperature = temperature;
     comp_->temperature_ref = temperature_ref;
 
-    if (verbosity > 0){
-        mexPrintf("[C++] adding compartment to network. \n");
-    }
 }
 
 
