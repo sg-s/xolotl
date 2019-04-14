@@ -5,12 +5,26 @@
 #include "mex.h"
 #include <random>
 
+
+int wow = 0;
+int N = 500;
+
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
 
     double gaussrand(void);
 
-    double * input_N = mxGetPr(prhs[0]);
-    int N = (int) input_N[0];
+    wow = 0;
+
+    mexPrintf("nrhs = %i\n",nrhs);
+
+    if (nrhs > 0) {
+        double * input_N = mxGetPr(prhs[0]);
+        N = (int) input_N[0];
+        mexPrintf("N = %i\n",N);
+    }
+    else {
+        N = 500;
+    }
 
 
     plhs[0] = mxCreateDoubleMatrix(N, 1, mxREAL);
@@ -22,8 +36,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
         rand_values[i] = gaussrand();
     }
 
-
-
+    //mexPrintf("wow = %i",wow);
 
 }
 
@@ -37,6 +50,8 @@ double gaussrand() {
     static double V1, V2, S;
     static int phase = 0;
     double X;
+
+    //wow++;
 
     if(phase == 0) {
         do {

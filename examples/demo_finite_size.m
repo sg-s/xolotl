@@ -6,10 +6,18 @@
 % using the approximate Langevin method 
 
 
-x = xolotl.examples.HodgkinHuxley;
+x = xolotl();
+
+x.add('compartment','AB','A',1e-5)
+
+x.AB.add('chow/NaV','gbar',1200);
+x.AB.add('chow/Kd','gbar',360);
+x.AB.add('Leak','gbar',30,'E',-54.4);
+
+
 x.approx_channels = 0;
 
-all_area = logspace(-7,-5,20);
+all_area = logspace(-6,log10(400e-6),20);
 N = 3;
 all_f = zeros(length(all_area),N);
 
@@ -28,7 +36,7 @@ for j = 1:N
 		x.AB.A = all_area(i);
 
 		V = x.integrate;
-		all_f(i,j) = xtools.findNSpikes(V,0)/10;
+		all_f(i,j) = xtools.findNSpikes(V,-40)/10;
 	end
 end
 
@@ -44,7 +52,7 @@ for i = 1:4
 	V = x.integrate;
 	time = (1:length(V))*1e-3*x.dt;
 	plot(time,V,'k')
-	set(gca,'YLim',[-80 50])
+	set(gca,'YLim',[-80 50],'XLim',[0 1])
 	th = title(['Area = ' strlib.oval(x.AB.A) 'mm^2']);
 	th.FontWeight = 'normal';
 	
