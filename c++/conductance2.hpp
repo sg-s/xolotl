@@ -137,8 +137,8 @@ void conductance::integrateLangevin(double V, double Ca) {
         mexPrintf("m is NaN, V = %f\n", V);
         mexErrMsgTxt("[error] stopping because NaNs appeared in integration!");
     }
-    if (m<0) {m = 0;}
-    if (m>1) {m = 1;}
+    if (m<0) {m = -m;}
+    if (m>1) {m = 2-m;}
     
     g = gbar*fast_pow(m,p);
 
@@ -158,8 +158,8 @@ void conductance::integrateLangevin(double V, double Ca) {
             }
 
             // stay within bounds!
-            if (h<0) {h = 0;}
-            if (h>1) {h = 1;}
+            if (h<0) {h = -h;}
+            if (h>1) {h = 2-h;}
 
             g = g*fast_pow(h,q);  
 

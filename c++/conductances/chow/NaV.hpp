@@ -67,7 +67,7 @@ double NaV::BetaM(double V) {
 }
 
 double NaV::BetaH(double V) {
-    return 1/(exp((35+V)/-10));
+    return 1/(1+exp((35+V)/-10));
 }
 
 

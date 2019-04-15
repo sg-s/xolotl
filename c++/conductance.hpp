@@ -239,8 +239,7 @@ number is raised to be an integer (0-8)
 
 */
 inline double conductance::fast_pow(double x, int a) {
-    switch (a)
-    {
+    switch (a) {
         case 0:
             return 1;
             break;
