@@ -31,16 +31,21 @@ public:
     double tau_m = std::numeric_limits<double>::infinity();
 
     // mRNA concentration 
+    // exists purely for compatibility with Integral Controller
     double m = 0;
+
+    // ignored variable -- exists for compatibility
+    double tau_g = 0;
 
     // area of the container this is in
     double container_A;
 
     // specify parameters + initial conditions for 
     // mechanism that controls a conductance 
-    ProportionalController(double tau_m_)
+    ProportionalController(double tau_m_, double m_, double tau_g_)
     {
-
+        tau_g = tau_g_;
+        m = m_;
         tau_m = tau_m_;
         if (isnan(tau_m)) {tau_m = 10e3;};
     }

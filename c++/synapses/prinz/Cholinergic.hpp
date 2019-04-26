@@ -48,15 +48,9 @@ int Cholinergic::getFullStateSize()
 }
 
 
-double Cholinergic::s_inf(double V_pre)
-{
-    return 1.0/(1.0+exp((Vth - V_pre)/Delta));
-}
+double Cholinergic::s_inf(double V_pre) {return 1.0/(1.0+exp((Vth - V_pre)/Delta));}
 
-double Cholinergic::tau_s(double sinf_)
-{
-    return (1 - sinf_)/k_;
-}
+double Cholinergic::tau_s(double sinf_) {return (1 - sinf_)/k_;}
 
 double Cholinergic::sdot(double V_pre, double s_)
 {
@@ -64,8 +58,7 @@ double Cholinergic::sdot(double V_pre, double s_)
     return (sinf - s_)/tau_s(sinf);
 }
 
-void Cholinergic::integrate(void)
-{
+void Cholinergic::integrate(void) {
     // figure out the voltage of the pre-synaptic neuron
     double V_pre = pre_syn->V;
     double sinf = s_inf(V_pre);
@@ -78,8 +71,7 @@ void Cholinergic::integrate(void)
 
 }
 
-void Cholinergic::integrateMS(int k, double V, double Ca)
-{
+void Cholinergic::integrateMS(int k, double V, double Ca) {
 
     double V_pre;
 
@@ -125,8 +117,7 @@ void Cholinergic::checkSolvers(int k){
     mexErrMsgTxt("[Cholinergic] Unsupported solver order\n");
 }
 
-int Cholinergic::getFullState(double *syn_state, int idx)
-{
+int Cholinergic::getFullState(double *syn_state, int idx) {
     // give it the current synapse variable
     syn_state[idx] = s;
 
@@ -138,8 +129,7 @@ int Cholinergic::getFullState(double *syn_state, int idx)
     return idx;
 }
 
-void Cholinergic::connect(compartment *pcomp1_, compartment *pcomp2_)
-{
+void Cholinergic::connect(compartment *pcomp1_, compartment *pcomp2_) {
     pre_syn = pcomp1_;
     post_syn = pcomp2_;
 
