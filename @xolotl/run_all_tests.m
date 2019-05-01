@@ -67,7 +67,7 @@ for i = length(all_tests):-1:1
 		corelib.cprintf('red','TEST FAILED\n')
 
 		% also show the error
-		keyboard
+		disp(err)
 
 	end
 end
