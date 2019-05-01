@@ -228,8 +228,7 @@ void IntegralController::integrate(void)
 
 
 
-void IntegralController::checkSolvers(int k)
-{
+void IntegralController::checkSolvers(int k) {
     if (k == 0){
         return;
     } else {

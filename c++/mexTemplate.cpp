@@ -95,8 +95,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // full state size is
     int full_controller_sizes[n_comp];
     int full_controller_size = 0;
-    for (int i = 0; i < n_comp; i ++)
-    {
+    for (int i = 0; i < n_comp; i ++) {
         int n_cont = (xolotl_network.comp[i])->n_cont;
 
         full_controller_sizes[i] = xolotl_network.comp[i]->getFullMechanismSize();
@@ -107,16 +106,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // compute ionic current state dimensions
     // assumed to be the same for all conductances 
     int full_current_size = 0;
-    for (int i = 0; i < n_comp; i ++)
-    {
+    for (int i = 0; i < n_comp; i ++) {
         full_current_size += (xolotl_network.comp[i])->n_cond;
     }
 
     // compute synapse state dim
     int full_synaptic_sizes[n_comp];
     int full_synaptic_size = 0;
-    for (int i = 0; i < n_comp; i ++)
-    {
+    for (int i = 0; i < n_comp; i ++) {
         int n_syn = (xolotl_network.comp[i])->n_syn;
 
         full_synaptic_sizes[i] = xolotl_network.comp[i]->getFullSynapseSize();

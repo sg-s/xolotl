@@ -60,22 +60,17 @@ public:
 };
 
 
-double CalciumMech::getState(int idx)
-{
-
+double CalciumMech::getState(int idx) {
     return std::numeric_limits<double>::quiet_NaN();
-
 }
 
 
-int CalciumMech::getFullStateSize()
-{
+int CalciumMech::getFullStateSize() {
     return 0;
 }
 
 
-int CalciumMech::getFullState(double *cont_state, int idx)
-{
+int CalciumMech::getFullState(double *cont_state, int idx) {
     // do nothing
     return idx;
 }
