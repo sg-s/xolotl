@@ -13,7 +13,7 @@
 % see https://github.com/sg-s/xolotl
 % for more information
 
-classdef xolotl <  cpplab & matlab.mixin.CustomDisplay & ConstructableHandle
+classdef xolotl <  cpplab & matlab.mixin.CustomDisplay & ConstructableHandle & UpdateableHandle
 
 properties (SetAccess = protected)
 	linked_binary@char % binary to run when integrate is called
