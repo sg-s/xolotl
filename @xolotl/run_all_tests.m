@@ -65,6 +65,10 @@ for i = length(all_tests):-1:1
 		passed = passed + 1;
 	catch err
 		corelib.cprintf('red','TEST FAILED\n')
+
+		% also show the error
+		keyboard
+
 	end
 end
 
