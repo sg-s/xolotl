@@ -47,28 +47,13 @@ dV = [NaN; diff(V)];
 
 if nargin == 1
 	% return V_lim and dV_lim too
-	m = abs(max(V));
-	V_lim(2) = round(m,-floor(log10(m))) + 10^floor(log10(m));
-	m = abs(min(V));
-	V_lim(1) = round(m,-floor(log10(m))) + 10^floor(log10(m));
-	if min(V) < 0
-		V_lim(1) = -V_lim(1);
-	end
-	if max(V) < 0
-		V_lim(2) = -V_lim(2);
-	end
+
+	% compute V_lim
+	V_lim = [min(V) - 5; max(V) + 5];
 
 	% dV_lim
-	m = abs(max(dV));
-	dV_lim(2) = round(m,-floor(log10(m))) + 10^floor(log10(m));
-	m = abs(min(dV));
-	dV_lim(1) = round(m,-floor(log10(m))) + 10^floor(log10(m));
-	if min(dV) < 0
-		dV_lim(1) = -dV_lim(1);
-	end
-	if max(dV) < 0
-		dV_lim(2) = -V_lim(2);
-	end
+	temp = (nanmax(dV) - nanmin(dV))*.1;
+	dV_lim = [min(dV) - temp, max(dV) + temp];
 
 end
 
@@ -76,8 +61,6 @@ assert(isvector(V_lim),'V_lim has to be a vector')
 assert(isvector(dV_lim),'dV_lim has to be a vector')
 assert(length(V_lim) == 2,'size of V_lim has to be 2x1')
 assert(length(dV_lim) == 2,'size of dV_lim has to be 2x1')
-
-
 
 % overflow
 V(V<V_lim(1)) = NaN;
@@ -95,9 +78,9 @@ dV = dV - dV_lim(1);
 dV = dV/(dV_lim(2) - dV_lim(1));
 dV = ceil(dV*99)+1;
 
+
 M = zeros(101,101);
 % M(101,101) is used to collect overflow terms
-
 
 % other way
 for i = 1:length(V)
