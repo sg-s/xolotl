@@ -19,12 +19,17 @@ function C = voltageCost(V1,V2, N)
 C = 0;
 
 
-% compute derivatives 
-dV1 = [NaN; diff(V1)];
-dV2 = [NaN; diff(V2)];
+
 
 assert(isvector(V1),'V1 must be a vector')
 assert(isvector(V2),'V2 must be a vector')
+
+V1 = V1(:);
+V2 = V2(:);
+
+% compute derivatives 
+dV1 = [NaN; diff(V1)];
+dV2 = [NaN; diff(V2)];
 
 if nargin == 2
 	N = 1e3;
@@ -46,7 +51,8 @@ for i = 2:length(x_space)
 	end
 
 	small_V1(1,i) = dV1(allowed_values(1));
-	small_V1(2,i) = V1(dV1 == small_V1(1,i));
+	temp = V1(dV1 == small_V1(1,i));
+	small_V1(2,i) = temp(1);
 end
 
 
@@ -64,7 +70,8 @@ for i = 2:length(x_space)
 	end
 
 	small_V2(1,i) = dV2(allowed_values(1));
-	small_V2(2,i) = V2(dV2 == small_V2(1,i));
+	temp = V2(dV2 == small_V2(1,i));
+	small_V2(2,i) = temp(1);
 end
 
 
