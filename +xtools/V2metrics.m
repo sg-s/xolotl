@@ -85,26 +85,7 @@ if nargout && ~nargin
 end
 
 % validate and accept options
-if mathlib.iseven(length(varargin))
-	for ii = 1:2:length(varargin)-1
-	temp = varargin{ii};
-    if ischar(temp)
-    	if ~any(find(strcmp(temp,fieldnames(options))))
-    		disp(['Unknown option: ' temp])
-    		disp('The allowed options are:')
-    		disp(fieldnames(options))
-    		error('UNKNOWN OPTION')
-    	else
-    		options.(temp) = varargin{ii+1};
-    	end
-    end
-end
-elseif isstruct(varargin{1})
-	% should be OK...
-	options = varargin{1};
-else
-	error('Inputs need to be name value pairs')
-end
+options = corelib.parseNameValueArguments(options,varargin{:});
 
 
 assert(isvector(V),'V should be a vector')
@@ -114,8 +95,8 @@ assert(~any(isinf(V)),'V cannot have Inf')
 assert((isreal(V)),'V cannot be complex')
 
 % find spikes in voltage trace
-n_spikes = xtools.findNSpikes(V);
-spiketimes = xtools.findNSpikeTimes(V,n_spikes);
+n_spikes = xtools.findNSpikes(V,options.spike_threshold);
+spiketimes = xtools.findNSpikeTimes(V,n_spikes,options.spike_threshold);
 
 spiketimes(spiketimes > length(V)) = [];
 
