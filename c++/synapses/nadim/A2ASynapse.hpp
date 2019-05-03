@@ -1,14 +1,14 @@
 // Axon to Axon Synapse
-#ifndef AXON
-#define AXON
+#ifndef A2ASYNAPSE
+#define A2ASYNAPSE
 #include "synapse.hpp"
 
-class Axon: public synapse {
+class A2ASynapse: public synapse {
 
 public:
 
     // specify parameters + initial conditions
-    Axon(double g_, double s_)
+    A2ASynapse(double g_, double s_)
     {
         gmax = g_;
         E = -70.0;
@@ -31,8 +31,7 @@ public:
     int getFullStateSize(void);
 };
 
-void Axon::integrate(double dt)
-{
+void A2ASynapse::integrate(double dt) {
 
     // figure out the voltage of the pre-synaptic neuron
     double V_pre = pre_syn->V;
@@ -50,8 +49,7 @@ void Axon::integrate(double dt)
 }
 
 
-int Axon::getFullState(double *syn_state, int idx)
-{
+int A2ASynapse::getFullState(double *syn_state, int idx) {
     // give it the current synapse variable
     syn_state[idx] = s;
     idx++;
@@ -63,17 +61,12 @@ int Axon::getFullState(double *syn_state, int idx)
 }
 
 
-int Axon::getFullStateSize()
-{
-    return 2;
-}
+int A2ASynapse::getFullStateSize(){return 2;}
 
 
-void Axon::connect(compartment *pcomp1_, compartment *pcomp2_)
-{
+void A2ASynapse::connect(compartment *pcomp1_, compartment *pcomp2_) {
     pre_syn = pcomp1_;
     post_syn = pcomp2_;
-
 
     // tell the post-synaptic cell that we're connecting to it
     post_syn->addSynapse(this);
