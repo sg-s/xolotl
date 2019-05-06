@@ -43,7 +43,7 @@ cpplab.rebuildCache;
 % compile GetMD5
 hashlib.md5compile;
 
-this_dir = fileparts(fileparts(which(mfilename)));
+this_dir = fileparts(fileparts(which('xolotl.run_all_tests')));
 all_tests = dir(pathlib.join(this_dir,'examples','demo*.m'));
 
 cd(pathlib.join(this_dir,'examples'))
@@ -54,7 +54,7 @@ total = length(all_tests);
 
 
 for i = length(all_tests):-1:1
-	disp(['Running test: ' all_tests(i).name])
+	fprintf(['Running test: ' all_tests(i).name ' '])
 	try
 		[~,script_name] = fileparts(all_tests(i).name);
 		evalin('base',script_name);

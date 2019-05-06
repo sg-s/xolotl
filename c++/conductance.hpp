@@ -139,7 +139,7 @@ public:
 
     // default constructor
     conductance() {
-        container = 0; //null pointer for safety
+        container = nullptr; //null pointer for safety
     }
 
     ~conductance() {}

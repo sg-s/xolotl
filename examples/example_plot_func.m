@@ -49,7 +49,7 @@ time = (1:length(V))*1e-3*x.dt;
 example_plot.plots.V.XData = time;
 example_plot.plots.V.YData = V;
 
-x.plotgbars(example_plot.gbars,'AB')
+x.plotgbars(example_plot.gbars,'AB');
 
 % get the burst metrics
 metrics = xtools.V2metrics(V,'sampling_rate',1/x.dt);

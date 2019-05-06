@@ -320,6 +320,14 @@ void compartment::addConductance(conductance *cond_) {
 
     n_cond++;
 
+    // set m, h of the conductance if unset
+    if (isnan(cond_->m)) {
+        cond_->m = cond_->m_inf(V,Ca);
+    }
+    if (isnan(cond_->h)) {
+        cond_->h = cond_->h_inf(V,Ca);
+    }
+
     if (verbosity > 0) {
         mexPrintf("[C++] adding conductance of type: %s\n", cond_->getClass().c_str());
     }
