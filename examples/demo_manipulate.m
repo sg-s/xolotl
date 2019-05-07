@@ -13,5 +13,8 @@ x.dt = .1;
 
 x.manipulate_plot_func = {@example_plot_func};
 
+x.pref.use_polar_gbar = false;
+
 x.manipulate('*gbar')
 
+figlib.pretty('fs',14,'lw',1.5)

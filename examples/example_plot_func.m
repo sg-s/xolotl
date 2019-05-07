@@ -9,7 +9,10 @@ if ~isfield(x.handles,'example_plot') || ~isvalid(x.handles.example_plot.main_fi
 
 
 	% make the subplots
-	example_plot.v_trace = subplot(2,1,1); hold on
+	example_plot.v_trace = subplot(2,3,1:2); hold on
+	set(example_plot.v_trace,'YLim',[-85 35]);
+
+
 	example_plot.gbars = subplot(2,3,4); hold on
 	example_plot.burst_metrics = subplot(2,3,5); hold on
 	example_plot.Ca_embedding = subplot(2,3,6); hold on
@@ -18,7 +21,7 @@ if ~isfield(x.handles,'example_plot') || ~isvalid(x.handles.example_plot.main_fi
 	example_plot.plots.V = plot(example_plot.v_trace,NaN,NaN,'k');
 	example_plot.plots.Ca_embedding = plot(example_plot.Ca_embedding,NaN,NaN,'k');
 	example_plot.plots.burst_metrics_all = plot(example_plot.burst_metrics,NaN,NaN,'.','Color',[.5 .5 .5]);
-	example_plot.plots.burst_metrics_this = plot(example_plot.burst_metrics,NaN,NaN,'r+');
+	example_plot.plots.burst_metrics_this = plot(example_plot.burst_metrics,NaN,NaN,'r+','MarkerSize',29);
 
 	
 
@@ -29,9 +32,11 @@ if ~isfield(x.handles,'example_plot') || ~isvalid(x.handles.example_plot.main_fi
 	% labels
 	xlabel(example_plot.burst_metrics,'Duty Cycle')
 	ylabel(example_plot.burst_metrics,'Burst period (ms)')
-	example_plot.burst_metrics.XLim = [0 1];
-	example_plot.burst_metrics.YLim = [0 3e3];
+	example_plot.burst_metrics.XLim = [0 .4];
+	example_plot.burst_metrics.YLim = [0 1e3];
 
+	xlabel(example_plot.v_trace,'Time (s)')
+	ylabel(example_plot.v_trace,'V_m (mV)')
 	xlabel(example_plot.Ca_embedding,'[Ca^2^+] (uM)')
 	ylabel(example_plot.Ca_embedding,'d [Ca^2^+] /dt (uM/ms)')
 

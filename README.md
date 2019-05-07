@@ -3,7 +3,9 @@
 [![Documentation Status](https://readthedocs.org/projects/xolotl/badge/?version=master)](https://xolotl.readthedocs.io/en/master/?badge=master)
 ![](https://img.shields.io/github/last-commit/sg-s/xolotl.svg)
 
-![](https://user-images.githubusercontent.com/6005346/41205222-30b6f3d4-6cbd-11e8-983b-9125585d629a.png)
+
+![](https://user-images.githubusercontent.com/6005346/57262966-9b751100-703c-11e9-890f-3808062e60d9.gif)
+
 
 
 
@@ -78,3 +80,6 @@ Click [here](https://github.com/sg-s/xolotl/releases/download/latest/xolotl.mltb
 # How do I cite this?
 
 We've published a technology report in [Frontiers in Neuroinformatics](https://doi.org/10.3389/fninf.2018.00087).
+
+
+![](https://user-images.githubusercontent.com/6005346/41205222-30b6f3d4-6cbd-11e8-983b-9125585d629a.png)
