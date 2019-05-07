@@ -10,15 +10,24 @@
 % **Description**
 %
 % embeds two voltage traces w.r.t to their derivatives, and measures
-% the distance between the two embeddings
+% the distance between the two embeddings. The traces are first
+% subsampled to N points, which speeds up the computation.
+% The subsampling is handled by fast C++ accelerated code
 %
 
 
-function C = voltageCost(V1,V2, N)
+function C = voltageCost(V1,V2, N, make_plot)
 
 C = 0;
 
+if nargin < 3
+	N = 100;
+	make_plot = false;
+end
 
+if nargin < 4
+	make_plot = false;
+end
 
 
 assert(isvector(V1),'V1 must be a vector')
@@ -36,54 +45,39 @@ if nargin == 2
 end
 
 
-% we need to inteligently subsample the trace. if we do something
+% we need to intelligently subsample the trace. if we do something
 % simple like picking one in every N points, we will miss spikes
 % we need to sample in the 2D space
-x_space =  linspace(nanmin(dV1),nanmax(dV1),N);
 
-% pick one point at random for each step along the x_space
-small_V1 = [NaN*x_space; NaN*x_space];
-for i = 2:length(x_space)
-	allowed_values = find(dV1 > x_space(i-1) & dV1 < x_space(i));
+[small_X1, small_Y1] = statlib.uniformSample2D(dV1,V1,N);
+rm_this = isnan(small_X1) | isnan(small_Y1);
+small_V1 = [small_X1(~rm_this), small_Y1(~rm_this)];
 
-	if isempty(allowed_values)
-		continue
-	end
-
-	small_V1(1,i) = dV1(allowed_values(1));
-	temp = V1(dV1 == small_V1(1,i));
-	small_V1(2,i) = temp(1);
-end
 
 
 
 % now do the same for V2
-x_space =  linspace(nanmin(dV2),nanmax(dV2),N);
+[small_X2, small_Y2] = statlib.uniformSample2D(dV2,V2,N);
+rm_this = isnan(small_X2) | isnan(small_Y2);
+small_V2 = [small_X2(~rm_this), small_Y2(~rm_this)];
 
-% pick one point at random for each step along the x_space
-small_V2 = [NaN*x_space; NaN*x_space];
-for i = 2:length(x_space)
-	allowed_values = find(dV2 > x_space(i-1) & dV2 < x_space(i));
 
-	if isempty(allowed_values)
-		continue
-	end
+C1 = sum(nanmin(pdist2(small_V2,small_V1)));
+C1 = C1/length(small_V1);
 
-	small_V2(1,i) = dV2(allowed_values(1));
-	temp = V2(dV2 == small_V2(1,i));
-	small_V2(2,i) = temp(1);
+C2 = sum(nanmin(pdist2(small_V1,small_V2)));
+C2 = C2/length(small_V2);
+
+C = C1 + C2;
+
+if ~make_plot
+	return
 end
 
+% otherwise, show the plot
+figure('outerposition',[300 300 701 600],'PaperUnits','points','PaperSize',[701 600]); hold on
+plot(dV2,V2,'Color',[.8 .8 1])
+plot(dV1,V1,'Color',[.8 .8 .8])
 
-small_V1(:,isnan(small_V1(1,:))) = [];
-small_V2(:,isnan(small_V2(1,:))) = [];
-
-small_V1 = small_V1';
-small_V2 = small_V2';
-
-for i = 1:length(small_V1)
-	C = C + nanmin(pdist2(small_V2,small_V1(i,:)));
-
-end
-
-C = C/length(small_V1);
+plot(small_V2(:,1),small_V2(:,2),'b.')
+plot(small_V1(:,1),small_V1(:,2),'k.')
