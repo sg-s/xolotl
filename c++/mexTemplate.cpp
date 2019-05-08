@@ -660,6 +660,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         // |__|  |__|  \______/  |_______/ |_______|   |____/
         //
 
+        if (verbosity > 0) {
+            mexPrintf("[xolotl] %i-step integration requested.\n", xolotl_network.solver_order);
+        }
+
         // do the integration respecting V_clamp
 
         for (int i = 0; i < nsteps; i++) {
