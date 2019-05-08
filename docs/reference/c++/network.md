@@ -19,7 +19,7 @@ as an entry point for all other objects.
 **Function Signature**
 
 ```C++
-void checkSolvers(void) 
+void checkSolvers(void)
 ```
 
 **Description**
@@ -28,8 +28,8 @@ void checkSolvers(void)
 This method verifies that all components can integrate
 using the requested solver order. What this method does
 is to call the `checkSolvers` in every compartment,
-which in turn calls the `checkSolvers` method in every 
-component contained in every compartment. 
+which in turn calls the `checkSolvers` method in every
+component contained in every compartment.
 
 
 
@@ -46,7 +46,7 @@ component contained in every compartment.
 **Function Signature**
 
 ```C++
-bool resolveTree(void) 
+bool resolveTree(void)
 ```
 
 **Description**
@@ -55,12 +55,12 @@ bool resolveTree(void)
 This method "resolves" a multi-compartment neuron model.
 What this means is that it works out which compartment
 is "upstream" (closer to the soma) or "downstream" (further
-from soma) for every compartment in a multi-compartment model. 
-It does so using the `tree_idx` property in every compartment, 
-setting it if need be. 
+from soma) for every compartment in a multi-compartment model.
+It does so using the `tree_idx` property in every compartment,
+setting it if need be.
 
 It returns `true` if there is a multi-compartment neuron model
-somewhere in the network, and `false` otherwise. 
+somewhere in the network, and `false` otherwise.
 
 
 
@@ -73,7 +73,7 @@ somewhere in the network, and `false` otherwise.
 
 
 
-### 
+###
 
 **Function Signature**
 
@@ -88,12 +88,12 @@ somewhere in the network, and `false` otherwise.
 This method "resolves" a multi-compartment neuron model.
 What this means is that it works out which compartment
 is "upstream" (closer to the soma) or "downstream" (further
-from soma) for every compartment in a multi-compartment model. 
-It does so using the `tree_idx` property in every compartment, 
-setting it if need be. 
+from soma) for every compartment in a multi-compartment model.
+It does so using the `tree_idx` property in every compartment,
+setting it if need be.
 
 It returns `true` if there is a multi-compartment neuron model
-somewhere in the network, and `false` otherwise. 
+somewhere in the network, and `false` otherwise.
 
 
 bool network::resolveTree(void) {
@@ -115,7 +115,7 @@ bool network::resolveTree(void) {
 **Function Signature**
 
 ```C++
-void addCompartment(compartment *comp_) 
+void addCompartment(compartment *comp_)
 ```
 
 **Description**
@@ -123,7 +123,7 @@ void addCompartment(compartment *comp_)
 
 This method adds a compartment to the network. It does the following things:
 1. adds a pointer to the compartment being added to a vector called `comp`
-2. Broadcasts certain global parameters like `temperature`, `dt`, etc to all compartments. 
+2. Broadcasts certain global parameters like `temperature`, `dt`, etc to all compartments.
 3. Updates `n_comp` to that network knows how many compartments there are.
 
 
@@ -141,7 +141,7 @@ This method adds a compartment to the network. It does the following things:
 **Function Signature**
 
 ```C++
-void integrateMS(double * I_ext_now) 
+void integrateMS(double * I_ext_now)
 ```
 
 **Description**
@@ -149,7 +149,7 @@ void integrateMS(double * I_ext_now)
 
 This method is used to integrate the network using a
 multi-step Runge Kutta solver. This method assumes that
-no compartment is being voltage clamped. 
+no compartment is being voltage clamped.
 
 
 
@@ -166,7 +166,7 @@ no compartment is being voltage clamped.
 **Function Signature**
 
 ```C++
-void integrate(double * I_ext_now) 
+void integrate(double * I_ext_now)
 ```
 
 **Description**
@@ -176,10 +176,10 @@ This method is used to integrate the network using the default
 single step solver. Typically, this means using the exponential-
 Euler method to integrate conductances and integrate the voltages
 and Calcium levels in compartments, though mechanisms can implement
-their own integration schemes. Multi-compartment models are 
+their own integration schemes. Multi-compartment models are
 integrated using the Crank-Nicholson scheme.  
 
-This method assumes that no compartment anywhere is being voltage clamped. 
+This method assumes that no compartment anywhere is being voltage clamped.
 
 
 
@@ -196,7 +196,7 @@ This method assumes that no compartment anywhere is being voltage clamped.
 **Function Signature**
 
 ```C++
-void integrateClamp(double *V_clamp) 
+void integrateClamp(double *V_clamp)
 ```
 
 **Description**
@@ -206,12 +206,12 @@ This method is used to integrate the network using the default
 single step solver. Typically, this means using the exponential-
 Euler method to integrate conductances and integrate the voltages
 and Calcium levels in compartments, though mechanisms can implement
-their own integration schemes. Multi-compartment models are 
+their own integration schemes. Multi-compartment models are
 integrated using the Crank-Nicholson scheme.  
 
 This method assumes that some compartment is being voltage clamped,
-and also assumes that no current is being injected into any compartment. 
- 
+and also assumes that no current is being injected into any compartment.
+
 
 
  **Code**
@@ -219,4 +219,3 @@ and also assumes that no current is being injected into any compartment.
 [Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L367)
 
 -------
-
