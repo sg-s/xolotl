@@ -30,16 +30,23 @@ public:
           is_electrical = false;
       }
 
-    double ss_core(double);
-    double s_inf(double);
-    double tau_s(double);
-    double sdot(double, double);
-    void integrate(void);
-    void integrateMS(int, double, double);
-    int getFullStateSize(void);
-    void connect(compartment *pcomp1_, compartment *pcomp2_);
-    double getCurrent(double V_post);
-    int getFullState(double*, int);
+      // dynamics functions
+      double ss_core(double);
+      double s_inf(double);
+      double tau_s(double);
+      double sdot(double, double, double);
+
+      // integration functions
+      void checkSolvers(int);
+      void integrate(void);
+      void integrateMS(int, double, double);
+
+      // output/connection functions
+      int getFullStateSize(void);
+      void connect(compartment *pcomp1_, compartment *pcomp2_);
+      double getCurrent(double V_post);
+      int getFullState(double*, int);
+      
 };
 
 int AMPAergic::getFullStateSize()
@@ -64,8 +71,7 @@ double AMPAergic::tau_s(double ss)
 
 double AMPAergic::sdot(double V_pre, double s_)
 {
-    double ss = ss_core(V_pre);
-    return (s_inf(ss) - s_) / tau_s(ss);
+    return ss_core(V_pre) * (1 - s_) / tau_r - s_ / tau_d;
 }
 
 void AMPAergic::integrate(void)
@@ -140,7 +146,14 @@ void AMPAergic::connect(compartment *pcomp1_, compartment *pcomp2_)
     post_syn->addSynapse(this);
 }
 
-
+void NMDAergic::checkSolvers(int k){
+    if (k == 0) {
+        return;
+    } else if (k == 4) {
+        return;
+    }
+    mexErrMsgTxt("[NMDAergic] Unsupported solver order\n");
+}
 
 
 #endif
