@@ -1,14 +1,10 @@
-% makes a two-compartment neuron model
-% that is meant to be fit to the dynamics of a STG neuron
-% 
-% In this model, the CellBody has all the normal STG channels
-% except NaV
-% and the axon only has NaV, Kd and ACurrent
-function x = TwoCompartmentSTG(resistivity)
+% makes a realistic cable with some options
+function x = makeSTGNeuron()
 
-if nargin == 0
-	resistivity = 1e-3; % MOhm mm; 
-end
+
+
+resistivity = 1e-3; % MOhm mm; 
+
 
 
 r_soma = .025;
@@ -30,6 +26,13 @@ x.add('compartment','Axon','radius',r_neurite,'len',L_neurite,'Ca_out',3000);
 x.Axon.add('prinz/Calcium','f',f)
 
 
+
+
+channels = {'NaV','CaT','CaS','ACurrent','KCa','Kd','HCurrent'};
+gbar = [1000        25  60     500         50  1000 .1];
+E =         [50   30  30 -80 -80 -80   -20];
+
+comp_names = x.Children;
 
 % soma has everythign except NaV
 x.CellBody.add('prinz/CaT','gbar',25);
