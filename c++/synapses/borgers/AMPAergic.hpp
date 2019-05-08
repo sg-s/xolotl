@@ -46,7 +46,7 @@ public:
       void connect(compartment *pcomp1_, compartment *pcomp2_);
       double getCurrent(double V_post);
       int getFullState(double*, int);
-      
+
 };
 
 int AMPAergic::getFullStateSize()
@@ -146,7 +146,7 @@ void AMPAergic::connect(compartment *pcomp1_, compartment *pcomp2_)
     post_syn->addSynapse(this);
 }
 
-void NMDAergic::checkSolvers(int k){
+void AMPAergic::checkSolvers(int k){
     if (k == 0) {
         return;
     } else if (k == 4) {
