@@ -19,7 +19,7 @@ as an entry point for all other objects.
 **Function Signature**
 
 ```C++
-void checkSolvers(void)
+void checkSolvers(void) 
 ```
 
 **Description**
@@ -35,7 +35,7 @@ component contained in every compartment.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L82)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L83)
 
 -------
 
@@ -46,7 +46,7 @@ component contained in every compartment.
 **Function Signature**
 
 ```C++
-bool resolveTree(void)
+bool resolveTree(void) 
 ```
 
 **Description**
@@ -67,13 +67,13 @@ somewhere in the network, and `false` otherwise.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L105)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L106)
 
 -------
 
 
 
-###
+### 
 
 **Function Signature**
 
@@ -104,7 +104,7 @@ bool network::resolveTree(void) {
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L109)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L110)
 
 -------
 
@@ -115,7 +115,7 @@ bool network::resolveTree(void) {
 **Function Signature**
 
 ```C++
-void addCompartment(compartment *comp_)
+void addCompartment(compartment *comp_) 
 ```
 
 **Description**
@@ -130,7 +130,7 @@ This method adds a compartment to the network. It does the following things:
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L217)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L218)
 
 -------
 
@@ -141,7 +141,7 @@ This method adds a compartment to the network. It does the following things:
 **Function Signature**
 
 ```C++
-void integrateMS(double * I_ext_now)
+void integrateMS(double * I_ext_now) 
 ```
 
 **Description**
@@ -155,7 +155,33 @@ no compartment is being voltage clamped.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L239)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L240)
+
+-------
+
+
+
+### integrateMSClamp
+
+**Function Signature**
+
+```C++
+void integrateMSClamp(double * V_clamp) 
+```
+
+**Description**
+
+
+This method is used to integrate the network using a
+multi-step Runge-Kutta solver. This method assumes that
+one compartment is being voltage-clamped.
+
+
+
+
+ **Code**
+
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L262)
 
 -------
 
@@ -166,7 +192,7 @@ no compartment is being voltage clamped.
 **Function Signature**
 
 ```C++
-void integrate(double * I_ext_now)
+void integrate(double * I_ext_now) 
 ```
 
 **Description**
@@ -177,7 +203,7 @@ single step solver. Typically, this means using the exponential-
 Euler method to integrate conductances and integrate the voltages
 and Calcium levels in compartments, though mechanisms can implement
 their own integration schemes. Multi-compartment models are
-integrated using the Crank-Nicholson scheme.  
+integrated using the Crank-Nicholson scheme.
 
 This method assumes that no compartment anywhere is being voltage clamped.
 
@@ -185,7 +211,7 @@ This method assumes that no compartment anywhere is being voltage clamped.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L266)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L293)
 
 -------
 
@@ -196,7 +222,7 @@ This method assumes that no compartment anywhere is being voltage clamped.
 **Function Signature**
 
 ```C++
-void integrateClamp(double *V_clamp)
+void integrateClamp(double *V_clamp) 
 ```
 
 **Description**
@@ -207,7 +233,7 @@ single step solver. Typically, this means using the exponential-
 Euler method to integrate conductances and integrate the voltages
 and Calcium levels in compartments, though mechanisms can implement
 their own integration schemes. Multi-compartment models are
-integrated using the Crank-Nicholson scheme.  
+integrated using the Crank-Nicholson scheme.
 
 This method assumes that some compartment is being voltage clamped,
 and also assumes that no current is being injected into any compartment.
@@ -216,6 +242,7 @@ and also assumes that no current is being injected into any compartment.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L367)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L394)
 
 -------
+
