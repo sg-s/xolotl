@@ -66,6 +66,13 @@ Currents are stored in an $n \times c$ matrix where $n$ is the number of time st
 are ordered exactly the same as in the `xolotl` object, meaning by compartment and
 then alphabetically.
 
+### (5) Synaptic currents
+
+Synaptic gating variables and curents are stored in an $n \times s$ matrix
+where $n$ is the number of time steps (`x.t_end / x.dt`) and $s$ is the number of synapses.
+Currents are ordered exactly the same as in the `xolotl` object,
+meaning by compartment and then alphabetically.
+
 !!! Note "Plotting mechanisms and currents"
     The example script `demo_stg` contains code that plots currents vs. time and `demo_integral_control` contains code that plots mechanisms vs. time.
 
