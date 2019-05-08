@@ -117,6 +117,8 @@ When voltage clamp is used with single-compartment or network models (no electri
 either the default exponential Euler or Runge-Kutta integration methods can be used.
 Both are compatible with voltage clamp and yield nearly identical results.
 
+As usual, you can switch between integration methods by setting the [solver order](../reference/matlab/xolotl/#solverorder) property.
+
 Be careful when using voltage clamp on multi-compartment models,
 since it is not possible to use implicit solvers when doing so.
 
