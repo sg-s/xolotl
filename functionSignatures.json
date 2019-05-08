@@ -13,7 +13,8 @@
         [
         	{"name":"x","kind":"required","type":"xolotl"},
             {"name":"comp1", "kind":"required", "type":"choices=x.Children"},
-            {"name":"comp2", "kind":"required", "type":"choices=x.Children"}
+            {"name":"comp2", "kind":"required", "type":"choices=x.Children"},
+            {"name":"syn","type":"choices=cpplab.search('synapses')"}
         ]
     },
 
