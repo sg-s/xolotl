@@ -34,7 +34,7 @@ public:
       double ss_core(double);
       double s_inf(double);
       double tau_s(double);
-      double sdot(double, double, double);
+      double sdot(double, double);
 
       // integration functions
       void checkSolvers(int);
