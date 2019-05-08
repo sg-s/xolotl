@@ -1,6 +1,11 @@
 // nearly-instantaneous rise synaptic conductance for NMDAergic receptors
 // based on the Jahr-Stevens model
 // based on C. Borgers "An Introduction to Modeling Neuronal Dynamics" Ch. 20
+//
+// notably, this current depends on both the post-synaptic and pre-synaptic membrane potentials
+// as well as an external magnesium concentration
+// there are two time constants, a rise-time and a delay-time constant
+
 #ifndef NMDA
 #define NMDA
 #include "synapse.hpp"
@@ -29,21 +34,28 @@ public:
         if (isnan (gmax)) { gmax = 0; }
         if (isnan (E)) { E = 0; }
         if (isnan (Mg)) { Mg = 1; }
-        if (isnan (tau_r)) { tau_r = 1; }
-        if (isnan (tau_d)) { tau_d = 1; }
+        if (isnan (tau_r)) { tau_r = 2; }
+        if (isnan (tau_d)) { tau_d = 100; }
         is_electrical = false;
     }
 
+    // dynamics functions
     double ss_core(double);
     double s_inf(double);
     double tau_s(double);
     double sdot(double, double, double);
+
+    // integration functions
+    void checkSolvers(int);
     void integrate(void);
     void integrateMS(int, double, double);
+
+    // output/connection functions
     int getFullStateSize(void);
     void connect(compartment *pcomp1_, compartment *pcomp2_);
     double getCurrent(double V_post);
     int getFullState(double*, int);
+
 };
 
 int NMDAergic::getFullStateSize()
@@ -69,8 +81,7 @@ double NMDAergic::tau_s(double ss)
 
 double NMDAergic::sdot(double V_pre, double V_post, double s_)
 {
-    double ss = ss_core(V_pre);
-    return (s_inf(ss) - s_) / tau_s(ss) * 1.0 / (1.0 + Mg / 3.57 * exp(-0.062*V_post));
+    return ss_core(V_pre) * (1 - s_) / tau_r - s_ / tau_d;
 }
 
 void NMDAergic::integrate(void)
@@ -121,6 +132,7 @@ void NMDAergic::integrateMS(int k, double V, double Ca)
         // last step
 
         s = s + (k_s[0] + 2*k_s[1] + 2*k_s[2] + k_s[3])/6;
+        s = s * 1.0 / (1.0 + Mg / 3.57 * exp(-0.062*V_post));
 
         if (s < 0) {s = 0;}
         if (s > 1) {s = 1;}
@@ -151,7 +163,14 @@ void NMDAergic::connect(compartment *pcomp1_, compartment *pcomp2_)
     post_syn->addSynapse(this);
 }
 
-
+void NMDAergic::checkSolvers(int k){
+    if (k == 0) {
+        return;
+    } else if (k == 4) {
+        return;
+    }
+    mexErrMsgTxt("[NMDAergic] Unsupported solver order\n");
+}
 
 
 #endif
