@@ -652,136 +652,132 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     } else if (is_voltage_clamped & is_multi_step) {
 
-     //    __  ___        __      ____
-     //   /  |/  /__  ___/ /__   |_  /
-     //  / /|_/ / _ \/ _  / -_) _/_ <
-     // /_/  /_/\___/\_,_/\__/ /____/
-     //
+        // .___  ___.   ______    _______   _______     ____
+        // |   \/   |  /  __  \  |       \ |   ____|   |___ \
+        // |  \  /  | |  |  |  | |  .--.  ||  |__        __) |
+        // |  |\/|  | |  |  |  | |  |  |  ||   __|      |__ <
+        // |  |  |  | |  `--'  | |  '--'  ||  |____     ___) |
+        // |__|  |__|  \______/  |_______/ |_______|   |____/
+        //
 
-     if (verbosity > 0) {
-         mexPrintf("[xolotl] %i-step integration requested.\n,", xolotl_network.solver_order);
-     }
+        // do the integration respecting V_clamp
 
-     // do the integration respecting V_clamp
+        for (int i = 0; i < nsteps; i++) {
 
-     for (int i = 0; i < nsteps; i++) {
+            if (V_clamp_size_2 == nsteps) {
+                // I_ext is dynamically changing
+                for(int q = 0; q < n_comp; q++) {
+                    V_clamp[q] = V_clamp_in[i*n_comp + q];
+                }
+            }
 
-         if (V_clamp_size_2 == nsteps) {
-             // I_ext is dynamically changing
-             for(int q = 0; q < n_comp; q++) {
-                 V_clamp[q] = V_clamp_in[i*n_comp + q];
-             }
-         }
+            xolotl_network.integrateClamp(V_clamp); // this needs to change
 
-         xolotl_network.integrateClamp(V_clamp); // TODO: this needs to change
+            if (i%progress_report == 0 & verbosity > 0) {
+                mexPrintf("[C++] integration %i %", percent_complete);
+                mexPrintf(" complete\n");
+                percent_complete += 10;
+                mexEvalString("drawnow;");
+            }
 
-         if (i%progress_report == 0 & verbosity > 0) {
-             mexPrintf("[C++] integration %i %", percent_complete);
-             mexPrintf(" complete\n");
-             percent_complete += 10;
-             mexEvalString("drawnow;");
-         }
+            // here we're getting the state of every compartment -- V, Ca, and all conductances
+            if (i%res == 0) {
 
+                switch (nlhs) {
+                    case 1:
+                        // only one output, do nothing
+                        break;
+                    case 2:
+                        // read out voltages only
+                        for (int j = 0; j < n_comp; j++) {
+                            if (isnan(V_clamp[j])) {
+                                output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
+                            }
+                            else {
+                                output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->I_clamp;
+                            }
+                        } // end j loop over compartments
+                        break;
 
-         // here we're getting the state of every compartment -- V, Ca, and all conductances
-         if (i%res == 0) {
+                    case 3:
+                        // V + Ca
+                        for (int j = 0; j < n_comp; j++) {
+                            if (isnan(V_clamp[j])) {
+                                output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
+                            }
+                            else {
+                                output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->I_clamp;
+                            }
+                            output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
+                            output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
 
-             switch (nlhs) {
-                 case 1:
-                     // only one output, do nothing
-                     break;
-                 case 2:
-                     // read out voltages only
-                     for (int j = 0; j < n_comp; j++) {
-                         if (isnan(V_clamp[j])) {
-                             output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
-                         }
-                         else {
-                             output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->I_clamp;
-                         }
-                     } // end j loop over compartments
-                     break;
+                        } // end j loop over compartments
+                        break;
 
-                 case 3:
-                     // V + Ca
-                     for (int j = 0; j < n_comp; j++) {
-                         if (isnan(V_clamp[j])) {
-                             output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
-                         }
-                         else {
-                             output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->I_clamp;
-                         }
-                         output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
-                         output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
+                    case 4:
+                        // V, Ca, mechanisms
 
-                     } // end j loop over compartments
-                     break;
+                        for (int j = 0; j < n_comp; j++) {
+                            if (isnan(V_clamp[j])) {
+                                output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
+                            }
+                            else {
+                                output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->I_clamp;
+                            }
+                            output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
+                            output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
+                            cont_idx = (xolotl_network.comp[j]->getFullMechanismState(output_cont_state,cont_idx));
 
-                 case 4:
-                     // V, Ca, mechanisms
-
-                     for (int j = 0; j < n_comp; j++) {
-                         if (isnan(V_clamp[j])) {
-                             output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
-                         }
-                         else {
-                             output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->I_clamp;
-                         }
-                         output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
-                         output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
-                         cont_idx = (xolotl_network.comp[j]->getFullMechanismState(output_cont_state,cont_idx));
-
-                     } // end j loop over compartments
-                     break;
+                        } // end j loop over compartments
+                        break;
 
 
-                 case 5:
-                     // V, Ca, C, I
-                     for (int j = 0; j < n_comp; j++) {
-                         if (isnan(V_clamp[j])) {
-                             output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
-                         }
-                         else {
-                             output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->I_clamp;
-                         }
-                         output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
-                         output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
-                         cont_idx = (xolotl_network.comp[j]->getFullMechanismState(output_cont_state,cont_idx));
-                         cond_idx = (xolotl_network.comp[j]->getFullCurrentState(output_curr_state,cond_idx));
+                    case 5:
+                        // V, Ca, C, I
+                        for (int j = 0; j < n_comp; j++) {
+                            if (isnan(V_clamp[j])) {
+                                output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
+                            }
+                            else {
+                                output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->I_clamp;
+                            }
+                            output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
+                            output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
+                            cont_idx = (xolotl_network.comp[j]->getFullMechanismState(output_cont_state,cont_idx));
+                            cond_idx = (xolotl_network.comp[j]->getFullCurrentState(output_curr_state,cond_idx));
 
-                     } // end j loop over compartments
-                     break;
+                        } // end j loop over compartments
+                        break;
 
 
 
-                 default:
-                     // V, Ca, Ca, I, Syn
-                     for (int j = 0; j < n_comp; j++) {
+                    default:
+                        // V, Ca, Ca, I, Syn
+                        for (int j = 0; j < n_comp; j++) {
 
-                         if (isnan(V_clamp[j])) {
-                             output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
-                         }
-                         else {
-                             output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->I_clamp;
-                         }
+                            if (isnan(V_clamp[j])) {
+                                output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
+                            }
+                            else {
+                                output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->I_clamp;
+                            }
 
-                         output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
-                         output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
-                         cont_idx = (xolotl_network.comp[j]->getFullMechanismState(output_cont_state,cont_idx));
-                         cond_idx = (xolotl_network.comp[j]->getFullCurrentState(output_curr_state,cond_idx));
-                     } // end j loop over compartments
+                            output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
+                            output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
+                            cont_idx = (xolotl_network.comp[j]->getFullMechanismState(output_cont_state,cont_idx));
+                            cond_idx = (xolotl_network.comp[j]->getFullCurrentState(output_curr_state,cond_idx));
+                        } // end j loop over compartments
 
-                     for (int k = 0; k < n_synapses; k++) {
-                         syn_idx = (all_synapses[k]->getFullState(output_syn_state,syn_idx));
-                     }
+                        for (int k = 0; k < n_synapses; k++) {
+                            syn_idx = (all_synapses[k]->getFullState(output_syn_state,syn_idx));
+                        }
 
-                     break;
-             } // switch
-             output_idx ++;
-         } // if we need to write output
+                        break;
+                } // switch
+                output_idx ++;
+            } // if we need to write output
 
-     } // end for loop over nsteps
-
+        } // end for loop over nsteps
 
     } else  {
         mexErrMsgTxt("[xolotl] Unknown integration mode. \n");
