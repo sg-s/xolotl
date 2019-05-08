@@ -66,6 +66,7 @@ public:
     void integrate(double *);
     void integrateMS(double *);
     void integrateClamp(double *);
+    void integrateMSClamp(double *);
     void addCompartment(compartment*);
     bool resolveTree(void);
     void checkSolvers(void);
@@ -252,6 +253,32 @@ void network::integrateMS(double * I_ext_now) {
     }
 }
 
+/*
+This method is used to integrate the network using a
+multi-step Runge-Kutta solver. This method assumes that
+one compartment is being voltage-clamped.
+*/
+
+void network::integrateMSClamp(double * V_clamp) {
+    // first move all variables to previous state in all compartments
+    for (int i = 0; i < n_comp; i++) {
+        comp[i]->V_prev = comp[i]->V;
+        comp[i]->Ca_prev = comp[i]->Ca;
+        comp[i]->i_Ca_prev = comp[i]->i_Ca;
+    }
+
+    // integrate using a multi-step solver
+    for (int k = 0; k <= solver_order; k++) {
+        for (int i = 0; i < n_comp; i++) {
+            comp[i]->integrateMS(k);
+        }
+    }
+
+    // set V_clamp in all the compartments
+    for (int i = 0; i < n_comp; i++) {
+        comp[i]->V_clamp = V_clamp[i];
+    }
+} // integrateMSClamp
 
 /*
 This method is used to integrate the network using the default
