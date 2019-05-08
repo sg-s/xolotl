@@ -1,14 +1,14 @@
-This document describes how to voltage clamp a compartment in xolotl. 
+This document describes how to voltage clamp a compartment in xolotl.
 
-## Introduction and Limitations 
+## Introduction and Limitations
 
-Voltage clamping is a technique where you insert an electrode into a cell (or part of a cell), and use a computer to inject whatever current is needed to keep the voltage of that compartment at a desired value. Experimentally, the voltage can be monitored either using a second electrode or by rapidly switching the first electrode between modes where it is used to record the voltage or to inject current. 
+Voltage clamping is a technique where you insert an electrode into a cell (or part of a cell), and use a computer to inject whatever current is needed to keep the voltage of that compartment at a desired value. Experimentally, the voltage can be monitored either using a second electrode or by rapidly switching the first electrode between modes where it is used to record the voltage or to inject current.
 
 xolotl allows you to voltage clamp compartments with the following limitations:
 
 1. Only one compartment can be voltage clamped at a time in any given model.
-2. You cannot simultaneously inject current and voltage clamp 
-3. Voltage clamping a single compartment in a multi-compartment model is not recommended, since xolotl does not use implicit solvers when voltage clamped. 
+2. You cannot simultaneously inject current and voltage clamp
+3. Voltage clamping a single compartment in a multi-compartment model is not recommended, since xolotl does not use implicit solvers when voltage clamped.
 
 
 ## Voltage clamping a single compartment to a fixed value
@@ -87,8 +87,8 @@ Now, when we integrate it using:
 data = x.integrate;
 ```
 
-!!! warning 
-    Note that the voltage and the clamping current are returned packaged into the same variable! 
+!!! warning
+    Note that the voltage and the clamping current are returned packaged into the same variable!
 
 Let's tease them apart and plot them:
 
@@ -110,6 +110,15 @@ ylabel('V_{PY} (mV)')
 We see something like this:
 
 ![](https://user-images.githubusercontent.com/6005346/50013473-3c303a80-ff8f-11e8-88f7-6afaa16826de.png)
+
+## Voltage clamp and integration
+
+When voltage clamp is used with single-compartment or network models (no electrical synapses),
+either the default exponential Euler or Runge-Kutta integration methods can be used.
+Both are compatible with voltage clamp and yield nearly identical results.
+
+Be careful when using voltage clamp on multi-compartment models,
+since it is not possible to use implicit solvers when doing so.
 
 ## See Also
 
