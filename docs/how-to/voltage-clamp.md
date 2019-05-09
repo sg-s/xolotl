@@ -6,9 +6,8 @@ Voltage clamping is a technique where you insert an electrode into a cell (or pa
 
 xolotl allows you to voltage clamp compartments with the following limitations:
 
-1. Only one compartment can be voltage clamped at a time in any given model.
-2. You cannot simultaneously inject current and voltage clamp
-3. Voltage clamping a single compartment in a multi-compartment model is not recommended, since xolotl does not use implicit solvers when voltage clamped.
+1. You cannot simultaneously inject current and voltage clamp
+2. Voltage clamping a single compartment in a multi-compartment model is not recommended, since xolotl does not use implicit solvers when voltage clamped.
 
 
 ## Voltage clamping a single compartment to a fixed value
@@ -110,6 +109,10 @@ ylabel('V_{PY} (mV)')
 We see something like this:
 
 ![](https://user-images.githubusercontent.com/6005346/50013473-3c303a80-ff8f-11e8-88f7-6afaa16826de.png)
+
+## Voltage clamping multiple compartments
+
+To voltage clamp more than one compartment, fill out more than one column of the `x.V_clamp` property with non-`NaN` values.
 
 ## Voltage clamp and integration
 
