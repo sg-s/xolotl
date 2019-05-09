@@ -93,7 +93,7 @@ void NMDAergic::integrate(void)
     double sinf = s_inf(ss);
 
     // integrate using exponential Euler
-    s = sinf + (s - sinf)*exp(-dt/tau_s(ss)) * 1.0 / (1.0 + Mg / 3.57 * exp(-0.062*V_post));
+    s = (sinf + (s - sinf)*exp(-dt/tau_s(ss))) * 1.0 / (1.0 + Mg / 3.57 * exp(-0.062*V_post));
     g = gmax*s;
 }
 
