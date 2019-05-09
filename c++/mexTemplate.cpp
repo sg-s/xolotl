@@ -24,7 +24,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double *output_curr_state; // currents
     double *output_syn_state;  // synapses
     double *output_cont_state; // mechanisms
-    double * spiketimes; 
+    double * spiketimes;
 
 
     //xolotl:define_v_clamp_idx
@@ -75,13 +75,13 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     //xolotl:add_conductances_here
 
 
-    vector<synapse*> all_synapses; // pointers to all synapses 
+    vector<synapse*> all_synapses; // pointers to all synapses
     //xolotl:add_synapses_here
 
 
     //xolotl:add_mechanisms_here
 
-    
+
 
     //xolotl:call_methods_here
     int nsteps = (int) floor(t_end/sim_dt);
@@ -101,10 +101,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         full_controller_sizes[i] = xolotl_network.comp[i]->getFullMechanismSize();
         full_controller_size += full_controller_sizes[i];
     }
-    
+
 
     // compute ionic current state dimensions
-    // assumed to be the same for all conductances 
+    // assumed to be the same for all conductances
     int full_current_size = 0;
     for (int i = 0; i < n_comp; i ++) {
         full_current_size += (xolotl_network.comp[i])->n_cond;
@@ -127,7 +127,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // ask all the mechanisms for their sizes
     int begin_mechansism_sizes = param_size;
     param_size = param_size + n_mechanisms;
-    
+
 
     plhs[0] = mxCreateDoubleMatrix(param_size, 1, mxREAL);
     output_state = mxGetPr(plhs[0]);
@@ -153,7 +153,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
 
     }
-         
+
 
     if (nlhs > 1) {
         plhs[1] = mxCreateDoubleMatrix(n_comp, nsteps_out, mxREAL);
@@ -179,7 +179,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         output_syn_state = mxGetPr(plhs[5]);
     }
 
-    // return another output for spiketimes 
+    // return another output for spiketimes
     if (nlhs > 6) {
         plhs[6] = mxCreateDoubleMatrix(nsteps_out, n_comp, mxREAL);
         spiketimes = mxGetPr(plhs[6]);
@@ -194,8 +194,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // create arrays to help us find spikes
     // and return just the spiketimes
-    double * prev_V = new double[n_comp]; 
-    int * spike_time_idx = new int[n_comp]; 
+    double * prev_V = new double[n_comp];
+    int * spike_time_idx = new int[n_comp];
     int spikes_only = 0;
     if (output_type == 2){
         // mexPrintf("Returning spiketimes instead of voltage..\n");
@@ -206,7 +206,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         }
     }
 
-    // figure out the sizes of the arrays 
+    // figure out the sizes of the arrays
     // for V_clamp and I_ext
     const mwSize *I_ext_dim, *V_clamp_dim;
     I_ext_dim = mxGetDimensions(prhs[1]);
@@ -257,7 +257,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // figure out if we're voltage clamping
     // if any V_clamp is non-NaN, then we are
-    
+
     for (int j = 0; j < n_comp; j++) {
         if (!isnan(V_clamp[j])) {
             is_voltage_clamped = true;
@@ -279,7 +279,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // }
 
 
-    int output_idx = 0; 
+    int output_idx = 0;
     int cont_idx = 0;
     int cond_idx = 0;
     int syn_idx = 0;
@@ -287,21 +287,21 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     if (verbosity > 0){
         mexPrintf("[C++] %i outputs requested\n", nlhs);
     }
-    
 
-    // tell all components about some core 
+
+    // tell all components about some core
     // parameters
     // xolotl_network.broadcast(sim_dt, temperature);
 
     if (!is_voltage_clamped & !is_multi_step){
- 
-//                    
-//                                  _         ___  
-//              _ __ ___   ___   __| | ___   / _ | 
+
+//
+//                                  _         ___
+//              _ __ ___   ___   __| | ___   / _ |
 //             | '_ ` _ \ / _ \ / _` |/ _ \ | | | |
 //             | | | | | | (_) | (_| |  __/ | |_| |
-//             |_| |_| |_|\___/ \__,_|\___|  \___/ 
-                                    
+//             |_| |_| |_|\___/ \__,_|\___|  \___/
+
 
 
         for (int i = 0; i < nsteps; i++) {
@@ -357,7 +357,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
                         } // end j loop over compartments
                         break;
-                    
+
 
                     case 5:
                         // V, Ca, C, I
@@ -378,7 +378,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                         for (int j = 0; j < n_comp; j++) {
 
                             output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
-   
+
                             output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
                             output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
                             cont_idx = (xolotl_network.comp[j]->getFullMechanismState(output_cont_state,cont_idx));
@@ -396,7 +396,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
 
 
-            // do we need to return spike times? 
+            // do we need to return spike times?
             switch (spikes_only){
 
                 case 0:
@@ -407,26 +407,26 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                         if ((prev_V[j] < spike_thresh) && ((xolotl_network.comp[j]->V) > spike_thresh)) {
                             spiketimes[spike_time_idx[j] + j*nsteps_out] = i;
                             spike_time_idx[j]++;
-                        } 
+                        }
                         prev_V[j] = xolotl_network.comp[j]->V;
                     } // end j loop over compartments
                     break;
             }
 
 
-                            
+
 
         } // end for loop over nsteps
 
 
     } else if (is_voltage_clamped & !is_multi_step) {
 
-//                             _           _ 
+//                             _           _
 //         _ __ ___   ___   __| | ___     / |
 //        | '_ ` _ \ / _ \ / _` |/ _ \    | |
 //        | | | | | | (_) | (_| |  __/    | |
 //        |_| |_| |_|\___/ \__,_|\___|    |_|
-                                
+
 
 
         // do the integration respecting V_clamp
@@ -500,7 +500,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
                         } // end j loop over compartments
                         break;
-                    
+
 
                     case 5:
                         // V, Ca, C, I
@@ -531,7 +531,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                             else {
                                 output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->I_clamp;
                             }
-   
+
                             output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
                             output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
                             cont_idx = (xolotl_network.comp[j]->getFullMechanismState(output_cont_state,cont_idx));
@@ -554,19 +554,19 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
 
     } else if (!is_voltage_clamped & is_multi_step) {
-//              
-//                            _        ____  
+//
+//                            _        ____
 //        _ __ ___   ___   __| | ___  |___ \
 //       | '_ ` _ \ / _ \ / _` |/ _ \   __) |
-//       | | | | | | (_) | (_| |  __/  / __/ 
+//       | | | | | | (_) | (_| |  __/  / __/
 //       |_| |_| |_|\___/ \__,_|\___| |_____|
-                                    
+
 
         if (verbosity > 0) {
             mexPrintf("[xolotl] %i-step integration requested.\n", xolotl_network.solver_order);
 
         }
-        
+
 
 
 
@@ -627,7 +627,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
 
 
-            // do we need to return spike times? 
+            // do we need to return spike times?
             switch (spikes_only){
 
                 case 0:
@@ -638,7 +638,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
                         if ((prev_V[j] < spike_thresh) && ((xolotl_network.comp[j]->V) > spike_thresh)) {
                             spiketimes[spike_time_idx[j] + j*nsteps_out] = i;
                             spike_time_idx[j]++;
-                        } 
+                        }
                         prev_V[j] = xolotl_network.comp[j]->V;
                     } // end j loop over compartments
                     break;
@@ -649,6 +649,139 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
 
 
+
+    } else if (is_voltage_clamped & is_multi_step) {
+
+        // .___  ___.   ______    _______   _______     ____
+        // |   \/   |  /  __  \  |       \ |   ____|   |___ \
+        // |  \  /  | |  |  |  | |  .--.  ||  |__        __) |
+        // |  |\/|  | |  |  |  | |  |  |  ||   __|      |__ <
+        // |  |  |  | |  `--'  | |  '--'  ||  |____     ___) |
+        // |__|  |__|  \______/  |_______/ |_______|   |____/
+        //
+
+        if (verbosity > 0) {
+            mexPrintf("[xolotl] %i-step integration requested.\n", xolotl_network.solver_order);
+        }
+
+        // do the integration respecting V_clamp
+
+        for (int i = 0; i < nsteps; i++) {
+
+            if (V_clamp_size_2 == nsteps) {
+                // I_ext is dynamically changing
+                for(int q = 0; q < n_comp; q++) {
+                    V_clamp[q] = V_clamp_in[i*n_comp + q];
+                }
+            }
+
+            xolotl_network.integrateClamp(V_clamp); // this needs to change
+
+            if (i%progress_report == 0 & verbosity > 0) {
+                mexPrintf("[C++] integration %i %", percent_complete);
+                mexPrintf(" complete\n");
+                percent_complete += 10;
+                mexEvalString("drawnow;");
+            }
+
+            // here we're getting the state of every compartment -- V, Ca, and all conductances
+            if (i%res == 0) {
+
+                switch (nlhs) {
+                    case 1:
+                        // only one output, do nothing
+                        break;
+                    case 2:
+                        // read out voltages only
+                        for (int j = 0; j < n_comp; j++) {
+                            if (isnan(V_clamp[j])) {
+                                output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
+                            }
+                            else {
+                                output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->I_clamp;
+                            }
+                        } // end j loop over compartments
+                        break;
+
+                    case 3:
+                        // V + Ca
+                        for (int j = 0; j < n_comp; j++) {
+                            if (isnan(V_clamp[j])) {
+                                output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
+                            }
+                            else {
+                                output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->I_clamp;
+                            }
+                            output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
+                            output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
+
+                        } // end j loop over compartments
+                        break;
+
+                    case 4:
+                        // V, Ca, mechanisms
+
+                        for (int j = 0; j < n_comp; j++) {
+                            if (isnan(V_clamp[j])) {
+                                output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
+                            }
+                            else {
+                                output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->I_clamp;
+                            }
+                            output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
+                            output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
+                            cont_idx = (xolotl_network.comp[j]->getFullMechanismState(output_cont_state,cont_idx));
+
+                        } // end j loop over compartments
+                        break;
+
+
+                    case 5:
+                        // V, Ca, C, I
+                        for (int j = 0; j < n_comp; j++) {
+                            if (isnan(V_clamp[j])) {
+                                output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
+                            }
+                            else {
+                                output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->I_clamp;
+                            }
+                            output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
+                            output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
+                            cont_idx = (xolotl_network.comp[j]->getFullMechanismState(output_cont_state,cont_idx));
+                            cond_idx = (xolotl_network.comp[j]->getFullCurrentState(output_curr_state,cond_idx));
+
+                        } // end j loop over compartments
+                        break;
+
+
+
+                    default:
+                        // V, Ca, Ca, I, Syn
+                        for (int j = 0; j < n_comp; j++) {
+
+                            if (isnan(V_clamp[j])) {
+                                output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->V;
+                            }
+                            else {
+                                output_V[output_idx*n_comp + j] = xolotl_network.comp[j]->I_clamp;
+                            }
+
+                            output_Ca[output_idx*2*n_comp + j] = xolotl_network.comp[j]->Ca;
+                            output_Ca[output_idx*2*n_comp + j + n_comp] = xolotl_network.comp[j]->E_Ca;
+                            cont_idx = (xolotl_network.comp[j]->getFullMechanismState(output_cont_state,cont_idx));
+                            cond_idx = (xolotl_network.comp[j]->getFullCurrentState(output_curr_state,cond_idx));
+                        } // end j loop over compartments
+
+                        for (int k = 0; k < n_synapses; k++) {
+                            syn_idx = (all_synapses[k]->getFullState(output_syn_state,syn_idx));
+                        }
+
+                        break;
+                } // switch
+                output_idx ++;
+            } // if we need to write output
+
+        } // end for loop over nsteps
 
     } else  {
         mexErrMsgTxt("[xolotl] Unknown integration mode. \n");

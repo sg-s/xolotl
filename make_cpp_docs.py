@@ -1,4 +1,4 @@
-# WHAT THIS IS 
+# WHAT THIS IS
 #
 # This is a python script that generates documentation
 # in markdown format from source C++ files that explains
@@ -11,7 +11,7 @@
 #
 #
 # WHO SHOULD USE THIS
-# 
+#
 # Use this only if you want to regenerate documentation
 # from source C++ files. Only maintainers of xolotl
 # should want to run this
@@ -47,7 +47,7 @@ for file in sorted(glob.glob("c++/*.hpp")):
 		continue
 
 	# is there another file with the same name, but with
-	# a number tacked on? 
+	# a number tacked on?
 	ext_files = sorted(glob.glob("c++/" + classname + "*.hpp"))
 	for ef in ext_files:
 		efname = ef.replace('.hpp','')
@@ -56,7 +56,7 @@ for file in sorted(glob.glob("c++/*.hpp")):
 		if efname != classname:
 			lines = tuple(open(file, 'r')) + tuple(open(ef,'r'))
 		else:
-			lines = tuple(open(file, 'r')) 
+			lines = tuple(open(file, 'r'))
 
 
 	# show the initial comment, if any
@@ -70,7 +70,7 @@ for file in sorted(glob.glob("c++/*.hpp")):
 
 	outfile.write('\n## Methods\n\n')
 
-	
+
 
 
 	# find all methods defined here
@@ -79,7 +79,7 @@ for file in sorted(glob.glob("c++/*.hpp")):
 	description_start = []
 	comment_start = []
 	for i in range(0,len(lines)):
-		
+
 		thisline = lines[i]
 		thisline = thisline.strip()
 
@@ -122,4 +122,3 @@ for file in sorted(glob.glob("c++/*.hpp")):
 		outfile.write('\n\n-------\n\n')
 
 	outfile.close()
-
