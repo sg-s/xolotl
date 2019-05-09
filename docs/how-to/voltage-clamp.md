@@ -59,7 +59,7 @@ V_clamp = rem(linspace(0,100,length(I)),20)-10;
 x.V_clamp = V_clamp(:);
 ```
 
-Integrating and plotting this yeilds a different current required to clamp the cell:
+Integrating and plotting this yields a different current required to clamp the cell:
 
 ![](https://user-images.githubusercontent.com/6005346/50013064-2c642680-ff8e-11e8-8089-846b5900644e.png)
 
