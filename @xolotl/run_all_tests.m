@@ -40,9 +40,6 @@ end
 % rebuild cpplab cache just to be safe
 cpplab.rebuildCache;
 
-% compile GetMD5
-hashlib.md5compile;
-
 this_dir = fileparts(fileparts(which('xolotl.run_all_tests')));
 all_tests = dir(pathlib.join(this_dir,'examples','demo*.m'));
 

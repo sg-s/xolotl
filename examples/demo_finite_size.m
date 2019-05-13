@@ -44,7 +44,7 @@ figure('outerposition',[300 300 1200 901],'PaperUnits','points','PaperSize',[120
 
 show_area = [1 10 50 100 200 400]*1e-6;
 clear ax
-for i = 1:6
+for i = 6:-1:1
 	ax(i) = subplot(6,2,(i-1)*2+1); hold on
 	x.reset;
 	x.AB.A = show_area(i);
@@ -65,7 +65,7 @@ end
 
 
 axf = subplot(2,2,2); hold on
-errorbar(all_area*1e6,mean(all_f,2),corelib.sem(all_f'),'k')
+errorbar(all_area*1e6,mean(all_f,2),std(all_f')./mean(all_f,2)','k')
 set(gca,'XScale','linear','YScale','linear')
 xlabel('Area (um^2)')
 ylabel('Firing rate (Hz)')
