@@ -69,7 +69,6 @@ if isempty(self.linked_binary)
 		disp(['[INFO] No linked binary, hashing...'])
 	end
 	h = self.hash;
-	mexBridge_name = [pathlib.join(self.xolotl_folder,'X_') h '.cpp'];
 	self.linked_binary = ['X_' h '.' mexext];
 end
 
@@ -90,8 +89,19 @@ if exist(pathlib.join(self.xolotl_folder,self.linked_binary),'file') == 3
 			disp(['[INFO] Current hash is ' h])
 		end
 
-		self.transpile;
-		self.compile;
+		% maybe the binary exists?
+		if exist(pathlib.join(self.xolotl_folder,['X_' h '.' mexext]),'file') == 3
+			% binary exists. just update the linked_binary and we should be good
+			if self.verbosity > 0
+				disp(['[INFO] Bianry exists, no need to recompile.'])
+			end
+			self.linked_binary = ['X_' h '.' mexext];
+		else
+			% no, need to compile
+
+			self.transpile;
+			self.compile;
+		end
 	end
 
 else
