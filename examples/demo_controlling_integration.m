@@ -35,15 +35,17 @@ temp = whos('V','Ca');
 memory_usage(1) = sum([temp.bytes]);
 
 
+spiketimes = xtools.findNSpikeTimes(V,xtools.findNSpikes(V));
+
 figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
 subplot(2,3,1)
-neurolib.raster(xtools.findNSpikeTimes(V,xtools.findNSpikes(V)),'Color','k')
+neurolib.raster(spiketimes(1:100),'center',false,'Color','k')
 set(gca,'XLim',[0 10],'YTick',[])
 drawnow
 
 
 subplot(2,3,2)
-neurolib.raster(xtools.findNSpikeTimes(V,xtools.findNSpikes(V)),'Color','k')
+neurolib.raster(spiketimes(end-100:end),'center',false,'Color','k')
 set(gca,'XLim',[1e3-1 1e3],'YTick',[])
 
 % now use C++ spike finding
@@ -55,12 +57,12 @@ temp = whos('data');
 memory_usage(2) = temp.bytes;
 
 subplot(2,3,4)
-neurolib.raster(data.AB.spiketimes,'Color','r')
+neurolib.raster(data.AB.spiketimes,'center',false,'Color','r')
 set(gca,'XLim',[0 10],'YTick',[])
 xlabel('Time (s)')
 
 subplot(2,3,5)
-neurolib.raster(data.AB.spiketimes,'Color','r')
+neurolib.raster(data.AB.spiketimes,'center',false,'Color','r')
 set(gca,'XLim',[1e3-1 1e3],'YTick',[])
 xlabel('Time (s)')
 
