@@ -30,4 +30,4 @@ xlabel('Time (s)')
 
 legend({'Exponential Euler','Runge-Kutta 4'})
 
-figlib.pretty('plw',1,'lw',1)
+figlib.pretty('PlotLineWidth',1,'LineWidth',1)

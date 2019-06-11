@@ -43,6 +43,6 @@ xlabel('Time (s)')
 ylabel('V_{m} (mV)')
 legend({'11C','22C'})
 set(gca,'XLim',[0 6],'YLim',[-80 50])
-figlib.pretty('plw',1,'lw',1)
+figlib.pretty('PlotLineWidth',1,'LineWidth',1)
 drawnow
 

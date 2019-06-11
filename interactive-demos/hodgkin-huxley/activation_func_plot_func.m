@@ -189,4 +189,4 @@ AM.tau.YTick = 10.^(floor(log10(tau_min)):ceil(log10(tau_max)));
 AM.tau_YLim = [10.^(floor(log10(tau_min))) 10.^(ceil(log10(tau_min)))];
 
 
-figlib.pretty('plw',2);
+figlib.pretty('PlotLineWidth',2);

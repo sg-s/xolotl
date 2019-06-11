@@ -180,7 +180,7 @@ if strcmp(self.handles.ax(1).XLimMode,'auto')
 end
 
 try
-	figlib.pretty('plw',1,'lw',1);
+	figlib.pretty('PlotLineWidth',1,'LineWidth',1);
 catch
 end
 

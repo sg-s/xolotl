@@ -22,4 +22,4 @@ xlabel('Time (s)')
 ylabel('Voltage in axon (mV)')
 set(gca,'YLim',[-80 50])
 
-figlib.pretty('plw',1,'lw',1)
+figlib.pretty('PlotLineWidth',1,'LineWidth',1)

@@ -73,4 +73,4 @@ set(gca,'YScale','log','XTick',[1 2],'XLim',[0 3],'XTickLabel',{'Normal mode','s
 ylabel('Memory used (bytes)')
 drawnow
 
-figlib.pretty('fs',12)
+figlib.pretty('FontSize',12)

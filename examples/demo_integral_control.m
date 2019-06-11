@@ -48,4 +48,4 @@ ylabel('V_m (mV)')
 xlabel('Time (s)')
 drawnow
 
-figlib.pretty('plw',1.5,'lw',1.5)
+figlib.pretty('PlotLineWidth',1.5,'LineWidth',1.5)

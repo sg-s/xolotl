@@ -17,4 +17,4 @@ x.pref.use_polar_gbar = false;
 
 x.manipulate('*gbar')
 
-figlib.pretty('fs',14,'lw',1.5)
+figlib.pretty('FontSize',14,'LineWidth',1.5)

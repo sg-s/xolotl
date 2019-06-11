@@ -36,4 +36,4 @@ set(gca,'YLim',[-80 50])
 ylabel('V_m (mV)')
 xlabel('Time (s)')
 
-figlib.pretty('plw',1.5,'lw',1.5)
+figlib.pretty('PlotLineWidth',1.5,'LineWidth',1.5)
