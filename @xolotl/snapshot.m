@@ -53,4 +53,4 @@ S = self.serialize;
 rm_these = find(strcmp(snap_name,{self.snapshots.name}));
 self.snapshots(rm_these) = [];
 
-self.snapshots = [self.snapshots; struct('name',snap_name,'V',S)];
+self.snapshots = [self.snapshots; struct('name',snap_name,'V',S,'hash',self.hash)];

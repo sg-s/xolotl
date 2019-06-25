@@ -150,7 +150,7 @@ methods
 
         self.setHiddenProps({'manipulate_plot_func','I_ext','V_clamp','snapshots'});
 
-        self.snapshots = struct('name','','V',[]);
+        self.snapshots = struct('name','','V',[],'hash','');
 
         self.manipulate_plot_func{1} = @self.plot;
 	end
