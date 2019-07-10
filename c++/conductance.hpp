@@ -299,6 +299,9 @@ object. This sets the `container` property of the conductance,
 so the channel knows which compartment contains it. 
 */
 void conductance::connect(compartment *pcomp_) {
+    if (gbar < 0) {
+        mexErrMsgTxt("gbars cannot be negative for any conductance \n");
+    }
     container = pcomp_;
     gbar_next = gbar;
 }
