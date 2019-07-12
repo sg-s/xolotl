@@ -61,7 +61,7 @@ compartments = x.find('compartment');
 for j = 1:length(compartments)
 
 	% add a calcium mechanism
-	x.(compartments{j}).add('bucholtz/CalciumMech','phi',options.phi);
+	x.(compartments{j}).add('buchholtz/CalciumMech','phi',options.phi);
 
 	for i = 1:options.n_channels
 	

@@ -49,9 +49,9 @@ switch options.CalciumMech
 case 'prinz'
 
 	x.AB.add('prinz/CalciumMech','f',options.f);
-case 'bucholtz'
+case 'buchholtz'
 	phi = options.f*1.9297e+05*vol/200;
-	x.AB.add('bucholtz/CalciumMech','phi',phi);
+	x.AB.add('buchholtz/CalciumMech','phi',phi);
 otherwise
 	error('Unknown Calcium Mechanism')
 end

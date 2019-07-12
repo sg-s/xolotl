@@ -4,7 +4,7 @@
 //
 // Modulatory Input Conductance
 // https://www.ncbi.nlm.nih.gov/pubmed/8463821
-// based on dynamic clamp in Sharp et al 1993, Bucholtz et al 1993, Golowasch et al 1992
+// based on dynamic clamp in Sharp et al 1993, Buchholtz et al 1993, Golowasch et al 1992
 #ifndef MICURRENT
 #define MICURRENT
 #include "conductance.hpp"
