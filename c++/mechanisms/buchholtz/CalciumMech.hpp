@@ -4,7 +4,8 @@
 //
 // Calcium mechanism
 //
-// as in Bucholtz et al. 1992
+// as in Buchholtz et al. 1992
+// https://doi.org/10.1152/jn.1992.67.2.332
 // and in "Methods in neuronal modelling"
 // and others.
 
