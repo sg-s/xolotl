@@ -8,7 +8,7 @@ A neuron can be approximated by a sphere such that it is well-described by a sin
 
 ### Implementing this in xolotl
 
-Note that this description of a neuron imposes a natural hierarchy to the things in our model: the soma *contains* various populations of ion channels. We will create a model in xolotl that looks like this:
+Note that this description of a neuron imposes a natural hierarchy on the things in our model: the soma *contains* various populations of ion channels. We will create a model in xolotl that looks like this:
 
 ![](../images/neuron-xolotl.png)  
 
@@ -56,7 +56,7 @@ x.HH.add('Leak', 'gbar', 1);
 
 What's going on here? In each line, we are specifying the thing that we want to add to `HH`, and we are specifying some parameters of the thing we're adding using name value syntax.
 
-Let's break this up by focusing on the first line. We're adding a component that is specified by the string `liu/NaV` to `HH`. This is a voltage gated Sodium conductance. We're setting its maximal conductance to 1000 uS/mm^2, and its reversal potential to 30mV and adding it to the model. The same logic works for the other two lines.
+Let's break this down by focusing on the first line. We're adding a component that is specified by the string `liu/NaV` to `HH`. This is a voltage gated sodium conductance. We're setting its maximal conductance to 1000 uS/mm^2, and its reversal potential to 30mV and adding it to the model. The same logic works for the other two lines.
 
 When we look at our model by typing `x`, we see:
 
