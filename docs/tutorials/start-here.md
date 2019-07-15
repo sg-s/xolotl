@@ -10,6 +10,10 @@ and make sure everything works well. You will need:
 
 Download [xolotl here](https://github.com/sg-s/xolotl/releases/download/latest/xolotl.mltbx) and drag the downloaded file (`xolotl.mltbx`) onto your MATLAB workspace. MATLAB should automatically open a prompt asking you if you want to install it.
 
+!!! note
+    There are other ways to install xolotl. For example, you can download via git. [Instructions here](https://xolotl.readthedocs.io/en/master/how-to/install-configure/#using-git)
+
+
 Then we need to install a C/C++ compiler, and get MATLAB to work with that. Follow these instructions based on your operating system:
 
 ## Installing a compiler
