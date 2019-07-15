@@ -2,7 +2,7 @@ In this tutorial, we will walk through the process of creating a model of a sing
 
 ### A high-level view of a neuron
 
-A simple description of a neuron is to imagine that it a small spherical object, so that it can be described well be a single membrane voltage, whose dynamics are governed by populations of ion channels in the cell, as illustrated in the schematic below:
+A neuron can be approximated by a sphere such that it is well-described by a single membrane voltage, the dynamics of which are governed by populations of ion channels in the cell as illustrated in the schematic below:
 
 ![](../images/neuron-sphere.png)
 
