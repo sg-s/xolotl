@@ -1,8 +1,8 @@
 # this script converts all the markdown formatted
 # documentation at the top of every method
-# and links them together into a single 
+# and links them together into a single
 # markdown documentation
- 
+
 
 import glob, os
 from shutil import copyfile
@@ -36,7 +36,7 @@ for file in sorted(glob.glob("@xolotl/*.m")):
 
 
 	for i in range(0,len(lines)):
-		
+
 		thisline = lines[i].replace('#','')
 		thisline = thisline.replace(' ','')
 		thisline = thisline.replace('%','')
@@ -50,10 +50,10 @@ for file in sorted(glob.glob("@xolotl/*.m")):
 
 
 	for i in range(0,len(lines)):
-		
+
 		thisline = lines[i].strip('%')
 		thisline = thisline.strip()
-			
+
 		if thisline.find('function') == 0:
 			z = i
 			break
@@ -62,7 +62,7 @@ for file in sorted(glob.glob("@xolotl/*.m")):
 	if a < 0 or z < 0:
 		continue
 
-	
+
 	out_file.write('\n\n')
 	out_file.write('-------\n\n')
 
@@ -89,10 +89,10 @@ for file in sorted(glob.glob("@xolotl/*.m")):
 			out_file.write(thisline)
 			continue
 
-		
 
 
-		# insert hyperlinks to other methods 
+
+		# insert hyperlinks to other methods
 
 		if thisline.find('* [') != -1 and format_link:
 			# pre-formatted link, just write it
