@@ -17,9 +17,9 @@ python make_docs.py
 python make_cpp_docs.py
 
 # automatic build number
-echo "Updating build number..."
-git log master --pretty=oneline | wc -l > build_number
+# echo "Updating build number..."
+# git log master --pretty=oneline | wc -l > build_number
+# git add build_number
 
-git add build_number
 git add git-hooks/pre-commit
 git add docs/reference/*
