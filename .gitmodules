@@ -1,6 +1,6 @@
-[submodule "@xgrid/xgrid"]
-	path = @xgrid/xgrid
+[submodule "xgrid"]
+	path = @xgrid
 	url = git@github.com:sg-s/xgrid.git
-[submodule "@xfit/xfit"]
-	path = @xfit/xfit
+[submodule "xfit"]
+	path = @xfit
 	url = git@github.com:sg-s/xfit.git
