@@ -81,5 +81,19 @@ Click [here](https://github.com/sg-s/xolotl/releases/download/latest/xolotl.mltb
 
 We've published a technology report in [Frontiers in Neuroinformatics](https://doi.org/10.3389/fninf.2018.00087).
 
+```
+@ARTICLE{10.3389/fninf.2018.00087,
+AUTHOR={Gorur-Shandilya, Srinivas and Hoyland, Alec and Marder, Eve},   
+TITLE={Xolotl: An Intuitive and Approachable Neuron and Network Simulator for Research and Teaching},      
+JOURNAL={Frontiers in Neuroinformatics},      
+VOLUME={12},      
+PAGES={87},     
+YEAR={2018},      
+URL={https://www.frontiersin.org/article/10.3389/fninf.2018.00087},       
+DOI={10.3389/fninf.2018.00087},      
+ISSN={1662-5196},   
+}
+
+```
 
 ![](https://user-images.githubusercontent.com/6005346/41205222-30b6f3d4-6cbd-11e8-983b-9125585d629a.png)
