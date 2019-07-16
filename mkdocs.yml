@@ -2,8 +2,8 @@ site_name: xolotl
 repo_url: https://github.com/sg-s/xolotl/
 site_author: Srinivas Gorur-Shandilya
 docs_dir: 'docs'
-theme: 
-  name: 'material' 
+theme:
+  name: 'material'
   logo: 'images/Xlogo.png'
   palette:
     primary: 'deep-purple'
@@ -15,7 +15,7 @@ pages:
     - Demos: 'tutorials/built-in-demos.md'
     - Your first neuron: 'tutorials/first-neuron.md'
     - Your first network: 'tutorials/first-network.md'
-  - How to: 
+  - How to:
     - Install and configure: how-to/install-configure.md
     - Construct models: how-to/construct-models.md
     - Discover existing components: how-to/discover-components.md
@@ -31,9 +31,9 @@ pages:
     - Make your own components: how-to/make-own-models.md
     - Manipulate a model: how-to/manipulate.md
     - Create multi-compartment models: how-to/create-multi-compartment-models.md
-  - Reference: 
+  - Reference:
     - Units: 'reference/units.md'
-    - C++ classes: 
+    - C++ classes:
       - conductance: 'reference/c++/conductance.md'
       - compartment: 'reference/c++/compartment.md'
       - synapse: 'reference/c++/synapse.md'
@@ -54,9 +54,9 @@ pages:
   - Performance tips:
     - Speed: 'performance/speed.md'
     - Memory: 'performance/memory.md'
-  - Troubleshooting: 
+  - Troubleshooting:
     - Fixes to common problems: troubleshooting.md
-  - Meta: 
+  - Meta:
     - Development and future: 'meta/future.md'
     - Documentation: 'meta/documentation.md'
     - Testing: 'meta/testing.md'
@@ -74,6 +74,6 @@ markdown_extensions:
   - toc:
       permalink: true
   - codehilite
-   
+
 # Required to load the MathJax javascript for the mdx_math.py
 extra_javascript: ['https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML']
