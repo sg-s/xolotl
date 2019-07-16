@@ -42,6 +42,13 @@ In the local xolotl repository, initialize the submodules by
 git submodule update --init
 ```
 
+!!! note
+Currently, xfit and xgrid are set up to use SSH for GitHub.
+If you do not have an SSH key set up for your GitHub account,
+you may experience issues attempting to install the submodules.
+We recommend setting up an SSH key with GitHub,
+or installing the MATLAB package for xolotl instead.
+
 ## Updating
 
 In most cases, `xolotl` can update itself to the latest version using
