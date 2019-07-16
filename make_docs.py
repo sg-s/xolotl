@@ -8,9 +8,9 @@ import glob, os
 from shutil import copyfile
 
 
-
+# make a copy of the documentation file
 copyfile('docs/reference/matlab/xolotl-head.md', 'docs/reference/matlab/xolotl.md')
-
+# open the copy for writing
 out_file = open('docs/reference/matlab/xolotl.md','a+')
 
 
