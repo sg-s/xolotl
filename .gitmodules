@@ -1,5 +1,5 @@
 [submodule "xfit"]
-	path = xfit
+	path = @xfit
 	url = git@github.com:sg-s/xfit.git
 [submodule "xgrid"]
 	path = xgrid
