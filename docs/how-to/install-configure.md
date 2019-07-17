@@ -40,6 +40,9 @@ In the local xolotl repository, initialize the submodules by
 
 ```bash
 git submodule update --init
+git submodule update
+git submodule foreach git checkout master
+git submodule foreach git pull origin master
 ```
 
 !!! note
