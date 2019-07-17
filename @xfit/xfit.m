@@ -1,13 +1,8 @@
-%                                      _            
-%  _ __  _ __ ___   ___ _ __ _   _ ___| |_ ___  ___ 
-% | '_ \| '__/ _ \ / __| '__| | | / __| __/ _ \/ __|
-% | |_) | | | (_) | (__| |  | |_| \__ \ ||  __/\__ \
-% | .__/|_|  \___/ \___|_|   \__,_|___/\__\___||___/
-% |_|  
-%
-% xfit is a toolbox that attempts
-% to change parameters in a Xolotl object
-% so that it fits some arbitrary set of conditions
+
+% xfit is a toolbox that helps you find neuron or network
+% models satisfying arbitrary constraints. It is a bridge 
+% between the Global Optimization Toolbox in MATLAB
+% and the xolotl neuron and network simulator 
 
 classdef xfit < handle
 
@@ -23,20 +18,26 @@ properties
 	lb
 	ub
 
-	options
+	
 
 	display_type = 'iter'
 	engine 
 
 	% logging
 	timestamp
-	best_cost
+	
 
 	% this can be used to store any user-defined data
 	data
 
 
 end % end props
+
+
+properties (SetAccess = private)
+	best_cost
+	options
+end
 
 methods
 	function self = xfit(engine)

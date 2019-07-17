@@ -48,8 +48,8 @@ pages:
       - xtest: reference/matlab/xtest.md
       - xolotl: reference/matlab/xolotl.md
       - cpplab: reference/matlab/cpplab.md
-      - xfit: ../xfit/docs/xfit.md
-      - xgrid: ../xgrid/docs/xgrid.md
+      - xfit: reference/matlab/xfit.md
+      - xgrid: reference/matlab/xgrid.md
   - How xolotl works:
     - How cpplab binds code: explanation/cpplab.md
     - How equations are integrated: explanation/integration.md

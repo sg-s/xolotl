@@ -4,13 +4,14 @@
 
 % first, we create our xolotl object
 x = xolotl.examples.BurstingNeuron('prefix','prinz');
+x.set('*gbar',veclib.shuffle((x.get('*gbar'))))
 
 % we instantiate the xfit object
 % and specify the particle swarm engine
 p = xfit('particleswarm');
 
 % we assign a cost function
-p.sim_func = @example_func;
+p.sim_func = @xolotl.examples.burstingCostFcn;
 
 % we assign the xolotl object
 p.x = x;
@@ -26,7 +27,7 @@ p.ub = [1e3 100 100 10 500 2000 2000];
 figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
 
 subplot(2,1,1); hold on
-
+set(gca,'XLim',[0 10],'YLim',[-80 50])
 x.t_end = 10e3;
 V = x.integrate;
 time = (1:length(V))*1e-3*x.dt;
@@ -43,11 +44,11 @@ x.set('*gbar',p.seed)
 
 % visualize the results of the optimization
 subplot(2,1,2); hold on
-
+set(gca,'XLim',[0 10],'YLim',[-80 50])
 x.t_end = 10e3;
 V = x.integrate;
 time = (1:length(V))*1e-3*x.dt;
 plot(time,V,'r')
 title('After optimization')
 
-figlib.pretty('LineWidth', 1, 'PlotLineWidth', 1, 'PlotBuffer', 0.2)
+figlib.pretty('LineWidth', 1, 'PlotLineWidth', 1, 'PlotBuffer', 0)
