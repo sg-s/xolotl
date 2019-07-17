@@ -44,15 +44,17 @@ git submodule foreach -q --recursive 'git checkout $(git config -f $toplevel/.gi
 git config --global status.submoduleSummary true
 ```
 
-!!! note
-We have provides a script, `xolotl-install-git.sh` that performs these steps for you.
-Run it from inside the main xolotl directory.
-
 The first command clones the submodules into the correct directories.
 The second checks out the master branch for xolotl and all submodules.
 The third configures `git status` to display the submodule states.
 
+Remember also to copy all git hooks from `xolotl/git-hooks` to `xolotl/.git/hooks/`.
+
 !!! note
+We have provided a script, `xolotl-install-git.sh` that performs these steps for you.
+Run it from inside the main xolotl directory,
+after having run `git clone --recursive git@github.com:sg-s/xolotl.git`.
+
 Currently, xfit and xgrid are set up to use SSH for GitHub.
 If you do not have an SSH key set up for your GitHub account,
 you may experience issues attempting to install the submodules.
