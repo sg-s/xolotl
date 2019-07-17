@@ -29,7 +29,7 @@ If you are comfortable with `git`, you can clone all the code and dependencies y
 ```bash
 git clone https://github.com/sg-s/srinivas.gs_mtools
 git clone https://github.com/sg-s/puppeteer
-git clone https://github.com/sg-s/xolotl
+git clone --recursive https://github.com/sg-s/xolotl
 git clone https://github.com/sg-s/cpplab
 ```
 
@@ -40,7 +40,17 @@ In the local xolotl repository, initialize the submodules by
 
 ```bash
 git submodule update --init
+git submodule foreach -q --recursive 'git checkout $(git config -f $toplevel/.gitmodules submodule.$name.branch || echo master)'
+git config --global status.submoduleSummary true
 ```
+
+!!! note
+We have provides a script, `xolotl-install-git.sh` that performs these steps for you.
+Run it from inside the main xolotl directory.
+
+The first command clones the submodules into the correct directories.
+The second checks out the master branch for xolotl and all submodules.
+The third configures `git status` to display the submodule states.
 
 !!! note
 Currently, xfit and xgrid are set up to use SSH for GitHub.
