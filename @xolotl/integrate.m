@@ -123,12 +123,15 @@ if nargout == 0 & self.closed_loop == false
 	error('Are you sure you want to integrate this with no outputs and with closed_loop set to FALSE?')
 end
 
-if self.output_type == 1
+
+if self.output_type == 0
+	n_outputs = nargout;
+elseif self.output_type == 1
 	n_outputs = 5; % we get everything
 elseif self.output_type == 2
 	n_outputs = 6; % everything + spiketimes
 else
-	n_outputs = nargout;
+	error('output_type should be either 0, 1 or 2')
 end
 
 V = [];
