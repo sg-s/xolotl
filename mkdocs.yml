@@ -33,6 +33,7 @@ pages:
     - Make your own components: how-to/make-own-models.md
     - Manipulate a model: how-to/manipulate.md
     - Create multi-compartment models: how-to/create-multi-compartment-models.md
+    - Fit a model to arbitrary constraints: how-to/fit-parameters.md
   - Reference:
     - Units: 'reference/units.md'
     - C++ classes:
