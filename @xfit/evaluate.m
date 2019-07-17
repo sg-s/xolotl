@@ -24,7 +24,7 @@ It is assumed that you have the following things
 configured in the xfit object:
 
 - `x` (the xolotl object)
-- `sim_func`
+- `SimFcn`
 - `parameter_names`
 
 %}
@@ -34,4 +34,4 @@ function c = evaluate(self,params)
 for i = 1:length(self.parameter_names)
 	self.x.set(self.parameter_names{i},params(i))
 end
-c = self.sim_func(self.x, self.data);
+c = self.SimFcn(self.x, self.data);

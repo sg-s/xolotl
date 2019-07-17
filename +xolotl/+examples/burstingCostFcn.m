@@ -26,9 +26,9 @@ metrics = xtools.V2metrics(V,'sampling_rate',10);
 
 
 % accumulate errors
-C = xfit.binCost([950 1050],metrics.burst_period);
-C = C + xfit.binCost([.1 .3],metrics.duty_cycle_mean);
-C = C + xfit.binCost([7 10],metrics.n_spikes_per_burst_mean);
+C = xtools.binCost([950 1050],metrics.burst_period);
+C = C + xtools.binCost([.1 .3],metrics.duty_cycle_mean);
+C = C + xtools.binCost([7 10],metrics.n_spikes_per_burst_mean);
 
 % safety -- if something goes wrong, return a large cost
 if isnan(C)

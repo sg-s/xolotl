@@ -9,9 +9,11 @@ x.set('*gbar',veclib.shuffle((x.get('*gbar'))))
 % we instantiate the xfit object
 % and specify the particle swarm engine
 p = xfit('particleswarm');
+p.options.UseParallel = true;
 
 % we assign a cost function
-p.sim_func = @xolotl.examples.burstingCostFcn;
+p.SimFcn = @xolotl.examples.burstingCostFcn;
+
 
 % we assign the xolotl object
 p.x = x;
@@ -34,6 +36,10 @@ time = (1:length(V))*1e-3*x.dt;
 plot(time,V,'k')
 title('Before optimization')
 
+subplot(2,1,2); hold on
+set(gca,'XLim',[0 10],'YLim',[-80 50])
+
+
 % perform the optimization procedure
 p.fit;
 
@@ -43,8 +49,7 @@ x.set('*gbar',p.seed)
 
 
 % visualize the results of the optimization
-subplot(2,1,2); hold on
-set(gca,'XLim',[0 10],'YLim',[-80 50])
+
 x.t_end = 10e3;
 V = x.integrate;
 time = (1:length(V))*1e-3*x.dt;

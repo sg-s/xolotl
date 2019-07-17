@@ -8,6 +8,7 @@ all_cond = cpplab.search([xroot  filesep 'c++'  filesep 'conductances']);
 if exist([xroot filesep 'cond_check.mat'],'file') == 2
 	load([xroot filesep 'cond_check.mat'])
 else
+	warning('It looks like this is the first time conductances are being checked. This will take a while...')
 	ok_channels = {};
 end
 

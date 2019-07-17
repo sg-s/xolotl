@@ -10,7 +10,7 @@ properties
 	x@xolotl
 
 	% function to minimize
-	sim_func@function_handle
+	SimFcn@function_handle
 
 	% parameters to optimize
 	parameter_names@cell
@@ -18,25 +18,30 @@ properties
 	lb
 	ub
 
+	PlotFcn
+
 	
 
-	display_type = 'iter'
+	Display = 'iter'
 	engine 
 
-	% logging
-	timestamp
 	
 
 	% this can be used to store any user-defined data
 	data
 
 
+	options
+
 end % end props
 
 
 properties (SetAccess = private)
 	best_cost
-	options
+	
+
+	% logging
+	timestamp
 end
 
 methods

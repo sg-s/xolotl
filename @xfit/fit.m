@@ -29,7 +29,7 @@ function fit(self)
 
 assert(~isempty(self.parameter_names),'No parameter names defined')
 assert(~isempty(self.x),'Xolotl object not configured')
-assert(~isempty(self.sim_func),'Simulation function not set')
+assert(~isempty(self.SimFcn),'Simulation function not set')
 
 if isempty(self.seed) && ~isempty(self.ub) && ~isempty(self.lb)
 	% pick a random seed within bounds
