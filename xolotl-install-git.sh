@@ -16,7 +16,7 @@ git config --global status.submoduleSummary true
 cd git-hooks
 for f in *
 do
-  chmod +x f
+  chmod +x "$f"
   cp -v "$f" ../.git/hooks/"$f"
 done
 cd ..
