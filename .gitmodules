@@ -1,0 +1,4 @@
+[submodule "xfit"]
+	path = @xfit
+	url = git@github.com:sg-s/xfit.git
+	branch = master
