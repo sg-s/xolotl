@@ -251,7 +251,7 @@ for i = 1:length(mechanism_sizes)
 	end
 
 	z = a + this_mech_size - 1;
-	data.(all_mechanisms{i}) = cont_state(:,a:z);
+	data = structlib.write(data, all_mechanisms{i}, cont_state(:,a:z));
 	a = z + 1;
 end
 

@@ -37,10 +37,9 @@ end % end props
 
 
 properties (SetAccess = private)
-	best_cost
 	
-
 	% logging
+	best_cost
 	timestamp
 end
 
@@ -139,10 +138,6 @@ methods
 
 end % end methods
 
-
-methods (Static)
-	b = binCost(r,a);
-end
 
 
 
