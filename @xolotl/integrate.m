@@ -66,7 +66,7 @@ function varargout = integrate(self)
 
 if isempty(self.linked_binary)
 	if self.verbosity > 0
-		disp(['[INFO] No linked binary, hashing...'])
+		disp('[INFO] No linked binary, hashing...')
 	end
 	h = self.hash;
 	self.linked_binary = ['X_' h '.' mexext];
@@ -78,14 +78,14 @@ if exist(pathlib.join(self.xolotl_folder,self.linked_binary),'file') == 3
 	% does the hash match up?
 
 	if self.verbosity > 0
-		disp(['[INFO] Binary exists.'])
+		disp('[INFO] Binary exists.')
 	end
 
 	h = self.hash;
 	if ~strcmp(self.linked_binary(3:34),h)
 
 		if self.verbosity > 0
-			disp(['[INFO] Binary out of sync'])
+			disp('[INFO] Binary out of sync')
 			disp(['[INFO] Current hash is ' h])
 		end
 
@@ -93,7 +93,7 @@ if exist(pathlib.join(self.xolotl_folder,self.linked_binary),'file') == 3
 		if exist(pathlib.join(self.xolotl_folder,['X_' h '.' mexext]),'file') == 3
 			% binary exists. just update the linked_binary and we should be good
 			if self.verbosity > 0
-				disp(['[INFO] Bianry exists, no need to recompile.'])
+				disp('[INFO] Bianry exists, no need to recompile.')
 			end
 			self.linked_binary = ['X_' h '.' mexext];
 		else
@@ -251,11 +251,8 @@ for i = 1:length(mechanism_sizes)
 	end
 
 	z = a + this_mech_size - 1;
-
-	eval(['data.' all_mechanisms{i} '=cont_state(:,a:z);']);
-
+	data.(all_mechanisms{i}) = cont_state(:,a:z);
 	a = z + 1;
-
 end
 
 
@@ -276,4 +273,4 @@ if ~isempty(syn_state )
 end
 
 varargout{1} = data;
-return
+
