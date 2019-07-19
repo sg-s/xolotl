@@ -120,6 +120,8 @@ The best cost holds the lowest value computed by the simulation function during 
 The `data` property can hold any user-defined data. You may want to use this if your cost function required additional data to measure the cost. For example, if you want to fit a neuron to a specifiy voltage trace, you would store it here. 
 
 
+## Methods
+
 -------
 
 ### evaluate
