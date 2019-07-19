@@ -83,9 +83,6 @@ for file in sorted(glob.glob("./*/")):
 		if a < 0 or z < 0:
 			continue
 
-
-		print(a)
-		print(z)
 		out_file.write('\n\n')
 		out_file.write('-------\n\n')
 
