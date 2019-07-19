@@ -1,18 +1,34 @@
-%                          _                                       
-%                         | |                                      
-%     _ __  ___ _   _  ___| |__   ___  _ __   ___  _ __ ___  _ __  
-%    | '_ \/ __| | | |/ __| '_ \ / _ \| '_ \ / _ \| '_ ` _ \| '_ \ 
-%    | |_) \__ \ |_| | (__| | | | (_) | |_) | (_) | | | | | | |_) |
-%    | .__/|___/\__, |\___|_| |_|\___/| .__/ \___/|_| |_| |_| .__/ 
-%    | |         __/ |                | |                   | |    
-%    |_|        |___/                 |_|                   |_|
-%  
-% start the simulation on all cluster, local and remote
+%
+% __   ____ _ _ __(_) __| |
+% \ \/ / _` | '__| |/ _` |
+%  >  < (_| | |  | | (_| |
+% /_/\_\__, |_|  |_|\__,_|
+%      |___/
+%
+% ### simulate
+%
+%
+% **Syntax**
+%
+% ```matlab
+% 	p.simulate()
+% ```
+%
+% **Description**
+%
+% Starts the simulation on all clusters, both local and remote.
+% This function should be called by the user once a simulation function is configured
+% and the jobs have been batched.
+%
+% See Also:
+% xgrid.batchify
+% xgrid.cleanup
+
 
 function simulate(self)
 
 	assert(~isempty(self.sim_func),'No sim function configured, refusing to start')
-    
+
 
 	% make sure there exists a linked binary
 	if isempty(self.x.linked_binary)
@@ -27,9 +43,7 @@ function simulate(self)
 
 			self.sim_start_time = now;
 
-			if self.verbosity
-				disp('Starting workers...')
-			end
+			corelib.verb(self.verbosity, 'INFO', 'Starting workers...')
 
 			for j = 1:self.num_workers
 				self.startWorker();
@@ -50,4 +64,4 @@ function simulate(self)
 
 
 
-end % end simulate 
+end % end simulate

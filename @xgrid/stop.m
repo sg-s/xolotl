@@ -1,15 +1,26 @@
-%                          _                                       
-%                         | |                                      
-%     _ __  ___ _   _  ___| |__   ___  _ __   ___  _ __ ___  _ __  
-%    | '_ \/ __| | | |/ __| '_ \ / _ \| '_ \ / _ \| '_ ` _ \| '_ \ 
-%    | |_) \__ \ |_| | (__| | | | (_) | |_) | (_) | | | | | | |_) |
-%    | .__/|___/\__, |\___|_| |_|\___/| .__/ \___/|_| |_| |_| .__/ 
-%    | |         __/ |                | |                   | |    
-%    |_|        |___/                 |_|                   |_|
+%
+% __   ____ _ _ __(_) __| |
+% \ \/ / _` | '__| |/ _` |
+%  >  < (_| | |  | | (_| |
+% /_/\_\__, |_|  |_|\__,_|
+%      |___/
+%
+% ### stop
+%
+%
+% **Syntax**
+%
+% ```matlab
+% 	p.stop()
+% ```
+%
+% **Description**
+%
+% Stops all simulations. Does not stop any daemons running on remote clusters.
+% Use `delete` to stop all daemons.
 % 
-% stop
-% stops all simulations
-% does not stop the daemon
+% See Also:
+% xgrid.delete
 
 function stop(self)
 % stop workers on local machine

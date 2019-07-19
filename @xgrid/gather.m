@@ -1,18 +1,38 @@
-%                          _                                       
-%                         | |                                      
-%     _ __  ___ _   _  ___| |__   ___  _ __   ___  _ __ ___  _ __  
-%    | '_ \/ __| | | |/ __| '_ \ / _ \| '_ \ / _ \| '_ ` _ \| '_ \ 
-%    | |_) \__ \ |_| | (__| | | | (_) | |_) | (_) | | | | | | |_) |
-%    | .__/|___/\__, |\___|_| |_|\___/| .__/ \___/|_| |_| |_| .__/ 
-%    | |         __/ |                | |                   | |    
-%    |_|        |___/                 |_|                   |_|
-%  
-% gathers data from all simulations running on
-% local and remote clusters 
+%
+% __   ____ _ _ __(_) __| |
+% \ \/ / _` | '__| |/ _` |
+%  >  < (_| | |  | | (_| |
+% /_/\_\__, |_|  |_|\__,_|
+%      |___/
+%
+% ### gather
+%
+%
+% **Syntax**
+%
+% ```matlab
+% 	[all_data, all_params, all_params_idx] = p.gather()
+% ```
+%
+% **Description**
+%
+% Collects together all results from all remote and local clusters.
+% `all_data` is a cell array where the elements are the outputs from each output `p.sim_func`.
+% `all_params` is an M x N matrix, where M is the number of parameters, and N is the number of simulations.
+% `all_params_idx` is a linear index through `all_params`.
+%
+% **Technical Details**
+%
+% The dimensions of `all_params` are identical to the `params` input of `batchify`.
+% Despite this, the matrices are not identical.
+% The `all_params` matrix is shuffled, due to the nature of performing the simulations in parallel.
+%
+% See Also:
+% xgrid.batchify
 
 
 function [all_data, all_params, all_param_idx] = gather(self)
-	
+
 % make sure nothing is running on any cluster
 % for i = 1:length(self.clusters)
 % 	if strcmp(self.clusters(i).Name,'local')
@@ -24,10 +44,10 @@ function [all_data, all_params, all_param_idx] = gather(self)
 % 		assert(plog.n_do == 0,'At least one job is still queued on remote')
 % 		assert(plog.n_doing == 0,'At least one job is still running on remote')
 % 	end
-	
+
 % end
 
-% copy all files from all remotes onto local, and gather locally 
+% copy all files from all remotes onto local, and gather locally
 for i = 1:length(self.clusters)
 	if strcmp(self.clusters(i).Name,'local')
 	else
