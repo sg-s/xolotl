@@ -17,15 +17,9 @@ properties
 	seed
 	lb
 	ub
-
-	PlotFcn
-
 	
-
-	Display = 'iter'
 	engine 
 
-	
 
 	% this can be used to store any user-defined data
 	data

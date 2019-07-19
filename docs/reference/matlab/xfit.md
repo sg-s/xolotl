@@ -118,3 +118,60 @@ The best cost holds the lowest value computed by the simulation function during 
 | []  |    any | any | 
 
 The `data` property can hold any user-defined data. You may want to use this if your cost function required additional data to measure the cost. For example, if you want to fit a neuron to a specifiy voltage trace, you would store it here. 
+
+
+-------
+
+### evaluate
+
+**Syntax**
+
+```matlab
+c = evaluate(self,params);
+```
+
+**Description**
+
+Updates parameters in the xolotl object using
+`params` (a vector), evaluate the cost function,
+and return a cost (a double).
+
+It is assumed that you have the following things
+configured in the xfit object:
+
+- `x` (the xolotl object)
+- `SimFcn`
+- `parameter_names`
+
+
+
+!!! info "See Also"
+    * [xfit.fit](../xfit/#fit)
+
+
+
+-------
+
+### fit
+
+**Syntax**
+
+```matlab
+best_fit_params = xf.fit;
+```
+
+**Description**
+
+Assuming `xf` is a `xfit` object, runs the optimization 
+algorithm in an effort to minimze the cost function using 
+specified conditions. Returns a vector of the best-fit
+parameters. Only the last (best-fit) value is returned. 
+
+The best-fit value is also used to update the seed.
+
+
+
+!!! info "See Also"
+    * [xfit.evaluate](../xfit/#evaluate)
+    * [How to fit a xolotl model](https://xolotl.readthedocs.io/en/master/how-to/fit-parameters/)
+

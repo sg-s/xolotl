@@ -1,13 +1,29 @@
-%                          _                                       
-%                         | |                                      
-%     _ __  ___ _   _  ___| |__   ___  _ __   ___  _ __ ___  _ __  
-%    | '_ \/ __| | | |/ __| '_ \ / _ \| '_ \ / _ \| '_ ` _ \| '_ \ 
-%    | |_) \__ \ |_| | (__| | | | (_) | |_) | (_) | | | | | | |_) |
-%    | .__/|___/\__, |\___|_| |_|\___/| .__/ \___/|_| |_| |_| .__/ 
-%    | |         __/ |                | |                   | |    
-%    |_|        |___/                 |_|                   |_|
+%                 _     _ 
+% __  ____ _ _ __(_) __| |
+% \ \/ / _` | '__| |/ _` |
+%  >  < (_| | |  | | (_| |
+% /_/\_\__, |_|  |_|\__,_|
+%      |___/              
 % 
+% ### addCluster
 %
+% adds a compute cluster to the pool
+%
+% **Syntax**
+% 
+% ```matlab
+% addCluster(self,cluster_name)
+% ```
+% 
+% **Description**
+% 
+% Do not use this method. This method is called internally when
+% you create a xgrid object. 
+%
+% See Also:
+% xgrid.batchify
+% xgrid.simulate
+% xgrid.tellRemote
 
 function addCluster(self,cluster_name)
 

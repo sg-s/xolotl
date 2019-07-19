@@ -230,11 +230,8 @@ in the `cpplab` superclass.
 
 
 !!! info "See Also"
-    * [cpplab.add](../cpplab/#add)
-    * [xolotl.checkCompartmentName](#checkcompartmentname)
-
-
-
+cpplab.add
+    * [xolotl.checkCompartmentName](../xolotl/#checkcompartmentname)
 
 
 
@@ -268,9 +265,6 @@ It should produce a figure that looks something like this
 
 
 
-
-
-
 -------
 
 ### checkCompartmentName
@@ -293,10 +287,7 @@ to a `xolotl` object.
 
 
 !!! info "See Also"
-    * [xolotl.add](#add)
-
-
-
+    * [xolotl.add](../xolotl/#add)
 
 
 
@@ -333,11 +324,8 @@ transpiling takes place
 
 
 !!! info "See Also"
-    * [xolotl.transpile](#transpile)
-    * [xolotl.compile](#compile)
-
-
-
+    * [xolotl.transpile](../xolotl/#transpile)
+    * [xolotl.compile](../xolotl/#compile)
 
 
 
@@ -365,11 +353,8 @@ A static method that cleans up all transpiled ``C++`` and compiled binary files.
 
 
 !!! info "See Also"
-    * [xolotl.compile](#compile)
-    * [xolotl.transpile](#transpile)
-
-
-
+    * [xolotl.compile](../xolotl/#compile)
+    * [xolotl.transpile](../xolotl/#transpile)
 
 
 
@@ -389,9 +374,6 @@ x.skip_hash = true;
 compiles a executable binary form a transpiled ``C++`` file.
 These are stored in your ``xolotl`` directory. ``xolotl``
 automatically compiles when t needs to. You can turn this
-
-
-
 
 
 -------
@@ -442,10 +424,7 @@ tab to get a list of compartments to connect.
 
 
 !!! info "See Also"
-    * [xolotl.add](#add)
-
-
-
+    * [xolotl.add](../xolotl/#add)
 
 
 
@@ -472,11 +451,8 @@ where V is a vector of voltages, I is the corresponding matrix of currents
 
 
 !!! info "See Also"
-    * [xolotl.plot](#plot)
-    * [xolotl.manipulate](#manipulate)
-
-
-
+    * [xolotl.plot](../xolotl/#plot)
+    * [xolotl.manipulate](../xolotl/#manipulate)
 
 
 
@@ -504,11 +480,8 @@ unless you add a new component to one of them.
 
 
 !!! info "See Also"
-    * [cpplab.copy](../cpplab/#copy)
+cpplab.copy
     * [How to copy models](https://xolotl.readthedocs.io/en/master/how-to/copy-models/)
-
-
-
 
 
 
@@ -548,10 +521,7 @@ The following optional parameters may be specified in name-value syntax:
 
 
 !!! info "See Also"
-    * [xolotl.integrate](#integrate)
-
-
-
+    * [xolotl.integrate](../xolotl/#integrate)
 
 
 
@@ -588,10 +558,7 @@ gating function of.
 
 
 !!! info "See Also"
-    * [xolotl.show](#show)
-
-
-
+    * [xolotl.show](../xolotl/#show)
 
 
 
@@ -616,10 +583,7 @@ A static method that goes to the folder that contains xolotl examples.
 
 
 !!! info "See Also"
-    * [xolotl.run_all_tests](#run_all_tests)
-
-
-
+    * [xolotl.run_all_tests](../xolotl/#run_all_tests)
 
 
 
@@ -677,13 +641,10 @@ When `output_type` is 1 or 2, the integration is performed requesting all output
 
 
 !!! info "See Also"
-    * [xolotl.show](#show)
-    * [xolotl.plot](#plot)
-    * [xolotl.transpile](#transpile)
-    * [xolotl.compile](#compile)
-
-
-
+    * [xolotl.show](../xolotl/#show)
+    * [xolotl.plot](../xolotl/#plot)
+    * [xolotl.transpile](../xolotl/#transpile)
+    * [xolotl.compile](../xolotl/#compile)
 
 
 
@@ -703,9 +664,6 @@ disk and loaded.
 
 !!! warning 
     Do not use this method. This method exists so that MATLAB knows how to load xolotl objects correctly
-
-
-
 
 
 
@@ -737,11 +695,8 @@ x.manipulate({'parameter1','parameter2'})
 
 
 !!! info "See Also"
-    * [xolotl.plot](#plot)
-    * [xolotl.show](#show)
-
-
-
+    * [xolotl.plot](../xolotl/#plot)
+    * [xolotl.show](../xolotl/#show)
 
 
 
@@ -762,10 +717,7 @@ should not need to use this by itself.
 
 
 !!! info "See Also"
-    * [xolotl.manipulate](#manipulate)
-
-
-
+    * [xolotl.manipulate](../xolotl/#manipulate)
 
 
 
@@ -804,11 +756,8 @@ x.pref.show_Ca = false;
 
 
 !!! info "See Also"
-    * [xolotl.manipulate](#manipulate)
-    * [xolotl.contributingCurrents](#contributingcurrents)
-
-
-
+    * [xolotl.manipulate](../xolotl/#manipulate)
+    * [xolotl.contributingCurrents](../xolotl/#contributingcurrents)
 
 
 
@@ -836,12 +785,9 @@ Makes a stem plot of conductance densities in a given compartment. If the first 
 
 
 !!! info "See Also"
-    * [xolotl.plot](#plot)
-    * [xolotl.show](#show)
-    * [xolotl.manipulate](#manipulate)
-
-
-
+    * [xolotl.plot](../xolotl/#plot)
+    * [xolotl.show](../xolotl/#show)
+    * [xolotl.manipulate](../xolotl/#manipulate)
 
 
 
@@ -876,10 +822,7 @@ If you move a xolotl object across computers (for example, by saving it to a fil
 
 
 !!! info "See Also"
-    * [cpplab.rebase](../cpplab/#rebase)
-
-
-
+cpplab.rebase
 
 
 
@@ -929,10 +872,7 @@ reset to.
 
 
 !!! info "See Also"
-    * [xolotl.snapshot](#snapshot)
-
-
-
+    * [xolotl.snapshot](../xolotl/#snapshot)
 
 
 
@@ -966,9 +906,6 @@ tests pass is a release published.
 
 
 
-
-
-
 -------
 
 ### setup
@@ -990,11 +927,8 @@ once. If xolotl works, there is no need to run this.
 
 
 !!! info "See Also"
-    * [xolotl.update](#update)
-    * [xolotl.uninstall](#uninstall)
-
-
-
+    * [xolotl.update](../xolotl/#update)
+    * [xolotl.uninstall](../xolotl/#uninstall)
 
 
 
@@ -1022,11 +956,8 @@ press the `tab` key and get a list of conductances you can show, like this:
 
 
 !!! info "See Also"
-    * [xolotl.plot](#plot)
-    * [xolotl.getGatingFunctions](#getgatingfunctions)
-
-
-
+    * [xolotl.plot](../xolotl/#plot)
+    * [xolotl.getGatingFunctions](../xolotl/#getgatingfunctions)
 
 
 
@@ -1059,10 +990,7 @@ it using the Crank-Nicholson scheme reserved for multi-compartment models.
 
 
 !!! info "See Also"
-    * [xolotl.connect](#connect)
-
-
-
+    * [xolotl.connect](../xolotl/#connect)
 
 
 
@@ -1104,11 +1032,8 @@ x.reset('base')
 
 
 !!! info "See Also"
-    * [xolotl.reset](#reset)
+    * [xolotl.reset](../xolotl/#reset)
     * [How to: save configurations and use snapshots](https://xolotl.readthedocs.io/en/master/how-to/snapshots/)
-
-
-
 
 
 
@@ -1141,11 +1066,8 @@ MATLAB to C++ and back.
 
 
 !!! info "See Also"
-    * [xolotl.compile](#compile)
-    * [xolotl.viewCode](#viewcode)
-
-
-
+    * [xolotl.compile](../xolotl/#compile)
+    * [xolotl.viewCode](../xolotl/#viewcode)
 
 
 
@@ -1176,10 +1098,7 @@ to be user accessible.
 
 
 !!! info "See Also"
-    * [xolotl.transpile](#transpile)
-
-
-
+    * [xolotl.transpile](../xolotl/#transpile)
 
 
 
@@ -1208,8 +1127,8 @@ that constructs the model and integrates it
 
 
 !!! info "See Also"
-    * [xolotl.transpile](#transpile)
-    * [xolotl.compile](#compile)
+    * [xolotl.transpile](../xolotl/#transpile)
+    * [xolotl.compile](../xolotl/#compile)
 
 
 

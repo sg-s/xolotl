@@ -1,29 +1,31 @@
-%{
-       __ _ _   
-__  __/ _(_) |_ 
-\ \/ / |_| | __|
- >  <|  _| | |_ 
-/_/\_\_| |_|\__|
-                
-
-### fit
-
-**Syntax**
-
-```matlab
-best_fit_params = xf.fit;
-```
-
-**Description**
-
-Assuming `xf` is a `xfit` object, runs the optimization 
-algorithm in an effort to minimze the cost function using 
-specified conditions. Returns a vector of the best-fit
-parameters. Only the last (best-fit) value is returned. 
-
-The best-fit value is also used to update the seed.
-
-%}
+% 
+%        __ _ _   
+% __  __/ _(_) |_ 
+% \ \/ / |_| | __|
+%  >  <|  _| | |_ 
+% /_/\_\_| |_|\__|
+%                 
+% 
+% ### fit
+% 
+% **Syntax**
+% 
+% ```matlab
+% best_fit_params = xf.fit;
+% ```
+% 
+% **Description**
+% 
+% Assuming `xf` is a `xfit` object, runs the optimization 
+% algorithm in an effort to minimze the cost function using 
+% specified conditions. Returns a vector of the best-fit
+% parameters. Only the last (best-fit) value is returned. 
+% 
+% The best-fit value is also used to update the seed.
+% 
+% See Also:
+% xfit.evaluate
+%     * [How to fit a xolotl model](https://xolotl.readthedocs.io/en/master/how-to/fit-parameters/)
 
 function fit(self)
 
