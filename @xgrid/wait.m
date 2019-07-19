@@ -1,13 +1,27 @@
-%                          _                                       
-%                         | |                                      
-%     _ __  ___ _   _  ___| |__   ___  _ __   ___  _ __ ___  _ __  
-%    | '_ \/ __| | | |/ __| '_ \ / _ \| '_ \ / _ \| '_ ` _ \| '_ \ 
-%    | |_) \__ \ |_| | (__| | | | (_) | |_) | (_) | | | | | | |_) |
-%    | .__/|___/\__, |\___|_| |_|\___/| .__/ \___/|_| |_| |_| .__/ 
-%    | |         __/ |                | |                   | |    
-%    |_|        |___/                 |_|                   |_|
-%  
-% waits fpr all simulations to end on all clusters
+%
+% __   ____ _ _ __(_) __| |
+% \ \/ / _` | '__| |/ _` |
+%  >  < (_| | |  | | (_| |
+% /_/\_\__, |_|  |_|\__,_|
+%      |___/
+%
+% ### daemonize
+%
+%
+% **Syntax**
+%
+% ```matlab
+% 	p.wait()
+% ```
+%
+% **Description**
+%
+% Waits for all simulations to be finished on all clusters.
+% 
+% See Also:
+% xgrid.simulate
+% xgrid.stop
+
 function wait(self)
 
 	keep_waiting = true;

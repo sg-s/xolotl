@@ -1,13 +1,29 @@
-%                          _                                       
-%                         | |                                      
-%     _ __  ___ _   _  ___| |__   ___  _ __   ___  _ __ ___  _ __  
-%    | '_ \/ __| | | |/ __| '_ \ / _ \| '_ \ / _ \| '_ ` _ \| '_ \ 
-%    | |_) \__ \ |_| | (__| | | | (_) | |_) | (_) | | | | | | |_) |
-%    | .__/|___/\__, |\___|_| |_|\___/| .__/ \___/|_| |_| |_| .__/ 
-%    | |         __/ |                | |                   | |    
-%    |_|        |___/                 |_|                   |_|
-%  
-% return the status of jobs on local machine 
+%
+% __   ____ _ _ __(_) __| |
+% \ \/ / _` | '__| |/ _` |
+%  >  < (_| | |  | | (_| |
+% /_/\_\__, |_|  |_|\__,_|
+%      |___/
+%
+% ### getJobStatus
+%
+%
+% **Syntax**
+%
+% ```matlab
+% 	p.getJobStatus()
+% ```
+%
+% **Description**
+%
+% Fetches the number of jobs to do, currently running jobs, and finished jobs.
+%
+% **Technical Details**
+%
+% This function is *internal*.
+%
+% See Also:
+% xgrid.showWorkerStates
 
 function [n_do, n_doing, n_done] = getJobStatus(self)
 	do_folder = [self.xgrid_folder filesep 'do' filesep ];

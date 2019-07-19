@@ -1,3 +1,31 @@
+%
+% __   ____ _ _ __(_) __| |
+% \ \/ / _` | '__| |/ _` |
+%  >  < (_| | |  | | (_| |
+% /_/\_\__, |_|  |_|\__,_|
+%      |___/
+%
+% ### showWorkerStates
+%
+%
+% **Syntax**
+%
+% ```matlab
+% 	p.showWorkerStates()
+% ```
+%
+% **Description**
+%
+% Prints the state of all workers on all clusters.
+% Determines the state by reading the log files.
+%
+% **Technical Details**
+%
+% This function is *internal*.
+%
+% See Also:
+% xgrid.simulate
+
 function showWorkerStates(self)
 
 fprintf('\n\nCluster      Worker  State      Output\n')
@@ -53,5 +81,3 @@ for i = 1:length(self.clusters)
     	end
 	end
 end
-
-

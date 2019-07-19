@@ -16,7 +16,7 @@ classdef xgrid < handle & matlab.mixin.CustomDisplay
 	properties
 		x@xolotl
 		sim_func@function_handle
-		n_func_outputs % how many outputs will the simulation function generate?
+		% n_func_outputs % how many outputs will the simulation function generate?
 		n_batches = 10 % per worker
 		verbosity = 1;
 
@@ -31,14 +31,14 @@ classdef xgrid < handle & matlab.mixin.CustomDisplay
 	end % end props
 
 	properties (SetAccess = protected)
-		allowed_param_names
+		% allowed_param_names
 
 		workers
 		n_sims
 		xolotl_hash
 		current_pool@parallel.Pool
 		daemon_handle@timer
-		controller_handle
+		% controller_handle
 
 		is_master = false;
 		speed

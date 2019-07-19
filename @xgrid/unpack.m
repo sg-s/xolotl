@@ -1,6 +1,28 @@
-% unpacks data from all_data 
-% and makes variables 
-% as defined in self.sim_func
+%
+% __   ____ _ _ __(_) __| |
+% \ \/ / _` | '__| |/ _` |
+%  >  < (_| | |  | | (_| |
+% /_/\_\__, |_|  |_|\__,_|
+%      |___/
+%
+% ### unpack
+%
+%
+% **Syntax**
+%
+% ```matlab
+% 	p.unpack(all_data)
+% ```
+%
+% **Description**
+%
+% Unpacks data from `all_data` and turns it into variables,
+% as defined in `p.sim_func`.
+%
+% **Technical Details**
+%
+% This function is *internal*.
+%
 
 function varargout = unpack(self, all_data)
 

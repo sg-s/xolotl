@@ -1,13 +1,30 @@
-%                          _
-%                         | |
-%     _ __  ___ _   _  ___| |__   ___  _ __   ___  _ __ ___  _ __
-%    | '_ \/ __| | | |/ __| '_ \ / _ \| '_ \ / _ \| '_ ` _ \| '_ \
-%    | |_) \__ \ |_| | (__| | | | (_) | |_) | (_) | | | | | | |_) |
-%    | .__/|___/\__, |\___|_| |_|\___/| .__/ \___/|_| |_| |_| .__/
-%    | |         __/ |                | |                   | |
-%    |_|        |___/                 |_|                   |_|
 %
-
+% __   ____ _ _ __(_) __| |
+% \ \/ / _` | '__| |/ _` |
+%  >  < (_| | |  | | (_| |
+% /_/\_\__, |_|  |_|\__,_|
+%      |___/
+%
+% ### simulate_core
+%
+%
+% **Syntax**
+%
+% ```matlab
+% 	p.simulate_core(idx, n_runs)
+% ```
+%
+% **Description**
+%
+% Contains the main loop that performs a job during an xgrid simulation.
+%
+% **Technical Details**
+%
+% This function is *internal*.
+% Users should call `simulate` instead.
+%
+% See Also:
+% xgrid.simulate
 
 function simulate_core(self,idx,n_runs)
 

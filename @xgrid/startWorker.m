@@ -1,16 +1,26 @@
-%                          _                                       
-%                         | |                                      
-%     _ __  ___ _   _  ___| |__   ___  _ __   ___  _ __ ___  _ __  
-%    | '_ \/ __| | | |/ __| '_ \ / _ \| '_ \ / _ \| '_ ` _ \| '_ \ 
-%    | |_) \__ \ |_| | (__| | | | (_) | |_) | (_) | | | | | | |_) |
-%    | .__/|___/\__, |\___|_| |_|\___/| .__/ \___/|_| |_| |_| .__/ 
-%    | |         __/ |                | |                   | |    
-%    |_|        |___/                 |_|                   |_|
-%  
-
-% start a new worker
-% you can use this if you want to start up one worker at a time
-% for whatever reason
+%
+% __   ____ _ _ __(_) __| |
+% \ \/ / _` | '__| |/ _` |
+%  >  < (_| | |  | | (_| |
+% /_/\_\__, |_|  |_|\__,_|
+%      |___/
+%
+% ### startWorker
+%
+%
+% **Syntax**
+%
+% ```matlab
+% 	p.startWorker()
+% ```
+%
+% **Description**
+%
+% SStarts a new worker.
+% You can use this if you want to start up one worker at a time, for whatever reason.
+%
+% See Also:
+% xgrid.addCluster
 
 function startWorker(self)
 

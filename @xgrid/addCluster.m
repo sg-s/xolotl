@@ -1,29 +1,38 @@
-%                 _     _ 
-% __  ____ _ _ __(_) __| |
+%
+% __   ____ _ _ __(_) __| |
 % \ \/ / _` | '__| |/ _` |
 %  >  < (_| | |  | | (_| |
 % /_/\_\__, |_|  |_|\__,_|
-%      |___/              
-% 
+%      |___/
+%
 % ### addCluster
 %
-% adds a compute cluster to the pool
 %
 % **Syntax**
-% 
+%
 % ```matlab
-% addCluster(self,cluster_name)
+% 	p.add('cluster_name')
 % ```
-% 
+%
 % **Description**
-% 
-% Do not use this method. This method is called internally when
-% you create a xgrid object. 
+%
+% Adds a computer as a computing cluster to the xgrid botnet.
+% If the cluster name is `'local'`, it finds the current parallel pool on your local machine.
+% If the list of clusters is empty, it begins the list.
+% If the cluster name is not `'local'`, it should be an SSH address.
+% That computer will be recruited to run the xgrid simulation.
+%
+% **Technical Details**
+%
+% If the cluster name is `'local'`, then it is your local computer.
+% Otherwise, `xgrid` will try to ping that computer, ssh into that computer,
+% and set up a daemon for xgrid.
+% A new directory `~/.psych` will be created on that computer.
 %
 % See Also:
-% xgrid.batchify
-% xgrid.simulate
-% xgrid.tellRemote
+% xgrid.daemonize
+% xgrid.delete
+%
 
 function addCluster(self,cluster_name)
 
@@ -69,7 +78,7 @@ else
 
 	% since this is being run as a controller, we'll need a daemon
 	self.daemonize;
-	
+
 	stop(self.daemon_handle)
 	self.daemon_handle.Period = 5;
 	start(self.daemon_handle)
@@ -81,7 +90,7 @@ else
 
 	if e == 0
 		corelib.cprintf('Green','OK\n')
-		% load the log 	
+		% load the log
 		try
 			load([self.xgrid_folder '/' cluster_name '.log.mat']);
 		catch

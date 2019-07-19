@@ -1,5 +1,34 @@
+%
+% __   ____ _ _ __(_) __| |
+% \ \/ / _` | '__| |/ _` |
+%  >  < (_| | |  | | (_| |
+% /_/\_\__, |_|  |_|\__,_|
+%      |___/
+%
+% ### daemonize
+%
+%
+% **Syntax**
+%
+% ```matlab
+% 	p.daemonize()
+% ```
+%
+% **Description**
+%
+% Sets up a daemon that listens for commands from xgrid.
+%
+% **Technical Details**
+%
+% This function is *internal*.
+% Users should call `addCluster` instead.
+%
+% See Also:
+% xgrid.addCluster
+% xgrid.stopDaemon
+
 function daemonize(self)
-	
+
 
 % stop all existing timers
 t = timerfindall;
@@ -18,7 +47,7 @@ addpath('~/.psych')
 self.daemon_handle = timer('TimerFcn',@self.xgridd,'ExecutionMode','fixedDelay','TasksToExecute',Inf,'Period',1);
 start(self.daemon_handle);
 
-% make sure the parpool never shuts down 
+% make sure the parpool never shuts down
 try
 	pool = gcp('nocreate');
 	pool.IdleTimeout = Inf;

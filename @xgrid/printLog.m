@@ -1,17 +1,32 @@
-%                          _                                       
-%                         | |                                      
-%     _ __  ___ _   _  ___| |__   ___  _ __   ___  _ __ ___  _ __  
-%    | '_ \/ __| | | |/ __| '_ \ / _ \| '_ \ / _ \| '_ ` _ \| '_ \ 
-%    | |_) \__ \ |_| | (__| | | | (_) | |_) | (_) | | | | | | |_) |
-%    | .__/|___/\__, |\___|_| |_|\___/| .__/ \___/|_| |_| |_| .__/ 
-%    | |         __/ |                | |                   | |    
-%    |_|        |___/                 |_|                   |_|
-% 
 %
+% __   ____ _ _ __(_) __| |
+% \ \/ / _` | '__| |/ _` |
+%  >  < (_| | |  | | (_| |
+% /_/\_\__, |_|  |_|\__,_|
+%      |___/
+%
+% ### printLog
+%
+%
+% **Syntax**
+%
+% ```matlab
+% 	p.daemonize()
+% ```
+%
+% **Description**
+%
+% Generates log files on each cluster.
+% The file contains the job status and state of each worker.
+%
+% See Also:
+% xgrid.getJobStatus
+% xgrid.showWorkerStates
+
 
 function printLog(self)
 
-% delete old log files if any 
+% delete old log files if any
 if exist(pathlib.join(self.xgrid_folder,'log.mat'),'file')
 	delete(pathlib.join(self.xgrid_folder,'log.mat'))
 end

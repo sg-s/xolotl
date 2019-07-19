@@ -1,20 +1,31 @@
-%                          _                                       
-%                         | |                                      
-%     _ __  ___ _   _  ___| |__   ___  _ __   ___  _ __ ___  _ __  
-%    | '_ \/ __| | | |/ __| '_ \ / _ \| '_ \ / _ \| '_ ` _ \| '_ \ 
-%    | |_) \__ \ |_| | (__| | | | (_) | |_) | (_) | | | | | | |_) |
-%    | .__/|___/\__, |\___|_| |_|\___/| .__/ \___/|_| |_| |_| .__/ 
-%    | |         __/ |                | |                   | |    
-%    |_|        |___/                 |_|                   |_|
-% 
 %
-% This is the daemon version of xgrid
-% it's a very simple loop that is meant to be run
-% on a timer. every time it runs, it looks to see if 
-% there is a command that tells it to do something
-% and if so, tries to do it. that's it. 
-% it should never ever throw an error, so 
-% count on this running at all times
+% __   ____ _ _ __(_) __| |
+% \ \/ / _` | '__| |/ _` |
+%  >  < (_| | |  | | (_| |
+% /_/\_\__, |_|  |_|\__,_|
+%      |___/
+%
+% ### xgridd
+%
+%
+% **Syntax**
+%
+% ```matlab
+% 	p.xgridd(~, ~)
+% ```
+%
+% **Description**
+%
+% This is the daemon version of xgrid.
+% It's a very simple loop that is meant to be run on a timer.
+% Every time it runs, it looks to see if there is a command that tells it to do something,
+% and if so, tries to do it.
+%
+% **Technical Details**
+%
+% This function should *never* throw an error,
+% so count on it to be running at all times.
+%
 
 function xgridd(self,~,~)
 
@@ -44,8 +55,8 @@ if self.is_master
 		end
 		parfeval(@self.getRemoteState,0,i);
 
-		% load the log 
-		
+		% load the log
+
 
 		try
 			load([self.xgrid_folder '/' self.clusters(i).Name '.log.mat']);
@@ -57,8 +68,8 @@ if self.is_master
 
 else
 
-	% running as slave 
-	% always print a log 
+	% running as slave
+	% always print a log
 	self.printLog;
 
 
