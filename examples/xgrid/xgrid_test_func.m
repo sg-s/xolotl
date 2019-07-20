@@ -11,9 +11,9 @@
 function [burst_period, n_spikes_per_burst, sim_time] = xgrid_test_func(x,~,~)
 
 % randomly fail
-if rand > .95
-	error('Random failure to simulate something going wrong in real-world xgrid simulation functions')
-end
+% if rand > .95
+% 	error('Random failure to simulate something going wrong in real-world xgrid simulation functions')
+% end
 
 x.closed_loop = false;
 x.reset;

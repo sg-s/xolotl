@@ -35,6 +35,7 @@ end
 p.cleanup;
 p.n_batches = 3;
 p.x = x;
+
 p.batchify(all_params,parameters_to_vary);
 
 % configure the simulation type, and the analysis functions 
@@ -44,10 +45,14 @@ tic
 p.simulate;
 wait(p.workers)
 t = toc;
-disp(['Finished in ' mat2str(t) ' seconds. Total speed = ' mat2str((length(all_params)*x.t_end*1e-3)/t)])
+
 
 
 [all_data,all_params,all_param_idx] = p.gather;
+
+
+disp(['Finished in ' mat2str(t) ' seconds. Total speed = ' mat2str((length(all_params)*x.t_end*1e-3)/t)])
+
 burst_periods = all_data{1};
 n_spikes_per_burst = all_data{2};
 spiketimes = all_data{3};
