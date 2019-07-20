@@ -3,7 +3,7 @@ In this tutorial, we will walk through the process of creating a parallelized pa
 We will set up a simple model,
 and simulate it many times in parallel for many parameter values.
 
-Code equivalent to this tutorial can be found in `../xgrid/tests/`.
+Code equivalent to this tutorial can be found in the xolotl examples folder.
 
 ### A high-level view of xgrid
 
@@ -63,10 +63,10 @@ cell array of xolotl parameter names.
 
 ### Creating the xgrid object
 
-Let's create the xgrid object.
+Let's create the xgrid object, telling it that we want to use the local machine to run simulations. 
 
 ```matlab
-p = xgrid('particleswarm');
+p = xgrid('local');
 ```
 
 We will cleanup any old auxiliary files that are laying around,
@@ -100,7 +100,6 @@ and use some analysis functions to compute the burst period and number of spikes
 p.sim_func = @xgrid_test_func;
 ```
 
-You can find the body of function in ``../xgrid/tests/``.
 
 ### Performing the simulation
 
