@@ -46,8 +46,8 @@ function simulate(self)
 			corelib.verb(self.verbosity, 'INFO', 'Starting workers...')
 
 			for j = 1:self.num_workers
+				disp(['Starting worker ' mat2str(j) ' ...'])
 				self.startWorker();
-				corelib.textbar(j, self.num_workers)
 			end
 
 

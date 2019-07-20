@@ -1,11 +1,10 @@
-%                          _
-%                         | |
-%     _ __  ___ _   _  ___| |__   ___  _ __   ___  _ __ ___  _ __
-%    | '_ \/ __| | | |/ __| '_ \ / _ \| '_ \ / _ \| '_ ` _ \| '_ \
-%    | |_) \__ \ |_| | (__| | | | (_) | |_) | (_) | | | | | | |_) |
-%    | .__/|___/\__, |\___|_| |_|\___/| .__/ \___/|_| |_| |_| .__/
-%    | |         __/ |                | |                   | |
-%    |_|        |___/                 |_|                   |_|
+%                 _     _ 
+% __  ____ _ _ __(_) __| |
+% \ \/ / _` | '__| |/ _` |
+%  >  < (_| | |  | | (_| |
+% /_/\_\__, |_|  |_|\__,_|
+%      |___/              
+% 
 %
 % a MATLAB class to run parameter scans of neuron models
 % runs using xolotl (https://github.com/sg-s/xolotl)
@@ -26,7 +25,7 @@ classdef xgrid < handle & matlab.mixin.CustomDisplay
 
 		num_workers
 
-		n_outputs
+		
 
 	end % end props
 
@@ -43,13 +42,12 @@ classdef xgrid < handle & matlab.mixin.CustomDisplay
 		is_master = false;
 		speed
 
-
-
 	end
 
 	properties (Access = protected)
 		xgrid_folder
 		sim_start_time
+		n_outputs
 	end
 
 
@@ -121,10 +119,6 @@ classdef xgrid < handle & matlab.mixin.CustomDisplay
 	methods
 
 
-
-
-		% when run with no input arguments, will run as slave
-		% when called with any argument, will run as master
 		function self = xgrid(varargin)
 
 

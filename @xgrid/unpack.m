@@ -11,7 +11,7 @@
 % **Syntax**
 %
 % ```matlab
-% 	p.unpack(all_data)
+% p.unpack(all_data)
 % ```
 %
 % **Description**
@@ -19,9 +19,6 @@
 % Unpacks data from `all_data` and turns it into variables,
 % as defined in `p.sim_func`.
 %
-% **Technical Details**
-%
-% This function is *internal*.
 %
 
 function varargout = unpack(self, all_data)

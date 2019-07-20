@@ -18,10 +18,6 @@
 %
 % Sets up a daemon that listens for commands from xgrid.
 %
-% **Technical Details**
-%
-% This function is *internal*.
-% Users should call `addCluster` instead.
 %
 % See Also:
 % xgrid.addCluster

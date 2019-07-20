@@ -16,7 +16,8 @@
 %
 % **Description**
 %
-% Stops all simulations. Does not stop any daemons running on remote clusters.
+% Stops running simulations on all clusters.
+% 
 % Use `delete` to stop all daemons.
 % 
 % See Also:

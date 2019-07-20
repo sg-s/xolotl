@@ -5,13 +5,13 @@
 % /_/\_\__, |_|  |_|\__,_|
 %      |___/
 %
-% ### daemonize
+% ### wait
 %
 %
 % **Syntax**
 %
 % ```matlab
-% 	p.wait()
+% p.wait()
 % ```
 %
 % **Description**

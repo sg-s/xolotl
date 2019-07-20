@@ -11,14 +11,13 @@
 % **Syntax**
 %
 % ```matlab
-% 	p.add('cluster_name')
+% 	p.addCluster('cluster_name')
 % ```
 %
 % **Description**
 %
-% Adds a computer as a computing cluster to the xgrid botnet.
+% Adds a computer as a computing cluster to the xgrid  worker pool.
 % If the cluster name is `'local'`, it finds the current parallel pool on your local machine.
-% If the list of clusters is empty, it begins the list.
 % If the cluster name is not `'local'`, it should be an SSH address.
 % That computer will be recruited to run the xgrid simulation.
 %

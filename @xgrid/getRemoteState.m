@@ -11,7 +11,7 @@
 % **Syntax**
 %
 % ```matlab
-% 	p.getRemoteState(idx)
+% p.getRemoteState(idx)
 % ```
 %
 % **Description**

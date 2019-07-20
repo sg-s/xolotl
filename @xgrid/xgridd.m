@@ -30,7 +30,7 @@
 function xgridd(self,~,~)
 
 
-% check if there is a pyschopomp object in the ws,
+% check if there is a xgrid object in the workspace,
 % otherwise kill itself
 
 vars = evalin('base','whos');

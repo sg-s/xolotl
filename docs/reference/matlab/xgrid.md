@@ -2,7 +2,7 @@
 
 This document describes the "xgrid" class.
 This is a MATLAB class that parallelizes xolotl simulations over one or more computing clusters.
-It requires the Parallel Computing Toolbox for MATLAB.
+It requires the [Parallel Computing Toolbox](https://www.mathworks.com/products/parallel-computing.html) for MATLAB.
 
 To instantiate an xgrid object, use
 
@@ -20,28 +20,31 @@ p = xgrid('engine')
 ## Properties
 
 Every xgrid object has the following properties.
-To access a property, use dot notation, e.g.:
+To access any property, use dot notation, e.g.:
 
 ```matlab
 p.verbosity
 ```
 
 ### `x`
+
 This property contains the xolotl object that comprises the model to be simulated.
 The structure of the model is important, but the exact parameter values do not,
 since xgrid will spawn multiple copies of the xolotl object
 and set parameter values during the parallelized simulations.
 
 ### `sim_func`
+
 This property is a function handle to the MATLAB function is used to simulate the xolotl models.
 The function must have at least one output and have the function signature
 
 ```matlab
-  function [outputs] = sim_func(x, ~, ~)
+function [outputs] = sim_func(x)
 ```
 
 where `x` is the xolotl object.
-There can be any number of outputs.
+
+There can be any number of outputs. xgrid automatically captures all outputs and saves them. 
 
 ### `n_batches`
 
@@ -75,15 +78,18 @@ An internal property that keeps track of the computing clusters recruited to run
 The amount of time (in seconds) between attempting to start a new batch of simulations.
 
 !!! warning
-It is not advisable to reduce the stagger time below 1 second.
+    It is not advisable to reduce the stagger time below 1 second.
 
 ### `num_workers`
+
 An internal property that keeps track of the number of workers recruited.
 
 ### `n_outputs`
+
 An internal property that keeps track of how many outputs of the simulation function there are.
 
 ### `workers`
+
 A protected property that lists the workers recruited.
 
 ### `n_sims`
@@ -91,15 +97,18 @@ A protected property that keeps track of how many simulations should be performe
 This is computed from the dimensionality of the input arguments to `p.batchify`.
 
 ### `xolotl_hash`
+
 A protected property that keeps track of the MD5 hash of the xolotl object.
 The hash does not change when parameters are changed,
 only when the structure of the model changes
 (viz. when `p.x` is modified).
 
 ### `current_pool`
+
 A protected property for accessing the current parallel pool.
 
 ### `daemon_handle`
+
 A protected property that consists of a vector of timers,
 each of which handles a daemon on a remote cluster.
 
@@ -112,18 +121,19 @@ each of which handles a daemon on a remote cluster.
 A protected flag that keeps track of whether this computer is the controlling computer.
 
 ### `speed`
+
 A protected property listing the speed of simulation
 as a ratio of time lapsed in the simulated world divided by the time lapsed in the real world.
 
 ### `xgrid_folder`
+
 A hidden and protected property that lists the main directory of xgrid.
 
 ### `sim_start_time`
+
 A hidden and protected property that keeps track of when simulations started.
 
 ## Methods
-
--------
 
 
 -------
@@ -134,14 +144,13 @@ A hidden and protected property that keeps track of when simulations started.
 **Syntax**
 
 ```matlab
-p.add('cluster_name')
+p.addCluster('cluster_name')
 ```
 
 **Description**
 
-Adds a computer as a computing cluster to the xgrid botnet.
+Adds a computer as a computing cluster to the xgrid  worker pool.
 If the cluster name is `'local'`, it finds the current parallel pool on your local machine.
-If the list of clusters is empty, it begins the list.
 If the cluster name is not `'local'`, it should be an SSH address.
 That computer will be recruited to run the xgrid simulation.
 
@@ -267,10 +276,6 @@ p.daemonize()
 
 Sets up a daemon that listens for commands from xgrid.
 
-**Technical Details**
-
-This function is *internal*.
-Users should call `addCluster` instead.
 
 
 
@@ -397,7 +402,7 @@ This function is *internal*.
 **Syntax**
 
 ```matlab
-p.daemonize()
+p.printLog()
 ```
 
 **Description**
@@ -530,7 +535,8 @@ p.stop()
 
 **Description**
 
-Stops all simulations. Does not stop any daemons running on remote clusters.
+Stops running simulations on all clusters.
+
 Use `delete` to stop all daemons.
 
 
@@ -553,12 +559,8 @@ p.stopDaemon()
 
 **Description**
 
-Forcibly stops all running daemons.
+Forcibly stops all running daemons. Do not use this method. 
 
-**Technical Details**
-
-This function is *internal*.
-Users should call `delete` instead.
 
 
 
@@ -580,14 +582,8 @@ p.tellRemote(cluster_name, command, value)
 
 **Description**
 
-Gives a command to a remote cluster.
-`cluster_name` is the name of the cluster defined when it was added.
-`command` and `value` are saved to the queue on the remote cluster.
-The remote will attempt to execute commands in sequence, or timeout if it cannot.
+Do not use this method. 
 
-**Technical Details**
-
-This function is *internal*.
 
 
 
@@ -613,10 +609,30 @@ p.unpack(all_data)
 Unpacks data from `all_data` and turns it into variables,
 as defined in `p.sim_func`.
 
-**Technical Details**
 
-This function is *internal*.
 
+
+
+-------
+
+### wait
+
+
+**Syntax**
+
+```matlab
+p.wait()
+```
+
+**Description**
+
+Waits for all simulations to be finished on all clusters.
+
+
+
+!!! info "See Also"
+    * [xgrid.simulate](../xgrid/#simulate)
+    * [xgrid.stop](../xgrid/#stop)
 
 
 

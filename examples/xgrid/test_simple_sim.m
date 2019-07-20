@@ -84,4 +84,9 @@ title('#spikes/burst')
 
 figlib.pretty();
 
-!rm *.error
+
+% clean up error files
+allfiles = dir('*.error');
+for i = 1:length(allfiles)
+	delete(allfiles(i).name)
+end

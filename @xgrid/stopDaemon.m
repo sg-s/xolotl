@@ -16,12 +16,8 @@
 %
 % **Description**
 %
-% Forcibly stops all running daemons.
+% Forcibly stops all running daemons. Do not use this method. 
 %
-% **Technical Details**
-%
-% This function is *internal*.
-% Users should call `delete` instead.
 %
 % See Also:
 % xgrid.delete

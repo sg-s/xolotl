@@ -11,25 +11,19 @@
 % **Syntax**
 %
 % ```matlab
-% 	p.tellRemote(cluster_name, command, value)
+% p.tellRemote(cluster_name, command, value)
 % ```
 %
 % **Description**
 %
-% Gives a command to a remote cluster.
-% `cluster_name` is the name of the cluster defined when it was added.
-% `command` and `value` are saved to the queue on the remote cluster.
-% The remote will attempt to execute commands in sequence, or timeout if it cannot.
+% Do not use this method. 
 %
-% **Technical Details**
-%
-% This function is *internal*.
 %
 % See Also:
 % xgrid.addCluster
 
 
-function [status] = tellRemote(self,cluster_name,command,value)
+function status = tellRemote(self,cluster_name,command,value)
 
 if nargin < 4
 	value = 0;
