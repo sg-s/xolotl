@@ -32,10 +32,11 @@
 %  using `checkCompartmentName`. If so, it calls the `add` method 
 % in the `cpplab` superclass.
 %
+% 
 % See Also: 
 % cpplab.add
 % xolotl.checkCompartmentName
-
+% 
 
 
 function add(self,obj_type, obj_name,varargin)

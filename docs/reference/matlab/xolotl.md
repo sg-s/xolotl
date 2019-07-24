@@ -229,6 +229,7 @@ in the `cpplab` superclass.
 
 
 
+
 !!! info "See Also"
 cpplab.add
     * [xolotl.checkCompartmentName](../xolotl/#checkcompartmentname)
@@ -479,9 +480,11 @@ unless you add a new component to one of them.
 
 
 
+
 !!! info "See Also"
 cpplab.copy
     * [How to copy models](https://xolotl.readthedocs.io/en/master/how-to/copy-models/)
+
 
 
 

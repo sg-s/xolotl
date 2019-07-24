@@ -22,9 +22,11 @@
 % XXXX* Some read-only properties in a xolotl object may not be copied over.
 % XXXX* Do not make vectors of ``xolotl`` objects, as it may lead to undefined behavior.
 %
+%
 % See Also: 
 % cpplab.copy
 %     * [How to copy models](https://xolotl.readthedocs.io/en/master/how-to/copy-models/)
+% 
 
 
 
