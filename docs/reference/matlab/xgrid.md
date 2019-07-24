@@ -203,7 +203,7 @@ param_names = {'*gbar'};
 !!! info "See Also"
     * [xgrid.cleanup](../xgrid/#cleanup)
     * [xgrid.simulate](../xgrid/#simulate)
-xolotl.find
+    * [xolotl.find](../xolotl/#find)
 
 
 
@@ -226,8 +226,8 @@ and saves results to `~/.psych/benchmark.mat`.
 
 
 !!! info "See Also"
-    * [xgrid.printLog](../xgrid/#printlog)
-    * [xgrid.showWorkerStates](../xgrid/#showworkerstates)
+    * [xgrid.printLog](../xgrid/#printLog)
+    * [xgrid.showWorkerStates](../xgrid/#showWorkerStates)
 
 
 
@@ -280,8 +280,8 @@ Sets up a daemon that listens for commands from xgrid.
 
 
 !!! info "See Also"
-    * [xgrid.addCluster](../xgrid/#addcluster)
-    * [xgrid.stopDaemon](../xgrid/#stopdaemon)
+    * [xgrid.addCluster](../xgrid/#addCluster)
+    * [xgrid.stopDaemon](../xgrid/#stopDaemon)
 
 
 
@@ -304,7 +304,7 @@ Tries to stop the running daemons and removes the handle from the xgrid object.
 
 
 !!! info "See Also"
-    * [xgrid.stopDaemon](../xgrid/#stopdaemon)
+    * [xgrid.stopDaemon](../xgrid/#stopDaemon)
 
 
 
@@ -362,7 +362,7 @@ This function is *internal*.
 
 
 !!! info "See Also"
-    * [xgrid.showWorkerStates](../xgrid/#showworkerstates)
+    * [xgrid.showWorkerStates](../xgrid/#showWorkerStates)
 
 
 
@@ -389,7 +389,7 @@ This function is *internal*.
 
 
 !!! info "See Also"
-    * [xgrid.showWorkerStates](../xgrid/#showworkerstates)
+    * [xgrid.showWorkerStates](../xgrid/#showWorkerStates)
 
 
 
@@ -413,8 +413,8 @@ The file contains the job status and state of each worker.
 
 
 !!! info "See Also"
-    * [xgrid.getJobStatus](../xgrid/#getjobstatus)
-    * [xgrid.showWorkerStates](../xgrid/#showworkerstates)
+    * [xgrid.getJobStatus](../xgrid/#getJobStatus)
+    * [xgrid.showWorkerStates](../xgrid/#showWorkerStates)
 
 
 
@@ -518,7 +518,7 @@ You can use this if you want to start up one worker at a time, for whatever reas
 
 
 !!! info "See Also"
-    * [xgrid.addCluster](../xgrid/#addcluster)
+    * [xgrid.addCluster](../xgrid/#addCluster)
 
 
 
@@ -588,7 +588,7 @@ Do not use this method.
 
 
 !!! info "See Also"
-    * [xgrid.addCluster](../xgrid/#addcluster)
+    * [xgrid.addCluster](../xgrid/#addCluster)
 
 
 

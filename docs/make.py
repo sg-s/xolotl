@@ -113,17 +113,14 @@ for file in sorted(glob.glob("./*/")):
 				# pre-formatted link, just write it
 				out_file.write('    ' + thisline)
 
-			elif thisline.lower().find(classname + '.') != -1 and format_link:
+			elif format_link:
 				# ok, this is a class method
-				link_name = thisline
-				link_name = link_name.strip()
-				method_name = thisline.replace(classname +'.','')
-				method_name = method_name.strip()
-				method_name = method_name.lower()
-				link_url = '[' + link_name + '](' + method_root + method_name + ')'
-				link_url = link_url.strip()
-				link_url = '    * ' + link_url + '\n'
-				out_file.write(link_url)
+				words = thisline.split('.')
+				link_class = words[0]
+				link_method = words[1]
+
+				out_file.write('    * [' + thisline.strip() + '](../' + link_class + '/#' + link_method.strip() + ')\n')
+
 
 			else:
 				out_file.write(thisline)

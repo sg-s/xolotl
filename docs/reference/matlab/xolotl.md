@@ -231,8 +231,8 @@ in the `cpplab` superclass.
 
 
 !!! info "See Also"
-cpplab.add
-    * [xolotl.checkCompartmentName](../xolotl/#checkcompartmentname)
+    * [cpplab.add](../cpplab/#add)
+    * [xolotl.checkCompartmentName](../xolotl/#checkCompartmentName)
 
 
 
@@ -482,7 +482,7 @@ unless you add a new component to one of them.
 
 
 !!! info "See Also"
-cpplab.copy
+    * [cpplab.copy](../cpplab/#copy)
     * [How to copy models](https://xolotl.readthedocs.io/en/master/how-to/copy-models/)
 
 
@@ -760,7 +760,7 @@ x.pref.show_Ca = false;
 
 !!! info "See Also"
     * [xolotl.manipulate](../xolotl/#manipulate)
-    * [xolotl.contributingCurrents](../xolotl/#contributingcurrents)
+    * [xolotl.contributingCurrents](../xolotl/#contributingCurrents)
 
 
 
@@ -825,7 +825,7 @@ If you move a xolotl object across computers (for example, by saving it to a fil
 
 
 !!! info "See Also"
-cpplab.rebase
+    * [cpplab.rebase](../cpplab/#rebase)
 
 
 
@@ -960,7 +960,7 @@ press the `tab` key and get a list of conductances you can show, like this:
 
 !!! info "See Also"
     * [xolotl.plot](../xolotl/#plot)
-    * [xolotl.getGatingFunctions](../xolotl/#getgatingfunctions)
+    * [xolotl.getGatingFunctions](../xolotl/#getGatingFunctions)
 
 
 
@@ -1070,7 +1070,7 @@ MATLAB to C++ and back.
 
 !!! info "See Also"
     * [xolotl.compile](../xolotl/#compile)
-    * [xolotl.viewCode](../xolotl/#viewcode)
+    * [xolotl.viewCode](../xolotl/#viewCode)
 
 
 
