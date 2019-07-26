@@ -31,7 +31,7 @@ public:
     // defaults
     if (isnan(gbar)) { gbar = 0; }
     if (isnan(E)) { E = -80; }
-    if (isnan(tau)) { tau = 1; }
+    if (isnan(tau)) { tau = 1000; }
   }
 
   double m_inf(double, double);
