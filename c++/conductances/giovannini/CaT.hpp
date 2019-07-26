@@ -56,15 +56,15 @@ string CaT::getClass(){
     return "CaT";
 }
 
-double NaV::a_m(double V, double Ca) {return 0.055 * (-27 - V) / (exp((-27 - V)/3.8) - 1);}
-double NaV::a_h(double V, double Ca) {return 0.000457 * exp((-13 - V)/50);}
-double NaV::b_m(double V, double Ca) {return 0.94 * exp((-75 - V)/17);}
-double NaV::b_h(double V, double Ca) {return 0.0065 * (exp((-15 - V)/28) + 1);}
+double CaT::a_m(double V, double Ca) {return 0.055 * (-27 - V) / (exp((-27 - V)/3.8) - 1);}
+double CaT::a_h(double V, double Ca) {return 0.000457 * exp((-13 - V)/50);}
+double CaT::b_m(double V, double Ca) {return 0.94 * exp((-75 - V)/17);}
+double CaT::b_h(double V, double Ca) {return 0.0065 * (exp((-15 - V)/28) + 1);}
 
-double NaV::m_inf(double V, double Ca) {return a_m(V, Ca) / (a_m(V, Ca) + b_m(V, Ca));}
-double NaV::h_inf(double V, double Ca) {return a_h(V, Ca) / (a_h(V, Ca) + b_h(V, Ca));}
-double NaV::tau_m(double V, double Ca) {return 1 / (a_m(V, Ca) + b_m(V, Ca));}
-double NaV::tau_h(double V, double Ca) {return 1 / (a_m(V, Ca) + b_m(V, Ca));}
+double CaT::m_inf(double V, double Ca) {return a_m(V, Ca) / (a_m(V, Ca) + b_m(V, Ca));}
+double CaT::h_inf(double V, double Ca) {return a_h(V, Ca) / (a_h(V, Ca) + b_h(V, Ca));}
+double CaT::tau_m(double V, double Ca) {return 1 / (a_m(V, Ca) + b_m(V, Ca));}
+double CaT::tau_h(double V, double Ca) {return 1 / (a_m(V, Ca) + b_m(V, Ca));}
 
 
 #endif
