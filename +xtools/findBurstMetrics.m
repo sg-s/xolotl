@@ -119,7 +119,7 @@ Ca_prom = std(Ca);
 Ca_peaks = burst_peak_loc;
 
 % find spikes
-spike_times = nonnans(xtools.findNSpikeTimes(V,1000,on_off_thresh));
+spike_times = veclib.nonnans(xtools.findNSpikeTimes(V,1000,on_off_thresh));
 
 if length(spike_times) == 0
 	burst_metrics(10) = 4;
