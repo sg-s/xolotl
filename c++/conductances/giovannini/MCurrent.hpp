@@ -20,7 +20,7 @@ public:
     E = E_;
     m = m_;
     h = h_;
-    tau = tau_;
+    tau = tau_; // ms
 
     p = 1;
 
