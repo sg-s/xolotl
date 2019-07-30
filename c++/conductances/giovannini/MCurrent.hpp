@@ -13,6 +13,9 @@ class MCurrent: public conductance {
 
 public:
 
+  // time constant (ms)
+  double tau;
+
   // specify parameters & initial conditions
   MCurrent(double g_, double E_, double m_, double h_, double tau_)
   {

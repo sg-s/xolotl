@@ -15,6 +15,13 @@ class CaN: public conductance {
 
 public:
 
+    // time constant (ms)
+    double beta;
+    // Q10 value, unitless
+    double Q10;
+    // temperature adjustment factor (unitless)
+    double T_adj;
+
     // specify parameters + initial conditions
     CaN(double g_, double E_, double m_, double beta_, double Q10_)
     {
