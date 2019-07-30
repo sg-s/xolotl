@@ -19,6 +19,7 @@
 class CalciumMech: public mechanism {
 
 protected:
+    double dt_by_tau_Ca = 0;
 public:
 
 
@@ -79,28 +80,26 @@ int CalciumMech::getFullState(double *cont_state, int idx) {
 
 
 // connection methods
-void CalciumMech::connect(compartment* comp_)
-{
+void CalciumMech::connect(compartment* comp_) {
     if (isnan(comp_->vol)) {mexErrMsgTxt("[CalciumMech] this mechanism requires that the volume of the compartment it is in be defined. \n");}
 
     comp = comp_;
     comp->addMechanism(this);
+
+    dt_by_tau_Ca = exp(-dt/tau_Ca);
 }
 
-void CalciumMech::connect(conductance* cond_)
-{
+void CalciumMech::connect(conductance* cond_) {
     mexErrMsgTxt("[CalciumMech] This mechanism cannot connect to a conductance object");
 }
 
-void CalciumMech::connect(synapse* syn_)
-{
+void CalciumMech::connect(synapse* syn_) {
     mexErrMsgTxt("[CalciumMech] This mechanism cannot connect to a synapse object");
 }
 
 
 
-void CalciumMech::integrate(void)
-{
+void CalciumMech::integrate(void) {
 
     double Ca = comp->Ca_prev;
 
@@ -111,24 +110,21 @@ void CalciumMech::integrate(void)
     // diverges
 
     double Ca_inf = Ca_in - (tau_Ca*phi*(comp->i_Ca_prev)*(comp->A))/(192971*(comp->vol)); // microM
-    comp->Ca = Ca_inf + (Ca - Ca_inf)*exp(-dt/tau_Ca);
+    comp->Ca = Ca_inf + (Ca - Ca_inf)*dt_by_tau_Ca;
 }
 
 
-double CalciumMech::Cadot(double Ca_)
-{
+double CalciumMech::Cadot(double Ca_) {
     return -(phi*(comp->i_Ca)*(comp->A)/(192971*(comp->vol))) - (Ca_ - Ca_in)/tau_Ca;
 }
 
 // Runge-Kutta 4 integrator
-void CalciumMech::integrateMS(int k, double V, double Ca_)
-{
+void CalciumMech::integrateMS(int k, double V, double Ca_) {
     if (k == 4){return;}
     comp->k_Ca[k] = dt*(Cadot(Ca_));
 }
 
-void CalciumMech::checkSolvers(int k)
-{
+void CalciumMech::checkSolvers(int k) {
     if (k == 0){
         return;
     } else if (k == 4){
