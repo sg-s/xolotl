@@ -40,8 +40,8 @@ public:
         p = 2;
 
         // allow this channel to be approximated
-        approx_m = 1;
-        approx_h = 1;
+        approx_m = 0;
+        approx_h = 0;
 
         // save the adjusted temperature scaling
         T_adj = pow(Q10, (temperature - temperature_ref) / 10);
@@ -61,8 +61,7 @@ string CaN::getClass(){
     return "CaN";
 }
 
-// double CaN::alpha(double Ca) {return beta * fast_pow(Ca / container->Ca_out, 2); }
-double CaN::alpha(double Ca) {return 1.0; }
+double CaN::alpha(double Ca) {return beta * fast_pow(Ca / container->Ca_out, 2); }
 
 double CaN::a_m(double V, double Ca) {return alpha(Ca) * T_adj;}
 double CaN::b_m(double V, double Ca) {return beta * T_adj;}
