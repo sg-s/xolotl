@@ -28,7 +28,7 @@ $$\tau_V \frac{dV}{dt} = V_\infty - V$$
 where $V = V(V, t)$ is the state variable and $\tau_V$ and $V_\infty$ are functions of $V$. This equation can be solved as follows:
 
 Rearrange equation
-$$\tau_V \frac{dV}{dt} = -(V + V_\infty)$$
+$$\tau_V \frac{dV}{dt} = -(V - V_\infty)$$
 
 Divide by $V - V_\infty$, multiply by $\tau_V$
 $$ \frac{dV}{V-V_\infty} = -\frac{dt}{\tau_V}$$
