@@ -72,9 +72,9 @@ public:
     virtual void checkSolvers(int) = 0;
 
     // connection methods
-    virtual void connect(compartment *) = 0;
-    virtual void connect(conductance *) = 0;
-    virtual void connect(synapse *) = 0;
+    virtual void connect(compartment *);
+    virtual void connect(conductance *);
+    virtual void connect(synapse *);
 
 
 };
@@ -88,6 +88,22 @@ conditions (single-step integration).
 void mechanism::integrate() {
     mexErrMsgTxt("[mechanism] Unimplemented integration method\n");
 }
+
+
+
+void mechanism::connect(compartment* comp_) {
+    mexErrMsgTxt("[mechanism] This mechanism cannot connect to a compartment object");
+}
+
+void mechanism::connect(conductance* cond_) {
+    mexErrMsgTxt("[mechanism] This mechanism cannot connect to a conductance object");
+}
+
+
+void mechanism::connect(synapse* syn_) {
+    mexErrMsgTxt("[mechanism] This mechanism cannot connect to a synapse object");
+}
+
 
 
 /*

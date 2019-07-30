@@ -42,6 +42,115 @@ conditions (single-step integration).
 
 
 
+### connect
+
+**Function Signature**
+
+```C++
+void connect(compartment* comp_) 
+```
+
+**Description**
+
+
+Since mechanisms can be just about anything, the abstract
+mechanism class only implements two methods. 
+This method is used to integrate the mechanism under default 
+conditions (single-step integration). 
+
+void mechanism::integrate() {
+    mexErrMsgTxt("[mechanism] Unimplemented integration method\n");
+}
+
+
+
+
+
+ **Code**
+
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L94)
+
+-------
+
+
+
+### connect
+
+**Function Signature**
+
+```C++
+void connect(conductance* cond_) 
+```
+
+**Description**
+
+
+Since mechanisms can be just about anything, the abstract
+mechanism class only implements two methods. 
+This method is used to integrate the mechanism under default 
+conditions (single-step integration). 
+
+void mechanism::integrate() {
+    mexErrMsgTxt("[mechanism] Unimplemented integration method\n");
+}
+
+
+
+void mechanism::connect(compartment* comp_) {
+    mexErrMsgTxt("[mechanism] This mechanism cannot connect to a compartment object");
+}
+
+
+
+ **Code**
+
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L98)
+
+-------
+
+
+
+### connect
+
+**Function Signature**
+
+```C++
+void connect(synapse* syn_) 
+```
+
+**Description**
+
+
+Since mechanisms can be just about anything, the abstract
+mechanism class only implements two methods. 
+This method is used to integrate the mechanism under default 
+conditions (single-step integration). 
+
+void mechanism::integrate() {
+    mexErrMsgTxt("[mechanism] Unimplemented integration method\n");
+}
+
+
+
+void mechanism::connect(compartment* comp_) {
+    mexErrMsgTxt("[mechanism] This mechanism cannot connect to a compartment object");
+}
+
+void mechanism::connect(conductance* cond_) {
+    mexErrMsgTxt("[mechanism] This mechanism cannot connect to a conductance object");
+}
+
+
+
+
+ **Code**
+
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L103)
+
+-------
+
+
+
 ### integrateMS
 
 **Function Signature**
@@ -62,7 +171,7 @@ solver is requested.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L99)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L115)
 
 -------
 
