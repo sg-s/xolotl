@@ -17,16 +17,9 @@ parameters_to_vary = {'*.CaS.gbar','*.ACurrent.gbar'};
 g_CaS_space = linspace(0,100,25);
 g_A_space = linspace(100,300,25);
 
-all_params = NaN(2,length(g_CaS_space)*length(g_A_space));
-c = 1;
-for i = 1:length(g_CaS_space)
-	for j = 1:length(g_A_space)
-		all_params(1,c) = g_CaS_space(i);
-		all_params(2,c) = g_A_space(j);
-		c = c + 1;
-	end
-end
 
+[X, Y] = meshgrid(g_CaS_space, g_A_space);
+all_params = [X(:), Y(:)]';
 
 
 

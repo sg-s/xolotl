@@ -1,21 +1,14 @@
-In this tutorial, we will walk through the process of running multiple simulations in parallel.
+In this tutorial, we will walk through the process of running multiple simulations in parallel. Doing so can speed up some tasks like parameter sweeps dramatically. 
 
-There are two main ways to parallelize simulations in xolotl.
-
-The preferred method uses native parallelization in MATLAB.
-This method is fastest, and can parallelize code on a single computer or computing cluster.
-One can also use the xgrid extension to the xolotl framework
-for parallelized computations on multiple computers or clusters at once.
-Note that simulations are _not_ multi-threaded;
-parallelization is effective only for multiple separate simulations running simultaneously,
-which is often necessary for characterizing the response of a model to changing parameters.
-
-In this tutorial, we will walk through the process of creating and executing a parameter sweep in parallel
-using native MATLAB parallel tools.
 
 !!! note "Parallel Computing Toolbox required"
-You will need the parallel computing toolbox for MATLAB for this tutorial.
-You can create a parallel pool by running `gcp('nocreate')` in your command window.
+    You will need the [parallel computing toolbox](https://www.mathworks.com/products/parallel-computing.html) for MATLAB for this tutorial. Make sure you have installed and configured this toolbox correctly, and that you are using as many workers as there threads in your CPU (for most CPUs, the number of threads is equal to twice the number of cores). 
+
+
+!!! note "Example available"
+    Code in this how-to is available in the script `demo_parallel` in the examples folder. 
+
+
 
 ### Creating the model
 
@@ -35,7 +28,7 @@ and set the time resolution and total simulation time.
 
 ### Designing a parameter sweep
 
-Let's investigate how the slow calcium and A-type potassium currents affect the burst period and number of spikes per burst.
+We want to investigate how the slow calcium and A-type potassium currents affect the burst period and number of spikes per burst.
 
 ```matlab
 % identify which parameters we want to consider
@@ -47,15 +40,10 @@ g_A_space = linspace(100,300,25);
 
 % create a 2 x N matrix of parameter values
 % where N is the number of simulations
-all_params = NaN(2,length(g_CaS_space)*length(g_A_space));
-c = 1;
-for i = 1:length(g_CaS_space)
-	for j = 1:length(g_A_space)
-		all_params(1,c) = g_CaS_space(i);
-		all_params(2,c) = g_A_space(j);
-		c = c + 1;
-	end
-end
+% here, N is 25x25 = 625
+% 
+[X, Y] = meshgrid(g_CaS_space, g_A_space);
+all_params = [X(:), Y(:)]';
 ```
 
 We now have a 2 x N matrix of parameter values corresponding to the
@@ -77,15 +65,12 @@ n_spikes_per_burst = NaN(length(all_params),1);
 In order to perform the simulation in parallel, we need only use a `parfor` loop,
 which is a parallelized `for` loop.
 
-!!! info
-Xolotl properties can be accessed, but not set using object ('dot') notation,
-while in a `parfor` loop.
-Instead, the `set` and `get` methods of xolotl should be used.
+!!! warning
+    In parfor loops, xolotl properties can be accessed, but not set using object ('dot') notation while in a `parfor` loop. Instead, use the `set` method to change parameters. 
 
-For each iteration of the loop, we set the xolotl parameters listed in `parameters_to_vary`
-to new values from the `all_params` matrix.
-We then integrate the model to acquire the membrane potential and intracellular calcium traces,
-cut off a transient region at the beginning of the simulation,
+For each iteration of the loop, we set the xolotl parameters listed in 
+`parameters_to_vary` to new values from the `all_params` matrix.
+We then integrate the model to acquire the membrane potential and intracellular calcium traces, cut off a transient region at the beginning of the simulation,
 and compute the burst metrics using an `xtools` function provided in the xolotl distribution.
 
 ```matlab
@@ -118,9 +103,9 @@ t = toc;
 
 We can make heat-maps of the burst period and mean number of spikes per burst
 as functions of the varied parameters.
-In addition, we display how long the simulation took.
-It is not unreasonable to expect simulation speeds of upwards of 600x to 700x real-time.
-A speed of 600x means that we can simulate 600 seconds of data in 1 second.
+A speed of 600X means that we can simulate 600 seconds of data in 1 second.
+On a 6-core machine from 2013, we achieved speeds greater than 600X.
+
 
 ```matlab
 disp(['Finished in ' strlib.oval(t) ' seconds. Total speed = ' strlib.oval((length(all_params)*x.t_end*1e-3)/t)])
