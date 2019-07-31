@@ -68,22 +68,33 @@ end
 BP_matrix(BP_matrix<0) = NaN;
 NS_matrix(NS_matrix<0) = 0;
 
-figure('outerposition',[0 0 1100 500],'PaperUnits','points','PaperSize',[1100 500]); hold on
+figure('outerposition',[0 0 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
+
 subplot(1,2,1)
-h = heatmap(g_A_space,g_CaS_space,BP_matrix);
-h.Colormap = parula;
-h.MissingDataColor = [1 1 1];
-ylabel('g_CaS')
+imagesc(BP_matrix,'AlphaData',~isnan(BP_matrix));
+[L,loc] = axlib.makeTickLabels(g_CaS_space,6);
+set(gca,'YTick',loc,'YTickLabels',L)
+[L,loc] = axlib.makeTickLabels(g_A_space,6);
+set(gca,'XTick',loc,'XTickLabels',L)
+ylabel('g_{CaS}')
 xlabel('g_A')
 title('Burst period (ms)')
+axis xy
+axis square
+colorbar
 
 subplot(1,2,2)
-h = heatmap(g_A_space,g_CaS_space,NS_matrix);
-h.Colormap = parula;
-h.MissingDataColor = [1 1 1];
-ylabel('g_CaS')
+imagesc(NS_matrix,'AlphaData',~isnan(NS_matrix));
+[L,loc] = axlib.makeTickLabels(g_CaS_space,6);
+set(gca,'YTick',loc,'YTickLabels',L)
+[L,loc] = axlib.makeTickLabels(g_A_space,6);
+set(gca,'XTick',loc,'XTickLabels',L)
+ylabel('g_{CaS}')
 xlabel('g_A')
 title('#spikes/burst')
+axis xy
+axis square
+colorbar
 
 figlib.pretty();
 
