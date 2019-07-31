@@ -4,10 +4,17 @@
 //
 // Calcium mechanism
 //
-// as in Buchholtz et al. 1992
-// https://doi.org/10.1152/jn.1992.67.2.332
-// and in "Methods in neuronal modelling"
-// and others.
+// A modified version of the Buchholtz mechanism
+// The salient difference is that calcium can only leak out, it can't flow out through calcium currents
+//
+// Converting between parameters in the original paper and xolotl:
+//      'vol' = 'A' * 'depth'
+//      'phi' = 1
+//
+// Destexhe, A., Babloyantz, A., and Sejnowski, T. J. (1993).
+// Ionic mechanisms for intrinsic slow oscillations in thalamic relay neurons.
+// Biophysical journal, 65(4):1538–52
+// https://www.sciencedirect.com/science/article/pii/S0006349593811901
 
 #ifndef CALCIUMMECH
 #define CALCIUMMECH
@@ -24,12 +31,12 @@ public:
 
 
     // parameters for calciumMech2
-    double tau_Ca = 200;  // milliseconds
+    double tau_Ca = 1000;  // milliseconds
 
     // parameter to convert from i_Ca to uM
-    double phi = .1;
+    double phi = 1;
 
-    double Ca_in = .05;
+    double Ca_in = 240; // microM
 
     // specify parameters + initial conditions for
     // mechanism that controls a conductance
@@ -58,6 +65,7 @@ public:
     double getState(int);
 
     double Cadot(double);
+    double Cainf(void);
 
 };
 
@@ -109,13 +117,19 @@ void CalciumMech::integrate(void) {
     // otherwise this becomes very tricky and easily
     // diverges
 
-    double Ca_inf = Ca_in - (tau_Ca*phi*(comp->i_Ca_prev)*(comp->A))/(192971*(comp->vol)); // microM
+    double Ca_inf = Ca_in + (tau_Ca * Cainf()); // microM
     comp->Ca = Ca_inf + (Ca - Ca_inf)*dt_by_tau_Ca;
 }
 
+double CalciumMech::Cadot(double Ca_) { return Cainf() - (Ca_ - Ca_in)/tau_Ca; }
 
-double CalciumMech::Cadot(double Ca_) {
-    return -(phi*(comp->i_Ca)*(comp->A)/(192971*(comp->vol))) - (Ca_ - Ca_in)/tau_Ca;
+double CalciumMech::Cainf(void) {
+    if (comp->i_Ca_prev < 0) {
+        return 0.0;
+    }
+    else {
+        return -(phi*(comp->i_Ca_prev)*(comp->A)/(192971*(comp->vol)));
+    }
 }
 
 // Runge-Kutta 4 integrator
