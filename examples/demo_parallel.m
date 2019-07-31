@@ -27,52 +27,40 @@ for i = 1:length(g_CaS_space)
 	end
 end
 
-if exist('p','var') && isa(p,'xgrid')
-else
-	p = xgrid();
+
+
+
+burst_period = NaN(length(all_params),1);
+n_spikes_per_burst = NaN(length(all_params),1);
+
+% run the simulations in parallel
+tic
+parfor i = 1:length(all_params)
+	x.reset;
+
+	x.set('t_end',11e3);
+	x.set(parameters_to_vary,all_params(:,i));
+
+	[V,Ca] = x.integrate; 
+
+
+	transient_cutoff = floor(length(V)/2);
+	Ca = Ca(transient_cutoff:end,1);
+	V = V(transient_cutoff:end,1);
+
+	burst_metrics = xtools.findBurstMetrics(V,Ca);
+
+	burst_period(i) = burst_metrics(1);
+	n_spikes_per_burst(i) = burst_metrics(2);
+
+
 end
-
-p.cleanup;
-p.n_batches = 1;
-p.x = x;
-
-p.batchify(all_params,parameters_to_vary);
-
-% configure the simulation type, and the analysis functions 
-p.sim_func = @xgrid_test_func;
-
-
-
-tic 
-p.simulate;
-wait(p.workers)
 t = toc;
 
-%% This will also work
-% this is a more bare-bones of doing things
-% tic
-% parfor i = 1:11
-% 	p.simulate_core(i,1);
-% end
-% t = toc;
-
-all_gbar = linspace(0,2e3,10);
-
-V = zeros(10e4,10);
-
-parfor i = 1:10
-	x.set('AB.NaV.gbar',all_gbar(i));
-	V(:,i) = x.integrate;
-end
-
-[all_data,all_params,all_param_idx] = p.gather;
 
 
-disp(['Finished in ' mat2str(t) ' seconds. Total speed = ' mat2str((length(all_params)*x.t_end*1e-3)/t)])
 
-burst_periods = all_data{1};
-n_spikes_per_burst = all_data{2};
-sim_time = all_data{3};
+disp(['Finished in ' strlib.oval(t) ' seconds. Total speed = ' strlib.oval((length(all_params)*x.t_end*1e-3)/t)])
 
 
 % assemble the data into a matrix for display
@@ -81,7 +69,7 @@ NS_matrix = NaN(length(g_CaS_space),length(g_A_space));
 for i = 1:length(all_params)
 	xx = find(all_params(1,i) == g_CaS_space);
 	y = find(all_params(2,i) == g_A_space);
-	BP_matrix(xx,y) = burst_periods(i);
+	BP_matrix(xx,y) = burst_period(i);
 	NS_matrix(xx,y) = n_spikes_per_burst(i);
 end
 BP_matrix(BP_matrix<0) = NaN;

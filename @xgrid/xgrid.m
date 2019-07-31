@@ -16,7 +16,7 @@ classdef xgrid < handle & matlab.mixin.CustomDisplay
 		x@xolotl
 		sim_func@function_handle
 		% n_func_outputs % how many outputs will the simulation function generate?
-		n_batches = 10 % per worker
+		n_batches = 1 % per worker
 		verbosity = 1;
 
 		clusters

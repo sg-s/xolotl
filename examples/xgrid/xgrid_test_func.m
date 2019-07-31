@@ -26,7 +26,7 @@ transient_cutoff = floor(length(V)/2);
 Ca = Ca(transient_cutoff:end,1);
 V = V(transient_cutoff:end,1);
 
-burst_metrics = xgrid.findBurstMetrics(V,Ca);
+burst_metrics = xtools.findBurstMetrics(V,Ca);
 
 burst_period = burst_metrics(1);
 n_spikes_per_burst = burst_metrics(2);
