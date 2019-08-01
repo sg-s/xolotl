@@ -2,9 +2,9 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// low-threshold calcium conductance
-// Giovannini et al. 2015
-// https://hal.archives-ouvertes.fr/hal-01426362/file/Giovannini-ICAN-Hippocampus_submittedRev.pdf
+// high-threshold calcium conductance
+// https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4406621/
+// Jochems & Yoshida 2015
 
 #ifndef CAT
 #define CAT
