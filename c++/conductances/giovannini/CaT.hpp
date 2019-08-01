@@ -64,7 +64,7 @@ double CaT::b_h(double V, double Ca) {return 0.0065 * (exp((-15 - V)/28) + 1);}
 double CaT::m_inf(double V, double Ca) {return a_m(V, Ca) / (a_m(V, Ca) + b_m(V, Ca));}
 double CaT::h_inf(double V, double Ca) {return a_h(V, Ca) / (a_h(V, Ca) + b_h(V, Ca));}
 double CaT::tau_m(double V, double Ca) {return 1 / (a_m(V, Ca) + b_m(V, Ca));}
-double CaT::tau_h(double V, double Ca) {return 1 / (a_m(V, Ca) + b_m(V, Ca));}
+double CaT::tau_h(double V, double Ca) {return 1 / (a_h(V, Ca) + b_h(V, Ca));}
 
 
 #endif

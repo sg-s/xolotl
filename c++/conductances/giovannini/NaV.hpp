@@ -58,6 +58,6 @@ double NaV::b_h(double V, double Ca) {return 4 / (exp((40 - V + 55)/5) - 1);}
 double NaV::m_inf(double V, double Ca) {return a_m(V, Ca) / (a_m(V, Ca) + b_m(V, Ca));}
 double NaV::h_inf(double V, double Ca) {return a_h(V, Ca) / (a_h(V, Ca) + b_h(V, Ca));}
 double NaV::tau_m(double V, double Ca) {return 1 / (a_m(V, Ca) + b_m(V, Ca));}
-double NaV::tau_h(double V, double Ca) {return 1 / (a_m(V, Ca) + b_m(V, Ca));}
+double NaV::tau_h(double V, double Ca) {return 1 / (a_h(V, Ca) + b_h(V, Ca));}
 
 #endif
