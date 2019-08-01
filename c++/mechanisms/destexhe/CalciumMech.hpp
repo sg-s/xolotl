@@ -36,7 +36,7 @@ public:
     // parameter to convert from i_Ca to uM
     double phi = 1;
 
-    double Ca_in = 240; // microM
+    double Ca_in = 0.24; // microM (Destexhe et al. 1994, results in E_Ca = 120 mV)
 
     // specify parameters + initial conditions for
     // mechanism that controls a conductance
