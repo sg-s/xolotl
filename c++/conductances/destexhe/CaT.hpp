@@ -5,6 +5,10 @@
 // low-threshold Ca++ current
 // Destexhe, Contreras, Sejnowski, & Steriade 1994
 // https://www.ncbi.nlm.nih.gov/pubmed/7527077
+//
+// These kinetics correspond to a temperature of 36 deg. C
+// assuming Q10 values of 5 and 3
+// and an extracellular Ca++ concentration of 2 mM
 
 #ifndef CAT
 #define CAT
