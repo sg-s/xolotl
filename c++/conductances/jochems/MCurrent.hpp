@@ -2,7 +2,7 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// Fast Sodium Conductance
+// M-current (potassium)
 // https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4406621/
 // Jochems & Yoshida 2015
 #ifndef MCURRENT
