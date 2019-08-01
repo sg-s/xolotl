@@ -14,18 +14,16 @@ class Kd: public conductance {
 public:
 
   // specify parameters & initial conditions
-  Kd(double g_, double E_, double m_, double h_)
+  Kd(double g_, double E_, double m_)
   {
     gbar = g_;
     E = E_;
     m = m_;
-    h = h_;
 
     p = 4;
 
     // allow this channel to be approximated?
     approx_m = 1;
-    approx_h = 1;
 
     // defaults
     if (isnan(gbar)) { gbar = 0; }
