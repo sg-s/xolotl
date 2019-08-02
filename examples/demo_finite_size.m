@@ -3,7 +3,7 @@
 % In this demo, we switch from a deterministic model
 % of channel and subunit kinetics to a stochastic model
 % that we integrate using the Euler-Maruyama method
-% using the approximate Langevin method 
+% using the approximate Langevin method
 
 
 x = xolotl();
@@ -36,7 +36,7 @@ for j = 1:N
 		x.AB.A = all_area(i);
 		x.integrate;
 		V = x.integrate;
-		all_f(i,j) = xtools.findNSpikes(V,0)/10;
+		all_f(i,j) = xtools.findNSpikes(V,0) * x.dt;
 	end
 end
 
@@ -56,7 +56,7 @@ for i = 6:-1:1
 	set(gca,'YLim',[-90 50],'XLim',[0 1])
 	th = title([strlib.oval(x.AB.A*1e6) 'um^2']);
 	th.FontWeight = 'normal';
-	
+
 	if i < 6
 		axis off
 	end
@@ -86,7 +86,9 @@ isis = diff(st);
 axisi = subplot(2,2,4); hold on
 [hy,hx] = histcounts(isis);
 stairs(axisi,hx(2:end)+mean(diff(hx)),hy,'k')
+xlabel('Interspike interval (ms)')
+legend('Area = 100 um^2')
 
-figlib.pretty()
+figlib.pretty('PlotBuffer', 0.1)
 
 axlib.makeEphys(ax(end),'time_scale',.1,'voltage_position',-90)

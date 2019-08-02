@@ -16,7 +16,6 @@ pages:
     - Your first neuron: 'tutorials/first-neuron.md'
     - Your first network: 'tutorials/first-network.md'
     - Your first xgrid: tutorials/first-xgrid.md
-    - Your first xfit: tutorials/first-xfit.md
   - How to:
     - Install and configure: how-to/install-configure.md
     - Construct models: how-to/construct-models.md
@@ -35,6 +34,7 @@ pages:
     - Create multi-compartment models: how-to/create-multi-compartment-models.md
     - Fit a model to arbitrary constraints: how-to/fit-parameters.md
     - Run simulations in parallel: how-to/run-simulations-in-parallel.md
+    - Use stochastic channels: how-to/stochastic-channels.md
   - Reference:
     - Units: 'reference/units.md'
     - C++ classes:
