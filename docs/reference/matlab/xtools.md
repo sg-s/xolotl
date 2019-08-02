@@ -38,14 +38,14 @@ options, or with individual options specified as name, value keyword pairs. Opti
 and the default option value is used instead.
 
 | Option Name | Default Value | Units |
-| ----------- | ------------- |
+| ----------- | ------------- | ----- |
 | `sampling_rate` | 20 | 1/ms |
 | `ibi_thresh` | 300 | ms |
 | `spike_threshold` | 0 | mV |
 | `debug` | false | |
 
 | Metric Name | Default Value | Units |
-| ----------- | ----- |
+| ----------- | ----- | ----- |
 | `firing_rate` | NaN | ? |
 | `burst_period` | NaN | ? |
 | `ibi_mean` | NaN | ? |
