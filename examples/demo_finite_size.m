@@ -36,7 +36,7 @@ for j = 1:N
 		x.AB.A = all_area(i);
 		x.integrate;
 		V = x.integrate;
-		all_f(i,j) = xtools.findNSpikes(V,0)/10;
+		all_f(i,j) = xtools.findNSpikes(V,0) * x.dt;
 	end
 end
 
