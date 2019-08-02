@@ -24,8 +24,8 @@
 % the two voltage traces are.
 %
 % !!! info "See Also"
-%     ->xtools.V2Matrix
-% 		LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
+%     xtools.V2Matrix
+%     LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
 %
 
 

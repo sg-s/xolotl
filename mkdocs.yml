@@ -43,7 +43,7 @@ pages:
       - synapse: 'reference/c++/synapse.md'
       - network: 'reference/c++/network.md'
       - mechanism: 'reference/c++/mechanism.md'
-    - MATLAB classes:
+    - MATLAB:
       - conductance: reference/matlab/conductance.md
       - xtools: reference/matlab/xtools.md
       - xtest: reference/matlab/xtest.md

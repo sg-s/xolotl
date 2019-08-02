@@ -26,7 +26,7 @@
 % Spikes are defined as voltage crossings across a threshold, `on_off_thresh` (default = 0 mV).
 %
 % !!! info "See Also"
-%     ->xtools.findNSpikeTimes
+%     xtools.findNSpikeTimes
 %
 %
 

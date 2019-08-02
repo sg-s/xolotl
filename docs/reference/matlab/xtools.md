@@ -210,7 +210,7 @@ Spikes are defined as voltage crossings across a threshold, `on_off_thresh` (def
 
 
 !!! info "See Also"
-    * [->xtools.findNSpikeTimes](../->xtools/#findNSpikeTimes)
+    * [xtools.findNSpikeTimes](../xtools/#findNSpikeTimes)
 
 
 
@@ -241,7 +241,7 @@ counted (default = 0 mV).
 
 
 !!! info "See Also"
-    * [->xtools.findNSpikeTimes](../->xtools/#findNSpikeTimes)
+    * [xtools.findNSpikeTimes](../xtools/#findNSpikeTimes)
 
 
 
@@ -268,7 +268,7 @@ the two voltage traces are.
 
 
 !!! info "See Also"
-    * [->xtools.V2Matrix](../->xtools/#V2Matrix)
+    * [xtools.V2Matrix](../xtools/#V2Matrix)
     * [LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21](../LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting/#In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists)
 
 

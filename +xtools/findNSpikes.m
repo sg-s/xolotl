@@ -28,7 +28,7 @@
 % counted (default = 0 mV).
 %
 % !!! info "See Also"
-%     ->xtools.findNSpikeTimes
+%     xtools.findNSpikeTimes
 %
 %
 

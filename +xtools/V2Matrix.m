@@ -31,8 +31,8 @@
 % `M` is the LeMasson matrix, which is always of size `101x101`.
 %
 % !!! info "See Also"
-%     ->xtools.matrixCost
-% 		LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
+%     xtools.matrixCost
+%     LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
 %
 
 
