@@ -89,6 +89,6 @@ stairs(axisi,hx(2:end)+mean(diff(hx)),hy,'k')
 xlabel('Interspike interval (ms)')
 legend('Area = 100 um^2')
 
-figlib.pretty()
+figlib.pretty('PlotBuffer', 0.1)
 
 axlib.makeEphys(ax(end),'time_scale',.1,'voltage_position',-90)
