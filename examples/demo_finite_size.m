@@ -87,6 +87,7 @@ axisi = subplot(2,2,4); hold on
 [hy,hx] = histcounts(isis);
 stairs(axisi,hx(2:end)+mean(diff(hx)),hy,'k')
 xlabel('Interspike interval (ms)')
+legend('Area = 100 um^2')
 
 figlib.pretty()
 
