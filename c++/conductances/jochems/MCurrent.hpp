@@ -42,7 +42,7 @@ string MCurrent::getClass()
   return "MCurrent";
 }
 
-double MCurrent::a_m(double V, double Ca) {return 1 / (1 + exp((-(V + 35)/10)));}
-double MCurrent::b_m(double V, double Ca) {return 4 / (3.3 * exp((V + 35)/20) + exp(-(V + 35)/20));}
+double MCurrent::m_inf(double V, double Ca) {return 1 / (1 + exp((-(V + 35)/10)));}
+double MCurrent::tau_m(double V, double Ca) {return 4 / (3.3 * exp((V + 35)/20) + exp(-(V + 35)/20));}
 
 #endif
