@@ -44,7 +44,7 @@ and the default option value is used instead.
 | `spike_threshold` | 0 | mV |
 | `debug` | false | |
 
-| Metric Name | Units |
+| Metric Name | Default Value | Units |
 | ----------- | ----- |
 | `firing_rate` | NaN | ? |
 | `burst_period` | NaN | ? |
@@ -67,9 +67,9 @@ and the default option value is used instead.
 
 
 !!! info "See Also"
-    * [->xtools.findNSpikes](../->xtools/#findNSpikes)
-    * [->xtools.findNSpikeTimes](../->xtools/#findNSpikeTimes)
-    * [->xtools.findBurstMetrics](../->xtools/#findBurstMetrics)
+    * [xtools.findNSpikes](../xtools/#findNSpikes)
+    * [xtools.findNSpikeTimes](../xtools/#findNSpikeTimes)
+    * [xtools.findBurstMetrics](../xtools/#findBurstMetrics)
     * [LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21](../LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting/#In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists)
 
 

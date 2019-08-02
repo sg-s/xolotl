@@ -39,7 +39,7 @@
 % | `spike_threshold` | 0 | mV |
 % | `debug` | false | |
 %
-% | Metric Name | Units |
+% | Metric Name | Default Value | Units |
 % | ----------- | ----- |
 % | `firing_rate` | NaN | ? |
 % | `burst_period` | NaN | ? |
@@ -60,10 +60,10 @@
 %
 %
 % !!! info "See Also"
-%     ->xtools.findNSpikes
-% 	->xtools.findNSpikeTimes
-% 	->xtools.findBurstMetrics
-% 	LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
+%     xtools.findNSpikes
+% 	  xtools.findNSpikeTimes
+% 	  xtools.findBurstMetrics
+%     LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21
 %
 
 
