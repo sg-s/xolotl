@@ -12,11 +12,19 @@ from shutil import copyfile
 
 
 for file in sorted(glob.glob("./*/")):
-	if file.find("@") < 0:
+	if file.find("@") < 0 and file.find("+") < 0:
+		continue
+
+	if file.find("@") > 0:
+		prefix = '@'
+	elif file.find("+") > 0:
+		prefix = '+'
+	else:
+		print("[ABORT] Unknown prefix")
 		continue
 
 	classname =  file.replace('/','')
-	classname =  classname.replace('@','')
+	classname =  classname.replace(prefix,'')
 	classname =  classname.replace('.','')
 	print("--------------------------------------")
 	print("Generating documentation for class: " + classname)
@@ -42,12 +50,12 @@ for file in sorted(glob.glob("./*/")):
 
 
 	# go over every method in this class
-	for file in sorted(glob.glob("@" + classname + "/*.m")):
+	for file in sorted(glob.glob(prefix + classname + "/*.m")):
 
 
 		filename = file.replace('.m','')
 		filename = filename.strip()
-		filename = filename.replace('@' + classname + '/','')
+		filename = filename.replace(prefix + classname + '/','')
 
 
 		if len(filename) == 0:

@@ -18,8 +18,6 @@
 
 function C = voltageCost(V1,V2, N, make_plot)
 
-C = 0;
-
 if nargin < 3
 	N = 100;
 	make_plot = false;
