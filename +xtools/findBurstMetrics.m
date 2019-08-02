@@ -89,7 +89,7 @@
 % of the calcium wave.
 %
 % !!! info "Dependencies"
-%     This function requires the Signal Processing Toolbox for MATLAB.
+% XXXXThis function requires the Signal Processing Toolbox for MATLAB.
 %
 %
 

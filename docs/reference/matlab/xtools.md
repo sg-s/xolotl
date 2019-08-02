@@ -182,7 +182,7 @@ of the calcium wave.
 of the calcium wave.
 
 !!! info "Dependencies"
-This function requires the Signal Processing Toolbox for MATLAB.
+    This function requires the Signal Processing Toolbox for MATLAB.
 
 
 
