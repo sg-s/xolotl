@@ -35,6 +35,7 @@ pages:
     - Create multi-compartment models: how-to/create-multi-compartment-models.md
     - Fit a model to arbitrary constraints: how-to/fit-parameters.md
     - Run simulations in parallel: how-to/run-simulations-in-parallel.md
+    - Use stochastic channels: how-to/stochastic-channels.md
   - Reference:
     - Units: 'reference/units.md'
     - C++ classes:
