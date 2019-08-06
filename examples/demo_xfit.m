@@ -8,7 +8,7 @@ x.set('*gbar',veclib.shuffle((x.get('*gbar'))))
 
 % we instantiate the xfit object
 % and specify the particle swarm engine
-p = xfit('particleswarm');
+p = xfit('patternsearch');
 p.options.UseParallel = true;
 
 % we assign a cost function

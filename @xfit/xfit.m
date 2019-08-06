@@ -27,6 +27,10 @@ properties
 
 	options
 
+	% nonlinear constrains, only supported
+	% for some engines 
+	nonlcon@function_handle
+
 end % end props
 
 
@@ -84,6 +88,8 @@ methods
 			self.engine = 'patternsearch';
 			self.options = optimoptions('patternsearch');
 			self.options.UseParallel = true;
+			self.options.UseCompleteSearch = true;
+			self.options.UseCompletePoll = true;
 			self.options.Display = 'iter';
 			self.options.MaxTime = 100;
 			self.options.OutputFcn = @self.pattern_logger;

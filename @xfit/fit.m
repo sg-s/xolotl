@@ -50,7 +50,7 @@ assert(length(unique([length(self.seed),length(self.parameter_names) , length(se
 switch self.engine
 case 'patternsearch'
 
-	best_fit_params = patternsearch(@(params) self.evaluate(params),self.seed,[],[],[],[],self.lb,self.ub,self.options);
+	best_fit_params = patternsearch(@(params) self.evaluate(params),self.seed,[],[],[],[],self.lb,self.ub,self.nonlcon, self.options);
 	self.seed = best_fit_params;
 
 case 'particleswarm'
