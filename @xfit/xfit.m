@@ -1,8 +1,8 @@
 
 % xfit is a toolbox that helps you find neuron or network
-% models satisfying arbitrary constraints. It is a bridge 
+% models satisfying arbitrary constraints. It is a bridge
 % between the Global Optimization Toolbox in MATLAB
-% and the xolotl neuron and network simulator 
+% and the xolotl neuron and network simulator
 
 classdef xfit < handle
 
@@ -17,8 +17,8 @@ properties
 	seed
 	lb
 	ub
-	
-	engine 
+
+	engine
 
 
 	% this can be used to store any user-defined data
@@ -28,14 +28,14 @@ properties
 	options
 
 	% nonlinear constrains, only supported
-	% for some engines 
+	% for some engines
 	nonlcon@function_handle
 
 end % end props
 
 
 properties (SetAccess = private)
-	
+
 	% logging
 	best_cost
 	timestamp
@@ -46,7 +46,7 @@ methods
 		% check for optimisation toolbox
 		v = ver;
 		gcp;
-		if nargin ==0 
+		if nargin ==0
 			engine = 'particleswarm';
 		end
 		assert(any(strcmp('Optimization Toolbox', {v.Name})),'optimisation toolbox is required')
@@ -71,10 +71,10 @@ methods
 			try
 				self.x.get(names{i});
 			catch
-				
+
 				error(['This name does not resolve to anything in the xolotl object tree: ' names{i}])
 			end
-			
+
 		end
 		self.parameter_names = names;
 	end
@@ -83,7 +83,7 @@ methods
 
 	function self = set.engine(self,value)
 		pool = gcp;
-		switch value 
+		switch value
 		case 'patternsearch'
 			self.engine = 'patternsearch';
 			self.options = optimoptions('patternsearch');
@@ -110,7 +110,7 @@ methods
 			self.options.Display = 'iter';
 			self.options.MaxTime = 100;
 			self.options.OutputFcn = @self.ga_logger;
-		otherwise 
+		otherwise
 			error('Unknown engine')
 		end
 	end % set engine
