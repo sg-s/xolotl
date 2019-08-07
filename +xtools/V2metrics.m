@@ -71,7 +71,7 @@
 function metrics = V2metrics(V, varargin)
 
 
-metrics = orderfields(struct('firing_rate',NaN,'burst_period',NaN,'ibi_mean',NaN,'ibi_std',NaN,'isi_mean',NaN,'burst_period_std',NaN,'isi_std',NaN,'duty_cycle_mean',NaN,'duty_cycle_std',NaN,'n_spikes_per_burst_mean',NaN,'n_spikes_per_burst_std',NaN,'min_V_mean',NaN,'min_V_std',NaN,'min_V_in_burst_mean',NaN,'min_V_in_burst_std',NaN,'spike_peak_mean',NaN,'spike_peak_std',NaN,'ibi_thresh',NaN,'isi_max',NaN,'isi_min',NaN));
+metrics = orderfields(struct('firing_rate',NaN,'burst_period',NaN,'ibi_mean',NaN,'ibi_std',NaN,'isi_mean',NaN,'burst_period_std',NaN,'isi_std',NaN,'duty_cycle_mean',NaN,'duty_cycle_std',NaN,'n_spikes_per_burst_mean',NaN,'n_spikes_per_burst_std',NaN,'min_V_mean',NaN,'min_V_std',NaN,'min_V_in_burst_mean',NaN,'min_V_in_burst_std',NaN,'spike_peak_mean',NaN,'spike_peak_std',NaN,'ibi_thresh',NaN,'isi_max',NaN,'isi_min',NaN,'min_V_bw_burst_mean',NaN,'min_V_bw_burst_std',NaN));
 
 % options and defaults
 options.sampling_rate = 20; % samples per millisecond
@@ -181,6 +181,7 @@ all_dc = NaN*burst_starts;
 all_n_spikes = NaN*burst_starts;
 all_min_V = NaN*burst_starts;
 all_min_V_in_burst = NaN*burst_starts;
+all_min_V_bw_burst = NaN*burst_starts;
 
 for i = 2:length(all_dc)
 	all_n_spikes(i) = sum(spiketimes >= burst_starts(i) & spiketimes <= burst_ends(i));
@@ -189,7 +190,15 @@ for i = 2:length(all_dc)
 	all_min_V(i) = min(V(burst_ends(i-1):burst_ends(i)));
 
 	all_dc(i) = (burst_ends(i) - burst_starts(i))/(burst_ends(i) - burst_ends(i-1));
+
+	try
+		all_min_V_bw_burst(i) = V(round(burst_ends(i) + ((burst_starts(i) - burst_ends(i-1)))/2));
+	catch
+	end
 end
+
+metrics.min_V_bw_burst_mean = nanmean(all_min_V_bw_burst);
+metrics.min_V_in_burst_std = nanstd(all_min_V_bw_burst);
 
 
 metrics.min_V_in_burst_mean = mean(all_min_V_in_burst(2:end));

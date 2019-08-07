@@ -59,8 +59,8 @@ case 'particleswarm'
 	best_fit_params = particleswarm(@(params) self.evaluate(params),length(self.ub),self.lb,self.ub,self.options);
 	self.seed = best_fit_params;
 case 'ga'
-	self.options.InitialPopulationMatrix = self.seed;
-	best_fit_params = ga(@(params) self.evaluate(params), length(self.ub), [], [], [], [], self.lb, self.ub, [], self.options);
+	self.options.InitialPopulationMatrix = self.seed(:)';
+	best_fit_params = ga(@(params) self.evaluate(params), length(self.ub), [], [], [], [], self.lb, self.ub, self.nonlcon, self.options);
 	self.seed = best_fit_params;
 
 end
