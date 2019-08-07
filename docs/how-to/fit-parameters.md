@@ -12,63 +12,84 @@ until we find a parameter set that best suits the cost function
 In this document, we will consider a bursting neuron
 and try to change its maximal conductances to change its burst period to a desired value.
 
-### Instantiating the xolotl object and the xfit object
+### Instantiating the xolotl object
 
 First, let us construct our model.
 This is an eight-conductance, single-compartment model.
-Using conductance dynamics from Liu *et al.* 1998.
+Using conductance dynamics from Prinz *et al.* 2003.
 
 ```matlab
-x = xolotl.examples.BurstingNeuron('prefix', 'liu');
+x = xolotl.examples.BurstingNeuron('prefix', 'prinz');
 ```
 
-We will then instantiate the xfit object
-and specify the particle swarm algorithm.
+We will give it some random parameters, by shuffling the existing ones.
 
 ```matlab
-p = xfit('particleswarm');
+x.set('*gbar',veclib.shuffle((x.get('*gbar'))))
+```
+
+This will result in a pathological waveform that probably isn't bursting.
+Our goal will be to recover bursting activity by algorithmically varying the maximal conductance parameters.
+
+### Instantiating the xfit object
+
+We will create the `xfit` object, and request the `pattern search` algorithm.
+This algorithm is a deterministic, black-box optimization scheme.
+First, we will make sure that a parallel pool has been created.
+This will allow your computer to use more processor cores to perform the optimization faster.
+
+```matlab
+% create a parallel pool using default options
+% if one already exists, do nothing
+gcp('nocreate');
+% create the xfit object
+p = xfit('patternsearch');
+% tell xfit which xolotl object to use
+p.x = x;
+% tell xfit to simulate in parallel
+p.options.UseParallel = true;
 ```
 
 ### Designing a cost function
 
-We will design a very simple cost function that computes the burst period and number of spikes per burst.
+We will design a very simple cost function that computes the burst period,
+the mean number of spikes per burst, and the duty cycle.
+We aim for a burst period within $[950, 1050]$ ms,
+a mean number of spikes per burst within $[7, 10]$,
+and a duty cycle within $[0.1, 0.3]$.
+
+If the model produces a voltage waveform with metrics outside of these values,
+the returned cost will be large.
+A model which satisfies this conditions will return a cost of 0.
 
 ```matlab
-function [C, burst_period, n_spikes_per_burst] = cost_function(x, ~, ~)
+function C = burstingCostFcn(x,~)
 
-  % reset the model
-  x.reset;
-  % set up the simulation time, and time step
-  x.t_end = 10e3;
-  x.sim_dt = 0.1;
-  x.dt = 0.1;
-  % use approximate channel dynamics for speedy computation
-  x.approx_channels = 1;
-  % turn on closed_loop integration
-  x.closed_loop = true;
+	% x is a xolotl object
+	x.reset;
+	x.t_end = 10e3;
+	x.approx_channels = 1;
+	x.sim_dt = .1;
+	x.dt = .1;
+	x.closed_loop = true;
 
-  % integrate the model once to get to steady-state
-  x.integrate;
-  % integrate from steady-state and store the output
-  V = x.integrate;
+	% integrate the model and discard the first 10 seconds
+	x.integrate;
+	% save the second 10 seconds of simulation
+	V = x.integrate;
 
-  % compute the burst metrics
-  metrics = xtools.V2metrics(V, 'sampling_rate', 10);
-  burst_period = metrics.burst_period;
-  n_spikes_per_burst = metrics.n_spikes_per_burst_mean;
+	% measure behavior
+	metrics = xtools.V2metrics(V,'sampling_rate',10);
 
-  % if the burst period is between 930 and 1050 ms, cost is zero
-  % otherwise, it's quadratic (bigger further away from bin)
-  C = xfit.binCost([930, 1050], burst_period);
+	% accumulate errors
+	C = xtools.binCost([950 1050],metrics.burst_period);
+	C = C + xtools.binCost([.1 .3],metrics.duty_cycle_mean);
+	C = C + xtools.binCost([7 10],metrics.n_spikes_per_burst_mean);
 
-  % if the mean number of spikes per burst is between 7 and 10, cost is zero
-  % otherwise, it's quadratic (bigger way from bin)
-  C = C + xfit.binCost([7, 10], n_spikes_per_burst);
-
-  % if something goes terribly wrong, return a super high cost
-  if isnan(C)
-    C = 1e3;
-  end
+	% safety -- if something goes wrong, return a large cost
+	if isnan(C)
+		C = 1e3;
+	end
 
 end % function
 ```
@@ -76,7 +97,7 @@ end % function
 Now, we add the cost function to the xfit object.
 
 ```matlab
-p.sim_func = @cost_function;
+p.SimFcn = @xolotl.examples.burstingCostFcn;
 ```
 
 ### Setting up parameter optimization
@@ -106,12 +127,15 @@ We display the results before simulation.
 figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
 
 subplot(2,1,1); hold on
-
+set(gca,'XLim',[0 10],'YLim',[-80 50])
 x.t_end = 10e3;
 V = x.integrate;
 time = (1:length(V))*1e-3*x.dt;
 plot(time,V,'k')
 title('Before optimization')
+
+subplot(2,1,2); hold on
+set(gca,'XLim',[0 10],'YLim',[-80 50])
 ```
 
 and begin the optimization procedure
@@ -131,16 +155,21 @@ Finally, we can finish our plot, and show voltage waveform produced by the optim
 
 ```matlab
 % visualize the results of the optimization
-subplot(2,1,2); hold on
-
 x.t_end = 10e3;
 V = x.integrate;
 time = (1:length(V))*1e-3*x.dt;
 plot(time,V,'r')
 title('After optimization')
 
-figlib.pretty('LineWidth', 1, 'PlotLineWidth', 1, 'PlotBuffer', 0.2)
+figlib.pretty('LineWidth', 1, 'PlotLineWidth', 1, 'PlotBuffer', 0)
 ```
+
+You should see results that look something like this:
+
+![](https://user-images.githubusercontent.com/30243182/62645332-ff4bf600-b919-11e9-8660-b6331717d40d.png)
+
+The top trace shows the model before optimization,
+and the bottom trace shows the results after the optimization algorithm has run its course.
 
 ### Next steps
 
