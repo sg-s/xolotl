@@ -26,8 +26,6 @@ public:
 
         // defaults 
         if (isnan(gbar)) { gbar = 0; }
-        if (isnan (m)) { m = $default_m; }
-        if (isnan (h)) { h = $default_h; }
         if (isnan (E)) { E = $default_E; }
 
         p = $p;

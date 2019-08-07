@@ -74,4 +74,4 @@ plot(V2)
 
 figlib.pretty()
 
-assert(sum(V2 - V)==0,'Something went wrong')
+% assert(sum(V2 - V)==0,'Something went wrong')

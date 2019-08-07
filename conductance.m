@@ -74,7 +74,7 @@ methods
 					end
 
 					if any(strfind(f,'NaN'))
-						f = '  0';
+						f = '  1';
 					end
 
 
