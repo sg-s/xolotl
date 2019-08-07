@@ -40,7 +40,7 @@ end
 
 [m_inf, h_inf, tau_m, tau_h] = xolotl.getGatingFunctions(conductance);
 
-V = linspace(-100,100,1e3);
+V = linspace(-200,200,1e3);
 
 % evaluate these functions
 minf = NaN*V;
@@ -93,19 +93,19 @@ if nargin < 3
 
 		ylabel(ax(1),'m_{\infty}')
 		xlabel(ax(1),'V (mV)')
-		set(ax(1),'YLim',[0 1])
+		set(ax(1),'YLim',[0 1],'XLim',[-100 100])
 
 		xlabel(ax(2),'V (mV)')
 		ylabel(ax(2),'h_{\infty}')
-		set(ax(2),'YLim',[0 1])
+		set(ax(2),'YLim',[0 1],'XLim',[-100 100])
 
 		ylabel(ax(3),'\tau_{m} (ms)')
 		xlabel(ax(3),'V (mV)')
-		set(ax(3),'YScale','log')
+		set(ax(3),'YScale','log','XLim',[-100 100])
 
 		ylabel(ax(4),'\tau_{h} (ms)')
 		xlabel(ax(4),'V (mV)')
-		set(ax(4),'YScale','log')
+		set(ax(4),'YScale','log','XLim',[-100 100])
 
 		f.Tag = 'xolotl-show';
 	end

@@ -66,22 +66,19 @@ if nargin == 1
 	all_channels = self.find('conductance');
 
 	for i = 1:length(all_channels)
-		try
-			self.set([all_channels{i} '.m'],0)
-		catch
+		if isprop(self.get(all_channels{i}),'m')
+			self.set([all_channels{i} '.m'],NaN)
 		end
-		try
-			self.set([all_channels{i} '.h'],1)
-		catch
+		if isprop(self.get(all_channels{i}),'h')
+			self.set([all_channels{i} '.h'],NaN)
 		end
 	end
 
 	% reset all synapses
 	all_synapses = self.find('synapse');
 	for i = 1:length(all_synapses)
-		try
+		if isprop(self.get(all_channels{i}),'s')
 			self.get(all_synapses{i}).s = 0;
-		catch
 		end
 	end
 

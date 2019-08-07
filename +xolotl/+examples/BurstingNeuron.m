@@ -37,6 +37,8 @@ if isempty(options.f) && strcmp(options.prefix,'prinz')
 	options.f = 14.96;
 elseif isempty(options.f) && strcmp(options.prefix,'liu')
 	options.f = 1.496;
+else 
+	options.f = 14.96;
 end
 
 
@@ -79,6 +81,18 @@ case 'prinz'
 		x.AB.add([prefix filesep channels{i}],'gbar',gbar(i),'E',E(i));
 	end
 
+case 'golowasch'
+	% Use Prinz channels, but Golowasch's HCurrent
+	channels = {'NaV','CaT','CaS','ACurrent','KCa','Kd'};
+
+	gbar(:,1) = [1000 25  60 500  50  1000];
+	E =         [50   30  30 -80 -80 -80  ];
+
+
+	for i = 1:length(channels)
+		x.AB.add(['prinz' filesep channels{i}],'gbar',gbar(i),'E',E(i));
+	end
+	x.AB.add('golowasch/HCurrent','gbar',10,'E',-20)
 
 end
 

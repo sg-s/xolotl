@@ -1,6 +1,30 @@
 
 
+/*
+This method "connects" a conductance object to a compartment
+object. This sets the `container` property of the conductance,
+so the channel knows which compartment contains it. 
+*/
+void conductance::connect(compartment *pcomp_) {
+    if (isnan(gbar)) {
+        // gbar unset, set it to a default
+        gbar = 0;
+    }
+    if (gbar < 0) {
+        mexErrMsgTxt("gbars cannot be negative for any conductance \n");
+    }
+    container = pcomp_;
+    gbar_next = gbar;
 
+    // make sure m and h are not NaN
+    if (isnan(m)) {
+        m = m_inf(container->V, container->Ca);
+    }
+
+    if (isnan(h)) {
+        h = h_inf(container->V, container->Ca);
+    }
+}
 
 
 
