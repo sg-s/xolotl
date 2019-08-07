@@ -8,7 +8,7 @@
 % otherwise, the cost is the quadratic difference
 
 
-function C = burstingCostFcn(x,~)
+function [C, V] = burstingCostFcn(x,~)
 
 % x is a xolotl object
 x.reset;
@@ -21,7 +21,7 @@ x.closed_loop = true;
 x.integrate;
 V = x.integrate;
 
-% measure behaviour 
+% measure behaviour
 metrics = xtools.V2metrics(V,'sampling_rate',10);
 
 
