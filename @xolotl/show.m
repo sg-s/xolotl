@@ -111,6 +111,7 @@ if nargin < 3
 	end
 end
 
+conductance = strrep(conductance,'.hpp','');
 
 plot(ax(find(strcmp({ax.Tag},'m_inf'))),V,minf,'DisplayName',conductance);
 plot(ax(find(strcmp({ax.Tag},'h_inf'))),V,hinf,'DisplayName',conductance);
