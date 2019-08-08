@@ -18,6 +18,9 @@ properties
 	lb
 	ub
 
+	SaveParameters
+	SaveWhenCostBelow@double = Inf
+
 	engine
 
 
@@ -39,6 +42,13 @@ properties (SetAccess = private)
 	% logging
 	best_cost
 	timestamp
+end
+
+properties (Access = private)
+
+	SimFcnHash
+	
+
 end
 
 methods

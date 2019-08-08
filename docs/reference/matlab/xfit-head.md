@@ -36,7 +36,7 @@ properties(xf)
 This property contains a xolotl object. Since xfit uses
 xolotl to run actual simulations, this is necessary for all projects. 
 
-### `sim_func`
+### `SimFcn`
 
 | Default | Allowed values | Type |
 | ------- | ----- | ----- |
@@ -56,7 +56,7 @@ function [cost, ...] = functionName(xolotl_object, data)
 ```
 
 When xfit performs a parameter optimization routine,
-it calls the `sim_func` using the xolotl object stored in the `x` property, which has been set up with trial parameters.
+it calls the `SimFcn` using the xolotl object stored in the `x` property, which has been set up with trial parameters.
 
 ### `parameter_names`
 
@@ -118,6 +118,11 @@ The best cost holds the lowest value computed by the simulation function during 
 | []  |    any | any | 
 
 The `data` property can hold any user-defined data. You may want to use this if your cost function required additional data to measure the cost. For example, if you want to fit a neuron to a specifiy voltage trace, you would store it here. 
+
+
+### 'nonlcon'
+
+Nonlinear inequality and equaity constraints, only supported for engines that support them. To understand how to use these constraints, look at MATLAB's documentation [here](https://www.mathworks.com/help/optim/ug/nonlinear-constraints.html)
 
 
 ## Methods

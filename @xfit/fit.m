@@ -33,6 +33,8 @@ assert(~isempty(self.parameter_names),'No parameter names defined')
 assert(~isempty(self.x),'Xolotl object not configured')
 assert(~isempty(self.SimFcn),'Simulation function not set')
 
+self.SimFcnHash = hashlib.md5hash(which(func2str(self.SimFcn)),'file');
+
 if isempty(self.seed) && ~isempty(self.ub) && ~isempty(self.lb)
 	% pick a random seed within bounds
 	self.ub = self.ub(:);
