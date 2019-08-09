@@ -29,9 +29,9 @@
 % `index` contains the linear index into the `current_steps` vector.
 % `metrics` contains a struct of computed statistics for the resultant spike train.
 %
-% If called without arguments or outputs, a struct
+% If called without arguments and one output, a struct
 % containing fields for all optional arguments, `options`,
-% is created.
+% is returned.
 %
 % Otherwise, the first argument should be a xolotl object,
 % and the latter should be either name, value keyword pairs,
@@ -42,6 +42,7 @@
 % | ----------- | ------------- | ----- |
 % | `current_steps` | 0:0.01:1 | nA |
 % | `debug` | false | |
+% | `ibi_thresh` | 300 | ms |
 % | `min_firing_rate` | 1 | Hz |
 % | `sampling_rate` | 20 | 1/ms |
 % | `spike_threshold` | 0 | mV |
@@ -59,10 +60,12 @@ function [I_ext, ii, metrics] = rheobase(x, varargin)
 
   % options and defaults
   options = struct;
-  options.min_firing_rate = 1;
-  options.spike_threshold = 0;
-  options.debug = false;
   options.current_steps = 0:0.01:1;
+  options.debug = false;
+  options.ibi_thresh = 300;
+  options.min_firing_rate = 1;
+  options.sampling_rate = 20;
+  options.spike_threshold = 0;
   options.verbosity = true;
 
   options = orderfields(options);
@@ -95,7 +98,7 @@ function [I_ext, ii, metrics] = rheobase(x, varargin)
     end
   end % for loop
 
-  corelib.verb(ii == length(current_steps) & options.verbosity, 'rheobase', ['maximum iterations reached'])
+  corelib.verb(ii == length(options.current_steps) & options.verbosity, 'findRheobase', ['maximum iterations reached'])
 
   I_ext = options.current_steps(ii);
 
