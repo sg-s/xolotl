@@ -8,15 +8,15 @@
 %  ;;   ;;     ;;    ;;     ;; ;;     ;; ;;       ;;    ;;
 % ;;     ;;    ;;     ;;;;;;;   ;;;;;;;  ;;;;;;;;  ;;;;;;
 %
-% ### findRheobase
+% ### rheobase
 %
 %
 % **Syntax**
 %
 % ```matlab
-% [I_ext, index, metrics] = xtools.findRheobase(x)
-% [I_ext, index, metrics] = xtools.findRheobase(x, 'PropertyName', PropertyValue, ...)
-% [I_ext, index, metrics] = xtools.findRheobase(x, options)
+% [I_ext, index, metrics] = xtools.rheobase(x)
+% [I_ext, index, metrics] = xtools.rheobase(x, 'PropertyName', PropertyValue, ...)
+% [I_ext, index, metrics] = xtools.rheobase(x, options)
 % ```
 %
 % **Description**
@@ -79,13 +79,13 @@ function [I_ext, ii, metrics] = rheobase(x, varargin)
   options = corelib.parseNameValueArguments(options, varargin{:});
 
   % save the initial state
-  corelib.verb(options.verbosity && any(strcmp({x.snapshots.name}, 'findRheobase')), 'findRheobase', 'overwriting ''findRheobase'' snapshot');
-  x.snapshot('findRheobase');
+  corelib.verb(options.verbosity && any(strcmp({x.snapshots.name}, 'rheobase')), 'rheobase', 'overwriting ''rheobase'' snapshot');
+  x.snapshot('rheobase');
 
   for ii = 1:length(options.current_steps)
-    corelib.verb(options.verbosity, 'findRheobase', ['I_ext = ' num2str(options.current_steps(ii)) ' nA'])
+    corelib.verb(options.verbosity, 'rheobase', ['I_ext = ' num2str(options.current_steps(ii)) ' nA'])
 
-    x.reset('findRheobase');
+    x.reset('rheobase');
     x.I_ext = options.current_steps(ii);
 
     x.integrate;
@@ -98,7 +98,7 @@ function [I_ext, ii, metrics] = rheobase(x, varargin)
     end
   end % for loop
 
-  corelib.verb(ii == length(options.current_steps) & options.verbosity, 'findRheobase', ['maximum iterations reached'])
+  corelib.verb(ii == length(options.current_steps) & options.verbosity, 'rheobase', ['maximum iterations reached'])
 
   I_ext = options.current_steps(ii);
 
