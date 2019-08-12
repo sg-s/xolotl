@@ -12,6 +12,9 @@ properties
 	% function to minimize
 	SimFcn@function_handle
 
+	% specify a function to plot results
+	ShowFcn@function_handle
+
 	% parameters to optimize
 	parameter_names@cell
 	seed

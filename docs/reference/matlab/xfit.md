@@ -207,3 +207,29 @@ where <hash> is the hash of parameters that will be saved
     * [xfit.fit](../xfit/#fit)
     * [How to fit a xolotl model](https://xolotl.readthedocs.io/en/master/how-to/fit-parameters/)
 
+
+
+-------
+
+### show
+
+**Syntax**
+
+```matlab
+xf.show()
+```
+
+**Description**
+
+Assuming `xf` is a `xfit` object, and you have run the xfit
+algorithm many times and run `xf.save`, and you have been
+saving results to a `.xfit` file, then this method runs
+the user-defined `ShowFcn` and goes over all the results
+If `ShowFcn` is not defined, then it simply plots the result
+
+
+
+!!! info "See Also"
+    * [xfit.evaluate](../xfit/#evaluate)
+    * [How to fit a xolotl model](https://xolotl.readthedocs.io/en/master/how-to/fit-parameters/)
+
