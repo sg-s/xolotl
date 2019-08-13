@@ -7,9 +7,15 @@
 #ifndef CAT
 #define CAT
 #include "conductance.hpp"
-
 //inherit conductance class spec
 class CaT: public conductance {
+
+private: 
+    double delta_temp = 0;
+    double pow_Q_tau_m_delta_temp = 0;
+    double pow_Q_tau_h_delta_temp = 0;
+    double pow_Q_g = 0;
+
 
 public:
 
@@ -25,7 +31,6 @@ public:
         m = m_;
         h = h_;
 
-
         Q_g = Q_g_;
         Q_tau_m = Q_tau_m_;
         Q_tau_h = Q_tau_h_;
@@ -35,40 +40,53 @@ public:
         
         
         if (isnan (Q_g)) { Q_g = 1; }
-        if (isnan (Q_tau_m)) { Q_tau_m = 1; }
-        if (isnan (Q_tau_h)) { Q_tau_h = 1; }
+        if (isnan (Q_tau_m)) { Q_tau_m = 2; }
+        if (isnan (Q_tau_h)) { Q_tau_h = 2; }
         if (isnan (E)) { E = 30; }
 
+        is_calcium = true;
+
+        p = 3;
+        q = 1;
     }
 
     void integrate(double, double);
+    void integrateLangevin(double, double);
+    void connect(compartment*);
 
     double m_inf(double, double);
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
     string getClass(void);
-
-
 };
 
 string CaT::getClass(){return "CaT";}
 
-void CaT::integrate(double V, double Ca)
-{
+void CaT::connect(compartment *pcomp_) {
+    // call super class method
+    conductance::connect(pcomp_);
 
-    double delta_temp = (temperature - temperature_ref)/10;
-
-    // update E by copying E_Ca from the cell
-    E = container->E_Ca;
-    m = m_inf(V,Ca) + (m - m_inf(V,Ca))*exp(-(dt*pow(Q_tau_m, delta_temp))/tau_m(V,Ca));
-    h = h_inf(V,Ca) + (h - h_inf(V,Ca))*exp(-(dt*pow(Q_tau_h, delta_temp))/tau_h(V,Ca));
-    g = pow(Q_g, delta_temp)*gbar*m*m*m*h;
-
-    // compute the specific calcium current and update it in the cell
-    double this_I = g*(V-E);
-    container->i_Ca += this_I;
+    // also set up some useful things
+    delta_temp = (temperature - temperature_ref)/10;
+    pow_Q_tau_m_delta_temp = (pow(Q_tau_m, delta_temp));
+    pow_Q_tau_h_delta_temp = (pow(Q_tau_h, delta_temp));
+    pow_Q_g = pow(Q_g, delta_temp);
 }
+
+
+
+void CaT::integrate(double V, double Ca) {
+    conductance::integrate(V,Ca);
+    g = pow_Q_g*g;
+}
+
+
+void CaT::integrateLangevin(double V, double Ca) {
+    conductance::integrateLangevin(V,Ca);
+    g = pow_Q_g*g;
+}
+
 
 
 double CaT::m_inf(double V, double Ca) {return 1.0/(1.0 + exp((V+27.1)/-7.2));}

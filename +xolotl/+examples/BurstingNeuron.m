@@ -33,19 +33,52 @@ options.f = [];
 
 options = corelib.parseNameValueArguments(options, varargin{:});
 
-if isempty(options.f) && strcmp(options.prefix,'prinz')
-	options.f = 14.96;
-elseif isempty(options.f) && strcmp(options.prefix,'liu')
-	options.f = 1.496;
-else 
-	options.f = 14.96;
-end
-
 
 x = xolotl;
 A = 0.0628;
 vol = A;
 x.add('compartment','AB','A',A,'vol',vol);
+
+
+prefix = options.prefix;
+
+
+channels = {'ACurrent','HCurrent','KCa','Kd','CaS','CaT','NaV'};
+
+
+for i = 1:length(channels)
+	try
+		x.AB.add([prefix filesep channels{i}])
+	catch
+		% fall back onto Prinz channels
+		x.AB.add(['prinz/' channels{i}])
+	end
+end
+
+x.AB.add('Leak');
+
+
+
+
+
+
+
+
+if any(strfind(prefix,'prinz'))
+	prefix = 'prinz';
+elseif any(strfind(prefix,'liu'))
+	prefix = 'liu';
+end
+
+
+if isempty(options.f) && strcmp(prefix,'prinz')
+	options.f = 14.96;
+elseif isempty(options.f) && strcmp(prefix,'liu')
+	options.f = 1.496;
+else 
+	options.f = 14.96;
+end
+
 
 switch options.CalciumMech
 case 'prinz'
@@ -58,45 +91,44 @@ otherwise
 	error('Unknown Calcium Mechanism')
 end
 
-prefix = options.prefix;
+
+
+
+
+% attempt to configure gbars correctly
 switch prefix
 
 case 'liu'
-	x.AB.add([prefix '/NaV'],'gbar',@() 115/x.AB.A,'E',30);
-	x.AB.add([prefix '/CaT'],'gbar',@() 1.44/x.AB.A,'E',30);
-	x.AB.add([prefix '/CaS'],'gbar',@() 1.7/x.AB.A,'E',30);
-	x.AB.add([prefix '/ACurrent'],'gbar',@() 15.45/x.AB.A,'E',-80);
-	x.AB.add([prefix '/KCa'],'gbar',@() 61.54/x.AB.A,'E',-80);
-	x.AB.add([prefix '/Kd'],'gbar',@() 38.31/x.AB.A,'E',-80);
-	x.AB.add([prefix '/HCurrent'],'gbar',@() .6343/x.AB.A,'E',-20);
-	x.AB.add('Leak','gbar',@() 0.0622/x.AB.A,'E',-50);
+	x.AB.NaV.gbar = 1831;
+	x.AB.CaT.gbar = 23;
+	x.AB.CaS.gbar = 27;
+	x.AB.ACurrent.gbar = 246;
+	x.AB.KCa.gbar = 980;
+	x.AB.Kd.gbar = 610;
+	x.AB.HCurrent.gbar = 10.1;
+	x.AB.Leak.gbar = .99;
+	x.AB.Leak.E = -50;
 case 'prinz'
 	channels = {'NaV','CaT','CaS','ACurrent','KCa','Kd','HCurrent'};
 
 	gbar(:,1) = [1000 25  60 500  50  1000 .1];
-	E =         [50   30  30 -80 -80 -80   -20];
-
 
 	for i = 1:length(channels)
-		x.AB.add([prefix filesep channels{i}],'gbar',gbar(i),'E',E(i));
+		x.AB.(channels{i}).gbar = gbar(i);
 	end
 
 case 'golowasch'
-	% Use Prinz channels, but Golowasch's HCurrent
-	channels = {'NaV','CaT','CaS','ACurrent','KCa','Kd'};
+	channels = {'NaV','CaT','CaS','ACurrent','KCa','Kd','HCurrent'};
 
-	gbar(:,1) = [1000 25  60 500  50  1000];
-	E =         [50   30  30 -80 -80 -80  ];
-
+	gbar(:,1) = [1000 25  60 500  50  1000 .1];
 
 	for i = 1:length(channels)
-		x.AB.add(['prinz' filesep channels{i}],'gbar',gbar(i),'E',E(i));
+		x.AB.(channels{i}).gbar = gbar(i);
 	end
-	x.AB.add('golowasch/HCurrent','gbar',10,'E',-20)
 
 end
 
 
 
-x.t_end = 2e3;
+x.t_end = 3e3;
 x.integrate;
