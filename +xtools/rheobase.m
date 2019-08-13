@@ -42,8 +42,7 @@
 % | ----------- | ------------- | ----- |
 % | `current_steps` | 0:0.01:1 | nA |
 % | `debug` | false | |
-% | `ibi_thresh` | 300 | ms |
-% | `min_firing_rate` | 1 | Hz |
+% | `MinFiringRate` | 1 | Hz |
 % | `sampling_rate` | 20 | 1/ms |
 % | `spike_threshold` | 0 | mV |
 % | `verbosity` | true | |
@@ -56,50 +55,42 @@
 %     xtools.findNSpikeTimes
 %
 
-function [I_ext, ii, metrics] = rheobase(x, varargin)
+function I = rheobase(x, varargin)
 
-  % options and defaults
-  options = struct;
-  options.current_steps = 0:0.01:1;
-  options.debug = false;
-  options.ibi_thresh = 300;
-  options.min_firing_rate = 1;
-  options.sampling_rate = 20;
-  options.spike_threshold = 0;
-  options.verbosity = true;
+% options and defaults
+options.MinI = -2;
+options.MaxI = 4;
+options.SpikeThreshold = 0;
+options.t_end = 10e3;
 
-  options = orderfields(options);
 
-  if nargout && ~nargin
-    varargout{1} = options;
-    return
-  end
+% validate and accept options
+options = corelib.parseNameValueArguments(options, varargin{:});
 
-  % validate and accept options
-  options = corelib.parseNameValueArguments(options, varargin{:});
+% save the initial state
+x.reset;
+x.snapshot('rheobase');
 
-  % save the initial state
-  corelib.verb(options.verbosity && any(strcmp({x.snapshots.name}, 'rheobase')), 'rheobase', 'overwriting ''rheobase'' snapshot');
-  x.snapshot('rheobase');
 
-  for ii = 1:length(options.current_steps)
-    corelib.verb(options.verbosity, 'rheobase', ['I_ext = ' num2str(options.current_steps(ii)) ' nA'])
+I = fminbnd(@(y) nSpikesForCurrent(x,y) ,options.MinI,options.MaxI);
 
-    x.reset('rheobase');
-    x.I_ext = options.current_steps(ii);
 
-    x.integrate;
-    V = x.integrate;
 
-    metrics = xtools.V2metrics(V, options);
+function N = nSpikesForCurrent(x, I_ext)
 
-    if metrics.firing_rate >= options.min_firing_rate
-      break
-    end
-  end % for loop
+	x.reset('rheobase');
+	x.I_ext = I_ext;
 
-  corelib.verb(ii == length(options.current_steps) & options.verbosity, 'rheobase', ['maximum iterations reached'])
+	x.closed_loop = true;
+	x.integrate;
+	V = x.integrate;
 
-  I_ext = options.current_steps(ii);
+	N = xtools.findNSpikes(V(:,1));
+	if N == 0
+		N = abs(I_ext);
+	end
 
-end % function
+end
+
+
+end
