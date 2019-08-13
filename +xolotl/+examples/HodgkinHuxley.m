@@ -28,9 +28,10 @@ function x = HodgkinHuxley(varargin)
 
 x = xolotl(varargin{:});
 
-x.add('compartment','AB','A',1e-5)
+x.add('compartment','HH','A',1e-5)
 
-x.AB.add('chow/NaV','gbar',1200);
-x.AB.add('chow/Kd','gbar',480);
+x.HH.add('liu/NaV','gbar',1e3);
+x.HH.add('liu/Kd','gbar',300);
+x.HH.add('Leak', 'gbar', 1);
 
 x.integrate;

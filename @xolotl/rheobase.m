@@ -1,12 +1,5 @@
 
-%
-% ;;     ;; ;;;;;;;;  ;;;;;;;   ;;;;;;;  ;;        ;;;;;;
-%  ;;   ;;     ;;    ;;     ;; ;;     ;; ;;       ;;    ;;
-%   ;; ;;      ;;    ;;     ;; ;;     ;; ;;       ;;
-%    ;;;       ;;    ;;     ;; ;;     ;; ;;        ;;;;;;
-%   ;; ;;      ;;    ;;     ;; ;;     ;; ;;             ;;
-%  ;;   ;;     ;;    ;;     ;; ;;     ;; ;;       ;;    ;;
-% ;;     ;;    ;;     ;;;;;;;   ;;;;;;;  ;;;;;;;;  ;;;;;;
+
 %
 % ### rheobase
 %
@@ -14,9 +7,9 @@
 % **Syntax**
 %
 % ```matlab
-% [I_ext, index, metrics] = xtools.rheobase(x)
-% [I_ext, index, metrics] = xtools.rheobase(x, 'PropertyName', PropertyValue, ...)
-% [I_ext, index, metrics] = xtools.rheobase(x, options)
+% [I_ext, index, metrics] = rheobase(x)
+% [I_ext, index, metrics] = rheobase(x, 'PropertyName', PropertyValue, ...)
+% [I_ext, index, metrics] = rheobase(x, options)
 % ```
 %
 % **Description**
@@ -53,13 +46,14 @@
 %     xtools.V2metrics
 %     xtools.findNSpikes
 %     xtools.findNSpikeTimes
+%     xolotl.fI
 %
 
-function I = rheobase(x, varargin)
+function I = rheobase(self, varargin)
 
 % options and defaults
-options.MinI = -2;
-options.MaxI = 4;
+options.I_min = -2;
+options.I_max = 4;
 options.SpikeThreshold = 0;
 options.t_end = 10e3;
 
@@ -68,11 +62,11 @@ options.t_end = 10e3;
 options = corelib.parseNameValueArguments(options, varargin{:});
 
 % save the initial state
-x.reset;
-x.snapshot('rheobase');
+self.reset;
+self.snapshot('rheobase');
 
 
-I = fminbnd(@(y) nSpikesForCurrent(x,y) ,options.MinI,options.MaxI);
+I = fminbnd(@(y) nSpikesForCurrent(self,y) ,options.I_min,options.I_max);
 
 
 
@@ -85,8 +79,8 @@ function N = nSpikesForCurrent(x, I_ext)
 	x.integrate;
 	V = x.integrate;
 
-	N = xtools.findNSpikes(V(:,1));
-	if N == 0
+	N = xtools.findNSpikes(V(:,1)) - 1;
+	if N < 0
 		N = abs(I_ext);
 	end
 

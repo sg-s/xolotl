@@ -39,7 +39,7 @@
 
 
 
-function data = fI(self, varargin)
+function varargout = fI(self, varargin)
 
 
 
@@ -120,3 +120,26 @@ end
 % restore the xolotl object the its original state
 self.deserialize(S);
 self.I_ext = I0;
+
+
+if nargout == 0
+	% make a plot
+
+	figure('outerposition',[300 300 700 600],'PaperUnits','points','PaperSize',[700 600]); hold on
+
+	plot(data.I,data.f_up,'k')
+	plot(data.I,data.f_down,'r')
+
+	xlabel('Injected current (nA)')
+	ylabel('Firing rate (Hz)')
+
+	% find the rheobase
+	r = self.rheobase('I_min',options.I_min,'I_max',options.I_max);
+	plotlib.vertline(r);
+
+	figlib.pretty()
+
+else
+	varargout{1} = data;
+
+end
