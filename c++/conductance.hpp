@@ -150,7 +150,7 @@ public:
 
     virtual void connect(compartment*); 
     virtual string getClass(void) = 0;
-    double getCurrent(double);
+    virtual double getCurrent(double);
     void checkSolvers(int);
 
     double mdot(double, double, double);
