@@ -891,20 +891,17 @@ reset to.
 **Syntax**
 
 ```matlab
-[I_ext, index, metrics] = rheobase(x)
-[I_ext, index, metrics] = rheobase(x, 'PropertyName', PropertyValue, ...)
-[I_ext, index, metrics] = rheobase(x, options)
+I = x.rheobase
+I = x.rheobase('PropertyName', PropertyValue, ...)
+I = x.rheobase(options)
 ```
 
 **Description**
 
-Finds the minimum injected current required to cause a xolotl model to spike.
-The model is simulated with constant injected current determined by the `current_steps` option,
-which is a vector of real numbers,
-until the minimum firing rate is reached.
-The output `I_ext` contains the current magnitude needed to cause the model to spike,
-`index` contains the linear index into the `current_steps` vector.
-`metrics` contains a struct of computed statistics for the resultant spike train.
+Finds the minimum injected current required to cause a xolotl model to .
+The model is simulated with increasing amounts of constant injected current until one spike is elicited.
+This minimum amount of current is called the rheobase.
+The output `I` contains the current magnitude needed to cause the model to spike,
 
 If called without arguments and one output, a struct
 containing fields for all optional arguments, `options`,
@@ -917,12 +914,10 @@ Options with a `NaN` value are ignored, and the default is used instead.
 
 | Option Name | Default Value | Units |
 | ----------- | ------------- | ----- |
-| `current_steps` | 0:0.01:1 | nA |
-| `debug` | false | |
-| `MinFiringRate` | 1 | Hz |
-| `sampling_rate` | 20 | 1/ms |
-| `spike_threshold` | 0 | mV |
-| `verbosity` | true | |
+| `I_min` | -0.2 | nA |
+| `I_max` | 4 | nA |
+| `SpikeThreshold` | 0 | mV |
+| `t_end` | 10e3 | ms |
 
 
 
