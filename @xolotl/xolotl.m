@@ -54,6 +54,10 @@ properties
 
     solver_order@double = 0;
 
+    % should we use the current to integrate voltage
+    % in single compartments? 
+    use_current@double = 0;
+
     % should we approximate gating functions?
     % 0 -- no approximations
     % 1 -- integer mV only (approx)

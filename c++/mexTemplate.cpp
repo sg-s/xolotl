@@ -48,6 +48,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     xolotl_network.approx_channels = approx_channels;
     xolotl_network.stochastic_channels = (int) stochastic_channels;
 
+    xolotl_network.use_current = (int) use_current;
+
 
     if (verbosity > 0) {
         mexPrintf("\n[CHANNELS]\n ");

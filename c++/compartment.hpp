@@ -140,6 +140,8 @@ public:
 
     int stochastic_channels = 0;
 
+    int use_current = 0;
+
     // constructor with all parameters
     compartment(double V_, double Ca_, double Cm_, double A_, double vol_,  double Ca_target_, double Ca_average_, double tree_idx_, double neuron_idx_, double radius_, double len_, double shell_thickness_, double Ca_out_)
     {
@@ -978,21 +980,46 @@ This method integrates the voltage in this compartment,
 assuming this compartment is not part of a multi-compartment
 neuron model, and default solver orders are being used.
 
-This method implements the exponential Euler method to
-update the voltages in this compartment.
+When the `use_current` flag is 0, it uses the exponential
+Euler method to integrate the voltage. This makes the 
+explicit assumption that all conductances are linear in V
+and that the currents don't need to be computed to 
+integrate the voltage. 
+
+When the `use_current` flag is 1, the currents from each 
+conductance are computed, and the the voltage is integrated
+using the sum total of these currents using a simple
+Euler method. 
 */
 void compartment::integrateVoltage(void) {
 
-    // compute infinity values for V and Ca
-    if (sigma_g == 0) {
-        V_inf = V_prev;
-    }
-    else {
-        V_inf = (sigma_gE + (I_ext/A))/sigma_g;
+    switch (use_current) {
+        case 0:
+            // compute infinity values for V and Ca
+            if (sigma_g == 0) {
+                V_inf = V_prev;
+            }
+            else {
+                V_inf = (sigma_gE + (I_ext/A))/sigma_g;
+            }
+
+            // integrate V
+            V = V_inf + (V_prev - V_inf)*exp(-dt/(Cm/(sigma_g)));
+            break;
+        case 1:
+            // get all currents and add it to I_ext
+            I_ext = -I_ext/A;
+            for (int i = 0; i < n_cond; i ++) {
+                I_ext += (cond[i]->getCurrent(V));
+            }
+
+            // now we have the total current, so let's 
+            // integrate using simple Euler
+            V += (-I_ext/Cm)*dt;
+            break;
     }
 
-    // integrate V
-    V = V_inf + (V_prev - V_inf)*exp(-dt/(Cm/(sigma_g)));
+
 
 }
 

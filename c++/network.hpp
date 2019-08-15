@@ -59,6 +59,8 @@ public:
     double verbosity;
     double approx_channels = 0;
 
+    int use_current = 0;
+
     // constructor
     network() {}
 
@@ -227,6 +229,7 @@ void network::addCompartment(compartment *comp_) {
     comp_->RT_by_nF = (0.0431)*(temperature + 273.15);
     comp_->temperature = temperature;
     comp_->temperature_ref = temperature_ref;
+    comp_->use_current = use_current;
 
 }
 
