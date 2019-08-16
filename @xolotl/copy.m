@@ -35,6 +35,15 @@ function N = copy(self)
 % make a new cpplab object
 N = xolotl;
 
+C = self.Children;
+N.Children = {};
+
+% copy cpplab properties by recursively calling copy
+for i = 1:length(C)
+	NN = self.(C{i}).copy;
+	N.add(NN,C{i});
+end
+
 % copy over every non-cpplab property
 props = properties(self);
 for i = 1:length(props)
@@ -47,15 +56,6 @@ for i = 1:length(props)
 	end
 end
 
-C = self.Children;
-N.Children = {};
-
-% copy cpplab properties by recursively calling copy
-
-for i = 1:length(C)
-	NN = self.(C{i}).copy;
-	N.add(NN,C{i});
-end
 
 % synchronize states
 N.deserialize(self.serialize)
