@@ -1,5 +1,10 @@
-% small script that tests xgrid
-% this simulates 100 different neurons 
+% In this example, we demonstrate how
+% xolotl can be run in parallel to quickly 
+% scan a region in parameter space and 
+% to analyze its behaviour there
+% 
+% Here, we will simulate 625 models in parallel
+% and measure their burst metrics and plot them
 
 
 
@@ -31,20 +36,16 @@ tic
 parfor i = 1:length(all_params)
 	x.reset;
 
-	x.set('t_end',11e3);
 	x.set(parameters_to_vary,all_params(:,i));
 
-	[V,Ca] = x.integrate; 
+	x.integrate;
+	V = x.integrate; 
 
 
-	transient_cutoff = floor(length(V)/2);
-	Ca = Ca(transient_cutoff:end,1);
-	V = V(transient_cutoff:end,1);
+	metrics = xtools.V2metrics(V,'sampling_rate',1/x.dt,'ibi_thresh',100);
 
-	burst_metrics = xtools.findBurstMetrics(V,Ca);
-
-	burst_period(i) = burst_metrics(1);
-	n_spikes_per_burst(i) = burst_metrics(2);
+	burst_period(i) = metrics.burst_period;
+	n_spikes_per_burst(i) = metrics.n_spikes_per_burst_mean;
 
 
 end
