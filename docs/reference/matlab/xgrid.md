@@ -226,8 +226,8 @@ and saves results to `~/.psych/benchmark.mat`.
 
 
 !!! info "See Also"
-    * [xgrid.printLog](../xgrid/#printLog)
-    * [xgrid.showWorkerStates](../xgrid/#showWorkerStates)
+    * [xgrid.printLog](../xgrid/#printlog)
+    * [xgrid.showWorkerStates](../xgrid/#showworkerstates)
 
 
 
@@ -280,8 +280,8 @@ Sets up a daemon that listens for commands from xgrid.
 
 
 !!! info "See Also"
-    * [xgrid.addCluster](../xgrid/#addCluster)
-    * [xgrid.stopDaemon](../xgrid/#stopDaemon)
+    * [xgrid.addCluster](../xgrid/#addcluster)
+    * [xgrid.stopDaemon](../xgrid/#stopdaemon)
 
 
 
@@ -304,7 +304,7 @@ Tries to stop the running daemons and removes the handle from the xgrid object.
 
 
 !!! info "See Also"
-    * [xgrid.stopDaemon](../xgrid/#stopDaemon)
+    * [xgrid.stopDaemon](../xgrid/#stopdaemon)
 
 
 
@@ -362,7 +362,7 @@ This function is *internal*.
 
 
 !!! info "See Also"
-    * [xgrid.showWorkerStates](../xgrid/#showWorkerStates)
+    * [xgrid.showWorkerStates](../xgrid/#showworkerstates)
 
 
 
@@ -389,7 +389,7 @@ This function is *internal*.
 
 
 !!! info "See Also"
-    * [xgrid.showWorkerStates](../xgrid/#showWorkerStates)
+    * [xgrid.showWorkerStates](../xgrid/#showworkerstates)
 
 
 
@@ -413,8 +413,8 @@ The file contains the job status and state of each worker.
 
 
 !!! info "See Also"
-    * [xgrid.getJobStatus](../xgrid/#getJobStatus)
-    * [xgrid.showWorkerStates](../xgrid/#showWorkerStates)
+    * [xgrid.getJobStatus](../xgrid/#getjobstatus)
+    * [xgrid.showWorkerStates](../xgrid/#showworkerstates)
 
 
 
@@ -518,7 +518,7 @@ You can use this if you want to start up one worker at a time, for whatever reas
 
 
 !!! info "See Also"
-    * [xgrid.addCluster](../xgrid/#addCluster)
+    * [xgrid.addCluster](../xgrid/#addcluster)
 
 
 
@@ -588,7 +588,7 @@ Do not use this method.
 
 
 !!! info "See Also"
-    * [xgrid.addCluster](../xgrid/#addCluster)
+    * [xgrid.addCluster](../xgrid/#addcluster)
 
 
 

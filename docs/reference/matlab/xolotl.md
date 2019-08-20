@@ -232,7 +232,7 @@ in the `cpplab` superclass.
 
 !!! info "See Also"
     * [cpplab.add](../cpplab/#add)
-    * [xolotl.checkCompartmentName](../xolotl/#checkCompartmentName)
+    * [xolotl.checkCompartmentName](../xolotl/#checkcompartmentname)
 
 
 
@@ -760,7 +760,7 @@ x.pref.show_Ca = false;
 
 !!! info "See Also"
     * [xolotl.manipulate](../xolotl/#manipulate)
-    * [xolotl.contributingCurrents](../xolotl/#contributingCurrents)
+    * [xolotl.contributingCurrents](../xolotl/#contributingcurrents)
 
 
 
@@ -924,10 +924,10 @@ Options with a `NaN` value are ignored, and the default is used instead.
 
 
 !!! info "See Also"
-    * [xtools.V2metrics](../xtools/#V2metrics)
-    * [xtools.findNSpikes](../xtools/#findNSpikes)
-    * [xtools.findNSpikeTimes](../xtools/#findNSpikeTimes)
-    * [xolotl.fI](../xolotl/#fI)
+    * [xtools.V2metrics](../xtools/#v2metrics)
+    * [xtools.findNSpikes](../xtools/#findnspikes)
+    * [xtools.findNSpikeTimes](../xtools/#findnspiketimes)
+    * [xolotl.fI](../xolotl/#fi)
 
 
 
@@ -1009,7 +1009,7 @@ press the `tab` key and get a list of conductances you can show, like this:
 
 !!! info "See Also"
     * [xolotl.plot](../xolotl/#plot)
-    * [xolotl.getGatingFunctions](../xolotl/#getGatingFunctions)
+    * [xolotl.getGatingFunctions](../xolotl/#getgatingfunctions)
 
 
 
@@ -1119,7 +1119,7 @@ MATLAB to C++ and back.
 
 !!! info "See Also"
     * [xolotl.compile](../xolotl/#compile)
-    * [xolotl.viewCode](../xolotl/#viewCode)
+    * [xolotl.viewCode](../xolotl/#viewcode)
 
 
 

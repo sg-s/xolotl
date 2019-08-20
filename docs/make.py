@@ -127,7 +127,7 @@ for file in sorted(glob.glob("./*/")):
 				link_class = words[0]
 				link_method = words[1]
 
-				out_file.write('    * [' + thisline.strip() + '](../' + link_class + '/#' + link_method.strip() + ')\n')
+				out_file.write('    * [' + thisline.strip() + '](../' + link_class + '/#' + link_method.strip().lower() + ')\n')
 
 
 			else:

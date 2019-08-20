@@ -67,10 +67,10 @@ and the default option value is used instead.
 
 
 !!! info "See Also"
-    * [xtools.findNSpikes](../xtools/#findNSpikes)
-    * [xtools.findNSpikeTimes](../xtools/#findNSpikeTimes)
-    * [xtools.findBurstMetrics](../xtools/#findBurstMetrics)
-    * [LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21](../LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting/#In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists)
+    * [xtools.findNSpikes](../xtools/#findnspikes)
+    * [xtools.findNSpikeTimes](../xtools/#findnspiketimes)
+    * [xtools.findBurstMetrics](../xtools/#findburstmetrics)
+    * [LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21](../LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting/#in: de schutter e (ed) computational neuroscience: realistic modeling for experimentalists)
 
 
 
@@ -210,7 +210,7 @@ Spikes are defined as voltage crossings across a threshold, `on_off_thresh` (def
 
 
 !!! info "See Also"
-    * [xtools.findNSpikeTimes](../xtools/#findNSpikeTimes)
+    * [xtools.findNSpikeTimes](../xtools/#findnspiketimes)
 
 
 
@@ -241,7 +241,7 @@ counted (default = 0 mV).
 
 
 !!! info "See Also"
-    * [xtools.findNSpikeTimes](../xtools/#findNSpikeTimes)
+    * [xtools.findNSpikeTimes](../xtools/#findnspiketimes)
 
 
 
@@ -268,8 +268,8 @@ the two voltage traces are.
 
 
 !!! info "See Also"
-    * [xtools.V2Matrix](../xtools/#V2Matrix)
-    * [LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21](../LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting/#In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists)
+    * [xtools.V2Matrix](../xtools/#v2matrix)
+    * [LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting. In: De Schutter E (ed) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press, London pp 1–21](../LeMasson G, Maex R (2001) Introduction to equation solving and parameter fitting/#in: de schutter e (ed) computational neuroscience: realistic modeling for experimentalists)
 
 
 
