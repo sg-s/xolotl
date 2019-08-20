@@ -1,6 +1,6 @@
 ### Something went wrong; what are my first steps?
 
-Try running:
+In MATLAB, try running:
 
 ```matlab
 xolotl.cleanup
