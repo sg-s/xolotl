@@ -189,6 +189,8 @@ x.LP.AlphaSynapseAB.gmax = 20;
 
 ```
 
+You can also use the [`set`](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#set) function.
+
 ## Integrate
 
 We can now integrate and plot the model, and we should see something like this:
@@ -196,10 +198,30 @@ We can now integrate and plot the model, and we should see something like this:
 
 ![](https://user-images.githubusercontent.com/6005346/49970181-82868a80-fef8-11e8-8887-cad414a6dcb5.png)
 
+## How to use this model
+
+We have created a xolotl model with two compartments, several conductances,
+and synapses connecting the two compartments.
+If we wanted to perform an experiment where we varied the injected current,
+or some parameter of the model, we can do so simply by changing the parameters in the object.
+There is no need to instantiate a new xolotl object for each trial in an experiment.
+This means that so long as you are using the same model structure
+(viz. same number of compartments, conductances, connections between them),
+xolotl doesn't have to recompile.
+This is super efficient.
+
+If you want to reset your model to where you started, or any other state, you can do so
+by creating a [snapshot](https://xolotl.readthedocs.io/en/master/how-to/snapshots/),
+and using the [`reset`](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#reset) function.
+
+!!! warning
+    Do not create two models with the same structure but different compartment names.
+    This will confuse xolotl.
+    If you do so, run `xolotl.cleanup`.
+
 
 ## See Also
 
 * [xolotl.add](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#add)
 * [cpplab.add](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#add)
 * [xolotl.connnect](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#connect)
-

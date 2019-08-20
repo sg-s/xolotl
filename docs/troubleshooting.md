@@ -1,3 +1,15 @@
+### Something went wrong; what are my first steps?
+
+In MATLAB, try running:
+
+```matlab
+xolotl.cleanup
+cpplab.rebuildCache
+```
+
+These two functions will remove old compiled C++ binaries
+and check to make sure that xolotl can find the C++ files
+that define compartments and conductances and so on.
 
 ### On macOS, I get an annoying warning saying "xcrun: error: SDK "macosx10.13.4" cannot be located"
 
