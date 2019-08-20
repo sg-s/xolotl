@@ -37,7 +37,7 @@ try the following
 xolotl.cleanup
 
 % rebuilds the cache of C++ objects
-cpplab.rebuildCache()
+cpplab.rebuildCache
 ```
 
 If you're still having a problem, we might have fixed it already! Reinstall or update by running the `xolotl.update()` if you installed the toolbox or pulling from the repository if you're using `git`.
