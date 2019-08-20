@@ -10,7 +10,7 @@
 % **Syntax**
 %
 % ```matlab
-% x.skip_hash = true;
+% x.compile
 % ```
 %
 % **Description**

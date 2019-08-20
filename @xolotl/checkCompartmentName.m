@@ -11,7 +11,7 @@
 % **Syntax**
 %
 % ```matlab
-% ok = checkCompartmentName(self,comp_name)
+% TF = checkCompartmentName(self,comp_name)
 % ```
 %
 % **Description**

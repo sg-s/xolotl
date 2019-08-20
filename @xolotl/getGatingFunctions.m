@@ -11,7 +11,7 @@
 % **Syntax**
 %
 % ```matlab
-% [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance)
+% [m_inf, h_inf, tau_m, tau_h] =  xolotl.getGatingFunctions(conductance)
 % ```
 %
 % **Description**

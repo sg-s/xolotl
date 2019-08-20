@@ -273,7 +273,7 @@ It should produce a figure that looks something like this
 **Syntax**
 
 ```matlab
-ok = checkCompartmentName(self,comp_name)
+TF = checkCompartmentName(self,comp_name)
 ```
 
 **Description**
@@ -367,7 +367,7 @@ A static method that cleans up all transpiled ``C++`` and compiled binary files.
 **Syntax**
 
 ```matlab
-x.skip_hash = true;
+x.compile
 ```
 
 **Description**
@@ -538,7 +538,7 @@ The following optional parameters may be specified in name-value syntax:
 **Syntax**
 
 ```matlab
-[m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance)
+[m_inf, h_inf, tau_m, tau_h] =  xolotl.getGatingFunctions(conductance)
 ```
 
 **Description**
@@ -1153,6 +1153,68 @@ to be user accessible.
     * [xolotl.transpile](../xolotl/#transpile)
 
 
+
+
+
+
+-------
+
+### uninstall
+
+**Syntax**
+
+```matlab
+xolotl.uninstall
+```
+
+**Description**
+
+Static method of xolotl that uninstalls the currently
+installed version of xolotl. If xolotl was installed
+as a MATLAB toolbox, this method deletes the toolbox
+and removes the toolbox from the path.
+
+!!! warning
+    Creating two snapshots with the same name will overwrite the first.
+
+
+
+!!! info "See Also"
+    * [xolotl.update](../xolotl/#update)
+
+
+
+
+
+
+-------
+
+### update
+
+**Syntax**
+
+```matlab
+xolotl.update
+```
+
+**Description**
+
+Static method of xolotl that updates the currently
+installed version of xolotl to the latest version.
+This method needs an active internet connection to 
+work. If xolotl was installed using git, it will
+attempt to use git to update. If xolotl was installed
+as a MATLAB toolbox, it will download the latest 
+version of the toolbox and will attempt to replace the
+installed version with the latest version.
+
+!!! warning
+    Updating xolotl if installed as a MATLAB toolbox will overwrite preferences and delete compiled binaries. 
+
+
+
+!!! info "See Also"
+    * [xolotl.uninstall](../xolotl/#uninstall)
 
 
 

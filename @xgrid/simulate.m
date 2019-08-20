@@ -32,10 +32,8 @@ function simulate(self)
 
 	% make sure there exists a linked binary
 	if isempty(self.x.linked_binary)
-		self.x.skip_hash_check = false;
 		self.x.transpile;
 		self.x.compile;
-		self.x.skip_hash_check = true;
 	end
 
 	for i = 1:length(self.clusters)
