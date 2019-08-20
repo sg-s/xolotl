@@ -7,7 +7,7 @@ xolotl.cleanup
 cpplab.rebuildCache
 ```
 
-These two functions will remove old compiles C++ binaries
+These two functions will remove old compiled C++ binaries
 and check to make sure that xolotl can find the C++ files
 that define compartments and conductances and so on.
 
