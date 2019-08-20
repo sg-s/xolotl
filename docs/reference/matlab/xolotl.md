@@ -1174,8 +1174,6 @@ installed version of xolotl. If xolotl was installed
 as a MATLAB toolbox, this method deletes the toolbox
 and removes the toolbox from the path.
 
-!!! warning
-    Creating two snapshots with the same name will overwrite the first.
 
 
 

@@ -20,8 +20,6 @@
 % as a MATLAB toolbox, this method deletes the toolbox
 % and removes the toolbox from the path.
 %
-% !!! warning
-% XXXXCreating two snapshots with the same name will overwrite the first.
 %
 % See Also: 
 % xolotl.update
