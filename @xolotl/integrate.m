@@ -114,6 +114,10 @@ if isnan(self.sim_dt) || isempty(self.sim_dt)
 	self.sim_dt = self.dt;
 end
 
+assert(self.t_end > 1,'t_end too short')
+assert(self.sim_dt > 0,'sim_dt must be positive')
+assert(self.dt > 0,'dt must be positive')
+
 % check that the simulation doesn't exceed C++ intmax
 assert(self.t_end/self.sim_dt<intmax,'Simulation is too long. The number of steps required exceeds INT_MAX')
 
