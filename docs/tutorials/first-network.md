@@ -1,6 +1,6 @@
 In this tutorial, we will walk through the process of creating a network model of three neurons connected together by synapses. We will integrate the model to find the membrane potential over time and view the output.
 
-Code equivalent to this tutorial can be found in `../xolotl/examples/demo_stg.m`.
+Code equivalent to this tutorial can be found in `../xolotl/examples/demo_pyloric_net.m`.
 
 ### A high-level view of the network
 
@@ -199,4 +199,4 @@ You should see something like this:
 ![](../images/stg-trace.png)
 
 !!! Note "A shortcut through this tutorial"
-    You can reproduce the model we created here by running the `demo_stg` script. Make sure you run `xolotl.go_to_examples` first so that you're in the right folder.
+    You can reproduce the model we created here by running the `demo_pyloric_net` script. Make sure you run `xolotl.go_to_examples` first so that you're in the right folder.

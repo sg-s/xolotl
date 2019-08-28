@@ -74,7 +74,7 @@ Currents are ordered exactly the same as in the `xolotl` object,
 meaning by compartment and then alphabetically.
 
 !!! Note "Plotting mechanisms and currents"
-    The example script `demo_stg` contains code that plots currents vs. time and `demo_integral_control` contains code that plots mechanisms vs. time.
+    The example script `demo_pyloric_net` contains code that plots currents vs. time and `demo_integral_control` contains code that plots mechanisms vs. time.
 
 ## Inject current into compartments
 Injected current is mediated by the `I_ext` property of the `xolotl` object.
