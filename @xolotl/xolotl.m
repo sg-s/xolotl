@@ -13,6 +13,7 @@
 % see https://github.com/sg-s/xolotl
 % for more information
 
+
 classdef xolotl <  cpplab & matlab.mixin.CustomDisplay & ConstructableHandle & UpdateableHandle
 
 properties (SetAccess = protected)
