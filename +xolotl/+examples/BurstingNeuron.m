@@ -130,5 +130,5 @@ end
 
 
 
-x.t_end = 3e3;
-x.integrate;
+% x.t_end = 3e3;
+% x.integrate;
