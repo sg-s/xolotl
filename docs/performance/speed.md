@@ -150,3 +150,8 @@ Let's compare the outputs of the two simulations:
 ![](../images/speed-comparison.png)
 
 We see that the two traces are slightly different, but the overall features are the same. 
+
+
+## Run code in parallel
+
+A common task in simulations is a parameter sweep -- the same model is run for many different parameter sets. xolotl supports all features of parallelization built into MATLAB, making it easy for you to run your code in parallel. Look at [this page](../how-to/run-simulations-in-parallel) for a primer on how to run your code in parallel. 
