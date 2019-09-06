@@ -80,6 +80,6 @@ void KCa::integrateLangevin(double V, double Ca) {
 
 
 double KCa::m_inf(double V, double Ca) { return (Ca/(Ca+3.0))/(1.0+exp((V+28.3)/-12.6)); }
-double KCa::tau_m(double V, double Ca) {return 90.3 - 75.1/(1.0+exp((V+46.0)/-22.7));}
+double KCa::tau_m(double V, double Ca) {return pow_Q_tau_m_delta_temp*(90.3 - 75.1/(1.0+exp((V+46.0)/-22.7)));}
 
 #endif
