@@ -87,7 +87,7 @@ void NaV::integrate(double V, double Ca) {
 
 double NaV::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+25.5)/-5.29));}
 double NaV::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+48.9)/5.18));}
-double NaV::tau_m(double V, double Ca) {return 1.32 - 1.26/(1+exp((V+120.0)/-25.0));}
-double NaV::tau_h(double V, double Ca) {return (0.67/(1.0+exp((V+62.9)/-10.0)))*(1.5+1.0/(1.0+exp((V+34.9)/3.6)));}
+double NaV::tau_m(double V, double Ca) {return pow_Q_tau_m_delta_temp*(1.32 - 1.26/(1+exp((V+120.0)/-25.0)));}
+double NaV::tau_h(double V, double Ca) {return pow_Q_tau_h_delta_temp*((0.67/(1.0+exp((V+62.9)/-10.0)))*(1.5+1.0/(1.0+exp((V+34.9)/3.6))));}
 
 #endif
