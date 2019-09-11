@@ -25,7 +25,7 @@ properties (SetAccess = protected)
 
 end  % end set protected props
 
-properties (Access = protected)
+properties (Access = protected, Transient = true)
 	xolotl_folder % full path to folder that contains xolotl code
 	cpp_folder % full path to folder that contains c++ code
 
