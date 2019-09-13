@@ -29,6 +29,9 @@
 
 function [passed, total] = run_all_tests(cleanup)
 
+
+hashlib.test()
+
 if nargin < 1
 	cleanup = true;
 end
