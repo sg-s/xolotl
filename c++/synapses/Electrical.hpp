@@ -17,33 +17,30 @@ public:
         is_electrical = true;
     }
 
-    void integrate(double dt);
+    void integrate(void);
     void connect(compartment *pcomp1_, compartment *pcomp2_);
 
     int getFullState(double*, int);
     int getFullStateSize(void);
 };
 
-void Electrical::integrate(void)
-{
+void Electrical::integrate() {
     // set E to V_pre
     E = (pre_syn->V);
+    g = gmax;
 }
 
-int Electrical::getFullStateSize()
-{
+int Electrical::getFullStateSize() {
     return 0;
 }
 
-int Electrical::getFullState(double *syn_state, int idx)
-{
+int Electrical::getFullState(double *syn_state, int idx) {
     return idx;
 }
 
 
 
-void Electrical::connect(compartment *pcomp1_, compartment *pcomp2_)
-{
+void Electrical::connect(compartment *pcomp1_, compartment *pcomp2_) {
     pre_syn = pcomp1_;
     post_syn = pcomp2_;
 
