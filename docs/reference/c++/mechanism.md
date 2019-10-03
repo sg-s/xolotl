@@ -28,15 +28,15 @@ void integrate()
 
 
 Since mechanisms can be just about anything, the abstract
-mechanism class only implements two methods. 
-This method is used to integrate the mechanism under default 
-conditions (single-step integration). 
+mechanism class only implements two methods.
+This method is used to integrate the mechanism under default
+conditions (single-step integration).
 
 
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L88)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L89)
 
 -------
 
@@ -54,9 +54,9 @@ void connect(compartment* comp_)
 
 
 Since mechanisms can be just about anything, the abstract
-mechanism class only implements two methods. 
-This method is used to integrate the mechanism under default 
-conditions (single-step integration). 
+mechanism class only implements two methods.
+This method is used to integrate the mechanism under default
+conditions (single-step integration).
 
 void mechanism::integrate() {
     mexErrMsgTxt("[mechanism] Unimplemented integration method\n");
@@ -68,7 +68,7 @@ void mechanism::integrate() {
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L94)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L95)
 
 -------
 
@@ -86,9 +86,9 @@ void connect(conductance* cond_)
 
 
 Since mechanisms can be just about anything, the abstract
-mechanism class only implements two methods. 
-This method is used to integrate the mechanism under default 
-conditions (single-step integration). 
+mechanism class only implements two methods.
+This method is used to integrate the mechanism under default
+conditions (single-step integration).
 
 void mechanism::integrate() {
     mexErrMsgTxt("[mechanism] Unimplemented integration method\n");
@@ -104,7 +104,7 @@ void mechanism::connect(compartment* comp_) {
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L98)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L99)
 
 -------
 
@@ -122,9 +122,9 @@ void connect(synapse* syn_)
 
 
 Since mechanisms can be just about anything, the abstract
-mechanism class only implements two methods. 
-This method is used to integrate the mechanism under default 
-conditions (single-step integration). 
+mechanism class only implements two methods.
+This method is used to integrate the mechanism under default
+conditions (single-step integration).
 
 void mechanism::integrate() {
     mexErrMsgTxt("[mechanism] Unimplemented integration method\n");
@@ -145,7 +145,7 @@ void mechanism::connect(conductance* cond_) {
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L103)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L104)
 
 -------
 
@@ -163,15 +163,15 @@ void integrateMS(int k, double V, double Ca)
 
 
 Since mechanisms can be just about anything, the abstract
-mechanism class only implements two methods. 
+mechanism class only implements two methods.
 This method is used to integrate the mechanism when a multi-step
-solver is requested. 
+solver is requested.
 
 
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L115)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L116)
 
 -------
 

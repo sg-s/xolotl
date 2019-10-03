@@ -27,15 +27,6 @@ sudo xcode-select -s /Applications/Xcode.app
 * You will have to do this only once.
 
 
-### On macOS, I get a warning or an error that says "xcrun: error: SDK "macosx10.14.6" cannot be located"
-
-
-You're getting this error because you haven't set up your compiler. Run this:
-
-```
-mex -v -setup
-```
-
 ### I ran the quickstart, but I don't see anything
 
 Are you using a tiny screen? Some UI elements may go out of the frame on very small screens. To fix this, acquire the handle to the figure and change the position property. For example:
