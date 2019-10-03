@@ -68,6 +68,7 @@ public:
     virtual int getFullStateSize(void) = 0;
     virtual int getFullState(double*, int) = 0;
     virtual double getState(int) = 0;
+    virtual string getClass(void) = 0;
 
     virtual void checkSolvers(int) = 0;
 
