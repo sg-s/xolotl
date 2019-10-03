@@ -21,7 +21,7 @@
 % Makes a stem plot of conductance densities in a given compartment. If the first argument is a handle to a valid axis, plots will be made there.
 %
 %
-% See Also: 
+% See Also:
 % xolotl.plot
 % xolotl.show
 % xolotl.manipulate
@@ -33,7 +33,7 @@
 function axes_handle = plotgbars(self,varargin)
 
 
-if isempty(varargin) 
+if isempty(varargin)
 	error('Not enough input arguments. You need to specify which compartment to plot maximal conductances for. ')
 end
 
