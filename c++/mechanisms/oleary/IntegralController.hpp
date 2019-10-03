@@ -1,10 +1,10 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
-// Integral controller, as in O'Leary et al 
+// Integral controller, as in O'Leary et al
 // This controller can control either a synapse
-// or a conductance 
+// or a conductance
 
 #ifndef INTEGRALCONTROLLER
 #define INTEGRALCONTROLLER
@@ -25,16 +25,16 @@ protected:
 public:
     // timescales
     double tau_m = std::numeric_limits<double>::infinity();
-    double tau_g = 5e3; 
+    double tau_g = 5e3;
 
-    // mRNA concentration 
+    // mRNA concentration
     double m = 0;
 
     // area of the container this is in
     double container_A;
 
-    // specify parameters + initial conditions for 
-    // mechanism that controls a conductance 
+    // specify parameters + initial conditions for
+    // mechanism that controls a conductance
     IntegralController(double tau_m_, double tau_g_, double m_)
     {
 
@@ -47,7 +47,7 @@ public:
         if (tau_g<=0) {mexErrMsgTxt("[IntegralController] tau_g must be > 0. Perhaps you meant to set it to Inf?\n");}
     }
 
-    
+
     void integrate(void);
 
     void checkSolvers(int);
@@ -59,8 +59,13 @@ public:
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
+    string getClass(void);
 
 };
+
+string IntegralController::getClass() {
+    return "IntegralController";
+}
 
 
 double IntegralController::getState(int idx)
@@ -86,11 +91,11 @@ int IntegralController::getFullState(double *cont_state, int idx)
     // being controller
     if (channel)
     {
-      cont_state[idx] = channel->gbar;  
+      cont_state[idx] = channel->gbar;
     }
     else if (syn)
     {
-        cont_state[idx] = syn->gmax;  
+        cont_state[idx] = syn->gmax;
     }
     idx++;
     return idx;
@@ -112,7 +117,7 @@ void IntegralController::connect(conductance * channel_)
     controlling_class = (channel_->getClass()).c_str();
 
     // attempt to read the area of the container that this
-    // controller should be in. 
+    // controller should be in.
     container_A  = (channel->container)->A;
 
     control_type = 1;
@@ -137,7 +142,7 @@ void IntegralController::connect(synapse* syn_)
 
 
     // attempt to read the area of the container that this
-    // controller should be in. 
+    // controller should be in.
     container_A  = (syn->post_syn)->A;
 
     control_type = 2;
@@ -160,8 +165,8 @@ void IntegralController::integrate(void)
 
             {
             // if the target is NaN, we will interpret this
-            // as the controller being disabled 
-            // and do nothing 
+            // as the controller being disabled
+            // and do nothing
             if (isnan((channel->container)->Ca_target)) {return;}
 
             double Ca_error = (channel->container)->Ca_target - (channel->container)->Ca_prev;
@@ -189,8 +194,8 @@ void IntegralController::integrate(void)
         case 2:
             {
             // if the target is NaN, we will interpret this
-            // as the controller being disabled 
-            // and do nothing 
+            // as the controller being disabled
+            // and do nothing
 
             if (isnan((syn->post_syn)->Ca_target)) {return;}
 
