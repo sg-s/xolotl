@@ -49,9 +49,13 @@ public:
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
+    string getClass(void);
 
 };
 
+string CurrentNoise2::getClass() {
+    return "CurrentNoise2";
+}
 
 double CurrentNoise2::getState(int idx)
 {
