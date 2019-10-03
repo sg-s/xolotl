@@ -18,7 +18,10 @@
 %
 % **Description**
 %
-% Makes a stem plot of conductance densities in a given compartment. If the first argument is a handle to a valid axis, plots will be made there.
+% Makes a stem plot of conductance densities in a given compartment.
+% If the first argument is a handle to a valid axis, plots will be made there.
+% If no axis handle is given, it will use `gca` instead.
+% This function can plot onto both Cartesian and polar axes.
 %
 %
 % See Also:
