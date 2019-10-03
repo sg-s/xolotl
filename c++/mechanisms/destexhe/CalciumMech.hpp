@@ -63,6 +63,7 @@ public:
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
+    string getClass(void);
 
     double Cadot(double);
     double Cainf(void);
@@ -74,18 +75,18 @@ double CalciumMech::getState(int idx) {
     return std::numeric_limits<double>::quiet_NaN();
 }
 
-
 int CalciumMech::getFullStateSize() {
     return 0;
 }
-
 
 int CalciumMech::getFullState(double *cont_state, int idx) {
     // do nothing
     return idx;
 }
 
-
+string CalciumMech::getClass() {
+    return "CalciumMech";
+}
 
 // connection methods
 void CalciumMech::connect(compartment* comp_) {

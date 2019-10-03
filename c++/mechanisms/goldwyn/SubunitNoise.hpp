@@ -46,9 +46,13 @@ public:
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
+    string getClass(void);
 
 };
 
+string SubunitNoise::getClass() {
+    return "SubunitNoise";
+}
 
 double SubunitNoise::getState(int idx)
 {

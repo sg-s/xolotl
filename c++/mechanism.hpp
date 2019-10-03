@@ -1,10 +1,10 @@
 /*
 
 This document describes the "mechanism" C++ class.
-This class describes objects that are mechanisms, and 
+This class describes objects that are mechanisms, and
 can be used to represent any sort of mechanism or dynamical
 system that affects compartments, conductances or synapses,
-or even other mechanisms. 
+or even other mechanisms.
 
 | Abstract | can contain | contained in |
 | --------  | ------ | -------  |
@@ -28,7 +28,7 @@ class synapse;
 class mechanism {
 protected:
     conductance* channel; // pointer to conductance that this regulates
-    synapse* syn; // pointer to synapse that this regulates 
+    synapse* syn; // pointer to synapse that this regulates
 
 
 public:
@@ -36,12 +36,12 @@ public:
     compartment * comp; // pointer to compartment that it is in
 
     // store the type of the thing being controlled
-    // as a string 
+    // as a string
     string controlling_class;
 
     int mechanism_idx;
 
-    // also store the parameters of the 
+    // also store the parameters of the
     // compartment that it is physically located in
     double container_A;
     double container_vol;
@@ -54,20 +54,21 @@ public:
 
     mechanism()
     {
-        // null pointers to all 
-        // connectors for safety 
-        channel = NULL; 
-        syn = NULL; 
+        // null pointers to all
+        // connectors for safety
+        channel = NULL;
+        syn = NULL;
         comp = NULL;
     }
-    
+
     ~mechanism() {}
-    
+
     virtual void integrate(void);
     virtual void integrateMS(int, double, double);
     virtual int getFullStateSize(void) = 0;
     virtual int getFullState(double*, int) = 0;
     virtual double getState(int) = 0;
+    virtual string getClass(void) = 0;
 
     virtual void checkSolvers(int) = 0;
 
@@ -81,9 +82,9 @@ public:
 
 /*
 Since mechanisms can be just about anything, the abstract
-mechanism class only implements two methods. 
-This method is used to integrate the mechanism under default 
-conditions (single-step integration). 
+mechanism class only implements two methods.
+This method is used to integrate the mechanism under default
+conditions (single-step integration).
 */
 void mechanism::integrate() {
     mexErrMsgTxt("[mechanism] Unimplemented integration method\n");
@@ -108,13 +109,13 @@ void mechanism::connect(synapse* syn_) {
 
 /*
 Since mechanisms can be just about anything, the abstract
-mechanism class only implements two methods. 
+mechanism class only implements two methods.
 This method is used to integrate the mechanism when a multi-step
-solver is requested. 
+solver is requested.
 */
 void mechanism::integrateMS(int k, double V, double Ca) {
     mexErrMsgTxt("[mechanism] Unimplemented multi-step integration method\n");
-}   
+}
 
 
 

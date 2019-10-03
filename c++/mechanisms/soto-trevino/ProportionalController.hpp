@@ -1,15 +1,15 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
 // Proportional Controller suggested to
-// regulate synapse strengths in a 
+// regulate synapse strengths in a
 // two cell half-center oscillator
-// 
+//
 // from:
 // Soto-Trevino et al 2001
 // https://www.nature.com/articles/nn0301_297
-// 
+//
 #ifndef PROPORTIONALCONTROLLER
 #define PROPORTIONALCONTROLLER
 #include "mechanism.hpp"
@@ -30,7 +30,7 @@ public:
     // timescales
     double tau_m = std::numeric_limits<double>::infinity();
 
-    // mRNA concentration 
+    // mRNA concentration
     // exists purely for compatibility with Integral Controller
     double m = 0;
 
@@ -40,8 +40,8 @@ public:
     // area of the container this is in
     double container_A;
 
-    // specify parameters + initial conditions for 
-    // mechanism that controls a conductance 
+    // specify parameters + initial conditions for
+    // mechanism that controls a conductance
     ProportionalController(double tau_m_, double m_, double tau_g_)
     {
         tau_g = tau_g_;
@@ -50,7 +50,7 @@ public:
         if (isnan(tau_m)) {tau_m = 10e3;};
     }
 
-    
+
     void integrate(void);
 
     void checkSolvers(int);
@@ -62,8 +62,13 @@ public:
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
+    string getClass(void);
 
 };
+
+string ProportionalController() {
+    return "ProportionalController";
+}
 
 
 double ProportionalController::getState(int idx)
@@ -85,11 +90,11 @@ int ProportionalController::getFullState(double *cont_state, int idx)
     // being controller
     if (channel)
     {
-      cont_state[idx] = channel->gbar;  
+      cont_state[idx] = channel->gbar;
     }
     else if (syn)
     {
-        cont_state[idx] = syn->gmax;  
+        cont_state[idx] = syn->gmax;
     }
     idx++;
     return idx;
@@ -108,7 +113,7 @@ void ProportionalController::connect(conductance * channel_) {
     controlling_class = (channel_->getClass()).c_str();
 
     // attempt to read the area of the container that this
-    // controller should be in. 
+    // controller should be in.
     container_A  = (channel->container)->A;
 
     control_type = 1;
@@ -130,7 +135,7 @@ void ProportionalController::connect(synapse* syn_) {
 
 
     // attempt to read the area of the container that this
-    // controller should be in. 
+    // controller should be in.
     container_A  = (syn->post_syn)->A;
 
     control_type = 2;
@@ -152,8 +157,8 @@ void ProportionalController::integrate(void) {
 
             {
             // if the target is NaN, we will interpret this
-            // as the controller being disabled 
-            // and do nothing 
+            // as the controller being disabled
+            // and do nothing
             if (isnan((channel->container)->Ca_target)) {return;}
 
             double Ca_error = (channel->container)->Ca_target - (channel->container)->Ca_prev;
@@ -176,8 +181,8 @@ void ProportionalController::integrate(void) {
         case 2:
             {
             // if the target is NaN, we will interpret this
-            // as the controller being disabled 
-            // and do nothing 
+            // as the controller being disabled
+            // and do nothing
 
             if (isnan((syn->post_syn)->Ca_target)) {return;}
 

@@ -1,6 +1,6 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
 // FSDTarget
 // implements a target mechanism for the FSD controller
@@ -52,14 +52,14 @@ public:
     double GS = 3;
     double GD = 1;
 
-    // Z parameters, as in Table 2 of Liu et al. 
+    // Z parameters, as in Table 2 of Liu et al.
     double ZM_F = 14.2;
     double ZM_S = 7.2;
     double ZM_D = 3;
 
     double ZH_F = 9.8;
     double ZH_S = 2.8;
-    
+
 
     // timescales
     double tau_MF = .5; // ms
@@ -70,8 +70,8 @@ public:
     double tau_HS = 60;
 
 
-    // specify parameters + initial conditions for 
-    // mechanism that controls a conductance 
+    // specify parameters + initial conditions for
+    // mechanism that controls a conductance
     FSDTarget(double Fbar_, double Sbar_, double Dbar_, double FF_, double S_, double D_, double MF_, double HF_, double MS_, double HS_, double MD_)
     {
 
@@ -103,12 +103,12 @@ public:
         Dbar = Dbar_;
 
         // abuse the controlling_class property
-        // so that FSDController can find this mechanism 
+        // so that FSDController can find this mechanism
         controlling_class = "FSD";
 
     }
 
-    
+
     void integrate(void);
 
     double MH_inf(double, double);
@@ -123,8 +123,13 @@ public:
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
+    string getClass(void);
 
 };
+
+string FSDTarget::getClass() {
+    return "FSDTarget";
+}
 
 // it has no state since this is only a container for
 // the target
@@ -145,7 +150,7 @@ double FSDTarget::getState(int idx){
         default:
             return std::numeric_limits<double>::quiet_NaN();
     }
-    
+
 }
 
 // return F, S D

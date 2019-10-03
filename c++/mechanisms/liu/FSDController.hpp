@@ -1,10 +1,10 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
-// Integral controller, as in O'Leary et al 
+// Integral controller, as in O'Leary et al
 // This controller can control either a synapse
-// or a conductance 
+// or a conductance
 
 #ifndef FSDCONTROLLER
 #define FSDCONTROLLER
@@ -16,11 +16,11 @@ class FSDController: public mechanism {
 
 protected:
 
-    // pointer to the FSD target mechanism 
+    // pointer to the FSD target mechanism
     mechanism * target = nullptr;
 
 
-    // housekeeping 
+    // housekeeping
     double delta_g = 0;
     double F_error = 0;
     double S_error = 0;
@@ -32,11 +32,11 @@ public:
     double B = 0;
     double C = 0;
 
-    // timescale 
+    // timescale
     double tau_g = 5000;
 
-    // specify parameters + initial conditions for 
-    // mechanism that controls a conductance 
+    // specify parameters + initial conditions for
+    // mechanism that controls a conductance
     FSDController(double A_, double B_, double C_, double tau_g_)
     {
         A = A_;
@@ -45,7 +45,7 @@ public:
         tau_g = tau_g_;
     }
 
-    
+
     void integrate(void);
 
     void checkSolvers(int);
@@ -57,8 +57,13 @@ public:
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
+    string getClass(void);
 
 };
+
+string FSDController::getClass() {
+    return "FSDController";
+}
 
 // unimplemented
 double FSDController::getState(int idx) {
@@ -71,7 +76,7 @@ int FSDController::getFullStateSize(){return 1; }
 
 int FSDController::getFullState(double *cont_state, int idx) {
     // return the current conductance level
-    cont_state[idx] = channel->gbar; 
+    cont_state[idx] = channel->gbar;
     idx++;
     return idx;
 }
@@ -119,10 +124,10 @@ void FSDController::integrate(void) {
 
     delta_g = (dt/tau_g)*(A*F_error + B*S_error + C*D_error)*channel->gbar_next;
 
-    
+
 
     // only update if not negative or zero
-    if (channel->gbar_next+delta_g > 0) { 
+    if (channel->gbar_next+delta_g > 0) {
         channel->gbar_next += delta_g;
     }
     else {

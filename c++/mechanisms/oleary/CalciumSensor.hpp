@@ -1,10 +1,10 @@
-// _  _ ____ _    ____ ___ _    
-//  \/  |  | |    |  |  |  |    
-// _/\_ |__| |___ |__|  |  |___ 
+// _  _ ____ _    ____ ___ _
+//  \/  |  | |    |  |  |  |
+// _/\_ |__| |___ |__|  |  |___
 //
 // Calcium sensor
 // this mechanism averages the Calcium
-// in the compartment it is in 
+// in the compartment it is in
 // over some time window
 // useful to measure Calcium, and
 // also useful in other mechanisms
@@ -22,13 +22,13 @@ public:
 
 
     // scale
-    double tau = 5e3; 
+    double tau = 5e3;
 
     double Ca_average;
 
 
-    // specify parameters + initial conditions for 
-    // mechanism that controls a conductance 
+    // specify parameters + initial conditions for
+    // mechanism that controls a conductance
     CalciumSensor(double tau_, double Ca_average_)
     {
         tau = tau_;
@@ -37,7 +37,7 @@ public:
 
     }
 
-    
+
     void integrate(void);
 
 
@@ -49,8 +49,13 @@ public:
     int getFullState(double * cont_state, int idx);
     double getState(int);
     void checkSolvers(int);
+    string getClass(void);
 
 };
+
+string CalciumSensor::getClass() {
+    return "CalciumSensor";
+}
 
 
 double CalciumSensor::getState(int idx)
@@ -63,7 +68,7 @@ double CalciumSensor::getState(int idx)
 
 int CalciumSensor::getFullStateSize()
 {
-    return 1; 
+    return 1;
 }
 
 

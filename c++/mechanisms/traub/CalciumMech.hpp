@@ -51,8 +51,13 @@ public:
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
+    string getClass(void);
 
 };
+
+string CalciumMech::getClass() {
+    return "CalciumMech";
+}
 
 
 double CalciumMech::getState(int idx){return std::numeric_limits<double>::quiet_NaN();}
