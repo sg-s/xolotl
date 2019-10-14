@@ -80,8 +80,9 @@ if ~isfield(self.handles,'gbar_plot') || ~isvalid(self.handles.gbar_plot(1))
 			hold(axes_handle,'on')
 		end
 
-		m = min(log10(g/2));
+		m = min(log10(nonzeros(g/2)));
 		M = max(log10(g*2));
+
 
 		c = lines(length(g));
 

@@ -27,6 +27,21 @@ sudo xcode-select -s /Applications/Xcode.app
 * You will have to do this only once.
 
 
+### When trying to run code on parallel, I get an error saying "File not found!" or "Error in xolotl/transpile (line 43) self.transpileCore('mexTemplate.cpp',out_file)"
+
+You're getting this error because one or more of MATLAB's parallel processes can't find the mexTemplate.cpp file that it needs to compile code. This is because even though xolotl is added on your path, it isn't on your path in *all* copies of the main MATLAB process that are running in parallel. 
+
+To fix this, save your path and reboot your parallel workers:
+
+```matlab
+savepath; % saves path
+delete(gcp) % delete the current parallel pool
+rehash toolbox
+rehash toolboxcache % updates caches
+parpool % restart parallel pool
+
+```
+
 ### I ran the quickstart, but I don't see anything
 
 Are you using a tiny screen? Some UI elements may go out of the frame on very small screens. To fix this, acquire the handle to the figure and change the position property. For example:
