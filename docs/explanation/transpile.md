@@ -1,9 +1,11 @@
 This document describes how xolotl automatically generates C++ code
 that sets up and integrates a model, given a model specification in
-MATLAB. 
+MATLAB.
 
 
 ## Philosophy
+
+
 
 ### How C++ objects are named and referenced
 
@@ -22,7 +24,7 @@ MATLAB.
 
 ### How mechanisms are connected to objects
 
-### How synapses are connected 
+### How synapses are connected
 
 ## See Also
 
