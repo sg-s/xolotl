@@ -88,8 +88,21 @@ that keep track of all conductances belonging to that compartment.
 ## Generating the C++ file
 
 When the model structure changes, the C++ file is transpiled and compiled.
-Transpilation is the process of going from the extant MATLAB `xolotl` object
+Transpiling is the process of going from the extant MATLAB `xolotl` object
 to a C++ source code file, which can then be compiled.
+
+Transpiling works by copying and editing a template file.
+This assures that everything is added in the correct places.
+Once the header files are included in the correct order,
+the `mexFunction` is put together.
+This function expects a vector of numerical parameters as input,
+and performs the integration, returning the desired outputs.
+All parameters are declared,
+then the constructors are called to instantiate the objects.
+
+Next, network components are wired together via their properties containing pointers,
+and a list of synapses is created.
+
 
 ### How headers are resolved
 
