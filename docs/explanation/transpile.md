@@ -27,9 +27,69 @@ in real-time using sliders.
 
 ### How C++ objects are named and referenced
 
+Each `cpplab` object has a few properties that describe what it is.
+For example, the `cpp_class_name` property describes what C++ class the MATLAB object represents,
+and the `cpp_class_path` property indicates where the originating header file is saved.
+
+Consider a model of a bursting neuron:
+
+```
+>> x = xolotl.examples.BurstingNeuron;
+>> x.AB.cpp_class_name
+
+ans =
+
+    'compartment'
+
+>> x.AB.cpp_class_path
+
+ans =
+
+    '/home/alec/code/xolotl/c++/compartment.hpp'
+```
+
+All `cpplab` objects have these properties.
+We can drill further into the `xolotl` object, looking at a conductance:
+
+```
+>> x.AB.NaV.cpp_class_name
+
+ans =
+
+    'NaV'
+
+>> x.AB.NaV.cpp_class_path
+
+ans =
+
+    '/home/alec/code/xolotl/c++/conductances/prinz/NaV.hpp'
+```
+
+`cpplab` objects which are instantiated from a class which inherits from another
+keep track of which class was their "parent".
+For example, all objects with the class name `'NaV'` have the parent class `'conductance'`.
+
 ### How relationships between objects are inferred  
 
+At the top of every `xolotl` model is the `xolotl` object.
+When a new object is added or instantiated and added using the `add` function,
+it is affixed to the model structure.
+The parent object keeps track of all tunable parameters in the `cpp_lab_real_names` property.
+This list can grow quite large.
+For example, the 3-compartment model of the pyloric network included with `xolotl`
+contains 155 parameters.
+
+On the back-end, each C++ object uses pointers to the parent and child objects to keep track of relations.
+For example, the `conductance` class comes with a `container` property
+that points to which compartment "owns" it.
+Accordingly, the `compartment` class comes with a vector of pointers
+that keep track of all conductances belonging to that compartment.
+
 ## Generating the C++ file
+
+When the model structure changes, the C++ file is transpiled and compiled.
+Transpilation is the process of going from the extant MATLAB `xolotl` object
+to a C++ source code file, which can then be compiled.
 
 ### How headers are resolved
 
