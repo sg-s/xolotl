@@ -28,8 +28,6 @@ If we were to use `codegen`, we would have to throw away
 the rich structure of the xolotl model tree and translate
 everything into a function, which would be very cumbersome.
 
-### Why not use `mex`?
-
 ## Philosophy
 
 Xolotl solves the problem of ease-of-use vs. computational
