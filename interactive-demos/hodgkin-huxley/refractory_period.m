@@ -7,7 +7,7 @@ if exist('hh_examples.mat','file') == 2
 else
 
 	x = xolotl;
-	x.handles = struct;
+	% x.handles = struct;
 	x.add('compartment','AB','A',0.0628,'vol',.0628);
 
 
