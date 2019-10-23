@@ -7,7 +7,7 @@
 % **Syntax**
 %
 % ```matlab
-% I = x.rheobase
+% options = x.rheobase
 % I = x.rheobase('PropertyName', PropertyValue, ...)
 % I = x.rheobase(options)
 % ```
@@ -33,8 +33,17 @@
 % | `I_min` | -0.2 | nA |
 % | `I_max` | 4 | nA |
 % | `SpikeThreshold` | 0 | mV |
+% | `nSpikes` | 1 | |
 % | `t_end` | 10e3 | ms |
 %
+% `I_min` and `I_max` define the minimum and maximum of the tested injected current.
+% The `SpikeThreshold` defines when a spike is said to occur.
+% The voltage must cross this threshold in order for a spike to be counted.
+% You can change the number of spikes to search for via the `nSpikes` option.
+% This should be used in combination with the `t_end` option,
+% which defines how long the simulation is.
+% For example, to find the current at which your model spikes at 10 Hz,
+% you could set `t_end = 10e3` and `nSpikes = 10`.
 %
 %
 % !!! info "See Also"
