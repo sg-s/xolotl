@@ -56,6 +56,12 @@ options.t_end = 10e3;
 % validate and accept options
 options = corelib.parseNameValueArguments(options, varargin{:});
 
+% if one output and no arguments, output the `options` structure
+if nargout && ~nargin
+	varargout{1} = options;
+	return
+end
+
 % save the initial state
 self.reset;
 self.snapshot('rheobase');
