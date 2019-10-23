@@ -50,6 +50,7 @@ function I = rheobase(self, varargin)
 options.I_min = -2;
 options.I_max = 4;
 options.SpikeThreshold = 0;
+options.nSpikes = 1;
 options.t_end = 10e3;
 
 
@@ -67,11 +68,11 @@ self.reset;
 self.snapshot('rheobase');
 
 
-I = fminbnd(@(y) nSpikesForCurrent(self,y) ,options.I_min,options.I_max);
+I = fminbnd(@(y) nSpikesForCurrent(self, y, options.nSpikes) ,options.I_min,options.I_max);
 
 
 
-function N = nSpikesForCurrent(x, I_ext)
+function N = nSpikesForCurrent(x, I_ext, nSpikes)
 
 	x.reset('rheobase');
 	x.I_ext = I_ext;
@@ -80,7 +81,7 @@ function N = nSpikesForCurrent(x, I_ext)
 	x.integrate;
 	V = x.integrate;
 
-	N = xtools.findNSpikes(V(:,1)) - 1;
+	N = xtools.findNSpikes(V(:,1)) - nSpikes;
 	if N < 0
 		N = abs(I_ext);
 	end
