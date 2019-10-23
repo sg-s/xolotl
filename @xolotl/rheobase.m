@@ -90,6 +90,11 @@ function N = nSpikesForCurrent(x, I_ext, nSpikes)
 	x.integrate;
 	V = x.integrate;
 
+	if any(isnan(V))
+		N = 1e9;
+		return
+	end
+
 	N = xtools.findNSpikes(V(:,1)) - nSpikes;
 	if N < 0
 		N = abs(I_ext);
