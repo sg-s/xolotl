@@ -14,7 +14,7 @@
 %
 % **Description**
 %
-% Finds the minimum injected current required to cause a xolotl model to .
+% Finds the minimum injected current required to cause a xolotl model to spike.
 % The model is simulated with increasing amounts of constant injected current until one spike is elicited.
 % This minimum amount of current is called the rheobase.
 % The output `I` contains the current magnitude needed to cause the model to spike,
