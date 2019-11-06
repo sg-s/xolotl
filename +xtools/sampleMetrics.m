@@ -3,7 +3,8 @@
 
 function [PrimaryOutput, metrics] = sampleMetrics(x, PrimaryOutputName, parameters, SamplePoint)
 
-
+SamplePoint = SamplePoint(:);
+SamplePoint = SamplePoint';
 
 assert(isa(x,'xolotl'),'First argument should be a xolotl object')
 
