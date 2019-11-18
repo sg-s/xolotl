@@ -124,7 +124,6 @@ void CaT::integrate(double V, double Ca) {
     g = pbar*m*m*h*G_by_V(V, Ca);
 
 
-    gbar = gbar_next;
     container->i_Ca += g*V;
 }
 

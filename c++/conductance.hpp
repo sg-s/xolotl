@@ -99,7 +99,6 @@ protected:
 public:
     compartment *container; // pointer to compartment that contains this
     double gbar;
-    double gbar_next;
     double g;
     double E = 0;
     double m = 0;
@@ -168,7 +167,7 @@ public:
 
 
     // fast random number generator
-    double gaussrand(void);
+    static double gaussrand(void);
 
 
     // housekeeping, temp variables

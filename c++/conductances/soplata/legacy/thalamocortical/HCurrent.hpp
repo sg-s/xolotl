@@ -75,34 +75,28 @@ string HCurrent::getClass(){
     return "HCurrent";
 }
 
-double HCurrent::aH(double V, double Ca)
-{
+double HCurrent::aH(double V, double Ca) {
     return (1.0 - m_inf(V, Ca)) / tau_m(V, Ca);
 }
 
-double HCurrent::bH(double V, double Ca)
-{
+double HCurrent::bH(double V, double Ca) {
     return m_inf(V, Ca) / tau_m(V, Ca);
 }
 
-double HCurrent::C1dot(double V, double Ca, double C1, double O1, double P1)
-{
+double HCurrent::C1dot(double V, double Ca, double C1, double O1, double P1) {
     return aH(V, Ca) * O1 - bH(V, Ca) * C1;
 }
 
-double HCurrent::P0dot(double V, double Ca, double C1, double O1, double P1)
-{
+double HCurrent::P0dot(double V, double Ca, double C1, double O1, double P1) {
     return 0.0004*(1.0-P0) -6.4e-15*(Ca*Ca*Ca*Ca)*P0;
 }
 
-double HCurrent::O1dot(double V, double Ca, double C1, double O1, double P1)
-{
+double HCurrent::O1dot(double V, double Ca, double C1, double O1, double P1) {
     return 0.001*(1.0-C1-O1) - 0.1*P0*O1;
 }
 
 // implement forward Euler
-void HCurrent::integrate(double V, double Ca, double C1, double O1, double P1)
-{
+void HCurrent::integrate(double V, double Ca, double C1, double O1, double P1) {
     C1 = C1 + dt*C1dot(V, Ca, C1, O1, P1);
     P0 = P0 + dt*P0dot(V, Ca, C1, O1, P1);
     O1 = O1 + dt*O1dot(V, Ca, C1, O1, P1);
@@ -111,8 +105,7 @@ void HCurrent::integrate(double V, double Ca, double C1, double O1, double P1)
 
 }
 
-void HCurrent::integrateMS(int k, double V, double Ca, double C1, double O1, double P1)
-{
+void HCurrent::integrateMS(int k, double V, double Ca, double C1, double O1, double P1) {
 
     switch (k)
     {
@@ -146,8 +139,6 @@ void HCurrent::integrateMS(int k, double V, double Ca, double C1, double O1, dou
             O1 = O1 + (k_O1[0] + 2*k_O1[1] + 2*k_O1[2] + k_O1[3])/6;
             break;
     }
-
-    gbar = gbar_next;
 
 }
 

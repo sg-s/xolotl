@@ -181,10 +181,10 @@ void IntegralController::integrate(void)
             double gdot = ((dt/tau_g)*(m - channel->gbar*container_A));
 
             // make sure it doesn't go below zero
-            if (channel->gbar_next + gdot < 0) {
-                channel->gbar_next = 0;
+            if (channel->gbar + gdot/container_A < 0) {
+                channel->gbar = 0;
             } else {
-                channel->gbar_next += gdot/container_A;
+                channel->gbar += gdot/container_A;
             }
 
 

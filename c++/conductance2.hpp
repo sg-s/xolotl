@@ -14,7 +14,6 @@ void conductance::connect(compartment *pcomp_) {
         mexErrMsgTxt("gbars cannot be negative for any conductance \n");
     }
     container = pcomp_;
-    gbar_next = gbar;
 
     // make sure m and h are not NaN
     if (isnan(m)) {
@@ -92,7 +91,6 @@ void conductance::integrate(double V, double Ca) {
             break;
     } // switch q
 
-    gbar = gbar_next;
 
     if (is_calcium) {
         container->i_Ca += getCurrent(V);
@@ -192,8 +190,6 @@ void conductance::integrateLangevin(double V, double Ca) {
 
     } // switch q
 
-    gbar = gbar_next;
-
 
     if (is_calcium) {
         container->i_Ca += getCurrent(V);
@@ -287,8 +283,6 @@ void conductance::integrateMS(int k, double V, double Ca) {
         }
 
     }
-
-    gbar = gbar_next;
 
     if (is_calcium) {
         container->i_Ca += getCurrent(V);

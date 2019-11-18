@@ -63,8 +63,7 @@ void CaT::integrate(double V, double Ca) {
     container->i_Ca += getCurrent(V);
 }
 
-void CaT::integrateMS(int k, double V, double Ca)
-{
+void CaT::integrateMS(int k, double V, double Ca) {
     E = container->E_Ca;
 
     switch (k)
@@ -94,8 +93,6 @@ void CaT::integrateMS(int k, double V, double Ca)
             h = h + (k_h[0] + 2*k_h[1] + 2*k_h[2] + k_h[3])/6;
             break;
     }
-
-    gbar = gbar_next;
 
     container->i_Ca += getCurrent(V);
 }
