@@ -44,7 +44,8 @@ Xolotl comes with several example scripts that illustrate various features of th
 
 | Demo name | What this demonstrates |
 | --------- | ---------------------- |
-| [demo_approx](https://github.com/sg-s/xolotl/blob/master/examples/demo_approx.m) | This example shows you how to use the [`appox_channels`](https://xolotl.readthedocs.io/en/master/reference/xolotl/#approx_channels) property to speed up code execution |
+| [demo_adaptive_sampling](https://github.com/sg-s/xolotl/blob/master/examples/demo_adaptive_sampling.m) | This example shows you how to use the [adaptive sampling function](https://github.com/sg-s/srinivas.gs_mtools/tree/master/%40adaptive) |
+| [demo_approx](https://github.com/sg-s/xolotl/blob/master/examples/demo_approx.m) | This example shows you how to use the [`approx_channels`](https://xolotl.readthedocs.io/en/master/reference/xolotl/#approx_channels) property to speed up code execution |
 | [demo_bursting_neuron](https://github.com/sg-s/xolotl/blob/master/examples/demo_bursting_neuron.m) | This example sets up a simple bursting neuron. It demonstrates how to use relational parameters to specify parameters that depend on other parameters in the model. |
 | [demo_clamp](https://github.com/sg-s/xolotl/blob/master/examples/demo_clamp.m) | This example shows you how to voltage clamp a compartment, and simulate the process of estimating the I-V curve of a conductance |
 | [demo_clamp_rk4](https://github.com/sg-s/xolotl/blob/master/examples/demo_clamp_rk4.m) | This demo is the same as `demo_clamp` except that it uses the [Runge-Kutta 4th order](../explanation/integration/#TheRunge-Kuttafourth-ordermethod) solver. |
