@@ -7,7 +7,7 @@ Here, we will learn how to install and configure `xolotl`. There are two ways to
 | ---------- | --------------- | ---------- |
 | Who should do this | Everyone |  Developers, advanced users |
 | Ease | Very easy | Some configuration needed |
-| OS support | All common OSes | Probably won't work on Windows|
+| OS support | All common OSes | Works with GitHub Desktop |
 
 
 ## Installing
