@@ -17,8 +17,8 @@
 classdef xolotl <  cpplab & matlab.mixin.CustomDisplay & ConstructableHandle & UpdateableHandle
 
 properties (SetAccess = protected)
-	linked_binary@char % binary to run when integrate is called
-	synapses@struct % structure containing synapses in model
+	linked_binary char % binary to run when integrate is called
+	synapses struct % structure containing synapses in model
     illegal_names = {'xolotl_network','compartment','conductance','controller','synapse','network','x','self'}; % list of illegal names for compartments, synpases and other objects
 
     snapshots % saves snapshots of models 
@@ -34,52 +34,52 @@ end  % end protected props
 
 
 properties
-	verbosity@double = 0;
+	verbosity (1,1) double {} = 0;
 
-    I_ext@double;
-    V_clamp@double;
+    I_ext double;
+    V_clamp double;
 
 	% output delta t
-	dt@double = 50e-3; % ms
+	dt (1,1) double {} = 50e-3; % ms
 
 	% simulation deltat
-	sim_dt@double = 50e-3;
+	sim_dt (1,1) double  = 50e-3;
 	t_end@double = 5000; % ms
 
 	handles
 	closed_loop = true;
-	temperature@double = 11; % centigrade
-	temperature_ref@double = 11; % centigrade
+	temperature (1,1) double = 11; % centigrade
+	temperature_ref (1,1) double = 11; % centigrade
 
-    manipulate_plot_func@cell
+    manipulate_plot_func cell
 
-    solver_order@double = 0;
+    solver_order (1,1) double = 0;
 
     % should we use the current to integrate voltage
     % in single compartments? 
-    use_current@double = 0;
+    use_current (1,1) double = 0;
 
     % should we approximate gating functions?
     % 0 -- no approximations
     % 1 -- integer mV only (approx)
-    approx_channels@double = 1;
+    approx_channels (1,1) double = 1;
 
     % should we integrate channels deterministically?
     % 0 -- deterministic
     % 1 -- Langevin approximation
-    stochastic_channels@double = 0; 
+    stochastic_channels (1,1) double = 0; 
 
     % structure that stores preferences
     % edit pref.m to change these
-    pref
+    pref struct
 
 
     % what sort of output do you desire?
     % 0 -- standard, V, Ca, etc. separated into variables
     % 1 -- a structure. all outputs included
     % 2 -- structure, but only with spike times
-    output_type@double = 0
-    spike_thresh@double = 0 % mV
+    output_type (1,1) double {mustBeInteger(output_type)} = 0
+    spike_thresh (1,1) double = 0 % mV
 
 
 end % end general props
