@@ -27,16 +27,17 @@ void integrate()
 **Description**
 
 
-Since mechanisms can be just about anything, the abstract
-mechanism class only implements two methods.
-This method is used to integrate the mechanism under default
-conditions (single-step integration).
+This virtual method is a placeholder method of mechanism that does
+nothing except throw an error. If your mechanim is properly 
+written, this will not be run (and therefore the error will
+not be thrown) because your mechanism will define a "integrate"
+method, which will be used instead of this.
 
 
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L89)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L90)
 
 -------
 
@@ -53,22 +54,17 @@ void connect(compartment* comp_)
 **Description**
 
 
-Since mechanisms can be just about anything, the abstract
-mechanism class only implements two methods.
-This method is used to integrate the mechanism under default
-conditions (single-step integration).
-
-void mechanism::integrate() {
-    mexErrMsgTxt("[mechanism] Unimplemented integration method\n");
-}
-
-
+This virtual method is a placeholder method of mechanism that does
+nothing except throw an error. If your mechanim is properly 
+written, this will not be run (and therefore the error will
+not be thrown) because your mechanism will define a "connect"
+method, which will be used instead of this.
 
 
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L95)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L102)
 
 -------
 
@@ -85,26 +81,17 @@ void connect(conductance* cond_)
 **Description**
 
 
-Since mechanisms can be just about anything, the abstract
-mechanism class only implements two methods.
-This method is used to integrate the mechanism under default
-conditions (single-step integration).
-
-void mechanism::integrate() {
-    mexErrMsgTxt("[mechanism] Unimplemented integration method\n");
-}
-
-
-
-void mechanism::connect(compartment* comp_) {
-    mexErrMsgTxt("[mechanism] This mechanism cannot connect to a compartment object");
-}
+This virtual method is a placeholder method of mechanism that does
+nothing except throw an error. If your mechanim is properly 
+written, this will not be run (and therefore the error will
+not be thrown) because your mechanism will define a "connect"
+method, which will be used instead of this.
 
 
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L99)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L113)
 
 -------
 
@@ -121,31 +108,17 @@ void connect(synapse* syn_)
 **Description**
 
 
-Since mechanisms can be just about anything, the abstract
-mechanism class only implements two methods.
-This method is used to integrate the mechanism under default
-conditions (single-step integration).
-
-void mechanism::integrate() {
-    mexErrMsgTxt("[mechanism] Unimplemented integration method\n");
-}
-
-
-
-void mechanism::connect(compartment* comp_) {
-    mexErrMsgTxt("[mechanism] This mechanism cannot connect to a compartment object");
-}
-
-void mechanism::connect(conductance* cond_) {
-    mexErrMsgTxt("[mechanism] This mechanism cannot connect to a conductance object");
-}
-
+This virtual method is a placeholder method of mechanism that does
+nothing except throw an error. If your mechanim is properly 
+written, this will not be run (and therefore the error will
+not be thrown) because your mechanism will define a "connect"
+method, which will be used instead of this.
 
 
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L104)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L124)
 
 -------
 
@@ -162,16 +135,17 @@ void integrateMS(int k, double V, double Ca)
 **Description**
 
 
-Since mechanisms can be just about anything, the abstract
-mechanism class only implements two methods.
-This method is used to integrate the mechanism when a multi-step
-solver is requested.
+This virtual method is a placeholder method of mechanism that does
+nothing except throw an error. If your mechanim is properly 
+written, this will not be run (and therefore the error will
+not be thrown) because your mechanism will define a "integrateMS"
+method, which will be used instead of this.
 
 
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L116)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L137)
 
 -------
 

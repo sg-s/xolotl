@@ -81,26 +81,46 @@ public:
 };
 
 /*
-Since mechanisms can be just about anything, the abstract
-mechanism class only implements two methods.
-This method is used to integrate the mechanism under default
-conditions (single-step integration).
+This virtual method is a placeholder method of mechanism that does
+nothing except throw an error. If your mechanim is properly 
+written, this will not be run (and therefore the error will
+not be thrown) because your mechanism will define a "integrate"
+method, which will be used instead of this.
 */
 void mechanism::integrate() {
     mexErrMsgTxt("[mechanism] Unimplemented integration method\n");
 }
 
 
-
+/*
+This virtual method is a placeholder method of mechanism that does
+nothing except throw an error. If your mechanim is properly 
+written, this will not be run (and therefore the error will
+not be thrown) because your mechanism will define a "connect"
+method, which will be used instead of this.
+*/
 void mechanism::connect(compartment* comp_) {
     mexErrMsgTxt("[mechanism] This mechanism cannot connect to a compartment object");
 }
 
+/*
+This virtual method is a placeholder method of mechanism that does
+nothing except throw an error. If your mechanim is properly 
+written, this will not be run (and therefore the error will
+not be thrown) because your mechanism will define a "connect"
+method, which will be used instead of this.
+*/
 void mechanism::connect(conductance* cond_) {
     mexErrMsgTxt("[mechanism] This mechanism cannot connect to a conductance object");
 }
 
-
+/*
+This virtual method is a placeholder method of mechanism that does
+nothing except throw an error. If your mechanim is properly 
+written, this will not be run (and therefore the error will
+not be thrown) because your mechanism will define a "connect"
+method, which will be used instead of this.
+*/
 void mechanism::connect(synapse* syn_) {
     mexErrMsgTxt("[mechanism] This mechanism cannot connect to a synapse object");
 }
@@ -108,10 +128,11 @@ void mechanism::connect(synapse* syn_) {
 
 
 /*
-Since mechanisms can be just about anything, the abstract
-mechanism class only implements two methods.
-This method is used to integrate the mechanism when a multi-step
-solver is requested.
+This virtual method is a placeholder method of mechanism that does
+nothing except throw an error. If your mechanim is properly 
+written, this will not be run (and therefore the error will
+not be thrown) because your mechanism will define a "integrateMS"
+method, which will be used instead of this.
 */
 void mechanism::integrateMS(int k, double V, double Ca) {
     mexErrMsgTxt("[mechanism] Unimplemented multi-step integration method\n");
