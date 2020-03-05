@@ -303,7 +303,8 @@ void network::integrate(double * I_ext_now) {
     // all compartments where neuron_idx is NaN will be treated
     // as single compartments and integrated normally
 
-    // integrate all channels in all compartments
+
+    // integrate all channels, mechanisms and synapses in all compartments
     for (int i = 0; i < n_comp; i++) {
 
         // move current values to previous values
@@ -314,18 +315,13 @@ void network::integrate(double * I_ext_now) {
         comp[i]->i_Ca = 0;
         comp[i]->I_ext = I_ext_now[i];
 
-        // integrate controllers
+
         comp[i]->integrateMechanisms();
 
         comp[i]->integrateChannels();
 
+        comp[i]->integrateSynapses();
 
-
-        // integrate synapses
-        if (isnan(comp[i]->neuron_idx))
-        {
-            comp[i]->integrateSynapses();
-        }
 
     }
 
