@@ -7,6 +7,10 @@ class A2ASynapse: public synapse {
 
 public:
 
+    double Delta;
+    double Vth;
+    double k_;
+
     // specify parameters + initial conditions
     A2ASynapse(double g_, double s_)
     {
@@ -24,14 +28,14 @@ public:
 
     }
 
-    void integrate(double dt);
+    void integrate(void);
 
     void connect(compartment *pcomp1_, compartment *pcomp2_);
     int getFullState(double*, int);
     int getFullStateSize(void);
 };
 
-void A2ASynapse::integrate(double dt) {
+void A2ASynapse::integrate() {
 
     // figure out the voltage of the pre-synaptic neuron
     double V_pre = pre_syn->V;
@@ -40,11 +44,12 @@ void A2ASynapse::integrate(double dt) {
     double s_inf = 1.0/(1.0+exp((Vth - V_pre)/Delta));
 
     // integrate using exponential Euler
-    double tau_s = 100.0/(1.0+exp((Vth - V_pre)/k_);
+    double tau_s = 100.0/(1.0+exp((Vth - V_pre)/k_));
 
     s = s_inf + (s - s_inf)*exp(-dt/tau_s);
 
 
+    g = gmax*s;
 
 }
 
