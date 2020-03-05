@@ -105,11 +105,12 @@ It returns `true` if there is a multi-compartment neuron model
 somewhere in the network, and `false` otherwise.
 
 */
+
 bool network::resolveTree(void) {
     compartment * connected_comp = NULL;
     bool is_multi_comp = false;
     if (verbosity > 0) {
-        mexPrintf("[C++] network::resolveTree() called\n");
+        mexPrintf("[C++] network resolve Tree called\n");
     }
 
 
@@ -180,22 +181,18 @@ bool network::resolveTree(void) {
     // go over every compartment, and check that stream
     // pointers and gs match up
 
-    if (verbosity > 0)
-    {
-        for (int i = 0; i < n_comp; i++)
-        {
+    if (verbosity > 0) {
+        for (int i = 0; i < n_comp; i++) {
             mexPrintf("---------------\n");
             mexPrintf("this comp tree_idx = %f\n",comp[i]->tree_idx);
-            if (comp[i]->downstream)
-            {
+            if (comp[i]->downstream) {
                 mexPrintf("downstream pointer exists\n");
 
             } else {
                 mexPrintf("NO downstream pointer\n");
             }
             mexPrintf("downstream_g =  %f\n", comp[i]->downstream_g);
-            if (comp[i]->upstream)
-            {
+            if (comp[i]->upstream) {
                 mexPrintf("upstream pointer exists\n");
 
             } else {

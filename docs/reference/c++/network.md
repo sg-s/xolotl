@@ -65,46 +65,10 @@ somewhere in the network, and `false` otherwise.
 
 
 
- **Code**
-
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L108)
-
--------
-
-
-
-### 
-
-**Function Signature**
-
-```C++
-        mexPrintf("[C++] resolveTree() called\n");
-
-```
-
-**Description**
-
-
-This method "resolves" a multi-compartment neuron model.
-What this means is that it works out which compartment
-is "upstream" (closer to the soma) or "downstream" (further
-from soma) for every compartment in a multi-compartment model.
-It does so using the `tree_idx` property in every compartment,
-setting it if need be.
-
-It returns `true` if there is a multi-compartment neuron model
-somewhere in the network, and `false` otherwise.
-
-
-bool network::resolveTree(void) {
-    compartment * connected_comp = NULL;
-    bool is_multi_comp = false;
-    if (verbosity > 0) {
-
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L112)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L109)
 
 -------
 
@@ -130,7 +94,7 @@ This method adds a compartment to the network. It does the following things:
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L220)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L217)
 
 -------
 
@@ -155,7 +119,7 @@ no compartment is being voltage clamped.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L243)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L240)
 
 -------
 
@@ -181,7 +145,7 @@ one compartment is being voltage-clamped.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L265)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L262)
 
 -------
 
@@ -211,7 +175,7 @@ This method assumes that no compartment anywhere is being voltage clamped.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L296)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L293)
 
 -------
 
@@ -242,7 +206,7 @@ and also assumes that no current is being injected into any compartment.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L393)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/network.hpp#L390)
 
 -------
 
