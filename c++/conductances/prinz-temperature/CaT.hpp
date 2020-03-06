@@ -25,9 +25,9 @@ public:
     double Q_tau_h;
 
     // specify parameters + initial conditions
-    CaT(double g_, double E_, double m_, double h_, double Q_g_, double Q_tau_m_, double Q_tau_h_)
+    CaT(double gbar_, double E_, double m_, double h_, double Q_g_, double Q_tau_m_, double Q_tau_h_)
     {
-        gbar = g_;
+        gbar = gbar_;
         E = E_;
         m = m_;
         h = h_;

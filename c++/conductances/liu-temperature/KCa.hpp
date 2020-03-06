@@ -24,9 +24,9 @@ public:
     double Q_tau_h;
 
     // specify parameters + initial conditions
-    KCa(double g_, double E_, double m_, double Q_g_, double Q_tau_m_)
+    KCa(double gbar_, double E_, double m_, double Q_g_, double Q_tau_m_)
     {
-        gbar = g_;
+        gbar = gbar_;
         E = E_;
         m = m_;
 

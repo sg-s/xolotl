@@ -92,9 +92,9 @@ class NewCond: public conductance {
 public:
 
     // specify parameters + initial conditions
-    NewCond(double g_, double E_, double m_, double h_)
+    NewCond(double gbar_, double E_, double m_, double h_)
     {
-        gbar = g_;
+        gbar = gbar_;
         E = E_;
         m = m_;
         h = h_;
@@ -301,7 +301,7 @@ public:
 
     // here is the constructor function
     // it accepts the maximal conductance and a single state variable
-    NewSynapse(double g_, double s_)
+    NewSynapse(double gbar_, double s_)
     {
         gmax = g_;
         s = s_;

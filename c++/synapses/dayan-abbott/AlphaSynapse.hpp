@@ -19,11 +19,11 @@ public:
 
 
     // specify parameters + initial conditions 
-    AlphaSynapse(double g_, double s_, double tau_s_, double V_thresh_, double E_)
+    AlphaSynapse(double gmax_, double s_, double tau_s_, double V_thresh_, double E_)
     {
 
         // wire up inputs
-        gmax = g_;
+        gmax = gmax_;
         s = s_;
         tau_s = tau_s_;
         V_thresh = V_thresh_;

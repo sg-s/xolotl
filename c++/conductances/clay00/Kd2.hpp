@@ -18,9 +18,9 @@ public:
     double Erev = -80.0; 
 
     //specify both gbar and erev and initial conditions
-    Kd2(double g_, double E_, double Erev_)
+    Kd2(double gbar_, double E_, double Erev_)
     {
-        gbar = g_;
+        gbar = gbar_;
         Erev = Erev_;
 
 

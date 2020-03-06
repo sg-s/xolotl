@@ -17,9 +17,9 @@ public:
   double tau;
 
   // specify parameters & initial conditions
-  MCurrent(double g_, double E_, double m_, double h_, double tau_)
+  MCurrent(double gbar_, double E_, double m_, double h_, double tau_)
   {
-    gbar = g_;
+    gbar = gbar_;
     E = E_;
     m = m_;
     h = h_;

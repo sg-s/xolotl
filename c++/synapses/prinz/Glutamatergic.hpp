@@ -15,9 +15,9 @@ public:
 
 
     // specify parameters + initial conditions 
-    Glutamatergic(double g_, double s_)
+    Glutamatergic(double gmax_, double s_)
     {
-        gmax = g_;
+        gmax = gmax_;
         E = -70.0;
         Delta = 5.0;
         Vth = -35.0;

@@ -12,9 +12,9 @@ public:
     double k_;
 
     // specify parameters + initial conditions
-    Soma(double g_, double s_)
+    Soma(double gmax_, double s_)
     {
-        gmax = g_;
+        gmax = gmax_;
         E = -70.0;
         Delta = 1.0;
         Vth = -25.0;

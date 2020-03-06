@@ -14,9 +14,9 @@ class KCaPD: public conductance {
 public:
 
     // specify parameters + initial conditions
-    KCaPD(double g_, double E_, double m_)
+    KCaPD(double gbar_, double E_, double m_)
     {
-        gbar = g_;
+        gbar = gbar_;
         E = E_;
         m = m_;
 

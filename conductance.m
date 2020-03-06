@@ -4,19 +4,19 @@ properties
 
 
 	% activation functions
-	m_inf@function_handle
-	h_inf@function_handle
-	tau_m@function_handle
-	tau_h@function_handle
+	m_inf 
+	h_inf 
+	tau_m 
+	tau_h 
 
-	is_Ca@logical = false
+	is_Ca (1,1) logical = false
 
-	default_m@double = 0
-	default_h@double = 1
-	default_E@double
+	default_m (1,1) double = 0
+	default_h (1,1) double = 1
+	default_E (1,1) double
 
-	p@double
-	q@double
+	p (1,1) double
+	q (1,1) double
 
 
 

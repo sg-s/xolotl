@@ -23,9 +23,9 @@ public:
     double beta = 0.002; // 1/ms
 
     //specify both gbar and erev and initial conditions
-    CaN(double g_, double E_, double m_, double Ca_c_)
+    CaN(double gbar_, double E_, double m_, double Ca_c_)
     {
-        gbar = g_;
+        gbar = gbar_;
         E = E_;
         m = m_;
         Ca_c = Ca_c_;

@@ -110,9 +110,9 @@ and adds them as dynamic properties to the `cpplab` object in MATLAB.
 Following the example above, here is the constructor for the `liu/NaV.hpp` header file:
 
 ```c++
-NaV(double g_, double E_, double m_, double h_)
+NaV(double gbar_, double E_, double m_, double h_)
 {
-    gbar = g_;
+    gbar = gbar_;
     E = E_;
     m = m_;
     h = h_;

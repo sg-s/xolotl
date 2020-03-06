@@ -15,9 +15,9 @@ class Cal: public conductance {
 public:
 
     // specify parameters + initial conditions
-    Cal(double g_, double E_, double m_, double h_)
+    Cal(double gbar_, double E_, double m_, double h_)
     {
-        gbar = g_;
+        gbar = gbar_;
         E = E_;
         m = m_;
         h = h_;

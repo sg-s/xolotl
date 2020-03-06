@@ -15,9 +15,9 @@ class Proc: public conductance {
 public:
 
     //specify both gbar and erev and initial conditions
-    Proc(double g_, double E_, double m_)
+    Proc(double gbar_, double E_, double m_)
     {
-        gbar = g_;
+        gbar = gbar_;
         E = E_;
         m = m_;
 

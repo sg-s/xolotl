@@ -38,9 +38,9 @@ public:
     double h_tau_V_slope2 = 3.6;
 
     // specify parameters + initial conditions
-    GenericNaVLike(double g_, double E_, double m_, double h_, double m_V_half_, double m_V_slope_, double h_V_half_, double h_V_slope_, double m_tau_A_, double m_tau_B_, double m_tau_V_half_, double m_tau_V_slope_, double h_tau_A1_,double h_tau_B1_, double h_tau_V_half1_, double h_tau_V_slope1_, double h_tau_A2_, double h_tau_B2_, double h_tau_V_half2_, double h_tau_V_slope2_)
+    GenericNaVLike(double gbar_, double E_, double m_, double h_, double m_V_half_, double m_V_slope_, double h_V_half_, double h_V_slope_, double m_tau_A_, double m_tau_B_, double m_tau_V_half_, double m_tau_V_slope_, double h_tau_A1_,double h_tau_B1_, double h_tau_V_half1_, double h_tau_V_slope1_, double h_tau_A2_, double h_tau_B2_, double h_tau_V_half2_, double h_tau_V_slope2_)
     {
-        gbar = g_;
+        gbar = gbar_;
         E = E_;
         m = m_;
         h = h_;

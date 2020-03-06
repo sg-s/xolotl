@@ -13,9 +13,9 @@ class Leak: public conductance {
 public:
 
     // specify parameters + initial conditions
-    Leak(double g_, double E_)
+    Leak(double gbar_, double E_)
     {
-        gbar = g_;
+        gbar = gbar_;
         g = gbar; // this is important as integrate doesn't do anything in the leak channels
         E = E_;
 

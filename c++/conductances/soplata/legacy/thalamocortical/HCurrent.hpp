@@ -29,9 +29,9 @@ public:
     double k_O1[4] = {0,0,0,0};
 
     //specify both gbar and erev and initial conditions
-    HCurrent(double g_, double E_, double C1_, double P0_, double O1_)
+    HCurrent(double gbar_, double E_, double C1_, double P0_, double O1_)
     {
-        gbar = g_;
+        gbar = gbar_;
         E = E_;
 
         C1 = C1_;

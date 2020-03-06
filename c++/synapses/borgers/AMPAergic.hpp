@@ -13,9 +13,9 @@ public:
     double tau_d;
 
       // specify parameters + initial conditions
-      AMPAergic(double g_, double s_, double E_, double tau_r_, double tau_d_)
+      AMPAergic(double gmax_, double s_, double E_, double tau_r_, double tau_d_)
       {
-          gmax = g_;
+          gmax = gmax_;
           E = E_;
           s = s_;
           tau_r = tau_r_;

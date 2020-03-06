@@ -13,9 +13,9 @@ public:
 
 
     // specify parameters + initial conditions
-    Cholinergic(double g_, double s_)
+    Cholinergic(double gmax_, double s_)
     {
-        gmax = g_;
+        gmax = gmax_;
         E = -80.0;
 
 

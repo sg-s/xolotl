@@ -18,9 +18,9 @@ public:
 
 
     // specify parameters + initial conditions
-    GABAergic(double g_, double s_, double E_)
+    GABAergic(double gmax_, double s_, double E_)
     {
-        gmax = g_;
+        gmax = gmax_;
         E = E_;
         s = s_;
 

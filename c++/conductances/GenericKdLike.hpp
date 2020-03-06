@@ -25,9 +25,9 @@ public:
 
 
     // specify parameters + initial conditions
-    GenericKdLike(double g_, double E_, double m_, double h_, double m_V_half_, double m_V_slope_, double m_tau_A_, double m_tau_B_, double m_tau_V_half_, double m_tau_V_slope_)
+    GenericKdLike(double gbar_, double E_, double m_, double h_, double m_V_half_, double m_V_slope_, double m_tau_A_, double m_tau_B_, double m_tau_V_half_, double m_tau_V_slope_)
     {
-        gbar = g_;
+        gbar = gbar_;
         E = E_;
         m = m_;
         h = h_;

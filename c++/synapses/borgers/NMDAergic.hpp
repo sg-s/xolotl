@@ -21,9 +21,9 @@ public:
   double tau_d; // decaying-phase time constant (ms)
 
     // specify parameters + initial conditions
-    NMDAergic(double g_, double s_, double u_, double E_, double Mg_, double tau_r_, double tau_d_)
+    NMDAergic(double gmax_, double s_, double u_, double E_, double Mg_, double tau_r_, double tau_d_)
     {
-        gmax = g_;
+        gmax = gmax_;
         E = E_;
         s = s_;
         u = u_;

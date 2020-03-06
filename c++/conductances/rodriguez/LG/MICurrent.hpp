@@ -17,9 +17,9 @@ public:
 
 
     //specify both gbar and erev and initial conditions
-    MICurrent(double g_, double E_, double m_)
+    MICurrent(double gbar_, double E_, double m_)
     {
-        gbar = g_;
+        gbar = gbar_;
         E = E_;
         m = m_;
 

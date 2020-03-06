@@ -16,9 +16,9 @@ class Kahp: public conductance {
 public:
 
     // specify parameters + initial conditions
-    Kahp(double g_, double E_, double m_)
+    Kahp(double gbar_, double E_, double m_)
     {
-        gbar = g_;
+        gbar = gbar_;
         E = E_;
         m = m_;
 

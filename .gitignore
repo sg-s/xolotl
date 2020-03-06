@@ -10,6 +10,7 @@
 *.sublime-workspace
 *a.out
 *X_*.cpp
+*A_*.cpp
 *.mat
 *.lyx~
 *.lyx#

@@ -20,9 +20,9 @@ public:
     double beta;
 
     // specify parameters + initial conditions
-    KCa(double g_, double E_, double m_, double alpha_, double beta_)
+    KCa(double gbar_, double E_, double m_, double alpha_, double beta_)
     {
-        gbar = g_;
+        gbar = gbar_;
         E = E_;
         m = m_;
 

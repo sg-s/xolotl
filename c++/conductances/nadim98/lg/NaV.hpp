@@ -15,9 +15,9 @@ public:
 
 
     //specify both gbar and erev and initial conditions
-    NaV(double g_, double E_, double m_, double h_)
+    NaV(double gbar_, double E_, double m_, double h_)
     {
-        gbar = g_;
+        gbar = gbar_;
         E = E_;
         m = m_;
         h = h_;

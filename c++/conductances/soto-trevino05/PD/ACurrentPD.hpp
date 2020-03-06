@@ -14,9 +14,9 @@ class ACurrentPD: public conductance {
 public:
 
     // specify parameters + initial conditions
-    ACurrentPD(double g_, double E_, double m_, double h_)
+    ACurrentPD(double gbar_, double E_, double m_, double h_)
     {
-        gbar = g_;
+        gbar = gbar_;
         E = E_;
         m = m_;
         h = h_;

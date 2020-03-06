@@ -41,7 +41,7 @@ cppfilename = pathlib.join(self.cpp_folder,in_file);
 lines = filelib.read(cppfilename);
 
 % insert network header and other critical headers
-% the specific ordering here is EXTREMELY importnat
+% the specific ordering here is EXTREMELY important
 % and goes a long way in resolving circular dependencies 
 header_files{1} = pathlib.join(self.cpp_folder,'conductance.hpp');
 header_files{2} = pathlib.join(self.cpp_folder,'synapse.hpp');

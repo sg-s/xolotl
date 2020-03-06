@@ -22,9 +22,9 @@ public:
 
 
     // specify parameters + initial conditions 
-    Glutamatergic(double g_, double s_, double Q_tau_, double Q_g_)
+    Glutamatergic(double gmax_, double s_, double Q_tau_, double Q_g_)
     {
-        gmax = g_;
+        gmax = gmax_;
         Q_tau = Q_tau_;
         Q_g = Q_g_;
         E = -70.0;

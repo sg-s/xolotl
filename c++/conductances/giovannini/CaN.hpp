@@ -25,9 +25,9 @@ public:
     double Ca_c;
 
     // specify parameters + initial conditions
-    CaN(double g_, double E_, double m_, double beta_, double Q10_, double Ca_c_)
+    CaN(double gbar_, double E_, double m_, double beta_, double Q10_, double Ca_c_)
     {
-        gbar = g_;
+        gbar = gbar_;
         E = E_;
         m = m_;
         beta = beta_;

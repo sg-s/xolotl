@@ -19,11 +19,11 @@ public:
     double x = 0.0;
 
     // specify parameters + initial conditions
-    Inhibitory(double g_, double s_, double m_, double y_, double x_, double tau_1_, double tau_2_, double E_)
+    Inhibitory(double gmax_, double s_, double m_, double y_, double x_, double tau_1_, double tau_2_, double E_)
     {
 
         // wire up inputs
-        gmax    = g_;
+        gmax    = gmax_;
         s       = s_;
         tau_1   = tau_1_;
         tau_2   = tau_2_;

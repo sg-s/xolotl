@@ -39,3 +39,10 @@ allfiles = dir([this_dir filesep '*X_*']);
 for i = 1:length(allfiles)
 	delete([this_dir filesep allfiles(i).name]);
 end
+
+
+% also delete all activation function binaries
+allfiles = dir([this_dir filesep '*A_*']);
+for i = 1:length(allfiles)
+	delete([this_dir filesep allfiles(i).name]);
+end

@@ -15,9 +15,9 @@ class MCurrent: public conductance {
 public:
 
   // specify parameters & initial conditions
-  MCurrent(double g_, double E_, double m_)
+  MCurrent(double gbar_, double E_, double m_)
   {
-    gbar = g_;
+    gbar = gbar_;
     E = E_;
     m = m_;
 

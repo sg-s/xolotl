@@ -33,7 +33,7 @@ public:
     double pbar; 
 
     // specify parameters + initial conditions
-    CaT(double g_, double E_, double m_, double h_, double pbar_)
+    CaT(double gbar_, double E_, double m_, double h_, double pbar_)
     {
 
         
@@ -45,7 +45,7 @@ public:
         h = h_;
 
         // gbar and E are unused in this model
-        gbar = g_;
+        gbar = gbar_;
         E = E_;
 
         // force these values, because they will not be used

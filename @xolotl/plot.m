@@ -140,10 +140,14 @@ for i = 1:N
 	this_I = currents(:,a:z);
 	a = z + 1;
 
-	curr_index = xolotl.contributingCurrents(this_V, this_I);
+	
 
 	% show voltage
 	if self.pref.plot_color
+
+
+		curr_index = xolotl.contributingCurrents(this_V, this_I);
+		
 		for j = 1:size(this_I,2)
 			Vplot = this_V;
 			Vplot(curr_index ~= j) = NaN;

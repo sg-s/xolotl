@@ -16,9 +16,9 @@ class Ca2: public conductance {
 public:
 
     // specify parameters + initial conditions
-    Ca2(double g_, double E_, double m_)
+    Ca2(double gbar_, double E_, double m_)
     {
-        gbar = g_;
+        gbar = gbar_;
         E = E_;
         m = m_;
 
