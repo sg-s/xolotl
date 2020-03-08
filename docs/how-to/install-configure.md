@@ -36,7 +36,7 @@ git clone https://github.com/sg-s/cpplab
 You will have to manually set your `MATLAB` paths. Make sure you add the main folder for `puppeteer`, `cpplab`, `xolotl` and `srinivas.gs_mtools`.
 
 !!! note
-Remember also to copy all git hooks from `xolotl/git-hooks` to `xolotl/.git/hooks/`.
+    If you are developing xolotl further, remember also to copy all git hooks from `xolotl/git-hooks` to `xolotl/.git/hooks/`.
 
 ## Updating
 

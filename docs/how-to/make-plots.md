@@ -1,8 +1,11 @@
-## Plot voltage by integrating the model
+## Plot voltage trace
+
+
+### By directly integrating the model
 
 Since the outputs from `x.integrate` are matrices when `x.output_structure = 0`, you can plot them as you would any other matrix of vector in MATLAB. 
 
-### Example
+For example,
 
 ```matlab
 x = xolotl.make_bursting_neuron;
@@ -17,7 +20,7 @@ makes this figure:
 ![](https://user-images.githubusercontent.com/6005346/50520183-e11d3e00-0a8c-11e9-8f87-74eb6a98e672.png)
 
 
-## Making plots using the [`plot`](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#plot) function
+### Using the [`plot`](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#plot) function
 The [`plot`](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#plot) function will generate a figure, simulate the model, and plot the
 voltage traces. Here are a few important features to note:
 
@@ -35,7 +38,7 @@ permanent for all xolotl objects, edit the `pref.m` file in the xolotl directory
 !!! Note "What's a contributing current?"
     The voltage trace is colored by the dominant current at that time. When the voltage is increasing, the color corresponds to the largest positive (inward cation or outward anion) current. Inversely, when the voltage is decreasing, the color corresponds to the largest negative (outward cation or inward anion) current.
 
-### Example
+For example,
 
 ```matlab
 x.plot
@@ -50,11 +53,12 @@ makes this figure:
 The activation curves and timescale dependence on any channel can be 
 plotted using the [show](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#show) method. 
 
-### Example
+For example,
 
 ```matlab
-xolotl.show('liu/NaV')
-xolotl.show('prinz/NaV')
+x = xolotl;
+x.show('liu/NaV','Liu')
+x.show('prinz/NaV','Prinz')
 ```
 
 
@@ -62,13 +66,24 @@ makes this figure:
 
 ![](https://user-images.githubusercontent.com/6005346/50520304-951ec900-0a8d-11e9-8ec1-88398062da2c.png)
 
+`x.show` can also work with conductance objects directly. This is useful if you are working with a conductance object with custom runtime-defined parameters.
+
+
+```matlab
+x = xolotl.examples.BurstingNeuron;
+x.show(x.AB.NaV)
+```
+
+
+
+
 ## Make a stem plot of maximal conductances in a compartment
 
 xolotl comes with a built in method to plot the maximal conductances
 in a compartment. This can be useful for more complex visualizations
 that you could make yourself.
 
-### Example
+For example,
 
 ```matlab
 close all
