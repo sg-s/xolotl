@@ -739,15 +739,19 @@ should not need to use this by itself.
 
 ```matlab
 x.plot()
+x.plot('comp_name')
+x.plot({'comp1','comp2'...})
 ```
 
 ** Description**
 
-`x.plot` makes a plot of voltage and calcium time series of all
+- **`x.plot`**  makes a plot of voltage and calcium time series of all
 compartments. The default option is to color the voltage
 traces by the dominant current at that point using
 `contributingCurrents` and to also show the Calcium
 concentration on the same plot.
+- **`x.plot('comp_name')`** Plots voltage traces from only that compartment.
+- **`x.plot({'comp1','comp2'...}))`** plots voltage traces from these compartments.
 
 
 If you want to turn off the coloring, or to hide the

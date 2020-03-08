@@ -3,7 +3,8 @@ In this tutorial, we will walk through the process of creating a parallelized pa
 We will set up a simple model,
 and simulate it many times in parallel for many parameter values.
 
-Code equivalent to this tutorial can be found in the xolotl examples folder.
+!!! Note
+    In most cases, you don't need to use `xgrid`. If you want to run all your code in parallel on a single computer, you can use MATLAB's native parallel support to do this. Run the `demo_parallel` example to see how this works. 
 
 ### A high-level view of xgrid
 

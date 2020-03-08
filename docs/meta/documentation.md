@@ -21,7 +21,7 @@ in that file.
 
 If we have documentation for each method mixed up with the code, 
 then how do we put them all together in one place in the 
-documentation? Obviously the answer is to problematically build 
+documentation? Obviously the answer is to programatically build 
 the documentation from source (code), so that 
 
 * we don't deal with copies of the same documentation in different places that we need to keep in sync
@@ -59,7 +59,7 @@ We like using mkdocs because:
 ### Material theme for MKdocs
 
 This is a very nice-looking theme that I like. 
-You're looking at it now.
+You're looking at it now. [Link to project page](https://squidfunk.github.io/mkdocs-material/)
 
 ## Hosting
 

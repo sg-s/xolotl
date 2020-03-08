@@ -18,6 +18,8 @@
 ### Adding New Conductances/Synapses/Controllers
 
 * Look at existing conductances/synapses/controllers and use them as a guideline
-* If you're making a new conductance, put them in ``c++/conductances/<first_author_name>``
-* Make sure you add a reference to the paper you're getting the conductance details from in a comment at the top of the file
+* If you're making a new conductance, put them in ``c++/conductances/<first_author_name>YY`` where `YY` is the two digit year
+* Make sure you add a reference to the paper you're getting the conductance details from in a comment at the top of the file. 
+* Run `xolotl.testConductances` to make sure your conductance file compiles correctly. 
+* Run `x.show` on your conductance file to inspect the activation curves to make sure that it matches what you want it to do
 * Send us a pull request
