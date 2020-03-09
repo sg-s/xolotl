@@ -38,6 +38,11 @@ x.connect('LGNeurite','LGAxon','Axial')
 
 x.LGAxon.add('nadim98/GenericChannel','NaV','gbar',35,'E',45,'p',3,'km',-.08,'Vkm',-21,'lm',0,'Vlm',0,'tau1m',1,'tau2m',0,'q',1,'kh',.13,'Vkh',-33,'lh',-.12,'Vlh',-62,'tau1h',0,'tau2h',5);
 x.LGAxon.add('nadim98/GenericChannel','Kd','gbar',40,'E',-80,'p',4,'km',-.045,'Vkm',-33,'lm',-.065,'Vlm',-5,'tau1m',4,'tau2m',100,'q',0,'kh',0,'Vkh',0,'lh',0,'Vlh',0,'tau1h',0,'tau2h',0);
+x.LGAxon.add('Leak','gbar',.073,'E',-60)
+
+
+x.LG.add('Leak','gbar',1,'E',-40)
+x.LGNeurite.add('Leak','gbar',1,'E',-40)
 
 x.show(x.LGAxon)
 
