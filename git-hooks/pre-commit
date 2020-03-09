@@ -1,9 +1,6 @@
 #!/bin/sh
 #
-# this hooks makes sure that all the C++ code you write or 
-# modify can compile without errors this does not check 
-# that the code is correct; but if you get an error here, 
-# it prevents you from committing, which is a good thing 
+# this hooks makes makes the docs, and updates version number
 
 
 
@@ -13,13 +10,14 @@ cp .git/hooks/pre-commit git-hooks/pre-commit
 
 # make the docs 
 echo "Making the docs..."
-python docs/make.py
-python make_cpp_docs.py
+python build/build_docs.py
+python build/build_cpp_docs.py
 
-# automatic build number
-# echo "Updating build number..."
-# git log master --pretty=oneline | wc -l > build_number
-# git add build_number
+# update version number
+echo "Updating version number..."
+python build/update_version.py
+
 
 git add git-hooks/pre-commit
+git add +xolotl/version.m
 git add docs/reference/*

@@ -18,7 +18,7 @@
 #
 # SEE ALSO
 #
-# make_docs.py
+# build/build_docs.py
 
 
 import glob, os
@@ -30,12 +30,13 @@ cpplab_method_root = 'https://xolotl.readthedocs.io/en/master/reference/matlab/c
 
 for file in sorted(glob.glob("c++/*.hpp")):
 
+
 	classname = file.replace('.hpp','')
 	classname = classname.strip()
 	classname = classname.replace('c++/','')
 
 	# does this classname end with a number? if so, skip
-	if classname[-1].isnumeric():
+	if classname[-1].isdigit():
 		continue
 
 	print(classname)
