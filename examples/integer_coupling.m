@@ -1,4 +1,6 @@
 
+close all
+
 x = xolotl;
 
 
@@ -6,6 +8,12 @@ x = xolotl;
 x.add('compartment','Int1','radius',.025,'len',.05);
 x.add('compartment','Int1Neurite','len',1,'radius',1.25);
 x.add('compartment','Int1Axon','len',1,'radius',1.25);
+x.connect('Int1','Int1Neurite','Axial')
+x.connect('Int1Neurite','Int1','Axial')
+x.connect('Int1Axon','Int1Neurite','Axial')
+x.connect('Int1Neurite','Int1Axon','Axial')
+
+
 
 % add channels to Int1 
 x.Int1Axon.add('nadim98/GenericChannel','NaV','gbar',35,'E',45,'p',3,'km',-.08,'Vkm',-26,'lm',0,'Vlm',0,'tau1m',1,'tau2m',0,'q',1,'kh',.13,'Vkh',-38,'lh',-.12,'Vlh',-67,'tau1h',0,'tau2h',5);
@@ -15,6 +23,25 @@ x.Int1Axon.add('Leak','gbar',0.073,'E',-30)
 
 x.Int1.add('Leak','gbar',1,'E',-40)
 x.Int1Neurite.add('Leak','gbar',1,'E',-40)
+
+
+
+
+% make LG
+x.add('compartment','LG','radius',.025,'len',.05);
+x.add('compartment','LGNeurite','len',1,'radius',1.25);
+x.add('compartment','LGAxon','len',1,'radius',1.25);
+x.connect('LG','LGNeurite','Axial')
+x.connect('LGNeurite','LG','Axial')
+x.connect('LGAxon','LGNeurite','Axial')
+x.connect('LGNeurite','LGAxon','Axial')
+
+x.LGAxon.add('nadim98/GenericChannel','NaV','gbar',35,'E',45,'p',3,'km',-.08,'Vkm',-21,'lm',0,'Vlm',0,'tau1m',1,'tau2m',0,'q',1,'kh',.13,'Vkh',-33,'lh',-.12,'Vlh',-62,'tau1h',0,'tau2h',5);
+x.LGAxon.add('nadim98/GenericChannel','Kd','gbar',40,'E',-80,'p',4,'km',-.045,'Vkm',-33,'lm',-.065,'Vlm',-5,'tau1m',4,'tau2m',100,'q',0,'kh',0,'Vkh',0,'lh',0,'Vlh',0,'tau1h',0,'tau2h',0);
+
+x.show(x.LGAxon)
+
+x.plot('LGAxon')
 
 return
 
