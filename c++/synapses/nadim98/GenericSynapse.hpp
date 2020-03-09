@@ -17,7 +17,7 @@ public:
 
 
     // specify parameters + initial conditions 
-    GenericSynapse(double gmax_, double s_, double k_, double Vk_, double tau3_, double tau4_, double lambda_, double Vlambda_)
+    GenericSynapse(double gmax_, double s_, double k_, double Vk_, double tau3_, double tau4_, double lambda_, double Vlambda_, double E_)
     {
         gmax = gmax_;
         k = k_;
@@ -26,10 +26,12 @@ public:
         tau4 = tau4_;
         lambda = lambda_;
         Vlambda = Vlambda_;
+        E = E_;
 
         // defaults
         if (isnan (s)) { s = 0; }
         if (isnan (gmax)) { gmax = 0; }
+        if (isnan (gmax)) { gmax = -80; }
         is_electrical = false;
 
     }
