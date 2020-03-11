@@ -44,6 +44,7 @@
 
 function plot(self, comp_names)
 
+
 if nargin == 1
 	comp_names = self.find('compartment');
 elseif ~iscell(comp_names)

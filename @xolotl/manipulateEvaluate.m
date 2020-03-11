@@ -45,8 +45,12 @@ if self.pref.use_approx
 	self.approx_channels = 1;
 end
 
-for i = 1:length(self.manipulate_plot_func)
-	self.manipulate_plot_func{i}(self);
+if isempty(self.manipulate_plot_func)
+	self.plot();
+else
+	for i = length(self.manipulate_plot_func):-1:1
+		self.manipulate_plot_func{i}(self);
+	end
 end
 
 self.approx_channels = original_approx_state;

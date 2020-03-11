@@ -157,8 +157,6 @@ methods
 
         self.snapshots = struct('name','','V',[],'hash','');
 
-        self.manipulate_plot_func{1} = @self.plot;
-
         % also configure the real names of props
         % for the better-serialize branch of cpplab
         if ~isfield(self,'cpp_lab_real_names_hash')

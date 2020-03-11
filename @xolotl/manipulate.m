@@ -158,11 +158,17 @@ p = puppeteer(real_names,values,lb,ub,[]);
 self.handles.puppeteer_object = p;
 
 
+self.reset('manipulate_zero')
 
-for i = length(self.manipulate_plot_func):-1:1
-	self.reset('manipulate_zero')
-	self.manipulate_plot_func{i}(self);
+if isempty(self.manipulate_plot_func)
+	self.plot();
+else
+	for i = length(self.manipulate_plot_func):-1:1
+		self.manipulate_plot_func{i}(self);
+	end
 end
+
+
 
 warning('on','MATLAB:hg:uicontrol:MinMustBeLessThanMax')
 warning('on','MATLAB:hg:uicontrol:ValueMustBeInRange')
