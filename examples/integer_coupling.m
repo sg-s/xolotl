@@ -44,6 +44,13 @@ x.LGAxon.add('Leak','gbar',.073,'E',-60)
 x.LG.add('Leak','gbar',1,'E',-40)
 x.LGNeurite.add('Leak','gbar',1,'E',-40)
 
+
+% MCN1
+
+
+
+
+
 x.show(x.LGAxon)
 
 x.plot('LGAxon')

@@ -1,5 +1,5 @@
 % makes a realistic cable with some options
-function x = makeSTGNeuron()
+function x = TwoCompartmentBurster()
 
 
 
