@@ -32,7 +32,15 @@ for i = 1:length(names)
 		self.I_ext(comp_idx) = values(i);
 
 	else
+
 		self.set(names{i},values(i))
+
+		% do we have to mirror?
+		if isfield(self.pref,'manipulated_params') && isfield(self.pref,'mirror_these')
+			idx = find(strcmp(self.pref.manipulated_params,names{i}));
+			self.set(self.pref.mirror_these{idx},values(i))
+		end
+
 	end
 end
 

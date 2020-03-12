@@ -687,6 +687,7 @@ disk and loaded.
 x.manipulate();
 x.manipulate('some*pattern')
 x.manipulate({'parameter1','parameter2'})
+x.manipulate({'parameter1','parameter2'},mirror_these)
 ```
 
 **Description**
@@ -696,6 +697,7 @@ x.manipulate({'parameter1','parameter2'})
 - **`x.manipulate()`** manipulates all the parameters in a xolotl model. It wires up sliders to all parameters, and moving these sliders causes the model to integrate, and a plot to update.
 - **`x.manipulate('some*pattern')`** creates sliders only for parameters specified by 'some*pattern'.
 - **`x.manipulate({'parameter1','parameter2'})`** creates sliders only for the parameters specified in the cell array. Parameters should resolve to valid properties of cpplab objects in the tree.
+- **`x.manipulate({'parameter1','parameter2'},mirror_these)`** creates sliders only for the parameters specified in the cell array. Parameters should resolve to valid properties of cpplab objects in the tree. In addition, parameters specified in mirror_these are also changed to reflect parameters changed in the first argument. 
 
 
 

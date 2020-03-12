@@ -10,9 +10,9 @@ class Electrical: public synapse {
 public:
 
     // specify parameters + initial conditions
-    Electrical(double g_)
+    Electrical(double gmax_)
     {
-        gmax = g_;
+        gmax = gmax_;
         s = 1; // always active
         is_electrical = true;
     }
