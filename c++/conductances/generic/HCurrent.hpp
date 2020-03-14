@@ -22,6 +22,7 @@ public:
         gbar = gbar_;
         Vhalf = Vhalf_;
         E = E_;
+        tau = tau_;
         m = m_;
 
         // defaults 

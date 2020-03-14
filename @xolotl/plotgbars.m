@@ -52,8 +52,8 @@ end
 
 
 
-assert(isa(axes_handle,'matlab.graphics.axis.Axes') | isa(axes_handle,'matlab.graphics.axis.PolarAxes'),'Expected first argument to be a axes handle')
-assert(any(strcmp(self.Children,compartment_name)),'compartment_name does not resolve to a known compartment')
+corelib.assert(isa(axes_handle,'matlab.graphics.axis.Axes') | isa(axes_handle,'matlab.graphics.axis.PolarAxes'),'Expected first argument to be a axes handle')
+corelib.assert(any(strcmp(self.Children,compartment_name)),'compartment_name does not resolve to a known compartment')
 
 channel_names = self.(compartment_name).find('conductance');
 

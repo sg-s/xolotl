@@ -167,11 +167,11 @@ classdef xgrid < handle & matlab.mixin.CustomDisplay
 		function self = set.sim_func(self,value)
 
 			% check if it exists
-			assert(isa(value,'function_handle'),'Sim func must be a function handle')
+			corelib.assert(isa(value,'function_handle'),'Sim func must be a function handle')
 
 			fs = func2str(value);
 			loc = which(fs);
-			assert(~isempty(loc),'Sim func could not be located')
+			corelib.assert(~isempty(loc),'Sim func could not be located')
 
 
 			self.sim_func = value;
@@ -196,7 +196,7 @@ classdef xgrid < handle & matlab.mixin.CustomDisplay
 		function self = set.x(self,value)
 
 
-			assert(length(value)==1,'Only one xolotl object can be linked')
+			corelib.assert(length(value)==1,'Only one xolotl object can be linked')
 			self.x = value;
 
 			if ~self.is_master & ~isempty(self.daemon_handle)
@@ -235,7 +235,7 @@ classdef xgrid < handle & matlab.mixin.CustomDisplay
 						continue
 					end
 					[e,~]=system(['scp ' copy_these{j} ' ' self.clusters(i).Name ':~/.psych/']);
-					assert(e == 0,['Error while copying ' copy_these{j}])
+					corelib.assert(e == 0,['Error while copying ' copy_these{j}])
 				end
 				fprintf('DONE\n')
 				command = 'x = value';

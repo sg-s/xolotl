@@ -7,22 +7,22 @@
 classdef xfit < handle
 
 properties
-	x@xolotl
+	x (1,1) xolotl
 
 	% function to minimize
-	SimFcn@function_handle
+	SimFcn function_handle 
 
 	% specify a function to plot results
-	ShowFcn@function_handle
+	ShowFcn function_handle 
 
 	% parameters to optimize
-	parameter_names@cell
-	seed
-	lb
-	ub
+	parameter_names cell
+	seed double
+	lb double
+	ub double
 
 	SaveParameters
-	SaveWhenCostBelow@double = Inf
+	SaveWhenCostBelow (1,1) double = Inf
 
 	engine
 
@@ -31,11 +31,11 @@ properties
 	data
 
 
-	options
+	options 
 
 	% nonlinear constrains, only supported
 	% for some engines
-	nonlcon@function_handle
+	nonlcon function_handle
 
 end % end props
 
@@ -45,14 +45,10 @@ properties (SetAccess = private)
 	% logging
 	best_cost
 	timestamp
-end
-
-properties (Access = private)
 
 	SimFcnHash
-	
-
 end
+
 
 methods
 	function self = xfit(engine)
@@ -62,22 +58,38 @@ methods
 		if nargin ==0
 			engine = 'particleswarm';
 		end
-		assert(any(strcmp('Optimization Toolbox', {v.Name})),'optimisation toolbox is required')
-		assert(any(strcmp('Global Optimization Toolbox', {v.Name})),'Global Optimization Toolbox is required')
+		corelib.assert(any(strcmp('Optimization Toolbox', {v.Name})),'optimisation toolbox is required')
+		corelib.assert(any(strcmp('Global Optimization Toolbox', {v.Name})),'Global Optimization Toolbox is required')
 		self.engine = engine;
 
 	end % end constructor
 
 	function self = set.x(self,value)
 		value.closed_loop = false;
-		assert(length(value) == 1,'Only one Xolotl object at a time')
+		corelib.assert(length(value) == 1,'Only one Xolotl object at a time')
 		self.x = value;
+	end
+
+
+	function self = set.SimFcn(self,value)
+
+		% check that it exists
+
+		if isempty(which(func2str(value)))
+			error('SimFcn could not be found')
+		end
+
+		self.SimFcnHash = hashlib.md5hash(which(func2str(value)));
+
+		self.SimFcn = value;
+
+
 	end
 
 
 	function self = set.parameter_names(self,names)
 		% check that a xolotl object is configured
-		assert(~isempty(self.x),'First configure a xolotl object')
+		corelib.assert(~isempty(self.x),'First configure a xolotl object')
 
 		% check that they all resolve correctly
 		for i = 1:length(names)

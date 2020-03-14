@@ -40,10 +40,10 @@ properties
     V_clamp double;
 
 	% output delta t
-	dt (1,1) double {} = 50e-3; % ms
+	dt (1,1) double {mustBeGreaterThan(dt,0)} = .1; % ms
 
 	% simulation deltat
-	sim_dt (1,1) double  = 50e-3;
+	sim_dt (1,1) double {mustBeGreaterThan(sim_dt,0)} = .1;
 	t_end (1,1) double {mustBeGreaterThan(t_end,1), mustBeInteger(t_end)} = 5000; % ms
 
 	handles 
@@ -184,9 +184,9 @@ methods
         end
 
         % make sure that it's the right size
-        assert(size(V_clamp,2) == n_comp,'Size of V_clamp is incorrect::2nd dimension size should be n_comp')
+        corelib.assert(size(V_clamp,2) == n_comp,'Size of V_clamp is incorrect::2nd dimension size should be n_comp')
         if size(V_clamp,1) ~= 1
-            assert(size(V_clamp,1) == n_steps,'Size of V_clamp is incorrect::1st dimension size should be n_steps')
+            corelib.assert(size(V_clamp,1) == n_steps,'Size of V_clamp is incorrect::1st dimension size should be n_steps')
         end
 
         d = dbstack;
@@ -228,9 +228,9 @@ methods
         end
 
         % make sure that it's the right size
-        assert(size(I_ext,2) == n_comp,['Size of I_ext is incorrect::2nd dimension size should be' mat2str(n_comp)])
+        corelib.assert(size(I_ext,2) == n_comp,['Size of I_ext is incorrect::2nd dimension size should be ' mat2str(n_comp)])
         if size(I_ext,1) ~= 1
-            assert(size(I_ext,1) == n_steps,['Size of I_ext is incorrect::1st dimension size should be ' mat2str(n_steps)])
+            corelib.assert(size(I_ext,1) == n_steps,['Size of I_ext is incorrect::1st dimension size should be ' mat2str(n_steps)])
         end
 
         d = dbstack;

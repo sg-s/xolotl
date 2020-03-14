@@ -46,13 +46,13 @@ function add(self,obj_type, obj_name,varargin)
 
 
 msg = ['You tried to add a compartment without a label, which is not allowed. Every compartment must be labeled. \n\n<a href="https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#add">Click here to read the documentation on how to use this method</a>'];
-assert(nargin > 2,'xolotl:add:no_label',msg)
+corelib.assert(nargin > 2,'xolotl:add:no_label',msg)
 
 msg = ['The name of the object you are trying to add must be a character vector. \n\n<a href="https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#add">Click here to read the documentation on how to use this method</a>'];
-assert(ischar(obj_name),'xolotl:add:name_type_mismatch',msg)
+corelib.assert(ischar(obj_name),'xolotl:add:name_type_mismatch',msg)
 
 msg = ['Illegal compartment name: ' obj_name '\n\n<a href="https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#add">Click here to read the documentation on how to use this method</a>'];
-assert(self.checkCompartmentName(obj_name),'xolotl:add:illegal_name',msg)
+corelib.assert(self.checkCompartmentName(obj_name),'xolotl:add:illegal_name',msg)
 
 if isa(obj_type,'cpplab')
 	% we're adding a cpplab object
@@ -62,7 +62,7 @@ if isa(obj_type,'cpplab')
 
 	msg = ['You are attempting to add a cpplab object to a xolotl object. To do so, the convention is "self.add(obj, obj_name)". \n\n<a href="https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#add">Click here to read the documentation on how to use this method</a>'];
 
-	assert(length(varargin) == 0,'xolotl:add:cpplab_object' ,msg)
+	corelib.assert(length(varargin) == 0,'xolotl:add:cpplab_object' ,msg)
 
 	obj = obj_type;
 
@@ -74,7 +74,7 @@ end
 
 
 % object should be a compartment object
-assert(strcmp(obj.cpp_class_name,'compartment'),'xolotl:add:not_compartment' ,'You can only add objects of type "compartment" to a xolotl object')
+corelib.assert(strcmp(obj.cpp_class_name,'compartment'),'xolotl:add:not_compartment' ,'You can only add objects of type "compartment" to a xolotl object')
 
 
 add@cpplab(self,obj, obj_name);

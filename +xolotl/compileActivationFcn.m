@@ -37,7 +37,7 @@ end
 
 
 % check that conductance exists 
-assert(exist(conductance.cpp_class_path)==2,'Cannot file C++ header file')
+corelib.assert(exist(conductance.cpp_class_path)==2,'Cannot file C++ header file')
 
 % 
 
@@ -67,7 +67,7 @@ for i = 1:length(header_files)
 end
 
 insert_here = filelib.find(lines,'//xolotl:include_headers_here');
-assert(length(insert_here)==1,'Could not find insertion point for headers')
+corelib.assert(length(insert_here)==1,'Could not find insertion point for headers')
 lines = [lines(1:insert_here); header_files(:); lines(insert_here+1:end)];
 
 
@@ -87,7 +87,7 @@ constructor(end) = ')';
 constructor = [constructor ';'];
 
 insert_here = filelib.find(lines,'//xolotl:construct_channel_here');
-assert(length(insert_here)==1,'Could not find insertion point for headers')
+corelib.assert(length(insert_here)==1,'Could not find insertion point for headers')
 lines = [lines(1:insert_here); constructor; lines(insert_here+1:end)];
 
 

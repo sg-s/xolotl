@@ -37,20 +37,20 @@
 % xolotl.find
 
 function batchify(self,params,param_names)
-	assert(~isempty(self.x),'First configure the xolotl object')
-	assert(~isempty(self.clusters),'At least one cluster has to be connected')
+	corelib.assert(~isempty(self.x),'First configure the xolotl object')
+	corelib.assert(~isempty(self.clusters),'At least one cluster has to be connected')
 
 	% check that param names resolve correctly -- we do
 	% so by attempting to read this property for each param name
 	for i = 1:length(param_names)
 
 		temp = self.x.get(param_names{i});
-		assert(~isempty(temp),'Parameter names did not resolve correctly')
+		corelib.assert(~isempty(temp),'Parameter names did not resolve correctly')
 	end
 
 	n_sims = size(params,2);
 	self.n_sims = n_sims;
-	assert(size(params,1) == length(param_names),'Param names does not match parameter dimensions')
+	corelib.assert(size(params,1) == length(param_names),'Param names does not match parameter dimensions')
 	xhash = self.xolotl_hash;
 	total_workers = sum([self.clusters.nthreads]);
 	n_jobs = total_workers*self.n_batches;

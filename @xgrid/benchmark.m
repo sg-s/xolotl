@@ -28,7 +28,7 @@ function benchmark(self)
 
 original_dir = pwd;
 
-assert(isempty(self.x),'benchmark cannot run if there a xolotl object already configured')
+corelib.assert(isempty(self.x),'benchmark cannot run if there a xolotl object already configured')
 
 cd([fileparts(fileparts(which('xgrid'))) filesep 'tests'])
 

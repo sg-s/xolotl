@@ -1,7 +1,7 @@
 
 function metrics = spiketimes2BurstMetrics(spiketimes, varargin)
 
-assert(isvector(spiketimes),'spiketimes must be a vector')
+corelib.assert(isvector(spiketimes),'spiketimes must be a vector')
 
 spiketimes = spiketimes(:);
 

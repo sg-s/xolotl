@@ -39,6 +39,9 @@
 
 function manipulate(self, manipulate_these, mirror_these)
 
+if ischar(manipulate_these) && ~any(strfind(manipulate_these,'*'))
+	manipulate_these = {manipulate_these};
+end
 
 if isempty(self.linked_binary)
 
@@ -120,9 +123,20 @@ if nargin < 2
 
 else
 
-	if ~iscell(manipulate_these) && any(strfind(manipulate_these,'*'))
+	if isa(manipulate_these,'cpplab')
+		% we are being given a cpplab object to manipulate
+		% this is only allowed if it a channel
+		corelib.assert(length(manipulate_these) == 1,'Only one cpplab object can be manipulated at a time')
+
+		corelib.assert(strcmp(manipulate_these.cpp_class_parent,'conductance'),'Only conductance type objects can be manipulated')
+
+		self.manipulateConductance(manipulate_these);
+		return
+
+	elseif ~iscell(manipulate_these) && any(strfind(manipulate_these,'*'))
 		% first find objects, then get them
 		manipulate_these = self.find(manipulate_these);
+	
 	end
 
 
@@ -147,7 +161,7 @@ else
 		end
 	end
 
-	assert(~isempty(manipulate_these),'Nothing was found to manipulate')
+	corelib.assert(~isempty(manipulate_these),'Nothing was found to manipulate')
 
 	if nargin == 3
 
@@ -156,7 +170,7 @@ else
 			mirror_these = self.find(mirror_these);
 		end
 
-		assert(length(manipulate_these) == length(mirror_these),'Length of mirror_these does not match that of parameters')
+		corelib.assert(length(manipulate_these) == length(mirror_these),'Length of mirror_these does not match that of parameters')
 
 		self.pref.manipulated_params = manipulate_these;
 		self.pref.mirror_these = mirror_these;

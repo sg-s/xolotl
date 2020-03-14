@@ -62,7 +62,7 @@ function simulate_core(self,idx,n_runs)
 
 
 		% check that the hash matches
-		assert(strcmp(xhash,self.xolotl_hash),'Hashes dont match')
+		corelib.assert(strcmp(xhash,self.xolotl_hash),'Hashes dont match')
 
 
 		for i = 1:size(this_params,2)

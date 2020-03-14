@@ -62,12 +62,12 @@ data = struct;
 I0 = self.I_ext;
 S = serialize(self);
 
-assert(options.I_min < options.I_max,'I_min must be less than I_max')
-assert(options.n_steps > 2, 'n_steps too small::At least two points needed')
+corelib.assert(options.I_min < options.I_max,'I_min must be less than I_max')
+corelib.assert(options.n_steps > 2, 'n_steps too small::At least two points needed')
 
-assert(length(self.find('compartment')) == 1,' You can only compute the f-I curve for single compartment models')
+corelib.assert(length(self.find('compartment')) == 1,' You can only compute the f-I curve for single compartment models')
 
-assert(mathlib.isint(options.n_steps),'n_steps must be an integer')
+corelib.assert(mathlib.isint(options.n_steps),'n_steps must be an integer')
 
 
 

@@ -30,6 +30,7 @@ function show(self)
 
 
 if isempty(self.SaveParameters)
+	disp('[ABORT] SaveParameters is empty')
 	return
 end
 
@@ -40,9 +41,19 @@ hash = hashlib.md5hash([self.SaveParameters{:}]);
 % get the results
 savename = [hash '.xfit'];
 if exist(savename,'file') == 2
-	load(savename,'-mat')
+	load(savename,'-mat','SimFcnHash','cost','xolotl_hash','params')
 else
-	error('No results saved!')
+	% no results saved. so we simply show what we have stored in 
+	% this object
+
+	if ~isempty(self.ShowFcn)
+		self.ShowFcn(self.x, self.data)
+	else
+		self.x.closed_loop = true;
+		self.x.integrate;
+		self.x.plot()
+	end
+	return
 end
 
 self.SimFcnHash = hashlib.md5hash(which(func2str(self.SimFcn)),'file');
@@ -79,8 +90,9 @@ for i = 1:length(cost)
 	self.x.set(self.SaveParameters,params(idx(i),:))
 
 	if ~isempty(self.ShowFcn)
-		self.ShowFcn(self.x)
+		self.ShowFcn(self.x, self.data)
 	else
+		self.x.closed_loop = true;
 		self.x.integrate;
 		self.x.plot()
 	end

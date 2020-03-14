@@ -74,7 +74,7 @@ for i = 1:length(header_files)
 end
 
 insert_here = filelib.find(lines,'//xolotl:include_headers_here');
-assert(length(insert_here)==1,'Could not find insertion point for headers')
+corelib.assert(length(insert_here)==1,'Could not find insertion point for headers')
 lines = [lines(1:insert_here); header_files(:); lines(insert_here+1:end)];
 
 
@@ -90,7 +90,7 @@ for j = 1:length(names)
 end
 input_hookups{end+1} = ['int param_size = ' mat2str(length(names)) ';'];
 insert_here = filelib.find(lines,'//xolotl:input_declarations');
-assert(length(insert_here)==1,'Could not find insertion point for input declarations')
+corelib.assert(length(insert_here)==1,'Could not find insertion point for input declarations')
 lines = [lines(1:insert_here); input_hookups(:); lines(insert_here+1:end)];
 
 
@@ -100,7 +100,7 @@ lines = [lines(1:insert_here); input_hookups(:); lines(insert_here+1:end)];
 
 
 insert_here = filelib.find(lines,'//xolotl:insert_constructors');
-assert(length(insert_here)==1,'Could not find insertion point for object constructors')
+corelib.assert(length(insert_here)==1,'Could not find insertion point for object constructors')
 lines = [lines(1:insert_here); constructors(:); lines(insert_here+1:end)];
 
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -136,7 +136,7 @@ end
 
 
 insert_here = filelib.find(lines,'//xolotl:read_state_back');
-assert(length(insert_here)==1,'Could not find insertion point for input declarations')
+corelib.assert(length(insert_here)==1,'Could not find insertion point for input declarations')
 lines = [lines(1:insert_here); output_hookups(:); lines(insert_here+1:end)];
 
 
@@ -157,7 +157,7 @@ end
 
 
 insert_here = filelib.find(lines,'//xolotl:add_conductances_here');
-assert(length(insert_here)==1,'Could not find insertion point for conductance->cell hookups')
+corelib.assert(length(insert_here)==1,'Could not find insertion point for conductance->cell hookups')
 lines = [lines(1:insert_here); channel_hookups(:); lines(insert_here+1:end)];
 
 
@@ -174,7 +174,7 @@ end
 
 
 insert_here = filelib.find(lines,'//xolotl:add_synapses_here');
-assert(length(insert_here)==1,'Could not find insertion point for synapse->cell hookups')
+corelib.assert(length(insert_here)==1,'Could not find insertion point for synapse->cell hookups')
 lines = [lines(1:insert_here); synapse_add_lines(:); lines(insert_here+1:end)];
 
 
@@ -210,7 +210,7 @@ end
 mechanism_add_lines{end+1} = ['int n_mechanisms = ' mat2str(length(all_mechanisms)) ';'];
 
 insert_here = filelib.find(lines,'//xolotl:add_mechanisms_here');
-assert(length(insert_here)==1,'Could not find insertion point for mechanism hookups');
+corelib.assert(length(insert_here)==1,'Could not find insertion point for mechanism hookups');
 lines = [lines(1:insert_here); mechanism_add_lines(:); lines(insert_here+1:end)];
 
 
@@ -224,7 +224,7 @@ for i = 1:length(compartment_names)
 end
 
 insert_here = filelib.find(lines,'//xolotl:add_neurons_to_network');
-assert(length(insert_here)==1,'Could not find insertion point for cell->network hookup')
+corelib.assert(length(insert_here)==1,'Could not find insertion point for cell->network hookup')
 lines = [lines(1:insert_here); network_add_lines(:); lines(insert_here+1:end)];
 
 

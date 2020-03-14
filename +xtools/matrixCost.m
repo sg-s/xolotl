@@ -33,8 +33,8 @@
 
 function C = matrixCost(M1,M2)
 
-assert(size(M1,2) == size(M2,2),'matrices not same size')
-assert(size(M1,1) == size(M2,1),'matrices not same size')
+corelib.assert(size(M1,2) == size(M2,2),'matrices not same size')
+corelib.assert(size(M1,1) == size(M2,1),'matrices not same size')
 
 N1 = sum(M1(:));
 N2 = sum(M2(:));

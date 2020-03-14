@@ -70,7 +70,7 @@ else
 	[e,~]=system(['ping ' cluster_name ' -c 1']);
 
 
-	assert(e == 0, 'Could not contact server -- check that you have the right name and that it is reachable')
+	corelib.assert(e == 0, 'Could not contact server -- check that you have the right name and that it is reachable')
 
 	corelib.cprintf('Green','OK')
 

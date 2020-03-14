@@ -88,11 +88,11 @@ end
 options = corelib.parseNameValueArguments(options,varargin{:});
 
 
-assert(isvector(V),'V should be a vector')
+corelib.assert(isvector(V),'V should be a vector')
 V = V(:);
-assert(~any(isnan(V)),'V cannot have NaNs')
-assert(~any(isinf(V)),'V cannot have Inf')
-assert((isreal(V)),'V cannot be complex')
+corelib.assert(~any(isnan(V)),'V cannot have NaNs')
+corelib.assert(~any(isinf(V)),'V cannot have Inf')
+corelib.assert((isreal(V)),'V cannot be complex')
 
 % find spikes in voltage trace
 n_spikes = xtools.findNSpikes(V,options.spike_threshold);

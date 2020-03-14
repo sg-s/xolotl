@@ -45,8 +45,8 @@
 
 function snapshot(self, snap_name)
 
-assert(nargin == 2, 'Two arguments required')
-assert(ischar(snap_name),'snap_name should be a string')
+corelib.assert(nargin == 2, 'Two arguments required')
+corelib.assert(ischar(snap_name),'snap_name should be a string')
 
 S = self.serialize;
 

@@ -6,17 +6,17 @@ function [PrimaryOutput, metrics] = sampleMetrics(x, PrimaryOutputName, paramete
 SamplePoint = SamplePoint(:);
 SamplePoint = SamplePoint';
 
-assert(isa(x,'xolotl'),'First argument should be a xolotl object')
+corelib.assert(isa(x,'xolotl'),'First argument should be a xolotl object')
 
 if isempty(PrimaryOutputName)
 	PrimaryOutputName = 'burst_period';
 end
 
-assert(exist('parameters','var') == 1,'parameters not defined')
+corelib.assert(exist('parameters','var') == 1,'parameters not defined')
 
-assert(exist('SamplePoint','var') == 1,'SamplePoint not defined')
+corelib.assert(exist('SamplePoint','var') == 1,'SamplePoint not defined')
 
-assert(size(SamplePoint,2) == length(parameters),'Size of SamplePoint and parameters dont match')
+corelib.assert(size(SamplePoint,2) == length(parameters),'Size of SamplePoint and parameters dont match')
 
 try
 	x.get(parameters);

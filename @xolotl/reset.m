@@ -94,7 +94,7 @@ else
 	idx1 = find(strcmp(snap_name,{self.snapshots.name}),1,'first');
 	idx2 = find(strcmp({self.snapshots.hash},self.hash));
 	idx = intersect(idx1,idx2);
-	assert(~isempty(idx),'snapshot not found')
+	corelib.assert(~isempty(idx),'snapshot not found')
 	self.deserialize(self.snapshots(idx).V);
 
 

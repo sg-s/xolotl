@@ -1,24 +1,26 @@
-// Cholingeric Synapse
-#ifndef GenericSynapse
-#define GenericSynapse
+// genric graded synapse
+// with a user-controllable half-maximum for activation
+// and timescale 
+#ifndef GRADED
+#define GRADED
 #include "synapse.hpp"
 
-class GenericSynapse: public synapse {
+class Graded: public synapse {
 
 public:
 
     double Delta = 5.0;
-    double k = 0.01;
+    double tau = 100;
     double Vth = -35.0;
 
 
     // specify parameters + initial conditions
-    GenericSynapse(double gmax_, double s_, double Vth_, double Delta_, double k_)
+    Graded(double gmax_, double s_, double Vth_, double Delta_, double tau_)
     {
         gmax = gmax_;
         E = -80.0;
         Vth = Vth_;
-        k = k_;
+        tau = tau_;
 
 
         // dynamic variables
@@ -28,7 +30,7 @@ public:
         if (isnan (s)) { s = 0; }
         if (isnan (gmax)) { gmax = 0; }
         if (isnan (Vth)) { Vth = -35.0; }
-        if (isnan (k)) { k = .01; }
+        if (isnan (tau)) { tau = 100; }
         is_electrical = false;
     }
 
@@ -46,23 +48,21 @@ public:
     int getFullState(double*, int);
 };
 
-int GenericSynapse::getFullStateSize()
-{
+int Graded::getFullStateSize() {
     return 2;
 }
 
 
-double GenericSynapse::s_inf(double V_pre) {return 1.0/(1.0+exp((Vth - V_pre)/Delta));}
+double Graded::s_inf(double V_pre) {return 1.0/(1.0+exp((Vth - V_pre)/Delta));}
 
-double GenericSynapse::tau_s(double sinf_) {return (1 - sinf_)/k;}
+double Graded::tau_s(double sinf_) {return tau*(1 - sinf_);}
 
-double GenericSynapse::sdot(double V_pre, double s_)
-{
+double Graded::sdot(double V_pre, double s_) {
     double sinf = s_inf(V_pre);
     return (sinf - s_)/tau_s(sinf);
 }
 
-void GenericSynapse::integrate(void) {
+void Graded::integrate(void) {
     // figure out the voltage of the pre-synaptic neuron
     double V_pre = pre_syn->V;
     double sinf = s_inf(V_pre);
@@ -75,7 +75,7 @@ void GenericSynapse::integrate(void) {
 
 }
 
-void GenericSynapse::integrateMS(int k, double V, double Ca) {
+void Graded::integrateMS(int k, double V, double Ca) {
 
     double V_pre;
 
@@ -112,16 +112,16 @@ void GenericSynapse::integrateMS(int k, double V, double Ca) {
 
 }
 
-void GenericSynapse::checkSolvers(int k){
+void Graded::checkSolvers(int k){
     if (k == 0) {
         return;
     } else if (k == 4) {
         return;
     }
-    mexErrMsgTxt("[GenericSynapse] Unsupported solver order\n");
+    mexErrMsgTxt("[Graded] Unsupported solver order\n");
 }
 
-int GenericSynapse::getFullState(double *syn_state, int idx) {
+int Graded::getFullState(double *syn_state, int idx) {
     // give it the current synapse variable
     syn_state[idx] = s;
 
@@ -133,7 +133,7 @@ int GenericSynapse::getFullState(double *syn_state, int idx) {
     return idx;
 }
 
-void GenericSynapse::connect(compartment *pcomp1_, compartment *pcomp2_) {
+void Graded::connect(compartment *pcomp1_, compartment *pcomp2_) {
     pre_syn = pcomp1_;
     post_syn = pcomp2_;
 

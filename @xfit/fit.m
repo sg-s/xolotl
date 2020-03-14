@@ -29,9 +29,9 @@
 
 function fit(self)
 
-assert(~isempty(self.parameter_names),'No parameter names defined')
-assert(~isempty(self.x),'Xolotl object not configured')
-assert(~isempty(self.SimFcn),'Simulation function not set')
+corelib.assert(~isempty(self.parameter_names),'No parameter names defined')
+corelib.assert(~isempty(self.x),'Xolotl object not configured')
+corelib.assert(~isempty(self.SimFcn),'Simulation function not set')
 
 self.SimFcnHash = hashlib.md5hash(which(func2str(self.SimFcn)),'file');
 
@@ -47,7 +47,7 @@ self.timestamp = NaN(1e3,1);
 self.best_cost = NaN(1e3,1);
 
 
-assert(length(unique([length(self.seed),length(self.parameter_names) , length(self.lb), length(self.ub)])) == 1, 'Length of lower bounds, upper bounds, parameter_names, and seed should be the same')
+corelib.assert(length(unique([length(self.seed),length(self.parameter_names) , length(self.lb), length(self.ub)])) == 1, 'Length of lower bounds, upper bounds, parameter_names, and seed should be the same')
 
 switch self.engine
 case 'patternsearch'

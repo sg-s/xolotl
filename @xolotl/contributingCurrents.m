@@ -24,7 +24,7 @@
 
 function curr_index = contributingCurrents(V, I)
 
-assert(isvector(V),'V should be a vector ')
+corelib.assert(isvector(V),'V should be a vector ')
 
 dV = [0; diff(V)];
 Vsign = dV > 0;

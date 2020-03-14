@@ -95,8 +95,8 @@
 
 function [burst_metrics, spike_times, Ca_peaks, Ca_troughs] = findBurstMetrics(V,Ca,Ca_peak_similarity, burst_duration_variability,on_off_thresh)
 
-assert(isvector(V),'Voltage trace has to be a vector')
-assert(isvector(Ca),'Calcium trace has to be a vector')
+corelib.assert(isvector(V),'Voltage trace has to be a vector')
+corelib.assert(isvector(Ca),'Calcium trace has to be a vector')
 
 if nargin < 3
 	Ca_peak_similarity = .3;

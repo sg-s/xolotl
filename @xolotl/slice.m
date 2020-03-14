@@ -33,20 +33,20 @@
 
 function slice(self, compartment, N_slices, axial_resistivity)
 
-assert(any(strcmp(self.find('compartment'),compartment)),'Unknown compartment')
+corelib.assert(any(strcmp(self.find('compartment'),compartment)),'Unknown compartment')
 
 
-assert(~any(N_slices - floor(N_slices)),'N_slices must be an integer > 1')
-assert(isscalar(N_slices),'N_slices must be an integer > 1')
-assert(N_slices > 1,'N_slices must be an integer > 1')
+corelib.assert(~any(N_slices - floor(N_slices)),'N_slices must be an integer > 1')
+corelib.assert(isscalar(N_slices),'N_slices must be an integer > 1')
+corelib.assert(N_slices > 1,'N_slices must be an integer > 1')
 
 if nargin < 4
 	axial_resistivity = NaN;
 end
 
-assert(isscalar(axial_resistivity),'axial_resistivity must be a real +ve number')
+corelib.assert(isscalar(axial_resistivity),'axial_resistivity must be a real +ve number')
 if ~isnan(axial_resistivity)
-	assert(axial_resistivity > 0,'axial_resistivity must be a real +ve number')
+	corelib.assert(axial_resistivity > 0,'axial_resistivity must be a real +ve number')
 end
 
 if iscell(compartment)
@@ -69,8 +69,8 @@ end
 % so make sure that the radius and length
 % fields are filled out
 
-assert(~isnan(self.(compartment).radius),'Radius of compartment must be specified')
-assert(~isnan(self.(compartment).len),'Length of compartment must be specified')
+corelib.assert(~isnan(self.(compartment).radius),'Radius of compartment must be specified')
+corelib.assert(~isnan(self.(compartment).len),'Length of compartment must be specified')
 
 
 new_len = self.(compartment).len/N_slices;

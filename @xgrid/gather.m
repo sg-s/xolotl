@@ -37,12 +37,12 @@ function [all_data, all_params, all_param_idx] = gather(self)
 % for i = 1:length(self.clusters)
 % 	if strcmp(self.clusters(i).Name,'local')
 % 		[n_do, n_doing] = self.getJobStatus;
-% 		assert(n_do == 0,'At least one job is still queued on local')
-% 		assert(n_doing == 0,'At least one job is still running on local')
+% 		corelib.assert(n_do == 0,'At least one job is still queued on local')
+% 		corelib.assert(n_doing == 0,'At least one job is still running on local')
 % 	else
 % 		plog = self.getRemoteState(i);
-% 		assert(plog.n_do == 0,'At least one job is still queued on remote')
-% 		assert(plog.n_doing == 0,'At least one job is still running on remote')
+% 		corelib.assert(plog.n_do == 0,'At least one job is still queued on remote')
+% 		corelib.assert(plog.n_doing == 0,'At least one job is still running on remote')
 % 	end
 
 % end
@@ -62,7 +62,7 @@ for i = 1:length(self.clusters)
 				continue
 			end
 
-			assert(e == 0,'Error copying job file to remote cluster')
+			corelib.assert(e == 0,'Error copying job file to remote cluster')
 		end
 
 	end
@@ -71,7 +71,7 @@ end
 done_folder = [self.xgrid_folder filesep 'done' filesep ];
 job_files =  dir([done_folder '*.ppp']);
 data_files =  dir([done_folder '*.ppp.data']);
-assert(length(job_files) == length(data_files),'# of data files does not match # of job files')
+corelib.assert(length(job_files) == length(data_files),'# of data files does not match # of job files')
 
 
 load([done_folder data_files(1).name],'-mat');
@@ -89,7 +89,7 @@ for i = 2:length(data_files) % because we've already loaded the first one (see a
 	load([done_folder job_files(i).name],'-mat');
 
 	% check that the xhash matches
-	assert(strcmp(xhash,xhash0),'xolotl hashes for two files do not match. this is a fatal error')
+	corelib.assert(strcmp(xhash,xhash0),'xolotl hashes for two files do not match. this is a fatal error')
 
 	for j = 1:length(data)
 		if size(data{j},2) ~= size(this_params,2)

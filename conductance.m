@@ -28,7 +28,7 @@ methods
 
 	function generateCPPFile(self, name)
 
-		assert(nargin == 2,'Not enough input arguments')
+		corelib.assert(nargin == 2,'Not enough input arguments')
 
 
 		% check that the "custom" folder exists
@@ -40,7 +40,7 @@ methods
 		% check that everything is filled out 
 		props = properties(self);
 		for i = 1:length(props)
-			assert(~isempty(self.(props{i})),['All properties must be filled out. ' props{i} ' is still not defined'])
+			corelib.assert(~isempty(self.(props{i})),['All properties must be filled out. ' props{i} ' is still not defined'])
 		end
 
 		this_dir = fileparts(which(mfilename));

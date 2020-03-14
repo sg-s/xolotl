@@ -28,8 +28,8 @@ if nargin < 4
 end
 
 
-assert(isvector(V1),'V1 must be a vector')
-assert(isvector(V2),'V2 must be a vector')
+corelib.assert(isvector(V1),'V1 must be a vector')
+corelib.assert(isvector(V2),'V2 must be a vector')
 
 V1 = V1(:);
 V2 = V2(:);

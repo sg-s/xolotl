@@ -28,37 +28,37 @@
 
 
 
-function show(self,conductance, custom_name)
+function show(self,thiscond, custom_name)
 
 
-if isa(conductance,'cpplab')
+if isa(thiscond,'cpplab')
 	% we have been given a cpplab object
 
 
-	if strcmp(conductance.cpp_class_name,'compartment')
+	if strcmp(thiscond.cpp_class_name,'compartment')
 		% we are being given a compartment, so we need to run this on every 
 		% channel in that compartment
-		channels = conductance.find('conductance');
+		channels = thiscond.find('conductance');
 		for i = 1:length(channels)
-			self.show(conductance.(channels{i}),channels{i});
+			self.show(thiscond.(channels{i}),channels{i});
 		end
 		return
 	end
 
-	assert(strcmp(conductance.cpp_class_parent,'conductance'),'xolotl.show() only works for conductance-type objects')
+	corelib.assert(strcmp(thiscond.cpp_class_parent,'conductance'),'xolotl.show() only works for conductance-type objects')
 
 
-elseif isa(conductance,'char')
-	conductance = cpplab(conductance);
+elseif isa(thiscond,'char')
+	thiscond = cpplab(thiscond);
 
-elseif isa(conductance,'cell')
-	for i = 1:length(conductance)
-		xolotl.show(conductance{i});
+elseif isa(thiscond,'cell')
+	for i = 1:length(thiscond)
+		xolotl.show(thiscond{i});
 	end
 	return
 end
 
-if strcmp(conductance.cpp_class_name,'Leak')
+if strcmp(thiscond.cpp_class_name,'Leak')
 	return
 end
 
@@ -66,16 +66,16 @@ end
 V = linspace(-200,200,1e3);
 
 % build a mex-able binary using the class path
-binary_name = str2func(xolotl.compileActivationFcn(conductance, self.cpp_folder));
+binary_name = str2func(xolotl.compileActivationFcn(thiscond, self.cpp_folder));
 
 
-params = conductance.get(conductance.cpp_constructor_signature);
+params = thiscond.get(thiscond.cpp_constructor_signature);
 
-[minf, hinf, taum, tauh] = binary_name(V, params);
+[data.minf, data.hinf, data.taum, data.tauh] = binary_name(V, params);
 
-if length(unique(hinf)) == 1
-	tauh = NaN*tauh;
-	hinf = NaN*tauh;
+if length(unique(data.hinf)) == 1
+	data.tauh = NaN*data.tauh;
+	data.hinf = NaN*data.tauh;
 end
 
 
@@ -99,10 +99,10 @@ if isempty(f)
 	for i = 1:4
 		ax(i) = subplot(2,2,i); hold on
 	end
-	ax(1).Tag = 'm_inf';
-	ax(2).Tag = 'h_inf';
-	ax(3).Tag = 'tau_m';
-	ax(4).Tag = 'tau_h';
+	ax(1).Tag = 'minf';
+	ax(2).Tag = 'hinf';
+	ax(3).Tag = 'taum';
+	ax(4).Tag = 'tauh';
 
 	ylabel(ax(1),'m_{\infty}')
 	xlabel(ax(1),'V (mV)')
@@ -126,18 +126,34 @@ end
 
 
 if nargin < 3
-	custom_name = conductance.cpp_class_name;
+	custom_name = thiscond.cpp_class_name;
 end
 
-plot(ax(find(strcmp({ax.Tag},'m_inf'))),V,minf,'DisplayName',custom_name);
-plot(ax(find(strcmp({ax.Tag},'h_inf'))),V,hinf,'DisplayName',custom_name);
-plot(ax(find(strcmp({ax.Tag},'tau_m'))),V,taum,'DisplayName',custom_name);
-plot(ax(find(strcmp({ax.Tag},'tau_h'))),V,tauh,'DisplayName',custom_name);
 
-try
-	figlib.pretty();
-catch
+% should we make a new plot, or just move the old one?
+fn = fieldnames(data);
+if isempty(ax(1).Children)
+	plot(ax(find(strcmp({ax.Tag},'minf'))),V,data.minf,'DisplayName',custom_name,'Tag',thiscond.hash);
+	plot(ax(find(strcmp({ax.Tag},'hinf'))),V,data.hinf,'DisplayName',custom_name,'Tag',thiscond.hash);
+	plot(ax(find(strcmp({ax.Tag},'taum'))),V,data.taum,'DisplayName',custom_name,'Tag',thiscond.hash);
+	plot(ax(find(strcmp({ax.Tag},'tauh'))),V,data.tauh,'DisplayName',custom_name,'Tag',thiscond.hash);
+else
+	% there are pre-existing plots. Make sure we don't plot the same object to two different plots
+	for i = 1:length(ax)
+		old_plots = ax(i).Children;
+		plothere = find(strcmp({old_plots.Tag},thiscond.hash));
+		if isempty(plothere)
+			% make new plot
+			plot(ax(i),V,data.(fn{i}),'DisplayName',custom_name,'Tag',thiscond.hash);
+		else
+			% change YData in this plot
+			plothere = ax(i).Children(plothere);
+			plothere.YData = data.(fn{find(strcmp(fn,ax(i).Tag))});
+		end
+	end
 end
+
+figlib.pretty();
 
 axes(ax(1))
 legend;

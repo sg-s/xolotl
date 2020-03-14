@@ -40,7 +40,7 @@
 
 function [M, V_lim, dV_lim] = V2Matrix(V, V_lim, dV_lim)
 
-assert(isvector(V),'V has to be a vector')
+corelib.assert(isvector(V),'V has to be a vector')
 
 V = V(:);
 dV = [NaN; diff(V)];
@@ -57,10 +57,10 @@ if nargin == 1
 
 end
 
-assert(isvector(V_lim),'V_lim has to be a vector')
-assert(isvector(dV_lim),'dV_lim has to be a vector')
-assert(length(V_lim) == 2,'size of V_lim has to be 2x1')
-assert(length(dV_lim) == 2,'size of dV_lim has to be 2x1')
+corelib.assert(isvector(V_lim),'V_lim has to be a vector')
+corelib.assert(isvector(dV_lim),'dV_lim has to be a vector')
+corelib.assert(length(V_lim) == 2,'size of V_lim has to be 2x1')
+corelib.assert(length(dV_lim) == 2,'size of dV_lim has to be 2x1')
 
 % overflow
 V(V<V_lim(1)) = NaN;

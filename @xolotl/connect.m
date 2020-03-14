@@ -55,12 +55,12 @@
 
 function connect(self,comp1,comp2,varargin)
 
-assert(ischar(comp1),'First argument should be a string; the name of the presynaptic compartment')
-assert(ischar(comp2),'Second argument should be a string; the name of the postsynaptic compartment')
-assert(any(strcmp(comp1,self.Children)),['Unknown compartment: ' comp1])
-assert(any(strcmp(comp2,self.Children)),['Unknown compartment: ' comp2])
+corelib.assert(ischar(comp1),'First argument should be a string; the name of the presynaptic compartment')
+corelib.assert(ischar(comp2),'Second argument should be a string; the name of the postsynaptic compartment')
+corelib.assert(any(strcmp(comp1,self.Children)),['Unknown compartment: ' comp1])
+corelib.assert(any(strcmp(comp2,self.Children)),['Unknown compartment: ' comp2])
 
-assert(~strcmp(comp1,comp2),'You cannot connect a compartment to itself')
+corelib.assert(~strcmp(comp1,comp2),'You cannot connect a compartment to itself')
 
 
 

@@ -44,7 +44,7 @@ else
 
 	% guess if this is Ubuntu
 	[e,o] = system('lsb_release -a');
-	assert(e ==0,'Unknown OS. Cannot automatically setup')
+	corelib.assert(e ==0,'Unknown OS. Cannot automatically setup')
 
 	if any(strfind(o,'Ubuntu'))
 

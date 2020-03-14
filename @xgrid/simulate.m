@@ -27,7 +27,7 @@
 
 function simulate(self)
 
-	assert(~isempty(self.sim_func),'No sim function configured, refusing to start')
+	corelib.assert(~isempty(self.sim_func),'No sim function configured, refusing to start')
 
 
 	% make sure there exists a linked binary

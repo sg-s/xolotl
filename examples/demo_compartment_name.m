@@ -7,7 +7,7 @@ x = xolotl;
 x.add('compartment','AB')
 
 
-assert(x.checkCompartmentName('PD'),'Cannot add a compartment called "PD". Why?')
+corelib.assert(x.checkCompartmentName('PD'),'Cannot add a compartment called "PD". Why?')
 
 
 % test adding something illegal 
