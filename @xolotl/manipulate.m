@@ -16,6 +16,7 @@
 % x.manipulate('some*pattern')
 % x.manipulate({'parameter1','parameter2'})
 % x.manipulate({'parameter1','parameter2'},mirror_these)
+% x.manipulate(x.Compartment.Channel)
 % ```
 %
 % **Description**
@@ -26,6 +27,7 @@
 % - **`x.manipulate('some*pattern')`** creates sliders only for parameters specified by 'some*pattern'.
 % - **`x.manipulate({'parameter1','parameter2'})`** creates sliders only for the parameters specified in the cell array. Parameters should resolve to valid properties of cpplab objects in the tree.
 % - **`x.manipulate({'parameter1','parameter2'},mirror_these)`** creates sliders only for the parameters specified in the cell array. Parameters should resolve to valid properties of cpplab objects in the tree. In addition, parameters specified in mirror_these are also changed to reflect parameters changed in the first argument. 
+% - **`x.manipulate(x.Compartment.Channel)`** If manipulate is given one argument which is a channel in a compartment, then parameters of that channel can be manipulated, and an additional window will be drawn plotting the activation functions of that channel. 
 %
 %
 % See Also: 

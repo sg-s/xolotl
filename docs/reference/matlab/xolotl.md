@@ -688,6 +688,7 @@ x.manipulate();
 x.manipulate('some*pattern')
 x.manipulate({'parameter1','parameter2'})
 x.manipulate({'parameter1','parameter2'},mirror_these)
+x.manipulate(x.Compartment.Channel)
 ```
 
 **Description**
@@ -698,6 +699,7 @@ x.manipulate({'parameter1','parameter2'},mirror_these)
 - **`x.manipulate('some*pattern')`** creates sliders only for parameters specified by 'some*pattern'.
 - **`x.manipulate({'parameter1','parameter2'})`** creates sliders only for the parameters specified in the cell array. Parameters should resolve to valid properties of cpplab objects in the tree.
 - **`x.manipulate({'parameter1','parameter2'},mirror_these)`** creates sliders only for the parameters specified in the cell array. Parameters should resolve to valid properties of cpplab objects in the tree. In addition, parameters specified in mirror_these are also changed to reflect parameters changed in the first argument. 
+- **`x.manipulate(x.Compartment.Channel)`** If manipulate is given one argument which is a channel in a compartment, then parameters of that channel can be manipulated, and an additional window will be drawn plotting the activation functions of that channel. 
 
 
 
@@ -706,6 +708,27 @@ x.manipulate({'parameter1','parameter2'},mirror_these)
     * [xolotl.plot](../xolotl/#plot)
     * [xolotl.show](../xolotl/#show)
 
+
+
+
+
+
+
+
+-------
+
+### manipulateConductance
+
+This method is used to update the `xolotl` object
+every time a slider is moved in the manipulate window.
+This is used internally in `xolotl.manipulate`. You
+should not need to use this by itself. 
+
+
+
+!!! info "See Also"
+    * [xolotl.manipulate](../xolotl/#manipulate)
+    * [xolotl.manipulateEvaluate](../xolotl/#manipulateevaluate)
 
 
 
@@ -730,6 +753,23 @@ should not need to use this by itself.
 
 
 
+
+
+
+-------
+
+### manipulateEvaluateCond
+
+This method is used to update the `xolotl` object
+every time a slider is moved in the manipulate window.
+This is used internally in `xolotl.manipulate`. You
+should not need to use this by itself. 
+
+
+
+!!! info "See Also"
+    * [xolotl.manipulate](../xolotl/#manipulate)
+    * [xolotl.manipulateEvaluate](../xolotl/#manipulateevaluate)
 
 
 
@@ -1016,8 +1056,8 @@ once. If xolotl works, there is no need to run this.
 
 ```matlab
 x.show('path/to/conductance/file')
-x.show(compartment)
-x.show(conductance)
+x.show(x.Compartment)
+x.show(x.Compartment.Conductance)
 x.show({conductance1, conductance2...})
 ```
 

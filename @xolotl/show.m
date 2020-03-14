@@ -11,8 +11,8 @@
 %
 % ```matlab
 % x.show('path/to/conductance/file')
-% x.show(compartment)
-% x.show(conductance)
+% x.show(x.Compartment)
+% x.show(x.Compartment.Conductance)
 % x.show({conductance1, conductance2...})
 % ```
 %

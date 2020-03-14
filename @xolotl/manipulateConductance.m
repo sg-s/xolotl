@@ -1,3 +1,25 @@
+
+%               _       _   _ 
+%    __  _____ | | ___ | |_| |
+%    \ \/ / _ \| |/ _ \| __| |
+%     >  < (_) | | (_) | |_| |
+%    /_/\_\___/|_|\___/ \__|_|
+%
+% ### manipulateConductance
+%
+% This method is used to update the `xolotl` object
+% every time a slider is moved in the manipulate window.
+% This is used internally in `xolotl.manipulate`. You
+% should not need to use this by itself. 
+%
+% See Also: 
+% xolotl.manipulate
+% xolotl.manipulateEvaluate
+
+
+
+
+
 function manipulateConductance(self,thiscond)
 
 rm_this = strcmp(thiscond.cpp_constructor_signature,'m') | strcmp(thiscond.cpp_constructor_signature,'h');
