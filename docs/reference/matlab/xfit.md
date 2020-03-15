@@ -8,7 +8,7 @@ between the [Global Optimization Toolbox](https://www.mathworks.com/products/glo
 The first step in using `xfit` is to create a `xfit` object using:
 
 ```matlab
-xf = xfit('particleswarm');
+xf = xfit();
 ```
 
 ## Properties
@@ -159,6 +159,34 @@ configured in the xfit object:
 
 !!! info "See Also"
     * [xfit.fit](../xfit/#fit)
+
+
+
+-------
+
+### find
+
+**Syntax**
+
+```matlab
+xf.find()
+xf.find('MaxTime',1e6)
+xf.find('NModels',42)
+```
+
+This method keeps finding solutions and saving them, and is designed to run indefinitely till you 
+manually stop it. 
+
+
+
+
+
+!!! info "See Also"
+    * [xfit.fit](../xfit/#fit)
+    * [xfit.save](../xfit/#save)
+    * [xfit.show](../xfit/#show)
+
+
 
 
 

@@ -8,7 +8,7 @@ between the [Global Optimization Toolbox](https://www.mathworks.com/products/glo
 The first step in using `xfit` is to create a `xfit` object using:
 
 ```matlab
-xf = xfit('particleswarm');
+xf = xfit();
 ```
 
 ## Properties

@@ -21,7 +21,7 @@ properties
 	lb double
 	ub double
 
-	SaveParameters
+	SaveParameters cell
 	SaveWhenCostBelow (1,1) double = Inf
 
 	engine
@@ -55,7 +55,7 @@ methods
 		% check for optimisation toolbox
 		v = ver;
 		gcp;
-		if nargin ==0
+		if nargin == 0
 			engine = 'particleswarm';
 		end
 		corelib.assert(any(strcmp('Optimization Toolbox', {v.Name})),'optimisation toolbox is required')
@@ -79,7 +79,7 @@ methods
 			error('SimFcn could not be found')
 		end
 
-		self.SimFcnHash = hashlib.md5hash(which(func2str(value)));
+		self.SimFcnHash = hashlib.md5hash(which(func2str(value)),'file');
 
 		self.SimFcn = value;
 

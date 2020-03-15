@@ -41,6 +41,7 @@ hash = hashlib.md5hash([self.SaveParameters{:}]);
 % get the results
 savename = [hash '.xfit'];
 if exist(savename,'file') == 2
+	disp('Loading saved results')
 	load(savename,'-mat','SimFcnHash','cost','xolotl_hash','params')
 else
 	% no results saved. so we simply show what we have stored in 
@@ -69,6 +70,10 @@ for i = 1:length(SimFcnHash)
 		continue
 	end
 
+	if isundefined(SimFcnHash(i))
+		continue
+	end
+
 	SimFcnHash(i) = self.SimFcnHash;
 
 	self.x.set(self.SaveParameters,params(i,:))
@@ -87,6 +92,10 @@ save(savename,'cost','SimFcnHash','-append')
 
 for i = 1:length(cost)
 
+	if isnan(cost(i))
+		continue
+	end
+
 	self.x.set(self.SaveParameters,params(idx(i),:))
 
 	if ~isempty(self.ShowFcn)
@@ -99,7 +108,6 @@ for i = 1:length(cost)
 
 	title(['Cost =  ' strlib.oval(cost(idx(i)))])
 
-	self.evaluate(self.x.get(self.parameter_names));
 
 	drawnow;
 

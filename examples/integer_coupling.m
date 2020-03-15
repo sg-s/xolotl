@@ -1,127 +1,38 @@
 
-close all
+
+channels = {'prinz/NaV','prinz/CaT','prinz/CaS','prinz/ACurrent','prinz/KCa','prinz/Kd','generic/HCurrent','Leak'};
+
 
 x = xolotl;
 
+x.add('compartment','Int1');
+x.Int1.add('prinz/CalciumMech');
 
-% make Int1
-x.add('compartment','Int1','radius',.025,'len',.05);
-x.add('compartment','Int1Neurite','len',1,'radius',1.25);
-x.add('compartment','Int1Axon','len',1,'radius',1.25);
-x.connect('Int1','Int1Neurite','Axial')
-x.connect('Int1Neurite','Int1','Axial')
-x.connect('Int1Axon','Int1Neurite','Axial')
-x.connect('Int1Neurite','Int1Axon','Axial')
-
-
-
-% add channels to Int1 
-x.Int1Axon.add('nadim98/GenericChannel','NaV','gbar',35,'E',45,'p',3,'km',-.08,'Vkm',-26,'lm',0,'Vlm',0,'tau1m',1,'tau2m',0,'q',1,'kh',.13,'Vkh',-38,'lh',-.12,'Vlh',-67,'tau1h',0,'tau2h',5);
-x.Int1Axon.add('nadim98/GenericChannel','Kd','gbar',60,'E',-80,'p',4,'km',-.045,'Vkm',-25,'lm',-.065,'Vlm',-35,'tau1m',4,'tau2m',150,'q',0,'kh',0,'Vkh',0,'lh',0,'Vlh',0,'tau1h',0,'tau2h',0);
-x.Int1Axon.add('nadim98/GenericChannel','HCurrent','gbar',20,'E',10,'p',1,'km',2,'Vkm',-65,'lm',2,'Vlm',-65,'tau1m',200,'tau2m',2500,'q',0,'kh',0,'Vkh',0,'lh',0,'Vlh',0,'tau1h',0,'tau2h',0);
-x.Int1Axon.add('Leak','gbar',0.073,'E',-30)
-
-x.Int1.add('Leak','gbar',1,'E',-40)
-x.Int1Neurite.add('Leak','gbar',1,'E',-40)
-
-
-
-
-% make LG
-x.add('compartment','LG','radius',.025,'len',.05);
-x.add('compartment','LGNeurite','len',1,'radius',1.25);
-x.add('compartment','LGAxon','len',1,'radius',1.25);
-x.connect('LG','LGNeurite','Axial')
-x.connect('LGNeurite','LG','Axial')
-x.connect('LGAxon','LGNeurite','Axial')
-x.connect('LGNeurite','LGAxon','Axial')
-
-x.LGAxon.add('nadim98/GenericChannel','NaV','gbar',35,'E',45,'p',3,'km',-.08,'Vkm',-21,'lm',0,'Vlm',0,'tau1m',1,'tau2m',0,'q',1,'kh',.13,'Vkh',-33,'lh',-.12,'Vlh',-62,'tau1h',0,'tau2h',5);
-x.LGAxon.add('nadim98/GenericChannel','Kd','gbar',40,'E',-80,'p',4,'km',-.045,'Vkm',-33,'lm',-.065,'Vlm',-5,'tau1m',4,'tau2m',100,'q',0,'kh',0,'Vkh',0,'lh',0,'Vlh',0,'tau1h',0,'tau2h',0);
-x.LGAxon.add('Leak','gbar',.073,'E',-60)
-
-
-x.LG.add('Leak','gbar',1,'E',-40)
-x.LGNeurite.add('Leak','gbar',1,'E',-40)
-
-
-% MCN1
-
-
-
-
-
-x.show(x.LGAxon)
-
-x.plot('LGAxon')
-
-return
-
-%Add conductances
-conds = {'prinz/NaV','prinz/Kd','prinz/HCurrent','prinz/ACurrent','prinz/CaT','prinz/CaS','prinz/KCa','Leak'};
-% AB
-gbars(:, 1) = [0, 650, 0.5, 500, 25, 100, 30, 0];
-% ABneurite
-gbars(:, 2) = [1000, 500, 0, 200, 0, 0, 0, 0.5];
-
-% Int1
-gbars(:, 3) = [0,  500, 0.5, 0,  0, 0, 0, 0];
-% Int1neurite
-gbars(:, 4) = [3000,  800, 1, 0,  0,  0, 0, 0.3];
-
-% LG
-%gbars(:, 5) = [0, 0, 0, 0,  0, 0, 0, 0];
-% LGneurite
-%gbars(:, 6) = [0, 0, 0, 0,  0, 0, 0, 0.3];
-
-%Assign conductances
-comps       = x.find('compartment');
-for i = 1:length(comps)
-    for j = 1:length(conds)
-        x.(comps{i}).add(conds{j}, 'gbar', gbars(j, i));
-    end
+for i = 1:length(channels)
+	x.Int1.add(channels{i});
 end
 
-%Enables a Calcium Mechanic
-for i = 1:length(comps)
-    x.(comps{i}).add('prinz/CalciumMech');
-end
+% configure gbars
+x.Int1.set('*gbar', [1e3,  86,  6.7,   30,   10.6,  387, 1, 1875])
+x.set('*Leak.E',-50)
 
-%AB dimensions
-x.AB.radius = 0.025;
-x.AB.len = 0.05;
-x.ABneurite.radius = 0.01;
-x.ABneurite.len = 0.35*5;
+x.add(copy(x.Int1),'LG')
 
-%Int1 dimensions
-x.Int1.radius = 0.025;
-x.Int1.len = 0.05;
-x.Int1neurite.len = 0.35*5;
-x.Int1neurite.radius = 0.01;
 
-%LG dimensions
-%x.LG.len = 0.1;
-%x.LG.radius = 0.025;
-%x.LGneurite.len = 0.35*5;
-%x.LGneurite.radius = 0.01;
+x.Int1.HCurrent.tau = 2e3;
+x.LG.HCurrent.tau = 2e3;
 
-%Connecting compartments
-x.slice('ABneurite',2);
-x.connect('ABneurite1','AB');
-x.AB.tree_idx = 0;
+x.connect('Int1','LG','generic/Graded','gmax',100,'tau',425,'Vth',-38);
+x.connect('LG','Int1','generic/Graded','gmax',100,'tau',425,'Vth',-38);
 
-x.slice('Int1neurite',2);
-x.connect('Intneurite1','Int1');
-x.Int1.tree_idx = 0;
-%x.slice('LGneurite',2);
-%x.connect('LGneurite1','LG');
-%x.LG.tree_idx = 0;
+x.Int1.V = -50;
+x.LG.V = -60;
 
-%Connects neurons (synapses)
-x.connect('ABneurite2','Intneurite1','prinz/Glut','gmax',30);
-%x.connect('Intneurite1','LGneurite1','prinz/Glutamate','gmax',10);
-%x.connect('LGneurite1','Intneurite1','prinz/Glutamate','gmax',10);
+x.t_end = 30e3;
 
-%time base for run (ms)
-x.t_end = 1e4; 
+temp = xolotl.examples.BurstingNeuron('prefix','prinz');
+temp.AB.HCurrent.destroy;
+temp.AB.add('generic/HCurrent','gbar',.1)
+x.add(temp.AB,'AB');
 
+x.connect('AB','Int1','generic/Graded','gmax',.5,'tau',100,'Vth',-35)
