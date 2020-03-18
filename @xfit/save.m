@@ -71,3 +71,5 @@ params(idx,:) = self.x.get(self.SaveParameters);
 
 
 save(savename, 'xolotl_hash','SimFcnHash','cost','params')
+
+disp('Saved this parameter set to disk')

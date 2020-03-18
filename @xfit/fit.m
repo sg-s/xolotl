@@ -69,3 +69,7 @@ end
 
 % now update the parameters of the xolotl object
 self.x.set(self.FitParameters,self.seed)
+
+
+% always be saving
+self.save();

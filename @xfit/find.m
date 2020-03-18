@@ -48,7 +48,6 @@ while goon
 	end
 
 	self.fit()
-	self.save;
 
 	t = toc;
 
