@@ -42,6 +42,11 @@ idx = 1;
 while goon
 
 	self.seed = [];
+
+	if ~isempty(self.InitFcn)
+		self.InitFcn(self.x,self.data);
+	end
+
 	self.fit()
 	self.save;
 

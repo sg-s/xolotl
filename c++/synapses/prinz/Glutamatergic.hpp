@@ -50,25 +50,23 @@ int Glutamatergic::getFullStateSize()
 }
 
 
-double Glutamatergic::s_inf(double V_pre)
-{
+double Glutamatergic::s_inf(double V_pre) {
     return 1.0/(1.0+exp((Vth - V_pre)/Delta));
 }
 
-double Glutamatergic::tau_s(double sinf_)
-{
+double Glutamatergic::tau_s(double sinf_) {
     return (1 - sinf_)/k_;
 }
 
-double Glutamatergic::sdot(double V_pre, double s_)
-{
+double Glutamatergic::sdot(double V_pre, double s_) {
     double sinf = s_inf(V_pre);
     return (sinf - s_)/tau_s(sinf);
 }
 
-void Glutamatergic::integrate(void)
-{   
+void Glutamatergic::integrate(void) {   
     // figure out the voltage of the pre-synaptic neuron
+    
+
     double V_pre = pre_syn->V;
     double sinf = s_inf(V_pre);
 
@@ -79,8 +77,7 @@ void Glutamatergic::integrate(void)
     
 }
 
-void Glutamatergic::integrateMS(int k, double V, double Ca)
-{
+void Glutamatergic::integrateMS(int k, double V, double Ca) {
 
     double V_pre;
 
@@ -122,8 +119,7 @@ void Glutamatergic::checkSolvers(int k){
     mexErrMsgTxt("[Glutamatergic] Unsupported solver order\n");
 }
 
-int Glutamatergic::getFullState(double *syn_state, int idx)
-{
+int Glutamatergic::getFullState(double *syn_state, int idx) {
     // give it the current synapse variable
     syn_state[idx] = s;
 
@@ -135,8 +131,7 @@ int Glutamatergic::getFullState(double *syn_state, int idx)
     return idx;
 }
 
-void Glutamatergic::connect(compartment *pcomp1_, compartment *pcomp2_) 
-{
+void Glutamatergic::connect(compartment *pcomp1_, compartment *pcomp2_) {
     pre_syn = pcomp1_; 
     post_syn = pcomp2_; 
 

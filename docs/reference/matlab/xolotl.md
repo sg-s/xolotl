@@ -1059,9 +1059,12 @@ x.show('path/to/conductance/file')
 x.show(x.Compartment)
 x.show(x.Compartment.Conductance)
 x.show({conductance1, conductance2...})
+x.show(x.Compartment.Synapse)
 ```
 
-This method displays activation functions and timescales of any conductance. Subsequent calls to `show` will update the plot, plotting the new activation curves over the old ones, allowing you to compare different channels.
+This method displays activation functions and timescales of any conductance or synapse. If you are 
+passing a conductance argument, subsequent calls to `show` will update the plot, 
+plotting the new activation curves over the old ones, allowing you to compare different channels.
 
 
 

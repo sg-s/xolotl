@@ -11,6 +11,7 @@
 *a.out
 *X_*.cpp
 *A_*.cpp
+*S_*.cpp
 *.mat
 *.lyx~
 *.lyx#

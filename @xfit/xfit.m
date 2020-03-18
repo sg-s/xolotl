@@ -15,6 +15,9 @@ properties
 	% specify a function to plot results
 	ShowFcn function_handle 
 
+	% specify a function to initialize the model
+	InitFcn function_handle
+
 	% parameters to optimize
 	FitParameters cell
 	seed double
@@ -24,7 +27,7 @@ properties
 	SaveParameters cell
 	SaveWhenCostBelow (1,1) double = Inf
 
-	engine
+	engine char 
 
 
 	% this can be used to store any user-defined data

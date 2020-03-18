@@ -14,9 +14,12 @@
 % x.show(x.Compartment)
 % x.show(x.Compartment.Conductance)
 % x.show({conductance1, conductance2...})
+% x.show(x.Compartment.Synapse)
 % ```
 %
-% This method displays activation functions and timescales of any conductance. Subsequent calls to `show` will update the plot, plotting the new activation curves over the old ones, allowing you to compare different channels.
+% This method displays activation functions and timescales of any conductance or synapse. If you are 
+% passing a conductance argument, subsequent calls to `show` will update the plot, 
+% plotting the new activation curves over the old ones, allowing you to compare different channels.
 %
 %
 %
@@ -28,37 +31,37 @@
 
 
 
-function show(self,thiscond, custom_name)
+function show(self,obj, custom_name)
 
 
-if isa(thiscond,'cpplab')
+if isa(obj,'cpplab')
 	% we have been given a cpplab object
 
 
-	if strcmp(thiscond.cpp_class_name,'compartment')
+	if strcmp(obj.cpp_class_name,'compartment')
 		% we are being given a compartment, so we need to run this on every 
 		% channel in that compartment
-		channels = thiscond.find('conductance');
+		channels = obj.find('conductance');
 		for i = 1:length(channels)
-			self.show(thiscond.(channels{i}),channels{i});
+			self.show(obj.(channels{i}),channels{i});
 		end
 		return
 	end
 
-	corelib.assert(strcmp(thiscond.cpp_class_parent,'conductance'),'xolotl.show() only works for conductance-type objects')
+	corelib.assert(strcmp(obj.cpp_class_parent,'conductance') || strcmp(obj.cpp_class_parent,'synapse'),'xolotl.show() only works for conductance-type or synapse-type objects')
 
 
-elseif isa(thiscond,'char')
-	thiscond = cpplab(thiscond);
+elseif isa(obj,'char')
+	obj = cpplab(obj);
 
-elseif isa(thiscond,'cell')
-	for i = 1:length(thiscond)
-		xolotl.show(thiscond{i});
+elseif isa(obj,'cell')
+	for i = 1:length(obj)
+		xolotl.show(obj{i});
 	end
 	return
 end
 
-if strcmp(thiscond.cpp_class_name,'Leak')
+if strcmp(obj.cpp_class_name,'Leak')
 	return
 end
 
@@ -66,18 +69,74 @@ end
 V = linspace(-200,200,1e3);
 
 % build a mex-able binary using the class path
-binary_name = str2func(xolotl.compileActivationFcn(thiscond, self.cpp_folder));
+if strcmp(obj.cpp_class_parent,'synapse')
+	binary_name = str2func(xolotl.compileSynapseFcn(obj, self.cpp_folder));
+	params = obj.get(obj.cpp_constructor_signature);
+
+else
+	binary_name = str2func(xolotl.compileActivationFcn(obj, self.cpp_folder));
 
 
-params = thiscond.get(thiscond.cpp_constructor_signature);
+	params = obj.get(obj.cpp_constructor_signature);
 
-[data.minf, data.hinf, data.taum, data.tauh] = binary_name(V, params);
+	[data.minf, data.hinf, data.taum, data.tauh] = binary_name(V, params);
 
-if length(unique(data.hinf)) == 1
-	data.tauh = NaN*data.tauh;
-	data.hinf = NaN*data.tauh;
+	if length(unique(data.hinf)) == 1
+		data.tauh = NaN*data.tauh;
+		data.hinf = NaN*data.tauh;
+	end
+
 end
 
+
+
+
+if strcmp(obj.cpp_class_parent,'synapse')
+
+
+	V_base = -80;
+	V_step = -80:1:50;
+
+
+
+
+	figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
+	ax.sinf = subplot(1,2,1); hold on
+	xlabel('V (mV)')
+	ylabel('s_{\infty} ')
+
+	ax.taus = subplot(1,2,2); hold on
+	xlabel('V (mV)')
+	ylabel('Approximate \tau_{s} (ms)')
+
+	sinf = NaN*V_step;
+	taus = NaN*V_step;
+
+	for i = 1:length(V_step)
+		V = zeros(1e4,1) + V_step(i);
+		V(1:2e3) = V_base;
+
+		V = V(:);
+
+		s = binary_name(V,params);
+
+		sinf(i) = s(end);
+
+		taus(i) = find(s>s(end)/exp(1),1,'first')/10; % ms
+
+	end
+
+	l  =plot(ax.sinf,V_step,sinf,'k','DisplayName',obj.cpp_class_name);
+	plot(ax.taus,V_step,taus,'k')
+
+	legend(l);
+
+
+	figlib.pretty()
+
+	return
+
+end
 
 
 
