@@ -153,7 +153,7 @@ configured in the xfit object:
 
 - `x` (the xolotl object)
 - `SimFcn`
-- `parameter_names`
+- `FitParameters`
 
 
 

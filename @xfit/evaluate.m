@@ -25,14 +25,14 @@
 % 
 % - `x` (the xolotl object)
 % - `SimFcn`
-% - `parameter_names`
+% - `FitParameters`
 % 
 % See Also:
 % xfit.fit
 
 function c = evaluate(self,params)
 % update parameters in the xolotl object using x
-for i = 1:length(self.parameter_names)
-	self.x.set(self.parameter_names{i},params(i))
-end
+
+self.x.set(self.FitParameters,params)
+
 c = self.SimFcn(self.x, self.data);

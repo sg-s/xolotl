@@ -78,7 +78,7 @@ for i = 1:length(SimFcnHash)
 
 	self.x.set(self.SaveParameters,params(i,:))
 
-	cost(i) = self.evaluate(self.x.get(self.parameter_names));
+	cost(i) = self.evaluate(self.x.get(self.FitParameters));
 
 
 

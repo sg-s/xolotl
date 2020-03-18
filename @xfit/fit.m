@@ -29,7 +29,7 @@
 
 function fit(self)
 
-corelib.assert(~isempty(self.parameter_names),'No parameter names defined')
+corelib.assert(~isempty(self.FitParameters),'No parameter names defined')
 corelib.assert(~isempty(self.x),'Xolotl object not configured')
 corelib.assert(~isempty(self.SimFcn),'Simulation function not set')
 
@@ -47,7 +47,7 @@ self.timestamp = NaN(1e3,1);
 self.best_cost = NaN(1e3,1);
 
 
-corelib.assert(length(unique([length(self.seed),length(self.parameter_names) , length(self.lb), length(self.ub)])) == 1, 'Length of lower bounds, upper bounds, parameter_names, and seed should be the same')
+corelib.assert(length(unique([length(self.seed),length(self.FitParameters) , length(self.lb), length(self.ub)])) == 1, 'Length of lower bounds, upper bounds, FitParameters, and seed should be the same')
 
 switch self.engine
 case 'patternsearch'
@@ -68,4 +68,4 @@ case 'ga'
 end
 
 % now update the parameters of the xolotl object
-self.x.set(self.parameter_names,self.seed)
+self.x.set(self.FitParameters,self.seed)

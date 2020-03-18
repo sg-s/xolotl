@@ -16,7 +16,7 @@ properties
 	ShowFcn function_handle 
 
 	% parameters to optimize
-	parameter_names cell
+	FitParameters cell
 	seed double
 	lb double
 	ub double
@@ -87,7 +87,7 @@ methods
 	end
 
 
-	function self = set.parameter_names(self,names)
+	function self = set.FitParameters(self,names)
 		% check that a xolotl object is configured
 		corelib.assert(~isempty(self.x),'First configure a xolotl object')
 
@@ -101,7 +101,7 @@ methods
 			end
 
 		end
-		self.parameter_names = names;
+		self.FitParameters = names;
 	end
 
 
