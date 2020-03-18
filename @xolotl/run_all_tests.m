@@ -29,6 +29,8 @@
 
 function [passed, total] = run_all_tests(cleanup)
 
+% create the parpool
+gcp;
 
 hashlib.test()
 

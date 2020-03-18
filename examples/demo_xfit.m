@@ -19,7 +19,7 @@ p.SimFcn = @xolotl.examples.burstingCostFcn;
 p.x = x;
 
 % we optimzie over all maximal conductances
-p.parameter_names = x.find('*gbar');
+p.FitParameters = x.find('*gbar');
 % lower bound values
 p.lb = [100 0 0 0 0 500 0 500];
 % upper bound values
