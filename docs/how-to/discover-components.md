@@ -3,7 +3,7 @@ In this document we will learn how to discover existing components in `xolotl`.
 
 ### Using [`xolotl.search()`](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#search)
 
-The `xolotl` system that underlies `xolotl` can also search for all C++ header files using wildcards. For example, to find all components that are sourced from papers authored by Astrid Prinz, we can use:
+`xolotl` can search for all C++ header files using wildcards. For example, to find all components that are sourced from papers authored by Astrid Prinz (this means it will look for .hpp files in any folder called "prinz"), we can use:
 
 ```matlab
 xolotl.search('prinz')
@@ -36,7 +36,7 @@ xolotl.search('prinz')
 
 ### Hands-on exploration
 
-Every component in `xolotl` exists a separate `C++` header file with a `*.hpp` extention. These files are organized in the `C++` folder in your `xolotl` folder. To know where this folder is, type this in your MATLAB terminal:
+Every component in `xolotl` is linked to a separate `C++` header file with a `*.hpp` extention. These files are organized in the `C++` folder in your `xolotl` folder. To know where this folder is, copy and paste this in your MATLAB terminal:
 
 ```matlab
 [fileparts(fileparts(which('xolotl'))) filesep 'c++']
