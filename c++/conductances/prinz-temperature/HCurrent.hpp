@@ -2,9 +2,9 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// H current. again, for mysterious reasons, the compiler
-// won't let me call this class "H"
-// http://jn.physiology.org/content/jn/90/6/3998.full.pdf
+// component info: temperature-sensitive H Current
+// component source [Prinz et al. 2003](http://jn.physiology.org/content/jn/90/6/3998.full.pdf)
+//
 #ifndef HCURRENT
 #define HCURRENT
 #include "conductance.hpp"

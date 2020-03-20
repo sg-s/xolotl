@@ -1,4 +1,7 @@
-// Cholingeric Synapse
+
+// component info: Graded Cholinergic synapse 
+// component source [Prinz et al. 2004](https://www.nature.com/articles/nn1352)
+//
 #ifndef CHOLINERGIC
 #define CHOLINERGIC
 #include "synapse.hpp"

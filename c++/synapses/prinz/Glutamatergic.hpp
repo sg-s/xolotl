@@ -1,4 +1,7 @@
-// GLUTAMATERGIC Synapse 
+// component info: Graded Glutamatergic synapse 
+// component source [Prinz et al. 2004](https://www.nature.com/articles/nn1352)
+//
+
 #ifndef GLUTAMATERGIC
 #define GLUTAMATERGIC
 #include "synapse.hpp"

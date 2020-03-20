@@ -2,8 +2,9 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// Slow Calcium conductance
-// http://jn.physiology.org/content/jn/90/6/3998.full.pdf
+// component info: temperature-sensitive slow Calcium current
+// component source [Prinz et al. 2003](http://jn.physiology.org/content/jn/90/6/3998.full.pdf)
+//
 #ifndef CAS
 #define CAS
 #include "conductance.hpp"

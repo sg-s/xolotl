@@ -1,5 +1,39 @@
 In this document we will learn how to discover existing components in `xolotl`.
 
+
+### Using [`xolotl.search()`](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#search)
+
+The `xolotl` system that underlies `xolotl` can also search for all C++ header files using wildcards. For example, to find all components that are sourced from papers authored by Astrid Prinz, we can use:
+
+```matlab
+xolotl.search('prinz')
+
+------------------------------------------------------------------------------------
+ Name                   Parent Class        Object Information
+------------------------------------------------------------------------------------
+ ACurrent               conductance         A Current (K+)                                    
+ CaS                    conductance         Slow Calcium current                              
+ CaT                    conductance         Transient calcium current                         
+ HCurrent               conductance         Hyper-polarization activated inward current       
+ KCa                    conductance         Calcium activated Potassium current               
+ Kd                     conductance         Inward rectifying potassium current               
+ NaV                    conductance         Sodium conductance                                
+ ACurrent               conductance         temperature-sensitive A current (K+)              
+ CaS                    conductance         temperature-sensitive slow Calcium current        
+ CaT                    conductance         temperature-sensitive transient calcium           
+ HCurrent               conductance         temperature-sensitive H Current                   
+ KCa                    conductance         temperature-sensitive slow Calcium                
+ Kd                     conductance         temperature-sensitive inward Potassium            
+ NaV                    conductance         temperature-sensitive Sodium                      
+ CalciumMech            mechanism           Calcium buffering and influx mechanism            
+ Cholinergic            synapse             Graded Cholinergic synapse                        
+ Glutamatergic          synapse             Graded Glutamatergic synapse                      
+ Cholinergic            synapse             temperature-sensitive graded Cholinergic synapse  
+ Glutamatergic          synapse             temperature-sensitive graded Glutamatergic synapse
+------------------------------------------------------------------------------------
+```
+
+
 ### Hands-on exploration
 
 Every component in `xolotl` exists a separate `C++` header file with a `*.hpp` extention. These files are organized in the `C++` folder in your `xolotl` folder. To know where this folder is, type this in your MATLAB terminal:
@@ -17,63 +51,6 @@ Knowing what components are available is as simple as looking for yourself in th
 
 For example, the delayed rectifier potassium conductance published in Liu *et al.* 1998 can be found in `../xolotl/c++/conductances/liu/Kd.hpp`.
 
-### Using [`cpplab.search()`](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#search)
-
-The `cpplab` system that underlies `xolotl` can also search for all C++ header files using wildcards. For example, to find all components that are sourced from papers authored by Astrid Prinz, we can use:
-
-```matlab
-a = cpplab.search('prinz')
-
-a =
-  19×1 cell array
-    {'conductances/prinz/ACurrent.hpp'             }
-    {'conductances/prinz/CaS.hpp'                  }
-    {'conductances/prinz/CaT.hpp'                  }
-    {'conductances/prinz/HCurrent.hpp'             }
-    {'conductances/prinz/KCa.hpp'                  }
-    {'conductances/prinz/Kd.hpp'                   }
-    {'conductances/prinz/NaV.hpp'                  }
-    {'conductances/prinz-temperature/ACurrent.hpp' }
-    {'conductances/prinz-temperature/CaS.hpp'      }
-    {'conductances/prinz-temperature/CaT.hpp'      }
-    {'conductances/prinz-temperature/HCurrent.hpp' }
-    {'conductances/prinz-temperature/KCa.hpp'      }
-    {'conductances/prinz-temperature/Kd.hpp'       }
-    {'conductances/prinz-temperature/NaV.hpp'      }
-    {'mechanisms/prinz/CalciumMech.hpp'            }
-    {'synapses/prinz/Cholinergic.hpp'              }
-    {'synapses/prinz/Glutamatergic.hpp'            }
-    {'synapses/prinz-temperature/Cholinergic.hpp'  }
-    {'synapses/prinz-temperature/Glutamatergic.hpp'}
-```
-
-Search for all fast, voltage-gated sodium channels.
-
-```matlab
-a = cpplab.search('NaV')
-
-a =
-  19×1 cell array
-    {'custom/NaV.hpp'                 }
-    {'dethier/NaV.hpp'                }
-    {'kispersky/NaV.hpp'              }
-    {'liu/NaV.hpp'                    }
-    {'liu-euler/NaV.hpp'              }
-    {'liu-temperature/NaV.hpp'        }
-    {'nadim98/int1/NaV.hpp'           }
-    {'nadim98/lg/NaV.hpp'             }
-    {'nadim98/mcn1/NaV.hpp'           }
-    {'odowd-aldrich/DmNaV.hpp'        }
-    {'prinz/NaV.hpp'                  }
-    {'prinz-temperature/NaV.hpp'      }
-    {'rodriguez/Int1/NaV.hpp'         }
-    {'soplata/reticular/NaV.hpp'      }
-    {'soplata/thalamocortical/NaV.hpp'}
-    {'soto-trevino05/NaV.hpp'         }
-    {'traub/NaV.hpp'                  }
-    {'turrigiano/NaV.hpp'             }
-    {'wicher/DmNaV.hpp'               }
-```
 
 
 ## See Also

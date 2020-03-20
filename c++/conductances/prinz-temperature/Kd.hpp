@@ -2,8 +2,9 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// inward rectifying potassium conductance
-// http://jn.physiology.org/content/jn/90/6/3998.full.pdf
+// component info: temperature-sensitive inward Potassium
+// component source [Prinz et al. 2003](http://jn.physiology.org/content/jn/90/6/3998.full.pdf)
+//
 #ifndef KD
 #define KD
 #include "conductance.hpp"

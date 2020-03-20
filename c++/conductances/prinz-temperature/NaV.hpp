@@ -2,8 +2,9 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// Sodium CONDUCTANCE
-// http://jn.physiology.org/content/jn/90/6/3998.full.pdf
+// component info: temperature-sensitive Sodium 
+// component source [Prinz et al. 2003](http://jn.physiology.org/content/jn/90/6/3998.full.pdf)
+//
 #ifndef NAV
 #define NAV
 #include "conductance.hpp"
