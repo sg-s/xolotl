@@ -1,23 +1,12 @@
-## Plot voltage trace
 
-
-### By directly integrating the model
-
-Since the outputs from `x.integrate` are matrices when `x.output_structure = 0`, you can plot them as you would any other matrix of vector in MATLAB. 
-
-For example,
+This document describes how you can make plots using xolotl. Here, we assume you have a single compartment model set up as follows:
 
 ```matlab
-x = xolotl.make_bursting_neuron;
-V = x.integrate;
-time = x.dt:x.dt:x.t_end;
-plot(time,V,'k')
-xlabel('Time (ms)')
-ylabel('V_m (mV)')
+x = xolotl.examples.BurstingNeuron;
 ```
-makes this figure:
 
-![](https://user-images.githubusercontent.com/6005346/50520183-e11d3e00-0a8c-11e9-8f87-74eb6a98e672.png)
+
+## Plot voltage/Calcium
 
 
 ### Using the [`plot`](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#plot) function
@@ -48,9 +37,71 @@ makes this figure:
 
 ![](https://user-images.githubusercontent.com/6005346/50520224-1c1f7180-0a8d-11e9-9825-d42869338d33.png)
 
-## Show activation curves of channels 
 
-The activation curves and timescale dependence on any channel can be 
+### By directly integrating the model
+
+Since the outputs from `x.integrate` are matrices when `x.output_structure = 0`, you can plot them as you would any other matrix of vector in MATLAB. 
+
+For example,
+
+```matlab
+V = x.integrate;
+time = x.dt:x.dt:x.t_end;
+plot(time,V,'k')
+xlabel('Time (ms)')
+ylabel('V_m (mV)')
+```
+makes this figure:
+
+![](https://user-images.githubusercontent.com/6005346/50520183-e11d3e00-0a8c-11e9-8f87-74eb6a98e672.png)
+
+
+## Plot Currents 
+
+### Using the [`porcupine`](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#porcupine) function
+
+
+All inward and outward currents in a periodically bursting neuron can be visualized using this function. For example, 
+
+```matlab
+x.porcupine()
+```
+
+makes this figure:
+
+![](https://user-images.githubusercontent.com/6005346/77183001-0c31ea00-6aa4-11ea-969e-3a6dd274ebda.png)
+
+
+### Using the [`currentscape`](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#currentscape) function
+
+
+The contributions of each current (or ["currentscape"](https://elifesciences.org/articles/42722)) can be visualized using the `currentscape` function. For example,
+
+```matlab
+x.currentscape
+```
+
+makes this figure:
+
+![](https://user-images.githubusercontent.com/6005346/77182736-97f74680-6aa3-11ea-9077-fcedd122e2f6.png)
+
+
+
+
+### Manually 
+
+You can always simply integrate the model and pull out every current directly. For example:
+
+```matlab
+[~,~,~,I] = x.integrate;
+```
+
+returns a matrix of all currents that you can plot. 
+
+
+## Show activation curves and timescales of channels and synapses 
+
+The activation curves and timescale dependence on any channel or synapse can be 
 plotted using the [show](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#show) method. 
 
 For example,

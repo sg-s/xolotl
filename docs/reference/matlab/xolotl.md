@@ -848,7 +848,7 @@ x.pref.show_Ca = false;
 !!! info "See Also"
     * [xolotl.manipulate](../xolotl/#manipulate)
     * [xolotl.contributingCurrents](../xolotl/#contributingcurrents)
-
+    * [xolotl.currentscape](../xolotl/#currentscape)
 
 
 
@@ -883,6 +883,34 @@ This function can plot onto both Cartesian and polar axes.
     * [xolotl.manipulate](../xolotl/#manipulate)
 
 
+
+
+
+
+
+-------
+
+### porcupine 
+
+**Syntax**
+
+```matlab
+x.porcupine()
+data = x.porcupine
+```
+
+** Description**
+
+- **`x.porcupine`**  makes a plot of voltage and inward and outward currents
+in a polar plot, wrapped to the burst period of the neuron (assuming it bursts)
+- **`data = x.porcupine`**  does not make a plot, but returns a data structure indicating
+the direction and magnitude of the greatest contribution of each current
+
+
+
+!!! info "See Also"
+    * [xolotl.plot](../xolotl/#plot)
+    * [xolotl.currentscape](../xolotl/#currentscape)
 
 
 
