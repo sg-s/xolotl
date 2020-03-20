@@ -1,12 +1,7 @@
-// _  _ ____ _    ____ ___ _
-//  \/  |  | |    |  |  |  |
-// _/\_ |__| |___ |__|  |  |___
-//
-// EAG channels: K+ channels that are inactivated by Calcium.
+// component info: EAG channel (K+) that is inactivated by Calcium.
 // this variant is an extra sensitive version of the channel
 // that is 2 orders more sensitive
-// paper source:
-// https://www.physiology.org/doi/10.1152/jn.00820.2017
+// component source [Bronk et al. 2017](https://journals.physiology.org/doi/full/10.1152/jn.00820.2017)
 
 #ifndef EAGES
 #define EAGES

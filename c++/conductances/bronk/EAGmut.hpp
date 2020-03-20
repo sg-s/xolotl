@@ -2,10 +2,9 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// EAG channels: K+ channels that are inactivated by Calcium.
+// component info: mutant EAG channels that are inactivated by Calcium.
 // mutant, less sensitive to Ca
-// paper source:
-// https://www.physiology.org/doi/10.1152/jn.00820.2017
+// component source [Bronk et al. 2017](https://www.physiology.org/doi/10.1152/jn.00820.2017)
 
 #ifndef EAGMUT
 #define EAGMUT

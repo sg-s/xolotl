@@ -2,9 +2,9 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// EAG channels: K+ channels that are inactivated by Calcium.
-// paper source:
-// https://www.physiology.org/doi/10.1152/jn.00820.2017
+// component info: WT EAG channels that are inactivated by Calcium.
+// component source [Bronk et al. 2017](https://www.physiology.org/doi/10.1152/jn.00820.2017)
+//
 #ifndef EAGWT
 #define EAGWT
 #include "conductance.hpp"

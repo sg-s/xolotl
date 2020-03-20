@@ -2,8 +2,9 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// Fast Calcium CONDUCTANCE
-// http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
+// component info: Transient Ca current
+// component source [Liu et al. 98](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)
+//
 #ifndef CAT
 #define CAT
 #include "conductance.hpp"

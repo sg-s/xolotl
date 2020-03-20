@@ -2,8 +2,9 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// CalciumMech mechanism
-// as in Prinz et al 2003 (and others)
+// component info: Calcium buffering and influx mechanism
+// component source [Prinz et al. 2003](https://journals.physiology.org/doi/full/10.1152/jn.00641.2003)
+
 
 #ifndef CALCIUMMECH
 #define CALCIUMMECH

@@ -2,8 +2,9 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// Slow Calcium conductance
-// http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
+// component info: Slow Ca conductance
+// component source [Liu et al. 98](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)
+//
 #ifndef CAS
 #define CAS
 #include "conductance.hpp"

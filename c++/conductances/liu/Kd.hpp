@@ -2,8 +2,9 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// inward rectifying potassium conductance
-// http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
+// component info: inward rectifying Potassium current
+// component source [Liu et al. 98](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)
+//
 #ifndef KD
 #define KD
 #include "conductance.hpp"

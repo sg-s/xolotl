@@ -2,8 +2,8 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// Sodium CONDUCTANCE
-// http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
+// component info: Fast sodium conductance 
+// component source [Liu et al. 98](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)
 #ifndef NAV
 #define NAV
 #include "conductance.hpp"

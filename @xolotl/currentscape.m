@@ -31,7 +31,7 @@
 % xolotl.manipulate
 % [Visualization of currents in neural models with similar behavior and different conductance densities](https://elifesciences.org/articles/42722)
 
-function varargout = currentscape(self,~)
+function varargout = currentscape(self,plot_here)
 
 
 corelib.assert(length(self.Children)==1,'The currentscapes method only works for single-compartment models')
@@ -56,6 +56,7 @@ norm_currents = [I_in, I_out];
 
 if nargout > 0
 	varargout{1} = norm_currents;
+	varargout{2} = V;
 	return
 end
 
@@ -67,19 +68,39 @@ I_out = I_out(:,idx);
 
 C = colormaps.dcol(size(I_in,2));
 
+make_axes = true;
+
+if nargin == 2
+	if isa(plot_here,'matlab.graphics.axis.Axes') && isvalid(plot_here)
+		ax.currentscape = plot_here;
+		make_axes = false;
+
+	end
+end
+
 
 if isempty(self.handles) || ~isfield(self.handles,'currentscape') || ~isvalid(self.handles.currentscape)
 
-	self.handles.currentscape = figure('outerposition',[300 300 888 901],'PaperUnits','points','PaperSize',[888 901]); hold on
+	if make_axes
 
-	ax.voltage = subplot(4,1,1); hold on
-	ax.currentscape = subplot(4,1,2:4); hold on
-	ylabel(ax.voltage,'V_m (mV)')
+		self.handles.currentscape = figure('outerposition',[300 300 888 901],'PaperUnits','points','PaperSize',[888 901]); hold on
 
-	ax.voltage.XColor = 'w';
+		ax.voltage = subplot(4,1,1); hold on
+		ax.currentscape = subplot(4,1,2:4); hold on
+		ylabel(ax.voltage,'V_m (mV)')
+
+		ax.voltage.XColor = 'w';
+
+		self.handles.currentscape_V = plot(ax.voltage,time,V,'k');
+
+		ax.voltage.Position(3) = .6;
+
+	end
+
+	
 	ax.currentscape.YColor = 'w';
 
-	self.handles.currentscape_V = plot(ax.voltage,time,V,'k');
+	
 
 
 	
@@ -102,26 +123,33 @@ if isempty(self.handles) || ~isfield(self.handles,'currentscape') || ~isvalid(se
 		a(i).FaceColor = C((i),:);
 	end
 
-	% fake plots for legend
-	for i = 1:length(a)
-		lh(i) = plot(NaN,NaN,'.','Color',C(i,:),'MarkerSize',33);
-	end
 
 
-	L = legend(lh,self.(self.Children{1}).find('conductance'));
+	
 
 
 	xlabel(ax.currentscape,'Time (s)')
-	figlib.pretty('PlotLineWidth',1)
+	
+
+	if make_axes
+		% fake plots for legend
+		for i = 1:length(a)
+			lh(i) = plot(NaN,NaN,'.','Color',C(i,:),'MarkerSize',33);
+		end
 
 
-	ax.voltage.Position(3) = .6;
-	ax.currentscape.Position(3) = .6;
+		L = legend(lh,self.(self.Children{1}).find('conductance'));
 
-	drawnow
+		ax.currentscape.Position(3) = .6;
 
-	L.Position(1) = .75;
-	drawnow
+		drawnow
+
+		L.Position(1) = .75;
+		drawnow
+
+		figlib.pretty('PlotLineWidth',1)
+
+	end
 
 	self.handles.currentscape_out = a;
 
@@ -133,7 +161,10 @@ if isempty(self.handles) || ~isfield(self.handles,'currentscape') || ~isvalid(se
 
 else
 
-	self.handles.currentscape_V.YData = V;
+	try
+		self.handles.currentscape_V.YData = V;
+	catch
+	end
 	
 	a = self.handles.currentscape_in;
 
