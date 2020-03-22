@@ -86,19 +86,19 @@ void LiuController::connectToLiuSensor() {
 
         if (this_mech == "FastSensor") {
             Fast = (channel->container)->getMechanismPointer(i);
-            mexPrintf("connected to fast sensor\n");
+            // mexPrintf("connected to fast sensor\n");
             sensor_connected++;
         }
 
         if (this_mech == "SlowSensor") {
             Slow = (channel->container)->getMechanismPointer(i);
-            mexPrintf("connected to SlowSensor\n");
+            // mexPrintf("connected to SlowSensor\n");
             sensor_connected++;
         }
 
         if (this_mech == "DCSensor") {
             DC = (channel->container)->getMechanismPointer(i);
-            mexPrintf("connected to DC sensor\n");
+            // mexPrintf("connected to DC sensor\n");
             sensor_connected++;
         }
     }
@@ -158,16 +158,15 @@ void LiuController::integrate(void) {
     }
 
 
-    double gdot = (FTarget - Fast->getState(0));
-    gdot += (STarget - Slow->getState(0));
-    gdot += (DTarget - DC->getState(0));
-    gdot = gdot*(dt/tau);
+    double gdot = A*(FTarget - Fast->getState(0));
+    gdot += B*(STarget - Slow->getState(0));
+    gdot += C*(DTarget - DC->getState(0));
+    gdot = gdot*(dt/tau)*(channel->gbar);
 
-    channel->gbar += gdot;
 
     // negative conductances disallowed 
-    if ((channel->gbar) < 0) {
-        channel->gbar = 0;
+    if ((channel->gbar + gdot) > 0) {
+        channel->gbar += gdot;
     }
 
 }
