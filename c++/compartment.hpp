@@ -195,8 +195,7 @@ public:
             A = 2*pi*radius*len; // + 2*pi*radius*radius;
             vol = pi*radius*radius*len;
 
-            if (!isnan(shell_thickness))
-            {
+            if (!isnan(shell_thickness)) {
                 double inner_radius = radius - shell_thickness;
                 if (inner_radius > 0)
                 {
@@ -401,9 +400,9 @@ they can throw an error, aborting the simulation.
 */
 void compartment::checkSolvers(int solver_order) {
 
-    if (solver_order == 0){
+    if (solver_order == 0) {
         return;
-    } else if (solver_order == 4){
+    } else if (solver_order == 4) {
         for (int i=0; i<n_cond; i++) {
             cond[i]->checkSolvers(solver_order);
         }
@@ -479,10 +478,8 @@ in this compartment, identified by its class name.
 conductance* compartment::getConductancePointer(const char* cond_class) {
     conductance* req_cond = NULL;
 
-    for (int i = 0; i < n_cond; i ++)
-    {
-        if ((cond[i]->getClass()) == cond_class)
-        {
+    for (int i = 0; i < n_cond; i ++) {
+        if ((cond[i]->getClass()) == cond_class) {
             req_cond = cond[i];
         }
     }
@@ -531,10 +528,8 @@ specifying where it should write values to
 * [getFullSynapseState](./compartment.md#getfullsynapsestate)
 
 */
-int compartment::getFullCurrentState(double *cond_state, int idx)
-{
-    for (int i = 0; i < n_cond; i ++)
-    {
+int compartment::getFullCurrentState(double *cond_state, int idx) {
+    for (int i = 0; i < n_cond; i ++) {
         cond_state[idx] = cond[i]->getCurrent(V);
         idx ++;
     }
@@ -554,8 +549,7 @@ what their data dimension is, and adding up all those numbers.
 */
 int compartment::getFullMechanismSize(void) {
     int full_size = 0;
-    for (int i=0; i<n_mech; i++)
-    {
+    for (int i=0; i<n_mech; i++) {
         full_size += mech[i]->getFullStateSize();
     }
     return full_size;

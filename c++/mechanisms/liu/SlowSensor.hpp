@@ -6,14 +6,14 @@
 // component source [Liu et al. 98](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)
 //
 
-#ifndef LIUSENSOR
-#define LIUSENSOR
+#ifndef SLOWSENSOR
+#define SLOWSENSOR
 #include "mechanism.hpp"
 #include <limits>
 
 
 //inherit mechanism class spec
-class LiuSensor: public mechanism {
+class SlowSensor: public mechanism {
 
 protected:
     double m_inf;
@@ -28,7 +28,7 @@ public:
     double m = 0;
     double h = 1;
 
-    // parameters for LiuSensor1
+    // parameters for SlowSensor
     double ZM;
     double ZH;
     double tau_m;
@@ -36,25 +36,25 @@ public:
     double G;
 
     // specify parameters + initial conditions 
-    LiuSensor(double ZM_, double ZH_, double tau_m_, double tau_h_, double G_, double X_, double m_, double h_)
+    SlowSensor(double ZM_, double ZH_, double tau_m_, double tau_h_, double G_, double X_, double m_, double h_)
     {
         // wiring 
-         ZM = ZM_;
-         ZH = ZH_;
-         tau_m = tau_m_;
-         tau_h = tau_h_;
-         G = G_;
-         X = X_;
+        ZM = ZM_;
+        ZH = ZH_;
+        tau_m = tau_m_;
+        tau_h = tau_h_;
+        G = G_;
+        X = X_;
 
-         // these defaults make it a "F" type sensor
-         if (isnan(ZM)) {ZM = 14.2;}
-         if (isnan(ZH)) {ZH = 9.8;}
-         if (isnan(tau_m)) {tau_m = .5; } // ms
-         if (isnan(tau_h)) {tau_h = 1.5;} // ms
-         if (isnan(G)) {G = 10;}
-         if (isnan(X)) {X = 0;}
-         if (isnan(m)) {m = 0;}
-         if (isnan(h)) {h = 1;}
+        // these defaults make it a "S" type sensor
+        if (isnan(ZM)) {ZM = 7.2;}
+        if (isnan(ZH)) {ZH = 2.8;}
+        if (isnan(tau_m)) {tau_m = 50; } // ms
+        if (isnan(tau_h)) {tau_h = 60;} // ms
+        if (isnan(G)) {G = 3;}
+        if (isnan(X)) {X = 0;}
+        if (isnan(m)) {m = 0;}
+        if (isnan(h)) {h = 1;}
 
 
     }
@@ -78,40 +78,40 @@ public:
 
 };
 
-string LiuSensor::getClass() {
-    return "LiuSensor";
+string SlowSensor::getClass() {
+    return "SlowSensor";
 }
 
 
-double LiuSensor::getState(int idx){return X;}
+double SlowSensor::getState(int idx){return X;}
 
 
-int LiuSensor::getFullStateSize(){return 1; }
+int SlowSensor::getFullStateSize(){return 1; }
 
 
-int LiuSensor::getFullState(double *cont_state, int idx) {
+int SlowSensor::getFullState(double *cont_state, int idx) {
     cont_state[idx] = X;
     idx++;
     return idx;
 }
 
 // connection methods
-void LiuSensor::connect(compartment* comp_) {
+void SlowSensor::connect(compartment* comp_) {
     comp = comp_;
     comp->addMechanism(this);
 }
 
-void LiuSensor::connect(conductance* cond_) {
-    mexErrMsgTxt("[LiuSensor] This mechanism cannot connect to a conductance object");
+void SlowSensor::connect(conductance* cond_) {
+    mexErrMsgTxt("[SlowSensor] This mechanism cannot connect to a conductance object");
 }
 
-void LiuSensor::connect(synapse* syn_) {
-    mexErrMsgTxt("[LiuSensor] This mechanism cannot connect to a synapse object");
+void SlowSensor::connect(synapse* syn_) {
+    mexErrMsgTxt("[SlowSensor] This mechanism cannot connect to a synapse object");
 }
 
 
 
-void LiuSensor::integrate(void) {
+void SlowSensor::integrate(void) {
     
 
     // convert i_Ca into nA/nF
@@ -123,25 +123,22 @@ void LiuSensor::integrate(void) {
 
     // compute m and h
     m = m_inf + (m - m_inf)*exp(-dt/tau_m);
-
-    if (tau_h > 0) {
-        h = h_inf + (h - h_inf)*exp(-dt/tau_h);
-    }
+    h = h_inf + (h - h_inf)*exp(-dt/tau_h);
 
     X = G*m*m*h;
 
 }
 
 // activation/inactivation functions
-double LiuSensor::boltzmann(double x) {
+double SlowSensor::boltzmann(double x) {
     return 1/(1 + exp(x));
 }
 
 
 
-void LiuSensor::checkSolvers(int k) {
+void SlowSensor::checkSolvers(int k) {
     if (k == 0) {return;}
-    else {mexErrMsgTxt("[LiuSensor] unsupported solver order\n");}
+    else {mexErrMsgTxt("[SlowSensor] unsupported solver order\n");}
 }
 
 

@@ -35,8 +35,7 @@ public:
 
     // specify parameters + initial conditions for
     // mechanism that controls a conductance
-    IntegralController(double tau_m_, double tau_g_, double m_)
-    {
+    IntegralController(double tau_m_, double tau_g_, double m_) {
 
         tau_m = tau_m_;
         tau_g = tau_g_;
@@ -80,8 +79,7 @@ double IntegralController::getState(int idx)
 int IntegralController::getFullStateSize(){return 2; }
 
 
-int IntegralController::getFullState(double *cont_state, int idx)
-{
+int IntegralController::getFullState(double *cont_state, int idx) {
     // give it the current mRNA level
     cont_state[idx] = m;
 
@@ -102,8 +100,7 @@ int IntegralController::getFullState(double *cont_state, int idx)
 }
 
 
-void IntegralController::connect(conductance * channel_)
-{
+void IntegralController::connect(conductance * channel_) {
 
     // connect to a channel
     channel = channel_;
@@ -125,13 +122,11 @@ void IntegralController::connect(conductance * channel_)
 
 }
 
-void IntegralController::connect(compartment* comp_)
-{
+void IntegralController::connect(compartment* comp_) {
     mexErrMsgTxt("[IntegralController] This mechanism cannot connect to a compartment object");
 }
 
-void IntegralController::connect(synapse* syn_)
-{
+void IntegralController::connect(synapse* syn_) {
 
     // connect to a synpase
     syn = syn_;
@@ -150,12 +145,10 @@ void IntegralController::connect(synapse* syn_)
 }
 
 
-void IntegralController::integrate(void)
-{
+void IntegralController::integrate(void) {
 
 
-    switch (control_type)
-    {
+    switch (control_type) {
         case 0:
             mexErrMsgTxt("[IntegralController] misconfigured controller. Make sure this object is contained by a conductance or synapse object");
             break;
