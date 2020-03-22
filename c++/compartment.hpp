@@ -132,7 +132,7 @@ public:
     double I_ext; // all external currents are summed here
     double I_clamp; // this is the current required to clamp it
     int n_cond; // this keep tracks of the # channels
-    int n_cont; // # of mechanisms
+    int n_mech; // # of mechanisms
     int n_syn; // # of synapses
     int n_axial_syn;
 
@@ -210,7 +210,7 @@ public:
         E_Ca = 0;           // because this will be computed from the Nernst eq.
         i_Ca = 0;           // this is the current density (nA/mm^2)
         n_cond = 0;         // number of conductances
-        n_cont = 0;         // number of controllers
+        n_mech = 0;         // number of controllers
         n_syn = 0;          // number of synapses
         n_axial_syn = 0;    // number of axial synapses
         delta_V = 0;        // instantaneous change in voltage
@@ -359,8 +359,8 @@ void compartment::addMechanism(mechanism *mech_) {
     mech_->temperature = temperature;
     mech_->temperature_ref = temperature_ref;
     cont.push_back(mech_);
-    mech_->mechanism_idx = n_cont; // tell the mechanism what rank it has
-    n_cont++;
+    mech_->mechanism_idx = n_mech; // tell the mechanism what rank it has
+    n_mech++;
 
     // also store the mechanism's full state size
     mechanism_sizes.push_back(mech_->getFullStateSize());
@@ -408,7 +408,7 @@ void compartment::checkSolvers(int solver_order) {
             cond[i]->checkSolvers(solver_order);
         }
 
-        for (int i=0; i<n_cont; i++) {
+        for (int i=0; i<n_mech; i++) {
             cont[i]->checkSolvers(solver_order);
         }
 
@@ -554,7 +554,7 @@ what their data dimension is, and adding up all those numbers.
 */
 int compartment::getFullMechanismSize(void) {
     int full_size = 0;
-    for (int i=0; i<n_cont; i++)
+    for (int i=0; i<n_mech; i++)
     {
         full_size += cont[i]->getFullStateSize();
     }
@@ -581,7 +581,7 @@ specifying where it should write values to
 */
 int compartment::getFullMechanismState(double *mech_state, int idx)
 {
-    for (int i = 0; i < n_cont; i ++)
+    for (int i = 0; i < n_mech; i ++)
     {
 
         cont[i]->getFullState(mech_state, idx);
@@ -642,7 +642,7 @@ This method returns a pointer to a mechanism stored in this
 compartment, identified by its numerical index.
 */
 mechanism * compartment::getMechanismPointer(int mech_idx){
-    if (mech_idx < n_cont) { return cont[mech_idx];}
+    if (mech_idx < n_mech) { return cont[mech_idx];}
     else { return NULL; }
 }
 
@@ -655,7 +655,7 @@ type, also in this compartment.
 mechanism* compartment::getMechanismPointer(const char* cond_class){
     mechanism* req_cont = NULL;
 
-    for (int i = 0; i < n_cont; i ++) {
+    for (int i = 0; i < n_mech; i ++) {
         if ((cont[i]->controlling_class) == cond_class) {
             req_cont = cont[i];
         }
@@ -816,7 +816,7 @@ simply calls the integrate method on every mechanism in the
 compartment.
 */
 void compartment::integrateMechanisms(void) {
-    for (int i=0; i<n_cont; i++) {
+    for (int i=0; i<n_mech; i++) {
         cont[i]->integrate();
     }
 }
@@ -881,7 +881,7 @@ void compartment::integrateMS(int k){
 
 
     // mechanisms
-    for (int i=0; i<n_cont; i++) {
+    for (int i=0; i<n_mech; i++) {
         cont[i]->integrateMS(k, V_MS, Ca_MS);
     }
 

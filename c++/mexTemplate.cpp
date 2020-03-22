@@ -98,7 +98,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int full_controller_sizes[n_comp];
     int full_controller_size = 0;
     for (int i = 0; i < n_comp; i ++) {
-        int n_cont = (xolotl_network.comp[i])->n_cont;
+        int n_mech = (xolotl_network.comp[i])->n_mech;
 
         full_controller_sizes[i] = xolotl_network.comp[i]->getFullMechanismSize();
         full_controller_size += full_controller_sizes[i];
@@ -136,7 +136,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     int idx = 0;
     for(int j = 0; j < n_comp; j++) {
-        for (int k = 0; k < xolotl_network.comp[j]->n_cont; k++) {
+        for (int k = 0; k < xolotl_network.comp[j]->n_mech; k++) {
             int mech_size = (xolotl_network.comp[j]->getMechanismPointer(k))->getFullStateSize();
             output_state[begin_mechansism_sizes+idx] = mech_size;
             idx++;
