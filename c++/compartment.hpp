@@ -33,7 +33,7 @@ protected:
 
     vector<conductance*> cond; // pointers to all conductances in compartment
     vector<synapse*> syn; // pointers to synapses onto this neuron.
-    vector<mechanism*> cont; // pointers to mechanisms
+    vector<mechanism*> mech; // pointers to mechanisms
     vector<int> mechanism_sizes; // stores sizes of each mechanism's full state
     vector<int> synapse_sizes; // stores sizes of each mechanism's full state
 
@@ -340,9 +340,9 @@ void compartment::addConductance(conductance *cond_) {
 This method adds a mechanism object to this compartment.
 It does the following things:
 
-1. Adds a pointer to the conductance to a vector of pointers called `cont`
+1. Adds a pointer to the conductance to a vector of pointers called `mech`
 2. Updates various attributes of the conductance like verbosity, etc.
-3. Tells the mechanism what its ordering in `cont` is by updating `mechanism_idx` in that mechanism object
+3. Tells the mechanism what its ordering in `mech` is by updating `mechanism_idx` in that mechanism object
 4. Determines the data frame size of this object by calling `getFullStateSize` and storing this in `mechanism_sizes`
 
 **See Also**
@@ -358,7 +358,7 @@ void compartment::addMechanism(mechanism *mech_) {
     // mech_->verbosity = verbosity;
     mech_->temperature = temperature;
     mech_->temperature_ref = temperature_ref;
-    cont.push_back(mech_);
+    mech.push_back(mech_);
     mech_->mechanism_idx = n_mech; // tell the mechanism what rank it has
     n_mech++;
 
@@ -409,7 +409,7 @@ void compartment::checkSolvers(int solver_order) {
         }
 
         for (int i=0; i<n_mech; i++) {
-            cont[i]->checkSolvers(solver_order);
+            mech[i]->checkSolvers(solver_order);
         }
 
         for (int i=0; i<n_syn; i++) {
@@ -556,7 +556,7 @@ int compartment::getFullMechanismSize(void) {
     int full_size = 0;
     for (int i=0; i<n_mech; i++)
     {
-        full_size += cont[i]->getFullStateSize();
+        full_size += mech[i]->getFullStateSize();
     }
     return full_size;
 }
@@ -579,12 +579,9 @@ specifying where it should write values to
 * [getFullCurrentState](./compartment.md#getfullcurrentstate)
 
 */
-int compartment::getFullMechanismState(double *mech_state, int idx)
-{
-    for (int i = 0; i < n_mech; i ++)
-    {
-
-        cont[i]->getFullState(mech_state, idx);
+int compartment::getFullMechanismState(double *mech_state, int idx) {
+    for (int i = 0; i < n_mech; i ++) {
+        mech[i]->getFullState(mech_state, idx);
         idx += mechanism_sizes[i];
 
     }
@@ -605,8 +602,7 @@ what their data dimension is, and adding up all those numbers.
 */
 int compartment::getFullSynapseSize(void) {
     int full_size = 0;
-    for (int i=0; i<n_syn; i++)
-    {
+    for (int i=0; i<n_syn; i++) {
         full_size += syn[i]->getFullStateSize();
     }
     return full_size;
@@ -642,7 +638,7 @@ This method returns a pointer to a mechanism stored in this
 compartment, identified by its numerical index.
 */
 mechanism * compartment::getMechanismPointer(int mech_idx){
-    if (mech_idx < n_mech) { return cont[mech_idx];}
+    if (mech_idx < n_mech) { return mech[mech_idx];}
     else { return NULL; }
 }
 
@@ -656,8 +652,8 @@ mechanism* compartment::getMechanismPointer(const char* cond_class){
     mechanism* req_cont = NULL;
 
     for (int i = 0; i < n_mech; i ++) {
-        if ((cont[i]->controlling_class) == cond_class) {
-            req_cont = cont[i];
+        if ((mech[i]->controlling_class) == cond_class) {
+            req_cont = mech[i];
         }
     }
 
@@ -817,7 +813,7 @@ compartment.
 */
 void compartment::integrateMechanisms(void) {
     for (int i=0; i<n_mech; i++) {
-        cont[i]->integrate();
+        mech[i]->integrate();
     }
 }
 
@@ -882,7 +878,7 @@ void compartment::integrateMS(int k){
 
     // mechanisms
     for (int i=0; i<n_mech; i++) {
-        cont[i]->integrateMS(k, V_MS, Ca_MS);
+        mech[i]->integrateMS(k, V_MS, Ca_MS);
     }
 
 
