@@ -2,9 +2,8 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// Integral controller, as in O'Leary et al
-// This controller can control either a synapse
-// or a conductance
+// component source [O'Leary et al. 2014](https://www.sciencedirect.com/science/article/pii/S089662731400292X)
+// component info: Integral controller of conductances and synapses
 
 #ifndef INTEGRALCONTROLLER
 #define INTEGRALCONTROLLER

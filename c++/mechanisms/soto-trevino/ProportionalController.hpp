@@ -2,13 +2,10 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// Proportional Controller suggested to
-// regulate synapse strengths in a
-// two cell half-center oscillator
 //
-// from:
-// Soto-Trevino et al 2001
-// https://www.nature.com/articles/nn0301_297
+// component info: Proportional controller of synapse strengths 
+// component source: [Soto-Trevino et al 2001](https://www.nature.com/articles/nn0301_297)
+// 
 //
 #ifndef PROPORTIONALCONTROLLER
 #define PROPORTIONALCONTROLLER

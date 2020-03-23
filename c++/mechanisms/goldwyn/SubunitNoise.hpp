@@ -2,9 +2,9 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// Subunit Noise generator
-// as in Goldwyn and Shea-Brown PLoS Comp Bio
-// https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002247
+// 
+// component info: Subunit Noise generator
+// component source: [Goldwyn and Shea-Brown](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002247)
 // this affect a single conductance type
 
 #ifndef SUBUNITNOISE

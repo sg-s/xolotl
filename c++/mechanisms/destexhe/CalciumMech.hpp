@@ -4,17 +4,19 @@
 //
 // Calcium mechanism
 //
-// A modified version of the Buchholtz mechanism
+// component info: A modified version of the Buchholtz Calcium mechanism
+// component source [Destexhe et al. 1993](https://www.sciencedirect.com/science/article/pii/S0006349593811901)
+// 
 // The salient difference is that calcium can only leak out, it can't flow out through calcium currents
 //
 // Converting between parameters in the original paper and xolotl:
 //      'vol' = 'A' * 'depth'
 //      'phi' = 1
 //
-// Destexhe, A., Babloyantz, A., and Sejnowski, T. J. (1993).
+// 
 // Ionic mechanisms for intrinsic slow oscillations in thalamic relay neurons.
 // Biophysical journal, 65(4):1538–52
-// https://www.sciencedirect.com/science/article/pii/S0006349593811901
+// 
 
 #ifndef CALCIUMMECH
 #define CALCIUMMECH

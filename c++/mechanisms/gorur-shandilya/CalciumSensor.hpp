@@ -2,12 +2,8 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// Calcium sensor
-// this mechanism averages the Calcium
-// in the compartment it is in
-// over some time window
-// useful to measure Calcium, and
-// also useful in other mechanisms
+// component info: sensor of intracellular calcium
+// component source: [Gorur-Shandilya et al. 2019](https://www.biorxiv.org/content/10.1101/753608v1.abstract)
 
 #ifndef CALCIUMSENSOR
 #define CALCIUMSENSOR
@@ -58,22 +54,19 @@ string CalciumSensor::getClass() {
 }
 
 
-double CalciumSensor::getState(int idx)
-{
+double CalciumSensor::getState(int idx) {
 
     return std::numeric_limits<double>::quiet_NaN();
 
 }
 
 
-int CalciumSensor::getFullStateSize()
-{
+int CalciumSensor::getFullStateSize() {
     return 1;
 }
 
 
-int CalciumSensor::getFullState(double *cont_state, int idx)
-{
+int CalciumSensor::getFullState(double *cont_state, int idx) {
     // return internal variable
     cont_state[idx] = Ca_average;
     idx++;
@@ -81,31 +74,26 @@ int CalciumSensor::getFullState(double *cont_state, int idx)
 }
 
 
-void CalciumSensor::connect(compartment* comp_)
-{
+void CalciumSensor::connect(compartment* comp_) {
     comp = comp_;
     if (isnan(Ca_average)) {Ca_average = comp->Ca;}
     comp->addMechanism(this);
 }
 
-void CalciumSensor::connect(synapse* syn_)
-{
+void CalciumSensor::connect(synapse* syn_) {
     mexErrMsgTxt("[CalciumSensor] cannot be added to a synapse\n");
 }
 
 
-void CalciumSensor::connect(conductance* cond_)
-{
+void CalciumSensor::connect(conductance* cond_) {
     mexErrMsgTxt("[CalciumSensor] cannot be added to a conductance\n");
 }
 
-void CalciumSensor::integrate(void)
-{
+void CalciumSensor::integrate(void) {
     Ca_average += (dt/tau)*(comp->Ca - Ca_average);
 }
 
-void CalciumSensor::checkSolvers(int k)
-{
+void CalciumSensor::checkSolvers(int k) {
     if (k == 0){
         return;
     } else {
