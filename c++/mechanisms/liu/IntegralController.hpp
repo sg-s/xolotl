@@ -49,8 +49,6 @@ public:
         // defaults
         if (isnan(tau)) {tau = 5000; } // ms
 
-
-
     }
 
     void checkSolvers(int);
@@ -61,8 +59,6 @@ public:
     void connect(compartment*);
     void connect(conductance*);
     void connect(synapse*);
-
-    double boltzmann(double);
 
 
     int getFullStateSize(void);
@@ -171,10 +167,6 @@ void IntegralController::integrate(void) {
 
 }
 
-// activation/inactivation functions
-double IntegralController::boltzmann(double x) {
-    return 1/(1 + exp(x));
-}
 
 
 
