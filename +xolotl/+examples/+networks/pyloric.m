@@ -7,12 +7,12 @@
     >  < (_) | | (_) | |_| |
    /_/\_\___/|_|\___/ \__|_|
 
-## PyloricNet
+## pyloric
 
 **Syntax**
 
 ```matlab
-x = xolotl.examples.PyloricNet();
+x = xolotl.examples.networks.pyloric();
 ```
 
 **Description**
@@ -24,7 +24,7 @@ following Prinz et al. Nat. Neuro.
 %}
 
 
-function x = PyloricNet()
+function x = pyloric()
 
 
 % the order here doesn't matter -- everything will be re-arranged

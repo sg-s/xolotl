@@ -5,7 +5,7 @@
 % in the pyloric circuit of the crab STG
 
 
-x = xolotl.examples.TwoCompartmentBurster;
+x = xolotl.examples.neurons.TwoCompartmentBurster;
 
 % add some noise
 x.CellBody.add('CurrentNoise','noise_amplitude',.5);

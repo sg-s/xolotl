@@ -5,7 +5,7 @@
 % Prinz ... Marder Nat Neuro 2004
 % http://www.nature.com/neuro/journal/v7/n12/abs/nn1352.html
 
-x = xolotl.examples.PyloricNet;
+x = xolotl.examples.networks.pyloric;
 
 x.integrate;
 

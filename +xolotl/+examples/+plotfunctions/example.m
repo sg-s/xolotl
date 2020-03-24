@@ -1,4 +1,4 @@
-function example_plot_func(x)
+function example(x)
 
 
 % let's figure out if we need to make the plot or not

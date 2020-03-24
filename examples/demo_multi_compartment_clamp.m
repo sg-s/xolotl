@@ -3,7 +3,7 @@
 % a single compartment in a multi-compartment neuron
 % model 
 
-x = xolotl.examples.BurstingCable();
+x = xolotl.examples.neurons.BurstingCable();
 x.set('*HCurrent.gbar',0)
 x.set('*NaV.gbar',0)
 x.dt = .01;

@@ -5,7 +5,7 @@
 % trace
 
 
-x = xolotl.examples.BurstingNeuron('prefix','liu');
+x = xolotl.examples.neurons.BurstingNeuron('prefix','liu');
 
 x.t_end = 1e3;
 x.integrate;

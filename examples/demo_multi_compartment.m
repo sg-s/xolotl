@@ -1,7 +1,7 @@
 % makes a realistic cable with some options
 
 
-x = xolotl.examples.BurstingCable();
+x = xolotl.examples.neurons.BurstingCable();
 x.dt = .1;
 x.sim_dt = .1;
 

@@ -3,7 +3,7 @@
 % custom conductances using the conductance class
 % and compare that the two neurons are identical
 
-x = xolotl.examples.BurstingNeuron('prefix','liu');
+x = xolotl.examples.neurons.BurstingNeuron('prefix','liu');
 
 
 

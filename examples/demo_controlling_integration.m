@@ -3,7 +3,7 @@
 % integration and request different forms of output
 % and how this can impact memory use
 
-x = xolotl.examples.BurstingNeuron('prefix','liu');
+x = xolotl.examples.neurons.BurstingNeuron('prefix','liu');
 
 g0 = 1e-1+1e-1*rand(8,1);
 x.set('*gbar',g0);
