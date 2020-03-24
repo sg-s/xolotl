@@ -199,4 +199,4 @@ You should see something like this:
 ![](../images/stg-trace.png)
 
 !!! Note "A shortcut through this tutorial"
-    You can reproduce the model we created here by running the `demo_stg` script. Make sure you run `xolotl.go_to_examples` first so that you're in the right folder.
+    You can reproduce the model we created here by running the `demo_pyloric_net` script. Make sure you run `xolotl.go_to_examples` first so that you're in the right folder.

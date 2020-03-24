@@ -17,7 +17,7 @@ Here, we will use a bursting neuron model with conductances from Liu *et al.* 19
 The model is built-in to xolotl as an example, so we will instantiate it.
 
 ```matlab
-x = xolotl.examples.BurstingNeuron('prefix','liu');
+x = xolotl.examples.neurons.BurstingNeuron('prefix','liu');
 x.dt = .1;
 x.sim_dt = .1;
 x.t_end = 10e3;

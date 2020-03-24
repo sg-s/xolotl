@@ -69,7 +69,7 @@ We can also voltage clamp a single cell in a network. To demonstrate this, we wi
 
 ```matlab
 xolotl.go_to_examples
-demo_stg
+demo_pyloric_net
 ```
 
 Here, let's voltage clamp one cell to another cell's voltage dynamics.

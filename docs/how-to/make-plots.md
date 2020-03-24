@@ -2,7 +2,7 @@
 This document describes how you can make plots using xolotl. Here, we assume you have a single compartment model set up as follows:
 
 ```matlab
-x = xolotl.examples.BurstingNeuron;
+x = xolotl.examples.neurons.BurstingNeuron;
 ```
 
 

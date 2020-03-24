@@ -135,8 +135,8 @@ double NewCond::tau_h(double V, double Ca) {return ...;}
 
 ```
 
-!!! warning "conductance vs. conductance"
-    Note that there are two different conductance classes that have little to do with each other. One of them is an abstract C++ class that all object of type conductance must inherit from. The other is a MATLAB class that is used to generate conductances automatically. When we're talking about C++ code, we're referring to the abstract C++ class.
+!!! warning "conductance" vs. "conductance"
+    Note that there are two different classes called "conductance". One of them is an abstract C++ class that all object of type conductance must inherit from. The other is a MATLAB class that is used to generate conductances automatically. When we're talking about C++ code, we're referring to the abstract C++ class.
 
 
 #### Why aren't there any integration routines?

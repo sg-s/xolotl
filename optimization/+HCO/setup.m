@@ -3,7 +3,7 @@
 
 function p = setup()
 
-x = xolotl.examples.HCO;
+x = xolotl.examples.networks.HCO;
 
 p = xfit;
 p.x = x;

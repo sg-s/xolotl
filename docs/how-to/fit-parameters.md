@@ -19,7 +19,7 @@ This is an eight-conductance, single-compartment model.
 Using conductance dynamics from Prinz *et al.* 2003.
 
 ```matlab
-x = xolotl.examples.BurstingNeuron('prefix', 'prinz');
+x = xolotl.examples.neurons.BurstingNeuron('prefix', 'prinz');
 ```
 
 We will give it some random parameters, by shuffling the existing ones.
