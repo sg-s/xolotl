@@ -11,6 +11,71 @@ These two functions will remove old compiled C++ binaries
 and check to make sure that xolotl can find the C++ files
 that define compartments and conductances and so on.
 
+
+### On macOS, I get an error saying "xcodebuild: error: SDK "macosx10.15.4" cannot be located."
+
+
+The full error looks like:
+
+```
+Error using mex
+xcodebuild: error: SDK "macosx10.15.4" cannot be located.
+xcrun: error: sh -c
+'/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -sdk
+macosx10.15.4 -find clang++ 2> /dev/null' failed with exit code 16384: (null)
+(errno=No such file or directory)
+xcrun: error: unable to find utility "clang++", not a developer tool or in PATH
+```
+
+The problem here is that Apple, in its infinite wisdom, has silently updated XCode, and has changed some defaults, which MATLAB blindly reads. Unfortunately, the defaults are wrong, and won't work. 
+
+Here's how to diagnose and fix the problem.
+
+First, check that you can reproduce the same error in your terminal. Paste this command in your terminal (not your MATLAB command prompt) and check that you get the same error:
+
+```bash
+/usr/bin/xcrun -sdk macosx10.15.4 clang++
+```
+
+If so, then the problem is with the `-sdk` flag. By trial and error, I figured out that this worked:
+
+```bash
+/usr/bin/xcrun -sdk macosx10.15 clang++
+```
+
+The value that works for you may be different. Once you figure out what works, we need to tell MATLAB to use this flag.
+
+Use 
+
+```matlab
+m = mex.getCompilerConfigurations('C++')
+```
+
+to see what MATLAB knows about C++ compilers and linkers.
+
+You should see something like this:
+
+```
+  CompilerConfiguration with properties:
+
+             Name: 'Xcode Clang++'
+     Manufacturer: 'Apple'
+         Language: 'C++'
+          Version: ''
+         Location: '/Applications/Xcode.app/Contents/Developer'
+        ShortName: 'Clang++'
+         Priority: 'A'
+          Details: [1×1 mex.CompilerConfigurationDetails]
+       LinkerName: '/usr/bin/xcrun -sdk macosx10.15 clang++'
+    LinkerVersion: ''
+           MexOpt: '/Users/srinivas/Library/Application Support/MathWorks/MATLAB/R2018a/mex_C++_maci64.xml'
+```
+
+The crucial line is the `LinkerName` property, where we see that it has the wrong `-sdk` flag. To change this, edit the xml file in the location indicated in the `MexOpt` field, and replace all instances of `macosxXXXXX` with `macosx10.15` or whatever works on your computer.
+
+
+Then, running `mex -setup C++` and `m = mex.getCompilerConfigurations('C++')` should show the updated ` LinkerName` and things should work again.
+
 ### On macOS, I get an annoying warning saying "xcrun: error: SDK "macosx10.13.4" cannot be located"
 
 Run the following in your shell (not the MATLAB prompt):
