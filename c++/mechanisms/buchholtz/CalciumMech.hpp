@@ -25,7 +25,7 @@ public:
     double tau_Ca = 200;  // milliseconds
 
     // parameter to convert from i_Ca to uM
-    double phi = .1;
+    double phi = 906.4649968;
 
     double Ca_in = .05;
 

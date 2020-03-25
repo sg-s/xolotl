@@ -71,26 +71,14 @@ elseif any(strfind(prefix,'liu'))
 end
 
 
-if isempty(options.f) && strcmp(prefix,'prinz')
-	options.f = 14.96;
-elseif isempty(options.f) && strcmp(prefix,'liu')
-	options.f = 1.496;
-else 
-	options.f = 14.96;
+
+
+x.AB.add([options.CalciumMech '/CalciumMech']);
+
+
+if isprop(x.AB.CalciumMech,'f') && any(strfind(options.prefix,'liu'))
+	x.AB.CalciumMech.f = 1.496;
 end
-
-
-switch options.CalciumMech
-case 'prinz'
-
-	x.AB.add('prinz/CalciumMech','f',options.f);
-case 'buchholtz'
-	phi = options.f*1.9297e+05*vol/200;
-	x.AB.add('buchholtz/CalciumMech','phi',phi);
-otherwise
-	error('Unknown Calcium Mechanism')
-end
-
 
 
 

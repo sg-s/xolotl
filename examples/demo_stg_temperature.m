@@ -7,7 +7,7 @@
 
 
 
-x = xolotl.examples.neurons.TemperatureSensitiveBurster;
+x = xolotl.examples.neurons.BurstingNeuron('prefix','prinz-temperature','CalciumMech','prinz-temperature');
 
 x.set('*Q_g',1)
 x.set('*Q_tau_m',2)
