@@ -7,7 +7,7 @@
 
 
 
-x = xolotl.examples.neurons.BurstingNeuron('prefix','prinz-temperature','CalciumMech','prinz-temperature');
+x = xolotl.examples.neurons.BurstingNeuron('prefix','prinz-temperature','CalciumMech','buchholtz-temperature');
 
 x.set('*Q',2 + randn(19,1)/10)
 
