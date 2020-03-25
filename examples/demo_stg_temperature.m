@@ -9,9 +9,7 @@
 
 x = xolotl.examples.neurons.BurstingNeuron('prefix','prinz-temperature','CalciumMech','prinz-temperature');
 
-x.set('*Q_g',1)
-x.set('*Q_tau_m',2)
-x.set('*Q_tau_h',2)
+x.set('*Q',2 + randn(19,1)/10)
 
 x.dt = 50e-3;
 x.t_end = 5e3;
