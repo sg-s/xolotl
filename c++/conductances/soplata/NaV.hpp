@@ -51,20 +51,29 @@ public:
 
     }
 
+    double m_alpha(double, double);
+    double h_alpha(double, double);
+    double m_beta(double, double);
+    double h_beta(double, double);
+
     double m_inf(double, double);
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
+
     string getClass(void);
 };
 
 string NaV::getClass(){return "NaV";}
 
+double NaV::m_alpha(double V, double Ca) {return 0.32 * (13 - (V + 35)) / (exp((13 - (V + 35))/4) -1);}
+double NaV::m_beta(double V, double Ca) {return 0.28 * ((V + 35) - 40) / (exp(((V + 35) - 40)/5) - 1);}
+double NaV::h_alpha(double V, double Ca) {return 0.128 * exp((17 - (V + 35))/18);}
+double NaV::h_beta(double V, double Ca) {return 4 / (1 + exp((40 - (V + 35))/5));}
 
-double NaV::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+25.5)/-5.29));}
-double NaV::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+48.9)/5.18));}
-double NaV::tau_m(double V, double Ca) {return 1.32 - 1.26/(1+exp((V+120.0)/-25.0));}
-double NaV::tau_h(double V, double Ca) {return (0.67/(1.0+exp((V+62.9)/-10.0)))*(1.5+1.0/(1.0+exp((V+34.9)/3.6)));}
-
+double NaV::m_inf(double V, double Ca) {return m_alpha(V, Ca) / (m_alpha(V, Ca) + m_beta(V, Ca));}
+double NaV::h_inf(double V, double Ca) {return h_alpha(V, Ca) / (h_alpha(V, Ca) + h_beta(V, Ca));}
+double NaV::tau_m(double V, double Ca) {return 1 / (m_alpha(V, Ca) + m_beta(V, Ca));}
+double NaV::tau_h(double V, double Ca) {return 1 / (h_alpha(V, Ca) + h_beta(V, Ca));}
 
 #endif
