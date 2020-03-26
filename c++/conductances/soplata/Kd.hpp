@@ -60,8 +60,8 @@ public:
 
 string Kd::getClass(){return "Kd";}
 
-double Kd::m_alpha(double V, double Ca) {return 0.032 * (15 - Vt) / (exp((15 - Vt)/5) -1);}
-double Kd::m_beta(double V, double Ca) {return 0.5 * exp((10 - Vt)/40);}
+double Kd::m_alpha(double V, double Ca) {return 0.032 * (15 - (V + 25)) / (exp((15 - (V + 25))/5) -1);}
+double Kd::m_beta(double V, double Ca) {return 0.5 * exp((10 - (V + 25))/40);}
 
 double Kd::m_inf(double V, double Ca) {return m_alpha(V, Ca) / (m_alpha(V, Ca) + m_beta(V, Ca));}
 double Kd::tau_m(double V, double Ca) {return 1 / (m_alpha(V, Ca) + m_beta(V, Ca));}
