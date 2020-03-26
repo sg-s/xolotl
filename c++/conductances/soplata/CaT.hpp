@@ -79,49 +79,31 @@ double CaT::tau_h(double V, double Ca) {return (30.8 + (211.4 * exp(((V + 2) + 1
 void CaT::integrate(double V, double Ca) {
 
 
-    if (is_calcium) {
-        E = container->E_Ca;
-    }
-
+    E = container->E_Ca;
+    
     V_idx = (int) round((V*10)+999);
     if (V_idx < 0) {V_idx = 0;};
     if (V_idx > 2000) {V_idx = 2000;};
 
-    // assume that p > 0
+    // there is no scenario where approx_m and approx_h are different
+    // so we need only one switch
     switch (approx_m) {
         case 0:
             minf = m_inf(V,Ca);
             m = minf;
+            hinf = h_inf(V,Ca);
+            h = hinf + (h - hinf)*exp(-dt/tau_h(V,Ca));
             break;
 
         default:
             m = m_inf_cache[V_idx];
+            h = h_inf_cache[V_idx] + (h - h_inf_cache[V_idx])*fast_exp(-(dt/tau_h_cache[V_idx]));
     } // switch approx_m
 
-    g = gbar*fast_pow(m,p);
+    g = gbar*fast_pow(m,p)*fast_pow(h,q);;
 
-    switch (q) {
-        case 0:
-            break;
-        default:
-            switch (approx_h) {
-                case 0:
-                    hinf = h_inf(V,Ca);
-                    h = hinf + (h - hinf)*exp(-dt/tau_h(V,Ca));
-                    break;
-                default:
-                    h = h_inf_cache[V_idx] + (h - h_inf_cache[V_idx])*fast_exp(-(dt/tau_h_cache[V_idx]));
-                    break;
-            }
+    container->i_Ca += getCurrent(V);
 
-            g = g*fast_pow(h,q);
-            break;
-    } // switch q
-
-
-    if (is_calcium) {
-        container->i_Ca += getCurrent(V);
-    }
 
 }
 
