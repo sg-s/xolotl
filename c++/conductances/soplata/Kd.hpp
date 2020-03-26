@@ -2,14 +2,24 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// delayed rectifier potassium conductance
+// component info: Delayed rectifier potassium current
+// component source: [Soplata et al. 2017](https://www.ncbi.nlm.nih.gov/pubmed/29227992)
+//
+// direct link to supplementary info: https://journals.plos.org/ploscompbiol/article/file?type=supplementary&id=info:doi/10.1371/journal.pcbi.1005879.s001
+// direct link to GitHub repository: https://github.com/asoplata/propofol-coupling-2017-full
+//
 // Soplata AE, McCarthy MM, Sherfey J, Lee S, Purdon PL, Brown EN, et al.
-// Thalamocortical control of propofol phase-amplitude coupling. PLOS
-// Computational Biology. 2017;13: e1005879. doi:10.1371/journal.pcbi.1005879
-// Kramer, M. A., Roopun, A. K., Carracedo, L. M., Traub, R. D., Whittington, M. A., & Kopell, N. J. (2008). Rhythm generation through period concatenation in rat somatosensory cortex. PLoS computational biology, 4(9), e1000169. (http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1000169)
-// Traub RD, Buhl EH, Gloveli T, Whittington MA (2003) Fast rhythmic bursting can be induced in layer 2/3 cortical neurons by enhancing persistent Na+ conductance or by blocking BK channels. J Neurophysiol 89:909–921.
-// Cunningham MO, Whittington MA, Bibbig A, Roopun A, LeBeau FEN, et al. (2004) A role for fast rhythmic bursting neurons in cortical gamma oscillations in vitro. Proc Natl Acad Sci USA 101:7152–7157.
-
+// (2017) Thalamocortical control of propofol phase-amplitude coupling. PLoS
+// Comput Biol 13(12): e1005879. https://doi.org/10.1371/journal.pcbi.1005879
+//
+// dynamics were inherited from Ching et al. 2010,
+// but diverge from the original publication
+//
+// Ching, S., Cimenser, A., Purdon, P. L., Brown, E. N., & Kopell, N. J.
+// (2010). Thalamocortical model for a propofol-induced alpha-rhythm
+// associated with loss of consciousness. Proceedings of the National
+// Academy of Sciences, 107(52), 22665–22670.
+// http://doi.org/10.1073/pnas.1017069108
 
 #ifndef KD
 #define KD
@@ -29,7 +39,7 @@ public:
 
         // defaults
         if (isnan(gbar)) { gbar = 0; }
-        if (isnan (E)) { E = -95; }
+        if (isnan (E)) { E = -100; }
 
         p = 4;
 
@@ -38,15 +48,22 @@ public:
 
     }
 
+    double m_alpha(double, double);
+    double m_beta(double, double);
+
     double m_inf(double, double);
     double tau_m(double, double);
+
     string getClass(void);
 
 };
 
 string Kd::getClass(){return "Kd";}
 
-double Kd::m_inf(double V, double Ca) {return 1./(1+exp((-V-29.5)/10));}
-double Kd::tau_m(double V, double Ca) {return .25+4.35*exp(-abs(V+10)/10);}
+double Kd::m_alpha(double V, double Ca) {return 0.032 * (15 - Vt) / (exp((15 - Vt)/5) -1);}
+double Kd::m_beta(double V, double Ca) {return 0.5 * exp((10 - Vt)/40);}
+
+double Kd::m_inf(double V, double Ca) {return m_alpha(V, Ca) / (m_alpha(V, Ca) + m_beta(V, Ca));}
+double Kd::tau_m(double V, double Ca) {return 1 / (m_alpha(V, Ca) + m_beta(V, Ca));}
 
 #endif
