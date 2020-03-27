@@ -28,7 +28,7 @@ the inactivation time constant function `tau_h`
 must be defined, as function handles.
 
 !!! Note "Instantaneous Kinetics"
-    If your conductance has instantaneous kinetics, you can set `tau_m` to `0`.
+    If your conductance has instantaneous kinetics, you can set `tau_m` to `@(V, Ca) 0`.
     Xolotl will automatically use a different integration scheme
     that updates `m` to its instantaneous steady-state value.
 
