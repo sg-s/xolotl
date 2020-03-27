@@ -23,6 +23,9 @@ void conductance::connect(compartment *pcomp_) {
     if (isnan(h)) {
         h = h_inf(container->V, container->Ca);
     }
+
+    if (tau_m(container->V, container->Ca) == 0) {instantaneous_m = 1;}
+    //if (tau_h(container->V, container->Ca) == 0) {instantaneous_h = 1;}
 }
 
 
@@ -63,11 +66,29 @@ void conductance::integrate(double V, double Ca) {
     switch (approx_m) {
         case 0:
             minf = m_inf(V,Ca);
-            m = minf + (m - minf)*exp(-dt/tau_m(V,Ca));
+
+            switch (instantaneous_m) {
+                case 0:
+                    m = minf + (m - minf)*exp(-dt/tau_m(V,Ca));
+                    break;
+                default:
+                    m = minf;
+                    break;
+            } // end switch instantaneous_m
+
+            
             break;
 
         default:
-            m = m_inf_cache[V_idx] + (m - m_inf_cache[V_idx])*fast_exp(-(dt/tau_m_cache[V_idx]));
+            switch (instantaneous_m) {
+                case 0:
+                    m = m_inf_cache[V_idx] + (m - m_inf_cache[V_idx])*fast_exp(-(dt/tau_m_cache[V_idx]));
+                    break;
+                default:
+                    m = m_inf_cache[V_idx];
+                    break;
+            } // end switch instantaneous_m
+            
             break;
     } // switch approx_m
     
@@ -79,11 +100,26 @@ void conductance::integrate(double V, double Ca) {
         default:
             switch (approx_h) {
                 case 0:
-                    hinf = h_inf(V,Ca);
-                    h = hinf + (h - hinf)*exp(-dt/tau_h(V,Ca));
+                    switch (instantaneous_h) {
+                        case 0:
+                            hinf = h_inf(V,Ca);
+                            h = hinf + (h - hinf)*exp(-dt/tau_h(V,Ca));
+                            break;
+                        default:
+                            h = h_inf(V,Ca);
+                            break;
+                    } // end switch instantaneous_h
                     break;
                 default:
-                    h = h_inf_cache[V_idx] + (h - h_inf_cache[V_idx])*fast_exp(-(dt/tau_h_cache[V_idx]));
+                    switch (instantaneous_h) {
+                        case 0: 
+                            h = h_inf_cache[V_idx] + (h - h_inf_cache[V_idx])*fast_exp(-(dt/tau_h_cache[V_idx]));
+                            break;
+                        default:
+                            h = h_inf_cache[V_idx];
+                            break;
+                    } // end switch instantaneous_h
+                    
                     break;
             }
 

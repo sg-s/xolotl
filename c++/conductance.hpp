@@ -96,6 +96,13 @@ class compartment;
 class conductance {
 protected:
     int V_idx = 0;
+
+    // these integer flags check to see if 
+    // tau_m or tau_h are 0, and if so, 
+    // m and h are set to their ss values
+    int instantaneous_m = 0;
+    int instantaneous_h = 0;
+
 public:
     compartment *container; // pointer to compartment that contains this
     double gbar;

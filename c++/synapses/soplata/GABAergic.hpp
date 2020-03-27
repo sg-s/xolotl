@@ -43,19 +43,16 @@ public:
     int getFullState(double*, int);
 };
 
-int GABAergic::getFullStateSize()
-{
+int GABAergic::getFullStateSize() {
     return 2;
 }
 
 
-double GABAergic::sdot(double V_pre, double s_)
-{
+double GABAergic::sdot(double V_pre, double s_) {
     return 2.0*(1.0 + tanh(V_pre/4.0))*(1.0-s_) - s_/5.0;
 }
 
-void GABAergic::integrate(void)
-{
+void GABAergic::integrate(void) {
     // figure out the voltage of the pre-synaptic neuron
     double V_pre = pre_syn->V;
 
@@ -67,8 +64,7 @@ void GABAergic::integrate(void)
 
 }
 
-void GABAergic::integrateMS(int k, double V, double Ca)
-{
+void GABAergic::integrateMS(int k, double V, double Ca) {
 
     double V_pre;
 
@@ -105,7 +101,7 @@ void GABAergic::integrateMS(int k, double V, double Ca)
 
 }
 
-void GABAergic::checkSolvers(int k){
+void GABAergic::checkSolvers(int k) {
     if (k == 0) {
         return;
     } else if (k == 4) {
@@ -114,8 +110,7 @@ void GABAergic::checkSolvers(int k){
     mexErrMsgTxt("[GABAergic] Unsupported solver order\n");
 }
 
-int GABAergic::getFullState(double *syn_state, int idx)
-{
+int GABAergic::getFullState(double *syn_state, int idx) {
     // give it the current synapse variable
     syn_state[idx] = s;
 
@@ -127,8 +122,7 @@ int GABAergic::getFullState(double *syn_state, int idx)
     return idx;
 }
 
-void GABAergic::connect(compartment *pcomp1_, compartment *pcomp2_)
-{
+void GABAergic::connect(compartment *pcomp1_, compartment *pcomp2_) {
     pre_syn = pcomp1_;
     post_syn = pcomp2_;
 

@@ -68,8 +68,7 @@ string ProportionalController() {
 }
 
 
-double ProportionalController::getState(int idx)
-{
+double ProportionalController::getState(int idx) {
     if (idx == 1) {return m;}
     else if (idx == 2) {return channel->gbar;}
     else {return std::numeric_limits<double>::quiet_NaN();}
@@ -80,8 +79,7 @@ double ProportionalController::getState(int idx)
 int ProportionalController::getFullStateSize(){return 1; }
 
 
-int ProportionalController::getFullState(double *cont_state, int idx)
-{
+int ProportionalController::getFullState(double *cont_state, int idx) {
 
     // and also output the current gbar of the thing
     // being controller
@@ -213,8 +211,7 @@ void ProportionalController::integrate(void) {
 
 
 
-void ProportionalController::checkSolvers(int k)
-{
+void ProportionalController::checkSolvers(int k) {
     if (k == 0){
         return;
     } else {
