@@ -26,7 +26,7 @@ void conductance::connect(compartment *pcomp_) {
 
     // check to see if tau_m is 0
     // this implies that the kinetics for m are instantaneous
-    if (tau_m(container->V, container->Ca) == 0)) {
+    if (tau_m(container->V, container->Ca) == 0) {
       instantaneous_m = 1;
     }
 
