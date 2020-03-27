@@ -27,6 +27,11 @@ the activation time constant function `tau_m`, and
 the inactivation time constant function `tau_h`
 must be defined, as function handles.
 
+!!! Note "Instantaneous Kinetics"
+    If your conductance has instantaneous kinetics, you can set `tau_m` to `@(V, Ca) 0`.
+    Xolotl will automatically use a different integration scheme
+    that updates `m` to its instantaneous steady-state value.
+
 For example,
 
 ```matlab
@@ -101,8 +106,8 @@ public:
 
         // defaults
         if (isnan(gbar)) { gbar = 0; }
-        
-        
+
+
         if (isnan (E)) { E = 30; }
 
         // specify exponents of m and h
@@ -279,12 +284,12 @@ void NewMech::checkSolvers(int k) {
 
 ## Creating new synapses
 
-Creating new synapses is similar to the process of 
-creating new conductances. New synapses inherit 
-from the abstract `C++` class `synapse`. 
+Creating new synapses is similar to the process of
+creating new conductances. New synapses inherit
+from the abstract `C++` class `synapse`.
 
 Here is a skeleton for a new synapse class that you
-can fill out for yourself. 
+can fill out for yourself.
 
 ```C++
 // here is an example of a synapse named NewSynapse
@@ -334,7 +339,7 @@ public:
 };
 
 // this function returns the state size of the synapse
-// which should be the number of state variables 
+// which should be the number of state variables
 // from this synapse plus one (for the synaptic current)
 int NewSynapse::getFullStateSize() {
     return 2;
