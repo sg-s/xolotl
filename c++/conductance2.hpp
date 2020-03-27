@@ -3,7 +3,7 @@
 /*
 This method "connects" a conductance object to a compartment
 object. This sets the `container` property of the conductance,
-so the channel knows which compartment contains it. 
+so the channel knows which compartment contains it.
 */
 void conductance::connect(compartment *pcomp_) {
     if (isnan(gbar)) {
@@ -34,21 +34,21 @@ the exponential Euler method. This is the default
 integration method used by xolotl. If an exact solution
 is to be calculated (i.e.,`approx_m = 0` and `approx_h=0`)
 then `m` and `h` are updated using the exponential Euler
-equation using function evaluations of the activation 
+equation using function evaluations of the activation
 functions at this voltage and Calcium.
 
 Otherwise, the lookup table is used to update `m` and `h`
-in this channel. 
+in this channel.
 
 Note that this method is defined as virtual, so it can be
 overridden by integration methods specified in a specific
-conductance. 
+conductance.
 
-**See Also** 
+**See Also**
 
 * [virtual methods in C++](http://www.cplusplus.com/doc/tutorial/polymorphism/)
 */
-void conductance::integrate(double V, double Ca) {   
+void conductance::integrate(double V, double Ca) {
 
 
     if (is_calcium) {
@@ -70,7 +70,7 @@ void conductance::integrate(double V, double Ca) {
             m = m_inf_cache[V_idx] + (m - m_inf_cache[V_idx])*fast_exp(-(dt/tau_m_cache[V_idx]));
             break;
     } // switch approx_m
-    
+
     g = gbar*fast_pow(m,p);
 
     switch (q) {
@@ -87,7 +87,7 @@ void conductance::integrate(double V, double Ca) {
                     break;
             }
 
-            g = g*fast_pow(h,q);            
+            g = g*fast_pow(h,q);
             break;
     } // switch q
 
@@ -108,13 +108,13 @@ and with [Sengupta, Laughlin and Niven](https://journals.aps.org/pre/abstract/10
 
 Briefly, this method follows the approximate Langevin
 formulation of the underlying stochastic system
-formed by N independent channels that have 
+formed by N independent channels that have
 independent gating kinetics. It can be thought of
 as the deterministic ODE, with an additive noise term
 whose variance scales with the inverse square root of
-the number of channels. The number of channels is 
+the number of channels. The number of channels is
 computed automatically from the channel density
-and the area of the compartment. 
+and the area of the compartment.
 
 */
 void conductance::integrateLangevin(double V, double Ca) {
@@ -129,7 +129,7 @@ void conductance::integrateLangevin(double V, double Ca) {
     if (V_idx < 0) {V_idx = 0;};
     if (V_idx > 2000) {V_idx = 2000;};
 
-    // calculate the number of channels 
+    // calculate the number of channels
     N = round((gbar*(container->A))/unitary_conductance);
 
     // if there are no channels, abort
@@ -161,7 +161,7 @@ void conductance::integrateLangevin(double V, double Ca) {
     }
     if (m<0) {m = -m;}
     if (m>1) {m = 2-m;}
-    
+
     g = gbar*fast_pow(m,p);
 
     switch (q) {
@@ -183,9 +183,9 @@ void conductance::integrateLangevin(double V, double Ca) {
             if (h<0) {h = -h;}
             if (h>1) {h = 2-h;}
 
-            g = g*fast_pow(h,q);  
+            g = g*fast_pow(h,q);
 
-    
+
             break;
 
     } // switch q
@@ -203,15 +203,15 @@ void conductance::integrateLangevin(double V, double Ca) {
 /*
 
 This method integrates a channel object using a multi-step
-solver (MS = "multi-step"). The "sub-step" is indicated in 
-the integer k, which is the first input to this method. 
+solver (MS = "multi-step"). The "sub-step" is indicated in
+the integer k, which is the first input to this method.
 
 The multi-step solver that is used here is a Runge-Kutta 4th
-order solver. Thus, k can have values up to 4. 
+order solver. Thus, k can have values up to 4.
 
 Based on `k`, different elements of the arrays `k_m` and `k_h`
 are calculated and stored. At each step, the derivative functions
-`mdot` and `hdot` are computed. 
+`mdot` and `hdot` are computed.
 
 **See Also**
 
@@ -251,7 +251,7 @@ void conductance::integrateMS(int k, double V, double Ca) {
                 m = m + (k_m[0] + 2*k_m[1] + 2*k_m[2] + k_m[3])/6;
                 break;
         }
-            
+
     } else {
 
         switch (k)
@@ -289,4 +289,3 @@ void conductance::integrateMS(int k, double V, double Ca) {
     }
 
 }
-
