@@ -138,6 +138,8 @@ public:
     // switches to tell xolotl
     // if m variable has instantaneous kinetics
     // if h variable has instantaneous kinetics
+    int instantaneous_m = 0;
+    int instantaneous_h = 0;
 
 
     // default constructor
