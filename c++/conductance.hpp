@@ -6,13 +6,13 @@ populations of ion channels.
 
 This is an abstract class, and concrete implementations
 of ion channel types need to inherit from this class and
-define certain attributes like their activation functions. 
+define certain attributes like their activation functions.
 
 | Abstract | can contain | contained in |
 | --------  | ------ | -------  |
 | yes |  nothing | compartment |
 
-## Properties 
+## Properties
 
 ### `container`
 
@@ -27,7 +27,7 @@ define certain attributes like their activation functions.
 | double |  0 | yes |
 
 The maximal conductance of this channel type (in $uS/mm^2$). This
-is typically exposed to the user as a parameter to set and modify. 
+is typically exposed to the user as a parameter to set and modify.
 
 
 ### `gbar_next`
@@ -42,9 +42,9 @@ is typically exposed to the user as a parameter to set and modify.
 | --------  | ------ | -------  |
 | double |  0 | no |
 
-The instantaneous conductance of this channel type. 
-This is a product of `gbar` and the activation and 
-inactivation variables. 
+The instantaneous conductance of this channel type.
+This is a product of `gbar` and the activation and
+inactivation variables.
 
 $$g = \bar{g} m^p h^q$$
 
@@ -81,7 +81,7 @@ The inactivation variable of this channel type.
 
 
 A flag that tells this channel how verbose it should be.
-This should not be exposed to the user, since it it 
+This should not be exposed to the user, since it it
 broadcast to all components from `xolotl.verbosity`.
 
 */
@@ -122,8 +122,8 @@ public:
     int N = 1;
 
     // switches to tell xolotl
-    // if channel supports approximation 
-    // for performance speedup 
+    // if channel supports approximation
+    // for performance speedup
     int approx_m = 0;
     int approx_h  = 0;
 
@@ -132,8 +132,12 @@ public:
     double tau_m_cache[2000];
     double tau_h_cache[2000];
 
-    // is this a calcium channel? 
+    // is this a calcium channel?
     bool is_calcium = false;
+
+    // switches to tell xolotl
+    // if m variable has instantaneous kinetics
+    // if h variable has instantaneous kinetics
 
 
     // default constructor
@@ -147,7 +151,7 @@ public:
     virtual void integrateMS(int, double, double);
     virtual void integrateLangevin(double, double);
 
-    virtual void connect(compartment*); 
+    virtual void connect(compartment*);
     virtual string getClass(void) = 0;
     virtual double getCurrent(double);
     void checkSolvers(int);
@@ -182,13 +186,13 @@ public:
 /*
 This method constructs a look up table (LUT)
 that is used to estimate $m_{inf}$ and other
-functions of the voltage. Since these functions 
+functions of the voltage. Since these functions
 are repeatedly evaluated, it is often faster to compute
 them for some values of the voltage once, store these
-values in a table, and use this table subsequently. 
+values in a table, and use this table subsequently.
 This is an approximation since the voltage is rounded
 off to the nearest value in the look-up table, uses
-a little more memory, but can be much faster. 
+a little more memory, but can be much faster.
 */
 void conductance::buildLUT(double approx_channels) {
     if (approx_channels == 0) {
@@ -202,9 +206,9 @@ void conductance::buildLUT(double approx_channels) {
 
     if (approx_m == 1) {
         if (verbosity > 0) {
-            mexPrintf("%s using approximate activation functions\n", getClass().c_str());  
+            mexPrintf("%s using approximate activation functions\n", getClass().c_str());
         }
-        
+
 
 
         for (int V_int = -999; V_int < 1001; V_int++) {
@@ -216,9 +220,9 @@ void conductance::buildLUT(double approx_channels) {
 
     if (approx_h == 1) {
         if (verbosity > 0) {
-           mexPrintf("%s using approximate in-activation functions\n", getClass().c_str()); 
+           mexPrintf("%s using approximate in-activation functions\n", getClass().c_str());
         }
-        
+
         for (int V_int = -999; V_int < 1001; V_int++) {
             V = ((double) V_int)/10;
             h_inf_cache[V_int+999] = h_inf(V,0);
@@ -233,7 +237,7 @@ void conductance::buildLUT(double approx_channels) {
 /*
 
 This method is a dirty hack to speed up computing
-exponents in C++. This requires that the power that a 
+exponents in C++. This requires that the power that a
 number is raised to be an integer (0-8)
 
 */
@@ -271,7 +275,7 @@ inline double conductance::fast_pow(double x, int a) {
 }
 
 /*
-This method constitutes a dirty hack which 
+This method constitutes a dirty hack which
 is a faster way to compute exp(x)
 but is less precise
 */
@@ -287,7 +291,7 @@ inline double conductance::fast_exp(double x) {
 /*
 
 The method returns the current that flows through
-this channel at this moment. 
+this channel at this moment.
 
 */
 double conductance::getCurrent(double V) { return g * (V - E); }
@@ -309,7 +313,7 @@ void conductance::checkSolvers(int solver_order) {
 
 /*
 This method defines the rate of change of the `m` variable
-of this conductance. This definition is used when `integrateMS` is used. 
+of this conductance. This definition is used when `integrateMS` is used.
 */
 double conductance::mdot(double V, double Ca, double m_) {
     return (m_inf(V,Ca) - m_)/tau_m(V,Ca);
@@ -317,7 +321,7 @@ double conductance::mdot(double V, double Ca, double m_) {
 
 /*
 This method defines the rate of change of the `h` variable
-of this conductance. This definition is used when `integrateMS` is used. 
+of this conductance. This definition is used when `integrateMS` is used.
 */
 double conductance::hdot(double V, double Ca, double h_) {
     return (h_inf(V,Ca) - h_)/tau_h(V,Ca);
@@ -325,38 +329,38 @@ double conductance::hdot(double V, double Ca, double h_) {
 
 /*
 This method defines the activation curve of this channel.
-This is a virtual method, and is meant to be defined in 
-the channel object. 
+This is a virtual method, and is meant to be defined in
+the channel object.
 */
 double conductance::m_inf(double V, double Ca){return 0;}
 
 /*
 This method defines the inactivation curve of this channel.
-This is a virtual method, and is meant to be defined in 
-the channel object. 
+This is a virtual method, and is meant to be defined in
+the channel object.
 */
 double conductance::h_inf(double V, double Ca){return 1;}
 
 /*
-This method defines the dependence of the timescale 
+This method defines the dependence of the timescale
 of the activation variable on the voltage of this channel.
-This is a virtual method, and is meant to be defined in 
-the channel object. 
+This is a virtual method, and is meant to be defined in
+the channel object.
 */
 double conductance::tau_m(double V, double Ca){return 1;}
 
 /*
-This method defines the dependence of the timescale 
+This method defines the dependence of the timescale
 of the inactivation variable on the voltage of this channel.
-This is a virtual method, and is meant to be defined in 
-the channel object. 
+This is a virtual method, and is meant to be defined in
+the channel object.
 */
 double conductance::tau_h(double V, double Ca){return 1;}
 
 
 /*
 This method implements a very fast Gaussian random
-number generator. This is much faster than the 
+number generator. This is much faster than the
 built-in generators in the C++ `<random>` header, and
 is copied from Knuth and Marsaglia.
 
