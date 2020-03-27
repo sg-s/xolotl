@@ -107,12 +107,28 @@ void conductance::integrate(double V, double Ca) {
         default:
             switch (approx_h) {
                 case 0:
-                    hinf = h_inf(V,Ca);
-                    h = hinf + (h - hinf)*exp(-dt/tau_h(V,Ca));
-                    break;
+                  switch (instantaneous_h) {
+                    case 0:
+                      // kinetics are *not* instantaneous, proceed as normal
+                      hinf = h_inf(V,Ca);
+                      h = hinf + (h - hinf)*exp(-dt/tau_h(V,Ca));
+                      break;
+                    default:
+                      // kinetics are instantaneous, do not integrate
+                      hinf = h_inf(V, Ca);
+                      h = hinf;
+                    } // switch instantaneous_h
                 default:
-                    h = h_inf_cache[V_idx] + (h - h_inf_cache[V_idx])*fast_exp(-(dt/tau_h_cache[V_idx]));
-                    break;
+                  switch (instantaneous_h) {
+                    case 0:
+                      // kinetics are *not* instantaneous, proceed as normal
+                      h = h_inf_cache[V_idx] + (h - h_inf_cache[V_idx])*fast_exp(-(dt/tau_h_cache[V_idx]));
+                      break;
+                    default:
+                      // kinetics are instantaneous, do not integrate
+                      h = h_inf_cache[V_idx];
+                      break;
+                    } // switch instantaneous_h
             }
 
             g = g*fast_pow(h,q);
