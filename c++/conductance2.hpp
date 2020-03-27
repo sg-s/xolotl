@@ -76,10 +76,12 @@ void conductance::integrate(double V, double Ca) {
         case 0:
           switch (instantaneous_m) {
             case 0:
+              // kinetics are *not* instantaneous, proceed as normal
               minf = m_inf(V,Ca);
               m = minf + (m - minf)*exp(-dt/tau_m(V,Ca));
               break;
             default:
+              // kinetics are instantaneous, do not integrate
               minf = m_inf(V, Ca);
               m = minf;
               break;
@@ -87,9 +89,11 @@ void conductance::integrate(double V, double Ca) {
         default:
             switch (instantaneous_m) {
               case 0:
+                // kinetics are *not* instantaneous, proceed as normal
                 m = m_inf_cache[V_idx] + (m - m_inf_cache[V_idx])*fast_exp(-(dt/tau_m_cache[V_idx]));
                 break;
               default:
+                // kinetics are instantaneous, do not integrate
                 m = m_inf_cache[V_idx];
                 break;
               } // switch instantaneous_m
