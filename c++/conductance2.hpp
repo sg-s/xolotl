@@ -25,7 +25,7 @@ void conductance::connect(compartment *pcomp_) {
     }
 
     if (tau_m(container->V, container->Ca) == 0) {instantaneous_m = 1;}
-    //if (tau_h(container->V, container->Ca) == 0) {instantaneous_h = 1;}
+    if (tau_h(container->V, container->Ca) == 0) {instantaneous_h = 1;}
 }
 
 
