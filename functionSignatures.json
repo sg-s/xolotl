@@ -3,9 +3,11 @@
     {
         "inputs":
         [
-            {"name":"conductance", "kind":"required", "type":"choices=cpplab.search('conductances')"}
+            {"name":"x","kind":"required","type":"xolotl"},
+            {"name":"obj", "kind":"required", "type":"choices=cpplab.search('conductances')"}
         ]
     },
+
 
     "xolotl.connect":
     {
