@@ -23,6 +23,18 @@ void conductance::connect(compartment *pcomp_) {
     if (isnan(h)) {
         h = h_inf(container->V, container->Ca);
     }
+
+    // check to see if tau_m is 0
+    // this implies that the kinetics for m are instantaneous
+    if (tau_m(container->V, container->Ca) == 0)) {
+      instantaneous_m = 1;
+    }
+
+    // check to see if tau_h is 0
+    // this implies that the kinetics for h are instantaneous
+    if (tau_h(container->V, container->Ca) == 0) {
+      instantaneous_h = 1;
+    }
 }
 
 
