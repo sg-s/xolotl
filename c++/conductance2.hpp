@@ -74,13 +74,25 @@ void conductance::integrate(double V, double Ca) {
     // assume that p > 0
     switch (approx_m) {
         case 0:
-            minf = m_inf(V,Ca);
-            m = minf + (m - minf)*exp(-dt/tau_m(V,Ca));
-            break;
-
+          switch (instantaneous_m) {
+            case 0:
+              minf = m_inf(V,Ca);
+              m = minf + (m - minf)*exp(-dt/tau_m(V,Ca));
+              break;
+            default:
+              minf = m_inf(V, Ca);
+              m = minf;
+              break;
+            } // switch instantaneous_m
         default:
-            m = m_inf_cache[V_idx] + (m - m_inf_cache[V_idx])*fast_exp(-(dt/tau_m_cache[V_idx]));
-            break;
+            switch (instantaneous_m) {
+              case 0:
+                m = m_inf_cache[V_idx] + (m - m_inf_cache[V_idx])*fast_exp(-(dt/tau_m_cache[V_idx]));
+                break;
+              default:
+                m = m_inf_cache[V_idx];
+                break;
+              } // switch instantaneous_m
     } // switch approx_m
 
     g = gbar*fast_pow(m,p);
