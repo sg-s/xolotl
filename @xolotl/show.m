@@ -203,7 +203,7 @@ else
 		plothere = find(strcmp({old_plots.Tag},obj.hash));
 		if isempty(plothere)
 			% make new plot
-			plot(ax(i),V,data.(fn{i}),'DisplayName',custom_name,'Tag',obj.hash);
+			plot(ax(i),V,data.(fn{find(strcmp(fn,ax(i).Tag))}),'DisplayName',custom_name,'Tag',obj.hash);
 		else
 			% change YData in this plot
 			plothere = ax(i).Children(plothere);

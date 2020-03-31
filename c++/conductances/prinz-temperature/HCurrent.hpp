@@ -14,8 +14,8 @@ class HCurrent: public conductance {
 
 private: 
     double delta_temp = 0;
-    double pow_Q_tau_m_delta_temp = 0;
-    double pow_Q_g = 0;
+    double pow_Q_tau_m_delta_temp = 1;
+    double pow_Q_g = 1;
 
 
 public:
