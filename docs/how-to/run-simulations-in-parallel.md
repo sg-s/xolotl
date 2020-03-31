@@ -108,7 +108,7 @@ On a 6-core machine from 2013, we achieved speeds greater than 600X.
 
 
 ```matlab
-disp(['Finished in ' strlib.oval(t) ' seconds. Total speed = ' strlib.oval((length(all_params)*x.t_end*1e-3)/t)])
+disp(['Finished in ' mat2str(t,3) ' seconds. Total speed = ' mat2str((length(all_params)*x.t_end*1e-3)/t)])
 
 
 % assemble the data into a matrix for display

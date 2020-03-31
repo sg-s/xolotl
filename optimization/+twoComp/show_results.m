@@ -49,7 +49,6 @@ for i = 1:18
 		time = (1:length(V))*p.x.dt*1e-3;
 		plot(time,V(:,2)+ randn(length(V),1)*5e-2,'k')
 
-		%title([mat2str(show_these(i)) '  cost = ' strlib.oval(cost(show_these(i)))])
 	end
 	axis off
 end

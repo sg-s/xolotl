@@ -16,7 +16,7 @@ p = twoComp.setup();
 
 
 for i = 1:1e9
-	disp(['Starting with random seed #' strlib.oval(i)])
+	disp(['Starting with random seed #' mat2str(i)])
 	try
 
 		% configure the data
@@ -50,7 +50,7 @@ for i = 1:1e9
 		if this_cost < 4
 
 
-			disp(['Final Cost for this seed is ' strlib.oval(this_cost)])
+			disp(['Final Cost for this seed is ' mat2str(this_cost,3)])
 
 			all_params(i,:) = X;
 			all_cost(i) = this_cost;

@@ -111,12 +111,12 @@ methods (Access = protected)
         		if isa(self.(compartment).(C{j}).gbar,'function_handle')
         			g = strrep(func2str(self.(compartment).(C{j}).gbar),'@()','');
         		else
-        			g = strlib.oval(self.(compartment).(C{j}).gbar);
+        			g = mat2str(self.(compartment).(C{j}).gbar,2);
         		end
         		if isa(self.(compartment).(C{j}).E,'function_handle')
         			E = strrep(func2str(self.(compartment).(C{j}).E),'@()','');
         		else
-        			E = strlib.oval(self.(compartment).(C{j}).E);
+        			E = mat2str(self.(compartment).(C{j}).E,2);
         		end
         		info_str = [' (g=' g ', E=' E ')'];
 

@@ -110,7 +110,7 @@ for i = 6:-1:1
 	time = (1:length(V))*1e-3*x.dt;
 	plot(time,V,'k')
 	set(gca,'YLim',[-90 50],'XLim',[0 1])
-	th = title([strlib.oval(x.AB.A*1e6) 'um^2']);
+	th = title([mat2str(x.AB.A*1e6,3) 'um^2']);
 	th.FontWeight = 'normal';
 
 	if i < 6

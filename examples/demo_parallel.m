@@ -54,7 +54,7 @@ t = toc;
 
 
 
-disp(['Finished in ' strlib.oval(t) ' seconds. Total speed = ' strlib.oval((length(all_params)*x.t_end*1e-3)/t)])
+disp(['Finished in ' mat2str(t,3) ' seconds. Total speed = ' mat2str((length(all_params)*x.t_end*1e-3)/t,3) 'X'])
 
 
 % assemble the data into a matrix for display

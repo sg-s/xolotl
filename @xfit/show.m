@@ -106,7 +106,7 @@ for i = 1:length(cost)
 		self.x.plot()
 	end
 
-	title(['Cost =  ' strlib.oval(cost(idx(i)))])
+	title(['Cost =  ' mat2str(cost(idx(i)),3)])
 
 
 	drawnow;
