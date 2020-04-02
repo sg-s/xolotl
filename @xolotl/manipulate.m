@@ -193,6 +193,7 @@ ub(values==0) = 1;
 warning('off','MATLAB:hg:uicontrol:ValueMustBeInRange')
 warning('off','MATLAB:hg:uicontrol:MinMustBeLessThanMax')
 p = puppeteer(real_names,values,lb,ub,[]);
+p.handles.fig.Name = 'xolotl::manipulate';
 self.handles.puppeteer_object = p;
 
 
@@ -211,4 +212,4 @@ end
 warning('on','MATLAB:hg:uicontrol:MinMustBeLessThanMax')
 warning('on','MATLAB:hg:uicontrol:ValueMustBeInRange')
 
-p.continuous_callback_function = @self.manipulateEvaluate;
+p.valueChangingFcn = @self.manipulateEvaluate;

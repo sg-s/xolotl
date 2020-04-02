@@ -97,7 +97,7 @@ end % function
 Now, we add the cost function to the xfit object.
 
 ```matlab
-p.SimFcn = @xolotl.examples.burstingCostFcn;
+p.SimFcn = @xolotl.examples.costfunctions.burstingCostFcn;
 ```
 
 ### Setting up parameter optimization
