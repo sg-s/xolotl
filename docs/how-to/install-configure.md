@@ -14,7 +14,7 @@ Here, we will learn how to install and configure `xolotl`. There are two ways to
 
 ### Using a MATLAB toolbox
 
-`xolotl` is available as a MATLAB toolbox. Click [here](https://github.com/sg-s/xolotl/releases/download/latest/xolotl.mltbx) to download it, and drag the downloaded file onto your MATLAB terminal to install it. You should get a popup that looks like this:
+`xolotl` is available as a MATLAB toolbox. Click [here](https://github.com/sg-s/xolotl/releases/latest/) to download it, and drag the downloaded file onto your MATLAB terminal to install it. You should get a popup that looks like this:
 
 ![](../images/install-toolbox.png)
 
