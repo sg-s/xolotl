@@ -103,6 +103,20 @@ lines = [lines(1:insert_here); input_hookups(:); lines(insert_here+1:end)];
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % make all the C++ objects
 [constructors, class_parents, obj_names] = self.generateConstructors;
+%
+
+% hotfix -- we are zeroing out all the arguments to the constructors
+% so we need to make new constructors
+for i = 1:length(constructors)
+	narg = length(strfind(constructors{i},','))+1;
+
+	constructors{i} = constructors{i}(1:strfind(constructors{i},'('));
+	for j = 1:narg
+		constructors{i} = [constructors{i} '0,'];
+	end
+	constructors{i}(end) = ')';
+	constructors{i}(end+1) = ';';
+end
 
 
 insert_here = filelib.find(lines,'//xolotl:insert_constructors');
