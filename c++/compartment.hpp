@@ -680,6 +680,8 @@ object in this compartment to integrate by calling their
 */
 void compartment::integrateChannels(void) {
 
+    //mexPrintf("Ca = %f\n",Ca);
+
     sigma_g = 0.0;
     sigma_gE = 0.0;
 

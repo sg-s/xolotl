@@ -320,6 +320,7 @@ void network::integrate(double * I_ext_now) {
         comp[i]->integrateSynapses();
 
 
+
     }
 
     // integrate voltages in all single compartments

@@ -14,56 +14,27 @@
 using namespace std;
 
 
-// declare pointers to outputs
-double *output_state;
-double *output_V;
-double *output_Ca;
-double *output_I_clamp;
-double *output_curr_state; // currents
-double *output_syn_state;  // synapses
-double *output_cont_state; // mechanisms
-double * spiketimes;
-
-// make an empty network
-network xolotl_network = network();
-
-vector<synapse*> all_synapses; // pointers to all synapses
-
-int n_conductances = 0;
-int n_mechanisms = 0;
-int n_synapses = 0;
-
-
-double approx_channels;
-double dt;
-double sim_dt;
-double temperature_ref;
-double temperature;
-double use_current;
-double verbosity;
-double stochastic_channels;
-double output_type;
-double solver_order;
-double spike_thresh;
-double t_end;
-
-//xolotl:insert_constructors
-
-
-
-bool init = true;
-
-
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
+    // declare pointers to outputs
+    double *output_state;
+    double *output_V;
+    double *output_Ca;
+    double *output_I_clamp;
+    double *output_curr_state; // currents
+    double *output_syn_state;  // synapses
+    double *output_cont_state; // mechanisms
+    double * spiketimes;
 
 
     //xolotl:define_v_clamp_idx
 
+    // make an empty network
+    network xolotl_network;
 
-    double * params  = mxGetPr(prhs[0]);
+    int n_synapses = 0;
+
     //xolotl:input_declarations
-
 
 
     // temperature and other wire-ups
@@ -78,36 +49,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     xolotl_network.stochastic_channels = (int) stochastic_channels;
 
     xolotl_network.use_current = (int) use_current;
-
-
-    if (init) {
-
-        //xolotl:add_neurons_to_network
-
-
-        //xolotl:add_conductances_here
-
-
-        //xolotl:add_synapses_here
-
-
-        //xolotl:add_mechanisms_here
-
-
-        init = false;
-
-
-    }
-
-
-
-    
-
-
-
-
-
-
 
 
     if (verbosity > 0) {
@@ -128,9 +69,23 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
 
+    //xolotl:insert_constructors
+
+
+    //xolotl:add_neurons_to_network
+
+    //xolotl:add_conductances_here
+
+
+    vector<synapse*> all_synapses; // pointers to all synapses
+    //xolotl:add_synapses_here
+
+
+    //xolotl:add_mechanisms_here
 
 
 
+    //xolotl:call_methods_here
     int nsteps = (int) floor(t_end/sim_dt);
     int progress_report = (int) floor(nsteps/10);
 
@@ -320,6 +275,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     if (is_multi_comp & is_multi_step){
         mexErrMsgTxt("[xolotl] multi-compartment models cannot be integrated with multi-step methods yet. \n");
     }
+
+    // if (is_multi_comp & is_voltage_clamped){
+    //     mexErrMsgTxt("[xolotl] multi-compartment models cannot be integrated when something is clamped yet. \n");
+    // }
 
 
     int output_idx = 0;

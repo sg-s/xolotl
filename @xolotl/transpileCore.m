@@ -83,10 +83,16 @@ lines = [lines(1:insert_here); header_files(:); lines(insert_here+1:end)];
 % this section of transpile generates a list of unique variable names that identifies all parameters and variables in the xolotl object using x.serialize, and then wires up arrays from matlab that correspond to these values to named variables in C++. so you can expect every variable to exist in your C++ workspace, where the names are defined in x.serialize
 
 [values,names,~,real_names] = self.serialize;
-input_hookups{1} = ['double * params  = mxGetPr(prhs[0]);'];
 
-for j = 1:length(names)
-	input_hookups{end+1} = ['double ' names{j} ' = params[' mat2str(j-1) '];'];
+
+for j = length(names):-1:1
+
+	if length(strfind(real_names{j},'.')) > 1
+		real_names{j}(min(strfind(real_names{j},'.'))) = '_';
+	end
+
+
+	input_hookups{j} = [real_names{j} ' = params[' mat2str(j-1) '];'];
 end
 input_hookups{end+1} = ['int param_size = ' mat2str(length(names)) ';'];
 insert_here = filelib.find(lines,'//xolotl:input_declarations');
@@ -207,7 +213,7 @@ for i = 1:length(all_mechanisms)
 
 end
 
-mechanism_add_lines{end+1} = ['int n_mechanisms = ' mat2str(length(all_mechanisms)) ';'];
+mechanism_add_lines{end+1} = ['n_mechanisms = ' mat2str(length(all_mechanisms)) ';'];
 
 insert_here = filelib.find(lines,'//xolotl:add_mechanisms_here');
 corelib.assert(length(insert_here)==1,'Could not find insertion point for mechanism hookups');
