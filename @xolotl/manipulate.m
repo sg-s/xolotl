@@ -45,22 +45,25 @@ if ischar(manipulate_these) && ~any(strfind(manipulate_these,'*'))
 	manipulate_these = {manipulate_these};
 end
 
-if isempty(self.linked_binary)
+% if isempty(self.linked_binary)
 
-	if exist(['X_' self.hash '.' mexext],'file') == 3
-		self.linked_binary = ['X_' self.hash '.' mexext];
-	else
+% 	if exist(['X_' self.hash '.' mexext],'file') == 3
+% 		self.linked_binary = ['X_' self.hash '.' mexext];
+% 	else
 
-		self.transpile;
-		self.compile;
-	end
-end
+% 		self.transpile;
+% 		self.compile;
+% 	end
+% end
 
 % disable closed loop
 self.closed_loop = false;
 
 % make a snapshot of this now
-self.snapshot('manipulate_zero')
+try
+	self.snapshot('manipulate_zero')
+catch
+end
 
 
 t_end = self.t_end;
@@ -197,7 +200,10 @@ p.handles.fig.Name = 'xolotl::manipulate';
 self.handles.puppeteer_object = p;
 
 
-self.reset('manipulate_zero')
+try
+	self.reset('manipulate_zero')
+catch
+end
 
 if isempty(self.manipulate_plot_func)
 	self.plot();

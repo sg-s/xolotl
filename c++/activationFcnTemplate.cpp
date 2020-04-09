@@ -43,6 +43,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double * params  = mxGetPr(prhs[1]);
 
 
+    double * coreParams  = mxGetPr(prhs[2]);
+    double temperature_ref = coreParams[0];
+    double temperature = coreParams[1];
 
     plhs[0] = mxCreateDoubleMatrix(N, 1, mxREAL);
     minf = mxGetPr(plhs[0]);
@@ -57,7 +60,16 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     tauh = mxGetPr(plhs[3]);
 
 
+    compartment comp(0, .05, 10, 1, 1,  1, .05, 0, 0, 1, 1, 1, .1);
+
     //xolotl:construct_channel_here
+
+    comp.temperature = temperature;
+    comp.temperature_ref = temperature_ref;
+
+    comp.addConductance(&ThisChannel);
+
+    
 
     for (int i = 0; i < N; i ++) {
         minf[i] = ThisChannel.m_inf(Vspace[i],0);

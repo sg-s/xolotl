@@ -79,7 +79,7 @@ else
 
 	params = obj.get(obj.cpp_constructor_signature);
 
-	[data.minf, data.hinf, data.taum, data.tauh] = binary_name(V, params);
+	[data.minf, data.hinf, data.taum, data.tauh] = binary_name(V, params, [self.temperature_ref; self.temperature]);
 
 	if length(unique(data.hinf)) == 1
 		data.tauh = NaN*data.tauh;
