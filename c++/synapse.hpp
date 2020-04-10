@@ -58,6 +58,8 @@ public:
     virtual int getFullState(double*, int) = 0;
 
 
+    virtual void init(void);
+
 };
 
 /*
@@ -92,6 +94,14 @@ should throw an error.
 void synapse::checkSolvers(int k){
     mexErrMsgTxt("[synapse] Unsupported solver order\n");
 }
+
+
+
+/*
+Initialization method
+*/
+
+void synapse::init() {}
 
 
 #endif

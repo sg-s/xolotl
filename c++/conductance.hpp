@@ -172,6 +172,8 @@ public:
 
     void buildLUT(double);
 
+    virtual void init(void);
+
 
     // fast random number generator
     static double gaussrand(void);
@@ -359,6 +361,9 @@ This is a virtual method, and is meant to be defined in
 the channel object. 
 */
 double conductance::tau_h(double V, double Ca){return 1;}
+
+
+
 
 
 /*

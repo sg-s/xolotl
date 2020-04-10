@@ -6,6 +6,18 @@ object. This sets the `container` property of the conductance,
 so the channel knows which compartment contains it. 
 */
 void conductance::connect(compartment *pcomp_) {
+    container = pcomp_;
+}
+
+
+
+/*
+This method allows you to run some initialization code
+before the model is integrated. This will be called
+after the model is constructed and wired up. 
+*/
+void conductance::init() {
+
     if (isnan(gbar)) {
         // gbar unset, set it to a default
         gbar = 0;
@@ -13,7 +25,6 @@ void conductance::connect(compartment *pcomp_) {
     if (gbar < 0) {
         mexErrMsgTxt("gbars cannot be negative for any conductance \n");
     }
-    container = pcomp_;
 
     // make sure m and h are not NaN
     if (isnan(m)) {
@@ -26,8 +37,8 @@ void conductance::connect(compartment *pcomp_) {
 
     if (tau_m(container->V, container->Ca) == 0) {instantaneous_m = 1;}
     if (tau_h(container->V, container->Ca) == 0) {instantaneous_h = 1;}
-}
 
+}
 
 
 

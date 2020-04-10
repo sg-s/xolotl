@@ -46,7 +46,7 @@ public:
     void checkSolvers(int);
 
     void integrate(void);
-
+    void init(void);
 
     void connect(compartment*);
     void connect(conductance*);
@@ -80,9 +80,6 @@ int CalciumMech::getFullState(double *cont_state, int idx) {
 void CalciumMech::connect(compartment* comp_) {
     comp = comp_;
     comp->addMechanism(this);
-
-    delta_temp = (temperature - temperature_ref)/10;
-    dt_by_tau_Ca = exp(-dt/(tau_Ca)*(pow(Q_tau, delta_temp)));
 }
 
 void CalciumMech::connect(conductance* cond_) {
@@ -92,6 +89,14 @@ void CalciumMech::connect(conductance* cond_) {
 void CalciumMech::connect(synapse* syn_) {
     mexErrMsgTxt("[CalciumMech] This mechanism cannot connect to a synapse object");
 }
+
+
+
+void CalciumMech::init() {
+    delta_temp = (temperature - temperature_ref)/10;
+    dt_by_tau_Ca = exp(-dt/(tau_Ca)*(pow(Q_tau, delta_temp)));
+}
+
 
 
 

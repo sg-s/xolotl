@@ -72,7 +72,38 @@ public:
     void addCompartment(compartment*);
     bool resolveTree(void);
     void checkSolvers(void);
+
+    void init(void);
 };
+
+
+
+/*
+This method triggers a chain of initialization methods.
+network asks all compartments to initialize, and each compartment
+asks all the mechanisms, synapses and conductances within in
+to also initialize. 
+*/
+
+void network::init(void) {
+    for (int i = 0; i < n_comp; i ++){
+        
+        comp[i]->stochastic_channels = stochastic_channels;
+        comp[i]->approx_channels = approx_channels;
+        comp[i]->dt = sim_dt;
+        comp[i]->verbosity = verbosity;
+        comp[i]->RT_by_nF = (0.0431)*(temperature + 273.15);
+        comp[i]->temperature = temperature;
+        comp[i]->temperature_ref = temperature_ref;
+        comp[i]->use_current = use_current;
+
+        comp[i]->init();
+
+
+
+    }
+}
+
 
 
 /*
@@ -216,18 +247,7 @@ This method adds a compartment to the network. It does the following things:
 */
 void network::addCompartment(compartment *comp_) {
     comp.push_back(comp_);
-
-
     n_comp++;
-    comp_->stochastic_channels = stochastic_channels;
-    comp_->approx_channels = approx_channels;
-    comp_->dt = sim_dt;
-    comp_->verbosity = verbosity;
-    comp_->RT_by_nF = (0.0431)*(temperature + 273.15);
-    comp_->temperature = temperature;
-    comp_->temperature_ref = temperature_ref;
-    comp_->use_current = use_current;
-
 }
 
 

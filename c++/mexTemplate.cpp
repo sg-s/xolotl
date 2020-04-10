@@ -51,7 +51,9 @@ double t_end;
 
 
 
-bool init = true;
+
+
+bool connectComponents = true;
 
 
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
@@ -80,8 +82,12 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     xolotl_network.use_current = (int) use_current;
 
 
-    if (init) {
+    
 
+
+    // the reason this has to happen here, and not outside the entry point, is
+    // that the compiler complains and I don't know why
+    if (connectComponents) {
         //xolotl:add_neurons_to_network
 
 
@@ -93,20 +99,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
         //xolotl:add_mechanisms_here
 
-
-        init = false;
-
+        connectComponents = false;
 
     }
 
-
-
-    
-
-
-
-
-
+    xolotl_network.init();
 
 
 

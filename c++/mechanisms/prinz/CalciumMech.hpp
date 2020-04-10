@@ -57,6 +57,8 @@ public:
     double getState(int);
     string getClass(void);
 
+    void init(void);
+
 };
 
 string CalciumMech::getClass() {
@@ -79,7 +81,10 @@ int CalciumMech::getFullState(double *cont_state, int idx) {
 void CalciumMech::connect(compartment* comp_) {
     comp = comp_;
     comp->addMechanism(this);
+}
 
+
+void CalciumMech::init() {
     dt_by_tau_Ca = exp(-dt/tau_Ca);
 }
 
