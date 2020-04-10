@@ -88,7 +88,12 @@ lines = [lines(1:insert_here); header_files(:); lines(insert_here+1:end)];
 for j = length(names):-1:1
 
 	if length(strfind(real_names{j},'.')) > 1
-		real_names{j}(min(strfind(real_names{j},'.'))) = '_';
+
+		dots = strfind(real_names{j},'.');
+		dots(end) = [];
+		real_names{j}(dots) = '_';
+
+		%real_names{j}(min(strfind(real_names{j},'.'))) = '_';
 	end
 
 
