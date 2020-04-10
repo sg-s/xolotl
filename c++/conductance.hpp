@@ -131,8 +131,15 @@ public:
     // switches to tell xolotl
     // if channel supports approximation 
     // for performance speedup 
-    int approx_m = 0;
-    int approx_h  = 0;
+    bool AllowMInfApproximation = true;
+    bool AllowHInfApproximation = true;
+
+
+    // these integer values are used to determine
+    // whether the approximation is actually used
+    // they are ints so that we can use switch on them
+    int UseMInfApproximation = 1;
+    int UseHInfApproximation = 1;
 
     double m_inf_cache[2000];
     double h_inf_cache[2000];
@@ -200,30 +207,43 @@ off to the nearest value in the look-up table, uses
 a little more memory, but can be much faster. 
 */
 void conductance::buildLUT(double approx_channels) {
+
+
+
     if (approx_channels == 0) {
         // turn off approximations
-        approx_m = 0;
-        approx_h = 0;
+  
+        UseMInfApproximation = 0;
+        UseHInfApproximation = 0;
+
         return;
+    } else {
+        // we should use approximations if possible
+        if (AllowMInfApproximation) {UseMInfApproximation = 1;}
+        if (AllowHInfApproximation) {UseHInfApproximation = 1;}
+
     }
 
     double V = 0;
 
-    if (approx_m == 1) {
+    if (UseMInfApproximation == 1) {
         if (verbosity > 0) {
             mexPrintf("%s using approximate activation functions\n", getClass().c_str());  
         }
-        
-
+    
 
         for (int V_int = -999; V_int < 1001; V_int++) {
             V = ((double) V_int)/10;
             m_inf_cache[V_int+999] = m_inf(V,0);
             tau_m_cache[V_int+999] = tau_m(V,0);
         }
+    } else {
+        if (verbosity > 0) {
+            mexPrintf("%s NOT USING approximate activation functions\n", getClass().c_str());  
+        }
     }
 
-    if (approx_h == 1) {
+    if (UseHInfApproximation == 1) {
         if (verbosity > 0) {
            mexPrintf("%s using approximate in-activation functions\n", getClass().c_str()); 
         }
@@ -233,7 +253,7 @@ void conductance::buildLUT(double approx_channels) {
             h_inf_cache[V_int+999] = h_inf(V,0);
             tau_h_cache[V_int+999] = tau_h(V,0);
         }
-    }
+    } 
 } // buildLUT
 
 
@@ -275,8 +295,10 @@ inline double conductance::fast_pow(double x, int a) {
         case 8:
             return x*x*x*x*x*x*x*x;
             break;
+        default: 
+            return pow(x,a);
+            break;
     }
-    return x;
 }
 
 /*

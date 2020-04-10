@@ -32,9 +32,6 @@ public:
         if (isnan (E)) { E = -20; }
 
 
-        // allow this channel to be approximated
-        approx_m = 1;
-        approx_h = 1;
     }
     double m_inf(double, double);
     double tau_m(double, double);

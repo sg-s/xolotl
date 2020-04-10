@@ -23,9 +23,11 @@ public:
 
         // defaults 
         if (isnan(gbar)) { gbar = 0; }
-        
-        
         if (isnan (E)) { E = -80; }
+
+
+        AllowMInfApproximation = false;
+        AllowHInfApproximation = false;
 
         p = 4;
         

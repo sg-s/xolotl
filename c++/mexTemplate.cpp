@@ -103,8 +103,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     }
 
-    xolotl_network.init();
 
+
+    xolotl_network.init();
 
 
     if (verbosity > 0) {

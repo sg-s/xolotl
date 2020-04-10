@@ -46,7 +46,7 @@ void conductance::init() {
 This method integrates the conductance object using
 the exponential Euler method. This is the default
 integration method used by xolotl. If an exact solution
-is to be calculated (i.e.,`approx_m = 0` and `approx_h=0`)
+is to be calculated (i.e.,`AllowMInfApproximation = 0` and `AllowHInfApproximation=0`)
 then `m` and `h` are updated using the exponential Euler
 equation using function evaluations of the activation 
 functions at this voltage and Calcium.
@@ -74,7 +74,7 @@ void conductance::integrate(double V, double Ca) {
     if (V_idx > 2000) {V_idx = 2000;};
 
     // assume that p > 0
-    switch (approx_m) {
+    switch (UseMInfApproximation) {
         case 0:
             minf = m_inf(V,Ca);
 
@@ -101,7 +101,7 @@ void conductance::integrate(double V, double Ca) {
             } // end switch instantaneous_m
             
             break;
-    } // switch approx_m
+    } // switch AllowMInfApproximation
     
     g = gbar*fast_pow(m,p);
 
@@ -109,7 +109,7 @@ void conductance::integrate(double V, double Ca) {
         case 0:
             break;
         default:
-            switch (approx_h) {
+            switch (UseHInfApproximation) {
                 case 0:
                     switch (instantaneous_h) {
                         case 0:
@@ -185,7 +185,7 @@ void conductance::integrateLangevin(double V, double Ca) {
     // mexPrintf("N = %i\n",N);
 
     // assume that p > 0
-    switch (approx_m) {
+    switch (UseMInfApproximation) {
         case 0:
             minf = m_inf(V,Ca);
             taum = tau_m(V,Ca);
@@ -195,7 +195,7 @@ void conductance::integrateLangevin(double V, double Ca) {
         default:
             m += (dt/tau_m_cache[V_idx])*(m_inf_cache[V_idx] - m) + sqrt((dt/(tau_m_cache[V_idx]*N))*(m + m_inf_cache[V_idx] - 2*m*m_inf_cache[V_idx]))*gaussrand();
             break;
-    } // switch approx_m
+    } // switch AllowMInfApproximation
 
     // stay within bounds!
     // mexPrintf("m = %f\n", m);
@@ -215,7 +215,7 @@ void conductance::integrateLangevin(double V, double Ca) {
         case 0:
             break;
         default:
-            switch (approx_h) {
+            switch (UseHInfApproximation) {
                 case 0:
                     hinf = h_inf(V,Ca);
                     tauh = tau_h(V,Ca);

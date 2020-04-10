@@ -115,8 +115,8 @@ public:
         q = 1;
 
         // allow this channel to be approximated?
-        approx_m = 1; // or 0 if not
-        approx_h = 1;
+        AllowMInfApproximation = true; // or false if not
+        AllowHInfApproximation = true;
     }
 
     double m_inf(double, double);

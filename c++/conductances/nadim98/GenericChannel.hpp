@@ -68,8 +68,8 @@ public:
         q = (int) q_;
 
         // allow this channel to be approximated
-        approx_m = 1;
-        approx_h = 1;
+        AllowMInfApproximation = true;
+        AllowHInfApproximation = true;
 
     }
 

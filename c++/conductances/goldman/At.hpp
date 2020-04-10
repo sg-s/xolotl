@@ -32,9 +32,6 @@ public:
         p = 1;
         q = 1;
 
-        // allow this channel to be approximated
-        approx_m = 1;
-        approx_h = 1;
 
     }
 

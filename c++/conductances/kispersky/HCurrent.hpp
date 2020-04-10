@@ -28,7 +28,6 @@ public:
         if (isnan (E)) { E = 0; }
 
         p = 1;
-        approx_m = 1;
 
     }
 

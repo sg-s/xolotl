@@ -68,21 +68,14 @@ public:
         h_tau_V_slope2 = h_tau_V_slope2_;
 
 
-
-
         // defaults 
-        if (isnan(gbar)) { gbar = 0; }
-        
+        if (isnan(gbar)) { gbar = 0; }        
         
         if (isnan (E)) { E = 30; }
-
 
         p = 3;
         q = 1;
 
-        // do not allow this channel to be approximated
-        approx_m = 0;
-        approx_h = 0;
     }
 
     double m_inf(double, double);

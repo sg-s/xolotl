@@ -27,6 +27,9 @@ public:
 
         p = 4;
 
+        AllowMInfApproximation = false;
+        AllowHInfApproximation = false;
+
     }
 
     double m_inf(double V, double Ca);

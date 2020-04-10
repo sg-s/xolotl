@@ -317,26 +317,8 @@ It does the following things:
 */
 void compartment::addConductance(conductance *cond_) {
     cond.push_back(cond_);
-    cond_->verbosity = verbosity;
-    cond_->buildLUT(approx_channels);
-    cond_->dt = dt;
-    cond_->temperature_ref = temperature_ref;
-    cond_->temperature = temperature;
     cond_->connect(this);
-
     n_cond++;
-
-    // set m, h of the conductance if unset
-    if (isnan(cond_->m)) {
-        cond_->m = cond_->m_inf(V,Ca);
-    }
-    if (isnan(cond_->h)) {
-        cond_->h = cond_->h_inf(V,Ca);
-    }
-
-    if (verbosity > 0) {
-        mexPrintf("[C++] adding conductance of type: %s\n", cond_->getClass().c_str());
-    }
 }
 
 
@@ -344,6 +326,7 @@ void compartment::addConductance(conductance *cond_) {
 Initialization method
 */
 void compartment::init() {
+
 
     // conductances
     for (int i=0; i<n_cond; i++) {
@@ -353,6 +336,7 @@ void compartment::init() {
         cond[i]->dt = dt;
         cond[i]->temperature_ref = temperature_ref;
         cond[i]->temperature = temperature;
+        cond[i]->verbosity = verbosity;
 
 
         // set m, h of the conductance if unset

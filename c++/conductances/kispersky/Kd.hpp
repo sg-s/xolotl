@@ -29,9 +29,6 @@ public:
 
         p = 3;
 
-        // allow this channel to be approximated
-        approx_m = 1;
-
     }
 
     double m_inf(double, double);

@@ -87,7 +87,7 @@ to also initialize.
 
 void network::init(void) {
     for (int i = 0; i < n_comp; i ++){
-        
+
         comp[i]->stochastic_channels = stochastic_channels;
         comp[i]->approx_channels = approx_channels;
         comp[i]->dt = sim_dt;
@@ -97,10 +97,8 @@ void network::init(void) {
         comp[i]->temperature_ref = temperature_ref;
         comp[i]->use_current = use_current;
 
+
         comp[i]->init();
-
-
-
     }
 }
 

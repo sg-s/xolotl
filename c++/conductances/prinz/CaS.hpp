@@ -32,9 +32,6 @@ public:
 
         is_calcium = true;
 
-        // allow this channel to be approximated
-        approx_m = 1;
-        approx_h = 1;
     }
 
     double m_inf(double, double);
