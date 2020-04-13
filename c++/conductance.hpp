@@ -209,6 +209,9 @@ a little more memory, but can be much faster.
 void conductance::buildLUT(double approx_channels) {
 
 
+    UseMInfApproximation = 0;
+    UseHInfApproximation = 0;
+
 
     if (approx_channels == 0) {
         // turn off approximations
