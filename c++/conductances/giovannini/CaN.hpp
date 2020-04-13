@@ -63,7 +63,7 @@ string CaN::getClass(){
 }
 
 
-void init() {
+void CaN::init() {
     // save the adjusted temperature scaling
     T_adj = pow(Q10, (temperature - temperature_ref) / 10);
 }
