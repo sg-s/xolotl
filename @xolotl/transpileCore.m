@@ -86,18 +86,7 @@ lines = [lines(1:insert_here); header_files(:); lines(insert_here+1:end)];
 
 
 for j = length(names):-1:1
-
-	if length(strfind(real_names{j},'.')) > 1
-
-		dots = strfind(real_names{j},'.');
-		dots(end) = [];
-		real_names{j}(dots) = '_';
-
-		%real_names{j}(min(strfind(real_names{j},'.'))) = '_';
-	end
-
-
-	input_hookups{j} = [real_names{j} ' = params[' mat2str(j-1) '];'];
+	input_hookups{j} = ['double ' names{j} ' = params[' mat2str(j-1) '];'];
 end
 input_hookups{end+1} = ['int param_size = ' mat2str(length(names)) ';'];
 insert_here = filelib.find(lines,'//xolotl:input_declarations');
@@ -108,20 +97,6 @@ lines = [lines(1:insert_here); input_hookups(:); lines(insert_here+1:end)];
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % make all the C++ objects
 [constructors, class_parents, obj_names] = self.generateConstructors;
-%
-
-% hotfix -- we are zeroing out all the arguments to the constructors
-% so we need to make new constructors
-for i = 1:length(constructors)
-	narg = length(strfind(constructors{i},','))+1;
-
-	constructors{i} = constructors{i}(1:strfind(constructors{i},'('));
-	for j = 1:narg
-		constructors{i} = [constructors{i} '0,'];
-	end
-	constructors{i}(end) = ')';
-	constructors{i}(end+1) = ';';
-end
 
 
 insert_here = filelib.find(lines,'//xolotl:insert_constructors');
@@ -231,8 +206,6 @@ for i = 1:length(all_mechanisms)
 
 
 end
-
-mechanism_add_lines{end+1} = ['n_mechanisms = ' mat2str(length(all_mechanisms)) ';'];
 
 insert_here = filelib.find(lines,'//xolotl:add_mechanisms_here');
 corelib.assert(length(insert_here)==1,'Could not find insertion point for mechanism hookups');

@@ -14,57 +14,47 @@
 using namespace std;
 
 
-// declare pointers to outputs
-double *output_state;
-double *output_V;
-double *output_Ca;
-double *output_I_clamp;
-double *output_curr_state; // currents
-double *output_syn_state;  // synapses
-double *output_cont_state; // mechanisms
-double * spiketimes;
 
-// make an empty network
-network xolotl_network = network();
-
-vector<synapse*> all_synapses; // pointers to all synapses
-
-int n_conductances = 0;
-int n_mechanisms = 0;
-int n_synapses = 0;
-
-
-double approx_channels;
-double dt;
-double sim_dt;
-double temperature_ref;
-double temperature;
-double use_current;
-double verbosity;
-double stochastic_channels;
-double output_type;
-double solver_order;
-double spike_thresh;
-double t_end;
-
-//xolotl:insert_constructors
-
-
-
-
-
-bool connectComponents = true;
 
 
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
 
 
+    double * params  = mxGetPr(prhs[0]);
+    //xolotl:input_declarations
+
+
+        
+    // declare pointers to outputs
+    double *output_state;
+    double *output_V;
+    double *output_Ca;
+    double *output_I_clamp;
+    double *output_curr_state; // currents
+    double *output_syn_state;  // synapses
+    double *output_cont_state; // mechanisms
+    double * spiketimes;
+
+    // make an empty network
+    network xolotl_network = network();
+
+    vector<synapse*> all_synapses; // pointers to all synapses
+
+    int n_conductances = 0;
+    int n_mechanisms = 0;
+    int n_synapses = 0;
+
+
+
+    //xolotl:insert_constructors
+
+
+
     //xolotl:define_v_clamp_idx
 
 
-    double * params  = mxGetPr(prhs[0]);
-    //xolotl:input_declarations
+    
 
 
 
@@ -85,23 +75,17 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     
 
 
-    // the reason this has to happen here, and not outside the entry point, is
-    // that the compiler complains and I don't know why
-    if (connectComponents) {
-        //xolotl:add_neurons_to_network
+    //xolotl:add_neurons_to_network
 
 
-        //xolotl:add_conductances_here
+    //xolotl:add_conductances_here
 
 
-        //xolotl:add_synapses_here
+    //xolotl:add_synapses_here
 
 
-        //xolotl:add_mechanisms_here
+    //xolotl:add_mechanisms_here
 
-        connectComponents = false;
-
-    }
 
 
 
