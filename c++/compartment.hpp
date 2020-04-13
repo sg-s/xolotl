@@ -331,12 +331,15 @@ void compartment::init() {
     // conductances
     for (int i=0; i<n_cond; i++) {
 
+
+        // first set all conductance parameters
         cond[i]->verbosity = verbosity;
-        cond[i]->buildLUT(approx_channels);
         cond[i]->dt = dt;
         cond[i]->temperature_ref = temperature_ref;
         cond[i]->temperature = temperature;
         cond[i]->verbosity = verbosity;
+
+
 
 
         // set m, h of the conductance if unset
@@ -347,7 +350,11 @@ void compartment::init() {
             cond[i]->h = cond[i]->h_inf(V,Ca);
         }
 
+
         cond[i]->init();
+
+        // then call buildLUT
+        cond[i]->buildLUT(approx_channels);
     }
 
 

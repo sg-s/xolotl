@@ -82,15 +82,13 @@ string CalciumMech::getClass() {
 
 // connection methods
 void CalciumMech::connect(compartment* comp_) {
-    
-
     comp = comp_;
     comp->addMechanism(this);
 }
 
 
-void init() {
-    if (isnan(comp_->vol)) {mexErrMsgTxt("[CalciumMech] this mechanism requires that the volume of the compartment it is in be defined. \n");}
+void CalciumMech::init() {
+    if (isnan(comp->vol)) {mexErrMsgTxt("[CalciumMech] this mechanism requires that the volume of the compartment it is in be defined. \n");}
     dt_by_tau_Ca = exp(-dt/tau_Ca);
 }
 

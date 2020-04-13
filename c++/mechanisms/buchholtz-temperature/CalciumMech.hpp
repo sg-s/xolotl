@@ -86,7 +86,6 @@ string CalciumMech::getClass() {
 // connection methods
 void CalciumMech::connect(compartment* comp_) {
     
-
     comp = comp_;
     comp->addMechanism(this);
 
@@ -102,11 +101,13 @@ void CalciumMech::connect(synapse* syn_) {
 }
 
 
-void init() {
-    if (isnan(comp_->vol)) {mexErrMsgTxt("[CalciumMech] this mechanism requires that the volume of the compartment it is in be defined. \n");}
+void CalciumMech::init() {
+    if (isnan(comp->vol)) {mexErrMsgTxt("[CalciumMech] this mechanism requires that the volume of the compartment it is in be defined. \n");}
 
     delta_temp = (temperature - temperature_ref)/10;
     dt_by_tau_Ca = exp(-dt/(tau_Ca)*(pow(Q_tau, delta_temp)));
+
+    mexPrintf("temperature = %f\n", temperature);
 }
 
 void CalciumMech::integrate(void) {

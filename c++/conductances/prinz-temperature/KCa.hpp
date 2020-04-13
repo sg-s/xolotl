@@ -42,12 +42,15 @@ public:
         if (isnan (E)) { E = -80; }
 
 
+        AllowMInfApproximation = false;
+        AllowHInfApproximation = false;
+
         p = 4;
     }
 
     void integrate(double, double);
     void integrateLangevin(double, double);
-    void connect(compartment*);
+    void init(void);
 
     double m_inf(double V, double Ca);
     double tau_m(double, double);
@@ -57,16 +60,13 @@ public:
 
 string KCa::getClass(){return "KCa";}
 
-void KCa::connect(compartment *pcomp_) {
-    // call super class method
-    conductance::connect(pcomp_);
 
+void KCa::init() {
     // also set up some useful things
     delta_temp = (temperature - temperature_ref)/10;
     pow_Q_tau_m_delta_temp = 1/(pow(Q_tau_m, delta_temp));
     pow_Q_g = pow(Q_g, delta_temp);
 }
-
 
 void KCa::integrate(double V, double Ca) {
     conductance::integrate(V,Ca);

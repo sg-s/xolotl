@@ -53,6 +53,7 @@ public:
     double a_m(double, double);
     double b_m(double, double);
     double alpha(double);
+    void init(void);
     string getClass(void);
 
 };

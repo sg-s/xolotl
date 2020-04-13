@@ -48,7 +48,7 @@ public:
 
     void integrate(double, double);
     void integrateLangevin(double, double);
-    void connect(compartment*);
+    void init(void);
 
     double m_inf(double, double);
     double tau_m(double, double);
@@ -58,15 +58,14 @@ public:
 
 string Kd::getClass(){return "Kd";}
 
-void Kd::connect(compartment *pcomp_) {
-    // call super class method
-    conductance::connect(pcomp_);
 
+void Kd::init() {
     // also set up some useful things
     delta_temp = (temperature - temperature_ref)/10;
-    pow_Q_tau_m_delta_temp = (pow(Q_tau_m, delta_temp));
+    pow_Q_tau_m_delta_temp = 1/(pow(Q_tau_m, delta_temp));
     pow_Q_g = pow(Q_g, delta_temp);
 }
+
 
 void Kd::integrate(double V, double Ca) {
     conductance::integrate(V,Ca);

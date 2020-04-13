@@ -53,7 +53,7 @@ public:
     void integrate(double, double);
     void integrateLangevin(double, double);
 
-    void connect(compartment*);
+    void init(void);
 
     double m_inf(double, double);
     double h_inf(double, double);
@@ -64,9 +64,7 @@ public:
 
 string ACurrent::getClass(){return "ACurrent";}
 
-void ACurrent::connect(compartment *pcomp_) {
-    // call super class method
-    conductance::connect(pcomp_);
+void ACurrent::init(void) {
 
     // also set up some useful things
     delta_temp = (temperature - temperature_ref)/10;
