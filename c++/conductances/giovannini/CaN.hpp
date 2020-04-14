@@ -43,8 +43,8 @@ public:
 
         p = 2;
 
-        allowMInfApprox = false;
-        allowHInfApprox = false;
+        AllowMInfApproximation = false;
+        AllowHInfApproximation = false;
 
     }
 
