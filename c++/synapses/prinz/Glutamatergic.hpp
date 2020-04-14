@@ -11,10 +11,10 @@ class Glutamatergic: public synapse {
 public:
 
 
-    double Delta;
+    double Delta = 5.0;
 
-    double k_;
-    double Vth;
+    double k_ = 0.025;;
+    double Vth = -35.0;;
 
     double s_inf_cache[2000];
     double tau_s_cache[2000];
@@ -25,15 +25,11 @@ public:
     {
         gmax = gmax_;
         E = -70.0;
-        Delta = 5.0;
-        Vth = -35.0;
-        k_ = 0.025;
         s = s_;
 
         // defaults
         if (isnan (s)) { s = 0; }
         if (isnan (gmax)) { gmax = 0; }
-        is_electrical = false;
 
     }
     

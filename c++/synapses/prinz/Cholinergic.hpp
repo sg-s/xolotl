@@ -33,7 +33,7 @@ public:
         if (isnan (s)) { s = 0; }
         if (isnan (gmax)) { gmax = 0; }
         if (isnan (Vth)) { Vth = -35.0; }
-        is_electrical = false;
+
     }
 
     void integrate(void);
