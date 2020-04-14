@@ -104,8 +104,6 @@ void CalciumMech::connect(synapse* syn_) {
 void CalciumMech::init() {
     if (isnan(comp->vol)) {mexErrMsgTxt("[CalciumMech] this mechanism requires that the volume of the compartment it is in be defined. \n");}
 
-    mexPrintf("mechanism: temperature = %f\n", temperature);
-
     delta_temp = (temperature - temperature_ref)/10;
     dt_by_tau_Ca = exp(-dt/(tau_Ca)*(pow(Q_tau, delta_temp)));
 

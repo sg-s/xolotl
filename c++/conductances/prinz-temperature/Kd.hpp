@@ -44,9 +44,6 @@ public:
 
         p = 4;
 
-        AllowMInfApproximation = false;
-        AllowHInfApproximation = false;
-
     }
 
     void integrate(double, double);

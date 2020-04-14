@@ -43,8 +43,6 @@ public:
         if (isnan (Q_tau_m)) { Q_tau_m = 2; }
         if (isnan (E)) { E = -20; }
 
-        AllowMInfApproximation = false;
-        AllowHInfApproximation = false;
     }
 
     void integrate(double, double);

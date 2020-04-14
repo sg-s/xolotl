@@ -48,8 +48,6 @@ public:
         p = 3;
         q = 1;
 
-        AllowMInfApproximation = false;
-        AllowHInfApproximation = false;
 
     }
 
@@ -74,8 +72,6 @@ void NaV::init() {
     pow_Q_tau_m_delta_temp = 1/(pow(Q_tau_m, delta_temp));
     pow_Q_tau_h_delta_temp = 1/(pow(Q_tau_h, delta_temp));
     pow_Q_g = pow(Q_g, delta_temp);
-
-    mexPrintf("NaV::pow_Q_tau_h_delta_temp = %f\n",pow_Q_tau_h_delta_temp);
 }
 
 

@@ -49,8 +49,7 @@ public:
         p = 3;
         q = 1;
 
-        AllowMInfApproximation = false;
-        AllowHInfApproximation = false;
+   
     }
 
     void integrate(double, double);
@@ -74,8 +73,6 @@ void ACurrent::init(void) {
     pow_Q_tau_m_delta_temp = 1/(pow(Q_tau_m, delta_temp));
     pow_Q_tau_h_delta_temp = 1/(pow(Q_tau_h, delta_temp));
     pow_Q_g = pow(Q_g, delta_temp);
-
-    mexPrintf("A: temperature = %f\n", temperature);
 }
 
 void ACurrent::integrateLangevin(double V, double Ca) {
