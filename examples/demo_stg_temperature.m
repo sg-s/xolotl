@@ -11,7 +11,7 @@ x = xolotl.examples.neurons.BurstingNeuron('prefix','prinz-temperature','Calcium
 
 x.set('*Q',2 + rand(19,1))
 
-x.sim_dt = .1
+x.sim_dt = .1;
 x.dt = .1;
 x.t_end = 5e3;
 

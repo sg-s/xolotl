@@ -107,7 +107,6 @@ void CalciumMech::init() {
     delta_temp = (temperature - temperature_ref)/10;
     dt_by_tau_Ca = exp(-dt/(tau_Ca)*(pow(Q_tau, delta_temp)));
 
-    mexPrintf("temperature = %f\n", temperature);
 }
 
 void CalciumMech::integrate(void) {
