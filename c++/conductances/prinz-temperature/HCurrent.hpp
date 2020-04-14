@@ -88,7 +88,7 @@ void HCurrent::integrate(double V, double Ca) {
 
 
 double HCurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+75.0)/5.5));}
-double HCurrent::tau_m(double V, double Ca) {return (1/pow_Q_tau_m_delta_temp)*((2/( exp((V+169.7)/(-11.6)) + exp((V- 26.7)/(14.3)) )));}
+double HCurrent::tau_m(double V, double Ca) {return (pow_Q_tau_m_delta_temp)*((2/( exp((V+169.7)/(-11.6)) + exp((V- 26.7)/(14.3)) )));}
 
 
 #endif

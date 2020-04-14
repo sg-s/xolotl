@@ -83,7 +83,7 @@ void Kd::integrateLangevin(double V, double Ca) {
 
 
 double Kd::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+12.3)/-11.8));}
-double Kd::tau_m(double V, double Ca) {return (1/pow_Q_tau_m_delta_temp)*(14.4 - 12.8/(1.0+exp((V+28.3)/-19.2)));}
+double Kd::tau_m(double V, double Ca) {return (pow_Q_tau_m_delta_temp)*(14.4 - 12.8/(1.0+exp((V+28.3)/-19.2)));}
 
 
 #endif
