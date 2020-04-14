@@ -44,6 +44,9 @@ public:
 
         p = 4;
 
+        AllowMInfApproximation = false;
+        AllowHInfApproximation = false;
+
     }
 
     void integrate(double, double);
@@ -60,6 +63,7 @@ string Kd::getClass(){return "Kd";}
 
 
 void Kd::init() {
+    conductance::init();
     // also set up some useful things
     delta_temp = (temperature - temperature_ref)/10;
     pow_Q_tau_m_delta_temp = 1/(pow(Q_tau_m, delta_temp));

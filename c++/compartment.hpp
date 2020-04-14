@@ -328,6 +328,8 @@ Initialization method
 void compartment::init() {
 
 
+    mexPrintf("compartment::RT_by_nF = %f\n",RT_by_nF);
+
     // conductances
     for (int i=0; i<n_cond; i++) {
 

@@ -50,6 +50,9 @@ public:
         is_calcium = true;
         p = 3;
         q = 1;
+
+        AllowMInfApproximation = false;
+        AllowHInfApproximation = false;
     }
 
     void integrate(double, double);
@@ -68,11 +71,14 @@ string CaS::getClass(){return "CaS";}
 
 
 void CaS::init() {
+    conductance::init();
     // also set up some useful things
     delta_temp = (temperature - temperature_ref)/10;
     pow_Q_tau_m_delta_temp = 1/(pow(Q_tau_m, delta_temp));
     pow_Q_tau_h_delta_temp = 1/(pow(Q_tau_h, delta_temp));
     pow_Q_g = pow(Q_g, delta_temp);
+
+    mexPrintf("CaS: delta_temp = %f\n", delta_temp);
 }
 
 

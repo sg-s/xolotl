@@ -42,6 +42,9 @@ public:
         if (isnan (Q_g)) { Q_g = 1; }
         if (isnan (Q_tau_m)) { Q_tau_m = 2; }
         if (isnan (E)) { E = -20; }
+
+        AllowMInfApproximation = false;
+        AllowHInfApproximation = false;
     }
 
     void integrate(double, double);
@@ -61,6 +64,7 @@ string HCurrent::getClass(){
 
 
 void HCurrent::init() {
+    conductance::init();
     // also set up some useful things
 
     delta_temp = (temperature - temperature_ref)/10;
