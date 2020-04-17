@@ -33,7 +33,6 @@
 
 function show(self,obj, custom_name)
 
-
 if isa(obj,'cpplab')
 	% we have been given a cpplab object
 
@@ -65,6 +64,8 @@ if strcmp(obj.cpp_class_name,'Leak')
 	return
 end
 
+
+
 % specify range of V
 V = linspace(-200,200,1e3);
 
@@ -79,7 +80,7 @@ else
 
 	params = obj.get(obj.cpp_constructor_signature);
 
-	[data.minf, data.hinf, data.taum, data.tauh] = binary_name(V, params);
+	[data.minf, data.hinf, data.taum, data.tauh] = binary_name(V, params, [self.temperature_ref; self.temperature]);
 
 	if length(unique(data.hinf)) == 1
 		data.tauh = NaN*data.tauh;
@@ -87,7 +88,6 @@ else
 	end
 
 end
-
 
 
 
@@ -196,6 +196,15 @@ if isempty(ax(1).Children)
 	plot(ax(find(strcmp({ax.Tag},'hinf'))),V,data.hinf,'DisplayName',custom_name,'Tag',obj.hash);
 	plot(ax(find(strcmp({ax.Tag},'taum'))),V,data.taum,'DisplayName',custom_name,'Tag',obj.hash);
 	plot(ax(find(strcmp({ax.Tag},'tauh'))),V,data.tauh,'DisplayName',custom_name,'Tag',obj.hash);
+
+
+
+	% turn all YLim modes to auto
+	for i = 1:length(ax)
+		ax(i).YLimMode = 'auto';
+	end
+
+
 else
 	% there are pre-existing plots. Make sure we don't plot the same object to two different plots
 	for i = 1:length(ax)
@@ -216,8 +225,3 @@ figlib.pretty();
 
 axes(ax(1))
 legend;
-
-% turn all YLim modes to auto
-for i = 1:length(ax)
-	ax(i).YLimMode = 'auto';
-end
