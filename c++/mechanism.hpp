@@ -77,6 +77,8 @@ public:
     virtual void connect(conductance *);
     virtual void connect(synapse *);
 
+    virtual void init(void);
+
 
 };
 
@@ -94,7 +96,7 @@ void mechanism::integrate() {
 
 /*
 This virtual method is a placeholder method of mechanism that does
-nothing except throw an error. If your mechanim is properly 
+nothing except throw an error. If your mechanism is properly 
 written, this will not be run (and therefore the error will
 not be thrown) because your mechanism will define a "connect"
 method, which will be used instead of this.
@@ -105,7 +107,7 @@ void mechanism::connect(compartment* comp_) {
 
 /*
 This virtual method is a placeholder method of mechanism that does
-nothing except throw an error. If your mechanim is properly 
+nothing except throw an error. If your mechanism is properly 
 written, this will not be run (and therefore the error will
 not be thrown) because your mechanism will define a "connect"
 method, which will be used instead of this.
@@ -116,7 +118,7 @@ void mechanism::connect(conductance* cond_) {
 
 /*
 This virtual method is a placeholder method of mechanism that does
-nothing except throw an error. If your mechanim is properly 
+nothing except throw an error. If your mechanism is properly 
 written, this will not be run (and therefore the error will
 not be thrown) because your mechanism will define a "connect"
 method, which will be used instead of this.
@@ -129,7 +131,7 @@ void mechanism::connect(synapse* syn_) {
 
 /*
 This virtual method is a placeholder method of mechanism that does
-nothing except throw an error. If your mechanim is properly 
+nothing except throw an error. If your mechanism is properly 
 written, this will not be run (and therefore the error will
 not be thrown) because your mechanism will define a "integrateMS"
 method, which will be used instead of this.
@@ -138,6 +140,13 @@ void mechanism::integrateMS(int k, double V, double Ca) {
     mexErrMsgTxt("[mechanism] Unimplemented multi-step integration method\n");
 }
 
+
+
+/*
+Initialization method
+*/
+
+void mechanism::init() {}
 
 
 #endif

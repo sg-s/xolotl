@@ -11,10 +11,13 @@ class Glutamatergic: public synapse {
 public:
 
 
-    double Delta;
+    double Delta = 5.0;
 
-    double k_;
-    double Vth;
+    double k_ = 0.025;;
+    double Vth = -35.0;;
+
+    double s_inf_cache[2000];
+    double tau_s_cache[2000];
 
 
     // specify parameters + initial conditions 
@@ -22,19 +25,16 @@ public:
     {
         gmax = gmax_;
         E = -70.0;
-        Delta = 5.0;
-        Vth = -35.0;
-        k_ = 0.025;
         s = s_;
 
         // defaults
         if (isnan (s)) { s = 0; }
         if (isnan (gmax)) { gmax = 0; }
-        is_electrical = false;
 
     }
     
     void integrate(void);
+    void init(void);
     void integrateMS(int, double, double);
     void checkSolvers(int);
 
@@ -47,8 +47,7 @@ public:
     int getFullStateSize(void);
 };
 
-int Glutamatergic::getFullStateSize()
-{
+int Glutamatergic::getFullStateSize() {
     return 2; 
 }
 
@@ -66,18 +65,31 @@ double Glutamatergic::sdot(double V_pre, double s_) {
     return (sinf - s_)/tau_s(sinf);
 }
 
-void Glutamatergic::integrate(void) {   
-    // figure out the voltage of the pre-synaptic neuron
-    
 
+void Glutamatergic::init() {
+    // build a LUT 
+    double V = 0;
+
+    for (int V_int = -999; V_int < 1001; V_int++) {
+        V = ((double) V_int)/10;
+        s_inf_cache[V_int+999] = s_inf(V);
+        tau_s_cache[V_int+999] = tau_s(s_inf(V));
+    }
+
+}
+
+void Glutamatergic::integrate(void) {
+    // figure out the voltage of the pre-synaptic neuron
     double V_pre = pre_syn->V;
-    double sinf = s_inf(V_pre);
+
+    int V_idx = (int) round((V_pre*10)+999);
+    if (V_idx < 0) {V_idx = 0;};
+    if (V_idx > 2000) {V_idx = 2000;};
 
     // integrate using exponential Euler
-    s = sinf + (s - sinf)*exp(-dt/tau_s(sinf));
+    s = s_inf_cache[V_idx] + (s - s_inf_cache[V_idx])*exp(-dt/tau_s_cache[V_idx]);
 
     g = gmax*s;
-    
 }
 
 void Glutamatergic::integrateMS(int k, double V, double Ca) {

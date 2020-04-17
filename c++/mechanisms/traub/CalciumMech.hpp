@@ -53,6 +53,7 @@ public:
     double getState(int);
     string getClass(void);
 
+
 };
 
 string CalciumMech::getClass() {
@@ -66,36 +67,30 @@ double CalciumMech::getState(int idx){return std::numeric_limits<double>::quiet_
 int CalciumMech::getFullStateSize(){return 0; }
 
 
-int CalciumMech::getFullState(double *cont_state, int idx)
-{
+int CalciumMech::getFullState(double *cont_state, int idx) {
     // do nothing
     return idx;
 }
 
 // connection methods
-void CalciumMech::connect(compartment* comp_)
-{
+void CalciumMech::connect(compartment* comp_) {
     comp = comp_;
     comp->addMechanism(this);
 }
 
-void CalciumMech::connect(conductance* cond_)
-{
+void CalciumMech::connect(conductance* cond_) {
     mexErrMsgTxt("[CalciumMech] This mechanism cannot connect to a conductance object");
 }
 
-void CalciumMech::connect(synapse* syn_)
-{
+void CalciumMech::connect(synapse* syn_) {
     mexErrMsgTxt("[CalciumMech] This mechanism cannot connect to a synapse object");
 }
 
-double CalciumMech::Cadot(double Ca_)
-{
+double CalciumMech::Cadot(double Ca_) {
     return -f * (comp->i_Ca) * (comp->A) - Ca_/tau_Ca;
 }
 
-void CalciumMech::integrate(void)
-{
+void CalciumMech::integrate(void) {
     double Ca = comp->Ca_prev;
     Ca = Ca + dt * Cadot(Ca);
     comp->Ca = Ca;
@@ -103,16 +98,14 @@ void CalciumMech::integrate(void)
 }
 
 // Runge-Kutta 4 integrator
-void CalciumMech::integrateMS(int k, double V, double Ca_)
-{
+void CalciumMech::integrateMS(int k, double V, double Ca_) {
     if (k == 4){return;}
 
     comp->k_Ca[k] = dt*(Cadot(Ca_));
     // mexPrintf("k_Ca[k] = %f\n", comp->k_Ca[k]);
 }
 
-void CalciumMech::checkSolvers(int k)
-{
+void CalciumMech::checkSolvers(int k) {
     if (k == 0){
         return;
     } else if (k == 4){

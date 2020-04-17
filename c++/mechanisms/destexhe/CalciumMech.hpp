@@ -70,6 +70,8 @@ public:
     double Cadot(double);
     double Cainf(void);
 
+    void init(void);
+
 };
 
 
@@ -92,12 +94,8 @@ string CalciumMech::getClass() {
 
 // connection methods
 void CalciumMech::connect(compartment* comp_) {
-    if (isnan(comp_->vol)) {mexErrMsgTxt("[CalciumMech] this mechanism requires that the volume of the compartment it is in be defined. \n");}
-
     comp = comp_;
     comp->addMechanism(this);
-
-    dt_by_tau_Ca = exp(-dt/tau_Ca);
 }
 
 void CalciumMech::connect(conductance* cond_) {
@@ -106,6 +104,11 @@ void CalciumMech::connect(conductance* cond_) {
 
 void CalciumMech::connect(synapse* syn_) {
     mexErrMsgTxt("[CalciumMech] This mechanism cannot connect to a synapse object");
+}
+
+void init() {
+    if (isnan(comp_->vol)) {mexErrMsgTxt("[CalciumMech] this mechanism requires that the volume of the compartment it is in be defined. \n");}
+    dt_by_tau_Ca = exp(-dt/tau_Ca);
 }
 
 

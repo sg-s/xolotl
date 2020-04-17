@@ -57,9 +57,6 @@ public:
 
         if (isnan(pbar)) {pbar = 0;}
 
-        // allow this channel to be approximated
-        approx_m = 0;
-        approx_h = 0;
 
         is_calcium = true;
 

@@ -14,18 +14,8 @@
 using namespace std;
 
 
-
-
-
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
-
-
-    double * params  = mxGetPr(prhs[0]);
-    //xolotl:input_declarations
-
-
-        
     // declare pointers to outputs
     double *output_state;
     double *output_V;
@@ -36,26 +26,15 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double *output_cont_state; // mechanisms
     double * spiketimes;
 
-    // make an empty network
-    network xolotl_network = network();
-
-    vector<synapse*> all_synapses; // pointers to all synapses
-
-    int n_conductances = 0;
-    int n_mechanisms = 0;
-    int n_synapses = 0;
-
-
-
-    //xolotl:insert_constructors
-
-
 
     //xolotl:define_v_clamp_idx
 
+    // make an empty network
+    network xolotl_network;
 
-    
+    int n_synapses = 0;
 
+    //xolotl:input_declarations
 
 
     // temperature and other wire-ups
@@ -70,26 +49,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     xolotl_network.stochastic_channels = (int) stochastic_channels;
 
     xolotl_network.use_current = (int) use_current;
-
-
-    
-
-
-    //xolotl:add_neurons_to_network
-
-
-    //xolotl:add_conductances_here
-
-
-    //xolotl:add_synapses_here
-
-
-    //xolotl:add_mechanisms_here
-
-
-
-
-    xolotl_network.init();
 
 
     if (verbosity > 0) {
@@ -110,9 +69,23 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
 
+    //xolotl:insert_constructors
+
+
+    //xolotl:add_neurons_to_network
+
+    //xolotl:add_conductances_here
+
+
+    vector<synapse*> all_synapses; // pointers to all synapses
+    //xolotl:add_synapses_here
+
+
+    //xolotl:add_mechanisms_here
 
 
 
+    //xolotl:call_methods_here
     int nsteps = (int) floor(t_end/sim_dt);
     int progress_report = (int) floor(nsteps/10);
 
@@ -302,6 +275,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     if (is_multi_comp & is_multi_step){
         mexErrMsgTxt("[xolotl] multi-compartment models cannot be integrated with multi-step methods yet. \n");
     }
+
+    // if (is_multi_comp & is_voltage_clamped){
+    //     mexErrMsgTxt("[xolotl] multi-compartment models cannot be integrated when something is clamped yet. \n");
+    // }
 
 
     int output_idx = 0;

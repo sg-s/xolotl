@@ -38,9 +38,6 @@ public:
 
         p = 2;
 
-        // allow approximations
-        approx_m = 1;
-
     }
 
     double m_inf(double, double);

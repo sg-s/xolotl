@@ -22,9 +22,12 @@ public:
 
         p = 4;
 
+
+        AllowMInfApproximation = false;
+        AllowHInfApproximation = false;
+
         // defaults
         if (isnan(gbar)) { gbar = 0; }
-        
         if (isnan (E)) { E = -80; }
     }
 

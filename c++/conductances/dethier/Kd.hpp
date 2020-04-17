@@ -29,7 +29,6 @@ public:
 
 
         p = 4;
-        approx_m = 1;
     }
 
     double m_inf(double, double);

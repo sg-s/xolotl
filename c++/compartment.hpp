@@ -107,7 +107,7 @@ public:
     // if not, you must specify the area and
     // volume
     double A = .0628;
-    double vol;
+    double vol = .0628;
     double radius; // mm
     double len; // mm
     double shell_thickness; // mm
@@ -127,13 +127,13 @@ public:
     double Ca_average;
 
 
-    double E_Ca;
-    double i_Ca; // specific calcium current (current/area. nA/mm^2)
-    double I_ext; // all external currents are summed here
-    double I_clamp; // this is the current required to clamp it
-    int n_cond; // this keep tracks of the # channels
-    int n_mech; // # of mechanisms
-    int n_syn; // # of synapses
+    double E_Ca = 100;
+    double i_Ca = 0; // specific calcium current (current/area. nA/mm^2)
+    double I_ext = 0; // all external currents are summed here
+    double I_clamp = 0; // this is the current required to clamp it
+    int n_cond = 0; // this keep tracks of the # channels
+    int n_mech = 0; // # of mechanisms
+    int n_syn = 0; // # of synapses
     int n_axial_syn;
 
     int solver_order = 0;
@@ -141,6 +141,9 @@ public:
     int stochastic_channels = 0;
 
     int use_current = 0;
+
+    compartment() {}
+
 
     // constructor with all parameters
     compartment(double V_, double Ca_, double Cm_, double A_, double vol_,  double Ca_target_, double Ca_average_, double tree_idx_, double neuron_idx_, double radius_, double len_, double shell_thickness_, double Ca_out_)
@@ -271,6 +274,8 @@ public:
 
     void checkSolvers(int);
 
+    void init(void);
+
 
 };
 
@@ -312,27 +317,70 @@ It does the following things:
 */
 void compartment::addConductance(conductance *cond_) {
     cond.push_back(cond_);
-    cond_->verbosity = verbosity;
-    cond_->buildLUT(approx_channels);
-    cond_->dt = dt;
-    cond_->temperature_ref = temperature_ref;
-    cond_->temperature = temperature;
     cond_->connect(this);
-
     n_cond++;
-
-    // set m, h of the conductance if unset
-    if (isnan(cond_->m)) {
-        cond_->m = cond_->m_inf(V,Ca);
-    }
-    if (isnan(cond_->h)) {
-        cond_->h = cond_->h_inf(V,Ca);
-    }
-
-    if (verbosity > 0) {
-        mexPrintf("[C++] adding conductance of type: %s\n", cond_->getClass().c_str());
-    }
 }
+
+
+/*
+Initialization method
+*/
+void compartment::init() {
+
+    // conductances
+    for (int i=0; i<n_cond; i++) {
+
+
+        // first set all conductance parameters
+        cond[i]->verbosity = verbosity;
+        cond[i]->dt = dt;
+        cond[i]->temperature_ref = temperature_ref;
+        cond[i]->temperature = temperature;
+        cond[i]->verbosity = verbosity;
+
+
+
+
+        // set m, h of the conductance if unset
+        if (isnan(cond[i]->m)) {
+            cond[i]->m = cond[i]->m_inf(V,Ca);
+        }
+        if (isnan(cond[i]->h)) {
+            cond[i]->h = cond[i]->h_inf(V,Ca);
+        }
+
+
+        cond[i]->init();
+
+        // then call buildLUT
+        cond[i]->buildLUT(approx_channels);
+    }
+
+
+    // synapses
+    for (int i=0; i<n_syn; i++) {
+
+        syn[i]->verbosity = verbosity;
+        syn[i]->dt = dt;
+        syn[i]->temperature_ref = temperature_ref;
+        syn[i]->temperature = temperature;
+
+        syn[i]->init();
+    }
+
+    // mechanisms
+    for (int i=0; i<n_mech; i++) {
+
+        mech[i]->dt = dt;
+        mech[i]->verbosity = verbosity;
+        mech[i]->temperature = temperature;
+        mech[i]->temperature_ref = temperature_ref;
+
+        mech[i]->init();
+    }
+
+}
+
 
 
 /*
@@ -353,10 +401,7 @@ It does the following things:
 
 void compartment::addMechanism(mechanism *mech_) {
     // mexPrintf("adding mechanism @  %p\n",mech_);
-    mech_->dt = dt;
-    // mech_->verbosity = verbosity;
-    mech_->temperature = temperature;
-    mech_->temperature_ref = temperature_ref;
+    
     mech.push_back(mech_);
     mech_->mechanism_idx = n_mech; // tell the mechanism what rank it has
     n_mech++;
@@ -377,8 +422,7 @@ pointer to this synapse is stored in the vector `syn`
 
 */
 void compartment::addSynapse(synapse *syn_) {
-    syn_->dt = dt;
-    syn_->verbosity = verbosity;
+    
     syn.push_back(syn_);
     n_syn ++;
 
@@ -679,6 +723,8 @@ object in this compartment to integrate by calling their
 
 */
 void compartment::integrateChannels(void) {
+
+    //mexPrintf("Ca = %f\n",Ca);
 
     sigma_g = 0.0;
     sigma_gE = 0.0;

@@ -50,11 +50,12 @@ public:
 
         p = 3;
         q = 1;
+
     }
 
     void integrate(double, double);
     void integrateLangevin(double, double);
-    void connect(compartment*);
+    void init(void);
 
     double m_inf(double, double);
     double h_inf(double, double);
@@ -65,15 +66,16 @@ public:
 
 string CaT::getClass(){return "CaT";}
 
-void CaT::connect(compartment *pcomp_) {
-    // call super class method
-    conductance::connect(pcomp_);
 
+
+void CaT::init() {
+    conductance::init();
     // also set up some useful things
     delta_temp = (temperature - temperature_ref)/10;
-    pow_Q_tau_m_delta_temp = (pow(Q_tau_m, delta_temp));
-    pow_Q_tau_h_delta_temp = (pow(Q_tau_h, delta_temp));
+    pow_Q_tau_m_delta_temp = 1/(pow(Q_tau_m, delta_temp));
+    pow_Q_tau_h_delta_temp = 1/(pow(Q_tau_h, delta_temp));
     pow_Q_g = pow(Q_g, delta_temp);
+
 }
 
 
@@ -93,7 +95,7 @@ void CaT::integrateLangevin(double V, double Ca) {
 
 double CaT::m_inf(double V, double Ca) {return 1.0/(1.0 + exp((V+27.1)/-7.2));}
 double CaT::h_inf(double V, double Ca) {return 1.0/(1.0 + exp((V+32.1)/5.5));}
-double CaT::tau_m(double V, double Ca) {return (1/pow_Q_tau_m_delta_temp)*(43.4 - 42.6/(1.0 + exp((V+68.1)/-20.5)));}
-double CaT::tau_h(double V, double Ca) {return (1/pow_Q_tau_h_delta_temp)*(210.0 - 179.6/(1.0 + exp((V+55.0)/-16.9)));}
+double CaT::tau_m(double V, double Ca) {return (pow_Q_tau_m_delta_temp)*(43.4 - 42.6/(1.0 + exp((V+68.1)/-20.5)));}
+double CaT::tau_h(double V, double Ca) {return (pow_Q_tau_h_delta_temp)*(210.0 - 179.6/(1.0 + exp((V+55.0)/-16.9)));}
 
 #endif

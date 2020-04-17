@@ -28,7 +28,6 @@ public:
         if (isnan (E)) { E = 30; }
 
         p = 1;
-        approx_m = 1;
     }
 
     double m_inf(double V, double Ca);

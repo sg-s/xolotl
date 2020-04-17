@@ -42,12 +42,13 @@ public:
         if (isnan (Q_g)) { Q_g = 1; }
         if (isnan (Q_tau_m)) { Q_tau_m = 2; }
         if (isnan (E)) { E = -20; }
+
     }
 
     void integrate(double, double);
     void integrateLangevin(double, double);
 
-    void connect(compartment*);
+    void init(void);
 
     double m_inf(double, double);
     double tau_m(double, double);
@@ -59,16 +60,16 @@ string HCurrent::getClass(){
     return "HCurrent";
 }
 
-void HCurrent::connect(compartment *pcomp_) {
-    // call super class method
-    conductance::connect(pcomp_);
 
+void HCurrent::init() {
+    conductance::init();
     // also set up some useful things
 
     delta_temp = (temperature - temperature_ref)/10;
-    pow_Q_tau_m_delta_temp = (pow(Q_tau_m, delta_temp));
+    pow_Q_tau_m_delta_temp = 1/(pow(Q_tau_m, delta_temp));
     pow_Q_g = pow(Q_g, delta_temp);
 }
+
 
 
 void HCurrent::integrateLangevin(double V, double Ca) {
@@ -85,7 +86,7 @@ void HCurrent::integrate(double V, double Ca) {
 
 
 double HCurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+75.0)/5.5));}
-double HCurrent::tau_m(double V, double Ca) {return (1/pow_Q_tau_m_delta_temp)*((2/( exp((V+169.7)/(-11.6)) + exp((V- 26.7)/(14.3)) )));}
+double HCurrent::tau_m(double V, double Ca) {return (pow_Q_tau_m_delta_temp)*((2/( exp((V+169.7)/(-11.6)) + exp((V- 26.7)/(14.3)) )));}
 
 
 #endif

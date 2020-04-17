@@ -14,6 +14,9 @@ public:
     double k_ = 0.01;
     double Vth = -35.0;
 
+    double s_inf_cache[2000];
+    double tau_s_cache[2000];
+
 
     // specify parameters + initial conditions
     Cholinergic(double gmax_, double s_, double Vth_)
@@ -30,7 +33,7 @@ public:
         if (isnan (s)) { s = 0; }
         if (isnan (gmax)) { gmax = 0; }
         if (isnan (Vth)) { Vth = -35.0; }
-        is_electrical = false;
+
     }
 
     void integrate(void);
@@ -41,24 +44,39 @@ public:
     double tau_s(double);
     double sdot(double, double);
 
+    void init(void);
+
     int getFullStateSize(void);
     void connect(compartment *pcomp1_, compartment *pcomp2_);
     double getCurrent(double V_post);
     int getFullState(double*, int);
 };
 
-int Cholinergic::getFullStateSize()
-{
+int Cholinergic::getFullStateSize() {
     return 2;
 }
+
+void Cholinergic::init() {
+    // build a LUT 
+    double V = 0;
+
+    for (int V_int = -999; V_int < 1001; V_int++) {
+        V = ((double) V_int)/10;
+        s_inf_cache[V_int+999] = s_inf(V);
+        tau_s_cache[V_int+999] = tau_s(s_inf(V));
+    }
+
+}
+
+
+
 
 
 double Cholinergic::s_inf(double V_pre) {return 1.0/(1.0+exp((Vth - V_pre)/Delta));}
 
 double Cholinergic::tau_s(double sinf_) {return (1 - sinf_)/k_;}
 
-double Cholinergic::sdot(double V_pre, double s_)
-{
+double Cholinergic::sdot(double V_pre, double s_) {
     double sinf = s_inf(V_pre);
     return (sinf - s_)/tau_s(sinf);
 }
@@ -66,14 +84,15 @@ double Cholinergic::sdot(double V_pre, double s_)
 void Cholinergic::integrate(void) {
     // figure out the voltage of the pre-synaptic neuron
     double V_pre = pre_syn->V;
-    double sinf = s_inf(V_pre);
+
+    int V_idx = (int) round((V_pre*10)+999);
+    if (V_idx < 0) {V_idx = 0;};
+    if (V_idx > 2000) {V_idx = 2000;};
 
     // integrate using exponential Euler
-    s = sinf + (s - sinf)*exp(-dt/tau_s(sinf));
+    s = s_inf_cache[V_idx] + (s - s_inf_cache[V_idx])*exp(-dt/tau_s_cache[V_idx]);
 
     g = gmax*s;
-
-
 }
 
 void Cholinergic::integrateMS(int k, double V, double Ca) {

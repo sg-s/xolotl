@@ -19,6 +19,7 @@ class CalciumMech: public mechanism {
 protected:
     double dt_by_tau_Ca = 0;
     double delta_temp = 0;
+    double compensated_tau_Ca = 1;
 public:
 
 
@@ -60,6 +61,8 @@ public:
     double getState(int);
     string getClass(void);
 
+    void init(void);
+
 
 };
 
@@ -83,14 +86,12 @@ string CalciumMech::getClass() {
 
 // connection methods
 void CalciumMech::connect(compartment* comp_) {
-    if (isnan(comp_->vol)) {mexErrMsgTxt("[CalciumMech] this mechanism requires that the volume of the compartment it is in be defined. \n");}
-
+    
     comp = comp_;
     comp->addMechanism(this);
 
-    delta_temp = (temperature - temperature_ref)/10;
-    dt_by_tau_Ca = exp(-dt/(tau_Ca)*(pow(Q_tau, delta_temp)));
 }
+
 
 void CalciumMech::connect(conductance* cond_) {
     mexErrMsgTxt("[CalciumMech] This mechanism cannot connect to a conductance object");
@@ -101,6 +102,15 @@ void CalciumMech::connect(synapse* syn_) {
 }
 
 
+void CalciumMech::init() {
+    if (isnan(comp->vol)) {mexErrMsgTxt("[CalciumMech] this mechanism requires that the volume of the compartment it is in be defined. \n");}
+
+    delta_temp = (temperature - temperature_ref)/10;
+    compensated_tau_Ca = tau_Ca/((pow(Q_tau, delta_temp)));
+
+    dt_by_tau_Ca = exp(-dt/(compensated_tau_Ca));
+
+}
 
 void CalciumMech::integrate(void) {
 
@@ -112,8 +122,13 @@ void CalciumMech::integrate(void) {
     // otherwise this becomes very tricky and easily
     // diverges
 
-    double Ca_inf = Ca_in - (tau_Ca*phi*(comp->i_Ca_prev)*(comp->A))/(192971*(comp->vol)); // microM
+    double Ca_inf = Ca_in - (compensated_tau_Ca*phi*(comp->i_Ca_prev)*(comp->A))/(192971*(comp->vol)); // microM
     comp->Ca = Ca_inf + (Ca - Ca_inf)*dt_by_tau_Ca;
+
+
+    // Euler formulation
+    // double Cadot = -(phi*(comp->i_Ca_prev)*(comp->A))/((192971*(comp->vol)))  - (Ca - Ca_in)/compensated_tau_Ca;
+    // comp->Ca = Ca + Cadot*dt;
 }
 
 
@@ -123,7 +138,7 @@ void CalciumMech::checkSolvers(int k) {
     if (k == 0){
         return;
     } else {
-        mexErrMsgTxt("[CalciumMech1] unsupported solver order\n");
+        mexErrMsgTxt("[CalciumMech] unsupported solver order\n");
     }
 }
 

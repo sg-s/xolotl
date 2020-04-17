@@ -34,7 +34,7 @@ public:
         p = 4;
 
         // allow this channel to be approximated
-        approx_m = 0;
+        AllowHInfApproximation = false;
 
         // need to set E to zero to linearize. Don't worry,
         // this is not the reversal potential

@@ -37,7 +37,7 @@ options = corelib.parseNameValueArguments(options, varargin{:});
 x = xolotl;
 A = 0.0628;
 vol = A;
-x.add('compartment','AB','A',A,'vol',vol);
+x.add('compartment','AB','A',A,'vol',vol,'Ca',.05);
 
 
 prefix = options.prefix;
@@ -55,7 +55,7 @@ for i = 1:length(channels)
 	end
 end
 
-x.AB.add('Leak');
+x.AB.add('Leak','gbar',0);
 
 
 
@@ -119,4 +119,4 @@ end
 
 
 x.t_end = 3e3;
-x.integrate;
+%x.integrate;

@@ -2,7 +2,7 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// Persisent Sodium
+// Persistent Sodium
 // http://jn.physiology.org/content/94/1/590.short
 
 #ifndef PROC
@@ -23,12 +23,9 @@ public:
 
         p = 1;
 
-        // allow this channel to be approximated
-        approx_m = 1;
 
          // defaults
         if (isnan(gbar)) { gbar = 0; }
-        
         if (isnan (E)) { E = 0; }
     }
 

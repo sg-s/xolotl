@@ -43,12 +43,8 @@ public:
 
         p = 2;
 
-        // allow this channel to be approximated
-        approx_m = 1;
-        approx_h = 1;
-
-        // save the adjusted temperature scaling
-        T_adj = pow(Q10, (temperature - temperature_ref) / 10);
+        AllowMInfApproximation = false;
+        AllowHInfApproximation = false;
 
     }
 
@@ -57,12 +53,19 @@ public:
     double a_m(double, double);
     double b_m(double, double);
     double alpha(double);
+    void init(void);
     string getClass(void);
 
 };
 
 string CaN::getClass(){
     return "CaN";
+}
+
+
+void CaN::init() {
+    // save the adjusted temperature scaling
+    T_adj = pow(Q10, (temperature - temperature_ref) / 10);
 }
 
 double CaN::alpha(double Ca) {return beta * fast_pow(Ca / Ca_c, 2); }

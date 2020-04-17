@@ -37,7 +37,7 @@ method, which will be used instead of this.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L90)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L92)
 
 -------
 
@@ -55,7 +55,7 @@ void connect(compartment* comp_)
 
 
 This virtual method is a placeholder method of mechanism that does
-nothing except throw an error. If your mechanim is properly 
+nothing except throw an error. If your mechanism is properly 
 written, this will not be run (and therefore the error will
 not be thrown) because your mechanism will define a "connect"
 method, which will be used instead of this.
@@ -64,7 +64,7 @@ method, which will be used instead of this.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L102)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L104)
 
 -------
 
@@ -82,7 +82,7 @@ void connect(conductance* cond_)
 
 
 This virtual method is a placeholder method of mechanism that does
-nothing except throw an error. If your mechanim is properly 
+nothing except throw an error. If your mechanism is properly 
 written, this will not be run (and therefore the error will
 not be thrown) because your mechanism will define a "connect"
 method, which will be used instead of this.
@@ -91,7 +91,7 @@ method, which will be used instead of this.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L113)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L115)
 
 -------
 
@@ -109,7 +109,7 @@ void connect(synapse* syn_)
 
 
 This virtual method is a placeholder method of mechanism that does
-nothing except throw an error. If your mechanim is properly 
+nothing except throw an error. If your mechanism is properly 
 written, this will not be run (and therefore the error will
 not be thrown) because your mechanism will define a "connect"
 method, which will be used instead of this.
@@ -118,7 +118,7 @@ method, which will be used instead of this.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L124)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L126)
 
 -------
 
@@ -136,7 +136,7 @@ void integrateMS(int k, double V, double Ca)
 
 
 This virtual method is a placeholder method of mechanism that does
-nothing except throw an error. If your mechanim is properly 
+nothing except throw an error. If your mechanism is properly 
 written, this will not be run (and therefore the error will
 not be thrown) because your mechanism will define a "integrateMS"
 method, which will be used instead of this.
@@ -145,7 +145,31 @@ method, which will be used instead of this.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L137)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L139)
+
+-------
+
+
+
+### init
+
+**Function Signature**
+
+```C++
+void init() 
+```
+
+**Description**
+
+
+Initialization method
+
+
+
+
+ **Code**
+
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L149)
 
 -------
 

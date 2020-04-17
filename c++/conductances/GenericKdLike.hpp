@@ -49,11 +49,8 @@ public:
         
         if (isnan (E)) { E = -80; }
 
-
         p = 4;
 
-        // do not allow this channel to be approximated
-        approx_m = 0;
     }
 
     double m_inf(double, double);
