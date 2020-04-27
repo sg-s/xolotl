@@ -98,9 +98,11 @@ void synapse::checkSolvers(int k){
 
 
 /*
-Initialization method
+This virtual method is a placeholder initialization method. Initialization 
+methods are called after the model has been constructed, and all components
+have been connected, but before the model starts the simulation. This is a
+good place to put code that you need to run once before the simulation. 
 */
-
 void synapse::init() {}
 
 

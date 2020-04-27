@@ -304,9 +304,7 @@ This method adds a conductance object to this compartment.
 It does the following things:
 
 1. Adds a pointer to the conductance to a vector of pointers called `cond`
-2. Updates various attributes of the conductance like verbosity, etc.
-3. Runs some initializaiton code (e.g. building look-up-tables in the conductance)
-4. Calls the `connect` method of that conductance with a pointer to this compartment.
+2. Calls the `connect` method of that conductance with a pointer to this compartment.
 
 **See Also**
 
@@ -323,7 +321,10 @@ void compartment::addConductance(conductance *cond_) {
 
 
 /*
-Initialization method
+This virtual method is a placeholder initialization method. Initialization 
+methods are called after the model has been constructed, and all components
+have been connected, but before the model starts the simulation. This is a
+good place to put code that you need to run once before the simulation. 
 */
 void compartment::init() {
 

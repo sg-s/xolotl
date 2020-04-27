@@ -12,9 +12,10 @@ void conductance::connect(compartment *pcomp_) {
 
 
 /*
-This method allows you to run some initialization code
-before the model is integrated. This will be called
-after the model is constructed and wired up. 
+This virtual method is a placeholder initialization method. Initialization 
+methods are called after the model has been constructed, and all components
+have been connected, but before the model starts the simulation. This is a
+good place to put code that you need to run once before the simulation. 
 */
 void conductance::init() {
 

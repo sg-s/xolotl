@@ -435,15 +435,16 @@ void init()
 **Description**
 
 
-This method allows you to run some initialization code
-before the model is integrated. This will be called
-after the model is constructed and wired up. 
+This virtual method is a placeholder initialization method. Initialization 
+methods are called after the model has been constructed, and all components
+have been connected, but before the model starts the simulation. This is a
+good place to put code that you need to run once before the simulation. 
 
 
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L448)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L449)
 
 -------
 
@@ -483,7 +484,7 @@ conductance.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L494)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L495)
 
 -------
 
@@ -521,7 +522,7 @@ and the area of the compartment.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L596)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L597)
 
 -------
 
@@ -559,7 +560,7 @@ are calculated and stored. At each step, the derivative functions
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L697)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L698)
 
 -------
 

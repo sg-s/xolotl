@@ -106,14 +106,16 @@ void init()
 **Description**
 
 
-Initialization method
-
+This virtual method is a placeholder initialization method. Initialization 
+methods are called after the model has been constructed, and all components
+have been connected, but before the model starts the simulation. This is a
+good place to put code that you need to run once before the simulation. 
 
 
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/synapse.hpp#L104)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/synapse.hpp#L106)
 
 -------
 
