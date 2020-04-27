@@ -14,8 +14,59 @@
 using namespace std;
 
 
+// declare pointers to outputs
+double *output_state;
+double *output_V;
+double *output_Ca;
+double *output_I_clamp;
+double *output_curr_state; // currents
+double *output_syn_state;  // synapses
+double *output_cont_state; // mechanisms
+double * spiketimes;
 
 
+int n_conductances = 0;
+int n_mechanisms = 0;
+int n_synapses = 0;
+
+
+int nsteps;
+int progress_report;
+
+int nsteps_out;
+int n_comp;
+int res;
+
+int full_current_size = 0;
+int full_controller_size = 0;
+int full_synaptic_size = 0;
+
+int spikes_only = 0;
+
+network xolotl_network;
+
+double * I_ext;
+double * V_clamp;
+double * I_ext_in;
+double * V_clamp_in;
+
+int I_ext_size_1;
+int I_ext_size_2;
+int V_clamp_size_1;
+int V_clamp_size_2;
+
+
+bool is_voltage_clamped;
+bool is_multi_comp;
+bool is_multi_step;
+
+
+int output_idx = 0;
+int cont_idx = 0;
+int cond_idx = 0;
+int syn_idx = 0;
+
+int percent_complete = 10;
 
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
@@ -26,24 +77,16 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
 
         
-    // declare pointers to outputs
-    double *output_state;
-    double *output_V;
-    double *output_Ca;
-    double *output_I_clamp;
-    double *output_curr_state; // currents
-    double *output_syn_state;  // synapses
-    double *output_cont_state; // mechanisms
-    double * spiketimes;
 
     // make an empty network
-    network xolotl_network = network();
+    xolotl_network = network();
 
     vector<synapse*> all_synapses; // pointers to all synapses
 
-    int n_conductances = 0;
-    int n_mechanisms = 0;
-    int n_synapses = 0;
+
+    n_conductances = 0;
+    n_mechanisms = 0;
+    n_synapses = 0;
 
 
 
@@ -113,17 +156,17 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
 
 
-    int nsteps = (int) floor(t_end/sim_dt);
-    int progress_report = (int) floor(nsteps/10);
+    nsteps = (int) floor(t_end/sim_dt);
+    progress_report = (int) floor(nsteps/10);
 
-    int nsteps_out = (int) floor(t_end/dt);
-    int n_comp = (int) (xolotl_network.comp).size(); // these many compartments
+    nsteps_out = (int) floor(t_end/dt);
+    n_comp = (int) (xolotl_network.comp).size(); // these many compartments
 
 
     // ask each controller (nicely) what their
     // full state size is
     int full_controller_sizes[n_comp];
-    int full_controller_size = 0;
+    full_controller_size = 0;
     for (int i = 0; i < n_comp; i ++) {
         int n_mech = (xolotl_network.comp[i])->n_mech;
 
@@ -134,14 +177,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // compute ionic current state dimensions
     // assumed to be the same for all conductances
-    int full_current_size = 0;
+    full_current_size = 0;
     for (int i = 0; i < n_comp; i ++) {
         full_current_size += (xolotl_network.comp[i])->n_cond;
     }
 
     // compute synapse state dim
     int full_synaptic_sizes[n_comp];
-    int full_synaptic_size = 0;
+    full_synaptic_size = 0;
     for (int i = 0; i < n_comp; i ++) {
         int n_syn = (xolotl_network.comp[i])->n_syn;
 
@@ -150,7 +193,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     // set up outputs as mex objects
-    int res = dt/sim_dt;
+    res = dt/sim_dt;
 
 
     // ask all the mechanisms for their sizes
@@ -225,9 +268,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // and return just the spiketimes
     double * prev_V = new double[n_comp];
     int * spike_time_idx = new int[n_comp];
-    int spikes_only = 0;
+    spikes_only = 0;
     if (output_type == 2){
-        // mexPrintf("Returning spiketimes instead of voltage..\n");
         spikes_only = 1;
         for (int i = 0; i < n_comp; i ++){
             spike_time_idx[i] = 0;
@@ -241,10 +283,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     I_ext_dim = mxGetDimensions(prhs[1]);
     V_clamp_dim = mxGetDimensions(prhs[2]);
 
-    int I_ext_size_1 = I_ext_dim[0];
-    int I_ext_size_2 = I_ext_dim[1];
-    int V_clamp_size_1 = V_clamp_dim[0];
-    int V_clamp_size_2 = V_clamp_dim[1];
+    I_ext_size_1 = I_ext_dim[0];
+    I_ext_size_2 = I_ext_dim[1];
+    V_clamp_size_1 = V_clamp_dim[0];
+    V_clamp_size_2 = V_clamp_dim[1];
 
 
 
@@ -271,9 +313,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
 
     // determine mode
-    bool is_voltage_clamped = false;
-    bool is_multi_comp = xolotl_network.resolveTree();
-    bool is_multi_step = false;
+    is_voltage_clamped = false;
+    is_multi_comp = xolotl_network.resolveTree();
+    is_multi_step = false;
 
     if (solver_order > 0) {
         is_multi_step = true;
@@ -296,7 +338,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     mexEvalString("drawnow;");
 
-    int percent_complete = 10;
+    percent_complete = 10;
 
 
     if (is_multi_comp & is_multi_step){
@@ -304,10 +346,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
 
-    int output_idx = 0;
-    int cont_idx = 0;
-    int cond_idx = 0;
-    int syn_idx = 0;
+    output_idx = 0;
+    cont_idx = 0;
+    cond_idx = 0;
+    syn_idx = 0;
 
     if (verbosity > 0){
         mexPrintf("[C++] %i outputs requested\n", nlhs);
