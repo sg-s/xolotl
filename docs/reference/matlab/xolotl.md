@@ -1259,36 +1259,6 @@ MATLAB to C++ and back.
 
 -------
 
-### transpileCore
-
-**Syntax**
-
-```matlab
-x.transpileCore(in_file,out_file)
-```
-
-**Description**
-
-method that writes C++ bridge code to set up
-and integrate your model based on the
-objects configured in the xolotl tree. This is
-internally called by xolotl.transpile()
-
-Do not call this method. It is not meant
-to be user accessible.
-
-
-
-!!! info "See Also"
-    * [xolotl.transpile](../xolotl/#transpile)
-
-
-
-
-
-
--------
-
 ### uninstall
 
 **Syntax**
