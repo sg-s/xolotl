@@ -5,9 +5,11 @@ function metrics = spiketimes2BurstMetrics(spiketimes, varargin)
 corelib.assert(isvector(spiketimes),'spiketimes must be a vector')
 
 spiketimes = spiketimes(:);
+spiketimes = spiketimes - min(spiketimes);
 
 options.MaxISI = .3;
 options.MinNSpikesPerBurst = 2; 
+options.debug = false;
 
 options = corelib.parseNameValueArguments(options,varargin{:});
 
@@ -35,6 +37,7 @@ if isempty(burst_ends)
 	return
 end
 
+
 % can't have a burst end before a burst start
 burst_ends(burst_ends<burst_starts(1)) = [];
 
@@ -49,7 +52,7 @@ if length(burst_starts) ~= length(burst_ends)
 	keyboard
 end
 
-n_spikes_per_burst = burst_ends - burst_starts;
+n_spikes_per_burst = burst_ends - burst_starts + 1;
 
 
 burst_starts(n_spikes_per_burst<options.MinNSpikesPerBurst) = [];
@@ -81,3 +84,14 @@ metrics.duty_cycle_std = nanstd(burst_durations./burst_periods);
 
 metrics.n_spikes_per_burst_mean = nanmean(n_spikes_per_burst);
 metrics.n_spikes_per_burst_std = nanstd(n_spikes_per_burst);
+
+if options.debug
+
+	figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
+	neurolib.raster(spiketimes,'deltat',1)
+
+	plot(burst_starts,burst_starts*0+.95,'ko','MarkerSize',10)
+
+	plot(burst_ends,burst_ends*0+1,'rv','MarkerSize',10)
+
+end
