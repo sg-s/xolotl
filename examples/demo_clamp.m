@@ -14,15 +14,16 @@ x.AB.add('Leak','gbar',@() 0.0622/x.AB.A,'E',-50);
 
 % make a note of what the actual activation curve is
 f = x.AB.Kd.cpp_child_functions(3).fun_handle;
-actual_m_inf = NaN*V;
-for i = 1:length(V)
-	actual_m_inf(i) = f(V(i),0);
+all_V_step = linspace(-80,50,30);
+actual_m_inf = NaN*all_V_step;
+for i = 1:length(all_V_step)
+	actual_m_inf(i) = f(all_V_step(i),0);
 end
 
 
 % specify what experiment we're doing to do
 holding_V = -60;
-all_V_step = linspace(-80,50,30);
+
 x.t_end = 5e2;
 
 all_I = NaN(x.t_end/x.dt,length(all_V_step));
