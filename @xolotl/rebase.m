@@ -41,3 +41,25 @@ self.cpp_folder = pathlib.join(self.xolotl_folder,'c++');
 
 % update all C++ class paths
 rebase@cpplab(self);
+
+
+% check that we have a working compiler
+compilerok = false;
+try
+	compilerok = getpref('xolotl','compilerok');
+catch
+end
+
+if compilerok
+	return
+end
+
+cc = mex.getCompilerConfigurations('C++');
+
+if length(cc) == 1
+	compilerok = true;
+end
+
+setpref('xolotl','compilerok',compilerok)
+
+corelib.assert(length(cc)==1,'No C++ compiler found. xolotl will not be able to run! ')

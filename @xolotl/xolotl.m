@@ -88,8 +88,14 @@ end % end general props
 methods (Access = protected)
     function displayScalarObject(self)
         url = 'https://github.com/sg-s/xolotl/';
-        fprintf(['\b\b\b\b\b\b\b\b\b<a href="' url '">xolotl</a> object with '])
-
+        url2 = ['matlab:' inputname(1) '.add(' char(39) 'compartment' char(39) ',' char(39) 'AB' char(39) ');' inputname(1)];
+        if isempty(self.Children)
+            fprintf(['\b\b\b\b\b\b\b\b\nEmpty <a href="' url '">xolotl</a> object.\n\n'])
+            fprintf(['Click <a href = "' url2 '">here</a> to add a default compartment\n'])
+            return
+        else
+            fprintf(['\b\b\b\b\b\b\b\b\n<a href="' url '">xolotl</a> object with '])
+        end
         compartment_names = self.find('compartment');
 
         if length(compartment_names) > 20
