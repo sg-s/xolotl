@@ -105,7 +105,7 @@ p.SimFcn = @xolotl.examples.costfunctions.burstingCostFcn;
 We will optimize over all maximal conductances.
 
 ```matlab
-p.parameter_names = x.find('*gbar')
+p.FitParameters = x.find('*gbar')
 ```
 
 and we define upper bound and lower bound values for our parameters.

@@ -12,17 +12,17 @@ p.SimFcn = @HCO.cost;
 
 p.ShowFcn = @HCO.show;
 
-parameter_names = [p.x.find('Cell1*gbar'); p.x.find('*Cell2.gmax'); 'Cell1.GradedCell2.Vth'; 'Cell1.HCurrent.Vhalf'];
+FitParameters = [p.x.find('Cell1*gbar'); p.x.find('*Cell2.gmax'); 'Cell1.GradedCell2.Vth'; 'Cell1.HCurrent.Vhalf'];
 
 
 
-other_params = cellfun(@(x) strrep(x,'Cell1','Cell2'),parameter_names,'UniformOutput',false);
+other_params = cellfun(@(x) strrep(x,'Cell1','Cell2'),FitParameters,'UniformOutput',false);
 other_params = cellfun(@(x) strrep(x,'GradedCell2','GradedCell1'),other_params,'UniformOutput',false);
 
-p.parameter_names = parameter_names;
-p.SaveParameters = [parameter_names; other_params];
+p.FitParameters = FitParameters;
+p.SaveParameters = [FitParameters; other_params];
 
-p.data.parameter_names = parameter_names;
+p.data.FitParameters = FitParameters;
 p.data.other_params = other_params;
 
 % configure bounds

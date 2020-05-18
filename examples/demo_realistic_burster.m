@@ -21,7 +21,7 @@ load([d filesep 'twoComp.xfit'],'-mat');
 all_cost = all_cost(idx);
 all_hash = all_hash(idx);
 
-parameter_names = {'Axon.ACurrent.gbar', 'Axon.Kd.gbar', 'Axon.Leak.gbar', 'Axon.NaV.gbar', 'CellBody.ACurrent.gbar', 'CellBody.CaS.gbar', 'CellBody.CaT.gbar', 'CellBody.HCurrent.gbar', 'CellBody.KCa.gbar', 'CellBody.Kd.gbar', 'CellBody.Leak.gbar', 'Axon.len', 'CellBody.len', 'CellBody.radius'   , 'CellBody.CalciumMech.f', 'CellBody.CalciumMech.tau_Ca'};
+FitParameters = {'Axon.ACurrent.gbar', 'Axon.Kd.gbar', 'Axon.Leak.gbar', 'Axon.NaV.gbar', 'CellBody.ACurrent.gbar', 'CellBody.CaS.gbar', 'CellBody.CaT.gbar', 'CellBody.HCurrent.gbar', 'CellBody.KCa.gbar', 'CellBody.Kd.gbar', 'CellBody.Leak.gbar', 'Axon.len', 'CellBody.len', 'CellBody.radius'   , 'CellBody.CalciumMech.f', 'CellBody.CalciumMech.tau_Ca'};
 
 % show some nice ones
 
@@ -35,7 +35,7 @@ figure('outerposition',[300 300 801 1100],'PaperUnits','points','PaperSize',[801
 for i = 1:18
 	subplot(6,3,i); hold on
 
-	x.set(parameter_names,all_params(show_these(i),:))
+	x.set(FitParameters,all_params(show_these(i),:))
 	x.closed_loop = true;
 	x.reset;
 	x.integrate;

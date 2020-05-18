@@ -29,7 +29,7 @@ for i = 1:1e9
 
 		% save
 		X = p.seed;
-		x.set(p.parameter_names,X);
+		x.set(p.FitParameters,X);
 		this_cost = p.sim_func(x, p.data);
 
 		if isnan(this_cost)

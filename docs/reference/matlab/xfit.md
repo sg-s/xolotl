@@ -71,7 +71,7 @@ Nonlinear inequality and equaity constraints, only supported for engines that su
 
 This property is a struct that holds options for the selected optimization engine. It is automatically generated from MATLAB's built-in [optimoptions](https://www.mathworks.com/help/optim/ug/optimization-options-reference.html) function.
 
-### `parameter_names`
+### `FitParameters`
 
 | Default | Allowed values | Type |
 | ------- | ----- | ----- |
@@ -79,7 +79,7 @@ This property is a struct that holds options for the selected optimization engin
 
 This cell array of character vectors contains the names of xolotl parameters to optimize over.
 The `find` method of xolotl is the best way to populate this list.
-`seed`, `lb`, and `ub` share one-to-one correspondence with `parameter_names`, so all should be the same dimensions.
+`seed`, `lb`, and `ub` share one-to-one correspondence with `FitParameters`, so all should be the same dimensions.
 
 
 

@@ -1,5 +1,5 @@
 % this script shows the best solutions we found
-function [x, parameter_names, parameters] = show_results()
+function [x, FitParameters, parameters] = show_results()
 
 p = twoComp.setup;
 data = twoComp.getData;
@@ -40,7 +40,7 @@ for i = 1:18
 		idx = idx + 1;
 	else
 
-		p.x.set(p.parameter_names,params(show_these(i),:))
+		p.x.set(p.FitParameters,params(show_these(i),:))
 		p.x.closed_loop = true;
 		p.x.reset;
 		p.x.integrate;
@@ -57,7 +57,7 @@ figlib.pretty('PlotLineWidth',1)
 
 
 x = p.x;
-parameter_names = p.parameter_names;
+FitParameters = p.FitParameters;
 
 parameters = params(show_these,:);
 

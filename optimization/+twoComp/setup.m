@@ -10,7 +10,7 @@ p.x = x;
 p.data = twoComp.getData;
 p.data = p.data(1);
 
-p.parameter_names = [x.find('*gbar');'Axon.len'; 'CellBody.len'; 'CellBody.radius'; 'CellBody.CalciumMech.f'; 'CellBody.CalciumMech.tau_Ca'];
+p.FitParameters = [x.find('*gbar');'Axon.len'; 'CellBody.len'; 'CellBody.radius'; 'CellBody.CalciumMech.f'; 'CellBody.CalciumMech.tau_Ca'];
 %      Axon                Soma  
 %      A   Kd    L    NaV   A   CaS  CaT  H    KCa  Kd   L
 p.lb = [10,  100, 0,  100, 10,  1,   1,   1,   10,  10,  0,  .1, .01, .01, 1,  10];
@@ -21,4 +21,4 @@ p.options.UseParallel = true;
 p.SimFcn = @twoComp.metricsCost;
 p.options.Display = 'iter';
 
-p.SaveParameters = p.parameter_names;
+p.SaveParameters = p.FitParameters;
