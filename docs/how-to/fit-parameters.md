@@ -109,13 +109,14 @@ p.FitParameters = x.find('*gbar')
 ```
 
 and we define upper bound and lower bound values for our parameters.
-We know these values by considering the biology.
+These bounds are estimates based on what physiologists know about 
+the expected range of these values. 
 
 ```matlab
 % lower bound values
-p.lb = [100 0 0 0 0 500 500];
+p.lb = [100 0 0 0 0 500 0 500];
 % upper bound values
-p.ub = [1e3 100 100 10 500 2000 2000];
+p.ub = [1e3 100 100 10 500 2000 0 2000];
 ```
 
 ### Performing the simulation
