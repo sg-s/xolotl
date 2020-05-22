@@ -16,9 +16,10 @@ conductances can be changed by setting the value of
 the parameter to the new parameter. For example, to
 change the maximal conductance `gbar` of the `NaV`
 conductance in the `AB` compartment of the `x` xolotl
-object to $10~\mathrm{\mu S / mm^2}$, you can do:
+object to $10~\mathrm{\mu S / mm^2}$, you can do this:
 
 ```matlab
+x = xolotl.examples.neurons.BurstingNeuron;
 x.AB.NaV.gbar = 10;
 ```
 
@@ -34,10 +35,20 @@ It is important to note that both functions will find all fields that match any 
 These functions also work "down the tree," meaning that they are functions of each compartment, conductance, and so on, and search only within the part of the tree specified. For example, `x.AB.find('*')` will fetch every property of the `AB` compartment, but none in other compartments.
 
 Get all conductances in all compartments.
+
+
 ```matlab
->> x.find('cond') 
+x = xolotl.examples.neurons.BurstingNeuron;
+x.find('cond') 
 % x.find('condu'), x.find('conduct'), 
 % ... x.find('conductance') also work 
+
+```
+
+
+Will show you this:
+
+```display
 
 ans =
 
@@ -56,7 +67,12 @@ ans =
 Get the names of all conductances in the `AB` compartment.
 
 ```matlab
->> x.AB.find('conductance')
+x.AB.find('conductance')
+```
+
+will show you:
+
+```display
 
 ans =
 
@@ -75,7 +91,12 @@ ans =
 Get the names of all maximal conductances in in `AB` compartment.
 
 ```matlab
->> x.find('AB*gbar')
+x.find('AB*gbar')
+```
+
+will show you
+
+```display
 
 ans =
 
@@ -94,7 +115,11 @@ ans =
 Get the names of all maximal conductances in the `AB` compartment from within the compartment's scope (note the importance of the wildcard `*`).
 
 ```matlab
->> x.AB.find('*gbar')
+x.AB.find('*gbar')
+```
+
+
+```display
 
 ans =
 
@@ -114,7 +139,12 @@ Get the values of some arbitrary properties. In this case, we find the reversal
 potentials of the `ACurrent` and the `HCurrent` conductances in the `AB` compartment.
 
 ```matlab
->> x.get('AB*Current.E')
+x.get('AB*Current.E')
+```
+
+will get
+
+```display
 
 ans =
 
@@ -122,10 +152,15 @@ ans =
    -20
 ```
 
-And some more, using a cell of character vectors as the function argument.
+To get multiple, specific parameters, use a cell array as follows:
 
 ```matlab
->> x.AB.NaV.get({'E', 'gbar'})
+x.AB.NaV.get({'E', 'gbar'})
+```
+
+will show
+
+```display
 
 ans =
 
@@ -148,6 +183,7 @@ cell (`HH`) with fast sodium (`NaV`), delayed rectifier potassium (`Kd`), and `L
 conductances, you could set the parameters manually by
 
 ```matlab
+x = xolotl.examples.neurons.HodgkinHuxley;
 x.HH.Kd.gbar = 300;
 x.HH.Leak.gbar = 0.1;
 x.HH.NaV.gbar = 1000;
@@ -166,11 +202,11 @@ x.set('*gbar', [300, 0.1, 1000]);
 You can remove any component from the model by calling its `destroy` method. For example:
 
 ```matlab
-x.CompName.CondName.destroy()
+x.HH.Leak.destroy()
 ```
 
+destroys the `Leak` conductance from the `HH` compartment.
 
-destroys an object called `CondName` from the compartment called `CompName`.
 
 ## Add a new component to an existing model
 
@@ -179,17 +215,6 @@ by using the `add` function for compartments, conductances, and mechanisms, and
 the `connect` function for synapses.
 
 
-
-This value is now saved in the object structure. You can `save` the model, or
-take a `snapshot` and this parameter's value will be maintained.
-
-If you just wanted to see the parameter value (or store the value in another variable),
-you can treat the expression `x.AB.NaV.gbar` just like any other variable.
-
-```matlab
-% print to the console
-x.AB.NaV.gbar
-```
 
 
 ## See Also

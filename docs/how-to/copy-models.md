@@ -6,6 +6,7 @@ Since `xolotl` objects derive from the [`handle` class of MATLAB](https://www.ma
 
 ```matlab
 % assuming x is a xolotl object
+x = xolotl.examples.neurons.HodgkinHuxley;
 x2 = x; % x2 and x are actually the same thing
 ```
 

@@ -42,7 +42,7 @@ You will have to manually set your `MATLAB` paths. Make sure you add the main fo
 
 In most cases, `xolotl` can update itself to the latest version using
 
-```matlab
+```display
 xolotl.update()
 ```
 
@@ -53,7 +53,7 @@ If you installed using `git`, `xolotl` will attempt to do a `git pull` and updat
 
 If you installed `xolotl` as a MATLAB toolbox, you can easily uninstall it using:
 
-```matlab
+```display
 xolotl.uninstall()
 ```
 
@@ -68,13 +68,14 @@ There are a couple of quirks specific to using the `MEX` compiler on Linux machi
 * On certain Linux distributions, `MEX` cannot identify the installed `g++` compiler, even when it exists on your path (e.g. `which g++` in the terminal works fine). The error looks something like this
 
 ```matlab
-  >> !which g++
-  /bin/g++
-  >> !g++ -dumpversion
-  8.1.0
-  >> mex -setup C++
-  Error using mex
-  No supported compiler was found.
+! which g++
+% will show: /bin/g++
+! g++ -dumpversion
+% may show 8.1.0
+mex -setup C++
+% may return: 
+% Error using mex
+% No supported compiler was found.
 ```
 
  `MATLAB` recommends changing your path so that you default to an older version of `g++`. This is not strictly necessary. `MATLAB` can still compile using `MEX` with newer versions of `g++` in most cases. Generally, downgrading to an older version of `g++` doesn't solve this problem.
@@ -89,7 +90,12 @@ There is a relatively simply fix however. Credit goes to GitHub user [bonanza123
 The problem is fixed if you see something like this in `MATLAB`:
 
 ```matlab
-  >> mex.getCompilerConfigurations('C++')
+mex.getCompilerConfigurations('C++')
+```
+
+will show something like:
+
+```display
   ans =
 
   CompilerConfiguration with properties:

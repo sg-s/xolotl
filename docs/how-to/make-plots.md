@@ -121,7 +121,7 @@ makes this figure:
 
 
 ```matlab
-x = xolotl.examples.BurstingNeuron;
+x = xolotl.examples.neurons.BurstingNeuron;
 x.show(x.AB.NaV)
 ```
 
@@ -137,9 +137,8 @@ that you could make yourself.
 For example,
 
 ```matlab
-close all
-x = xolotl.make_bursting_neuron;
-x.plotgbars('AB')
+x = xolotl.examples.neurons.BurstingNeuron;
+x.plotgbars('AB');
 ```
 
 makes a plot like this:

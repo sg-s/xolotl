@@ -15,7 +15,7 @@ own conductances, mechanisms and synapses.
 First, create a `conductance` object.
 
 ```matlab
-newCond = conductance;
+newCond = xolotl.conductance;
 ```
 
 Remember that you  can always see all the
@@ -29,14 +29,16 @@ must be defined, as function handles.
 
 !!! Note "Instantaneous Kinetics"
     If your conductance has instantaneous kinetics, you can set `tau_m` to `@(V, Ca) 0`.
-    Xolotl will automatically use a different integration scheme
+    xolotl will automatically use a different integration scheme
     that updates `m` to its instantaneous steady-state value.
 
 For example,
 
 ```matlab
 newCond.m_inf = @(V,Ca) 1.0 / (1.0 + exp((V-20.0)/5.0));
-% and so on
+newCond.h_inf = @(V,Ca) 1;
+newCond.tau_m = @(V,Ca) 0;
+newCond.tau_h = @(V,Ca) 0;
 ```
 
 You must also set whether this is a Calcium conductance.
@@ -51,7 +53,8 @@ in the current equation.
 
 ```matlab
 newCond.p = 4;
-newCond.q = 1;
+newCond.q = 0;
+
 ```
 
 Finally, you must set the default reversal potential.
@@ -140,30 +143,31 @@ double NewCond::tau_h(double V, double Ca) {return ...;}
 
 ```
 
-!!! warning "conductance" vs. "conductance"
+!!! warning "xolotl.conductance" vs. "conductance"
     Note that there are two different classes called "conductance". One of them is an abstract C++ class that all object of type conductance must inherit from. The other is a MATLAB class that is used to generate conductances automatically. When we're talking about C++ code, we're referring to the abstract C++ class.
 
 
 #### Why aren't there any integration routines?
 
 Because models for conductances are so stereotyped, integration
-routines for them are specified in the conductance class. If we look at the [code for the conductance class](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp), we see this:
+routines for them are specified in the parent conductance class. If we look at the [code for the conductance class](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp), we see this:
 
 ```C++
     virtual void integrate(double, double);
     virtual void integrateMS(int, double, double);
 ```
 
-which means that while the conductance class can integrate
-models on its own, you can also override it with your own
-integration routines if you so which, and that will be used.
+In C++, declaring a method "virtual" means that it will be used if 
+there isn't anything else that overrides it. If you specify your own
+`integrate` method, then that will be used, not the built-in one.
 
 
 ## Creating new mechanisms
 
 Because mechanisms are so generic, the only way to make new
 mechanisms is to write new C++ files. As with conductances,
-new mechanisms inherit from the abstract C++ class called "mechanism" and it is typically straightforward to write a new mechanism.
+new mechanisms inherit from the abstract C++ class called 
+"mechanism" and it is typically straightforward to write a new mechanism.
 
 Here's what a skeleton for a new mechanism would look like:
 
@@ -285,7 +289,7 @@ void NewMech::checkSolvers(int k) {
 ## Creating new synapses
 
 Creating new synapses is similar to the process of
-creating new conductances. New synapses inherit
+creating new conductances by hand. New synapses inherit
 from the abstract `C++` class `synapse`.
 
 Here is a skeleton for a new synapse class that you
@@ -409,6 +413,9 @@ void NewSynapse::connect(compartment *pcomp1_, compartment *pcomp2_) {
 All conductances (and any other network component) are
 defined by an `.hpp` header file. **You can save your
 new conductance anywhere within your MATLAB path.**
+`cpplab` will find them, link them, and use them automatically.
+If `cpplab` can't find them, then running `xolotl.rebuildCache`
+should fix it. 
 
 
 ## How are built-in C++ files organized?

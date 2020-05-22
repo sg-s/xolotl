@@ -45,6 +45,11 @@ end
 % rebuild cpplab cache just to be safe
 cpplab.rebuildCache;
 
+
+% test the docs
+xolotl.testDocs()
+
+
 this_dir = fileparts(fileparts(which('xolotl.run_all_tests')));
 all_tests = dir(pathlib.join(this_dir,'examples','demo*.m'));
 

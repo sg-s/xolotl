@@ -32,8 +32,9 @@ methods
 
 
 		% check that the "custom" folder exists
-		if exist([fileparts(which(mfilename)) filesep 'c++' filesep 'conductances' filesep 'custom'],'dir') ~= 7
-			mkdir([fileparts(which(mfilename)) filesep 'c++' filesep 'conductances' filesep 'custom'])
+		customdir = [fileparts(fileparts(which('xolotl'))) filesep 'c++' filesep 'conductances' filesep 'custom'];
+		if exist(customdir,'dir') ~= 7
+			mkdir(customdir)
 		end
 
 
@@ -43,15 +44,14 @@ methods
 			corelib.assert(~isempty(self.(props{i})),['All properties must be filled out. ' props{i} ' is still not defined'])
 		end
 
-		this_dir = fileparts(which(mfilename));
-		this_dir = [this_dir filesep 'c++' filesep 'conductances' filesep 'templates' filesep];
+		templatedir = [fileparts(fileparts(which('xolotl'))) filesep 'c++' filesep 'conductances' filesep 'templates' filesep];
 
 
 
 		if self.is_Ca  
-			lines = filelib.read([this_dir 'Ca_exact.hpp']);
+			lines = filelib.read([templatedir 'Ca_exact.hpp']);
 		else
-			lines = filelib.read([this_dir 'generic_exact.hpp']);
+			lines = filelib.read([templatedir 'generic_exact.hpp']);
 		end
 
 
@@ -96,7 +96,7 @@ methods
 		end
 
 
-		filelib.write([fileparts(fileparts(this_dir)) filesep 'custom' filesep name '.hpp'],lines);
+		filelib.write([customdir filesep name '.hpp'],lines);
 
 
 

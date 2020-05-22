@@ -31,9 +31,9 @@ x.set('*gbar',veclib.shuffle((x.get('*gbar'))))
 This will result in a pathological waveform that probably isn't bursting.
 Our goal will be to recover bursting activity by algorithmically varying the maximal conductance parameters.
 
-### Instantiating the xfit object
+### Creating the xfit object
 
-We will create the `xfit` object, and request the `pattern search` algorithm.
+We will create the `xfit` object, and request the `particle swarm` algorithm.
 This algorithm is a deterministic, black-box optimization scheme.
 First, we will make sure that a parallel pool has been created.
 This will allow your computer to use more processor cores to perform the optimization faster.
@@ -43,7 +43,7 @@ This will allow your computer to use more processor cores to perform the optimiz
 % if one already exists, do nothing
 gcp('nocreate');
 % create the xfit object
-p = xfit('patternsearch');
+p = xfit('particleswarm');
 % tell xfit which xolotl object to use
 p.x = x;
 % tell xfit to simulate in parallel
@@ -62,7 +62,7 @@ If the model produces a voltage waveform with metrics outside of these values,
 the returned cost will be large.
 A model which satisfies this conditions will return a cost of 0.
 
-```matlab
+```display
 function C = burstingCostFcn(x,~)
 
 	% x is a xolotl object

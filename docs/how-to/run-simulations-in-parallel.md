@@ -107,7 +107,7 @@ A speed of 600X means that we can simulate 600 seconds of data in 1 second.
 On a 6-core machine from 2013, we achieved speeds greater than 600X.
 
 
-```matlab
+```display
 disp(['Finished in ' mat2str(t,3) ' seconds. Total speed = ' mat2str((length(all_params)*x.t_end*1e-3)/t)])
 
 

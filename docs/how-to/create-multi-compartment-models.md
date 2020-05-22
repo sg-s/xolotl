@@ -18,11 +18,12 @@ The `Axial` synapse is a special type of electrical synapse that forces you to t
 Thus, the general recipe for creating a multi-compartment cable is:
 
 ```matlab
-x.add('compartment','Soma')
-x.add('compartment','Neurite')
+x = xolotl;
+x.add('compartment','CellBody')
+x.add('compartment','Neurite','radius',.01,'len',.35*5)
 x.slice('Neurite',10)
-x.connect('Neurite01','Soma')
-x.Soma.tree_idx = 0; % mark this as the cell body
+x.connect('Neurite01','CellBody')
+x.CellBody.tree_idx = 0; % mark this as the cell body
 ```
 
 
@@ -53,9 +54,3 @@ In multi-compartment models in which the compartments are connected by `Axial` s
 The shape of the compartment is cylindrical, and the surface area is computed automatically,
 according to the "body" of the cylinder (i.e. $2 \pi r L$).
 
-While the `A` and `V` compartment properties aren't used in this case, you can still set them to values.
-If you want them to automatically update, you can set them to anonymous functions:
-
-```matlab
-x.comp.A = @() x.comp.len * 2 * pi * x.comp.radius;
-```

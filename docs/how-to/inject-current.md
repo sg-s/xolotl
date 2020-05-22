@@ -40,7 +40,7 @@ xolotl supports injecting arbitrary, time-varying currents into a compartment, a
 For example, if we want to inject a random current into a neuron model, we can do something like this:
 
 ```matlab
-x = xolotl.make_bursting_neuron;
+x = xolotl.examples.neurons.BurstingNeuron;
 x.I_ext = randn(x.t_end/x.sim_dt,1);
 ```
 

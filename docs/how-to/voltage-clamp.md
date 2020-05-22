@@ -15,14 +15,14 @@ xolotl allows you to voltage clamp compartments with the following limitations:
 Here, we will use a single-compartment model of a bursting neuron. You can create this model using:
 
 ```matlab
-xolotl.go_to_examples;
-demo_bursting_neuron
+x = xolotl.examples.neurons.BurstingNeuron;
 ```
 
-Now, if we inspect the `V_clamp` property, we see:
+Now, if we inspect the `V_clamp` property using `x.V_clamp`, we see:
 
-```matlab
+```display
 x.V_clamp
+
 ans =
    NaN
 ```
@@ -68,8 +68,7 @@ Integrating and plotting this yields a different current required to clamp the c
 We can also voltage clamp a single cell in a network. To demonstrate this, we will use a 3-cell network of the pyloric circuit:
 
 ```matlab
-xolotl.go_to_examples
-demo_pyloric_net
+x = xolotl.examples.networks.pyloric;
 ```
 
 Here, let's voltage clamp one cell to another cell's voltage dynamics.

@@ -6,6 +6,7 @@ All xolotl models can be manipulated out of the box. If you run
 
 
 ```matlab
+x = xolotl.examples.neurons.BurstingNeuron;
 x.manipulate
 ```
 
@@ -42,21 +43,17 @@ To configure xolotl to use your custom function, use this syntax:
 
 
 ```matlab
-x.manipulate_plot_func = {@foo};
+x.manipulate_plot_func = {@x.plot};
 ```
 
-Note that you can use this syntax to specify more than one plot function:
-
-```matlab
-x.manipulate_plot_func = {@foo, @bar};
-```
 
 Your custom function should look something like this:
 
 
-```matlab
-% note: no outputs, and only one input,
+```display
+% Your function should have no outputs, and only one input,
 % which is a xolotl object
+
 function foo(x)
 
 

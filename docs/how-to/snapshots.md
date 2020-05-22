@@ -6,6 +6,10 @@ In this document we will learn how to use the `snapshot` and `reset` methods in 
 To quickly save and revert back to a certain set of numerical parameters in a model, you can use the `snapshot` and `reset` methods.
 
 ```matlab
+
+% first create a model to work with
+x = xolotl.examples.neurons.BurstingNeuron;
+
 % save a model's parameters as 'initial'
 x.snapshot('initial')
 % do something else to the model

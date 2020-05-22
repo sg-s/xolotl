@@ -7,6 +7,11 @@ In this document we will learn how to discover existing components in `xolotl`.
 
 ```matlab
 xolotl.search('prinz')
+```
+
+will show the following:
+
+```display
 
 ------------------------------------------------------------------------------------
  Name                   Parent Class        Object Information

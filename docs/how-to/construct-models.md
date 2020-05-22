@@ -32,7 +32,7 @@ What we're doing here is creating a compartment and adding it to our `xolotl` ob
 
 We get a prompt that looks like this:
 
-```matlab
+```display
 xolotl object with
 ---------------------
 + AB  
@@ -70,19 +70,18 @@ Note that, in each line, we are:
 The first argument is a character vector that represents a unique path to the C++
 header file. For example, if your conductance is specified in
 
-```matlab
+```display
 '~/code/xolotl/c++/conductances/prinz/NaV.hpp'
 ```
 
 but there are other `'prinz'` and `'NaV'` conductances, then the character vector
 `'prinz/NaV'` suitably indicates which conductance you mean.
 
-Now, if we look at our model, we see:
+Now, if we look at our model by typing `x`, we see:
 
-```matlab
-x
+```display
 
->xolotl object with
+xolotl object with
 ---------------------
 + AB  
   > ACurrent (g=500, E=-80)
@@ -137,11 +136,10 @@ x.connect('AB','LP','AlphaSynapse')
 
 ## Discover parameters and structure of the model
 
-We've just added a new synapse. Let's explore it to understand where it is and what parameters it has. If we look inside the LP compartment, we see:
+We've just added a new synapse. Let's explore it to understand where it is and what parameters it has. If we look inside the LP compartment using `x.LP`, we see:
 
-```matlab
-x.LP
-ans =
+```display
+
  compartment object (9f24f53) with:
 
               vol : NaN
@@ -162,11 +160,12 @@ ans =
    AlphaSynapseAB : AlphaSynapse object
 ```
 
-We see that the AlphaSynapse is included inside the LP neuron. By drilling down into the synapse, we can look at its properties:
+We see that the AlphaSynapse is included inside the LP neuron. By drilling down into the synapse, we can look at its properties using `x.LP.AlphaSynapseAB`:
 
-```matlab
-x.LP.AlphaSynapseAB
+```display
+
 ans =
+
  AlphaSynapse object (5f2921a) with:
 
           gmax : 0

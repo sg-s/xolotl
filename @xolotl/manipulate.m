@@ -41,6 +41,11 @@
 
 function manipulate(self, manipulate_these, mirror_these)
 
+
+if nargin == 1
+	manipulate_these = '*';
+end
+
 if ischar(manipulate_these) && ~any(strfind(manipulate_these,'*'))
 	manipulate_these = {manipulate_these};
 end
