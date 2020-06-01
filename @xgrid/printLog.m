@@ -27,8 +27,8 @@
 function printLog(self)
 
 % delete old log files if any
-if exist(pathlib.join(self.xgrid_folder,'log.mat'),'file')
-	delete(pathlib.join(self.xgrid_folder,'log.mat'))
+if exist(fullfile(self.xgrid_folder,'log.mat'),'file')
+	delete(fullfile(self.xgrid_folder,'log.mat'))
 end
 
 % start logging
@@ -47,4 +47,4 @@ for i = 1:length(self.workers)
 end
 plog.last_updated = now;
 
-save(pathlib.join(self.xgrid_folder,'log.mat'),'plog')
+save(fullfile(self.xgrid_folder,'log.mat'),'plog')

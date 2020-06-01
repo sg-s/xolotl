@@ -28,10 +28,10 @@ function binary_name = compileActivationFcn(conductance, cpp_folder)
 xolotl_folder = fileparts(cpp_folder);
 
 binary_name = ['A_' conductance.hash];
-mexBridge_name = pathlib.join(xolotl_folder, [binary_name '.cpp']);
+mexBridge_name = fullfile(xolotl_folder, [binary_name '.cpp']);
 
 % check if its already been compiled
-if exist(pathlib.join(xolotl_folder,[binary_name '.' mexext]),'file') == 3
+if exist(fullfile(xolotl_folder,[binary_name '.' mexext]),'file') == 3
 	return
 end
 
@@ -44,7 +44,7 @@ corelib.assert(exist(conductance.cpp_class_path)==2,'Cannot file C++ header file
 
 
 % read lines from template
-lines = filelib.read(pathlib.join(cpp_folder,'activationFcnTemplate.cpp'));
+lines = filelib.read(fullfile(cpp_folder,'activationFcnTemplate.cpp'));
 
 
 header_files{7} = conductance.cpp_class_path;
@@ -52,12 +52,12 @@ header_files{7} = conductance.cpp_class_path;
 % insert network header and other critical headers
 % the specific ordering here is EXTREMELY important
 % and goes a long way in resolving circular dependencies 
-header_files{1} = pathlib.join(cpp_folder,'conductance.hpp');
-header_files{2} = pathlib.join(cpp_folder,'synapse.hpp');
-header_files{3} = pathlib.join(cpp_folder,'mechanism.hpp');
-header_files{4} = pathlib.join(cpp_folder,'compartment.hpp');
-header_files{5} = pathlib.join(cpp_folder,'network.hpp');
-header_files{6} = pathlib.join(cpp_folder,'conductance2.hpp');
+header_files{1} = fullfile(cpp_folder,'conductance.hpp');
+header_files{2} = fullfile(cpp_folder,'synapse.hpp');
+header_files{3} = fullfile(cpp_folder,'mechanism.hpp');
+header_files{4} = fullfile(cpp_folder,'compartment.hpp');
+header_files{5} = fullfile(cpp_folder,'network.hpp');
+header_files{6} = fullfile(cpp_folder,'conductance2.hpp');
 
 
 

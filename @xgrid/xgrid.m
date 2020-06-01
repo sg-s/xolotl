@@ -136,17 +136,17 @@ classdef xgrid < handle & matlab.mixin.CustomDisplay
 			[e,o] = system('rm ~/.psych/*.hpp');
 
 			% create do, doing, done folders if they don't exist
-			if exist(pathlib.join(self.xgrid_folder,'do'),'file') == 7
+			if exist(fullfile(self.xgrid_folder,'do'),'file') == 7
 			else
-				mkdir(pathlib.join(self.xgrid_folder,'do'))
+				mkdir(fullfile(self.xgrid_folder,'do'))
 			end
-			if exist(pathlib.join(self.xgrid_folder,'doing'),'file') == 7
+			if exist(fullfile(self.xgrid_folder,'doing'),'file') == 7
 			else
-				mkdir(pathlib.join(self.xgrid_folder,'doing'))
+				mkdir(fullfile(self.xgrid_folder,'doing'))
 			end
-			if exist(pathlib.join(self.xgrid_folder,'done'),'file') == 7
+			if exist(fullfile(self.xgrid_folder,'done'),'file') == 7
 			else
-				mkdir(pathlib.join(self.xgrid_folder,'done'))
+				mkdir(fullfile(self.xgrid_folder,'done'))
 			end
 
 			if nargin == 0

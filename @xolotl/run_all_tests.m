@@ -51,9 +51,9 @@ xolotl.testDocs()
 
 
 this_dir = fileparts(fileparts(which('xolotl.run_all_tests')));
-all_tests = dir(pathlib.join(this_dir,'examples','demo*.m'));
+all_tests = dir(fullfile(this_dir,'examples','demo*.m'));
 
-cd(pathlib.join(this_dir,'examples'))
+cd(fullfile(this_dir,'examples'))
 
 
 passed = 0;

@@ -37,7 +37,7 @@
 function rebase(self)
 
 self.xolotl_folder = fileparts(fileparts(which('xolotl')));
-self.cpp_folder = pathlib.join(self.xolotl_folder,'c++');
+self.cpp_folder = fullfile(self.xolotl_folder,'c++');
 
 % update all C++ class paths
 rebase@cpplab(self);

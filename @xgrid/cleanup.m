@@ -37,20 +37,20 @@ done_folder = [self.xgrid_folder filesep 'done' filesep ];
 % remove all .ppp files
 allfiles = dir([do_folder '*.ppp']);
 for i = 1:length(allfiles)
-	delete(pathlib.join(allfiles(i).folder,allfiles(i).name))
+	delete(fullfile(allfiles(i).folder,allfiles(i).name))
 end
 allfiles = dir([doing_folder '*.ppp']);
 for i = 1:length(allfiles)
-	delete(pathlib.join(allfiles(i).folder,allfiles(i).name))
+	delete(fullfile(allfiles(i).folder,allfiles(i).name))
 end
 allfiles = dir([done_folder '*.ppp']);
 for i = 1:length(allfiles)
-	delete(pathlib.join(allfiles(i).folder,allfiles(i).name))
+	delete(fullfile(allfiles(i).folder,allfiles(i).name))
 end
 
 allfiles = dir([done_folder '*.ppp.data']);
 for i = 1:length(allfiles)
-	delete(pathlib.join(allfiles(i).folder,allfiles(i).name))
+	delete(fullfile(allfiles(i).folder,allfiles(i).name))
 end
 
 % destroy all error files

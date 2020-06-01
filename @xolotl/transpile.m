@@ -47,18 +47,18 @@ if self.verbosity > 0
 end
 
 % read lines from mexTemplate
-cppfilename = pathlib.join(self.cpp_folder,'mexTemplate.cpp');
+cppfilename = fullfile(self.cpp_folder,'mexTemplate.cpp');
 lines = filelib.read(cppfilename);
 
 % insert network header and other critical headers
 % the specific ordering here is EXTREMELY important
 % and goes a long way in resolving circular dependencies 
-header_files{1} = pathlib.join(self.cpp_folder,'conductance.hpp');
-header_files{2} = pathlib.join(self.cpp_folder,'synapse.hpp');
-header_files{3} = pathlib.join(self.cpp_folder,'mechanism.hpp');
-header_files{4} = pathlib.join(self.cpp_folder,'compartment.hpp');
-header_files{5} = pathlib.join(self.cpp_folder,'network.hpp');
-header_files{6} = pathlib.join(self.cpp_folder,'conductance2.hpp');
+header_files{1} = fullfile(self.cpp_folder,'conductance.hpp');
+header_files{2} = fullfile(self.cpp_folder,'synapse.hpp');
+header_files{3} = fullfile(self.cpp_folder,'mechanism.hpp');
+header_files{4} = fullfile(self.cpp_folder,'compartment.hpp');
+header_files{5} = fullfile(self.cpp_folder,'network.hpp');
+header_files{6} = fullfile(self.cpp_folder,'conductance2.hpp');
 
 temp = self.generateHeaders; temp = temp(:);
 temp(cellfun(@isempty,temp)) = [];
@@ -247,5 +247,5 @@ if ispc
 	end
 end
 
-mexBridge_name = pathlib.join(self.xolotl_folder, out_file);
+mexBridge_name = fullfile(self.xolotl_folder, out_file);
 filelib.write(mexBridge_name,lines);

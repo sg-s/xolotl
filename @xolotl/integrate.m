@@ -74,7 +74,7 @@ end
 
 
 % does the binary exist?
-if exist(pathlib.join(self.xolotl_folder,self.linked_binary),'file') == 3
+if exist(fullfile(self.xolotl_folder,self.linked_binary),'file') == 3
 	% does the hash match up?
 
 	if self.verbosity > 0
@@ -90,7 +90,7 @@ if exist(pathlib.join(self.xolotl_folder,self.linked_binary),'file') == 3
 		end
 
 		% maybe the binary exists?
-		if exist(pathlib.join(self.xolotl_folder,['X_' h '.' mexext]),'file') == 3
+		if exist(fullfile(self.xolotl_folder,['X_' h '.' mexext]),'file') == 3
 			% binary exists. just update the linked_binary and we should be good
 			if self.verbosity > 0
 				disp('[INFO] Bianry exists, no need to recompile.')
