@@ -15,6 +15,9 @@ that define compartments and conductances and so on.
 ### On macOS, I get an error saying "xcodebuild: error: SDK "macosx10.15.4" cannot be located."
 
 
+FIRST, see if [this automatic fix works for you](https://github.com/sg-s/matlab-catalina-compiler-fix). 
+
+
 The full error looks like:
 
 ```
