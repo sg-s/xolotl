@@ -23,7 +23,7 @@ for i = 1:length(channels)
 
 	[m_inf, h_inf, tau_m, tau_h] =  xolotl.getGatingFunctions(x.AB.(channels{i}).cpp_class_path);
 
-	temp = conductance;
+	temp = xolotl.conductance;
 	temp.m_inf = m_inf;
 	temp.h_inf = h_inf;
 	temp.tau_m = tau_m;
