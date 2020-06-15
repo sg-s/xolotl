@@ -7,6 +7,8 @@
 % and measure their burst metrics and plot them
 
 
+clearvars
+clear mex
 
 x = xolotl.examples.neurons.BurstingNeuron('prefix','liu');
 x.dt = .1;
@@ -100,8 +102,4 @@ colorbar
 figlib.pretty();
 
 
-% clean up error files
-allfiles = dir('*.error');
-for i = 1:length(allfiles)
-	delete(allfiles(i).name)
-end
+clearvars

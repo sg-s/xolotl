@@ -67,7 +67,7 @@ for i = length(all_tests):-1:1
 		evalin('base',script_name);
 		pause(1)
 		close all
-		% clearvars -except all_tests i
+		clearvars -except all_tests i passed total
 		corelib.cprintf('green','TEST PASSED\n')
 		passed = passed + 1;
 	catch err
