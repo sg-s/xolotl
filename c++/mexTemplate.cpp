@@ -14,62 +14,61 @@
 using namespace std;
 
 
-// declare pointers to outputs
-double *output_state;
-double *output_V;
-double *output_Ca;
-double *output_I_clamp;
-double *output_curr_state; // currents
-double *output_syn_state;  // synapses
-double *output_cont_state; // mechanisms
-double * spiketimes;
 
-
-int n_conductances = 0;
-int n_mechanisms = 0;
-int n_synapses = 0;
-
-
-int nsteps;
-int progress_report;
-
-int nsteps_out;
-int n_comp;
-int res;
-
-int full_current_size = 0;
-int full_controller_size = 0;
-int full_synaptic_size = 0;
-
-int spikes_only = 0;
-
-network xolotl_network;
-
-double * I_ext;
-double * V_clamp;
-double * I_ext_in;
-double * V_clamp_in;
-
-int I_ext_size_1;
-int I_ext_size_2;
-int V_clamp_size_1;
-int V_clamp_size_2;
-
-
-bool is_voltage_clamped;
-bool is_multi_comp;
-bool is_multi_step;
-
-
-int output_idx = 0;
-int cont_idx = 0;
-int cond_idx = 0;
-int syn_idx = 0;
-
-int percent_complete = 10;
 
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 {
+
+
+
+    // declare pointers to outputs
+    double *output_state;
+    double *output_V;
+    double *output_Ca;
+    double *output_I_clamp;
+    double *output_curr_state; // currents
+    double *output_syn_state;  // synapses
+    double *output_cont_state; // mechanisms
+    double *spiketimes;
+
+
+    int n_conductances = 0;
+    int n_mechanisms = 0;
+    int n_synapses = 0;
+
+
+    int nsteps;
+    int progress_report;
+
+    int nsteps_out;
+    int n_comp;
+    int res;
+
+    int full_current_size = 0;
+    int full_controller_size = 0;
+    int full_synaptic_size = 0;
+
+    int spikes_only = 0;
+
+    network xolotl_network;
+
+    int I_ext_size_1;
+    int I_ext_size_2;
+    int V_clamp_size_1;
+    int V_clamp_size_2;
+
+
+    bool is_voltage_clamped;
+    bool is_multi_comp;
+    bool is_multi_step;
+
+
+    int output_idx = 0;
+    int cont_idx = 0;
+    int cond_idx = 0;
+    int syn_idx = 0;
+
+    int percent_complete = 10;
 
 
     double * params  = mxGetPr(prhs[0]);
