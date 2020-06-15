@@ -64,10 +64,12 @@ for i = length(all_tests):-1:1
 	fprintf(['Running test: ' all_tests(i).name ' '])
 	try
 		[~,script_name] = fileparts(all_tests(i).name);
+		evalin('base','clearvars')
 		evalin('base',script_name);
 		pause(1)
 		close all
 		clearvars -except all_tests i passed total
+
 		corelib.cprintf('green','TEST PASSED\n')
 		passed = passed + 1;
 	catch err
