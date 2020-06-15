@@ -29,4 +29,4 @@
 
 function uninstall()
 
-uninstall@UpdateableHandle('xolotl')
+uninstall@UpdateableHandle('xolotl',fileparts(fileparts(which('xolotl'))))
