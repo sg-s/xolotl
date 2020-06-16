@@ -29,9 +29,11 @@ a.xolotl_folder = fileparts(fileparts(which('xolotl')));
 a.cpp_folder = [fileparts(fileparts(which('xolotl'))) filesep 'c++'];
 
 % update linked_binary extension 
-[~,binary_name]=fileparts(a.linked_binary);
+[~,binary_name] = fileparts(a.linked_binary);
 if ~isempty(binary_name)
 	a.linked_binary = [binary_name '.' mexext];
+else
+	a.linked_binary = '';
 end
 
 b = a;

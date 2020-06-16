@@ -8,7 +8,6 @@
 
 
 clearvars
-clear mex
 
 x = xolotl.examples.neurons.BurstingNeuron('prefix','liu');
 x.dt = .1;
@@ -17,6 +16,8 @@ x.t_end = 10e3;
 
 
 % in this example, we are going to vary the maximal conductances of the Acurrent and the slow calcium conductance in a grid
+
+x.integrate;
 
 
 parameters_to_vary = {'*.CaS.gbar','*.ACurrent.gbar'};

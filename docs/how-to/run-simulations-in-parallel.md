@@ -74,6 +74,11 @@ We then integrate the model to acquire the membrane potential and intracellular 
 and compute the burst metrics using an `xtools` function provided in the xolotl distribution.
 
 ```matlab
+
+% first, integrate the model to force it to compile outside the parallel loop
+x.integrate;
+
+
 % run the simulations in parallel
 tic
 parfor i = 1:length(all_params)
