@@ -77,11 +77,11 @@ The inactivation variable of this channel type.
 
 | type | default | user-accessible |
 | --------  | ------ | -------  |
-| double |  0 | no |
+| int |  -1 | no |
 
 
 A flag that tells this channel how verbose it should be.
-This should not be exposed to the user, since it it 
+This is not be exposed to the user, since it it
 broadcast to all components from `xolotl.verbosity`.
 
 */
@@ -111,7 +111,7 @@ public:
     double m = 0;
     double h = 1;
 
-    int verbosity = 1;
+    int verbosity = -1;
 
     int p = 1;
     int q = 0;

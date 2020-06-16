@@ -10,7 +10,22 @@
   "github_repo": "xolotl",
   "github_binary": ["xolotl.mltbx"],
   "github_token": ".github_token.json",
-  "github_release_path": "/usr/local/bin/"
+  "github_release_path": "/usr/local/bin/",
+  "external_code": [
+    "/Users/srinivas/GoogleDrive/code/cpplab/@cpplab",
+    "/Users/srinivas/GoogleDrive/code/puppeteer/@puppeteer",
+    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/+axlib",
+    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/+corelib",
+    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/+filelib",
+    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/+hashlib"
+    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/+netlib",
+    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/+strlib",
+    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/+structlib",
+    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/+veclib",
+    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/@adaptive",
+    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/ConstructableHandle.m",
+    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/UpdateableHandle.m"
+  ]
 }
 
 

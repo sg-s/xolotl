@@ -169,12 +169,27 @@ values only affect components that are temperature sensitive.
 
 | Default | Allowed values | Type |
 | ------- | ----- | ----- |
-| 0  |     +ve numbers | double | 
+| -1  |    integers | int | 
 
-`verbosity` is a positive integer that controls how verbose
-xolotl is when running simulations. Set to a large positive 
-number to get more verbose output, useful for debugging. 
+`verbosity` is an integer that controls how verbose
+xolotl is when running simulations. Use this value to 
+control verbosity from different components of xolotl. 
+verbosity uses a prime basis given by:
 
+| Multiple of  | Effect | 
+| ------- | ----- |
+| 2 | hashing, integration, transpiling | 
+| 3 | mex compilation verbosity |
+| 5 | core C++ integration | 
+| 7 | C++ mechanism verbosity |
+| 11 | C++ conductance verbosity |
+| 13 | C++ synapse verbosity |
+| 17 | MATLAB-level loading | 
+
+For example, if you wanted the code to be verbose
+about *everything*, simple use `0`. If you want the 
+code to be verbose about mex compilation and MATLAB-level
+loading, but nothing else, set `verbosity = 17*3`
 
 ### `pref`
 
