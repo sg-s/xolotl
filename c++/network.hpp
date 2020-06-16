@@ -56,7 +56,7 @@ public:
     int solver_order = 0;
     int stochastic_channels = 0;
 
-    double verbosity;
+    int verbosity;
     double approx_channels = 0;
 
     int use_current = 0;
@@ -138,7 +138,7 @@ somewhere in the network, and `false` otherwise.
 bool network::resolveTree(void) {
     compartment * connected_comp = NULL;
     bool is_multi_comp = false;
-    if (verbosity > 0) {
+    if (verbosity%5==0) {
         mexPrintf("[C++] network resolve Tree called\n");
     }
 
@@ -210,7 +210,7 @@ bool network::resolveTree(void) {
     // go over every compartment, and check that stream
     // pointers and gs match up
 
-    if (verbosity > 0) {
+    if (verbosity%5==0) {
         for (int i = 0; i < n_comp; i++) {
             mexPrintf("---------------\n");
             mexPrintf("this comp tree_idx = %f\n",comp[i]->tree_idx);

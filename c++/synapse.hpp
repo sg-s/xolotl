@@ -36,7 +36,7 @@ public:
     bool is_electrical = false;
 
     double dt = 0;
-    double verbosity = 0;
+    int verbosity = 0;
     double temperature_ref = 11;
     double temperature = 11;
 

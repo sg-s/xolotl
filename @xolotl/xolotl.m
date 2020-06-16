@@ -34,7 +34,7 @@ end  % end protected props
 
 
 properties
-	verbosity (1,1) double {mustBeFinite(verbosity)} = 0;
+	verbosity (1,1) double {mustBeFinite(verbosity)} = -1;
 
     I_ext double;
     V_clamp double;

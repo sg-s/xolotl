@@ -34,7 +34,7 @@ h = self.hash;
 mexBridge_name = [fullfile(self.xolotl_folder,'X_') h '.cpp'];
 corelib.assert(exist(mexBridge_name,'file')==2,'C++ file to compile does not exist. Use "transpile" before compiling')
 
-if self.verbosity > 0
+if rem(self.verbosity,2) == 0
 	disp(['[INFO] compiling using mex...'])
 end
 
@@ -49,7 +49,7 @@ if isunix && ~ismac
 	warning('off','MATLAB:mex:GccVersion');
 end
 
-if self.verbosity > 1
+if rem(self.verbosity,3) == 0
 	mex('-v',ipath,mexBridge_name,'-outdir',self.xolotl_folder)
 else
 	mex('-silent',ipath,mexBridge_name,'-outdir',self.xolotl_folder)
@@ -64,6 +64,6 @@ end
 % update linked_binary
 self.linked_binary = ['X_' h '.' mexext];
 
-if self.verbosity > 0
+if rem(self.verbosity,2) == 0
 	disp(['[INFO] compilation successful!'])
 end

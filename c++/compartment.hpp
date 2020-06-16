@@ -74,7 +74,7 @@ public:
 
     double V_clamp = 0; // stores the voltage that it is clamped to
 
-    double verbosity = 0;
+    int verbosity = 0;
 
     double RT_by_nF;
 

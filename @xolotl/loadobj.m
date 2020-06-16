@@ -21,11 +21,17 @@
 
 function b = loadobj(a)
 
+if rem(a.verbosity,17) == 0
+	disp('[INFO] Loading a xolotl object...')
+end
+
 a.xolotl_folder = fileparts(fileparts(which('xolotl')));
 a.cpp_folder = [fileparts(fileparts(which('xolotl'))) filesep 'c++'];
 
 % update linked_binary extension 
 [~,binary_name]=fileparts(a.linked_binary);
-a.linked_binary = [binary_name '.' mexext];
+if ~isempty(binary_name)
+	a.linked_binary = [binary_name '.' mexext];
+end
 
 b = a;

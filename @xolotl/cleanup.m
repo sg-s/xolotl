@@ -46,3 +46,4 @@ allfiles = dir([this_dir filesep '*A_*']);
 for i = 1:length(allfiles)
 	delete([this_dir filesep allfiles(i).name]);
 end
+

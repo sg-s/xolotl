@@ -111,7 +111,7 @@ public:
     double m = 0;
     double h = 1;
 
-    double verbosity = 0;
+    int verbosity = 1;
 
     int p = 1;
     int q = 0;
@@ -230,7 +230,7 @@ void conductance::buildLUT(double approx_channels) {
     double V = 0;
 
     if (UseMInfApproximation == 1) {
-        if (verbosity > 0) {
+        if (verbosity%11==0) {
             mexPrintf("%s using approximate activation functions\n", getClass().c_str());  
         }
     
@@ -241,13 +241,13 @@ void conductance::buildLUT(double approx_channels) {
             tau_m_cache[V_int+999] = tau_m(V,0);
         }
     } else {
-        if (verbosity > 0) {
+        if (verbosity%11==0) {
             mexPrintf("%s NOT USING approximate activation functions\n", getClass().c_str());  
         }
     }
 
     if (UseHInfApproximation == 1) {
-        if (verbosity > 0) {
+        if (verbosity%11==0) {
            mexPrintf("%s using approximate in-activation functions\n", getClass().c_str()); 
         }
         

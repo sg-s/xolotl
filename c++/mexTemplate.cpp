@@ -97,7 +97,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
 
     
-
+    int v = (int) verbosity;
+    if (v == 0) {v=1;}
 
 
     // temperature and other wire-ups
@@ -107,7 +108,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     xolotl_network.sim_dt = sim_dt;
     xolotl_network.dt = dt;
 
-    xolotl_network.verbosity = verbosity;
+    xolotl_network.verbosity = v;
     xolotl_network.approx_channels = approx_channels;
     xolotl_network.stochastic_channels = (int) stochastic_channels;
 
@@ -134,7 +135,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     xolotl_network.init();
 
 
-    if (verbosity > 0) {
+    if (v%5 == 0) {
         mexPrintf("\n[CHANNELS]\n ");
 
         if (approx_channels == 1) { mexPrintf("approximate, ");}
@@ -214,7 +215,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
 
 
-    if (verbosity > 0) {
+    if (v%5 == 0) {
         mexPrintf("\n[#COMP]   [MECH SIZE]   [CURRENT SIZE]   [SYN SIZE]\n ");
         mexPrintf(   "%i            ",n_comp);
         mexPrintf(   "%i            ",full_controller_size);
@@ -289,7 +290,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
 
 
-    if (verbosity > 0) {
+    if (v%5 == 0) {
         mexPrintf("\n[I_EXT] ");
         if (I_ext_size_2 == nsteps) {mexPrintf(" dynamically changing\n");}
         else { mexPrintf("fixed \n");}
@@ -350,7 +351,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     cond_idx = 0;
     syn_idx = 0;
 
-    if (verbosity > 0){
+    if (v%5 == 0){
         mexPrintf("[C++] %i outputs requested\n", nlhs);
     }
 
@@ -381,7 +382,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             xolotl_network.integrate(I_ext);
 
 
-            if (i%progress_report == 0 & verbosity > 0) {
+            if (i%progress_report == 0 & v%5 == 0) {
                 mexPrintf("[C++] integration %i %", percent_complete);
                 mexPrintf(" complete\n");
                 percent_complete += 10;
@@ -508,7 +509,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
             xolotl_network.integrateClamp(V_clamp);
 
-            if (i%progress_report == 0 & verbosity > 0) {
+            if (i%progress_report == 0 & v%5 == 0) {
                 mexPrintf("[C++] integration %i %", percent_complete);
                 mexPrintf(" complete\n");
                 percent_complete += 10;
@@ -628,7 +629,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 //       |_| |_| |_|\___/ \__,_|\___| |_____|
 
 
-        if (verbosity > 0) {
+        if (v%5 == 0) {
             mexPrintf("[xolotl] %i-step integration requested.\n", xolotl_network.solver_order);
 
         }
@@ -647,7 +648,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             xolotl_network.integrateMS(I_ext);
 
 
-            if (i%progress_report == 0 & verbosity > 0) {
+            if (i%progress_report == 0 & v%5 == 0) {
                 mexPrintf("[C++] integration %i %", percent_complete);
                 mexPrintf(" complete\n");
                 percent_complete += 10;
@@ -726,7 +727,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         // |__|  |__|  \______/  |_______/ |_______|   |____/
         //
 
-        if (verbosity > 0) {
+        if (v%5 == 0) {
             mexPrintf("[xolotl] %i-step integration requested.\n", xolotl_network.solver_order);
         }
 
@@ -743,7 +744,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
             xolotl_network.integrateClamp(V_clamp); // this needs to change
 
-            if (i%progress_report == 0 & verbosity > 0) {
+            if (i%progress_report == 0 & v%5 == 0) {
                 mexPrintf("[C++] integration %i %", percent_complete);
                 mexPrintf(" complete\n");
                 percent_complete += 10;

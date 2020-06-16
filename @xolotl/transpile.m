@@ -42,7 +42,7 @@ h = self.hash;
 out_file = ['X_' h '.cpp'];
 
 
-if self.verbosity > 0
+if rem(self.verbosity,2) == 0
 	disp(['[INFO] starting transpile with hash: ' self.hash])
 end
 

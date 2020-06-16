@@ -65,35 +65,39 @@ function varargout = integrate(self)
 
 
 if isempty(self.linked_binary)
-	if self.verbosity > 0
+	if rem(self.verbosity,2) == 0
 		disp('[INFO] No linked binary, hashing...')
 	end
 	h = self.hash;
 	self.linked_binary = ['X_' h '.' mexext];
+else
+	if rem(self.verbosity,2) == 0
+		disp(['[INFO] Linked binary is:' self.linked_binary])
+	end
 end
 
 
 % does the binary exist?
-if exist(fullfile(self.xolotl_folder,self.linked_binary),'file') == 3
+if exist(fullfile(self.xolotl_folder,self.linked_binary),'file') > 0
 	% does the hash match up?
 
-	if self.verbosity > 0
+	if rem(self.verbosity,2) == 0
 		disp('[INFO] Binary exists.')
 	end
 
 	h = self.hash;
 	if ~strcmp(self.linked_binary(3:34),h)
 
-		if self.verbosity > 0
+		if rem(self.verbosity,2) == 0
 			disp('[INFO] Binary out of sync')
 			disp(['[INFO] Current hash is ' h])
 		end
 
 		% maybe the binary exists?
-		if exist(fullfile(self.xolotl_folder,['X_' h '.' mexext]),'file') == 3
+		if exist(fullfile(self.xolotl_folder,['X_' h '.' mexext]),'file') > 0
 			% binary exists. just update the linked_binary and we should be good
-			if self.verbosity > 0
-				disp('[INFO] Bianry exists, no need to recompile.')
+			if rem(self.verbosity,2) == 0
+				disp('[INFO] Binary exists, no need to recompile.')
 			end
 			self.linked_binary = ['X_' h '.' mexext];
 		else
