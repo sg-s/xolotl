@@ -16,35 +16,33 @@
 class LiuController: public mechanism {
 
 protected:
-    // pointer to sensor 
+    // pointer to sensors
     mechanism* Fast = 0;
     mechanism* Slow = 0;
     mechanism* DC = 0;
 
-    int sensor_connected = 0;
-    
+    double FTarget = 0;
+    double STarget = 0;
+    double DCTarget = 0;
+
+
 public:
 
-    // parameters for LiuController1
+    // parameters for LiuController
     double tau = 5e3;
     double A = 0;
     double B = 0;
     double C = 0;
-    double FTarget = 0;
-    double STarget = 0;
-    double DTarget = 0;
+    
 
     // specify parameters + initial conditions 
-    LiuController(double tau_, double A_, double B_, double C_, double FTarget_, double STarget_, double DTarget_)
+    LiuController(double tau_, double A_, double B_, double C_)
     {
         // wiring 
         tau = tau_;
         A = A_;
         B = B_;
         C = C_;
-        FTarget = FTarget_;
-        STarget = STarget_;
-        DTarget = DTarget_;
 
         // defaults
         if (isnan(tau)) {tau = 5000; } // ms
@@ -70,12 +68,12 @@ public:
     double getState(int);
     string getClass(void);
 
-    void connectToLiuSensor(void);
+    void init(void);
 
 };
 
 
-void LiuController::connectToLiuSensor() {
+void LiuController::init() {
 
 
     int n_mech = (channel->container)->n_mech;
@@ -86,20 +84,32 @@ void LiuController::connectToLiuSensor() {
 
         if (this_mech == "FastSensor") {
             Fast = (channel->container)->getMechanismPointer(i);
-            // mexPrintf("connected to fast sensor\n");
-            sensor_connected++;
+            if (verbosity==0) {
+                mexPrintf("LiuController(%s) connected to [FastSensor]\n",controlling_class.c_str());
+            }
         }
 
         if (this_mech == "SlowSensor") {
             Slow = (channel->container)->getMechanismPointer(i);
-            // mexPrintf("connected to SlowSensor\n");
-            sensor_connected++;
+            if (verbosity==0) {
+                mexPrintf("LiuController(%s) connected to [SlowSensor]\n",controlling_class.c_str());
+            }
         }
 
         if (this_mech == "DCSensor") {
             DC = (channel->container)->getMechanismPointer(i);
-            // mexPrintf("connected to DC sensor\n");
-            sensor_connected++;
+            if (verbosity==0) {
+                mexPrintf("LiuController(%s) connected to [DCSensor]\n",controlling_class.c_str());
+            }
+        }
+
+        if (this_mech == "FSDTarget") {
+            if (verbosity==0) {
+                mexPrintf("LiuController(%s) connected to [FSDTarget]\n",controlling_class.c_str());
+            }
+            FTarget = (channel->container)->getMechanismPointer(i)->getState(0);
+            STarget = (channel->container)->getMechanismPointer(i)->getState(1);
+            DCTarget = (channel->container)->getMechanismPointer(i)->getState(2);
         }
     }
 
@@ -149,18 +159,11 @@ void LiuController::connect(synapse* syn_) {
 
 
 void LiuController::integrate(void) {
-    switch (sensor_connected) {
-        case 0:
-            connectToLiuSensor();
-            break;
-        default:
-            break;
-    }
 
 
     double gdot = A*(FTarget - Fast->getState(0));
     gdot += B*(STarget - Slow->getState(0));
-    gdot += C*(DTarget - DC->getState(0));
+    gdot += C*(DCTarget - DC->getState(0));
     gdot = gdot*(dt/tau)*(channel->gbar);
 
 
@@ -169,11 +172,6 @@ void LiuController::integrate(void) {
         channel->gbar += gdot;
     }
 
-}
-
-// activation/inactivation functions
-double LiuController::boltzmann(double x) {
-    return 1/(1 + exp(x));
 }
 
 

@@ -41,6 +41,7 @@ public:
         tau_m = tau_m_;
         G = G_;
         X = X_;
+        m = m_;
 
 
         // these defaults make it a "F" type sensor

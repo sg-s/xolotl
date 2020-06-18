@@ -50,7 +50,7 @@ public:
     double temperature;
     double temperature_ref;
 
-    int verbosity;
+    int verbosity = -1;
 
     mechanism()
     {

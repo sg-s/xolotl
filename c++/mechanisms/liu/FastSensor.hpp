@@ -23,12 +23,12 @@ protected:
     
 public:
 
-    // primary dynamical variable s
+    // primary dynamical variables
     double X;
     double m = 0;
     double h = 1;
 
-    // parameters for FastSensor1
+    // parameters for FastSensor
     double ZM;
     double ZH;
     double tau_m;

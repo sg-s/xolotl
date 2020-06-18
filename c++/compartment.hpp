@@ -74,7 +74,7 @@ public:
 
     double V_clamp = 0; // stores the voltage that it is clamped to
 
-    int verbosity = 0;
+    int verbosity = -1;
 
     double RT_by_nF;
 
@@ -333,11 +333,10 @@ void compartment::init() {
 
 
         // first set all conductance parameters
-        cond[i]->verbosity = verbosity;
+        cond[i]->verbosity = verbosity%11;
         cond[i]->dt = dt;
         cond[i]->temperature_ref = temperature_ref;
         cond[i]->temperature = temperature;
-        cond[i]->verbosity = verbosity;
 
 
 
@@ -361,7 +360,7 @@ void compartment::init() {
     // synapses
     for (int i=0; i<n_syn; i++) {
 
-        syn[i]->verbosity = verbosity;
+        syn[i]->verbosity = verbosity%13;
         syn[i]->dt = dt;
         syn[i]->temperature_ref = temperature_ref;
         syn[i]->temperature = temperature;
@@ -373,7 +372,7 @@ void compartment::init() {
     for (int i=0; i<n_mech; i++) {
 
         mech[i]->dt = dt;
-        mech[i]->verbosity = verbosity;
+        mech[i]->verbosity = verbosity%7;
         mech[i]->temperature = temperature;
         mech[i]->temperature_ref = temperature_ref;
 
