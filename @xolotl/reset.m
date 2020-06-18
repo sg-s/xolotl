@@ -42,6 +42,10 @@
 % press tab and get a list of snapshots that you want to
 % reset to.
 %
+% % !!! warning
+% XXXXreset will not change the values of `I_ext` and `V_clamp`
+%
+%
 % See Also: 
 % xolotl.snapshot
 % 
