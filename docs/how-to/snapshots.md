@@ -12,9 +12,13 @@ x = xolotl.examples.neurons.BurstingNeuron;
 
 % save a model's parameters as 'initial'
 x.snapshot('initial')
+
 % do something else to the model
-x.I_ext = 0.2;
+x.AB.NaV.gbar = 0;
+
+
 V = x.integrate;
+
 % save this as a different state to return to later
 x.snapshot('added_current');
 % return to the previously saved 'initial' state
