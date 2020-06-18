@@ -135,9 +135,9 @@ Notice that we didn't specify what the reversal potentials should be, but they w
 Let's change the `Leak` reversal potential a little bit:
 
 ```matlab
-x.AB.Leak.E = -55; % mV
-x.LP.Leak.E = -55; % mV
-x.PY.Leak.E = -55; % mV
+x.AB.Leak.E = -50; % mV
+x.LP.Leak.E = -50; % mV
+x.PY.Leak.E = -50; % mV
 ```
 
 At this point, we have created three neurons, and inserted channels into them.
