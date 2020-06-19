@@ -2,10 +2,51 @@
 This document describes the "compartment" C++ class.
 This class describes objects that are compartments, and
 can be used to represent neurons and parts of neurons.
+[Click here](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp) to
+view the source code of this class.
 
 | Abstract | can contain | contained in |
 | --------  | ------ | -------  |
 | no |  conductance, mechanism, synapse | network |
+
+## Properties
+
+### User-accessible properties
+
+| Name | type | Notes |
+| --------  | ------ | -------  |
+| V |  double | membrane potential  |
+| Ca | double | calcium concentration |
+| Ca_target | double | Do not use. Will be removed in a future release |
+
+### Variables that help with integration
+
+| Name | type | Notes |
+| --------  | ------ | -------  |
+| k_V | double{4} | Stores sub-step voltages in Runge-Kutta integration |
+| k_Ca | double{4} | Stores sub-step voltages in Runge-Kutta integration |
+
+
+
+### Pointers to other components and helper variables
+
+| Name | type | Notes |
+| --------  | ------ | -------  |
+| cond | vector<conductance*> |  pointers to all conductances in compartment |
+| syn | vector<synapse*> | pointers to synapses onto this neuron. |
+| mech | vector<mechanism*> |  pointers to mechanisms |
+| mechanism_sizes | vector<int> |  stores sizes of each mechanism's full state |
+| synapse_sizes  |  vector<int> |  stores sizes of each mechanism's full state |
+| axial_syn| vector<synapse*>  | vector that will store the axial synapses |
+| upstream |    compartment * | pointer to upstream compartment |
+| downstream |    compartment * | pointer to downstream compartment |
+
+
+### Global parameters
+
+| Name | type | Notes |
+| --------  | ------ | -------  |
+| temperature | double | Automatically set by network |
 
 
 
@@ -42,7 +83,7 @@ axial synapses are connected to it.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L297)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L340)
 
 -------
 
@@ -76,7 +117,7 @@ It does the following things:
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L316)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L359)
 
 -------
 
@@ -102,7 +143,7 @@ good place to put code that you need to run once before the simulation.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L329)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L372)
 
 -------
 
@@ -138,7 +179,7 @@ It does the following things:
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L403)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L445)
 
 -------
 
@@ -169,7 +210,7 @@ pointer to this synapse is stored in the vector `syn`
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L425)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L467)
 
 -------
 
@@ -201,7 +242,7 @@ they can throw an error, aborting the simulation.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L446)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L488)
 
 -------
 
@@ -226,7 +267,7 @@ scheme and returns B, C, D and F values as defined in eq.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L473)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L515)
 
 -------
 
@@ -254,7 +295,7 @@ in this compartment, identified by its class name.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L523)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L565)
 
 -------
 
@@ -282,7 +323,7 @@ in this compartment, identified by its numeric index.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L543)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L585)
 
 -------
 
@@ -306,7 +347,7 @@ via axial synapses to this compartment.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L553)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L595)
 
 -------
 
@@ -342,7 +383,7 @@ specifying where it should write values to
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L576)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L618)
 
 -------
 
@@ -373,7 +414,7 @@ what their data dimension is, and adding up all those numbers.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L595)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L637)
 
 -------
 
@@ -410,7 +451,7 @@ specifying where it should write values to
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L621)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L663)
 
 -------
 
@@ -441,7 +482,7 @@ what their data dimension is, and adding up all those numbers.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L642)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L684)
 
 -------
 
@@ -477,7 +518,7 @@ specifying where it should write values to
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L667)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L709)
 
 -------
 
@@ -501,7 +542,7 @@ compartment, identified by its numerical index.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L679)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L721)
 
 -------
 
@@ -527,7 +568,7 @@ type, also in this compartment.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L690)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L732)
 
 -------
 
@@ -553,7 +594,7 @@ numerical index it was added to this compartment.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L711)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L753)
 
 -------
 
@@ -581,7 +622,7 @@ object in this compartment to integrate by calling their
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L726)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L768)
 
 -------
 
@@ -613,7 +654,7 @@ integrateCNSecondPass.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L787)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L829)
 
 -------
 
@@ -644,7 +685,7 @@ integrateCNFirstPass.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L836)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L878)
 
 -------
 
@@ -669,7 +710,7 @@ compartment.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L855)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L897)
 
 -------
 
@@ -696,7 +737,7 @@ this compartment.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L868)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L910)
 
 -------
 
@@ -723,7 +764,7 @@ contribute to `sigma_g` and `sigma_gE`.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L947)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L989)
 
 -------
 
@@ -749,7 +790,7 @@ stored in `I_clamp`.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L963)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L1005)
 
 -------
 
@@ -775,7 +816,7 @@ account current flows between compartments
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L982)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L1024)
 
 -------
 
@@ -811,7 +852,7 @@ Euler method.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L1031)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L1073)
 
 -------
 
@@ -841,7 +882,7 @@ of this compartment based on the other compartments in the model.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L1078)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp#L1120)
 
 -------
 
