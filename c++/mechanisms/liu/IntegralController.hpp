@@ -25,7 +25,7 @@ protected:
     
 public:
 
-    // parameters for IntegralController1
+    // parameters for IntegralController
     double tau = 5e3;
     double A = 0;
     double B = 0;

@@ -21,6 +21,7 @@ protected:
     // 1 --- channels
     // 2 --- synapses
     int control_type = 0;
+    double Target = 0;
 public:
     // timescales
     double tau_m = std::numeric_limits<double>::infinity();
@@ -50,6 +51,8 @@ public:
 
     void checkSolvers(int);
 
+    void init(void);
+
     void connect(conductance *);
     void connect(synapse*);
     void connect(compartment*);
@@ -61,13 +64,51 @@ public:
 
 };
 
+
+void IntegralController::init() {
+    
+    compartment* temp_comp;
+
+    if (control_type == 1) {
+        temp_comp = channel->container;
+        
+    } else if (control_type == 2) {
+        temp_comp  = syn->post_syn;
+    } else {
+        mexErrMsgTxt("IntegralController can only control conductances or synapses\n");
+    }
+
+    int n_mech = temp_comp->n_mech;
+
+    bool targetMissing = true;
+
+    for (int i = 0; i < n_mech; i++) {
+
+        string this_mech = temp_comp->getMechanismPointer(i)->getClass().c_str();
+
+        if (this_mech == "CalciumTarget") {
+            if (verbosity==0) {
+                mexPrintf("IntegralController(%s) connected to [CalciumTarget]\n",controlling_class.c_str());
+            }
+
+            Target = temp_comp->getMechanismPointer(i)->getState(0);
+            
+            targetMissing = false;
+        }
+    }
+
+    // attempt to read Ca_target from compartment -- legacy code support
+    if (targetMissing) {
+        Target = temp_comp->Ca_target;
+    }
+}
+
 string IntegralController::getClass() {
     return "IntegralController";
 }
 
 
-double IntegralController::getState(int idx)
-{
+double IntegralController::getState(int idx) {
     if (idx == 1) {return m;}
     else if (idx == 2) {return channel->gbar;}
     else {return std::numeric_limits<double>::quiet_NaN();}
@@ -86,12 +127,10 @@ int IntegralController::getFullState(double *cont_state, int idx) {
 
     // and also output the current gbar of the thing
     // being controller
-    if (channel)
-    {
+    if (channel) {
       cont_state[idx] = channel->gbar;
     }
-    else if (syn)
-    {
+    else if (syn) {
         cont_state[idx] = syn->gmax;
     }
     idx++;
@@ -159,9 +198,9 @@ void IntegralController::integrate(void) {
             // if the target is NaN, we will interpret this
             // as the controller being disabled
             // and do nothing
-            if (isnan((channel->container)->Ca_target)) {return;}
+            if (isnan(Target)) {return;}
 
-            double Ca_error = (channel->container)->Ca_target - (channel->container)->Ca_prev;
+            double Ca_error = Target - (channel->container)->Ca_prev;
 
             // integrate mRNA
             m += (dt/tau_m)*(Ca_error);
@@ -189,9 +228,9 @@ void IntegralController::integrate(void) {
             // as the controller being disabled
             // and do nothing
 
-            if (isnan((syn->post_syn)->Ca_target)) {return;}
+            if (isnan(Target)) {return;}
 
-            double Ca_error = (syn->post_syn)->Ca_target - (syn->post_syn)->Ca_prev;
+            double Ca_error = Target - (syn->post_syn)->Ca_prev;
 
             // integrate mRNA
             m += (dt/tau_m)*(Ca_error);

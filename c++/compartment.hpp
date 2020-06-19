@@ -3,10 +3,51 @@
 This document describes the "compartment" C++ class.
 This class describes objects that are compartments, and
 can be used to represent neurons and parts of neurons.
+[Click here](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/compartment.hpp) to
+view the source code of this class. 
 
 | Abstract | can contain | contained in |
 | --------  | ------ | -------  |
 | no |  conductance, mechanism, synapse | network |
+
+## Properties 
+
+### User-accessible properties
+
+| Name | type | Notes | 
+| --------  | ------ | -------  | 
+| V |  double | membrane potential  |
+| Ca | double | calcium concentration | 
+| Ca_target | double | Do not use. Will be removed in a future release |
+
+### Variables that help with integration 
+
+| Name | type | Notes | 
+| --------  | ------ | -------  | 
+| k_V | double{4} | Stores sub-step voltages in Runge-Kutta integration |
+| k_Ca | double{4} | Stores sub-step voltages in Runge-Kutta integration |
+
+
+
+### Pointers to other components and helper variables
+
+| Name | type | Notes | 
+| --------  | ------ | -------  | 
+| cond | vector<conductance*> |  pointers to all conductances in compartment | 
+| syn | vector<synapse*> | pointers to synapses onto this neuron. | 
+| mech | vector<mechanism*> |  pointers to mechanisms | 
+| mechanism_sizes | vector<int> |  stores sizes of each mechanism's full state |
+| synapse_sizes  |  vector<int> |  stores sizes of each mechanism's full state |
+| axial_syn| vector<synapse*>  | vector that will store the axial synapses |
+| upstream |    compartment * | pointer to upstream compartment |
+| downstream |    compartment * | pointer to downstream compartment |
+
+
+### Global parameters 
+
+| Name | type | Notes | 
+| --------  | ------ | -------  | 
+| temperature | double | Automatically set by network | 
 
 
 
@@ -188,7 +229,9 @@ public:
         if (isnan (V)) { V = -60; } // mV
         if (isnan (Ca)) { Ca = .05; }
 
-        // if (isnan (Ca_target)) { Ca_target = Ca_in; }
+        if (!isnan(Ca_target)) { 
+            mexPrintf("\n-----------------------------\n[WARNING] Ca_target will be\n removed in a future release. \nDo not use. Use the \nCalciumTarget mechanism instead\n------------------------------\n");
+        }
 
         if (!isnan(len) && !isnan(radius)) {
             // radius and length
