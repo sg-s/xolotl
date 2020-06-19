@@ -83,9 +83,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     vector<synapse*> all_synapses; // pointers to all synapses
 
 
-    n_conductances = 0;
-    n_mechanisms = 0;
-    n_synapses = 0;
 
 
 
@@ -212,7 +209,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
             idx++;
         }
     }
-
 
 
     if (v%5 == 0) {

@@ -217,6 +217,8 @@ for i = 1:length(all_mechanisms)
 
 end
 
+mechanism_add_lines{end+1} = ['n_mechanisms = ' mat2str(length(all_mechanisms)) ';'];
+
 insert_here = filelib.find(lines,'//xolotl:add_mechanisms_here');
 corelib.assert(length(insert_here)==1,'Could not find insertion point for mechanism hookups');
 lines = [lines(1:insert_here); mechanism_add_lines(:); lines(insert_here+1:end)];
