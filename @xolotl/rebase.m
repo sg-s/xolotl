@@ -56,10 +56,10 @@ end
 
 cc = mex.getCompilerConfigurations('C++');
 
-if length(cc) == 1
+if length(cc) > 0
 	compilerok = true;
 end
 
 setpref('xolotl','compilerok',compilerok)
 
-corelib.assert(length(cc)==1,'No C++ compiler found. xolotl will not be able to run! ')
+corelib.assert(compilerok,'No C++ compiler found. xolotl will not be able to run! ')
