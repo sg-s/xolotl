@@ -3,6 +3,11 @@
 
 %% Create a single-compartment neuron model
 x = xolotl.examples.neurons.BurstingNeuron('prefix','liu');
+
+try
+	x.download
+end
+
 x.dt = .1;
 x.sim_dt = .1;
 x.t_end = 10e3;

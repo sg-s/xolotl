@@ -10,6 +10,14 @@ x = xolotl.examples.neurons.TwoCompartmentBurster;
 % add some noise
 x.CellBody.add('CurrentNoise','noise_amplitude',.5);
 
+
+% try to download a binary
+% so that people without compilers can use this too
+try
+	x.download
+end
+
+
 d = fileparts(mfilename('fullpath'));
 
 % load data results

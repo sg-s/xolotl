@@ -15,6 +15,12 @@ x.AB.add('chow/Kd','gbar',360);
 x.AB.add('Leak','gbar',3,'E',-54.4);
 
 
+% try to download a binary
+% so that people without compilers can use this too
+try
+	x.download
+end
+
 x.approx_channels = 0;
 
 all_area = logspace(-6,log10(400e-6),20);

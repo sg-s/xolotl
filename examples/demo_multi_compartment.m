@@ -5,6 +5,11 @@ x = xolotl.examples.neurons.BurstingCable();
 x.dt = .1;
 x.sim_dt = .1;
 
+% try to download a binary
+% so that people without compilers can use this too
+try
+	x.download
+end
 
 V = x.integrate;
 time = (1:length(V))*x.dt*1e-3;

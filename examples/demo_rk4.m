@@ -5,6 +5,13 @@ close all
 
 x = xolotl.examples.neurons.BurstingNeuron('prefix','prinz');
 
+% try to download a binary
+% so that people without compilers can use this too
+try
+	x.download
+end
+
+
 x.t_end = 1e4;
 x.integrate;
 x.t_end = 5e3;

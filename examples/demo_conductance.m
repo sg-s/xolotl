@@ -5,6 +5,11 @@
 
 x = xolotl.examples.neurons.BurstingNeuron('prefix','liu');
 
+% try to download a binary
+% so that people without compilers can use this too
+try
+	x.download
+end
 
 
 channels = x.AB.find('conductance');

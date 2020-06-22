@@ -11,7 +11,11 @@ x.sim_dt = .01;
 
 x.closed_loop = false;
 
-
+% try to download a binary
+% so that people without compilers can use this too
+try
+	x.download
+end
 
 
 V = x.integrate;

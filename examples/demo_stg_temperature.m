@@ -10,6 +10,13 @@
 x = xolotl.examples.neurons.BurstingNeuron('prefix','prinz-temperature','CalciumMech','buchholtz-temperature');
 
 
+% try to download a binary
+% so that people without compilers can use this too
+try
+	x.download
+end
+
+
 % set Q10s of all components 
 RandStream.setGlobalStream(RandStream('mt19937ar','Seed',9)); 
 x.set('*Q',2 + randn(19,1)/10)

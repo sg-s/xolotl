@@ -7,6 +7,13 @@
 
 x = xolotl.examples.networks.pyloric;
 
+% try to download a binary
+% so that people without compilers can use this too
+try
+	x.download
+end
+
+
 x.integrate;
 
 

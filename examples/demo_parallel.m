@@ -14,12 +14,19 @@ x.dt = .1;
 x.sim_dt = .1;
 x.t_end = 10e3;
 
+% try to download a binary
+% so that people without compilers can use this too
+try
+	x.download
+end
 
-% in this example, we are going to vary the maximal conductances of the Acurrent and the slow calcium conductance in a grid
 
+% The point of having this integrate call outside the parallel loop
+% is to force a compilation. If you don't do this, you will get 
+% and error
 x.integrate;
 
-
+% in this example, we are going to vary the maximal conductances of the Acurrent and the slow calcium conductance in a grid
 parameters_to_vary = {'*.CaS.gbar','*.ACurrent.gbar'};
 
 g_CaS_space = linspace(0,100,25);

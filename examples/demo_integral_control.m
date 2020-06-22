@@ -22,6 +22,12 @@ x.AB.Kd.add('oleary/IntegralController','tau_m',2000);
 x.AB.HCurrent.add('oleary/IntegralController','tau_m',125000);
 
 
+% try to download a binary
+% so that people without compilers can use this too
+try
+	x.download
+end
+
 x.t_end = 5e5;
 x.sim_dt = .1;
 x.dt = 100;

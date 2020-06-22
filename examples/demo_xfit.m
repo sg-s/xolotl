@@ -4,6 +4,15 @@
 
 % first, we create our xolotl object
 x = xolotl.examples.neurons.BurstingNeuron('prefix','prinz');
+
+% try to download a binary
+% so that people without compilers can use this too
+try
+	x.download
+end
+
+
+
 x.set('*gbar',veclib.shuffle((x.get('*gbar'))))
 
 % we instantiate the xfit object

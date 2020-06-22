@@ -10,6 +10,13 @@ x.AB.add('liu/CaT','gbar',@() 1.44/x.AB.A,'E',30);
 x.AB.add('liu/Kd','gbar',@() 38.31/x.AB.A,'E',-80);
 x.AB.add('Leak','gbar',@() 0.0622/x.AB.A,'E',-50);
 
+
+% try to download a binary
+% so that people without compilers can use this too
+try
+	x.download
+end
+
 holding_V = -60;
 all_V_step = linspace(-80,50,30);
 

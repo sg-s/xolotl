@@ -26,6 +26,12 @@ x.dt = .1;
 x.sim_dt = .1;
 
 
+% try to download a binary
+% so that people without compilers can use this too
+try
+	x.download
+end
+
 % normal output type, variables separated
 x.output_type = 0;
 [V,Ca] = x.integrate;
