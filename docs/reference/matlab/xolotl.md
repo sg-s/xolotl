@@ -548,6 +548,35 @@ x.manipulate('*gbar');
 
 -------
 
+### download
+
+
+**Syntax**
+
+```matlab
+x.download;
+```
+
+**Description**
+
+Downloads a pre-complied binary for
+this model, if available. 
+
+
+
+
+
+
+
+!!! info "See Also"
+    * [xolotl.compile](../xolotl/#compile)
+    * [xolotl.viewCode](../xolotl/#viewcode)
+
+
+
+
+-------
+
 ### fI
 
 **Syntax**
@@ -1004,6 +1033,10 @@ x.reset('base')
 This method supports tab completion. You should be able to
 press tab and get a list of snapshots that you want to
 reset to.
+
+% !!! warning
+    reset will not change the values of `I_ext` and `V_clamp`
+
 
 
 

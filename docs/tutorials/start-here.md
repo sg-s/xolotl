@@ -4,7 +4,10 @@ In this tutorial we will walk through the steps required to install `xolotl`
 and make sure everything works well. You will need:
 
 1. [MATLAB](https://www.mathworks.com/products/matlab.html) 	(`xolotl` will not work on GNU Octave)
-2. An internet connection
+2. [The parallel computing toolbox](https://www.mathworks.com/products/parallel-computing.html) (for running simulations in parallel)
+3. [The Signal Processing toolbox](https://www.mathworks.com/products/signal.html) (for some analysis code)
+4. [Global Optimization toolbox](https://www.mathworks.com/products/global-optimization.html) (to fit models to data)
+5. An internet connection
 
 ## Installing xolotl
 
