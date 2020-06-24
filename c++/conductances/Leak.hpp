@@ -2,7 +2,8 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// Slow Calcium conductance
+// component info: generic Leak conductance
+
 #ifndef LEAK
 #define LEAK
 #include "conductance.hpp"

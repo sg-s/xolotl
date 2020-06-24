@@ -28,7 +28,7 @@ void integrate()
 
 
 This virtual method is a placeholder method of mechanism that does
-nothing except throw an error. If your mechanim is properly 
+nothing except throw an error. If your mechanism is properly 
 written, this will not be run (and therefore the error will
 not be thrown) because your mechanism will define a "integrate"
 method, which will be used instead of this.

@@ -53,6 +53,9 @@ view the source code of this class.
 
 */
 
+
+// component info: generic compartment. Compartments contain channels, synapses and mechanisms
+
 #ifndef COMPARTMENT
 #define COMPARTMENT
 #include <cmath>
