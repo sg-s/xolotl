@@ -26,7 +26,10 @@ end
 % and error
 x.integrate;
 
-% in this example, we are going to vary the maximal conductances of the Acurrent and the slow calcium conductance in a grid
+% in this example, we are going to vary the maximal 
+% conductances of the Acurrent and the slow calcium conductance in a grid
+% using wildcards ('*') makes this code work for any model, 
+% no matter what the compartment is
 parameters_to_vary = {'*.CaS.gbar','*.ACurrent.gbar'};
 
 g_CaS_space = linspace(0,100,25);
@@ -64,7 +67,7 @@ t = toc;
 
 
 
-disp(['Finished in ' mat2str(t,3) ' seconds. Total speed = ' mat2str((length(all_params)*x.t_end*1e-3)/t,3) 'X'])
+disp(['Finished in ' mat2str(t,3) ' seconds. Total speed = ' mat2str(2*(length(all_params)*x.t_end*1e-3)/t,4) 'X'])
 
 
 % assemble the data into a matrix for display
