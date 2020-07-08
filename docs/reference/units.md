@@ -25,3 +25,4 @@
 | Voltage | mV |
 | Calcium concentration | μM | 
 | Current (density) | $nA/mm^2$ | 
+| Current (clamping) | nA | 
