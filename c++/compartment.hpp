@@ -912,11 +912,15 @@ this compartment.
 */
 void compartment::integrateMS(int k){
 
+    double V_MS;
+    double Ca_MS;
+
 
     if (k == 4) {
         // terminal calculations, advance step
         V = V_prev + (k_V[0] + 2*k_V[1] + 2*k_V[2] + k_V[3])/6;
         Ca = Ca_prev + (k_Ca[0] + 2*k_Ca[1] + 2*k_Ca[2] + k_Ca[3])/6;
+        Ca_MS = Ca_prev;
     }
 
 
@@ -925,8 +929,7 @@ void compartment::integrateMS(int k){
     sigma_gE = 0;
     i_Ca = 0;
 
-    double V_MS;
-    double Ca_MS;
+    
 
     if (k == 0) {
         // first step
@@ -944,7 +947,6 @@ void compartment::integrateMS(int k){
     }
 
     E_Ca = RT_by_nF*log((Ca_out)/(Ca_MS));
-
 
     // channels
     for (int i=0; i<n_cond; i++)
