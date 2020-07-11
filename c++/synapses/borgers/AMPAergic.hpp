@@ -49,33 +49,25 @@ public:
 
 };
 
-int AMPAergic::getFullStateSize()
-{
-    return 2;
-}
+int AMPAergic::getFullStateSize() {return 2;}
 
-double AMPAergic::ss_core(double V_pre)
-{
+double AMPAergic::ss_core(double V_pre) {
     return (1.0 + tanh(V_pre/10.0))/2.0;
 }
 
-double AMPAergic::s_inf(double ss)
-{
+double AMPAergic::s_inf(double ss) {
     return ss / ( ss + tau_r / tau_d );
 }
 
-double AMPAergic::tau_s(double ss)
-{
+double AMPAergic::tau_s(double ss) {
     return tau_r / (ss + tau_r / tau_d);
 }
 
-double AMPAergic::sdot(double V_pre, double s_)
-{
+double AMPAergic::sdot(double V_pre, double s_) {
     return ss_core(V_pre) * (1 - s_) / tau_r - s_ / tau_d;
 }
 
-void AMPAergic::integrate(void)
-{
+void AMPAergic::integrate(void) {
     // figure out the voltage of the pre-synaptic neuron
     double V_pre = pre_syn -> V;
     double ss = ss_core(V_pre);
@@ -86,8 +78,7 @@ void AMPAergic::integrate(void)
     g = gmax*s;
 }
 
-void AMPAergic::integrateMS(int k, double V, double Ca)
-{
+void AMPAergic::integrateMS(int k, double V, double Ca) {
 
     double V_pre;
 
@@ -124,8 +115,7 @@ void AMPAergic::integrateMS(int k, double V, double Ca)
 
 }
 
-int AMPAergic::getFullState(double *syn_state, int idx)
-{
+int AMPAergic::getFullState(double *syn_state, int idx) {
     // give it the current synapse variable
     syn_state[idx] = s;
 
@@ -137,8 +127,7 @@ int AMPAergic::getFullState(double *syn_state, int idx)
     return idx;
 }
 
-void AMPAergic::connect(compartment *pcomp1_, compartment *pcomp2_)
-{
+void AMPAergic::connect(compartment *pcomp1_, compartment *pcomp2_) {
     pre_syn = pcomp1_;
     post_syn = pcomp2_;
 

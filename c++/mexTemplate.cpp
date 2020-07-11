@@ -31,6 +31,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double *output_cont_state; // mechanisms
     double *spiketimes;
 
+    double *mech_sizes_out;
+    double *syn_sizes_out;
+
 
     int n_conductances = 0;
     int n_mechanisms = 0;
@@ -45,7 +48,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     int res;
 
     int full_current_size = 0;
-    int full_controller_size = 0;
+    int full_mechanism_size = 0;
     int full_synaptic_size = 0;
 
     int spikes_only = 0;
@@ -160,15 +163,15 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     n_comp = (int) (xolotl_network.comp).size(); // these many compartments
 
 
-    // ask each controller (nicely) what their
+    // ask each mechanism (nicely) what their
     // full state size is
-    int full_controller_sizes[n_comp];
-    full_controller_size = 0;
+    int full_mechanism_sizes[n_comp];
+    full_mechanism_size = 0;
     for (int i = 0; i < n_comp; i ++) {
         int n_mech = (xolotl_network.comp[i])->n_mech;
 
-        full_controller_sizes[i] = xolotl_network.comp[i]->getFullMechanismSize();
-        full_controller_size += full_controller_sizes[i];
+        full_mechanism_sizes[i] = xolotl_network.comp[i]->getFullMechanismSize();
+        full_mechanism_size += full_mechanism_sizes[i];
     }
 
 
@@ -194,27 +197,52 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
 
     // ask all the mechanisms for their sizes
-    int begin_mechansism_sizes = param_size;
+    int begin_mechanism_sizes = param_size;
     param_size = param_size + n_mechanisms;
+
+    if (nrhs == 1) {
+        // the only thing we are being asked to do is compute the mechanism
+        // and synapse sizes and return that. once we're done, abort
+        plhs[0] = mxCreateDoubleMatrix(n_mechanisms, 1, mxREAL);
+        mech_sizes_out = mxGetPr(plhs[0]);
+
+        int idx = 0;
+        for(int j = 0; j < n_comp; j++) {
+            for (int k = 0; k < xolotl_network.comp[j]->n_mech; k++) {
+                int mech_size = (xolotl_network.comp[j]->getMechanismPointer(k))->getFullStateSize();
+                mech_sizes_out[idx] = mech_size;
+                idx++;
+            }
+        }
+
+
+        plhs[1] = mxCreateDoubleMatrix(n_synapses, 1, mxREAL);
+        syn_sizes_out = mxGetPr(plhs[1]);
+
+        
+        idx = 0;
+        for(int j = 0; j < n_comp; j++) {
+            for (int k = 0; k < xolotl_network.comp[j]->n_syn; k++) {
+                int syn_size = (xolotl_network.comp[j]->getSynapsePointer(k))->getFullStateSize();
+                syn_sizes_out[idx] = syn_size;
+                idx++;
+            }
+        }
+
+        return;
+    }
 
 
     plhs[0] = mxCreateDoubleMatrix(param_size, 1, mxREAL);
     output_state = mxGetPr(plhs[0]);
 
-    int idx = 0;
-    for(int j = 0; j < n_comp; j++) {
-        for (int k = 0; k < xolotl_network.comp[j]->n_mech; k++) {
-            int mech_size = (xolotl_network.comp[j]->getMechanismPointer(k))->getFullStateSize();
-            output_state[begin_mechansism_sizes+idx] = mech_size;
-            idx++;
-        }
-    }
+    
 
 
     if (v%5 == 0) {
         mexPrintf("\n[#COMP]   [MECH SIZE]   [CURRENT SIZE]   [SYN SIZE]\n ");
         mexPrintf(   "%i            ",n_comp);
-        mexPrintf(   "%i            ",full_controller_size);
+        mexPrintf(   "%i            ",full_mechanism_size);
         mexPrintf(   "%i            ",full_current_size);
         mexPrintf(   "%i         \n",full_synaptic_size);
 
@@ -233,7 +261,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     }
 
     if (nlhs > 3) {
-        plhs[3] = mxCreateDoubleMatrix(full_controller_size, nsteps_out, mxREAL);
+        plhs[3] = mxCreateDoubleMatrix(full_mechanism_size, nsteps_out, mxREAL);
         output_cont_state = mxGetPr(plhs[3]);
     }
 

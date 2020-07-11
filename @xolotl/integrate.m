@@ -151,7 +151,7 @@ Ca = [];
 I_clamp = [];
 curr_state = [];
 syn_state = [];
-cont_state = [];
+mech_state = [];
 spiketimes = [];
 
 comp_names = self.find('compartment');
@@ -182,16 +182,16 @@ arguments = self.serialize;
 %arguments = self.get(self.find('*'));
 
 [~,f] = fileparts(self.linked_binary);
-
 f = str2func(f);
+
+
+% now do the actual integration
 [results{1:n_outputs+1}] = f(arguments,self.I_ext',self.V_clamp');
 
 if self.closed_loop
 	self.deserialize(results{1}(1:length(arguments)));
 end
 
-% read out mechanism sizes
-mechanism_sizes = results{1}(length(arguments)+1:end);
 
 
 if n_outputs > 0
@@ -203,8 +203,8 @@ if n_outputs > 1
 	varargout{2} = Ca;
 end
 if n_outputs > 2
-	cont_state = (results{4})';
-	varargout{3} = cont_state;
+	mech_state = (results{4})';
+	varargout{3} = mech_state;
 end
 if n_outputs > 3
 	curr_state = (results{5})';
@@ -223,7 +223,8 @@ end
 
 % return a data structure
 
-data = struct;
+
+data = self.structureOutputs(V,Ca,mech_state,curr_state,syn_state);
 
 % voltages/spikes
 if self.output_type == 2
@@ -232,57 +233,6 @@ if self.output_type == 2
 	for i = 1:n_comp
 		data.(comp_names{i}).spiketimes = nonzeros(spiketimes(:,i));
 	end
-
-end
-
-for i = 1:n_comp
-	if isnan(sum(self.V_clamp(:,i)))
-		data.(comp_names{i}).V = V(:,i);
-	else
-		data.(comp_names{i}).I_clamp = V(:,i);
-		data.(comp_names{i}).V_clamp = self.V_clamp(:,i);
-	end
-end
-
-
-% calcium and E_Ca
-for i = 1:n_comp
-	data.(comp_names{i}).Ca = Ca(:,i);
-	data.(comp_names{i}).E_Ca = Ca(:,i+n_comp);
-end
-
-
-% all mechanisms
-all_mechanisms = self.find('mechanism');
-a = 1;
-for i = 1:length(mechanism_sizes)
-	this_mech_size = mechanism_sizes(i);
-
-	if this_mech_size == 0
-		continue
-	end
-
-	z = a + this_mech_size - 1;
-	data = structlib.write(data, all_mechanisms{i}, cont_state(:,a:z));
-	a = z + 1;
-end
-
-
-% all currents
-a = 1;
-for i = 1:n_comp
-	cond_names = self.(comp_names{i}).find('conductance');
-	for j = 1:length(cond_names)
-		data.(comp_names{i}).(cond_names{j}).I = curr_state(:,a);
-		a = a + 1;
-	end
-end
-
-
-% all synapses
-if ~isempty(syn_state )
-	data.synapse_state = syn_state;
 end
 
 varargout{1} = data;
-
