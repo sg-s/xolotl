@@ -70,13 +70,22 @@ methods
 						f = func2str(self.(props{i}));
 						f = strrep(f,'@(V,Ca)',' ');
 					else
-						error('Unrecognised function signature.')
+						error('Unrecognized function signature.')
 					end
 
 					if any(strfind(f,'NaN'))
 						f = '  1';
 					end
 
+
+					% remove ^ and convert to pow
+					if any(strfind(f,'^'))
+						caretpos = strfind(f,'^');
+						basepos = max(regexpi(f(1:caretpos-1),'\W'))+1:caretpos-1;
+						temp = regexp(f(caretpos+1:end),'[^0-9.]')-1;
+						exponentpos =  (caretpos+1:caretpos+temp(1));
+						f = strrep(f,f(basepos(1):exponentpos(end)),['pow(',f(basepos),',',f(exponentpos),')']);
+					end
 
 					this_line = strrep(this_line,['$' props{i}], f);
 					
