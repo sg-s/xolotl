@@ -4,7 +4,7 @@ function p = setup()
 
 
 % first, we create our xolotl object
-x = xolotl.examples.BurstingNeuron('prefix','prinz');
+x = xolotl.examples.neurons.BurstingNeuron('prefix','prinz');
 x.set('*gbar',veclib.shuffle((x.get('*gbar'))))
 
 % we instantiate the xfit object
@@ -13,7 +13,7 @@ p = xfit('particleswarm');
 p.options.UseParallel = true;
 
 % we assign a cost function
-p.SimFcn = @xolotl.examples.burstingCostFcn;
+p.SimFcn = @xolotl.examples.costfunctions.burstingCostFcn;
 
 
 % we assign the xolotl object

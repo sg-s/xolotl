@@ -1,8 +1,9 @@
 function COST = cost(x,data)
 
 
+
 % copy over parameters to the other neuron
-x.set(data.other_params,x.get(data.parameter_names))
+x.set(data.other_params,x.get(data.FitParameters))
 
 gmax = x.Cell1.GradedCell2.gmax;
 
