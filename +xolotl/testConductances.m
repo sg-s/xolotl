@@ -1,9 +1,13 @@
 % tests every conductance in c++/conductance
 % and checks that it compiles
 
+function testConductances()
+
 
 xroot = fileparts(fileparts(which('xolotl')));
 all_cond = cpplab.search([xroot  filesep 'c++'  filesep 'conductances']);
+
+xroot = filelib.cachePath('xolotl');
 
 if exist([xroot filesep 'cond_check.mat'],'file') == 2
 	load([xroot filesep 'cond_check.mat'])

@@ -32,7 +32,7 @@ function download(self)
 
 url = ['https://github.com/sg-s/xolotl/releases/download/bin/X_' self.hash '.' mexext];
 
-savename = fullfile(self.xolotl_folder,['X_' self.hash '.' mexext]);
+savename = fullfile(filelib.cachePath('xolotl'),['X_' self.hash '.' mexext]);
 
 
 try

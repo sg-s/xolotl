@@ -168,6 +168,9 @@ methods
         if ~isfield(self,'cpp_lab_real_names_hash')
             self.cpp_lab_real_names = {'approx_channels';'dt' ;'output_type';'sim_dt';'solver_order';'spike_thresh'   ;'stochastic_channels';'t_end';'temperature';'temperature_ref';'use_current';'verbosity'};
         end
+
+        % add the cache path to the path so that we can run the binaries
+         addpath(filelib.cachePath('xolotl'))
 	end
 
 

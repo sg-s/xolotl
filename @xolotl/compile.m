@@ -36,7 +36,7 @@ end
 
 h = self.hash;
 
-mexBridge_name = [fullfile(self.xolotl_folder,'X_') h '.cpp'];
+mexBridge_name = [fullfile(filelib.cachePath('xolotl'),'X_') h '.cpp'];
 corelib.assert(exist(mexBridge_name,'file')==2,'C++ file to compile does not exist. Use "transpile" before compiling')
 
 if rem(self.verbosity,2) == 0
@@ -55,9 +55,9 @@ if isunix && ~ismac
 end
 
 if rem(self.verbosity,3) == 0
-	mex('-v',ipath,mexBridge_name,'-outdir',self.xolotl_folder)
+	mex('-v',ipath,mexBridge_name,'-outdir',filelib.cachePath('xolotl'))
 else
-	mex('-silent',ipath,mexBridge_name,'-outdir',self.xolotl_folder)
+	mex('-silent',ipath,mexBridge_name,'-outdir',filelib.cachePath('xolotl'))
 end
 
 if isunix && ~ismac

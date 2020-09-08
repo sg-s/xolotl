@@ -29,7 +29,7 @@
 
 function cleanup()
 
-this_dir = fileparts(fileparts(which('xolotl.cleanup')));
+this_dir = filelib.cachePath('xolotl');
 
 d = dbstack;
 if ~any(strcmp({d.name},'run_all_tests'))

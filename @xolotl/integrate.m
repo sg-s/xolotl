@@ -78,7 +78,7 @@ end
 
 
 % does the binary exist?
-if exist(fullfile(self.xolotl_folder,self.linked_binary),'file') > 0
+if exist(fullfile(filelib.cachePath('xolotl'),self.linked_binary),'file') > 0
 	% does the hash match up?
 
 	if rem(self.verbosity,2) == 0

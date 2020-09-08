@@ -249,5 +249,5 @@ if ispc
 	end
 end
 
-mexBridge_name = fullfile(self.xolotl_folder, out_file);
+mexBridge_name = fullfile(filelib.cachePath('xolotl'), out_file);
 filelib.write(mexBridge_name,lines);
