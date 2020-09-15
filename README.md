@@ -1,3 +1,5 @@
+[![View xolotl on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/79894-xolotl)
+
 # xolotl: a fast and flexible neuronal simulator
 
 [![Documentation Status](https://readthedocs.org/projects/xolotl/badge/?version=master)](https://xolotl.readthedocs.io/en/master/?badge=master)
@@ -73,6 +75,8 @@ MATLAB has to offer. You can:
 Hooked? [Get started here](https://xolotl.readthedocs.io/en/master/).
 
 # Where do I get this?
+
+![](https://user-images.githubusercontent.com/6005346/93216395-ad3ced00-f735-11ea-8512-5915c4b70d87.gif)
 
 Click [here](https://github.com/sg-s/xolotl/releases/download/latest/xolotl.mltbx) to download, and click on the downloaded file to install.
 
