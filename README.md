@@ -1,9 +1,10 @@
-[![View xolotl on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/79894-xolotl)
+
 
 # xolotl: a fast and flexible neuronal simulator
 
 [![Documentation Status](https://readthedocs.org/projects/xolotl/badge/?version=master)](https://xolotl.readthedocs.io/en/master/?badge=master)
 ![](https://img.shields.io/github/last-commit/sg-s/xolotl.svg)
+[![View xolotl on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/79894-xolotl)
 
 
 ![](https://user-images.githubusercontent.com/6005346/57262966-9b751100-703c-11e9-890f-3808062e60d9.gif)
