@@ -29,9 +29,6 @@
 
 function compile(self)
 
-
-disp('Compiling....')
-
 if ~isempty(getCurrentTask)
 	error('Compile was called on a parallel worker, which is not allowed. To avoid seeing this message, first run "integrate" on your model outside a parallel loop.')
 end

@@ -126,10 +126,12 @@ string LiuController::getClass() {
 double LiuController::getState(int idx){return 0;}
 
 
-int LiuController::getFullStateSize(){return 0; }
+int LiuController::getFullStateSize(){return 1; }
 
 
 int LiuController::getFullState(double *cont_state, int idx) {
+    cont_state[idx] = channel->gbar;
+    idx++;
     return idx;
 }
 

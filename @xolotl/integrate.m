@@ -200,7 +200,6 @@ end
 
 
 
-
 if self.closed_loop
 	self.deserialize(results{1}(1:length(args)));
 end
