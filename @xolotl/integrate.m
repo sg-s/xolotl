@@ -94,7 +94,7 @@ if exist(fullfile(filelib.cachePath('xolotl'),self.linked_binary),'file') > 0
 		end
 
 		% maybe the binary exists?
-		if exist(fullfile(self.xolotl_folder,['X_' h '.' mexext]),'file') > 0
+		if exist(fullfile(filelib.cachePath('xolotl'),['X_' h '.' mexext]),'file') > 0
 			% binary exists. just update the linked_binary and we should be good
 			if rem(self.verbosity,2) == 0
 				disp('[INFO] Binary exists, no need to recompile.')
@@ -176,20 +176,34 @@ elseif  floor(self.t_end/self.sim_dt) ~= size(self.I_ext,1) && size(self.I_ext,1
 end
 
 % vectorize the current state
-arguments = self.serialize;
-
-% this may give us some small speed bump
-%arguments = self.get(self.find('*'));
+args = self.serialize;
 
 [~,f] = fileparts(self.linked_binary);
 f = str2func(f);
 
 
 % now do the actual integration
-[results{1:n_outputs+1}] = f(arguments,self.I_ext',self.V_clamp');
+
+if self.pref.cache
+	hash = hashlib.md5hash([self.hash hashlib.md5hash(self.serialize) hashlib.md5hash(nargout)]);
+	cachename =  fullfile(userpath,'xolotl',[hash '.cache']);
+	if exist(cachename,'file') == 2
+		% cache exists, load that and don't do anything
+		disp('Using cache...')
+		load(cachename,'results','-mat')
+	else
+		[results{1:n_outputs+1}] = f(args,self.I_ext',self.V_clamp');
+	end
+
+else
+	[results{1:n_outputs+1}] = f(args,self.I_ext',self.V_clamp');
+end
+
+
+
 
 if self.closed_loop
-	self.deserialize(results{1}(1:length(arguments)));
+	self.deserialize(results{1}(1:length(args)));
 end
 
 
@@ -214,6 +228,12 @@ if n_outputs > 4
 	syn_state = (results{6})';
 	varargout{5} = syn_state;
 end
+
+
+if self.pref.cache
+	save(cachename,'results')
+end
+
 
 if self.output_type == 0
 	return
