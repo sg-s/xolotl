@@ -189,7 +189,6 @@ if self.pref.cache
 	cachename =  fullfile(userpath,'xolotl',[hash '.cache']);
 	if exist(cachename,'file') == 2
 		% cache exists, load that and don't do anything
-		disp('Using cache...')
 		load(cachename,'results','-mat')
 	else
 		[results{1:n_outputs+1}] = f(args,self.I_ext',self.V_clamp');
