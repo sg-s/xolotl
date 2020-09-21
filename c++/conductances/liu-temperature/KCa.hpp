@@ -35,11 +35,12 @@ public:
 
         // defaults 
         if (isnan(gbar)) { gbar = 0; }
-        
         if (isnan (Q_g)) { Q_g = 1; }
         if (isnan (Q_tau_m)) { Q_tau_m = 2; }
         if (isnan (E)) { E = -80; }
 
+        AllowMInfApproximation = false;
+        AllowHInfApproximation = false;
 
         p = 4;
     }
