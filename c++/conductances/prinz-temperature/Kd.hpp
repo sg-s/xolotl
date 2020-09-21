@@ -23,7 +23,6 @@ public:
 
     double Q_g;
     double Q_tau_m;
-    double Q_tau_h;
 
     //specify both gbar and erev and initial conditions
     Kd(double gbar_, double E_, double m_, double Q_g_, double Q_tau_m_)

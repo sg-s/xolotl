@@ -51,6 +51,7 @@ for i = 1:length(channels)
 		x.AB.add([prefix filesep channels{i}])
 	catch
 		% fall back onto Prinz channels
+		warning(['Could not find or load ' prefix filesep channels{i} '. Falling back to: ' 'prinz/' channels{i}])
 		x.AB.add(['prinz/' channels{i}])
 	end
 end
