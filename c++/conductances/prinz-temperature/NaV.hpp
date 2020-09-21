@@ -72,10 +72,6 @@ void NaV::init() {
     pow_Q_tau_m_delta_temp = 1/(pow(Q_tau_m, delta_temp));
     pow_Q_tau_h_delta_temp = 1/(pow(Q_tau_h, delta_temp));
     pow_Q_g = pow(Q_g, delta_temp);
-
-    mexPrintf("delta_temp=%f\n",delta_temp);
-    mexPrintf("pow_Q_tau_h_delta_temp=%f\n",pow_Q_tau_h_delta_temp);
-
 }
 
 
@@ -93,14 +89,7 @@ void NaV::integrate(double V, double Ca) {
 
 double NaV::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+25.5)/-5.29));}
 double NaV::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+48.9)/5.18));}
-double NaV::tau_m(double V, double Ca) {
-
-
-    mexPrintf("tau_m\n");
-    return (pow_Q_tau_m_delta_temp)*(2.64 - 2.52/(1+exp((V+120.0)/-25.0)));}
-double NaV::tau_h(double V, double Ca) {
-
-    mexPrintf("tau_h\n");
-    return (pow_Q_tau_h_delta_temp)*(1.34/(1.0+exp((V+62.9)/-10.0)))*(1.5+1.0/(1.0+exp((V+34.9)/3.6)));}
+double NaV::tau_m(double V, double Ca) {return (pow_Q_tau_m_delta_temp)*(2.64 - 2.52/(1+exp((V+120.0)/-25.0)));}
+double NaV::tau_h(double V, double Ca) {return (pow_Q_tau_h_delta_temp)*(1.34/(1.0+exp((V+62.9)/-10.0)))*(1.5+1.0/(1.0+exp((V+34.9)/3.6)));}
 
 #endif
