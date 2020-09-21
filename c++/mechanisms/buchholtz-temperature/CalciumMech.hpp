@@ -122,7 +122,7 @@ void CalciumMech::integrate(void) {
     // otherwise this becomes very tricky and easily
     // diverges
 
-    double Ca_inf = Ca_in - (compensated_tau_Ca*phi*(comp->i_Ca_prev)*(comp->A))/(192971*(comp->vol)); // microM
+    double Ca_inf = Ca_in - (tau_Ca*phi*(comp->i_Ca_prev)*(comp->A))/(192971*(comp->vol)); // microM
     comp->Ca = Ca_inf + (Ca - Ca_inf)*dt_by_tau_Ca;
 
 

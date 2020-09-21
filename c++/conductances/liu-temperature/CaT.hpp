@@ -69,8 +69,8 @@ void CaT::connect(compartment *pcomp_) {
 
     // also set up some useful things
     delta_temp = (temperature - temperature_ref)/10;
-    pow_Q_tau_m_delta_temp = (pow(Q_tau_m, delta_temp));
-    pow_Q_tau_h_delta_temp = (pow(Q_tau_h, delta_temp));
+    pow_Q_tau_m_delta_temp = 1/(pow(Q_tau_m, delta_temp));
+    pow_Q_tau_h_delta_temp = 1/(pow(Q_tau_h, delta_temp));
     pow_Q_g = pow(Q_g, delta_temp);
 }
 
