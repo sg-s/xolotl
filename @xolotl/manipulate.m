@@ -50,17 +50,6 @@ if ischar(manipulate_these) && ~any(strfind(manipulate_these,'*'))
 	manipulate_these = {manipulate_these};
 end
 
-% if isempty(self.linked_binary)
-
-% 	if exist(['X_' self.hash '.' mexext],'file') == 3
-% 		self.linked_binary = ['X_' self.hash '.' mexext];
-% 	else
-
-% 		self.transpile;
-% 		self.compile;
-% 	end
-% end
-
 % disable closed loop
 self.closed_loop = false;
 
@@ -195,6 +184,9 @@ end
 lb = values/3;
 ub = values*3;
 ub(values==0) = 1;
+
+% lower bounds of gbars must be 0
+lb(cellfun(@(x) any(strfind(x,'gbar')),real_names)) = 0;
 
 
 % create a puppeteer instance and configure
