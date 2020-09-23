@@ -108,7 +108,7 @@ if strcmp(obj.cpp_class_parent,'synapse')
 
 
 
-	figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
+	figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600],'Color','w'); hold on
 	ax.sinf = subplot(1,2,1); hold on
 	xlabel('V (mV)')
 	ylabel('s_{\infty} ')
@@ -140,8 +140,6 @@ if strcmp(obj.cpp_class_parent,'synapse')
 	legend(l);
 
 
-	figlib.pretty()
-
 	return
 
 end
@@ -162,9 +160,11 @@ end
 
 if isempty(f)
 
-	f = figure('outerposition',[100 100 1000 900],'PaperUnits','points','PaperSize',[1000 500]); hold on
+	f = figure('outerposition',[100 100 1000 900],'PaperUnits','points','PaperSize',[1000 500],'Color','w'); hold on
 	for i = 1:4
 		ax(i) = subplot(2,2,i); hold on
+		ax(i).FontSize = 16;
+		ax(i).LineWidth = 1;
 	end
 	ax(1).Tag = 'minf';
 	ax(2).Tag = 'hinf';
@@ -188,6 +188,7 @@ if isempty(f)
 	set(ax(4),'YScale','log','XLim',[-100 100])
 
 	f.Tag = 'xolotl-show';
+
 end
 
 
@@ -200,10 +201,10 @@ end
 % should we make a new plot, or just move the old one?
 fn = fieldnames(data);
 if isempty(ax(1).Children)
-	plot(ax(find(strcmp({ax.Tag},'minf'))),V,data.minf,'DisplayName',custom_name,'Tag',obj.hash);
-	plot(ax(find(strcmp({ax.Tag},'hinf'))),V,data.hinf,'DisplayName',custom_name,'Tag',obj.hash);
-	plot(ax(find(strcmp({ax.Tag},'taum'))),V,data.taum,'DisplayName',custom_name,'Tag',obj.hash);
-	plot(ax(find(strcmp({ax.Tag},'tauh'))),V,data.tauh,'DisplayName',custom_name,'Tag',obj.hash);
+	plot(ax(find(strcmp({ax.Tag},'minf'))),V,data.minf,'DisplayName',custom_name,'Tag',obj.hash,'LineWidth',2);
+	plot(ax(find(strcmp({ax.Tag},'hinf'))),V,data.hinf,'DisplayName',custom_name,'Tag',obj.hash,'LineWidth',2);
+	plot(ax(find(strcmp({ax.Tag},'taum'))),V,data.taum,'DisplayName',custom_name,'Tag',obj.hash,'LineWidth',2);
+	plot(ax(find(strcmp({ax.Tag},'tauh'))),V,data.tauh,'DisplayName',custom_name,'Tag',obj.hash,'LineWidth',2);
 
 
 
@@ -220,7 +221,7 @@ else
 		plothere = find(strcmp({old_plots.Tag},obj.hash));
 		if isempty(plothere)
 			% make new plot
-			plot(ax(i),V,data.(fn{find(strcmp(fn,ax(i).Tag))}),'DisplayName',custom_name,'Tag',obj.hash);
+			plot(ax(i),V,data.(fn{find(strcmp(fn,ax(i).Tag))}),'DisplayName',custom_name,'Tag',obj.hash,'LineWidth',2);
 		else
 			% change YData in this plot
 			plothere = ax(i).Children(plothere);
@@ -229,7 +230,6 @@ else
 	end
 end
 
-figlib.pretty();
 
 axes(ax(1))
 legend;
