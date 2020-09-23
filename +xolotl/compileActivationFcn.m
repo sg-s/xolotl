@@ -26,21 +26,19 @@
 function binary_name = compileActivationFcn(conductance, cpp_folder)
 
 xolotl_folder = fileparts(cpp_folder);
+binary_loc = filelib.cachePath('xolotl');
 
 binary_name = ['A_' conductance.hash];
-mexBridge_name = fullfile(xolotl_folder, [binary_name '.cpp']);
+mexBridge_name = fullfile(binary_loc, [binary_name '.cpp']);
 
 % check if its already been compiled
-if exist(fullfile(xolotl_folder,[binary_name '.' mexext]),'file') == 3
+if exist(fullfile(binary_loc,[binary_name '.' mexext]),'file') == 3
 	return
 end
 
 
 % check that conductance exists 
 corelib.assert(exist(conductance.cpp_class_path)==2,'Cannot file C++ header file')
-
-% 
-
 
 
 % read lines from template
@@ -108,7 +106,7 @@ if isunix && ~ismac
 	warning('off','MATLAB:mex:GccVersion');
 end
 
-mex('-silent',ipath,mexBridge_name,'-outdir',xolotl_folder)
+mex('-silent',ipath,mexBridge_name,'-outdir',binary_loc)
 
 
 if isunix && ~ismac

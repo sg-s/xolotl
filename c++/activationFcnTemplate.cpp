@@ -46,6 +46,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     double * coreParams  = mxGetPr(prhs[2]);
     double temperature_ref = coreParams[0];
     double temperature = coreParams[1];
+    double Ca_in = coreParams[2];
+    double Ca_out = coreParams[3];
 
     plhs[0] = mxCreateDoubleMatrix(N, 1, mxREAL);
     minf = mxGetPr(plhs[0]);
@@ -59,8 +61,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     plhs[3] = mxCreateDoubleMatrix(N, 1, mxREAL);
     tauh = mxGetPr(plhs[3]);
 
-
-    compartment comp(0, .05, 10, 1, 1,  1, .05, 0, 0, 1, 1, 1, .1);
+    // V  Ca  Cm  A  vol   Ca_target  Ca_average  tree_idx  neuron_idx  radius  len  shell_thickness  Ca_out_)
+    compartment comp(0, Ca_in, 10, 1, 1,  std::numeric_limits<double>::quiet_NaN(), .05, 0, 0, 1, 1, 1, Ca_out);
 
     //xolotl:construct_channel_here
 
@@ -69,13 +71,15 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     comp.addConductance(&ThisChannel);
 
+    comp.init();
+
     
 
     for (int i = 0; i < N; i ++) {
-        minf[i] = ThisChannel.m_inf(Vspace[i],0);
-        hinf[i] = ThisChannel.h_inf(Vspace[i],0);
-        taum[i] = ThisChannel.tau_m(Vspace[i],0);
-        tauh[i] = ThisChannel.tau_h(Vspace[i],0);
+        minf[i] = ThisChannel.m_inf(Vspace[i],Ca_in);
+        hinf[i] = ThisChannel.h_inf(Vspace[i],Ca_in);
+        taum[i] = ThisChannel.tau_m(Vspace[i],Ca_in);
+        tauh[i] = ThisChannel.tau_h(Vspace[i],Ca_in);
     }
 
 

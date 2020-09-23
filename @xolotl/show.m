@@ -31,7 +31,15 @@
 
 
 
-function show(self,obj, custom_name)
+function show(self,obj, custom_name, Ca_in, Ca_out)
+
+if ~exist('Ca_in','var')
+	Ca_in = .05;
+end
+
+if ~exist('Ca_out','var')
+	Ca_out = 3000;
+end
 
 if isa(obj,'cpplab')
 	% we have been given a cpplab object
@@ -80,7 +88,7 @@ else
 
 	params = obj.get(obj.cpp_constructor_signature);
 
-	[data.minf, data.hinf, data.taum, data.tauh] = binary_name(V, params, [self.temperature_ref; self.temperature]);
+	[data.minf, data.hinf, data.taum, data.tauh] = binary_name(V, params, [self.temperature_ref; self.temperature; Ca_in; Ca_out]);
 
 	if length(unique(data.hinf)) == 1
 		data.tauh = NaN*data.tauh;
@@ -126,7 +134,7 @@ if strcmp(obj.cpp_class_parent,'synapse')
 
 	end
 
-	l  =plot(ax.sinf,V_step,sinf,'k','DisplayName',obj.cpp_class_name);
+	l = plot(ax.sinf,V_step,sinf,'k','DisplayName',obj.cpp_class_name);
 	plot(ax.taus,V_step,taus,'k')
 
 	legend(l);
@@ -165,11 +173,11 @@ if isempty(f)
 
 	ylabel(ax(1),'m_{\infty}')
 	xlabel(ax(1),'V (mV)')
-	set(ax(1),'YLim',[0 1],'XLim',[-100 100])
+	set(ax(1),'YLim',[-.01 1],'XLim',[-100 100])
 
 	xlabel(ax(2),'V (mV)')
 	ylabel(ax(2),'h_{\infty}')
-	set(ax(2),'YLim',[0 1],'XLim',[-100 100])
+	set(ax(2),'YLim',[-.01 1],'XLim',[-100 100])
 
 	ylabel(ax(3),'\tau_{m} (ms)')
 	xlabel(ax(3),'V (mV)')
@@ -200,7 +208,7 @@ if isempty(ax(1).Children)
 
 
 	% turn all YLim modes to auto
-	for i = 1:length(ax)
+	for i = 3:length(ax)
 		ax(i).YLimMode = 'auto';
 	end
 
