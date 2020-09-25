@@ -31,6 +31,10 @@
 % tab to get a list of conductances you can get the
 % gating function of.
 %
+%
+% !!! warning
+% XXXXThis may return function handles that are incorrect or malformed for some channels. This is only guaranteed to work when activation functions are simply defined inline in the C++ code. 
+%
 % See Also: 
 % xolotl.show
 %
@@ -41,10 +45,10 @@ function [m_inf, h_inf, tau_m, tau_h] =  getGatingFunctions(conductance)
 
 C = cpplab(conductance);
 
-m_inf = @(V) NaN;
-h_inf = @(V) NaN;
-tau_m = @(V) NaN;
-tau_h = @(V) NaN;
+m_inf = @(V,Ca) NaN;
+h_inf = @(V,Ca) NaN;
+tau_m = @(V,Ca) NaN;
+tau_h = @(V,Ca) NaN;
 
 for i = 1:length(C.cpp_child_functions)
     if strcmp(C.cpp_child_functions(i).fun_name,'m_inf')
@@ -57,3 +61,21 @@ for i = 1:length(C.cpp_child_functions)
         tau_h = C.cpp_child_functions(i).fun_handle;
     end
 end
+
+
+% vectorize all function handles
+m_inf = strrep(func2str(m_inf),'/','./');
+m_inf = strrep(m_inf,'*','.*');
+m_inf = str2func(m_inf);
+
+h_inf = strrep(func2str(h_inf),'/','./');
+h_inf = strrep(h_inf,'*','.*');
+h_inf = str2func(h_inf);
+
+tau_m = strrep(func2str(tau_m),'/','./');
+tau_m = strrep(tau_m,'*','.*');
+tau_m = str2func(tau_m);
+
+tau_h = strrep(func2str(tau_h),'/','./');
+tau_h = strrep(tau_h,'*','.*');
+tau_h = str2func(tau_h);

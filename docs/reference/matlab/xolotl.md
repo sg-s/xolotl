@@ -644,6 +644,10 @@ tab to get a list of conductances you can get the
 gating function of.
 
 
+!!! warning
+    This may return function handles that are incorrect or malformed for some channels. This is only guaranteed to work when activation functions are simply defined inline in the C++ code. 
+
+
 
 !!! info "See Also"
     * [xolotl.show](../xolotl/#show)
