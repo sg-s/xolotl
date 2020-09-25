@@ -198,13 +198,15 @@ if nargin < 3
 end
 
 
+hash = hashlib.md5hash([obj.hash hashlib.md5hash([Ca_in,Ca_out])]);
+
 % should we make a new plot, or just move the old one?
 fn = fieldnames(data);
 if isempty(ax(1).Children)
-	plot(ax(find(strcmp({ax.Tag},'minf'))),V,data.minf,'DisplayName',custom_name,'Tag',obj.hash,'LineWidth',2);
-	plot(ax(find(strcmp({ax.Tag},'hinf'))),V,data.hinf,'DisplayName',custom_name,'Tag',obj.hash,'LineWidth',2);
-	plot(ax(find(strcmp({ax.Tag},'taum'))),V,data.taum,'DisplayName',custom_name,'Tag',obj.hash,'LineWidth',2);
-	plot(ax(find(strcmp({ax.Tag},'tauh'))),V,data.tauh,'DisplayName',custom_name,'Tag',obj.hash,'LineWidth',2);
+	plot(ax(find(strcmp({ax.Tag},'minf'))),V,data.minf,'DisplayName',custom_name,'Tag',hash,'LineWidth',2);
+	plot(ax(find(strcmp({ax.Tag},'hinf'))),V,data.hinf,'DisplayName',custom_name,'Tag',hash,'LineWidth',2);
+	plot(ax(find(strcmp({ax.Tag},'taum'))),V,data.taum,'DisplayName',custom_name,'Tag',hash,'LineWidth',2);
+	plot(ax(find(strcmp({ax.Tag},'tauh'))),V,data.tauh,'DisplayName',custom_name,'Tag',hash,'LineWidth',2);
 
 
 
@@ -218,10 +220,10 @@ else
 	% there are pre-existing plots. Make sure we don't plot the same object to two different plots
 	for i = 1:length(ax)
 		old_plots = ax(i).Children;
-		plothere = find(strcmp({old_plots.Tag},obj.hash));
+		plothere = find(strcmp({old_plots.Tag},hash));
 		if isempty(plothere)
 			% make new plot
-			plot(ax(i),V,data.(fn{find(strcmp(fn,ax(i).Tag))}),'DisplayName',custom_name,'Tag',obj.hash,'LineWidth',2);
+			plot(ax(i),V,data.(fn{find(strcmp(fn,ax(i).Tag))}),'DisplayName',custom_name,'Tag',hash,'LineWidth',2);
 		else
 			% change YData in this plot
 			plothere = ax(i).Children(plothere);
