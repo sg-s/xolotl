@@ -82,6 +82,9 @@ void IntegralController::init() {
 
     bool targetMissing = true;
 
+
+    // read the Calcium Target from the CalciumTarget mechanism
+    // in the compartment that the controlled object is in 
     for (int i = 0; i < n_mech; i++) {
 
         string this_mech = temp_comp->getMechanismPointer(i)->getClass().c_str();
@@ -92,7 +95,6 @@ void IntegralController::init() {
             }
 
             Target = temp_comp->getMechanismPointer(i)->getState(0);
-            
             targetMissing = false;
         }
     }
@@ -186,6 +188,12 @@ void IntegralController::connect(synapse* syn_) {
 void IntegralController::integrate(void) {
 
 
+    // if the target is NaN, we will interpret this
+    // as the controller being disabled
+    // and do nothing
+    if (isnan(Target)) {return;}
+
+
     switch (control_type) {
         case 0:
             mexErrMsgTxt("[IntegralController] misconfigured controller. Make sure this object is contained by a conductance or synapse object");
@@ -195,12 +203,12 @@ void IntegralController::integrate(void) {
         case 1:
 
             {
-            // if the target is NaN, we will interpret this
-            // as the controller being disabled
-            // and do nothing
-            if (isnan(Target)) {return;}
-
             double Ca_error = Target - (channel->container)->Ca_prev;
+
+            // debug -- constant drive
+            if (Target < 0) {
+                Ca_error = 1;
+            } 
 
             // integrate mRNA
             m += (dt/tau_m)*(Ca_error);
@@ -224,13 +232,14 @@ void IntegralController::integrate(void) {
             }
         case 2:
             {
-            // if the target is NaN, we will interpret this
-            // as the controller being disabled
-            // and do nothing
-
-            if (isnan(Target)) {return;}
 
             double Ca_error = Target - (syn->post_syn)->Ca_prev;
+
+            // debug -- constant drive
+            if (Target < 0) {
+                Ca_error = 1;
+            }  
+            
 
             // integrate mRNA
             m += (dt/tau_m)*(Ca_error);

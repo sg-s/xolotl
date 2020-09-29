@@ -126,7 +126,7 @@ methods (Access = protected)
         		end
         		info_str = [' (g=' g ', E=' E ')'];
 
-        		fprintf([' |  ' url_str info_str '\n'])
+        		fprintf([ ' ' char(1154) ' ' url_str info_str '\n'])
         	end
 
             % also show the synapses in this compartment
@@ -135,8 +135,10 @@ methods (Access = protected)
                 url = ['matlab:' inputname(1) '.' compartment '.' synapse];
                 url_str = ['<a href="' url '">' synapse '</a>'];
                 info_str = [' (' mat2str(self.(compartment).(synapse).gmax,4) 'nS)'];
-                fprintf([' > ' url_str info_str '\n'])
+                fprintf([' ' char(881) ' ' url_str info_str '\n'])
             end
+
+            % 1244 881 1154
 
             fprintf('\n')
         end
