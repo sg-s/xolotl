@@ -96,41 +96,49 @@ methods (Access = protected)
         else
             fprintf(['\b\b\b\b\b\b\b\b\n<a href="' url '">xolotl</a> object with '])
         end
-        compartment_names = self.find('compartment');
+        all_compartments = self.find('compartment');
 
-        if length(compartment_names) > 20
-            fprintf([mat2str(length(compartment_names)) ' compartments\n'])
+        if length(all_compartments) > 20
+            fprintf([mat2str(length(all_compartments)) ' compartments\n'])
             return
         else
             fprintf('\n---------------------\n')
         end
 
-        for i = 1:length(compartment_names)
-        	compartment = compartment_names{i};
+        for compartment = List(all_compartments)
         	url = ['matlab:' inputname(1) '.' compartment];
-        	fprintf(['+ <a href="' url '">' compartment_names{i} '</a>  \n'])
-        	% now show the conductances within this channel
-        	C = self.(compartment).find('conductance');
-        	for j = 1:length(C)
-        		url = ['matlab:' inputname(1) '.' compartment '.' C{j}];
-        		url_str = ['<a href="' url '">' C{j} '</a>'];
-        		if isa(self.(compartment).(C{j}).gbar,'function_handle')
-        			g = strrep(func2str(self.(compartment).(C{j}).gbar),'@()','');
+        	fprintf(['[ ] <a href="' url '">' compartment '</a>  \n'])
+
+        	% now show the channels within this compartment
+        	channels = self.(compartment).find('conductance');
+        	for channel = List(channels)
+        		url = ['matlab:' inputname(1) '.' compartment '.' channel];
+        		url_str = ['<a href="' url '">' channel '</a>'];
+        		if isa(self.(compartment).(channel).gbar,'function_handle')
+        			g = strrep(func2str(self.(compartment).(channel).gbar),'@()','');
         		else
-        			g = mat2str(self.(compartment).(C{j}).gbar,4);
+        			g = mat2str(self.(compartment).(channel).gbar,4);
         		end
-        		if isa(self.(compartment).(C{j}).E,'function_handle')
-        			E = strrep(func2str(self.(compartment).(C{j}).E),'@()','');
+        		if isa(self.(compartment).(channel).E,'function_handle')
+        			E = strrep(func2str(self.(compartment).(channel).E),'@()','');
         		else
-        			E = mat2str(self.(compartment).(C{j}).E,4);
+        			E = mat2str(self.(compartment).(channel).E,4);
         		end
         		info_str = [' (g=' g ', E=' E ')'];
 
-
-
-        		fprintf(['  > ' url_str info_str '\n'])
+        		fprintf([' |  ' url_str info_str '\n'])
         	end
-        	fprintf('---------------------\n')
+
+            % also show the synapses in this compartment
+            synapses = self.(compartment).find('synapse');
+            for synapse = List(synapses)
+                url = ['matlab:' inputname(1) '.' compartment '.' synapse];
+                url_str = ['<a href="' url '">' synapse '</a>'];
+                info_str = [' (' mat2str(self.(compartment).(synapse).gmax,4) 'nS)'];
+                fprintf([' > ' url_str info_str '\n'])
+            end
+
+            fprintf('\n')
         end
 
 
