@@ -7,7 +7,7 @@
 [![View xolotl on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/79894-xolotl)
 
 
-![](https://user-images.githubusercontent.com/6005346/57262966-9b751100-703c-11e9-890f-3808062e60d9.gif)
+![](https://user-images.githubusercontent.com/6005346/99264565-9fb3ea00-27ee-11eb-8800-64dea9f563e4.gif)
 
 
 
