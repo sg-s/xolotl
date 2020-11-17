@@ -4,10 +4,10 @@ properties
 
 
 	% activation functions
-	m_inf 
-	h_inf 
-	tau_m 
-	tau_h 
+	m_inf (1,1) function_handle
+	h_inf (1,1) function_handle
+	tau_m (1,1) function_handle
+	tau_h (1,1) function_handle
 
 	is_Ca (1,1) logical = false
 
@@ -43,6 +43,12 @@ methods
 		for i = 1:length(props)
 			corelib.assert(~isempty(self.(props{i})),['All properties must be filled out. ' props{i} ' is still not defined'])
 		end
+
+		% devectorize functions
+		self.m_inf = str2func(strrep(func2str(self.m_inf),'./','/'));
+		self.h_inf = str2func(strrep(func2str(self.h_inf),'./','/'));
+		self.tau_m = str2func(strrep(func2str(self.tau_m),'./','/'));
+		self.tau_h = str2func(strrep(func2str(self.tau_h),'./','/'));
 
 		templatedir = [fileparts(fileparts(which('xolotl'))) filesep 'c++' filesep 'conductances' filesep 'templates' filesep];
 
