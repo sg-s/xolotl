@@ -4,10 +4,10 @@ properties
 
 
 	% activation functions
-	m_inf (1,1) function_handle
-	h_inf (1,1) function_handle
-	tau_m (1,1) function_handle
-	tau_h (1,1) function_handle
+	m_inf function_handle
+	h_inf function_handle
+	tau_m function_handle
+	tau_h function_handle
 
 	is_Ca (1,1) logical = false
 
