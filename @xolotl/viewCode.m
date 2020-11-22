@@ -31,12 +31,10 @@
 
 function viewCode(self)
 
-
 h = self.hash;
-c = ['X_' h '.cpp'];
-c = fullfile(self.xolotl_folder,c);
-if exist(c,'file') == 2
-	edit(c);
+mexBridge_name = [fullfile(filelib.cachePath('xolotl'),'X_') h '.cpp'];
+if exist(mexBridge_name,'file') == 2
+	edit(mexBridge_name);
 else
 	error('No C++ file matching this configuration. Use "transpile"')
 end
