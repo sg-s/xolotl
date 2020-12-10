@@ -33,20 +33,31 @@ FitParameters = {'Axon.ACurrent.gbar', 'Axon.Kd.gbar', 'Axon.Leak.gbar', 'Axon.N
 
 % show some nice ones
 
-show_these = [714 579 967 244 1173 760 1161 115 765 445 775 1177 635 945 51 886 837 407 802 413 924 193 1072];
+show_these = [579 244 760 765 445 775 1177 635 945 51 886 407 802 413 924 193 1072];
 
-figure('outerposition',[300 300 801 1100],'PaperUnits','points','PaperSize',[801 1100]); hold on
+figure('outerposition',[300 300 1211 800],'PaperUnits','points','PaperSize',[1211 800]); hold on
+
+load all_PD
 
 
+for i = 1:4
+	subplot(5,2,i); hold on
+	time = (1:length(all_PD))*1e-4;
+	plot(time,all_PD(:,i),'k')
+	set(gca,'XLim',[0 3])
+	axis off
+end
+
+for i = 1:6
+	subplot(5,2,i+4); hold on
 
 
-for i = 1:18
-	subplot(6,3,i); hold on
-
+	x.t_end = 10e3;
 	x.set(FitParameters,all_params(show_these(i),:))
 	x.closed_loop = true;
 	x.reset;
 	x.integrate;
+	x.t_end = 3e3;
 	V = x.integrate;
 	time = (1:length(V))*x.dt*1e-3;
 	plot(time,V(:,2)+ randn(length(V),1)*5e-2,'k')
