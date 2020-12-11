@@ -8,8 +8,6 @@
 #ifndef CALCIUMTARGET
 #define CALCIUMTARGET
 #include "mechanism.hpp"
-#include <limits>
-
 
 //inherit mechanism class spec
 class CalciumTarget: public mechanism {
@@ -24,23 +22,14 @@ public:
 
 
     // specify parameters + initial conditions 
-    CalciumTarget(double Target_)
-    {
+    CalciumTarget(double Target_) {
         Target = Target_;
     }
 
     void checkSolvers(int);
 
-    void integrate(void);
+    void connectCompartment(compartment*);
 
-
-    void connect(compartment*);
-    void connect(conductance*);
-    void connect(synapse*);
-
-
-    int getFullStateSize(void);
-    int getFullState(double * cont_state, int idx);
     double getState(int);
     string getClass(void);
 
@@ -56,35 +45,16 @@ string CalciumTarget::getClass() {
 double CalciumTarget::getState(int idx){return Target;}
 
 
-int CalciumTarget::getFullStateSize(){return 0; }
-
-
-int CalciumTarget::getFullState(double *cont_state, int idx) {
-    return idx;
-}
 
 // connection methods
-void CalciumTarget::connect(compartment* comp_) {
+void CalciumTarget::connectCompartment(compartment* comp_) {
     comp = comp_;
     comp->addMechanism(this);
 }
 
-void CalciumTarget::connect(conductance* cond_) {
-    mexErrMsgTxt("[CalciumTarget] This mechanism cannot connect to a conductance object");
-}
-
-void CalciumTarget::connect(synapse* syn_) {
-    mexErrMsgTxt("[CalciumTarget] This mechanism cannot connect to a synapse object");
-}
 
 
-
-void CalciumTarget::integrate(void) {
-    // do nothing
-}
-
-
-
+// this works with any solver order, so let's say so
 void CalciumTarget::checkSolvers(int k) {
     return;
 }

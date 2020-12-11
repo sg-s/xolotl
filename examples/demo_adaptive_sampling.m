@@ -5,8 +5,13 @@
 x = xolotl.examples.neurons.BurstingNeuron('prefix','liu');
 
 try
-	x.download
+	x.snapshot('base')
+	x.integrate;
+	x.reset('base')
+catch
+	x.download;
 end
+
 
 x.dt = .1;
 x.sim_dt = .1;

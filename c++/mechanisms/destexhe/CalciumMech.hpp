@@ -58,13 +58,8 @@ public:
 
     void checkSolvers(int);
 
-    void connect(compartment*);
-    void connect(conductance*);
-    void connect(synapse*);
+    void connectCompartment(compartment*);
 
-    int getFullStateSize(void);
-    int getFullState(double * cont_state, int idx);
-    double getState(int);
     string getClass(void);
 
     double Cadot(double);
@@ -75,36 +70,18 @@ public:
 };
 
 
-double CalciumMech::getState(int idx) {
-    return std::numeric_limits<double>::quiet_NaN();
-}
 
-int CalciumMech::getFullStateSize() {
-    return 0;
-}
-
-int CalciumMech::getFullState(double *cont_state, int idx) {
-    // do nothing
-    return idx;
-}
 
 string CalciumMech::getClass() {
     return "CalciumMech";
 }
 
 // connection methods
-void CalciumMech::connect(compartment* comp_) {
+void CalciumMech::connectCompartment(compartment* comp_) {
     comp = comp_;
     comp->addMechanism(this);
 }
 
-void CalciumMech::connect(conductance* cond_) {
-    mexErrMsgTxt("[CalciumMech] This mechanism cannot connect to a conductance object");
-}
-
-void CalciumMech::connect(synapse* syn_) {
-    mexErrMsgTxt("[CalciumMech] This mechanism cannot connect to a synapse object");
-}
 
 void init() {
     if (isnan(comp_->vol)) {mexErrMsgTxt("[CalciumMech] this mechanism requires that the volume of the compartment it is in be defined. \n");}

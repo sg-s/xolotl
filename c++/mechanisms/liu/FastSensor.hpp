@@ -61,14 +61,10 @@ public:
 
     }
 
-    void checkSolvers(int);
-
     void integrate(void);
 
 
-    void connect(compartment*);
-    void connect(conductance*);
-    void connect(synapse*);
+    void connectCompartment(compartment*);
 
     double boltzmann(double);
 
@@ -98,17 +94,9 @@ int FastSensor::getFullState(double *cont_state, int idx) {
 }
 
 // connection methods
-void FastSensor::connect(compartment* comp_) {
+void FastSensor::connectCompartment(compartment* comp_) {
     comp = comp_;
     comp->addMechanism(this);
-}
-
-void FastSensor::connect(conductance* cond_) {
-    mexErrMsgTxt("[FastSensor] This mechanism cannot connect to a conductance object");
-}
-
-void FastSensor::connect(synapse* syn_) {
-    mexErrMsgTxt("[FastSensor] This mechanism cannot connect to a synapse object");
 }
 
 
@@ -137,11 +125,6 @@ double FastSensor::boltzmann(double x) {
 }
 
 
-
-void FastSensor::checkSolvers(int k) {
-    if (k == 0) {return;}
-    else {mexErrMsgTxt("[FastSensor] unsupported solver order\n");}
-}
 
 
 

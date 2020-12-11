@@ -7,8 +7,8 @@
 // 
 // uses a faster RNG
 
-#ifndef CURRENTNOISE22
-#define CURRENTNOISE22
+#ifndef CURRENTNOISE2
+#define CURRENTNOISE2
 #include "mechanism.hpp"
 #include <limits>
 #include <random>
@@ -39,16 +39,10 @@ public:
     double gaussrand(void);
 
     void integrate(void);
-    void checkSolvers(int);
 
     void connect(compartment*);
-    void connect(conductance*);
-    void connect(synapse*);
 
 
-    int getFullStateSize(void);
-    int getFullState(double * cont_state, int idx);
-    double getState(int);
     string getClass(void);
 
 };
@@ -57,59 +51,22 @@ string CurrentNoise2::getClass() {
     return "CurrentNoise2";
 }
 
-double CurrentNoise2::getState(int idx)
-{
-
-    return std::numeric_limits<double>::quiet_NaN();
-}
 
 
-int CurrentNoise2::getFullStateSize() {return 0; }
-
-
-int CurrentNoise2::getFullState(double *cont_state, int idx)
-{
-    // do nothing
-    return idx;
-}
-
-
-void CurrentNoise2::connect(compartment* comp_)
-{
+void CurrentNoise2::connect(compartment* comp_) {
     comp = comp_;
     comp->addMechanism(this);
 }
 
-void CurrentNoise2::connect(conductance* cond_)
-{
-    mexErrMsgTxt("[CurrentNoise2] This mechanism cannot connect to a conductance object");
-}
 
-void CurrentNoise2::connect(synapse* syn_)
-{
-    mexErrMsgTxt("[CurrentNoise2] This mechanism cannot connect to a synapse object");
-}
-
-
-void CurrentNoise2::integrate(void)
-{
+void CurrentNoise2::integrate(void) {
     comp->I_ext += gaussrand()*noise_amplitude*dt;
-}
-
-void CurrentNoise2::checkSolvers(int k)
-{
-    if (k == 0){
-        return;
-    } else {
-        mexErrMsgTxt("[CurrentNoise2] unsupported solver order\n");
-    }
 }
 
 // originally from Knuth and Marsaglia
 // see "A Convenient Method for Generating Normal Variables"
 // SIAM Rev., 6(3), 260–264.
-double CurrentNoise2::gaussrand()
-{
+double CurrentNoise2::gaussrand() {
     static double V1, V2, S;
     static int phase = 0;
     double X;

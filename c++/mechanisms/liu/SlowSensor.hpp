@@ -59,14 +59,10 @@ public:
 
     }
 
-    void checkSolvers(int);
 
     void integrate(void);
 
-
-    void connect(compartment*);
-    void connect(conductance*);
-    void connect(synapse*);
+    void connectCompartment(compartment*);
 
     double boltzmann(double);
 
@@ -96,19 +92,10 @@ int SlowSensor::getFullState(double *cont_state, int idx) {
 }
 
 // connection methods
-void SlowSensor::connect(compartment* comp_) {
+void SlowSensor::connectCompartment(compartment* comp_) {
     comp = comp_;
     comp->addMechanism(this);
 }
-
-void SlowSensor::connect(conductance* cond_) {
-    mexErrMsgTxt("[SlowSensor] This mechanism cannot connect to a conductance object");
-}
-
-void SlowSensor::connect(synapse* syn_) {
-    mexErrMsgTxt("[SlowSensor] This mechanism cannot connect to a synapse object");
-}
-
 
 
 void SlowSensor::integrate(void) {
@@ -134,12 +121,6 @@ double SlowSensor::boltzmann(double x) {
     return 1/(1 + exp(x));
 }
 
-
-
-void SlowSensor::checkSolvers(int k) {
-    if (k == 0) {return;}
-    else {mexErrMsgTxt("[SlowSensor] unsupported solver order\n");}
-}
 
 
 

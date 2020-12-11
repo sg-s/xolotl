@@ -37,16 +37,11 @@ public:
 
     void checkSolvers(int);
 
-    void integrate(void);
+
+    void connectCompartment(compartment*);
+  
 
 
-    void connect(compartment*);
-    void connect(conductance*);
-    void connect(synapse*);
-
-
-    int getFullStateSize(void);
-    int getFullState(double * cont_state, int idx);
     double getState(int);
     string getClass(void);
 
@@ -77,32 +72,14 @@ double FSDTarget::getState(int idx){
 }
 
 
-int FSDTarget::getFullStateSize(){return 0; }
-
-
-int FSDTarget::getFullState(double *cont_state, int idx) {
-    return idx;
-}
 
 // connection methods
-void FSDTarget::connect(compartment* comp_) {
+void FSDTarget::connectCompartment(compartment* comp_) {
     comp = comp_;
     comp->addMechanism(this);
 }
 
-void FSDTarget::connect(conductance* cond_) {
-    mexErrMsgTxt("[FSDTarget] This mechanism cannot connect to a conductance object");
-}
 
-void FSDTarget::connect(synapse* syn_) {
-    mexErrMsgTxt("[FSDTarget] This mechanism cannot connect to a synapse object");
-}
-
-
-
-void FSDTarget::integrate(void) {
-    // do nothing
-}
 
 
 

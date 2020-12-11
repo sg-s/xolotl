@@ -37,15 +37,13 @@ public:
 
 
     void integrate(void);
-    void checkSolvers(int);
+
 
     void connect(compartment*);
     void connect(conductance*);
     void connect(synapse*);
 
-    int getFullStateSize(void);
-    int getFullState(double * cont_state, int idx);
-    double getState(int);
+
     string getClass(void);
 
 };
@@ -54,50 +52,17 @@ string SubunitNoise::getClass() {
     return "SubunitNoise";
 }
 
-double SubunitNoise::getState(int idx)
-{
 
-    return std::numeric_limits<double>::quiet_NaN();
-
-}
-
-
-int SubunitNoise::getFullStateSize()
-{
-    return 0;
-}
-
-
-int SubunitNoise::getFullState(double *cont_state, int idx)
-{
-    // do nothing
-    return idx;
-}
-
-
-void SubunitNoise::connect(conductance * channel_)
-{
+void SubunitNoise::connect(conductance * channel_) {
 
     // connect to a channel
     channel = channel_;
     (channel->container)->addMechanism(this);
     controlling_class = (channel_->getClass()).c_str();
 
-
 }
 
-void SubunitNoise::connect(compartment* comp_)
-{
-    mexErrMsgTxt("[SubunitNoise] This mechanism cannot connect to a compartment object");
-}
-
-void SubunitNoise::connect(synapse* syn_)
-{
-    mexErrMsgTxt("[SubunitNoise] This mechanism cannot connect to a synapse object");
-}
-
-void SubunitNoise::integrate(void)
-{
+void SubunitNoise::integrate(void) {
 
     channel->m += distribution(generator)*noise_amplitude*dt;;
     channel->h += distribution(generator)*noise_amplitude*dt;;
@@ -108,16 +73,6 @@ void SubunitNoise::integrate(void)
     if ((channel->h) > 1) {channel->h = 1;}
 
 }
-
-void SubunitNoise::checkSolvers(int k)
-{
-    if (k == 0){
-        return;
-    } else {
-        mexErrMsgTxt("[SubunitNoise] unsupported solver order\n");
-    }
-}
-
 
 
 #endif

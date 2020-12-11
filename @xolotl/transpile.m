@@ -206,13 +206,23 @@ all_mechanisms = self.find('mechanism');
 for i = 1:length(all_mechanisms)
 	% connect to synapse/conductance
 	idx = max(strfind(all_mechanisms{i},'.'));
-	cond_name = 'NULL';
-	syn_name = 'NULL';
 
 	parent_name = strrep(all_mechanisms{i}(1:idx-1),'.','_');
 	mechanism_name = strrep(all_mechanisms{i},'.','_');
 
-	mechanism_add_lines{end+1} = [mechanism_name '.connect(&' parent_name ');'];
+
+	if strcmp(self.get(strrep(parent_name,'_','.')).cpp_class_parent,'conductance')
+		mechanism_add_lines{end+1} = [mechanism_name '.connectConductance(&' parent_name ');'];
+	elseif strcmp(self.get(strrep(parent_name,'_','.')).cpp_class_parent,'mechanism')
+		mechanism_add_lines{end+1} = [mechanism_name '.connectMechanism(&' parent_name ');'];
+	elseif strcmp(self.get(strrep(parent_name,'_','.')).cpp_class_name,'compartment')
+		mechanism_add_lines{end+1} = [mechanism_name '.connectCompartment(&' parent_name ');'];
+	else
+		
+		error('Could not determine parent class of mechanism')
+	end
+
+	
 
 
 end

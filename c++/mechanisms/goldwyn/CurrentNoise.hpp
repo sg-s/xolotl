@@ -39,16 +39,10 @@ public:
     }
 
     void integrate(void);
-    void checkSolvers(int);
 
-    void connect(compartment*);
-    void connect(conductance*);
-    void connect(synapse*);
+    void connectCompartment(compartment*);
 
 
-    int getFullStateSize(void);
-    int getFullState(double * cont_state, int idx);
-    double getState(int);
     string getClass(void);
 
 };
@@ -58,52 +52,15 @@ string CurrentNoise::getClass() {
 }
 
 
-double CurrentNoise::getState(int idx)
-{
-
-    return std::numeric_limits<double>::quiet_NaN();
-}
-
-
-int CurrentNoise::getFullStateSize() {return 0; }
-
-
-int CurrentNoise::getFullState(double *cont_state, int idx)
-{
-    // do nothing
-    return idx;
-}
-
-
-void CurrentNoise::connect(compartment* comp_)
-{
+void CurrentNoise::connectCompartment(compartment* comp_) {
     comp = comp_;
     comp->addMechanism(this);
 }
 
-void CurrentNoise::connect(conductance* cond_)
-{
-    mexErrMsgTxt("[CurrentNoise] This mechanism cannot connect to a conductance object");
-}
-
-void CurrentNoise::connect(synapse* syn_)
-{
-    mexErrMsgTxt("[CurrentNoise] This mechanism cannot connect to a synapse object");
-}
 
 
-void CurrentNoise::integrate(void)
-{
+void CurrentNoise::integrate(void) {
     comp->I_ext += distribution(generator)*noise_amplitude*dt;
-}
-
-void CurrentNoise::checkSolvers(int k)
-{
-    if (k == 0){
-        return;
-    } else {
-        mexErrMsgTxt("[CurrentNoise] unsupported solver order\n");
-    }
 }
 
 

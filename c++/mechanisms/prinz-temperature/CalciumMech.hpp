@@ -43,19 +43,11 @@ public:
 
     }
 
-    void checkSolvers(int);
-
     void integrate(void);
     void init(void);
 
-    void connect(compartment*);
-    void connect(conductance*);
-    void connect(synapse*);
+    void connectCompartment(compartment*);
 
-
-    int getFullStateSize(void);
-    int getFullState(double * cont_state, int idx);
-    double getState(int);
     string getClass(void);
 
 };
@@ -65,31 +57,13 @@ string CalciumMech::getClass() {
 }
 
 
-double CalciumMech::getState(int idx){return std::numeric_limits<double>::quiet_NaN();}
 
-
-int CalciumMech::getFullStateSize(){return 0; }
-
-
-int CalciumMech::getFullState(double *cont_state, int idx) {
-    // do nothing
-    return idx;
-}
 
 // connection methods
-void CalciumMech::connect(compartment* comp_) {
+void CalciumMech::connectCompartment(compartment* comp_) {
     comp = comp_;
     comp->addMechanism(this);
 }
-
-void CalciumMech::connect(conductance* cond_) {
-    mexErrMsgTxt("[CalciumMech] This mechanism cannot connect to a conductance object");
-}
-
-void CalciumMech::connect(synapse* syn_) {
-    mexErrMsgTxt("[CalciumMech] This mechanism cannot connect to a synapse object");
-}
-
 
 
 void CalciumMech::init() {
@@ -98,25 +72,12 @@ void CalciumMech::init() {
 }
 
 
-
-
 void CalciumMech::integrate(void) {
     double Ca = comp->Ca_prev;
     double Ca_inf = Ca_in - f*(comp->A)*(comp->i_Ca_prev);
     Ca = Ca_inf + (Ca - Ca_inf)*dt_by_tau_Ca;
     comp->Ca = Ca;
 
-}
-
-
-
-
-void CalciumMech::checkSolvers(int k) {
-    if (k == 0){
-        return;}
-    else {
-        mexErrMsgTxt("[CalciumMech] unsupported solver order\n");
-    }
 }
 
 

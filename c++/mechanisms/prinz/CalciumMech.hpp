@@ -47,14 +47,8 @@ public:
 
     double Cadot(double);
 
-    void connect(compartment*);
-    void connect(conductance*);
-    void connect(synapse*);
+    void connectCompartment(compartment*);
 
-
-    int getFullStateSize(void);
-    int getFullState(double * cont_state, int idx);
-    double getState(int);
     string getClass(void);
 
     void init(void);
@@ -66,19 +60,10 @@ string CalciumMech::getClass() {
 }
 
 
-double CalciumMech::getState(int idx){return std::numeric_limits<double>::quiet_NaN();}
 
-
-int CalciumMech::getFullStateSize(){return 0; }
-
-
-int CalciumMech::getFullState(double *cont_state, int idx) {
-    // do nothing
-    return idx;
-}
 
 // connection methods
-void CalciumMech::connect(compartment* comp_) {
+void CalciumMech::connectCompartment(compartment* comp_) {
     comp = comp_;
     comp->addMechanism(this);
 }
@@ -86,14 +71,6 @@ void CalciumMech::connect(compartment* comp_) {
 
 void CalciumMech::init() {
     dt_by_tau_Ca = exp(-dt/tau_Ca);
-}
-
-void CalciumMech::connect(conductance* cond_) {
-    mexErrMsgTxt("[CalciumMech] This mechanism cannot connect to a conductance object");
-}
-
-void CalciumMech::connect(synapse* syn_) {
-    mexErrMsgTxt("[CalciumMech] This mechanism cannot connect to a synapse object");
 }
 
 

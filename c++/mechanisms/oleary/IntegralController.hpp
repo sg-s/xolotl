@@ -49,13 +49,11 @@ public:
 
     void integrate(void);
 
-    void checkSolvers(int);
 
     void init(void);
 
-    void connect(conductance *);
-    void connect(synapse*);
-    void connect(compartment*);
+    void connectConductance(conductance*);
+    void connectSynapse(synapse*);
 
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
@@ -140,7 +138,7 @@ int IntegralController::getFullState(double *cont_state, int idx) {
 }
 
 
-void IntegralController::connect(conductance * channel_) {
+void IntegralController::connectConductance(conductance * channel_) {
 
     // connect to a channel
     channel = channel_;
@@ -162,13 +160,10 @@ void IntegralController::connect(conductance * channel_) {
 
 }
 
-void IntegralController::connect(compartment* comp_) {
-    mexErrMsgTxt("[IntegralController] This mechanism cannot connect to a compartment object");
-}
 
-void IntegralController::connect(synapse* syn_) {
+void IntegralController::connectSynapse(synapse* syn_) {
 
-    // connect to a synpase
+    // connect to a synapse
     syn = syn_;
 
 
@@ -196,7 +191,7 @@ void IntegralController::integrate(void) {
 
     switch (control_type) {
         case 0:
-            mexErrMsgTxt("[IntegralController] misconfigured controller. Make sure this object is contained by a conductance or synapse object");
+            mexErrMsgTxt("[IntegralController] mis-configured controller. Make sure this object is contained by a conductance or synapse object");
             break;
 
 
@@ -263,22 +258,12 @@ void IntegralController::integrate(void) {
             }
 
         default:
-            mexErrMsgTxt("[IntegralController] misconfigured controller");
+            mexErrMsgTxt("[IntegralController] mis-configured controller");
             break;
 
     }
 
 
-}
-
-
-
-void IntegralController::checkSolvers(int k) {
-    if (k == 0){
-        return;
-    } else {
-        mexErrMsgTxt("[IntegralController] unsupported solver order\n");
-    }
 }
 
 

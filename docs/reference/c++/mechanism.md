@@ -37,18 +37,18 @@ method, which will be used instead of this.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L92)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L93)
 
 -------
 
 
 
-### connect
+### connectCompartment
 
 **Function Signature**
 
 ```C++
-void connect(compartment* comp_) 
+void connectCompartment(compartment* comp_) 
 ```
 
 **Description**
@@ -64,18 +64,18 @@ method, which will be used instead of this.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L104)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L105)
 
 -------
 
 
 
-### connect
+### connectConductance
 
 **Function Signature**
 
 ```C++
-void connect(conductance* cond_) 
+void connectConductance(conductance* cond_) 
 ```
 
 **Description**
@@ -91,18 +91,18 @@ method, which will be used instead of this.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L115)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L119)
 
 -------
 
 
 
-### connect
+### connectSynapse
 
 **Function Signature**
 
 ```C++
-void connect(synapse* syn_) 
+void connectSynapse(synapse* syn_) 
 ```
 
 **Description**
@@ -118,7 +118,7 @@ method, which will be used instead of this.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L126)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L133)
 
 -------
 
@@ -145,7 +145,7 @@ method, which will be used instead of this.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L139)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L149)
 
 -------
 
@@ -172,7 +172,103 @@ good place to put code that you need to run once before the simulation.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L152)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L162)
+
+-------
+
+
+
+### getState
+
+**Function Signature**
+
+```C++
+double getState(int i) 
+```
+
+**Description**
+
+ This virtual method is a placeholder. If you want to read values
+out of your mechanism, make sure this returns something sensible. 
+
+
+
+ **Code**
+
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L170)
+
+-------
+
+
+
+### getFullStateSize
+
+**Function Signature**
+
+```C++
+int getFullStateSize() 
+```
+
+**Description**
+
+ This virtual method does nothing, but should return the full state
+size of your mechanism
+
+
+
+
+ **Code**
+
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L179)
+
+-------
+
+
+
+### getFullState
+
+**Function Signature**
+
+```C++
+int getFullState(double* cont_, int i) 
+```
+
+**Description**
+
+ This virtual method does nothing, but can return as many dynamic
+variables as you want 
+
+
+
+
+ **Code**
+
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L188)
+
+-------
+
+
+
+### checkSolvers
+
+**Function Signature**
+
+```C++
+void checkSolvers(int k) 
+```
+
+**Description**
+
+ This virtual method only allows runs if solver_order is 0
+If your mechanism supports other solver orders, say so in your method
+to override this. 
+
+
+
+
+ **Code**
+
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L198)
 
 -------
 

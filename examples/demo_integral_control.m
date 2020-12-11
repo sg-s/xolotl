@@ -25,7 +25,11 @@ x.AB.HCurrent.add('oleary/IntegralController','tau_m',125000);
 % try to download a binary
 % so that people without compilers can use this too
 try
-	x.download
+	x.snapshot('base')
+	x.integrate;
+	x.reset('base')
+catch
+	x.download;
 end
 
 x.t_end = 5e5;

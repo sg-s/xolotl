@@ -17,8 +17,13 @@ x.t_end = 10e3;
 % try to download a binary
 % so that people without compilers can use this too
 try
-	x.download
+	x.snapshot('base')
+	x.integrate;
+	x.reset('base')
+catch
+	x.download;
 end
+
 
 
 % The point of having this integrate call outside the parallel loop

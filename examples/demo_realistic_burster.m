@@ -14,8 +14,13 @@ x.CellBody.add('CurrentNoise','noise_amplitude',.5);
 % try to download a binary
 % so that people without compilers can use this too
 try
-	x.download
+	x.snapshot('base')
+	x.integrate;
+	x.reset('base')
+catch
+	x.download;
 end
+
 
 
 d = fileparts(mfilename('fullpath'));
@@ -37,16 +42,22 @@ show_these = [579 244 760 765 445 775 1177 635 945 51 886 407 802 413 924 193 10
 
 figure('outerposition',[300 300 1211 800],'PaperUnits','points','PaperSize',[1211 800]); hold on
 
-load all_PD
 
+try
+	load all_PD
 
-for i = 1:4
-	subplot(5,2,i); hold on
-	time = (1:length(all_PD))*1e-4;
-	plot(time,all_PD(:,i),'k')
-	set(gca,'XLim',[0 3])
-	axis off
+	for i = 1:4
+		subplot(5,2,i); hold on
+		time = (1:length(all_PD))*1e-4;
+		plot(time,all_PD(:,i),'k')
+		set(gca,'XLim',[0 3])
+		axis off
+	end
+	
+catch
 end
+
+
 
 for i = 1:6
 	subplot(5,2,i+4); hold on

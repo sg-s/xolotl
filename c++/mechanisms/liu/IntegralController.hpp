@@ -50,20 +50,11 @@ public:
         if (isnan(tau)) {tau = 5000; } // ms
 
     }
-
-    void checkSolvers(int);
-
+    
     void integrate(void);
+    void connectConductance(conductance*);
 
 
-    void connect(compartment*);
-    void connect(conductance*);
-    void connect(synapse*);
-
-
-    int getFullStateSize(void);
-    int getFullState(double * cont_state, int idx);
-    double getState(int);
     string getClass(void);
 
     void connectToLiuSensor(void);
@@ -109,15 +100,6 @@ string IntegralController::getClass() {
 }
 
 
-double IntegralController::getState(int idx){return 0;}
-
-
-int IntegralController::getFullStateSize(){return 0; }
-
-
-int IntegralController::getFullState(double *cont_state, int idx) {
-    return idx;
-}
 
 // connection methods
 void IntegralController::connect(conductance* cond_) {
@@ -132,14 +114,6 @@ void IntegralController::connect(conductance* cond_) {
     // attempt to read the area of the container that this
     // controller should be in.
     container_A  = (channel->container)->A;
-}
-
-void IntegralController::connect(compartment* cond_) {
-    mexErrMsgTxt("[IntegralController] This mechanism cannot connect to a compartment object");
-}
-
-void IntegralController::connect(synapse* syn_) {
-    mexErrMsgTxt("[IntegralController] This mechanism cannot connect to a synapse object");
 }
 
 
@@ -167,13 +141,6 @@ void IntegralController::integrate(void) {
 
 }
 
-
-
-
-void IntegralController::checkSolvers(int k) {
-    if (k == 0) {return;}
-    else {mexErrMsgTxt("[IntegralController] unsupported solver order\n");}
-}
 
 
 

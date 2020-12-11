@@ -54,14 +54,11 @@ public:
 
     }
 
-    void checkSolvers(int);
 
     void integrate(void);
 
 
-    void connect(compartment*);
-    void connect(conductance*);
-    void connect(synapse*);
+    void connectCompartment(compartment*);
 
     double boltzmann(double);
 
@@ -90,20 +87,11 @@ int DCSensor::getFullState(double *cont_state, int idx) {
     return idx;
 }
 
-// connection methods
-void DCSensor::connect(compartment* comp_) {
+
+void DCSensor::connectCompartment(compartment* comp_) {
     comp = comp_;
     comp->addMechanism(this);
 }
-
-void DCSensor::connect(conductance* cond_) {
-    mexErrMsgTxt("[DCSensor] This mechanism cannot connect to a conductance object");
-}
-
-void DCSensor::connect(synapse* syn_) {
-    mexErrMsgTxt("[DCSensor] This mechanism cannot connect to a synapse object");
-}
-
 
 
 void DCSensor::integrate(void) {
@@ -129,11 +117,6 @@ double DCSensor::boltzmann(double x) {
 }
 
 
-
-void DCSensor::checkSolvers(int k) {
-    if (k == 0) {return;}
-    else {mexErrMsgTxt("[DCSensor] unsupported solver order\n");}
-}
 
 
 

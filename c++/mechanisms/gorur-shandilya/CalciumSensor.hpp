@@ -37,27 +37,17 @@ public:
     void integrate(void);
 
 
-    void connect(compartment*);
-    void connect(conductance*);
-    void connect(synapse*);
+    void connectCompartment(compartment*);
+
 
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
-    double getState(int);
-    void checkSolvers(int);
     string getClass(void);
 
 };
 
 string CalciumSensor::getClass() {
     return "CalciumSensor";
-}
-
-
-double CalciumSensor::getState(int idx) {
-
-    return std::numeric_limits<double>::quiet_NaN();
-
 }
 
 
@@ -74,32 +64,17 @@ int CalciumSensor::getFullState(double *cont_state, int idx) {
 }
 
 
-void CalciumSensor::connect(compartment* comp_) {
+void CalciumSensor::connectCompartment(compartment* comp_) {
     comp = comp_;
     if (isnan(Ca_average)) {Ca_average = comp->Ca;}
     comp->addMechanism(this);
 }
 
-void CalciumSensor::connect(synapse* syn_) {
-    mexErrMsgTxt("[CalciumSensor] cannot be added to a synapse\n");
-}
-
-
-void CalciumSensor::connect(conductance* cond_) {
-    mexErrMsgTxt("[CalciumSensor] cannot be added to a conductance\n");
-}
 
 void CalciumSensor::integrate(void) {
     Ca_average += (dt/tau)*(comp->Ca - Ca_average);
 }
 
-void CalciumSensor::checkSolvers(int k) {
-    if (k == 0){
-        return;
-    } else {
-        mexErrMsgTxt("[CalciumSensor] unsupported solver order\n");
-    }
-}
 
 
 #endif

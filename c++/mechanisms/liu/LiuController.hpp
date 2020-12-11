@@ -51,21 +51,18 @@ public:
 
     }
 
-    void checkSolvers(int);
+
 
     void integrate(void);
+   
+    void connectConductance(conductance*);
 
-
-    void connect(compartment*);
-    void connect(conductance*);
-    void connect(synapse*);
 
     double boltzmann(double);
 
 
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
-    double getState(int);
     string getClass(void);
 
     void init(void);
@@ -123,8 +120,6 @@ string LiuController::getClass() {
 }
 
 
-double LiuController::getState(int idx){return 0;}
-
 
 int LiuController::getFullStateSize(){return 1; }
 
@@ -136,7 +131,7 @@ int LiuController::getFullState(double *cont_state, int idx) {
 }
 
 // connection methods
-void LiuController::connect(conductance* cond_) {
+void LiuController::connectConductance(conductance* cond_) {
 
     channel = cond_;
 
@@ -149,15 +144,6 @@ void LiuController::connect(conductance* cond_) {
     // controller should be in.
     container_A  = (channel->container)->A;
 }
-
-void LiuController::connect(compartment* cond_) {
-    mexErrMsgTxt("[LiuController] This mechanism cannot connect to a compartment object");
-}
-
-void LiuController::connect(synapse* syn_) {
-    mexErrMsgTxt("[LiuController] This mechanism cannot connect to a synapse object");
-}
-
 
 
 void LiuController::integrate(void) {
@@ -177,11 +163,6 @@ void LiuController::integrate(void) {
 }
 
 
-
-void LiuController::checkSolvers(int k) {
-    if (k == 0) {return;}
-    else {mexErrMsgTxt("[LiuController] unsupported solver order\n");}
-}
 
 
 
