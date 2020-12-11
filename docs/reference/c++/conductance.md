@@ -113,7 +113,7 @@ a little more memory, but can be much faster.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L209)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L210)
 
 -------
 
@@ -140,7 +140,7 @@ number is raised to be an integer (0-8)
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L277)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L278)
 
 -------
 
@@ -165,7 +165,7 @@ but is less precise
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L317)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L318)
 
 -------
 
@@ -191,7 +191,7 @@ this channel at this moment.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L332)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L333)
 
 -------
 
@@ -213,7 +213,7 @@ void checkSolvers(int solver_order)
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L338)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L339)
 
 -------
 
@@ -237,7 +237,7 @@ of this conductance. This definition is used when `integrateMS` is used.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L353)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L354)
 
 -------
 
@@ -261,7 +261,7 @@ of this conductance. This definition is used when `integrateMS` is used.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L361)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L362)
 
 -------
 
@@ -286,7 +286,7 @@ the channel object.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L370)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L371)
 
 -------
 
@@ -311,7 +311,7 @@ the channel object.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L377)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L378)
 
 -------
 
@@ -337,7 +337,7 @@ the channel object.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L385)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L386)
 
 -------
 
@@ -363,7 +363,7 @@ the channel object.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L393)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L394)
 
 -------
 
@@ -393,7 +393,7 @@ SIAM Rev., 6(3), 260–264.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L409)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L410)
 
 -------
 
@@ -418,7 +418,7 @@ so the channel knows which compartment contains it.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L442)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L443)
 
 -------
 
@@ -444,7 +444,7 @@ good place to put code that you need to run once before the simulation.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L454)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L455)
 
 -------
 
@@ -484,7 +484,7 @@ conductance.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L500)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L501)
 
 -------
 
@@ -522,7 +522,7 @@ and the area of the compartment.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L602)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L603)
 
 -------
 
@@ -560,7 +560,7 @@ are calculated and stored. At each step, the derivative functions
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L703)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L704)
 
 -------
 

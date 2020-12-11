@@ -163,6 +163,7 @@ public:
 
     virtual void connect(compartment*); 
     virtual string getClass(void) = 0;
+    virtual double getState(int) = 0;
     virtual double getCurrent(double);
     void checkSolvers(int);
 
