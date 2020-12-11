@@ -25,6 +25,7 @@ pages:
     - Copy a model: how-to/copy-models.md
     - Save and load models: how-to/save-load-models.md
     - Run simulations: how-to/run-simulations.md
+    - Inspect conductances and mechanism: how-to/inspect-channels-and-mechanisms.md
     - Voltage clamp a compartment: how-to/voltage-clamp.md
     - Inject current: how-to/inject-current.md
     - Make plots: how-to/make-plots.md
