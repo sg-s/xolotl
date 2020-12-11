@@ -163,7 +163,7 @@ public:
 
     virtual void connect(compartment*); 
     virtual string getClass(void) = 0;
-    virtual double getState(int) = 0;
+    virtual double getState(int);
     virtual double getCurrent(double);
     void checkSolvers(int);
 
@@ -431,5 +431,9 @@ double conductance::gaussrand() {
     return X;
 }
 
+
+double conductance::getState(int i) {
+    return 0;
+}
 
 #endif

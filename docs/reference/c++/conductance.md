@@ -399,6 +399,61 @@ SIAM Rev., 6(3), 260–264.
 
 
 
+### getState
+
+**Function Signature**
+
+```C++
+double getState(int i) 
+```
+
+**Description**
+
+
+This method implements a very fast Gaussian random
+number generator. This is much faster than the 
+built-in generators in the C++ `<random>` header, and
+is copied from Knuth and Marsaglia.
+
+For the original source, see
+"A Convenient Method for Generating Normal Variables"
+SIAM Rev., 6(3), 260–264.
+
+double conductance::gaussrand() {
+    static double V1, V2, S;
+    static int phase = 0;
+    double X;
+
+    if(phase == 0) {
+        do {
+            double U1 = (double)rand() / RAND_MAX;
+            double U2 = (double)rand() / RAND_MAX;
+
+            V1 = 2 * U1 - 1;
+            V2 = 2 * U2 - 1;
+            S = V1 * V1 + V2 * V2;
+            } while(S >= 1 || S == 0);
+
+        X = V1 * sqrt(-2 * log(S) / S);
+    } else
+        X = V2 * sqrt(-2 * log(S) / S);
+
+    phase = 1 - phase;
+
+    return X;
+}
+
+
+
+
+ **Code**
+
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L435)
+
+-------
+
+
+
 ### connect
 
 **Function Signature**
@@ -418,7 +473,7 @@ so the channel knows which compartment contains it.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L443)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L447)
 
 -------
 
@@ -444,7 +499,7 @@ good place to put code that you need to run once before the simulation.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L455)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L459)
 
 -------
 
@@ -484,7 +539,7 @@ conductance.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L501)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L505)
 
 -------
 
@@ -522,7 +577,7 @@ and the area of the compartment.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L603)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L607)
 
 -------
 
@@ -560,7 +615,7 @@ are calculated and stored. At each step, the derivative functions
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L704)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance.hpp#L708)
 
 -------
 
