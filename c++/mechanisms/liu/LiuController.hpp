@@ -47,7 +47,7 @@ public:
         // defaults
         if (isnan(tau)) {tau = 5000; } // ms
 
-
+        fullStateSize = 1;
 
     }
 
@@ -61,7 +61,6 @@ public:
     double boltzmann(double);
 
 
-    int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     string getClass(void);
 
@@ -120,8 +119,6 @@ string LiuController::getClass() {
 }
 
 
-
-int LiuController::getFullStateSize(){return 1; }
 
 
 int LiuController::getFullState(double *cont_state, int idx) {

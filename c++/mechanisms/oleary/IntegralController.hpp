@@ -42,6 +42,8 @@ public:
         m = m_;
 
 
+        fullStateSize = 2;
+
         // if (tau_m<=0) {mexErrMsgTxt("[IntegralController] tau_m must be > 0. Perhaps you meant to set it to Inf?\n");}
         if (tau_g<=0) {mexErrMsgTxt("[IntegralController] tau_g must be > 0. Perhaps you meant to set it to Inf?\n");}
     }
@@ -55,7 +57,6 @@ public:
     void connectConductance(conductance*);
     void connectSynapse(synapse*);
 
-    int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
     string getClass(void);
@@ -115,8 +116,6 @@ double IntegralController::getState(int idx) {
 
 }
 
-
-int IntegralController::getFullStateSize(){return 2; }
 
 
 int IntegralController::getFullState(double *cont_state, int idx) {

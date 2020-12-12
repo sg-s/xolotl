@@ -209,7 +209,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         int idx = 0;
         for(int j = 0; j < n_comp; j++) {
             for (int k = 0; k < xolotl_network.comp[j]->n_mech; k++) {
-                int mech_size = (xolotl_network.comp[j]->getMechanismPointer(k))->getFullStateSize();
+                int mech_size = (xolotl_network.comp[j]->getMechanismPointer(k))->fullStateSize;
                 mech_sizes_out[idx] = mech_size;
                 idx++;
             }

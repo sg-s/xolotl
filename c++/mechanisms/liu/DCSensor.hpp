@@ -43,8 +43,9 @@ public:
         X = X_;
         m = m_;
 
+        fullStateSize = 1;
 
-        // these defaults make it a "F" type sensor
+        // these defaults make it a "DC" type sensor
         if (isnan(ZM)) {ZM = 3;}
         if (isnan(tau_m)) {tau_m = 500; } // ms
         if (isnan(G)) {G = 1;}
@@ -62,8 +63,6 @@ public:
 
     double boltzmann(double);
 
-
-    int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
     string getClass(void);
@@ -77,8 +76,6 @@ string DCSensor::getClass() {
 
 double DCSensor::getState(int idx){return X;}
 
-
-int DCSensor::getFullStateSize(){return 1; }
 
 
 int DCSensor::getFullState(double *cont_state, int idx) {

@@ -45,18 +45,17 @@ public:
         m = m_;
         tau_m = tau_m_;
         if (isnan(tau_m)) {tau_m = 10e3;};
+
+        fullStateSize = 1;
     }
 
 
     void integrate(void);
 
-    void checkSolvers(int);
-
     void connect(conductance *);
     void connect(synapse*);
     void connect(compartment*);
 
-    int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
     string getClass(void);
@@ -75,8 +74,6 @@ double ProportionalController::getState(int idx) {
 
 }
 
-
-int ProportionalController::getFullStateSize(){return 1; }
 
 
 int ProportionalController::getFullState(double *cont_state, int idx) {
@@ -115,9 +112,6 @@ void ProportionalController::connect(conductance * channel_) {
 
 }
 
-void ProportionalController::connect(compartment* comp_) {
-    mexErrMsgTxt("[ProportionalController] This mechanism cannot connect to a compartment object");
-}
 
 void ProportionalController::connect(synapse* syn_) {
 
@@ -210,14 +204,6 @@ void ProportionalController::integrate(void) {
 }
 
 
-
-void ProportionalController::checkSolvers(int k) {
-    if (k == 0){
-        return;
-    } else {
-        mexErrMsgTxt("[ProportionalController] unsupported solver order\n");
-    }
-}
 
 
 

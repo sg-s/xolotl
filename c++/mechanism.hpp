@@ -52,6 +52,8 @@ public:
 
     int verbosity = -1;
 
+    int fullStateSize = 0;
+
     mechanism()
     {
         // null pointers to all
@@ -66,7 +68,6 @@ public:
     virtual void integrate(void);
     virtual void integrateMS(int, double, double);
 
-    virtual int getFullStateSize(void);
     virtual int getFullState(double*, int);
     virtual double getState(int);
     virtual string getClass(void) = 0;
@@ -171,14 +172,6 @@ double mechanism::getState(int i) {
     return 0;
 }
 
-
-/* This virtual method does nothing, but should return the full state
-size of your mechanism
-*/
-
-int mechanism::getFullStateSize() {
-    return 0;
-}
 
 
 /* This virtual method does nothing, but can return as many dynamic

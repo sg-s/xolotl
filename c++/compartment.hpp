@@ -453,7 +453,7 @@ void compartment::addMechanism(mechanism *mech_) {
     n_mech++;
 
     // also store the mechanism's full state size
-    mechanism_sizes.push_back(mech_->getFullStateSize());
+    mechanism_sizes.push_back(mech_->fullStateSize);
 }
 
 /*
@@ -640,7 +640,7 @@ what their data dimension is, and adding up all those numbers.
 int compartment::getFullMechanismSize(void) {
     int full_size = 0;
     for (int i=0; i<n_mech; i++) {
-        full_size += mech[i]->getFullStateSize();
+        full_size += mech[i]->fullStateSize;
     }
     return full_size;
 }
