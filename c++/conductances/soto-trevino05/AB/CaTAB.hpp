@@ -30,7 +30,7 @@ public:
         if (isnan (E)) { E = 50; }
 
         name = "CaTAB";
-        is_calicum = true;
+        is_calcium = true;
 
     }
 
