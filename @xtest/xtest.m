@@ -4,9 +4,9 @@ classdef xtest < matlab.unittest.TestCase
 properties
     
     % xolotl objects
-    single_comp@xolotl
+    single_comp (1,1) xolotl
 
-    stg_network@xolotl
+    stg_network (1,1) xolotl
 
 
 

@@ -14,7 +14,7 @@ class Kd: public conductance {
 
 public:
 
-    //specify both gbar and erev and initial conditions
+    //specify both gbar and E_rev and initial conditions
     Kd(double gbar_, double E_, double m_)
     {
         gbar = gbar_;

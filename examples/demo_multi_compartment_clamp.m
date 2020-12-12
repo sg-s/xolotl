@@ -9,8 +9,6 @@ x.set('*NaV.gbar',0)
 x.dt = .01;
 x.sim_dt = .01;
 
-x.closed_loop = false;
-
 % try to download a binary
 % so that people without compilers can use this too
 try
@@ -20,6 +18,10 @@ try
 catch
 	x.download;
 end
+
+
+
+x.closed_loop = false;
 
 
 
