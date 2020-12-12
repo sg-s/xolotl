@@ -33,6 +33,7 @@ public:
         tau_Ca = tau_Ca_;
 
         controlling_class = "unset";
+        name = "CalciumMech";
 
     }
 
@@ -45,14 +46,11 @@ public:
 
     void connectCompartment(compartment*);
 
-    string getClass(void);
+    
 
 
 };
 
-string CalciumMech::getClass() {
-    return "CalciumMech";
-}
 
 
 

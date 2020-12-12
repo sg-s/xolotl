@@ -25,12 +25,12 @@ public:
 
         // defaults 
         if (isnan(gbar)) { gbar = 0; }
-        
-        
         if (isnan (E)) { E = -80; }
 
         p = 1;
         q = 1;
+
+        name = "Shaker";
 
     }
 
@@ -38,13 +38,10 @@ public:
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
+    
 
 
 };
-
-string Shaker::getClass(){return "Shaker";}
-
 
 double Shaker::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+62.8)/-8.2)); }
 double Shaker::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+80.0)/5.23)); }

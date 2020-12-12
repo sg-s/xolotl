@@ -22,10 +22,11 @@ public:
 
         // defaults 
         if (isnan(gbar)) { gbar = 0; }
-        
         if (isnan (E)) { E = -77; }
 
         unitary_conductance = 20e-6; // uS
+
+        name = "Kd";
 
         p = 4;
 
@@ -33,16 +34,12 @@ public:
 
     double m_inf(double, double);
     double tau_m(double, double);
-    string getClass(void);
+    
 
     double Alpha(double);
     double Beta(double);
 
 };
-
-string Kd::getClass(){
-    return "Kd";
-}
 
 
 double Kd::Alpha(double V) {

@@ -46,6 +46,8 @@ public:
 
         is_calcium = true;
 
+        name = "CaT";
+
         p = 3;
         q = 1;
     }
@@ -58,10 +60,10 @@ public:
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
+    
 };
 
-string CaT::getClass(){return "CaT";}
+
 
 void CaT::connect(compartment *pcomp_) {
     // call super class method

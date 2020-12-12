@@ -26,73 +26,24 @@ public:
 
         // defaults
         if (isnan(gbar)) { gbar = 0; }
-        
-        
         if (isnan (E)) { E = 30; }
 
         p = 2;
         q = 1;
 
         is_calcium = true;
+        name = "CaT";
     }
-
-    void integrate(double, double);
-    void integrateMS(int, double, double);
 
     double m_inf(double, double);
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
+    
 
 
 };
 
-string CaT::getClass(){
-    return "CaT";
-}
-
-void CaT::integrate(double V, double Ca) {
-    E = container->E_Ca;
-    m = m_inf(V, Ca);
-    h = h_inf(V, Ca) + (h - h_inf(V, Ca))*exp(-dt/tau_h(V, Ca));
-    g = gbar * m * m * h;
-    container->i_Ca += getCurrent(V);
-}
-
-void CaT::integrateMS(int k, double V, double Ca) {
-    E = container->E_Ca;
-
-    switch (k)
-    {
-        case 0:
-            k_m[0] = dt*m_inf(V, Ca);
-            k_h[0] = dt*(hdot(V, Ca, h));
-            g = gbar*fast_pow(m,p)*fast_pow(h,q);
-            break;
-        case 1:
-            k_m[1] = dt*m_inf(V, Ca);
-            k_h[1] = dt*(hdot(V, Ca, h + k_h[0]/2));
-            g = gbar*fast_pow(m + k_m[0]/2,p)*fast_pow(h + k_h[0]/2,q);
-            break;
-        case 2:
-            k_m[2] = dt*m_inf(V, Ca);
-            k_h[2] = dt*(hdot(V, Ca, h + k_h[1]/2));
-            g = gbar*fast_pow(m + k_m[1]/2,p)*fast_pow(h + k_h[1]/2,q);
-            break;
-        case 3:
-            k_m[3] = dt*m_inf(V, Ca);
-            k_h[3] = dt*(hdot(V, Ca, h + k_h[2]));
-            g = gbar*fast_pow(m + k_m[2],p)*fast_pow(h + k_h[2],q);
-            break;
-        case 4:
-            m = m_inf(V, Ca);
-            h = h + (k_h[0] + 2*k_h[1] + 2*k_h[2] + k_h[3])/6;
-            break;
-    }
-
-    container->i_Ca += getCurrent(V);
-}
 
 double CaT::m_inf(double V, double Ca) {return 1.0/(1.0+exp((-((V+2.0)+57.0))/6.2)); }
 double CaT::h_inf(double V, double Ca) {return 1.0/(1.0+exp(((V+2.0)+81.0)/4.0)); }

@@ -32,7 +32,7 @@ public:
     {
         noise_amplitude = noise_amplitude_;
         controlling_class = "unset";
-
+        name = "CurrentNoise2";
     }
 
 
@@ -43,13 +43,9 @@ public:
     void connect(compartment*);
 
 
-    string getClass(void);
+    
 
 };
-
-string CurrentNoise2::getClass() {
-    return "CurrentNoise2";
-}
 
 
 

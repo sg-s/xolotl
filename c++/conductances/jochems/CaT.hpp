@@ -31,6 +31,7 @@ public:
         q = 1;
 
         is_calcium = true;
+        name = "CaT";
 
     }
 
@@ -43,14 +44,11 @@ public:
     double b_m(double, double);
     double a_h(double, double);
     double b_h(double, double);
-    string getClass(void);
+    
 
 
 };
 
-string CaT::getClass(){
-    return "CaT";
-}
 
 double CaT::a_m(double V, double Ca) {return 0.055 * (-27 - V) / (exp((-27 - V)/3.8) - 1);}
 double CaT::a_h(double V, double Ca) {return 0.000457 * exp((-13 - V)/50);}

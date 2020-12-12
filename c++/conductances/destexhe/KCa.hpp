@@ -41,17 +41,16 @@ public:
         // allow approximations
         AllowMInfApproximation = false;
 
+        name = "KCa";
+
     }
 
     double m_inf(double, double);
     double tau_m(double, double);
-    string getClass(void);
+    
 
 };
 
-string KCa::getClass(){
-    return "KCa";
-}
 
 double KCa::m_inf(double V, double Ca) {return alpha * fast_pow(Ca, 2) / (alpha * fast_pow(Ca, 2) + beta);}
 double KCa::tau_m(double V, double Ca) {return 1 / (alpha * fast_pow(Ca, 2) + beta);}

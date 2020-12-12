@@ -27,15 +27,16 @@ public:
          // defaults
         if (isnan(gbar)) { gbar = 0; }
         if (isnan (E)) { E = 0; }
+
+        name = "Proc";
     }
 
 
     double m_inf(double, double);
-    string getClass(void);
+    
 
 };
 
-string Proc::getClass(){return "Proc";}
 
 double Proc::m_inf(double V, double Ca) {return 1.0/(1.0+exp(-(V+12.0)/3.05));}
 

@@ -48,6 +48,8 @@ public:
         X = X_;
 
 
+        fullStateSize = 1;
+
         // these defaults make it a "F" type sensor
         if (isnan(ZM)) {ZM = 14.2;}
         if (isnan(ZH)) {ZH = 9.8;}
@@ -57,6 +59,8 @@ public:
         if (isnan(X)) {X = 0;}
         if (isnan(m)) {m = 0;}
         if (isnan(h)) {h = 1;}
+
+        name = "FastSensor";
 
 
     }
@@ -72,19 +76,12 @@ public:
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
-    string getClass(void);
+    
 
 };
 
-string FastSensor::getClass() {
-    return "FastSensor";
-}
-
-
 double FastSensor::getState(int idx){return X;}
 
-
-int FastSensor::getFullStateSize(){return 1; }
 
 
 int FastSensor::getFullState(double *cont_state, int idx) {

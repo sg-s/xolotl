@@ -21,11 +21,6 @@ x.AB.KCa.add('oleary/IntegralController','tau_m',1250);
 x.AB.Kd.add('oleary/IntegralController','tau_m',2000);
 x.AB.HCurrent.add('oleary/IntegralController','tau_m',125000);
 
-x.closed_loop = false;
-x.t_end = 1e6;
-x.dt = .1;
-x.sim_dt = .1;
-
 
 % try to download a binary
 % so that people without compilers can use this too
@@ -36,6 +31,14 @@ try
 catch
 	x.download;
 end
+
+
+x.closed_loop = false;
+x.t_end = 1e6;
+x.dt = .1;
+x.sim_dt = .1;
+
+
 
 
 % normal output type, variables separated

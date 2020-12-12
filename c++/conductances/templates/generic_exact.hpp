@@ -37,12 +37,11 @@ public:
     double h_inf(double V, double Ca);
     double tau_m(double V, double Ca);
     double tau_h(double V, double Ca);
-    string getClass(void);
+    
 
 
 };
 
-string CondName::getClass(){return "CondName";}
 
 double CondName::m_inf(double V, double Ca) {return $m_inf;}
 double CondName::h_inf(double V, double Ca) {return $h_inf;}

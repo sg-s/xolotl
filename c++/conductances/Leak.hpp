@@ -22,6 +22,8 @@ public:
 
         if (isnan (E)) { E = -55; }
 
+        name = "Leak";
+
     }
 
 
@@ -29,11 +31,10 @@ public:
     void integrateMS(int, double, double);
     void integrateLangevin(double, double);
 
-    string getClass(void);
+    
 
 };
 
-string Leak::getClass(){return "Leak";}
 
 void Leak::integrate(double V, double Ca) {
     // do nothing

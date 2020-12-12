@@ -43,6 +43,8 @@ public:
         if (isnan (Q_tau_m)) { Q_tau_m = 2; }
         if (isnan (E)) { E = -20; }
 
+        name = "HCurrent";
+
     }
 
     void integrate(double, double);
@@ -52,13 +54,9 @@ public:
 
     double m_inf(double, double);
     double tau_m(double, double);
-    string getClass(void);
+    
 
 };
-
-string HCurrent::getClass(){
-    return "HCurrent";
-}
 
 
 void HCurrent::init() {

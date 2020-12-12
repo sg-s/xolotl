@@ -26,20 +26,17 @@ public:
 
         // defaults
         if (isnan(gbar)) { gbar = 0; }
-        
         if (isnan (E)) { E = -80; }
+
+        name = "Kahp";
     }
     
     double m_inf(double V, double Ca);
     double tau_m(double, double);
-    string getClass(void);
+    
 
 };
 
-
-string Kahp::getClass(){
-    return "Kahp";
-}
 
 double Kahp::m_inf(double V, double Ca) {
     double var = 0.2 / 10000 * Ca;

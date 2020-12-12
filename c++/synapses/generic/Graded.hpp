@@ -32,6 +32,8 @@ public:
         if (isnan (Vth)) { Vth = -35.0; }
         if (isnan (tau)) { tau = 100; }
         is_electrical = false;
+
+        fullStateSize = 2;
     }
 
     void integrate(void);
@@ -48,9 +50,6 @@ public:
     int getFullState(double*, int);
 };
 
-int Graded::getFullStateSize() {
-    return 2;
-}
 
 
 double Graded::s_inf(double V_pre) {return 1.0/(1.0+exp((Vth - V_pre)/Delta));}

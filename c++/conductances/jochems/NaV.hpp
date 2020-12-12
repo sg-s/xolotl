@@ -30,6 +30,8 @@ public:
         p = 3;
         h = 1;
 
+        name = "NaV";
+
     }
 
     double m_inf(double, double);
@@ -40,11 +42,11 @@ public:
     double b_m(double, double);
     double a_h(double, double);
     double b_h(double, double);
-    string getClass(void);
+    
 
 };
 
-string NaV::getClass(){return "NaV";}
+
 
 
 double NaV::a_m(double V, double Ca) {return 0.32 * (13 - V) / (exp((13 - V)/4) - 1);}

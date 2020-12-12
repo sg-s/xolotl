@@ -31,15 +31,17 @@ public:
         if (isnan(tau)) { tau = 2e3; }
         if (isnan (E)) { E = -20; }
 
+        name = "HCurrent";
+
 
     }
     double m_inf(double, double);
     double tau_m(double, double);
-    string getClass(void);
+    
 
 };
 
-string HCurrent::getClass(){return "HCurrent";}
+
 
 
 double HCurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V-Vhalf)/5.5));}

@@ -46,6 +46,8 @@ public:
         AllowMInfApproximation = false;
         AllowHInfApproximation = false;
 
+        name = "CaN";
+
     }
 
     double m_inf(double, double);
@@ -54,13 +56,10 @@ public:
     double b_m(double, double);
     double alpha(double);
     void init(void);
-    string getClass(void);
+    
 
 };
 
-string CaN::getClass(){
-    return "CaN";
-}
 
 
 void CaN::init() {

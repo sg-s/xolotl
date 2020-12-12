@@ -33,6 +33,8 @@ public:
         noise_amplitude = noise_amplitude_;
         controlling_class = "unset";
 
+        name = "SubunitNoise";
+
     }
 
 
@@ -44,13 +46,10 @@ public:
     void connect(synapse*);
 
 
-    string getClass(void);
+    
 
 };
 
-string SubunitNoise::getClass() {
-    return "SubunitNoise";
-}
 
 
 void SubunitNoise::connect(conductance * channel_) {
@@ -58,7 +57,7 @@ void SubunitNoise::connect(conductance * channel_) {
     // connect to a channel
     channel = channel_;
     (channel->container)->addMechanism(this);
-    controlling_class = (channel_->getClass()).c_str();
+    controlling_class = (channel_->name).c_str();
 
 }
 

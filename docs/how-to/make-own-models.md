@@ -109,8 +109,6 @@ public:
 
         // defaults
         if (isnan(gbar)) { gbar = 0; }
-
-
         if (isnan (E)) { E = 30; }
 
         // specify exponents of m and h
@@ -120,16 +118,16 @@ public:
         // allow this channel to be approximated?
         AllowMInfApproximation = true; // or false if not
         AllowHInfApproximation = true;
+
+        name = "NewCond";
     }
 
     double m_inf(double, double);
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
+    
 };
-
-string NewCond::getClass(){return "NewCond";}
 
 
 double NewCond::m_inf(double V, double Ca) {return ...;}
@@ -190,15 +188,12 @@ public:
     double B = 1;
 
     // constructor
-    NewMech(double A_, B_)
-    {
+    NewMech(double A_, B_) {
         A = A_;
         B = B_;
         controlling_class = "unset";
+        name = "NewMech";
     }
-
-    // declare methods
-    void checkSolvers(int);
 
     void integrate(void);
     void integrateMS(int, double, double);
@@ -214,18 +209,11 @@ public:
 
     // these methods allow reading out of the mechanism
     // state
-    int getFullStateSize(void);
     int getFullState(double * mech_state, int idx);
     double getState(int);
 
 };
 
-
-double NewMech::getState(int idx){return std::numeric_limits<double>::quiet_NaN();}
-
-// specify the dimensions of your mechanism
-// this size must match the getState method
-int NewMech::getFullStateSize(){return 0; }
 
 // this does nothing since our state size is 0
 // otherwise we should increment idx, and
@@ -236,19 +224,12 @@ int NewMech::getFullState(double *mech_state, int idx) {
 
 // connection methods
 // we allow the mechanism to connect to a compartment
+// all other connection attempts will lead to a runtime error
 void NewMech::connect(compartment* comp_) {
     comp = comp_;
     comp->addMechanism(this);
 }
 
-// disallow other connections
-void NewMech::connect(conductance* cond_) {
-    mexErrMsgTxt("[NewMech] This mechanism cannot connect to a conductance object");
-}
-
-void NewMech::connect(synapse* syn_) {
-    mexErrMsgTxt("[NewMech] This mechanism cannot connect to a synapse object");
-}
 
 
 // specify how we integrate it with the default
@@ -263,24 +244,6 @@ double NewMech::NewMechCustomMethod(double X_) {
     // insert your code here
 }
 
-// Runge-Kutta 4 integrator
-// you don't have to code this...see checkSolvers
-void NewMech::integrateMS(int k, double V, double Ca_) {
-    if (k == 4){return;}
-   // insert RK4 code here
-}
-
-// throw an error to disallow solver_orders
-// 0 must always work, though
-void NewMech::checkSolvers(int k) {
-    if (k == 0){
-        return;
-    } else if (k == 4){
-        return;
-    } else {
-        mexErrMsgTxt("[CalciumMech] unsupported solver order\n");
-    }
-}
 
 #endif
 
@@ -323,6 +286,8 @@ public:
         if (isnan (s)) { s = 0; }
         if (isnan (gmax)) { gmax = 0; }
         is_electrical = false;
+
+        name = "NewSynapse";
     }
 
     // all of these functions are needed for all synapses
@@ -412,7 +377,7 @@ void NewSynapse::connect(compartment *pcomp1_, compartment *pcomp2_) {
 
 All conductances (and any other network component) are
 defined by an `.hpp` header file. **You can save your
-new conductance anywhere within your MATLAB path.**
+new conductance anywhere on your MATLAB path.**
 `cpplab` will find them, link them, and use them automatically.
 If `cpplab` can't find them, then running `xolotl.rebuildCache`
 should fix it. 

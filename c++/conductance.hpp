@@ -111,6 +111,8 @@ public:
     double m = 0;
     double h = 1;
 
+    string name = "unset";
+
     int verbosity = -1;
 
     int p = 1;
@@ -162,7 +164,6 @@ public:
     virtual void integrateLangevin(double, double);
 
     virtual void connect(compartment*); 
-    virtual string getClass(void) = 0;
     virtual double getState(int);
     virtual double getCurrent(double);
     void checkSolvers(int);
@@ -222,7 +223,7 @@ void conductance::buildLUT(double approx_channels) {
 
 
         if (verbosity==0) {
-            mexPrintf("%s NOT using approximate activation functions because approx_channels is set to 0.\n", getClass().c_str());  
+            mexPrintf("%s NOT using approximate activation functions because approx_channels is set to 0.\n", name.c_str());  
         }
 
         return;
@@ -237,7 +238,7 @@ void conductance::buildLUT(double approx_channels) {
 
     if (UseMInfApproximation == 1) {
         if (verbosity==0) {
-            mexPrintf("%s using approximate activation functions\n", getClass().c_str());  
+            mexPrintf("%s using approximate activation functions\n", name.c_str());  
         }
     
 
@@ -248,13 +249,13 @@ void conductance::buildLUT(double approx_channels) {
         }
     } else {
         if (verbosity==0) {
-            mexPrintf("%s NOT USING approximate activation functions\n", getClass().c_str());  
+            mexPrintf("%s NOT USING approximate activation functions\n", name.c_str());  
         }
     }
 
     if (UseHInfApproximation == 1) {
         if (verbosity==0) {
-           mexPrintf("%s using approximate in-activation functions\n", getClass().c_str()); 
+           mexPrintf("%s using approximate in-activation functions\n", name.c_str()); 
         }
         
         for (int V_int = -999; V_int < 1001; V_int++) {
@@ -342,7 +343,7 @@ void conductance::checkSolvers(int solver_order) {
     } else if (solver_order == 4) {
         return;
     } else {
-        mexPrintf("Error using %s", getClass().c_str());
+        mexPrintf("Error using %s", name.c_str());
         mexErrMsgTxt("Unsupported solver order \n");
     }
 }

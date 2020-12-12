@@ -42,8 +42,12 @@ public:
         m = m_;
 
 
+        fullStateSize = 2;
+
         // if (tau_m<=0) {mexErrMsgTxt("[IntegralController] tau_m must be > 0. Perhaps you meant to set it to Inf?\n");}
         if (tau_g<=0) {mexErrMsgTxt("[IntegralController] tau_g must be > 0. Perhaps you meant to set it to Inf?\n");}
+
+        name = "IntegralController";
     }
 
 
@@ -55,10 +59,9 @@ public:
     void connectConductance(conductance*);
     void connectSynapse(synapse*);
 
-    int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
-    string getClass(void);
+    
 
 };
 
@@ -85,7 +88,7 @@ void IntegralController::init() {
     // in the compartment that the controlled object is in 
     for (int i = 0; i < n_mech; i++) {
 
-        string this_mech = temp_comp->getMechanismPointer(i)->getClass().c_str();
+        string this_mech = temp_comp->getMechanismPointer(i)->name.c_str();
 
         if (this_mech == "CalciumTarget") {
             if (verbosity==0) {
@@ -103,10 +106,6 @@ void IntegralController::init() {
     }
 }
 
-string IntegralController::getClass() {
-    return "IntegralController";
-}
-
 
 double IntegralController::getState(int idx) {
     if (idx == 1) {return m;}
@@ -115,8 +114,6 @@ double IntegralController::getState(int idx) {
 
 }
 
-
-int IntegralController::getFullStateSize(){return 2; }
 
 
 int IntegralController::getFullState(double *cont_state, int idx) {
@@ -149,7 +146,7 @@ void IntegralController::connectConductance(conductance * channel_) {
 
 
 
-    controlling_class = (channel_->getClass()).c_str();
+    controlling_class = (channel_->name).c_str();
 
     // attempt to read the area of the container that this
     // controller should be in.

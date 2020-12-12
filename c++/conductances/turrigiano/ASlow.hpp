@@ -31,19 +31,17 @@ public:
         // defaults
         if (isnan(gbar)) { gbar = 0; }        
         if (isnan (E)) { E = -20; }
+
+        name = "ASlow";
     }
 
     double m_inf(double, double);
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
+    
 };
 
-
-string ASlow::getClass(){
-    return "ASlow";
-}
 
 double ASlow::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+24.3)/-9.4)); }
 double ASlow::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+61.3)/6.6)); }

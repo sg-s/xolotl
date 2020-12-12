@@ -19,9 +19,7 @@ public:
 
     void integrate(void);
     void connect(compartment *pcomp1_, compartment *pcomp2_);
-
-    int getFullState(double*, int);
-    int getFullStateSize(void);
+    void checkSolvers(int);
 };
 
 void Electrical::integrate() {
@@ -30,12 +28,10 @@ void Electrical::integrate() {
     g = gmax;
 }
 
-int Electrical::getFullStateSize() {
-    return 0;
-}
 
-int Electrical::getFullState(double *syn_state, int idx) {
-    return idx;
+// always works
+void mechanism::checkSolvers(int k) {
+    return;
 }
 
 

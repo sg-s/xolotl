@@ -35,17 +35,16 @@ public:
 
         p = 1;
         q = 0;
+
+        name = "CaCurrent";
     }
 
     void integrate(double, double);
 
     double m_inf(double V, double CaCurrent);
-    string getClass(void);
 
 
 };
-
-string CaCurrent::getClass(){return "CaCurrent";}
 
 void CaCurrent::integrate(double V, double Ca) {
 

@@ -25,35 +25,21 @@ public:
         p = 1;
 
 
+        name = "Ca2";
+        is_calcium = true;
+
         // defaults
         if (isnan(gbar)) { gbar = 0; }
         if (isnan (E)) { E = 120; }
 
     }
 
-    void integrate(double, double);
-    void integrateMS(int,double, double);
 
     double m_inf(double, double);
     double tau_m(double, double);
-    string getClass(void);
+    
 };
 
-string Ca2::getClass(){
-    return "Ca2";
-}
-
-void Ca2::integrate(double V, double Ca) {
-    E = container->E_Ca;
-    conductance::integrate(V,Ca);
-    container->i_Ca += getCurrent(V);
-}
-
-void Ca2::integrateMS(int k, double V, double Ca) {
-    E = container->E_Ca;
-    conductance::integrateMS(k, V, Ca);
-    container->i_Ca += getCurrent(V);
-}
 
 double Ca2::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+21.6)/-8.5));}
 double Ca2::tau_m(double V, double Ca) {return 16 - 13.1/(exp((V+25.1)/-26.4));}

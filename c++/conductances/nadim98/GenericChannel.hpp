@@ -71,16 +71,17 @@ public:
         AllowMInfApproximation = true;
         AllowHInfApproximation = true;
 
+        name = "GenericChannel";
+
     }
 
     double m_inf(double, double);
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
+    
 };
 
-string GenericChannel::getClass(){return "GenericChannel";}
 
 
 double GenericChannel::m_inf(double V, double Ca) {

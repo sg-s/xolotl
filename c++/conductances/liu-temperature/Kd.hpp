@@ -43,6 +43,8 @@ public:
 
         p = 4;
 
+        name = "Kd";
+
     }
 
     void integrate(double, double);
@@ -51,11 +53,11 @@ public:
 
     double m_inf(double, double);
     double tau_m(double, double);
-    string getClass(void);
+    
 
 };
 
-string Kd::getClass(){return "Kd";}
+
 
 void Kd::connect(compartment *pcomp_) {
     // call super class method

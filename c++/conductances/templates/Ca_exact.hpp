@@ -41,12 +41,11 @@ public:
     double h_inf(double V, double Ca);
     double tau_m(double V, double Ca);
     double tau_h(double V, double Ca);
-    string getClass(void);
+    
 
 
 };
 
-string CondName::getClass(){return "CondName";}
 
 void CondName::integrate(double V, double Ca) {
     E = container->E_Ca;

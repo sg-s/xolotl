@@ -40,6 +40,8 @@ public:
         if (isnan (tau_r)) { tau_r = 2; }
         if (isnan (tau_d)) { tau_d = 100; }
         is_electrical = false;
+
+        fullStateSize = 3;
     }
 
     // dynamics functions
@@ -54,16 +56,11 @@ public:
     void integrateMS(int, double, double);
 
     // output/connection functions
-    int getFullStateSize(void);
     void connect(compartment *pcomp1_, compartment *pcomp2_);
-    double getCurrent(double V_post);
     int getFullState(double*, int);
 
 };
 
-int NMDAergic::getFullStateSize() {
-    return 3;
-}
 
 // // //
 double NMDAergic::ss_core(double V_pre) {

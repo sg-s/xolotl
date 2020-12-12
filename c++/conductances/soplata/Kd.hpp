@@ -43,6 +43,8 @@ public:
 
         p = 4;
 
+        name = "Kd";
+
     }
 
     double m_alpha(double, double);
@@ -51,11 +53,10 @@ public:
     double m_inf(double, double);
     double tau_m(double, double);
 
-    string getClass(void);
 
 };
 
-string Kd::getClass(){return "Kd";}
+
 
 double Kd::m_alpha(double V, double Ca) {return 0.032 * (15 - (V + 25)) / (exp((15 - (V + 25))/5) -1);}
 double Kd::m_beta(double V, double Ca) {return 0.5 * exp((10 - (V + 25))/40);}

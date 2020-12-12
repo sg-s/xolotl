@@ -24,8 +24,9 @@ public:
 
          // defaults
         if (isnan(gbar)) { gbar = 0; }
-        
         if (isnan (E)) { E = 0; }
+
+        name = "Ap";
 
         p = 1;
       
@@ -34,12 +35,9 @@ public:
 
     double m_inf(double, double);
     double tau_m(double, double);
-    string getClass(void);
+    
 
 };
-
-string Ap::getClass(){return "Ap";}
-
 
 
 double Ap::m_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)-12.0)/-11.0)));}

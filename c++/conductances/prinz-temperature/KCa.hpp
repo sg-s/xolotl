@@ -45,6 +45,8 @@ public:
         AllowHInfApproximation = false;
 
         p = 4;
+
+        name = "KCa";
     }
 
     void integrate(double, double);
@@ -53,11 +55,11 @@ public:
 
     double m_inf(double V, double Ca);
     double tau_m(double, double);
-    string getClass(void);
+    
 
 };
 
-string KCa::getClass(){return "KCa";}
+
 
 
 void KCa::init() {

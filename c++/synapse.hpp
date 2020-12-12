@@ -40,6 +40,8 @@ public:
     double temperature_ref = 11;
     double temperature = 11;
 
+    int fullStateSize = 0;
+    string name = "unset";
 
     synapse()
     {
@@ -54,8 +56,7 @@ public:
     virtual void checkSolvers(int);
 
     virtual void connect(compartment*, compartment*) = 0;// tells compiler they will be overridden by derived class
-    virtual int getFullStateSize(void) = 0;
-    virtual int getFullState(double*, int) = 0;
+    virtual int getFullState(double*, int);
 
 
     virtual void init(void);
@@ -91,9 +92,16 @@ This method checks whether the synapse can use the requested
 solver order to integrate its equations. If it can't, it 
 should throw an error. 
 */
-void synapse::checkSolvers(int k){
-    mexErrMsgTxt("[synapse] Unsupported solver order\n");
+void synapse::checkSolvers(int k) {
+    if (k == 0) {return;}
+    else {
+        string txt = "Error using ";
+        txt += name;
+        txt += ". This synapse does not support this solver order. Try using x.solver_order = 0;";
+        mexErrMsgTxt(txt.c_str());
+    }
 }
+
 
 
 
@@ -104,6 +112,18 @@ have been connected, but before the model starts the simulation. This is a
 good place to put code that you need to run once before the simulation. 
 */
 void synapse::init() {}
+
+
+/*
+This virtual method can be overridden to return the full state
+of this synapse.
+*/
+int synapse::getFullState(double* syn_state, int i) {
+    return i;
+}
+
+
+
 
 
 #endif

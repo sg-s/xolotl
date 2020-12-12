@@ -28,6 +28,8 @@ public:
           if (isnan (tau_r)) { tau_r = 1; }
           if (isnan (tau_d)) { tau_d = 1; }
           is_electrical = false;
+
+          fullStateSize = 2;
       }
 
       // dynamics functions
@@ -42,14 +44,11 @@ public:
       void integrateMS(int, double, double);
 
       // output/connection functions
-      int getFullStateSize(void);
       void connect(compartment *pcomp1_, compartment *pcomp2_);
-      double getCurrent(double V_post);
       int getFullState(double*, int);
 
 };
 
-int AMPAergic::getFullStateSize() {return 2;}
 
 double AMPAergic::ss_core(double V_pre) {
     return (1.0 + tanh(V_pre/10.0))/2.0;

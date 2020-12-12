@@ -23,7 +23,7 @@ end
 
 
 % make a note of what the actual activation curve is
-f = x.AB.Kd.cpp_child_functions(3).fun_handle;
+f = x.AB.Kd.cpp_child_functions(1).fun_handle;
 all_V_step = linspace(-80,50,30);
 actual_m_inf = NaN*all_V_step;
 for i = 1:length(all_V_step)

@@ -26,13 +26,15 @@ public:
         if (isnan (gmax)) { gmax = 0; }
         is_electrical = false;
 
+        fullStateSize = 2;
+
     }
 
     void integrate(void);
 
     void connect(compartment *pcomp1_, compartment *pcomp2_);
     int getFullState(double*, int);
-    int getFullStateSize(void);
+
 };
 
 void Soma::integrate(void) {
@@ -65,9 +67,6 @@ int Soma::getFullState(double *syn_state, int idx) {
 }
 
 
-int Soma::getFullStateSize() {
-    return 2;
-}
 
 
 void Soma::connect(compartment *pcomp1_, compartment *pcomp2_) {

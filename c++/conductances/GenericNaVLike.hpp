@@ -76,16 +76,16 @@ public:
         p = 3;
         q = 1;
 
+        name = "GenericNaVLike";
+
     }
 
     double m_inf(double, double);
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
+    
 };
-
-string GenericNaVLike::getClass(){return "GenericNaVLike";}
 
 
 double GenericNaVLike::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V-m_V_half)/m_V_slope));}

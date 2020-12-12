@@ -38,17 +38,15 @@ public:
 
         p = 2;
 
+        name = "CaN";
+
     }
 
     double m_inf(double, double);
     double tau_m(double, double);
-    string getClass(void);
+    
 
 };
-
-string CaN::getClass(){
-    return "CaN";
-}
 
 double CaN::m_inf(double V, double Ca) {return alpha * fast_pow(Ca, 2) / (alpha * fast_pow(Ca, 2) + beta);}
 double CaN::tau_m(double V, double Ca) {return 1 / (alpha * fast_pow(Ca, 2) + beta);}

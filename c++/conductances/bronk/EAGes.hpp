@@ -26,15 +26,16 @@ public:
 
         p = 1;
 
+        name = "EAGes";
+
     }
 
     double m_inf(double V, double Ca);
     double tau_m(double, double);
-    string getClass(void);
+    
 
 };
 
-string EAGes::getClass(){return "EAG";}
 
 
 double EAGes::m_inf(double V, double Ca) { return (9.29e-4/(Ca+9.29e-4))/(1.0+exp((V+23.12)/-16.94)); }

@@ -24,20 +24,20 @@ public:
 
          // defaults
         if (isnan(gbar)) { gbar = 0; }
-        
         if (isnan (E)) { E = 0; }
 
         p = 1;
+
+        name = "Proc";
 
     }
 
     double m_inf(double, double);
     double tau_m(double, double);
-    string getClass(void);
+    
 
 };
 
-string Proc::getClass(){return "Proc";}
 
 
 

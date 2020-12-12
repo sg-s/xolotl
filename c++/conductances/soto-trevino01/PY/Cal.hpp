@@ -26,32 +26,20 @@ public:
         p = 1;
 
 
+        is_calcium = true;
+        name = "Cal";
+
          // defaults
         if (isnan(gbar)) { gbar = 0; }
         if (isnan (E)) { E = -80; }
     }
 
-    void integrate(double, double);
-    void integrateMS(int,double, double);
-
     double m_inf(double, double);
-    string getClass(void);
+    
 
 };
 
-string Cal::getClass(){return "Cal";}
 
-void Cal::integrate(double V, double Ca) {
-    E = container->E_Ca;
-    conductance::integrate(V,Ca);
-    container->i_Ca += getCurrent(V);
-}
-
-void Cal::integrateMS(int k, double V, double Ca) {
-    E = container->E_Ca;
-    conductance::integrateMS(k, V, Ca);
-    container->i_Ca += getCurrent(V);
-}
 
 double Cal::m_inf(double V, double Ca) {return (0.5)*(1.0+tanh((V))/15.0);}
 

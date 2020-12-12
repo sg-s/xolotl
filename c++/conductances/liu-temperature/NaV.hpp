@@ -47,6 +47,8 @@ public:
         p = 3;
         q = 1;
 
+        name = "NaV";
+
     }
 
     void integrate(double, double);
@@ -57,10 +59,10 @@ public:
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
+    
 };
 
-string NaV::getClass(){return "NaV";}
+
 
 void NaV::connect(compartment *pcomp_) {
     // call super class method

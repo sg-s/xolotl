@@ -29,16 +29,17 @@ public:
         if (isnan(gbar)) { gbar = 0; }        
         if (isnan (E)) { E = -80; }
 
+        name = "ACurrentAB";
+
     }
 
     double m_inf(double, double);
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
+    
 };
 
-string ACurrentAB::getClass(){return "ACurrentAB";}
 
 double ACurrentAB::m_inf(double V, double Ca) {return 1.0/(1.0+exp(-(V+27)/8.7)); }
 double ACurrentAB::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+56.9)/4.9)); }

@@ -47,12 +47,14 @@ public:
 
         p = 1;
 
+        name = "HCurrent";
+
 
     }
 
     double m_inf(double, double);
     double tau_m(double, double);
-    string getClass(void);
+    
 
     // equations of state
     double C1dot(double, double, double, double, double);
@@ -68,10 +70,6 @@ public:
     void integrateMS(int, double, double, double, double, double);
 
 };
-
-string HCurrent::getClass(){
-    return "HCurrent";
-}
 
 double HCurrent::aH(double V, double Ca) {
     return (1.0 - m_inf(V, Ca)) / tau_m(V, Ca);

@@ -24,21 +24,21 @@ public:
 
         p = 1;
 
-
          // defaults
         if (isnan(gbar)) { gbar = 0; }
         if (isnan (E)) { E = -20; }
+
+        name = "MICurrent";
     }
 
     double m_inf(double V, double Ca);
     double h_inf(double V, double Ca);
     double tau_m(double V, double Ca);
     double tau_h(double V, double Ca);
-    string getClass(void);
+    
 
 };
 
-string MICurrent::getClass(){return "MICurrent";}
 
 double MICurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+55.0)/-5));}
 double MICurrent::tau_m(double V, double Ca) {return 6.0;}

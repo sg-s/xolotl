@@ -38,6 +38,8 @@ public:
         if (isnan (E)) { E = 0; }
         if (isnan (gmax)) { gmax = 0; }
         is_electrical = false;
+
+        fullStateSize = 2;
     }
     
     void integrate(void);
@@ -49,9 +51,6 @@ public:
     int getFullState(double*, int);
 };
 
-int AlphaSynapse::getFullStateSize() {
-    return 2; 
-}
 
 
 

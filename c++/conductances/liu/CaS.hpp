@@ -30,6 +30,8 @@ public:
         q = 1;
 
         is_calcium = true;
+
+        name = "CaS";
         
     }
 
@@ -37,13 +39,9 @@ public:
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
+
 
 };
-
-string CaS::getClass(){
-    return "CaS";
-}
 
 
 double CaS::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+33.0)/-8.1));}

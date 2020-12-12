@@ -46,6 +46,8 @@ public:
         G = G_;
         X = X_;
 
+        fullStateSize = 1;
+
         // these defaults make it a "S" type sensor
         if (isnan(ZM)) {ZM = 7.2;}
         if (isnan(ZH)) {ZH = 2.8;}
@@ -56,6 +58,7 @@ public:
         if (isnan(m)) {m = 0;}
         if (isnan(h)) {h = 1;}
 
+        name = "SlowSensor";
 
     }
 
@@ -67,22 +70,15 @@ public:
     double boltzmann(double);
 
 
-    int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
-    string getClass(void);
+    
 
 };
 
-string SlowSensor::getClass() {
-    return "SlowSensor";
-}
 
 
 double SlowSensor::getState(int idx){return X;}
-
-
-int SlowSensor::getFullStateSize(){return 1; }
 
 
 int SlowSensor::getFullState(double *cont_state, int idx) {

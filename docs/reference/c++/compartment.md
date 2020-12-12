@@ -166,7 +166,7 @@ It does the following things:
 1. Adds a pointer to the conductance to a vector of pointers called `mech`
 2. Updates various attributes of the conductance like verbosity, etc.
 3. Tells the mechanism what its ordering in `mech` is by updating `mechanism_idx` in that mechanism object
-4. Determines the data frame size of this object by calling `getFullStateSize` and storing this in `mechanism_sizes`
+4. Determines the data frame size of this object by reading out `fullStateSize` and storing this in `mechanism_sizes`
 
 **See Also**
 

@@ -436,7 +436,7 @@ It does the following things:
 1. Adds a pointer to the conductance to a vector of pointers called `mech`
 2. Updates various attributes of the conductance like verbosity, etc.
 3. Tells the mechanism what its ordering in `mech` is by updating `mechanism_idx` in that mechanism object
-4. Determines the data frame size of this object by calling `getFullStateSize` and storing this in `mechanism_sizes`
+4. Determines the data frame size of this object by reading out `fullStateSize` and storing this in `mechanism_sizes`
 
 **See Also**
 
@@ -453,7 +453,7 @@ void compartment::addMechanism(mechanism *mech_) {
     n_mech++;
 
     // also store the mechanism's full state size
-    mechanism_sizes.push_back(mech_->getFullStateSize());
+    mechanism_sizes.push_back(mech_->fullStateSize);
 }
 
 /*
@@ -473,7 +473,7 @@ void compartment::addSynapse(synapse *syn_) {
     n_syn ++;
 
     // also store the synapse's full state size
-    synapse_sizes.push_back(syn_->getFullStateSize());
+    synapse_sizes.push_back(syn_->fullStateSize);
 }
 
 /*
@@ -569,7 +569,7 @@ conductance* compartment::getConductancePointer(const char* cond_class) {
     conductance* req_cond = NULL;
 
     for (int i = 0; i < n_cond; i ++) {
-        if ((cond[i]->getClass()) == cond_class) {
+        if ((cond[i]->name) == cond_class) {
             req_cond = cond[i];
         }
     }
@@ -640,7 +640,7 @@ what their data dimension is, and adding up all those numbers.
 int compartment::getFullMechanismSize(void) {
     int full_size = 0;
     for (int i=0; i<n_mech; i++) {
-        full_size += mech[i]->getFullStateSize();
+        full_size += mech[i]->fullStateSize;
     }
     return full_size;
 }
@@ -687,7 +687,7 @@ what their data dimension is, and adding up all those numbers.
 int compartment::getFullSynapseSize(void) {
     int full_size = 0;
     for (int i=0; i<n_syn; i++) {
-        full_size += syn[i]->getFullStateSize();
+        full_size += syn[i]->fullStateSize;
     }
     return full_size;
 }

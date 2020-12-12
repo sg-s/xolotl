@@ -22,19 +22,19 @@ public:
 
         p = 4;
 
+        name = "KCaPD";
+
          // defaults
         if (isnan(gbar)) { gbar = 0; }
-        
         if (isnan (E)) { E = -80; }
     }
 
 
     double m_inf(double V, double Ca);
     double tau_m(double, double);
-    string getClass(void);
+    
 };
 
-string KCaPD::getClass(){return "KCaPD";}
 
 double KCaPD::m_inf(double V, double Ca) { return (Ca/(Ca+30))/(1.0+exp(-(V+51.0)/8.0)); }
 double KCaPD::tau_m(double V, double Ca) {return 90.3 - 75.09/(1.0+exp(-(V+46.0)/22.7));}

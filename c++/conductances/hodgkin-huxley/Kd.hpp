@@ -28,20 +28,18 @@ public:
         unitary_conductance = 20e-6; // uS
 
         p = 4;
+
+        name = "Kd";
     }
 
     double m_inf(double, double);
     double tau_m(double, double);
-    string getClass(void);
+    
 
     double Alpha(double);
     double Beta(double);
 
 };
-
-string Kd::getClass(){
-    return "Kd";
-}
 
 
 double Kd::Alpha(double V) {

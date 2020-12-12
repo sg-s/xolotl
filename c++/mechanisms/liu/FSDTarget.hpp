@@ -33,6 +33,8 @@ public:
         FTarget = FTarget_;
         STarget = STarget_;
         DCTarget = DCTarget_;
+
+        name = "FSDTarget";
     }
 
     void checkSolvers(int);
@@ -43,13 +45,9 @@ public:
 
 
     double getState(int);
-    string getClass(void);
+    
 
 };
-
-string FSDTarget::getClass() {
-    return "FSDTarget";
-}
 
 
 // we are abusing getState to read out value of the target 

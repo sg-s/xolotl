@@ -23,14 +23,14 @@ public:
 
         // defaults 
         if (isnan(gbar)) { gbar = 0; }
-        
-        
         if (isnan (E)) { E = 50; }
 
         unitary_conductance = 20e-6; // uS
 
         p = 3;
         q = 1;
+
+        name = "NaV";
 
     }
 
@@ -45,10 +45,10 @@ public:
     double BetaM(double);
     double BetaH(double);
 
-    string getClass(void);
+    
 };
 
-string NaV::getClass(){return "NaV";}
+
 
 
 double NaV::AlphaM(double V) {

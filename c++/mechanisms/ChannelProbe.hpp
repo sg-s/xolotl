@@ -21,26 +21,15 @@ public:
     // specify parameters + initial conditions for
     ChannelProbe(double dummy_) {
         dummy = dummy_;
+        fullStateSize = 2;
+        name = "ChannelProbe";
     }
 
     void connectConductance(conductance *);
-
-    int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
-    string getClass(void);
+    
 
 };
-
-
-
-
-string ChannelProbe::getClass() {
-    return "ChannelProbe";
-}
-
-
-
-int ChannelProbe::getFullStateSize(){return 2; }
 
 
 int ChannelProbe::getFullState(double *cont_state, int idx) {
@@ -54,7 +43,6 @@ int ChannelProbe::getFullState(double *cont_state, int idx) {
 
 
 void ChannelProbe::connectConductance(conductance * channel_) {
-
     // connect to a channel
     channel = channel_;
 

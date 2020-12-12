@@ -50,6 +50,7 @@ public:
         is_calcium = true;
         p = 3;
         q = 1;
+        name = "CaS";
     }
 
     void integrate(double, double);
@@ -60,10 +61,10 @@ public:
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
+    
 };
 
-string CaS::getClass(){return "CaS";}
+
 
 void CaS::connect(compartment *pcomp_) {
     // call super class method

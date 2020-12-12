@@ -37,12 +37,13 @@ public:
         if (isnan (E)) { E = 0; }
         if (isnan (gmax)) { gmax = 0; }
         is_electrical = false;
+
+        fullStateSize = 2;
     }
 
     void integrate(void);
     void checkSolvers(int);
 
-    int getFullStateSize(void);
     void connect(compartment *pcomp1_, compartment *pcomp2_);
     double getCurrent(double V_post);
     int getFullState(double*, int);
@@ -51,9 +52,7 @@ public:
     double m_inf(double);
 };
 
-int Inhibitory::getFullStateSize() {
-    return 2;
-}
+
 
 void Inhibitory::integrate(void) {
     // figure out the voltage of the pre-synaptic neuron

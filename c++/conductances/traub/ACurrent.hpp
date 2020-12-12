@@ -26,6 +26,8 @@ public:
         p = 1;
         q = 1;
 
+        name = "ACurrent";
+
 
         // defaults
         if (isnan(gbar)) { gbar = 0; }
@@ -36,14 +38,9 @@ public:
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
 
 };
 
-
-string ACurrent::getClass(){
-    return "ACurrent";
-}
 
 double ACurrent::m_inf(double V, double Ca) {return (0.02*(13.1-V)/(exp((13.1-V)/10.0)-1.0))/((0.02*(13.1-V)/(exp((13.1-V)/10.0)-1.0))+(0.0175*(V-40.1)/(exp((V-40.1)/10.0)-1.0))); }
 double ACurrent::h_inf(double V, double Ca) {return (0.128*exp((17.0-V)/18.0))/((0.128*exp((17.0-V)/18.0))+(4.0/(1.0+exp((40.0-V)/5.0)))); }

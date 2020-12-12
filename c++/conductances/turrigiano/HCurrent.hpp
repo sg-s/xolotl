@@ -23,7 +23,7 @@ public:
 
         p = 1;
 
-
+        name = "HCurrent";
 
         // defaults
         if (isnan(gbar)) { gbar = 0; }        
@@ -33,12 +33,9 @@ public:
 
     double m_inf(double, double);
     double tau_m(double, double);
-    string getClass(void);
+    
 };
 
-string HCurrent::getClass(){
-    return "HCurrent";
-}
 
 double HCurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+78.3)/6.5));}
 double HCurrent::tau_m(double V, double Ca) {return (272.0 + 1499.0/(1.0+exp((V+42.2)/-8.73)));}

@@ -29,9 +29,9 @@ public:
 
         // defaults
         if (isnan(gbar)) { gbar = 0; }
-        
-        
         if (isnan (E)) { E = 47; }
+
+        name = "DmNaV";
 
     }
 
@@ -39,12 +39,11 @@ public:
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
+    
 
 
 };
 
-string DmNaV::getClass(){return "DmNaV";}
 
 double DmNaV::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+34.3)/-8.79));}
 double DmNaV::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+48)/6));}
