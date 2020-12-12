@@ -25,16 +25,17 @@ public:
 
         // defaults
         if (isnan(gbar)) { gbar = 0; }
-        
         if (isnan (E)) { E = -80; }
 
         p = 4;
+
+        name = "Kd";
 
     }
 
     double m_inf(double, double);
     double tau_m(double, double);
-    string getClass(void);
+    
 
     // auxiliary functions
     double a_m(double, double);
@@ -42,9 +43,6 @@ public:
 
 };
 
-string Kd::getClass(){
-    return "Kd";
-}
 
 double Kd::a_m(double V, double Ca) {return 0.032*(15.0-(V+55.0))/(exp((15.0-(V+55.0))/5.0)-1.0); }
 double Kd::b_m(double V, double Ca) {return 0.5*exp((10-(V+55.0))/40.0); }

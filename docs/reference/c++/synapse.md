@@ -36,7 +36,7 @@ synapse type.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/synapse.hpp#L72)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/synapse.hpp#L73)
 
 -------
 
@@ -64,7 +64,7 @@ synapse type.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/synapse.hpp#L84)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/synapse.hpp#L85)
 
 -------
 
@@ -75,7 +75,7 @@ synapse type.
 **Function Signature**
 
 ```C++
-void checkSolvers(int k)
+void checkSolvers(int k) 
 ```
 
 **Description**
@@ -89,7 +89,7 @@ should throw an error.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/synapse.hpp#L94)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/synapse.hpp#L95)
 
 -------
 
@@ -115,7 +115,31 @@ good place to put code that you need to run once before the simulation.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/synapse.hpp#L106)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/synapse.hpp#L114)
+
+-------
+
+
+
+### getFullState
+
+**Function Signature**
+
+```C++
+int getFullState(double* syn_state, int i) 
+```
+
+**Description**
+
+
+This virtual method can be overridden to return the full state
+of this synapse.
+
+
+
+ **Code**
+
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/synapse.hpp#L121)
 
 -------
 

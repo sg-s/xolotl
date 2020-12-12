@@ -25,16 +25,16 @@ public:
 
         // defaults
         if (isnan(gbar)) { gbar = 0; }
-        
         if (isnan (E)) { E = -80; }
 
         p = 4;
+        name = "MCurrent";
 
     }
 
     double m_inf(double, double);
     double tau_m(double, double);
-    string getClass(void);
+    
 
     // auxiliary functions
     double a_m(double, double);
@@ -42,9 +42,6 @@ public:
 
 };
 
-string MCurrent::getClass(){
-    return "MCurrent";
-}
 
 double MCurrent::a_m(double V, double Ca) {return 0.0001 * 3.209 * (V + 30) / (1 - exp(-(V+30)/9)); }
 double MCurrent::b_m(double V, double Ca) {return -0.0001 * 3.209 * (V + 30) / (1 - exp((V+30)/9)); }

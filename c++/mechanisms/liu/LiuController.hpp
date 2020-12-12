@@ -49,6 +49,8 @@ public:
 
         fullStateSize = 1;
 
+
+        name = "LiuController";
     }
 
 
@@ -62,7 +64,7 @@ public:
 
 
     int getFullState(double * cont_state, int idx);
-    string getClass(void);
+    
 
     void init(void);
 
@@ -76,7 +78,7 @@ void LiuController::init() {
 
     for (int i = 0; i < n_mech; i++) {
 
-        string this_mech = (channel->container)->getMechanismPointer(i)->getClass().c_str();
+        string this_mech = (channel->container)->getMechanismPointer(i)->name.c_str();
 
         if (this_mech == "FastSensor") {
             Fast = (channel->container)->getMechanismPointer(i);
@@ -114,9 +116,6 @@ void LiuController::init() {
 
 }
 
-string LiuController::getClass() {
-    return "LiuController";
-}
 
 
 
@@ -135,7 +134,7 @@ void LiuController::connectConductance(conductance* cond_) {
     // make sure the compartment that we are in knows about us
     (channel->container)->addMechanism(this);
 
-    controlling_class = (channel->getClass()).c_str();
+    controlling_class = (channel->name).c_str();
 
     // attempt to read the area of the container that this
     // controller should be in.

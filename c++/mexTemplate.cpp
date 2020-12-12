@@ -223,7 +223,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         idx = 0;
         for(int j = 0; j < n_comp; j++) {
             for (int k = 0; k < xolotl_network.comp[j]->n_syn; k++) {
-                int syn_size = (xolotl_network.comp[j]->getSynapsePointer(k))->getFullStateSize();
+                int syn_size = (xolotl_network.comp[j]->getSynapsePointer(k))->fullStateSize;
                 syn_sizes_out[idx] = syn_size;
                 idx++;
             }

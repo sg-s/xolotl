@@ -26,15 +26,16 @@ public:
         // defaults
         if (isnan(gbar)) { gbar = 0; }
         if (isnan (E)) { E = -20; }
+
+        name = "HCurrent";
     }
 
     double m_inf(double, double);
     double tau_m(double, double);
-    string getClass(void);
 
 };
 
-string HCurrent::getClass(){return "HCurrent";}
+
 
 double HCurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+70.0)/6.0));}
 double HCurrent::tau_m(double V, double Ca) {return (272.0 + 1499.0/(1.0+exp((V+42.2)/-8.73)));}

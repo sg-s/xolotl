@@ -26,6 +26,8 @@ public:
         p = 1;
         q = 1;
 
+        name = "TransLTS";
+
         // defaults
         if (isnan(gbar)) { gbar = 0; }
         if (isnan (E)) { E = 0; }
@@ -35,12 +37,11 @@ public:
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
+    
 
 
 };
 
-string TransLTS::getClass(){return "TransLTS";}
 
 double TransLTS::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+55.0)/-3.0));}
 double TransLTS::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+63.0)/0.8));}

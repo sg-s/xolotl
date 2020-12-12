@@ -31,6 +31,8 @@ public:
         Ca_average = Ca_average_;
 
         fullStateSize = 1;
+
+        name = "CalciumSensor";
     }
 
 
@@ -41,13 +43,10 @@ public:
 
 
     int getFullState(double * cont_state, int idx);
-    string getClass(void);
+    
 
 };
 
-string CalciumSensor::getClass() {
-    return "CalciumSensor";
-}
 
 
 

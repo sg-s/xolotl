@@ -24,20 +24,21 @@ public:
 
          // defaults
         if (isnan(gbar)) { gbar = 0; }
-        
         if (isnan (E)) { E = 0; }
 
         p = 4;
+
+        name = "KCa";
 
     }
 
     double m_inf(double V, double Ca);
     double tau_m(double, double);
-    string getClass(void);
+    
 
 };
 
-string KCa::getClass(){return "KCa";}
+
 
 
 double KCa::m_inf(double V, double Ca) {return (Ca/(Ca+3))*(1.0/(1.0+exp(((V)+27.2)/-7.2)));}

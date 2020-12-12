@@ -37,6 +37,7 @@ public:
         Ca_in = Ca_in_;
 
         controlling_class = "unset";
+        name = "CalciumMech";
 
     }
 
@@ -49,15 +50,11 @@ public:
 
     void connectCompartment(compartment*);
 
-    string getClass(void);
+    
 
     void init(void);
 
 };
-
-string CalciumMech::getClass() {
-    return "CalciumMech";
-}
 
 
 

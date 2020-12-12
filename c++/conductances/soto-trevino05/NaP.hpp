@@ -24,6 +24,7 @@ public:
         p = 3;
         q = 1;
 
+        name = "NaP";
         
         // defaults
         if (isnan(gbar)) { gbar = 0; }
@@ -34,10 +35,9 @@ public:
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
+    
 };
 
-string NaP::getClass(){return "NaP";}
 
 double NaP::m_inf(double V, double Ca) {return 1.0/(1.0+exp(-(V+26.8)/8.2));}
 double NaP::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+48.5)/4.8));}

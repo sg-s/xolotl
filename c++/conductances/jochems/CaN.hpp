@@ -44,16 +44,17 @@ public:
         AllowMInfApproximation = false;
         AllowHInfApproximation = false;
 
+        name = "CaN";
+
     }
 
     double m_inf(double, double);
     double tau_m(double, double);
     double alpha(double);
-    string getClass(void);
+    
 
 };
 
-string CaN::getClass(){return "CaN";}
 
 double CaN::alpha(double Ca) { return beta + fast_pow(Ca / Ca_c, 2); }
 

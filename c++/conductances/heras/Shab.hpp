@@ -25,12 +25,12 @@ public:
 
         // defaults
         if (isnan(gbar)) { gbar = 0; }
-        
-        
         if (isnan (E)) { E = -80; }
 
         p = 2;
         q = 1;
+
+        name = "Shab";
 
 
     }
@@ -39,11 +39,9 @@ public:
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
+    
 
 };
-
-string Shab::getClass(){return "Shab";}
 
 
 double Shab::m_inf(double V, double Ca) {return (1.0/(1.0+exp(sqrt((-1.0-V)/9.1))));}

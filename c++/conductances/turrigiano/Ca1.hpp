@@ -30,33 +30,18 @@ public:
         if (isnan(gbar)) { gbar = 0; }        
         if (isnan (E)) { E = 120; }
 
+        name = "Ca1";
+        is_calcium = true;
+
     }
-
-    void integrate(double, double);
-    void integrateMS(int,double, double);
-
     double m_inf(double, double);
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
+    
 };
 
-string Ca1::getClass(){
-    return "Ca1";
-}
 
-void Ca1::integrate(double V, double Ca) {
-    E = container->E_Ca;
-    conductance::integrate(V,Ca);
-    container->i_Ca += getCurrent(V);
-}
-
-void Ca1::integrateMS(int k, double V, double Ca) {
-    E = container->E_Ca;
-    conductance::integrateMS(k, V, Ca);
-    container->i_Ca += getCurrent(V);
-}
 
 double Ca1::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+27.1)/-7.18));}
 double Ca1::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+30.1)/5.5));}

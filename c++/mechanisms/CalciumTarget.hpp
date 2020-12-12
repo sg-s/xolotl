@@ -24,6 +24,7 @@ public:
     // specify parameters + initial conditions 
     CalciumTarget(double Target_) {
         Target = Target_;
+        name = "CalciumTarget";
     }
 
     void checkSolvers(int);
@@ -31,13 +32,9 @@ public:
     void connectCompartment(compartment*);
 
     double getState(int);
-    string getClass(void);
+    
 
 };
-
-string CalciumTarget::getClass() {
-    return "CalciumTarget";
-}
 
 
 // we are abusing getState to read out value of the target 

@@ -34,32 +34,18 @@ public:
 
         is_calcium = true;
 
+        name = "CaT";
+
     }
 
-    void integrate(double, double);
-    void integrateMS(int, double, double);
 
     double m_inf(double, double);
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
+    
 
 };
-
-string CaT::getClass(){return "CaT";}
-
-void CaT::integrate(double V, double Ca) {
-    E = container->E_Ca;
-    conductance::integrate(V,Ca);
-    container->i_Ca += getCurrent(V);
-}
-
-void CaT::integrateMS(int k, double V, double Ca) {
-    E = container->E_Ca;
-    conductance::integrateMS(k, V, Ca);
-    container->i_Ca += getCurrent(V);
-}
 
 
 

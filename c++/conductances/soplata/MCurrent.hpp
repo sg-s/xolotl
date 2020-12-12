@@ -33,19 +33,20 @@ public:
 
         p = 1;
 
+        name = "MCurrent";
+
 
     }
 
     double m_inf(double, double);
     double tau_m(double, double);
-    string getClass(void);
+    
 
     double alpha(double, double);
     double beta(double, double);
 
 };
 
-string MCurrent::getClass(){return "MCurrent";}
 
 double MCurrent::alpha(double V, double Ca) { return .02/(1+exp((-20-V)/5)); }
 double MCurrent::beta(double V, double Ca) { return .01*exp((-43-V)/18); }

@@ -58,6 +58,7 @@ public:
         if (isnan(m)) {m = 0;}
         if (isnan(h)) {h = 1;}
 
+        name = "SlowSensor";
 
     }
 
@@ -71,13 +72,10 @@ public:
 
     int getFullState(double * cont_state, int idx);
     double getState(int);
-    string getClass(void);
+    
 
 };
 
-string SlowSensor::getClass() {
-    return "SlowSensor";
-}
 
 
 double SlowSensor::getState(int idx){return X;}

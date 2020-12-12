@@ -25,6 +25,8 @@ public:
 
         p = 1;
 
+        name = "MICurrent";
+
 
          // defaults
         if (isnan(gbar)) { gbar = 0; }
@@ -35,11 +37,10 @@ public:
     double h_inf(double V, double Ca);
     double tau_m(double V, double Ca);
     double tau_h(double V, double Ca);
-    string getClass(void);
+    
 
 };
 
-string MICurrent::getClass(){return "MICurrent";}
 
 double MICurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+60.0)/-5.0));}
 double MICurrent::tau_m(double V, double Ca) {return 5.0;}

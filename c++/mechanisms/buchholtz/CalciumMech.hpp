@@ -38,31 +38,20 @@ public:
         Ca_in = Ca_in_;
 
         controlling_class = "unset";
+        name = "CalciumMech";
 
     }
 
 
     void integrate(void);
     void integrateMS(int, double, double);
-
     void checkSolvers(int);
-
     void connectCompartment(compartment*);
-
-
-    string getClass(void);
-
     double Cadot(double);
-
     void init(void);
 
 };
 
-
-
-string CalciumMech::getClass() {
-    return "CalciumMech";
-}
 
 // connection methods
 void CalciumMech::connectCompartment(compartment* comp_) {

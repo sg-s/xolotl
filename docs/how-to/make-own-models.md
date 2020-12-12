@@ -118,16 +118,16 @@ public:
         // allow this channel to be approximated?
         AllowMInfApproximation = true; // or false if not
         AllowHInfApproximation = true;
+
+        name = "NewCond";
     }
 
     double m_inf(double, double);
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
+    
 };
-
-string NewCond::getClass(){return "NewCond";}
 
 
 double NewCond::m_inf(double V, double Ca) {return ...;}
@@ -192,6 +192,7 @@ public:
         A = A_;
         B = B_;
         controlling_class = "unset";
+        name = "NewMech";
     }
 
     void integrate(void);
@@ -285,6 +286,8 @@ public:
         if (isnan (s)) { s = 0; }
         if (isnan (gmax)) { gmax = 0; }
         is_electrical = false;
+
+        name = "NewSynapse";
     }
 
     // all of these functions are needed for all synapses
@@ -374,7 +377,7 @@ void NewSynapse::connect(compartment *pcomp1_, compartment *pcomp2_) {
 
 All conductances (and any other network component) are
 defined by an `.hpp` header file. **You can save your
-new conductance anywhere within your MATLAB path.**
+new conductance anywhere on your MATLAB path.**
 `cpplab` will find them, link them, and use them automatically.
 If `cpplab` can't find them, then running `xolotl.rebuildCache`
 should fix it. 

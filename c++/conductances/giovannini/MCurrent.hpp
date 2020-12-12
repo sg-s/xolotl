@@ -31,20 +31,18 @@ public:
     if (isnan(gbar)) { gbar = 0; }
     if (isnan(E)) { E = -80; }
     if (isnan(tau)) { tau = 1000; }
+
+    name = "MCurrent";
   }
 
   double m_inf(double, double);
   double tau_m(double, double);
   double a_m(double, double);
   double b_m(double, double);
-  string getClass(void);
+  
 
 };
 
-string MCurrent::getClass()
-{
-  return "MCurrent";
-}
 
 double MCurrent::a_m(double V, double Ca) {return (1 / tau) * (3.3 * exp((V + 35)/20) + exp(-(V + 35)/20)) / exp((-35 + V)/10) + 1;}
 double MCurrent::b_m(double V, double Ca) {return (1 / tau) * (3.3 * exp((V + 35)/20) + exp(-(V + 35)/20) * (1 - 1 / (exp((-35 + V)/10) + 1)));}

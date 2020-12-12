@@ -34,6 +34,8 @@ public:
         if (isnan (gmax)) { gmax = -80; }
         is_electrical = false;
 
+        fullStateSize = 2;
+
     }
     
     void integrate(void);
@@ -46,12 +48,10 @@ public:
     
     void connect(compartment *pcomp1_, compartment *pcomp2_);
     int getFullState(double*, int);
-    int getFullStateSize(void);
+
 };
 
-int GenericSynapse::getFullStateSize() {
-    return 2; 
-}
+
 
 
 double GenericSynapse::s_inf(double V_pre) {

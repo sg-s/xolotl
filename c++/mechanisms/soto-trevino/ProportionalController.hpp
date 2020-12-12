@@ -47,6 +47,8 @@ public:
         if (isnan(tau_m)) {tau_m = 10e3;};
 
         fullStateSize = 1;
+
+        name = "ProportionalController";
     }
 
 
@@ -58,13 +60,11 @@ public:
 
     int getFullState(double * cont_state, int idx);
     double getState(int);
-    string getClass(void);
+    
 
 };
 
-string ProportionalController() {
-    return "ProportionalController";
-}
+
 
 
 double ProportionalController::getState(int idx) {
@@ -102,7 +102,7 @@ void ProportionalController::connect(conductance * channel_) {
     // make sure the compartment that we are in knows about us
     (channel->container)->addMechanism(this);
 
-    controlling_class = (channel_->getClass()).c_str();
+    controlling_class = (channel_->name).c_str();
 
     // attempt to read the area of the container that this
     // controller should be in.

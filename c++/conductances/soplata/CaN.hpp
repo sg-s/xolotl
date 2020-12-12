@@ -34,16 +34,16 @@ public:
 
         // allow this channel to be approximated
         AllowMInfApproximation = false;
+        name = "CaN";
 
     }
 
     double m_inf(double, double);
     double tau_m(double, double);
-    string getClass(void);
+    
 
 };
 
-string CaN::getClass(){return "CaN";}
 
 double CaN::m_inf(double V, double Ca) { return alpha * Ca / (alpha * Ca + beta); }
 double CaN::tau_m(double V, double Ca) { return 1.0 / (alpha * Ca + beta); }

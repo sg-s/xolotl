@@ -57,7 +57,7 @@ public:
 
         if (isnan(pbar)) {pbar = 0;}
 
-
+        name = "CaT";
         is_calcium = true;
 
     }
@@ -70,7 +70,7 @@ public:
 
     void integrate(double, double);
 
-    string getClass(void);
+    
 
     void connect(compartment *);
 
@@ -125,9 +125,6 @@ void CaT::integrate(double V, double Ca) {
 }
 
 
-string CaT::getClass(){
-    return "CaT";
-}
 
 
 double CaT::m_inf(double V, double Ca) {

@@ -49,13 +49,15 @@ public:
         // defaults
         if (isnan(tau)) {tau = 5000; } // ms
 
+        name = "IntegralController";
+
     }
     
     void integrate(void);
     void connectConductance(conductance*);
 
 
-    string getClass(void);
+    
 
     void connectToLiuSensor(void);
 
@@ -69,7 +71,7 @@ void IntegralController::connectToLiuSensor() {
 
     for (int i = 0; i < n_mech; i++) {
 
-        string this_mech = (channel->container)->getMechanismPointer(i)->getClass().c_str();
+        string this_mech = (channel->container)->getMechanismPointer(i)->name.c_str();
 
         if (this_mech == "FastSensor") {
             Fast = (channel->container)->getMechanismPointer(i);
@@ -95,10 +97,6 @@ void IntegralController::connectToLiuSensor() {
 
 }
 
-string IntegralController::getClass() {
-    return "IntegralController";
-}
-
 
 
 // connection methods
@@ -109,7 +107,7 @@ void IntegralController::connect(conductance* cond_) {
     // make sure the compartment that we are in knows about us
     (channel->container)->addMechanism(this);
 
-    controlling_class = (channel->getClass()).c_str();
+    controlling_class = (channel->name).c_str();
 
     // attempt to read the area of the container that this
     // controller should be in.

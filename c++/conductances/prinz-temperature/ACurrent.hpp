@@ -49,6 +49,8 @@ public:
         p = 3;
         q = 1;
 
+        name = "ACurrent";
+
    
     }
 
@@ -61,10 +63,8 @@ public:
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
 };
 
-string ACurrent::getClass(){return "ACurrent";}
 
 void ACurrent::init(void) {
     conductance::init();

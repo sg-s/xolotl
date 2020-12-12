@@ -26,21 +26,20 @@ public:
 
         // defaults
         if (isnan(gbar)) { gbar = 0; }
-        
         if (isnan (E)) { E = -80; }
 
         p = 1;
+
+        name = "Novel";
 
 
     }
 
     double m_inf(double, double);
     double tau_m(double, double);
-    string getClass(void);
+    
 
 };
-
-string Novel::getClass(){return "Novel";}
 
 
 double Novel::m_inf(double V, double Ca) {return (1.0/(1.0+exp(sqrt((1.0+V)/-9.1))));}

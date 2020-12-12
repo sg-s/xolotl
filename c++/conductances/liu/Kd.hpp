@@ -26,17 +26,15 @@ public:
         if (isnan (E)) { E = -80; }
 
         p = 4;
+
+        name = "Kd";
     }
 
     double m_inf(double, double);
     double tau_m(double, double);
-    string getClass(void);
 
 };
 
-string Kd::getClass(){
-    return "Kd";
-}
 
 
 double Kd::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+12.3)/-11.8));}

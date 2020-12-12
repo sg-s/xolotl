@@ -39,17 +39,17 @@ public:
 
         p = 1;
         q = 0;
+
+        name = "Potassium";
     }
 
     double m_inf(double V, double Ca);
     double tau_m(double V, double Ca);
 
-    string getClass(void);
 
 
 };
 
-string Potassium::getClass(){return "Potassium";}
 
 
 

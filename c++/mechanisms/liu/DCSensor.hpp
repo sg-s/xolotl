@@ -52,6 +52,8 @@ public:
         if (isnan(X)) {X = 0;}
         if (isnan(m)) {m = 0;}
 
+        name = "DCSensor";
+
 
     }
 
@@ -65,13 +67,10 @@ public:
 
     int getFullState(double * cont_state, int idx);
     double getState(int);
-    string getClass(void);
+    
 
 };
 
-string DCSensor::getClass() {
-    return "DCSensor";
-}
 
 
 double DCSensor::getState(int idx){return X;}

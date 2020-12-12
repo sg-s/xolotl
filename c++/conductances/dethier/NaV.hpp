@@ -33,18 +33,18 @@ public:
         p = 3;
         q = 1;
 
+        name = "NaV";
+
     }
 
     double m_inf(double, double);
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
 
 
 };
 
-string NaV::getClass(){return "NaV";}
 
 
 double NaV::m_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+35.5)/-5.29)));}

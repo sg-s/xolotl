@@ -39,6 +39,8 @@ public:
         if (isnan (gmax)) { gmax = 0; }
 
         is_electrical = false;
+
+        fullStateSize = 2;
     }
     
     void integrate(void);
@@ -49,36 +51,29 @@ public:
     double tau_s(double);
     double sdot(double, double);
 
-    int getFullStateSize(void);
+
     void connect(compartment *pcomp1_, compartment *pcomp2_);
     double getCurrent(double V_post);
     int getFullState(double*, int);
 };
 
-int Cholinergic::getFullStateSize()
-{
-    return 2; 
-}
 
 
-double Cholinergic::s_inf(double V_pre)
-{
+
+double Cholinergic::s_inf(double V_pre) {
     return 1.0/(1.0+exp((Vth - V_pre)/Delta));
 }
 
-double Cholinergic::tau_s(double sinf_)
-{
+double Cholinergic::tau_s(double sinf_) {
     return (1 - sinf_)/k_;
 }
 
-double Cholinergic::sdot(double V_pre, double s_)
-{
+double Cholinergic::sdot(double V_pre, double s_) {
     double sinf = s_inf(V_pre);
     return (sinf - s_)/tau_s(sinf);
 }
 
-void Cholinergic::integrate(void)
-{   
+void Cholinergic::integrate(void) {   
     // figure out the voltage of the pre-synaptic neuron
     double V_pre = pre_syn->V;
     double sinf = s_inf(V_pre);
@@ -90,8 +85,7 @@ void Cholinergic::integrate(void)
     
 }
 
-void Cholinergic::integrateMS(int k, double V, double Ca)
-{
+void Cholinergic::integrateMS(int k, double V, double Ca) {
 
     double V_pre;
 
@@ -140,7 +134,6 @@ void Cholinergic::checkSolvers(int k){
 int Cholinergic::getFullState(double *syn_state, int idx) {
     // give it the current synapse variable
     syn_state[idx] = s;
-
     idx++;
 
     // also return the current from this synapse

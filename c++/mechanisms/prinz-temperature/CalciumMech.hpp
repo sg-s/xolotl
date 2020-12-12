@@ -40,6 +40,7 @@ public:
         Q_tau = Q_tau_;
 
         controlling_class = "unset";
+        name = "CalciumMech";
 
     }
 
@@ -48,14 +49,9 @@ public:
 
     void connectCompartment(compartment*);
 
-    string getClass(void);
+    
 
 };
-
-string CalciumMech::getClass() {
-    return "CalciumMech";
-}
-
 
 
 

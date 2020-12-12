@@ -49,6 +49,8 @@ public:
 
         p = 3;
         q = 1;
+
+        name = "ACurrent";
     }
 
     void integrate(double, double);
@@ -60,10 +62,8 @@ public:
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
 };
 
-string ACurrent::getClass(){return "ACurrent";}
 
 void ACurrent::connect(compartment *pcomp_) {
     // call super class method

@@ -31,6 +31,8 @@ public:
         if (isnan (s)) { s = 0; }
         if (isnan (gmax)) { gmax = 0; }
 
+        fullStateSize = 2;
+
     }
     
     void integrate(void);
@@ -44,12 +46,9 @@ public:
     
     void connect(compartment *pcomp1_, compartment *pcomp2_);
     int getFullState(double*, int);
-    int getFullStateSize(void);
+
 };
 
-int Glutamatergic::getFullStateSize() {
-    return 2; 
-}
 
 
 double Glutamatergic::s_inf(double V_pre) {

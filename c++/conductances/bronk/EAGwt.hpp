@@ -23,8 +23,9 @@ public:
 
         // defaults
         if (isnan(gbar)) { gbar = 0; }
-        
         if (isnan (E)) { E = -80; }
+
+        name = "EAGwt";
 
         p = 1;
 
@@ -33,11 +34,10 @@ public:
 
     double m_inf(double V, double Ca);
     double tau_m(double, double);
-    string getClass(void);
+    
 
 };
 
-string EAGwt::getClass(){return "EAG";}
 
 double EAGwt::m_inf(double V, double Ca) { return (9.29e-2/(Ca+9.29e-2))/(1.0+exp((V+23.12)/-16.94)); }
 double EAGwt::tau_m(double V, double Ca) {return 5497 - 5500/(1.0+exp((V+251.5 )/-51.5));}

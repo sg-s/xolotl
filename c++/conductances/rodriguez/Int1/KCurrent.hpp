@@ -29,18 +29,18 @@ public:
         // defaults
         if (isnan(gbar)) { gbar = 0; }
         if (isnan (E)) { E = -70; }
+
+        name = "KCurrent";
     }
 
     double m_inf(double, double);
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
+    
 
 
 };
-
-string KCurrent::getClass(){return "KCurrent";}
 
 double KCurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+26.0)/-9.0));}
 double KCurrent::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+16.0)/1.5));}

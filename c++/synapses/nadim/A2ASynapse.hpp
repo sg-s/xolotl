@@ -26,13 +26,14 @@ public:
         if (isnan (gmax)) { gmax = 0; }
         is_electrical = false;
 
+        fullStateSize = 2;
+
     }
 
     void integrate(void);
 
     void connect(compartment *pcomp1_, compartment *pcomp2_);
     int getFullState(double*, int);
-    int getFullStateSize(void);
 };
 
 void A2ASynapse::integrate() {
@@ -66,7 +67,6 @@ int A2ASynapse::getFullState(double *syn_state, int idx) {
 }
 
 
-int A2ASynapse::getFullStateSize(){return 2;}
 
 
 void A2ASynapse::connect(compartment *pcomp1_, compartment *pcomp2_) {

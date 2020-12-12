@@ -28,18 +28,16 @@ public:
         // defaults
         if (isnan(gbar)) { gbar = 0; }        
         if (isnan (E)) { E = -80; }
+
+        name = "Kd";
     }
 
     double m_inf(double, double);
     double tau_m(double, double);
-    string getClass(void);
+    
 
 };
 
-
-string Kd::getClass(){
-    return "Kd";
-}
 
 double Kd::m_inf(double V, double Ca) {return (0.016*(35.1-V)/(exp((35.1-V)/5.0)-1.0))/((0.016*(35.1-V)/(exp((35.1-V)/5.0)-1.0))+(0.25*exp((20.0-V)/40.0))); }
 double Kd::tau_m(double V, double Ca) {return 1.0/((0.016*(35.1-V)/(exp((35.1-V)/5.0)-1.0))+(0.25*exp((20.0-V)/40.0)));}

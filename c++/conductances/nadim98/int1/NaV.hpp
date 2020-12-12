@@ -22,10 +22,10 @@ public:
         m = m_;
         h = h_;
 
+        name = "NaV";
+
          // defaults
         if (isnan(gbar)) { gbar = 0; }
-        
-        
         if (isnan (E)) { E = 0; }
 
         p = 3;
@@ -37,11 +37,11 @@ public:
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
+    
 
 };
 
-string NaV::getClass(){return "NaV";}
+
 
 double NaV::m_inf(double V, double Ca) {return (1.0/(1.0+exp(-0.08*((V)+26.0))));}
 double NaV::tau_m(double V, double Ca) {return 0.0;}

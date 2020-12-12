@@ -60,6 +60,8 @@ public:
         if (isnan(m)) {m = 0;}
         if (isnan(h)) {h = 1;}
 
+        name = "FastSensor";
+
 
     }
 
@@ -74,14 +76,9 @@ public:
     int getFullStateSize(void);
     int getFullState(double * cont_state, int idx);
     double getState(int);
-    string getClass(void);
+    
 
 };
-
-string FastSensor::getClass() {
-    return "FastSensor";
-}
-
 
 double FastSensor::getState(int idx){return X;}
 

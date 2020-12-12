@@ -43,19 +43,16 @@ public:
         Ca_in = Ca_in_;
         Q_tau = Q_tau_;
 
+        name = "CalciumMech";
+
         controlling_class = "unset";
 
     }
 
 
     void integrate(void);
-
     void checkSolvers(int);
-
     void connectCompartment(compartment*);
-
-    string getClass(void);
-
     void init(void);
 
 
@@ -63,17 +60,10 @@ public:
 
 
 
-
-string CalciumMech::getClass() {
-    return "CalciumMech";
-}
-
 // connection methods
 void CalciumMech::connectCompartment(compartment* comp_) {
-    
     comp = comp_;
     comp->addMechanism(this);
-
 }
 
 

@@ -27,6 +27,8 @@ public:
         
         if (isnan (E)) { E = -80; }
 
+        name = "EAGmut";
+
         p = 1;
 
     }
@@ -34,11 +36,9 @@ public:
 
     double m_inf(double V, double Ca);
     double tau_m(double, double);
-    string getClass(void);
+    
 
 };
-
-string EAGmut::getClass(){return "EAG";}
 
 
 double EAGmut::m_inf(double V, double Ca) { return (.92*(1-.05)/(Ca+.92) + .05)/(1.0+exp((V+23.12)/-16.94)); }

@@ -26,10 +26,7 @@ public:
     void integrate(void);
     void connect(compartment *pcomp1_, compartment *pcomp2_);
 
-    int getFullState(double*, int);
-    int getFullStateSize(void);
 
-    void checkSolvers(int k);
 };
 
 void Axial::integrate(void) {       
@@ -38,18 +35,7 @@ void Axial::integrate(void) {
 }
 
 
-int Axial::getFullStateSize() {return 0; }
 
-int Axial::getFullState(double *syn_state, int idx){
-    return idx;
-}
-
-void Axial::checkSolvers(int k){
-    if (k == 0) {
-        return;
-    }
-    mexErrMsgTxt("[Axial] Unsupported solver order\n");
-}
 
 
 

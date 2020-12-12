@@ -45,6 +45,8 @@ public:
         p = 3;
         q = 1;
 
+        name = "NaV";
+
 
     }
 
@@ -58,10 +60,9 @@ public:
     double tau_m(double, double);
     double tau_h(double, double);
 
-    string getClass(void);
 };
 
-string NaV::getClass(){return "NaV";}
+
 
 double NaV::m_alpha(double V, double Ca) {return 0.32 * (13 - (V + 35)) / (exp((13 - (V + 35))/4) -1);}
 double NaV::m_beta(double V, double Ca) {return 0.28 * ((V + 35) - 40) / (exp(((V + 35) - 40)/5) - 1);}

@@ -39,18 +39,16 @@ public:
         // need to set E to zero to linearize. Don't worry,
         // this is not the reversal potential
         E = 0;
+
+        name = "Kd2";
     }
 
-    string getClass(void);
+    
 
     void integrate(double, double);
 
 
 };
-
-string Kd2::getClass(){
-    return "Kd2";
-}
 
 
 void Kd2::integrate(double V_, double Ca_){

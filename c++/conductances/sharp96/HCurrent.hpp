@@ -28,16 +28,18 @@ public:
         if (isnan (E)) { E = -10; }
 		if (isnan (Vhalf)) { Vhalf = -50; }
 
+        name = "HCurrent";
+
     }
 	
     double m_inf(double, double);
     double tau_m(double, double);
 	
-    string getClass(void);
+    
 
 };
 
-string HCurrent::getClass(){return "HCurrent";}
+
 
 
 double HCurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V-Vhalf)/7));}

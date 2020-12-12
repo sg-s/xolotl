@@ -32,6 +32,8 @@ public:
         p = 1;
         q = 1;
 
+        name = "At";
+
 
     }
 
@@ -39,11 +41,9 @@ public:
     double h_inf(double, double);
     double tau_m(double, double);
     double tau_h(double, double);
-    string getClass(void);
+    
 
 };
-
-string At::getClass(){return "At";}
 
 
 double At::m_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+23.0)/-13.0)));}

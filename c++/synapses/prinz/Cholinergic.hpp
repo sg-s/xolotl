@@ -34,6 +34,9 @@ public:
         if (isnan (gmax)) { gmax = 0; }
         if (isnan (Vth)) { Vth = -35.0; }
 
+
+        fullStateSize = 2;
+
     }
 
     void integrate(void);
@@ -46,15 +49,11 @@ public:
 
     void init(void);
 
-    int getFullStateSize(void);
     void connect(compartment *pcomp1_, compartment *pcomp2_);
     double getCurrent(double V_post);
     int getFullState(double*, int);
 };
 
-int Cholinergic::getFullStateSize() {
-    return 2;
-}
 
 void Cholinergic::init() {
     // build a LUT 
@@ -67,9 +66,6 @@ void Cholinergic::init() {
     }
 
 }
-
-
-
 
 
 double Cholinergic::s_inf(double V_pre) {return 1.0/(1.0+exp((Vth - V_pre)/Delta));}

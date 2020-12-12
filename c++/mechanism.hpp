@@ -37,7 +37,8 @@ public:
 
     // store the type of the thing being controlled
     // as a string
-    string controlling_class;
+    string controlling_class = "unset";
+    string name = "unset";
 
     int mechanism_idx;
 
@@ -70,7 +71,6 @@ public:
 
     virtual int getFullState(double*, int);
     virtual double getState(int);
-    virtual string getClass(void) = 0;
 
     virtual void checkSolvers(int);
 
@@ -105,7 +105,7 @@ method, which will be used instead of this.
 */
 void mechanism::connectCompartment(compartment* comp_) {
     string txt = "Error using ";
-    txt += getClass();
+    txt += name;
     txt += ". This mechanism cannot connect to a compartment object";
     mexErrMsgTxt(txt.c_str());
 }
@@ -119,7 +119,7 @@ method, which will be used instead of this.
 */
 void mechanism::connectConductance(conductance* cond_) {
     string txt = "Error using ";
-    txt += getClass();
+    txt += name;
     txt += ". This mechanism cannot connect to a conductance object";
     mexErrMsgTxt(txt.c_str());
 }
@@ -133,7 +133,7 @@ method, which will be used instead of this.
 */
 void mechanism::connectSynapse(synapse* syn_) {
     string txt = "Error using ";
-    txt += getClass();
+    txt += name;
     txt += ". This mechanism cannot connect to a synapse object";
     mexErrMsgTxt(txt.c_str());
 }
@@ -193,7 +193,7 @@ void mechanism::checkSolvers(int k) {
     if (k == 0) {return;}
     else {
         string txt = "Error using ";
-        txt += getClass();
+        txt += name;
         txt += ". This mechanism does not support this solver order. Try using x.solver_order = 0;";
         mexErrMsgTxt(txt.c_str());
     }
