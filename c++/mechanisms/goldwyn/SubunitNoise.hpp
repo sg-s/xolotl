@@ -41,9 +41,8 @@ public:
     void integrate(void);
 
 
-    void connect(compartment*);
-    void connect(conductance*);
-    void connect(synapse*);
+    void connectConductance(conductance*);
+
 
 
     
@@ -52,7 +51,7 @@ public:
 
 
 
-void SubunitNoise::connect(conductance * channel_) {
+void SubunitNoise::connectConductance(conductance * channel_) {
 
     // connect to a channel
     channel = channel_;

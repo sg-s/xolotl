@@ -2,8 +2,9 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// H current fit directly to I-V curve in Golowasch and Marder 1992
-// You won't find this anywhere else
+// 
+// component source: [Golowasch & Marder 1992](https://journals.physiology.org/doi/abs/10.1152/jn.1992.67.2.318)
+// component info: H current fit directly to I-V curve in Golowasch and Marder 1992
 #ifndef HCURRENT
 #define HCURRENT
 #include "conductance.hpp"
@@ -38,7 +39,9 @@ public:
 
 
 double HCurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+95.16)/9.12));}
-double HCurrent::tau_m(double V, double Ca) {return (272.0 + 1499.0/(1.0+exp((V+42.2)/-8.73)));}
+
+// we don't know what the timescale is, we're guessing it's slow
+double HCurrent::tau_m(double V, double Ca) {return 2e3;}
 
 
 #endif

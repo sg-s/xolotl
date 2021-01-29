@@ -4,6 +4,7 @@
 //
 // generic hyper-polarization activated current 
 // with customizable activation and timescale 
+// component info: HCurrent with customizable Vhalf and tau
 #ifndef HCURRENT
 #define HCURRENT
 #include "conductance.hpp"

@@ -40,7 +40,7 @@ public:
 
     void integrate(void);
 
-    void connect(compartment*);
+    void connectCompartment(compartment*);
 
 
     
@@ -49,7 +49,7 @@ public:
 
 
 
-void CurrentNoise2::connect(compartment* comp_) {
+void CurrentNoise2::connectCompartment(compartment* comp_) {
     comp = comp_;
     comp->addMechanism(this);
 }
