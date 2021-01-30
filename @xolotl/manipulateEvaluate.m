@@ -21,6 +21,11 @@
 
 function manipulateEvaluate(self,names,values)
 
+if ~iscell(names)
+	names = {names};
+end
+
+
 for i = 1:length(names)
 	if any(strfind(names{i},'I_ext_'))
 		comp_name = strrep(names{i},'I_ext_','');

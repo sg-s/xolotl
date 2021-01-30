@@ -183,7 +183,10 @@ end
 % semi-intelligently make the upper and lower bounds
 lb = values/3;
 ub = values*3;
+lb(values<0) = values(values<0)*2;
+ub(values<0) = values(values<0)/2;
 ub(values==0) = 1;
+
 
 % lower bounds of gbars must be 0
 lb(cellfun(@(x) any(strfind(x,'gbar')),real_names)) = 0;
@@ -192,7 +195,17 @@ lb(cellfun(@(x) any(strfind(x,'gbar')),real_names)) = 0;
 % create a puppeteer instance and configure
 warning('off','MATLAB:hg:uicontrol:ValueMustBeInRange')
 warning('off','MATLAB:hg:uicontrol:MinMustBeLessThanMax')
-p = puppeteer(real_names,values,lb,ub,[]);
+
+p = puppeteer;
+
+for i = 1:length(real_names)
+	if ~isnan(values(i))
+		p.add('Name',real_names{i},'Value',values(i),'Lower',lb(i),'Upper',ub(i));
+	end
+	
+end
+p.makeUI;
+
 p.handles.fig.Name = 'xolotl::manipulate';
 self.handles.puppeteer_object = p;
 
