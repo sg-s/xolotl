@@ -30,7 +30,9 @@
 function [passed, total] = run_all_tests(cleanup)
 
 % create the parpool
-gcp;
+if ~isempty(ver('parallel'))
+	gcp;
+end
 
 hashlib.test()
 
