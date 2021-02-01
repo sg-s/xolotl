@@ -33,6 +33,9 @@ if ~isempty(getCurrentTask)
 	error('Compile was called on a parallel worker, which is not allowed. To avoid seeing this message, first run "integrate" on your model outside a parallel loop.')
 end
 
+compilerok = getpref('xolotl','compilerok');
+corelib.assert(compilerok,'No C++ compiler found. xolotl will not be able to run! ')
+
 h = self.hash;
 
 mexBridge_name = [fullfile(filelib.cachePath('xolotl'),'X_') h '.cpp'];

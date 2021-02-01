@@ -60,6 +60,3 @@ if length(cc) > 0
 	compilerok = true;
 end
 
-setpref('xolotl','compilerok',compilerok)
-
-corelib.assert(compilerok,'No C++ compiler found. xolotl will not be able to run! ')
