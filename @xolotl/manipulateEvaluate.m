@@ -19,31 +19,32 @@
 
 
 
-function manipulateEvaluate(self,names,values)
-
-if ~iscell(names)
-	names = {names};
-end
+function manipulateEvaluate(self,Parameters)
 
 
-for i = 1:length(names)
-	if any(strfind(names{i},'I_ext_'))
-		comp_name = strrep(names{i},'I_ext_','');
+
+
+for i = 1:length(Parameters)
+	if any(strfind(Parameters(i).Name,'I_ext_'))
+		comp_name = strrep(Parameters(i).Name,'I_ext_','');
 		comp_idx = find(strcmp(self.Children,comp_name));
 
 		if size(self.I_ext,1) > 1
 			self.I_ext = zeros(1,length(self.Children));
 		end
-		self.I_ext(comp_idx) = values(i);
+		self.I_ext(comp_idx) = Parameters(i).Value;
+
+	elseif any(strfind(Parameters(i).Name,'t_end'))
+		self.set(Parameters(i).Name,round(Parameters(i).Value))
 
 	else
 
-		self.set(names{i},values(i))
+		self.set(Parameters(i).Name,Parameters(i).Value)
 
 		% do we have to mirror?
 		if isfield(self.pref,'manipulated_params') && isfield(self.pref,'mirror_these')
-			idx = find(strcmp(self.pref.manipulated_params,names{i}));
-			self.set(self.pref.mirror_these{idx},values(i))
+			idx = find(strcmp(self.pref.manipulated_params,Parameters{i}));
+			self.set(self.pref.mirror_these{idx},Parameters(i).Value)
 		end
 
 	end

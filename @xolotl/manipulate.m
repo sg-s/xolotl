@@ -101,10 +101,13 @@ if nargin < 2
 	% remove some parameters of xolotl
 	rm_this = [];
 	rm_this = [rm_this; find(strcmp(real_names,'verbosity'))];
+	rm_this = [rm_this; find(strcmp(real_names,'spike_thresh'))];
+	rm_this = [rm_this; find(strcmp(real_names,'use_current'))];
 	rm_this = [rm_this; find(strcmp(real_names,'solver_order'))];
 	rm_this = [rm_this; find(strcmp(real_names,'output_type'))];
 	rm_this = [rm_this; find(strcmp(real_names,'approx_channels'))];
-	rm_this = [rm_this; find(strcmp(real_names,'approx_channels'))];
+	rm_this = [rm_this; find(strcmp(real_names,'stochastic_channels'))];
+	rm_this = [rm_this; find(strcmp(real_names,'t_end'))];
 	rm_this = [rm_this;  filelib.find(real_names,'tree_idx')];
 
 	values(rm_this) = [];
@@ -187,9 +190,24 @@ lb(values<0) = values(values<0)*2;
 ub(values<0) = values(values<0)/2;
 ub(values==0) = 1;
 
+LowerLimits = lb*(-Inf);
+UpperLimits = lb*(Inf);
+
+
+% try to group the parameters sensibly 
+Groups = categorical(repmat({'Parameters'},length(lb),1));
+
+this = cellfun(@(x) strcmp(x(end-1:end),'.E'),real_names);
+Groups(this) = 'Reversal Potentials';
+
+this = cellfun(@(x) any(strfind(x,'.gbar')),real_names);
+Groups(this) = 'Conductances';
+
+this = cellfun(@(x) any(strfind(x,'.gmax')),real_names);
+Groups(this) = 'Synapses';
 
 % lower bounds of gbars must be 0
-lb(cellfun(@(x) any(strfind(x,'gbar')),real_names)) = 0;
+%LowerLimits(cellfun(@(x) any(strfind(x,'gbar')),real_names)) = 0;
 
 
 % create a puppeteer instance and configure
@@ -200,7 +218,7 @@ p = puppeteer;
 
 for i = 1:length(real_names)
 	if ~isnan(values(i))
-		p.add('Name',real_names{i},'Value',values(i),'Lower',lb(i),'Upper',ub(i));
+		p.add('Name',real_names{i},'Value',values(i),'Lower',lb(i),'Upper',ub(i),'Group',Groups(i));
 	end
 	
 end
@@ -228,4 +246,4 @@ end
 warning('on','MATLAB:hg:uicontrol:MinMustBeLessThanMax')
 warning('on','MATLAB:hg:uicontrol:ValueMustBeInRange')
 
-p.valueChangingFcn = @self.manipulateEvaluate;
+p.callbackFcn = @self.manipulateEvaluate;
