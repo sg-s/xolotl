@@ -60,3 +60,4 @@ if length(cc) > 0
 	compilerok = true;
 end
 
+setpref('xolotl','compilerok',compilerok);
