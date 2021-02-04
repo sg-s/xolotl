@@ -246,4 +246,5 @@ end
 warning('on','MATLAB:hg:uicontrol:MinMustBeLessThanMax')
 warning('on','MATLAB:hg:uicontrol:ValueMustBeInRange')
 
-p.callbackFcn = @self.manipulateEvaluate;
+p.valueChangingFcn = @self.manipulateEvaluate;
+p.valueChangedFcn = @self.manipulateEvaluate;
