@@ -19,7 +19,7 @@ classdef xolotl <  cpplab & matlab.mixin.CustomDisplay & ConstructableHandle & U
 properties (SetAccess = protected)
 	linked_binary char % binary to run when integrate is called
 	synapses struct % structure containing synapses in model
-    illegal_names cell = {'xolotl_network','compartment','conductance','controller','synapse','network','x','self'}; % list of illegal names for compartments, synpases and other objects
+    illegal_names cell = {'xolotl_network','compartment','conductance','controller','synapse','network','x','self'}; % list of illegal names for compartments, synapses and other objects
 
     snapshots struct % saves snapshots of models 
 
