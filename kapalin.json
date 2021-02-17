@@ -1,6 +1,5 @@
 {
   "name": "xolotl",
-  "deps": ["cpplab", "srinivas.gs_mtools","puppeteer"],
   "stable-branch": "master",
   "author": "Srinivas Gorur-Shandilya",
   "author-url": "https://srinivas.gs",
@@ -13,20 +12,9 @@
   "external_code": [
     "/Users/srinivas/GoogleDrive/code/cpplab/@cpplab",
     "/Users/srinivas/GoogleDrive/code/puppeteer/@puppeteer",
-    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/+axlib",
-    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/+corelib",
-    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/+figlib",
-    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/+filelib",
-    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/+hashlib",
-    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/+netlib",
-    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/+neurolib",
-    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/+strlib",
-    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/+structlib",
-    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/+pathlib",
-    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/+veclib",
-    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/@adaptive",
-    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/ConstructableHandle.m",
-    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/UpdateableHandle.m"
+    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/+*",
+    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/@*",
+    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/*.m",
   ]
 }
 
