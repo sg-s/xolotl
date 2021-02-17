@@ -11,6 +11,9 @@ x.add('compartment','AB','A',0.0628);
 x.AB.add('liu/Kd','gbar',@() 38.31/x.AB.A,'E',-80);
 x.AB.add('Leak','gbar',@() 0.0622/x.AB.A,'E',-50);
 
+% test showing the model
+x
+
 % try to download a binary
 % so that people without compilers can use this too
 try
