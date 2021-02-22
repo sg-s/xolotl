@@ -37,7 +37,7 @@ method, which will be used instead of this.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L95)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L108)
 
 -------
 
@@ -64,7 +64,7 @@ method, which will be used instead of this.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L107)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L120)
 
 -------
 
@@ -91,7 +91,7 @@ method, which will be used instead of this.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L121)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L134)
 
 -------
 
@@ -118,7 +118,7 @@ method, which will be used instead of this.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L135)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L148)
 
 -------
 
@@ -145,7 +145,7 @@ method, which will be used instead of this.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L151)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L164)
 
 -------
 
@@ -172,7 +172,7 @@ good place to put code that you need to run once before the simulation.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L164)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L177)
 
 -------
 
@@ -195,31 +195,7 @@ out of your mechanism, make sure this returns something sensible.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L172)
-
--------
-
-
-
-### getFullState
-
-**Function Signature**
-
-```C++
-int getFullState(double* cont_, int i) 
-```
-
-**Description**
-
- This virtual method does nothing, but can return as many dynamic
-variables as you want 
-
-
-
-
- **Code**
-
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L182)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L185)
 
 -------
 
@@ -244,7 +220,7 @@ to override this.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L192)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L196)
 
 -------
 

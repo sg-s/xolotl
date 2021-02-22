@@ -186,6 +186,13 @@ public:
 
     int use_current = 0;
 
+
+    // this vector mech_states stores the full
+    // states for every mechanism so that other 
+    // mechanisms can use it via the mechanism::getPrevState()
+    // method, so that all computations happen synchronously 
+    vector <double> mech_states;
+
     compartment() {}
 
 
@@ -446,7 +453,6 @@ It does the following things:
 */
 
 void compartment::addMechanism(mechanism *mech_) {
-    // mexPrintf("adding mechanism @  %p\n",mech_);
     
     mech.push_back(mech_);
     mech_->mechanism_idx = n_mech; // tell the mechanism what rank it has
@@ -454,6 +460,16 @@ void compartment::addMechanism(mechanism *mech_) {
 
     // also store the mechanism's full state size
     mechanism_sizes.push_back(mech_->fullStateSize);
+
+
+    // tell the mechanism its offset
+    mech_->mech_state_offet = mech_states.size();
+
+    // resize the mech_states vector
+    for (int i = 0; i < mech_->fullStateSize; i++) {
+        mech_states.push_back(0);
+    }
+
 }
 
 /*
@@ -896,11 +912,30 @@ void compartment::integrateCNSecondPass(void) {
 This method integrates all mechanisms in this compartment. It
 simply calls the integrate method on every mechanism in the
 compartment.
+
+Before integration, it copies over the full state of every
+mechanism into compartment::mech_states so that all mechanisms 
+"see" the same thing when they interact with each other, solving
+ordering inconsistencies 
+
 */
 void compartment::integrateMechanisms(void) {
+
+    // write to mech_states (a store of previous states)
+    // by asking every mechanism for their current state
+    for (int i=0; i<n_mech; i++) {
+        //mexPrintf("mech name: %s\n",mech[i]->name.c_str());
+        for (int j=0; j < mechanism_sizes[i]; j++) {
+            //mexPrintf("state valuue = %f\n",mech[i]->getState(j));
+            mech_states[mech[i]->mech_state_offet + j] = mech[i]->getState(j);
+        }
+    }
+
     for (int i=0; i<n_mech; i++) {
         mech[i]->integrate();
     }
+
+    //mexErrMsgTxt("stopping!");
 }
 
 /*

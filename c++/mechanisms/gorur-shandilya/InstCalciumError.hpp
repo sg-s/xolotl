@@ -26,7 +26,7 @@ public:
         controlling_class = "unset";
         Target = Target_;
 
-        fullStateSize = 0;
+        fullStateSize = 1;
 
         name = "InstCalciumError";
         mechanism_type = "target_error";

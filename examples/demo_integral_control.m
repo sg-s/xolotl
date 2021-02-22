@@ -37,6 +37,9 @@ x.sim_dt = .1;
 x.dt = 100;
 [~,~,C] = x.integrate;
 
+% remove the column that corresponds to the InstCalciumError
+C(:,9) = [];
+
 
 
 figure('outerposition',[300 300 900 600],'PaperUnits','points','PaperSize',[1200 600]); hold on

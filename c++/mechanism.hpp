@@ -56,6 +56,11 @@ public:
 
     int fullStateSize = 0;
 
+
+    // this int identifies the location of the start in mech_state
+    // in the parent compartment from where we can start reading out values corresponding to this mechanism
+    int mech_state_offet = 0;
+
     mechanism()
     {
         // null pointers to all
@@ -70,8 +75,7 @@ public:
     virtual void integrate(void);
     virtual void integrateMS(int, double, double);
 
-    virtual int getFullState(double*, int);
-    virtual double getState(int);
+    
 
     virtual void checkSolvers(int);
 
@@ -83,7 +87,16 @@ public:
     virtual void init(void);
 
 
+
+    // methods for other classes to pass data
+    virtual int getFullState(double*, int);
+    virtual double getState(int);
+    double getPrevState(int);
+
+
 };
+
+
 
 /*
 This virtual method is a placeholder method of mechanism that does
@@ -173,15 +186,6 @@ double mechanism::getState(int i) {
     return 0;
 }
 
-
-
-/* This virtual method does nothing, but can return as many dynamic
-variables as you want 
-*/
-
-int mechanism::getFullState(double* cont_, int i) {
-    return i;
-}
 
 
 /* This virtual method only allows runs if solver_order is 0

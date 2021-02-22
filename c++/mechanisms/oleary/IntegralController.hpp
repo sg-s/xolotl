@@ -50,6 +50,8 @@ public:
 
         if (tau_g<=0) {mexErrMsgTxt("[IntegralController] tau_g must be > 0. Perhaps you meant to set it to Inf?\n");}
 
+        if (isnan(m)) {m = 0;}
+
         name = "IntegralController";
     }
 
@@ -62,7 +64,8 @@ public:
     void connectConductance(conductance*);
     void connectSynapse(synapse*);
 
-    int getFullState(double * cont_state, int idx);
+
+    int getFullState(double*,int);
     double getState(int);
     
 
@@ -109,8 +112,8 @@ void IntegralController::init() {
 
 
 double IntegralController::getState(int idx) {
-    if (idx == 1) {return m;}
-    else if (idx == 2) {return channel->gbar;}
+    if (idx == 0) {return m;}
+    else if (idx == 1) {return channel->gbar;}
     else {return std::numeric_limits<double>::quiet_NaN();}
 
 }
@@ -193,7 +196,7 @@ void IntegralController::integrate(void) {
             {
 
             // integrate mRNA
-            m += (dt/tau_m)*(feedback_error->getState(0));
+            m += (dt/tau_m)*(feedback_error->getPrevState(0));
 
             // mRNA levels below zero don't make any sense
             if (m < 0) {m = 0;}
@@ -217,7 +220,7 @@ void IntegralController::integrate(void) {
 
 
             // integrate mRNA
-            m += (dt/tau_m)*(feedback_error->getState(0));
+            m += (dt/tau_m)*(feedback_error->getPrevState(0));
 
             // mRNA levels below zero don't make any sense
             if (m < 0) {m = 0;}

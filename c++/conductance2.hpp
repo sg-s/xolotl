@@ -338,3 +338,30 @@ void conductance::integrateMS(int k, double V, double Ca) {
 
 }
 
+
+
+/*
+This method returns the previous state of the value stored in this 
+mechanism by pulling it out of the mech_states array stored in the compartment that this mechanism belongs to 
+*/
+double mechanism::getPrevState(int i) {
+    return comp->mech_states.at(mech_state_offet + i);
+}
+
+
+
+
+/*
+THis method reads out the full state from the mechanism 
+and writes it to a provided array, returning the index of 
+the next position to write to
+*/
+int mechanism::getFullState(double* A, int idx) {
+
+
+    for (int i = 0; i < fullStateSize; i++) {
+        A[idx] = this->getState(i);
+        idx++;
+    } 
+    return idx;   
+}

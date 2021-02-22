@@ -26,19 +26,25 @@ public:
     }
 
     void connectConductance(conductance *);
-    int getFullState(double * cont_state, int idx);
+    double getState(int);
     
 
 };
 
 
-int ChannelProbe::getFullState(double *cont_state, int idx) {
-    // read out m and h
-    cont_state[idx] = channel->m;
-    idx++;
-    cont_state[idx] = channel->h;
-    idx++;
-    return idx;
+double ChannelProbe::getState(int idx) {
+    double v = 0;
+    switch (idx) {
+        case 0:
+            v = channel->m;
+            break;
+        case 1:
+            v =  channel->h;
+            break;
+        default:
+            mexErrMsgTxt("Illegal getState index");
+    }
+    return v;
 }
 
 

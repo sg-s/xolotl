@@ -10,7 +10,7 @@ x.set('*gbar',g0);
 x.AB.Leak.gbar = .099;
 
 % configure the target
-x.AB.add('CalciumTarget','Target',7)
+x.AB.add('InstCalciumError','Target',7)
 
 
 x.AB.NaV.add('oleary/IntegralController','tau_m',666);
