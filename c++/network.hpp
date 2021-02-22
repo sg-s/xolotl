@@ -330,7 +330,6 @@ void network::integrate(double * I_ext_now) {
         comp[i]->i_Ca = 0;
         comp[i]->I_ext = I_ext_now[i];
 
-
         comp[i]->integrateMechanisms();
 
         comp[i]->integrateChannels();

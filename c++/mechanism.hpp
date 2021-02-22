@@ -39,6 +39,7 @@ public:
     // as a string
     string controlling_class = "unset";
     string name = "unset";
+    string mechanism_type = "unset";
 
     int mechanism_idx;
 

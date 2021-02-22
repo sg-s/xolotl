@@ -9,8 +9,8 @@ g0 = 1e-1+1e-1*rand(8,1);
 x.set('*gbar',g0);
 x.AB.Leak.gbar = .099;
 
-% configure the target
-x.AB.add('CalciumTarget','Target',7)
+% configure the target and error rule
+x.AB.add('InstCalciumError','Target',7)
 
 
 x.AB.NaV.add('oleary/IntegralController','tau_m',666);

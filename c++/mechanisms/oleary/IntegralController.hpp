@@ -21,7 +21,11 @@ protected:
     // 1 --- channels
     // 2 --- synapses
     int control_type = 0;
-    double Target = 0;
+
+    // pointer to mechanism that generates the error
+    // signal
+    mechanism * feedback_error = 0;
+
 public:
     // timescales
     double tau_m = std::numeric_limits<double>::infinity();
@@ -44,7 +48,6 @@ public:
 
         fullStateSize = 2;
 
-        // if (tau_m<=0) {mexErrMsgTxt("[IntegralController] tau_m must be > 0. Perhaps you meant to set it to Inf?\n");}
         if (tau_g<=0) {mexErrMsgTxt("[IntegralController] tau_g must be > 0. Perhaps you meant to set it to Inf?\n");}
 
         name = "IntegralController";
@@ -81,28 +84,26 @@ void IntegralController::init() {
 
     int n_mech = temp_comp->n_mech;
 
-    bool targetMissing = true;
-
-
     // read the Calcium Target from the CalciumTarget mechanism
     // in the compartment that the controlled object is in 
     for (int i = 0; i < n_mech; i++) {
 
-        string this_mech = temp_comp->getMechanismPointer(i)->name.c_str();
+        string this_mech_type = temp_comp->getMechanismPointer(i)->mechanism_type.c_str();
+        string this_mech_name = temp_comp->getMechanismPointer(i)->name.c_str();
 
-        if (this_mech == "CalciumTarget") {
+        if (this_mech_type == "target_error") {
             if (verbosity==0) {
-                mexPrintf("IntegralController(%s) connected to [CalciumTarget]\n",controlling_class.c_str());
+                mexPrintf("IntegralController(%s) connected to ",controlling_class.c_str());
+                mexPrintf("[%s]\n",this_mech_name.c_str());
             }
 
-            Target = temp_comp->getMechanismPointer(i)->getState(0);
-            targetMissing = false;
+            feedback_error = temp_comp->getMechanismPointer(i);
         }
     }
 
     // attempt to read Ca_target from compartment -- legacy code support
-    if (targetMissing) {
-        Target = temp_comp->Ca_target;
+    if (!feedback_error) {
+        mexErrMsgTxt("Could not connect to any mechanism that identifies itself as a 'target_error' type.");
     }
 }
 
@@ -139,7 +140,7 @@ void IntegralController::connectConductance(conductance * channel_) {
 
     // connect to a channel
     channel = channel_;
-
+    comp = channel->container;
 
     // make sure the compartment that we are in knows about us
     (channel->container)->addMechanism(this);
@@ -180,11 +181,6 @@ void IntegralController::connectSynapse(synapse* syn_) {
 void IntegralController::integrate(void) {
 
 
-    // if the target is NaN, we will interpret this
-    // as the controller being disabled
-    // and do nothing
-    if (isnan(Target)) {return;}
-
 
     switch (control_type) {
         case 0:
@@ -195,15 +191,9 @@ void IntegralController::integrate(void) {
         case 1:
 
             {
-            double Ca_error = Target - (channel->container)->Ca_prev;
-
-            // debug -- constant drive
-            if (Target < 0) {
-                Ca_error = 1;
-            } 
 
             // integrate mRNA
-            m += (dt/tau_m)*(Ca_error);
+            m += (dt/tau_m)*(feedback_error->getState(0));
 
             // mRNA levels below zero don't make any sense
             if (m < 0) {m = 0;}
@@ -225,16 +215,9 @@ void IntegralController::integrate(void) {
         case 2:
             {
 
-            double Ca_error = Target - (syn->post_syn)->Ca_prev;
-
-            // debug -- constant drive
-            if (Target < 0) {
-                Ca_error = 1;
-            }  
-            
 
             // integrate mRNA
-            m += (dt/tau_m)*(Ca_error);
+            m += (dt/tau_m)*(feedback_error->getState(0));
 
             // mRNA levels below zero don't make any sense
             if (m < 0) {m = 0;}
