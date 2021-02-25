@@ -21,11 +21,11 @@ We will simulate a regulation model, based on [O'Leary et al.](https://www.cell.
 
 This is the core set of ODEs we are trying to model:
 
-$$ \tau_i \dot{m_i} = Ca - Ca_T + \xi $$
+$$ \tau_i \dot{m_i} = (Ca - Ca_T) + \xi $$
 
 $$ \tau_g \dot{g_i} = m_i - g_i$$
 
-This regulation model applies to each channel $i$ in the neuron, so we would imagine whatever mechanism we create to be added to each channel. 
+This regulation model applies to each channel i in the neuron, so we would imagine whatever mechanism we create to be added to each channel. 
 
 
 ## Monolithic architecture
@@ -34,7 +34,7 @@ This regulation model applies to each channel $i$ in the neuron, so we would ima
 
 Let's imagine what happens if we take these ODEs and stick them all into a single mechanism. We have some problems:
 
-* The $ Ca- Ca_T $ term really belongs to the compartment, not individual channels, because it is true for all channels
+* The (Ca- Ca_T) term really belongs to the compartment, not individual channels, because it is true for all channels
 * This means that we have to manually specify that it's the same for all channels, and also gives us the freedom to allow them to be different (which is bad, because this is not in our model)
 * If we wanted to use the noise term in a completely different model, we really can't
 * If we wanted to replace the first two terms in the first ODE with something else, there's no easy way to do it. 
@@ -57,10 +57,10 @@ We would create a model that looked like this using:
 ```
 % assuming x is a xolotl model with a compartment named C
 
-x.C.add('InstCalciumError'
+x.C.add('InstCalciumError')
 
-x.B.channel1.add('GaussianNoise')
-x.B.channel1.add('IntegralController')
+x.C.channel1.add('GaussianNoise')
+x.C.channel1.add('IntegralController')
 
 % and so on for the other channels
 
@@ -127,20 +127,3 @@ You don't have to manually set `controlling_class` -- this is done automatically
 * [cpplab.add](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#add)
 * [xolotl.add](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#add)
 ```
-
-
-### `findMechanismsControlling`
-
-
-How do we make sure the `IntegralController` mechanism connects to the `GaussianNoise` that is connected to the same channel as it? This problem is tricky because there are many `GaussianNoise`
-
-
-
-## See Also
-
-* [cpplab.set](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#set)
-* [cpplab.get](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#get)
-* [cpplab.find](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#find)
-* [cpplab.destroy](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#destroy)
-* [cpplab.add](https://xolotl.readthedocs.io/en/master/reference/matlab/cpplab/#add)
-* [xolotl.add](https://xolotl.readthedocs.io/en/master/reference/matlab/xolotl/#add)
