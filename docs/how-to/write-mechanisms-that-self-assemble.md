@@ -25,7 +25,7 @@ $$ \tau_i \dot{m_i} = Ca - Ca_T + \xi $$
 
 $$ \tau_g \dot{g_i} = m_i - g_i$$
 
-This regulation model applies to each channel $$i$$ in the neuron, so we would imagine whatever mechanism we create to be added to each channel. 
+This regulation model applies to each channel $i$ in the neuron, so we would imagine whatever mechanism we create to be added to each channel. 
 
 
 ## Monolithic architecture
@@ -34,7 +34,7 @@ This regulation model applies to each channel $$i$$ in the neuron, so we would i
 
 Let's imagine what happens if we take these ODEs and stick them all into a single mechanism. We have some problems:
 
-* The $$ Ca- Ca_T $$ term really belongs to the compartment, not individual channels, because it is true for all channels
+* The $ Ca- Ca_T $ term really belongs to the compartment, not individual channels, because it is true for all channels
 * This means that we have to manually specify that it's the same for all channels, and also gives us the freedom to allow them to be different (which is bad, because this is not in our model)
 * If we wanted to use the noise term in a completely different model, we really can't
 * If we wanted to replace the first two terms in the first ODE with something else, there's no easy way to do it. 
