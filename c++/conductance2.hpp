@@ -387,7 +387,7 @@ std::vector<mechanism*> mechanism::findMechanismsOfTypeControlling(std::string g
     std::vector<mechanism*> these_mechs;
      
     int n_mech = comp->n_mech;
-
+    mechanism * temp_mech = nullptr;
 
     string original_mech_name = this->name.c_str();
 
@@ -395,8 +395,10 @@ std::vector<mechanism*> mechanism::findMechanismsOfTypeControlling(std::string g
     // mechanism 
     for (int i = 0; i < n_mech; i++) {
 
-        string this_mech_type = comp->getMechanismPointer(i)->mechanism_type.c_str();
-        string this_mech_name = comp->getMechanismPointer(i)->name.c_str();
+        temp_mech = comp->getMechanismPointer(i);
+
+        string this_mech_type = temp_mech->mechanism_type.c_str();
+        string this_mech_name = temp_mech->name.c_str();
         string this_mech_controls = comp->getMechanismPointer(i)->controlling_class.c_str();
 
         if (this_mech_type == get_this_type && this_mech_controls == should_control) {
@@ -406,7 +408,9 @@ std::vector<mechanism*> mechanism::findMechanismsOfTypeControlling(std::string g
                 mexPrintf("[%s]\n",this_mech_name.c_str());
             }
 
-            these_mechs.push_back(comp->getMechanismPointer(i));
+            if (temp_mech != this) {
+                these_mechs.push_back(temp_mech);
+            }
         }
     }
 
@@ -431,7 +435,7 @@ std::vector<mechanism*> mechanism::findMechanismsOfType(std::string get_this_typ
     std::vector<mechanism*> these_mechs;
      
     int n_mech = comp->n_mech;
-
+    mechanism * temp_mech = nullptr;
 
     string original_mech_name = this->name.c_str();
 
@@ -439,8 +443,10 @@ std::vector<mechanism*> mechanism::findMechanismsOfType(std::string get_this_typ
     // mechanism 
     for (int i = 0; i < n_mech; i++) {
 
-        string this_mech_type = comp->getMechanismPointer(i)->mechanism_type.c_str();
-        string this_mech_name = comp->getMechanismPointer(i)->name.c_str();
+        temp_mech = comp->getMechanismPointer(i);
+
+        string this_mech_type = temp_mech->mechanism_type.c_str();
+        string this_mech_name = temp_mech->name.c_str();
 
         if (this_mech_type == get_this_type) {
             if (verbosity==0) {
@@ -449,7 +455,11 @@ std::vector<mechanism*> mechanism::findMechanismsOfType(std::string get_this_typ
                 mexPrintf("[%s]\n",this_mech_name.c_str());
             }
 
-            these_mechs.push_back(comp->getMechanismPointer(i));
+            if (this != temp_mech) {
+                these_mechs.push_back(temp_mech);
+            }
+
+            
         }
     }
 
@@ -470,22 +480,23 @@ You are free to do whatever you like with that vector. A typical
 use case would be to find mechanisms of a required type, then connect to them from another mechanism. 
 */
 
-std::vector<mechanism*> mechanism::findMechanismsOfTypeControlling(std::string should_control) {
+std::vector<mechanism*> mechanism::findMechanismsControlling(std::string should_control) {
 
 
     std::vector<mechanism*> these_mechs;
      
     int n_mech = comp->n_mech;
-
+    mechanism * temp_mech = nullptr;
 
     string original_mech_name = this->name.c_str();
 
     // connect to any mechanism identifying itself as an "mRNA_RHS"
     // mechanism 
     for (int i = 0; i < n_mech; i++) {
+        temp_mech = comp->getMechanismPointer(i);
 
-        string this_mech_name = comp->getMechanismPointer(i)->name.c_str();
-        string this_mech_controls = comp->getMechanismPointer(i)->controlling_class.c_str();
+        string this_mech_name = temp_mech->name.c_str();
+        string this_mech_controls = temp_mech->controlling_class.c_str();
 
         if (this_mech_controls == should_control) {
             if (verbosity==0) {
@@ -494,7 +505,10 @@ std::vector<mechanism*> mechanism::findMechanismsOfTypeControlling(std::string s
                 mexPrintf("[%s]\n",this_mech_name.c_str());
             }
 
-            these_mechs.push_back(comp->getMechanismPointer(i));
+            if (temp_mech != this) {
+                these_mechs.push_back(temp_mech);
+            }
+            
         }
     }
 

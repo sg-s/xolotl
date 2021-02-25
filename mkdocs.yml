@@ -36,6 +36,7 @@ pages:
     - Fit a model to arbitrary constraints: how-to/fit-parameters.md
     - Run simulations in parallel: how-to/run-simulations-in-parallel.md
     - Use stochastic channels: how-to/stochastic-channels.md
+    - Construct complex self-assembling models: how-to/write-mechanisms-that-self-assemble.md
   - Reference:
     - Units: 'reference/units.md'
     - C++ classes:
