@@ -354,7 +354,12 @@ double mechanism::getPrevState(int i) {
 /*
 THis method reads out the full state from the mechanism 
 and writes it to a provided array, returning the index of 
-the next position to write to
+the next position to write to.
+
+This method is used in two scenarios:
+
+1. In reading out mechanism state to output to the user
+2. In reading out mechanism state and storing it in the compartment's mech_state property to allow for synchronous updates. 
 */
 int mechanism::getFullState(double* A, int idx) {
 
@@ -365,3 +370,137 @@ int mechanism::getFullState(double* A, int idx) {
     } 
     return idx;   
 }
+
+
+
+/*
+This helper function find all mechanisms of a requested type, 
+that also control a requested class of mechanism, in
+the current compartment and returns a vector of pointers to them.
+You are free to do whatever you like with that vector. A typical
+use case would be to find mechanisms of a required type, then connect to them from another mechanism. 
+*/
+
+std::vector<mechanism*> mechanism::findMechanismsOfTypeControlling(std::string get_this_type, std::string should_control) {
+
+
+    std::vector<mechanism*> these_mechs;
+     
+    int n_mech = comp->n_mech;
+
+
+    string original_mech_name = this->name.c_str();
+
+    // connect to any mechanism identifying itself as an "mRNA_RHS"
+    // mechanism 
+    for (int i = 0; i < n_mech; i++) {
+
+        string this_mech_type = comp->getMechanismPointer(i)->mechanism_type.c_str();
+        string this_mech_name = comp->getMechanismPointer(i)->name.c_str();
+        string this_mech_controls = comp->getMechanismPointer(i)->controlling_class.c_str();
+
+        if (this_mech_type == get_this_type && this_mech_controls == should_control) {
+            if (verbosity==0) {
+                mexPrintf("%s",original_mech_name.c_str());
+                mexPrintf("(controlling %s) connected to ",controlling_class.c_str());
+                mexPrintf("[%s]\n",this_mech_name.c_str());
+            }
+
+            these_mechs.push_back(comp->getMechanismPointer(i));
+        }
+    }
+
+
+    return these_mechs;
+
+
+}
+
+
+
+/*
+This helper function find all mechanisms of a requested type in
+the current compartment and returns a vector of pointers to them.
+You are free to do whatever you like with that vector. A typical
+use case would be to find mechanisms of a required type, then connect to them from another mechanism. 
+*/
+
+std::vector<mechanism*> mechanism::findMechanismsOfType(std::string get_this_type) {
+
+
+    std::vector<mechanism*> these_mechs;
+     
+    int n_mech = comp->n_mech;
+
+
+    string original_mech_name = this->name.c_str();
+
+    // connect to any mechanism identifying itself as an "mRNA_RHS"
+    // mechanism 
+    for (int i = 0; i < n_mech; i++) {
+
+        string this_mech_type = comp->getMechanismPointer(i)->mechanism_type.c_str();
+        string this_mech_name = comp->getMechanismPointer(i)->name.c_str();
+
+        if (this_mech_type == get_this_type) {
+            if (verbosity==0) {
+                mexPrintf("%s",original_mech_name.c_str());
+                mexPrintf("(controlling %s) connected to ",controlling_class.c_str());
+                mexPrintf("[%s]\n",this_mech_name.c_str());
+            }
+
+            these_mechs.push_back(comp->getMechanismPointer(i));
+        }
+    }
+
+
+    return these_mechs;
+
+
+}
+
+
+
+
+/*
+This helper function find all mechanisms that control a specified
+class of mechanisms  in
+the current compartment and returns a vector of pointers to them.
+You are free to do whatever you like with that vector. A typical
+use case would be to find mechanisms of a required type, then connect to them from another mechanism. 
+*/
+
+std::vector<mechanism*> mechanism::findMechanismsOfTypeControlling(std::string should_control) {
+
+
+    std::vector<mechanism*> these_mechs;
+     
+    int n_mech = comp->n_mech;
+
+
+    string original_mech_name = this->name.c_str();
+
+    // connect to any mechanism identifying itself as an "mRNA_RHS"
+    // mechanism 
+    for (int i = 0; i < n_mech; i++) {
+
+        string this_mech_name = comp->getMechanismPointer(i)->name.c_str();
+        string this_mech_controls = comp->getMechanismPointer(i)->controlling_class.c_str();
+
+        if (this_mech_controls == should_control) {
+            if (verbosity==0) {
+                mexPrintf("%s",original_mech_name.c_str());
+                mexPrintf("(controlling %s) connected to ",controlling_class.c_str());
+                mexPrintf("[%s]\n",this_mech_name.c_str());
+            }
+
+            these_mechs.push_back(comp->getMechanismPointer(i));
+        }
+    }
+
+
+    return these_mechs;
+
+
+}
+

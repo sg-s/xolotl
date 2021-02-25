@@ -19,7 +19,10 @@ or even other mechanisms.
 #define MECHANISM
 #include <cmath>
 #include <string>
+#include <vector>
+
 using std::string;
+
 class compartment;
 class conductance;
 class synapse;
@@ -92,6 +95,15 @@ public:
     virtual int getFullState(double*, int);
     virtual double getState(int);
     double getPrevState(int);
+
+
+    // helper methods to allow mechanisms to self-assemble
+    // based on names and types
+    std::vector<mechanism*> findMechanismsOfTypeControlling(std::string, std::string); 
+
+    std::vector<mechanism*> findMechanismsOfType(std::string get_this_type);
+
+    std::vector<mechanism*> findMechanismsControlling(std::string); 
 
 
 };
@@ -205,3 +217,6 @@ void mechanism::checkSolvers(int k) {
 }
 
 #endif
+
+
+
