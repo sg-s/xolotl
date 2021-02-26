@@ -22,17 +22,25 @@ public:
     double noise = 0;
     double noise_amplitude = 0;
 
+
+    // how many dimensions should the GaussianNoise have?
+    int dimension = 1;
+
     // specify parameters + initial conditions for
     // mechanism that controls a conductance
-    GaussianNoise(double noise_amplitude_) {
+    GaussianNoise(double noise_amplitude_, double dimension_) {
 
         noise_amplitude = noise_amplitude_;
         if (isnan(noise_amplitude)) {noise_amplitude = 0;}
 
-        name = "GaussianNoise";
-        mechanism_type = "NoiseTerm";
+        if (isnan(dimension_)) {dimension_ = 1;}
 
-        fullStateSize = 1;
+        dimension = (int) dimension;
+
+        name = "GaussianNoise";
+        mechanism_type = "AdditiveNoise";
+
+        fullStateSize = dimension;
     }
 
 
@@ -46,7 +54,7 @@ public:
 
 };
 
-
+// doesn't matter what the index is, always return the same noise
 double GaussianNoise::getState(int i) {
     return noise;
 }
@@ -56,6 +64,7 @@ void GaussianNoise::connectCompartment(compartment * comp_) {
     comp = comp_;
     comp->addMechanism(this);
 }
+
 
 
 void GaussianNoise::connectConductance(conductance * channel_) {

@@ -21,7 +21,6 @@ x.AB.KCa.add('oleary/IntegralController','tau_m',1250);
 x.AB.Kd.add('oleary/IntegralController','tau_m',2000);
 x.AB.HCurrent.add('oleary/IntegralController','tau_m',125000);
 
-
 % try to download a binary
 % so that people without compilers can use this too
 try
@@ -31,6 +30,8 @@ try
 catch
 	x.download;
 end
+
+x.verbosity = 7;
 
 x.t_end = 5e5;
 x.sim_dt = .1;

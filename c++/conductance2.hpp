@@ -462,10 +462,7 @@ std::vector<mechanism*> mechanism::findMechanismsOfType(std::string get_this_typ
             
         }
     }
-
-
     return these_mechs;
-
 
 }
 

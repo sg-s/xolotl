@@ -64,14 +64,17 @@ public:
     // in the parent compartment from where we can start reading out values corresponding to this mechanism
     int mech_state_offet = 0;
 
+
     mechanism()
     {
         // null pointers to all
         // connectors for safety
-        channel = NULL;
-        syn = NULL;
-        comp = NULL;
+        channel = nullptr;
+        syn = nullptr;
+        comp = nullptr;
     }
+
+
 
     ~mechanism() {}
 
@@ -86,6 +89,8 @@ public:
     virtual void connectCompartment(compartment*);
     virtual void connectConductance(conductance*);
     virtual void connectSynapse(synapse *);
+
+
 
     virtual void init(void);
 
@@ -163,6 +168,7 @@ void mechanism::connectSynapse(synapse* syn_) {
     txt += ". This mechanism cannot connect to a synapse object";
     mexErrMsgTxt(txt.c_str());
 }
+
 
 
 

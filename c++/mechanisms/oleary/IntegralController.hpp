@@ -14,17 +14,13 @@
 class IntegralController: public mechanism {
 
 protected:
-    // flag used to switch between
-    // controlling channels and synapses
-    // meaning:
-    // 0 --- unset, will throw an error
-    // 1 --- channels
-    // 2 --- synapses
-    int control_type = 0;
 
-    // pointer to mechanism that generates the error
-    // signal
-    mechanism * feedback_error = 0;
+    // this keeps track of the total RHS value on the MRNA ODE
+    double RHS = 0;
+
+    // we use a vector to keep pointers to mechanisms that 
+    // contribute to RHS terms in the mRNA ODE
+    vector<mechanism*> RHS_terms;
 
 public:
     // timescales
@@ -56,16 +52,11 @@ public:
     }
 
 
+
+    // fcn declarations
     void integrate(void);
-
-
     void init(void);
-
     void connectConductance(conductance*);
-    void connectSynapse(synapse*);
-
-
-    int getFullState(double*,int);
     double getState(int);
     
 
@@ -73,69 +64,34 @@ public:
 
 
 void IntegralController::init() {
-    
-    compartment* temp_comp;
 
-    if (control_type == 1) {
-        temp_comp = channel->container;
-        
-    } else if (control_type == 2) {
-        temp_comp  = syn->post_syn;
-    } else {
-        mexErrMsgTxt("IntegralController can only control conductances or synapses\n");
+    if (isnan(m)) {
+        m = channel->gbar*(channel->container->A);
     }
 
-    int n_mech = temp_comp->n_mech;
 
-    // read the Calcium Target from the CalciumTarget mechanism
-    // in the compartment that the controlled object is in 
-    for (int i = 0; i < n_mech; i++) {
+    // connect to CalciumError type mechanisms
+    vector<mechanism*> temp = findMechanismsOfType("CalciumError");
+    RHS_terms.insert(RHS_terms.end(), temp.begin(), temp.end());
 
-        string this_mech_type = temp_comp->getMechanismPointer(i)->mechanism_type.c_str();
-        string this_mech_name = temp_comp->getMechanismPointer(i)->name.c_str();
-
-        if (this_mech_type == "target_error") {
-            if (verbosity==0) {
-                mexPrintf("IntegralController(%s) connected to ",controlling_class.c_str());
-                mexPrintf("[%s]\n",this_mech_name.c_str());
-            }
-
-            feedback_error = temp_comp->getMechanismPointer(i);
-        }
-    }
-
-    // attempt to read Ca_target from compartment -- legacy code support
-    if (!feedback_error) {
-        mexErrMsgTxt("Could not connect to any mechanism that identifies itself as a 'target_error' type.");
-    }
+    // connect to any mechanism that is controlling the same conductance as this controller
+    temp = findMechanismsControlling(this->controlling_class.c_str());
+    RHS_terms.insert(RHS_terms.end(), temp.begin(), temp.end());
 }
 
 
 double IntegralController::getState(int idx) {
-    if (idx == 0) {return m;}
-    else if (idx == 1) {return channel->gbar;}
-    else {return std::numeric_limits<double>::quiet_NaN();}
-
-}
-
-
-
-int IntegralController::getFullState(double *cont_state, int idx) {
-    // give it the current mRNA level
-    cont_state[idx] = m;
-
-    idx++;
-
-    // and also output the current gbar of the thing
-    // being controller
-    if (channel) {
-      cont_state[idx] = channel->gbar;
+    switch (idx) {
+        case 0:
+            return m;
+            break;
+        case 1:
+            return channel->gbar;
+            break;
+        default:
+            return std::numeric_limits<double>::quiet_NaN();
     }
-    else if (syn) {
-        cont_state[idx] = syn->gmax;
-    }
-    idx++;
-    return idx;
+
 }
 
 
@@ -149,101 +105,42 @@ void IntegralController::connectConductance(conductance * channel_) {
     (channel->container)->addMechanism(this);
 
 
-
     controlling_class = (channel_->name).c_str();
 
     // attempt to read the area of the container that this
     // controller should be in.
     container_A  = (channel->container)->A;
 
-    control_type = 1;
-
-
 }
 
-
-void IntegralController::connectSynapse(synapse* syn_) {
-
-    // connect to a synapse
-    syn = syn_;
-
-
-    // make sure the compartment that we are in knows about us
-    (syn->post_syn)->addMechanism(this);
-
-
-    // attempt to read the area of the container that this
-    // controller should be in.
-    container_A  = (syn->post_syn)->A;
-
-    control_type = 2;
-
-}
 
 
 void IntegralController::integrate(void) {
 
 
+    RHS = 0;
+    for (int i = 0; i < RHS_terms.size(); i++) {
+        RHS += RHS_terms[i]->getPrevState(0);
+    }
 
-    switch (control_type) {
-        case 0:
-            mexErrMsgTxt("[IntegralController] mis-configured controller. Make sure this object is contained by a conductance or synapse object");
-            break;
+    if (RHS == 0) {
+        return;
+    }
 
+    // integrate mRNA
+    m += (dt/tau_m)*(RHS);
 
-        case 1:
+    // mRNA levels below zero don't make any sense
+    if (m < 0) {m = 0;}
 
-            {
+    // copy the protein levels from this channel
+    double gdot = ((dt/tau_g)*(m - channel->gbar*container_A));
 
-            // integrate mRNA
-            m += (dt/tau_m)*(feedback_error->getPrevState(0));
-
-            // mRNA levels below zero don't make any sense
-            if (m < 0) {m = 0;}
-
-            // copy the protein levels from this channel
-            double gdot = ((dt/tau_g)*(m - channel->gbar*container_A));
-
-            // make sure it doesn't go below zero
-            if (channel->gbar + gdot/container_A < 0) {
-                channel->gbar = 0;
-            } else {
-                channel->gbar += gdot/container_A;
-            }
-
-
-            break;
-
-            }
-        case 2:
-            {
-
-
-            // integrate mRNA
-            m += (dt/tau_m)*(feedback_error->getPrevState(0));
-
-            // mRNA levels below zero don't make any sense
-            if (m < 0) {m = 0;}
-
-            // copy the protein levels from this syn
-            double gdot = ((dt/tau_g)*(m - syn->gmax*1e-3));
-
-            // make sure it doesn't go below zero
-            if (syn->gmax + gdot*1e3 < 0) {
-                syn->gmax = 0;
-            } else {
-                syn->gmax += gdot*1e3;
-            }
-
-
-            break;
-
-            }
-
-        default:
-            mexErrMsgTxt("[IntegralController] mis-configured controller");
-            break;
-
+    // make sure it doesn't go below zero
+    if (channel->gbar + gdot/container_A < 0) {
+        channel->gbar = 0;
+    } else {
+        channel->gbar += gdot/container_A;
     }
 
 

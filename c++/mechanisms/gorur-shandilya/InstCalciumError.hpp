@@ -29,7 +29,7 @@ public:
         fullStateSize = 1;
 
         name = "InstCalciumError";
-        mechanism_type = "target_error";
+        mechanism_type = "CalciumError";
     }
 
 
