@@ -46,7 +46,7 @@ public:
         tau_m = tau_m_;
         tau_g = tau_g_;
         m = m_;
-        Gain_ = Gain;
+        Gain = Gain_;
 
 
         fullStateSize = 2;
