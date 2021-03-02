@@ -71,7 +71,6 @@ void GaussianNoise::connectConductance(conductance * channel_) {
 
     // connect to a channel
     channel = channel_;
-    comp = channel->container;
 
     // make sure the compartment that we are in knows about us
     (channel->container)->addMechanism(this);
@@ -83,7 +82,7 @@ void GaussianNoise::connectConductance(conductance * channel_) {
 
 
 void GaussianNoise::integrate(void) {
-    noise = dt*noise_amplitude*(conductance::gaussrand());
+    noise = noise_amplitude*(conductance::gaussrand());
 }
 
 

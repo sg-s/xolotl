@@ -458,17 +458,23 @@ void compartment::addMechanism(mechanism *mech_) {
     mech_->mechanism_idx = n_mech; // tell the mechanism what rank it has
     n_mech++;
 
+
+    // give the mechanism a pointer to the compartment it is in
+    mech_->comp = this;
+
     // also store the mechanism's full state size
     mechanism_sizes.push_back(mech_->fullStateSize);
 
 
     // tell the mechanism its offset
-    mech_->mech_state_offet = mech_states.size();
+    mech_->mech_state_offset = mech_states.size();
 
     // resize the mech_states vector
     for (int i = 0; i < mech_->fullStateSize; i++) {
         mech_states.push_back(0);
     }
+
+    // mexPrintf("full_mech_size = %i\n",mech_states.size());
 
 }
 
@@ -924,10 +930,10 @@ void compartment::integrateMechanisms(void) {
     // write to mech_states (a store of previous states)
     // by asking every mechanism for their current state
     for (int i=0; i<n_mech; i++) {
-        //mexPrintf("mech name: %s\n",mech[i]->name.c_str());
+        // mexPrintf("mech name: %s\n",mech[i]->name.c_str());
         for (int j=0; j < mechanism_sizes[i]; j++) {
-            //mexPrintf("state valuue = %f\n",mech[i]->getState(j));
-            mech_states[mech[i]->mech_state_offet + j] = mech[i]->getState(j);
+            // mexPrintf("state value = %f\n",mech[i]->getState(j));
+            mech_states.at((mech[i]->mech_state_offset) + j) = mech[i]->getState(j);
         }
     }
 

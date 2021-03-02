@@ -22,6 +22,8 @@ protected:
     // contribute to RHS terms in the mRNA ODE
     vector<mechanism*> RHS_terms;
 
+    mechanism* calcium_error; 
+
 public:
     // timescales
     double tau_m = std::numeric_limits<double>::infinity();
@@ -33,13 +35,18 @@ public:
     // area of the container this is in
     double container_A;
 
+
+    // gain term on the calcium error
+    double Gain = 1;
+
     // specify parameters + initial conditions for
     // mechanism that controls a conductance
-    IntegralController(double tau_m_, double tau_g_, double m_) {
+    IntegralController(double tau_m_, double tau_g_, double m_, double Gain_) {
 
         tau_m = tau_m_;
         tau_g = tau_g_;
         m = m_;
+        Gain_ = Gain;
 
 
         fullStateSize = 2;
@@ -49,6 +56,7 @@ public:
         if (isnan(m)) {m = 0;}
 
         name = "IntegralController";
+        mechanism_type = "Homeostatic_regulator";
     }
 
 
@@ -56,7 +64,6 @@ public:
     // fcn declarations
     void integrate(void);
     void init(void);
-    void connectConductance(conductance*);
     double getState(int);
     
 
@@ -65,18 +72,28 @@ public:
 
 void IntegralController::init() {
 
+
+    // attempt to read the area of the container that this
+    // controller should be in.
+    container_A  = (channel->container)->A;
+
     if (isnan(m)) {
-        m = channel->gbar*(channel->container->A);
+        m = channel->gbar*(container_A);
     }
 
 
     // connect to CalciumError type mechanisms
     vector<mechanism*> temp = findMechanismsOfType("CalciumError");
-    RHS_terms.insert(RHS_terms.end(), temp.begin(), temp.end());
+    calcium_error = temp.at(0);
 
     // connect to any mechanism that is controlling the same conductance as this controller
-    temp = findMechanismsControlling(this->controlling_class.c_str());
+    temp = findMechanismsControlling(controlling_class.c_str());
+
+    // mexPrintf("Number of other mechanisms controlling the same thing = %i\n",temp.size());
+
     RHS_terms.insert(RHS_terms.end(), temp.begin(), temp.end());
+
+    // mexPrintf("Number of RHS terms = %i \n",RHS_terms.size());
 }
 
 
@@ -95,33 +112,28 @@ double IntegralController::getState(int idx) {
 }
 
 
-void IntegralController::connectConductance(conductance * channel_) {
-
-    // connect to a channel
-    channel = channel_;
-    comp = channel->container;
-
-    // make sure the compartment that we are in knows about us
-    (channel->container)->addMechanism(this);
-
-
-    controlling_class = (channel_->name).c_str();
-
-    // attempt to read the area of the container that this
-    // controller should be in.
-    container_A  = (channel->container)->A;
-
-}
-
-
 
 void IntegralController::integrate(void) {
 
 
+    // mexPrintf("IntegralController::integrate starting....\n");
+
+
+
     RHS = 0;
-    for (int i = 0; i < RHS_terms.size(); i++) {
-        RHS += RHS_terms[i]->getPrevState(0);
+
+    if (calcium_error) {
+        RHS +=  calcium_error->getPrevState(0)*Gain;
     }
+
+
+
+    for (int i = 0; i < RHS_terms.size(); i++) {
+        RHS += RHS_terms.at(i)->getPrevState(0);
+    }
+
+
+    // mexPrintf("IntegralController::integrate starting@131\n");
 
     if (RHS == 0) {
         return;

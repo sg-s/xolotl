@@ -345,7 +345,7 @@ This method returns the previous state of the value stored in this
 mechanism by pulling it out of the mech_states array stored in the compartment that this mechanism belongs to 
 */
 double mechanism::getPrevState(int i) {
-    return comp->mech_states.at(mech_state_offet + i);
+    return comp->mech_states.at(mech_state_offset + i);
 }
 
 
@@ -362,14 +362,63 @@ This method is used in two scenarios:
 2. In reading out mechanism state and storing it in the compartment's mech_state property to allow for synchronous updates. 
 */
 int mechanism::getFullState(double* A, int idx) {
-
-
     for (int i = 0; i < fullStateSize; i++) {
-        A[idx] = this->getState(i);
+        A[idx] = getState(i);
         idx++;
     } 
     return idx;   
 }
+
+
+
+
+/*
+This helper function find ONE mechanism with a certain name, 
+that also control a certain thing, in
+the current compartment and returns a pointer to it.
+*/
+
+mechanism* mechanism::findMechanismNamedControlling(std::string get_this_name, std::string should_control) {
+
+
+    mechanism* this_mech;
+     
+    int n_mech = comp->n_mech;
+    mechanism * temp_mech = nullptr;
+
+    string original_mech_name = this->name.c_str();
+
+    // connect to any mechanism identifying itself as an "mRNA_RHS"
+    // mechanism 
+    for (int i = 0; i < n_mech; i++) {
+
+        temp_mech = comp->getMechanismPointer(i);
+
+        if (!temp_mech) {
+            continue;
+        }
+
+        string this_mech_name = temp_mech->name.c_str();
+        string this_mech_controls = comp->getMechanismPointer(i)->controlling_class.c_str();
+
+        if (this_mech_name == get_this_name && this_mech_controls == should_control && temp_mech != this) {
+            if (verbosity==0) {
+                mexPrintf("%s",original_mech_name.c_str());
+                mexPrintf("(controlling %s) connected to ",controlling_class.c_str());
+                mexPrintf("[%s]\n",this_mech_name.c_str());
+            }
+
+            this_mech = temp_mech;
+            return this_mech;
+        }
+    }
+
+
+    return this_mech;
+
+
+}
+
 
 
 
@@ -397,20 +446,23 @@ std::vector<mechanism*> mechanism::findMechanismsOfTypeControlling(std::string g
 
         temp_mech = comp->getMechanismPointer(i);
 
+        if (!temp_mech) {
+            continue;
+        }
+
+
         string this_mech_type = temp_mech->mechanism_type.c_str();
         string this_mech_name = temp_mech->name.c_str();
         string this_mech_controls = comp->getMechanismPointer(i)->controlling_class.c_str();
 
-        if (this_mech_type == get_this_type && this_mech_controls == should_control) {
+        if (this_mech_type == get_this_type && this_mech_controls == should_control && temp_mech != this) {
             if (verbosity==0) {
                 mexPrintf("%s",original_mech_name.c_str());
                 mexPrintf("(controlling %s) connected to ",controlling_class.c_str());
                 mexPrintf("[%s]\n",this_mech_name.c_str());
             }
 
-            if (temp_mech != this) {
-                these_mechs.push_back(temp_mech);
-            }
+            these_mechs.push_back(temp_mech);
         }
     }
 
@@ -445,20 +497,21 @@ std::vector<mechanism*> mechanism::findMechanismsOfType(std::string get_this_typ
 
         temp_mech = comp->getMechanismPointer(i);
 
+        if (!temp_mech) {
+            continue;
+        }
+
         string this_mech_type = temp_mech->mechanism_type.c_str();
         string this_mech_name = temp_mech->name.c_str();
 
-        if (this_mech_type == get_this_type) {
+        if (this_mech_type == get_this_type && this != temp_mech) {
             if (verbosity==0) {
                 mexPrintf("%s",original_mech_name.c_str());
                 mexPrintf("(controlling %s) connected to ",controlling_class.c_str());
                 mexPrintf("[%s]\n",this_mech_name.c_str());
             }
 
-            if (this != temp_mech) {
-                these_mechs.push_back(temp_mech);
-            }
-
+            these_mechs.push_back(temp_mech);
             
         }
     }
@@ -492,19 +545,21 @@ std::vector<mechanism*> mechanism::findMechanismsControlling(std::string should_
     for (int i = 0; i < n_mech; i++) {
         temp_mech = comp->getMechanismPointer(i);
 
+        if (!temp_mech) {
+            continue;
+        }
+
         string this_mech_name = temp_mech->name.c_str();
         string this_mech_controls = temp_mech->controlling_class.c_str();
 
-        if (this_mech_controls == should_control) {
+        if (this_mech_controls == should_control && temp_mech != this) {
             if (verbosity==0) {
                 mexPrintf("%s",original_mech_name.c_str());
                 mexPrintf("(controlling %s) connected to ",controlling_class.c_str());
                 mexPrintf("[%s]\n",this_mech_name.c_str());
             }
 
-            if (temp_mech != this) {
-                these_mechs.push_back(temp_mech);
-            }
+            these_mechs.push_back(temp_mech);
             
         }
     }
@@ -515,3 +570,66 @@ std::vector<mechanism*> mechanism::findMechanismsControlling(std::string should_
 
 }
 
+
+
+
+/*
+This virtual method is a placeholder method of mechanism connects 
+a mechanism to a compartment. It sets the "comp" pointer 
+in the mechanism, and tells the parent compartment about this 
+mechanism (via addMechanism). 
+
+If you want to prevent your mechanism from connecting to a 
+compartment, override this method with something that 
+throws a runtime error. 
+*/
+void mechanism::connectCompartment(compartment* comp_) {
+
+    comp = comp_;
+
+    // make sure the compartment that we are in knows about us
+    comp->addMechanism(this);
+    controlling_class = "compartment";
+}
+
+/*
+This virtual method is a placeholder method of mechanism connects 
+a mechanism to a conductance. It sets the "channel" pointer 
+in the mechanism, and tells the parent compartment about this 
+mechanism (via addMechanism). 
+
+If you want to prevent your mechanism from connecting to a 
+conductance, override this method with something that 
+throws a runtime error. 
+*/
+void mechanism::connectConductance(conductance* channel_) {
+
+    // connect to a channel
+    channel = channel_;
+
+    // make sure the compartment that we are in knows about us
+    (channel->container)->addMechanism(this);
+    controlling_class = (channel_->name).c_str();
+
+}
+
+/*
+This virtual method is a placeholder method of mechanism connects 
+a mechanism to a conductance. It sets the "channel" pointer 
+in the mechanism, and tells the parent compartment about this 
+mechanism (via addMechanism). 
+
+If you want to prevent your mechanism from connecting to a 
+conductance, override this method with something that 
+throws a runtime error. 
+*/
+void mechanism::connectSynapse(synapse* syn_) {
+
+    // connect to a channel
+    syn = syn_;
+
+    // make sure the compartment that we are in knows about us
+    (syn->post_syn)->addMechanism(this);
+    controlling_class = (syn->name).c_str();
+
+}

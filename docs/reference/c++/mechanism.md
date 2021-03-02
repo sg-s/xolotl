@@ -37,88 +37,7 @@ method, which will be used instead of this.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L125)
-
--------
-
-
-
-### connectCompartment
-
-**Function Signature**
-
-```C++
-void connectCompartment(compartment* comp_) 
-```
-
-**Description**
-
-
-This virtual method is a placeholder method of mechanism that does
-nothing except throw an error. If your mechanism is properly 
-written, this will not be run (and therefore the error will
-not be thrown) because your mechanism will define a "connect"
-method, which will be used instead of this.
-
-
-
- **Code**
-
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L137)
-
--------
-
-
-
-### connectConductance
-
-**Function Signature**
-
-```C++
-void connectConductance(conductance* cond_) 
-```
-
-**Description**
-
-
-This virtual method is a placeholder method of mechanism that does
-nothing except throw an error. If your mechanism is properly 
-written, this will not be run (and therefore the error will
-not be thrown) because your mechanism will define a "connect"
-method, which will be used instead of this.
-
-
-
- **Code**
-
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L151)
-
--------
-
-
-
-### connectSynapse
-
-**Function Signature**
-
-```C++
-void connectSynapse(synapse* syn_) 
-```
-
-**Description**
-
-
-This virtual method is a placeholder method of mechanism that does
-nothing except throw an error. If your mechanism is properly 
-written, this will not be run (and therefore the error will
-not be thrown) because your mechanism will define a "connect"
-method, which will be used instead of this.
-
-
-
- **Code**
-
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L165)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L122)
 
 -------
 
@@ -145,7 +64,7 @@ method, which will be used instead of this.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L182)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L135)
 
 -------
 
@@ -172,7 +91,7 @@ good place to put code that you need to run once before the simulation.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L195)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L148)
 
 -------
 
@@ -195,7 +114,7 @@ out of your mechanism, make sure this returns something sensible.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L203)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L156)
 
 -------
 
@@ -220,7 +139,7 @@ to override this.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L214)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/mechanism.hpp#L167)
 
 -------
 

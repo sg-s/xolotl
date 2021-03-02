@@ -31,8 +31,6 @@ catch
 	x.download;
 end
 
-x.verbosity = 7;
-
 x.t_end = 5e5;
 x.sim_dt = .1;
 x.dt = 100;

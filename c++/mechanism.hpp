@@ -62,13 +62,11 @@ public:
 
     // this int identifies the location of the start in mech_state
     // in the parent compartment from where we can start reading out values corresponding to this mechanism
-    int mech_state_offet = 0;
+    int mech_state_offset = 0;
 
 
     mechanism()
     {
-        // null pointers to all
-        // connectors for safety
         channel = nullptr;
         syn = nullptr;
         comp = nullptr;
@@ -105,10 +103,9 @@ public:
     // helper methods to allow mechanisms to self-assemble
     // based on names and types
     std::vector<mechanism*> findMechanismsOfTypeControlling(std::string, std::string); 
-
     std::vector<mechanism*> findMechanismsOfType(std::string get_this_type);
-
-    std::vector<mechanism*> findMechanismsControlling(std::string); 
+    std::vector<mechanism*> findMechanismsControlling(std::string);
+    mechanism* findMechanismNamedControlling(std::string, std::string);
 
 
 };
@@ -125,50 +122,6 @@ method, which will be used instead of this.
 void mechanism::integrate() {
     // do nothing
 }
-
-
-/*
-This virtual method is a placeholder method of mechanism that does
-nothing except throw an error. If your mechanism is properly 
-written, this will not be run (and therefore the error will
-not be thrown) because your mechanism will define a "connect"
-method, which will be used instead of this.
-*/
-void mechanism::connectCompartment(compartment* comp_) {
-    string txt = "Error using ";
-    txt += name;
-    txt += ". This mechanism cannot connect to a compartment object";
-    mexErrMsgTxt(txt.c_str());
-}
-
-/*
-This virtual method is a placeholder method of mechanism that does
-nothing except throw an error. If your mechanism is properly 
-written, this will not be run (and therefore the error will
-not be thrown) because your mechanism will define a "connect"
-method, which will be used instead of this.
-*/
-void mechanism::connectConductance(conductance* cond_) {
-    string txt = "Error using ";
-    txt += name;
-    txt += ". This mechanism cannot connect to a conductance object";
-    mexErrMsgTxt(txt.c_str());
-}
-
-/*
-This virtual method is a placeholder method of mechanism that does
-nothing except throw an error. If your mechanism is properly 
-written, this will not be run (and therefore the error will
-not be thrown) because your mechanism will define a "connect"
-method, which will be used instead of this.
-*/
-void mechanism::connectSynapse(synapse* syn_) {
-    string txt = "Error using ";
-    txt += name;
-    txt += ". This mechanism cannot connect to a synapse object";
-    mexErrMsgTxt(txt.c_str());
-}
-
 
 
 
