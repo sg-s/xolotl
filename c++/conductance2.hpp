@@ -381,7 +381,7 @@ the current compartment and returns a pointer to it.
 mechanism* mechanism::findMechanismNamedControlling(std::string get_this_name, std::string should_control) {
 
 
-    mechanism* this_mech;
+    mechanism* this_mech = nullptr;
      
     int n_mech = comp->n_mech;
     mechanism * temp_mech = nullptr;

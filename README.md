@@ -104,7 +104,9 @@ ISSN={1662-5196},
 ![](https://user-images.githubusercontent.com/6005346/41205222-30b6f3d4-6cbd-11e8-983b-9125585d629a.png)
 
 
-# Papers that use `xolotl`
+# Papers and projects that use `xolotl`
 
 1. [Regulation of Eag by Ca2+/calmodulin controls presynaptic excitability in Drosophila](https://www.physiology.org/doi/full/10.1152/jn.00820.2017)
 2. [Homeostatic plasticity rules that compensate for cell size are susceptible to channel deletion](https://www.biorxiv.org/cgi/content/short/753608v1)
+3. [NBIO140 Lab 5](https://github.com/sg-s/nbio140-lab5) Lab for NBIO140 taught by Steven van Hooser
+4. [BlackBoxNeuron](https://github.com/sg-s/black-box-neuron-public) Neuron simulator designed for teaching and undergraduate research. Used for the [Brandeis QBREC](https://www.brandeis.edu/qbrec/) program 

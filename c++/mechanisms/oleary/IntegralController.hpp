@@ -116,18 +116,16 @@ double IntegralController::getState(int idx) {
 void IntegralController::integrate(void) {
 
 
-    // mexPrintf("IntegralController::integrate starting....\n");
-
-
-
     RHS = 0;
 
+
+    // get the RHS term due to the calcium error,
+    // and multiply by gain
     if (calcium_error) {
-        RHS +=  calcium_error->getPrevState(0)*Gain;
+        RHS += calcium_error->getPrevState(0)*Gain;
     }
 
-
-
+    // there may be other RHS terms, get them all
     for (int i = 0; i < RHS_terms.size(); i++) {
         RHS += RHS_terms.at(i)->getPrevState(0);
     }
