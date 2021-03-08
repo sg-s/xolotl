@@ -1276,6 +1276,26 @@ x.reset('base')
 
 -------
 
+### time
+
+**Syntax**
+
+```matlab
+plot(x.time,x.integrate)
+```
+
+This helper method generates a time vector for your plots in seconds. 
+
+
+
+
+!!! info "See Also"
+    * [xolotl.integrate](../xolotl/#integrate)
+
+
+
+-------
+
 ### transpile
 
 

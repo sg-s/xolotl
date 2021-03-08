@@ -51,7 +51,7 @@ figure('outerposition',[300 300 900 901],'PaperUnits','points','PaperSize',[1200
 
 subplot(3,1,1); hold on
 
-time = x.dt*(1:length(Ca))*1e-3;
+time = x.time;
 plot(time,1+time*0,'k--');
 plot(time,Ca,'r','LineWidth',2);
 set(gca,'XScale','log','YScale','log')
@@ -61,8 +61,7 @@ ylabel('<Ca>/Ca_T ')
 
 subplot(3,1,2); hold on
 
-time = x.dt*(1:length(g))*1e-3;
-plot(time,g);
+plot(x.time,g);
 set(gca,'XScale','log','YScale','log','YTick',[1e-2 1e0 1e2 1e4])
 xlabel('Time (s)')
 ylabel('g (uS/mm^2)')
@@ -75,8 +74,7 @@ subplot(3,1,3); hold on
 x.dt = .1;
 x.t_end = 1e3;
 V = x.integrate;
-time = x.dt*(1:length(V))*1e-3;
-plot(time,V,'k')
+plot(x.time,V,'k')
 set(gca,'YLim',[-80 50])
 ylabel('V_m (mV)')
 xlabel('Time (s)')
