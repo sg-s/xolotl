@@ -13,6 +13,8 @@ x.AB.Leak.gbar = .099;
 x.AB.add('InstCalciumError','Target',7)
 
 
+x.AB.add('CalciumSensor');
+
 x.AB.NaV.add('oleary/IntegralController','tau_m',666);
 x.AB.CaT.add('oleary/IntegralController','tau_m',55555);
 x.AB.CaS.add('oleary/IntegralController','tau_m',45454);
@@ -34,23 +36,42 @@ end
 x.t_end = 5e5;
 x.sim_dt = .1;
 x.dt = 100;
-[~,~,C] = x.integrate;
 
-% remove the column that corresponds to the InstCalciumError
-C(:,9) = [];
+x.output_type = 1;
+
+data = x.integrate;
+g = xolotl.filterOutputData(data,'IntegralController');
+g = g(:,2:2:end);
+
+Ca = xolotl.filterOutputData(data,'CalciumSensor');
+Ca = Ca./x.AB.InstCalciumError.Target;
+
+figure('outerposition',[300 300 900 901],'PaperUnits','points','PaperSize',[1200 901]); hold on
 
 
+subplot(3,1,1); hold on
 
-figure('outerposition',[300 300 900 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
-subplot(2,1,1); hold on
+time = x.dt*(1:length(Ca))*1e-3;
+plot(time,1+time*0,'k--');
+plot(time,Ca,'r','LineWidth',2);
+set(gca,'XScale','log','YScale','log')
+xlabel('Time (s)')
+ylabel('<Ca>/Ca_T ')
 
-time = x.dt*(1:length(C))*1e-3;
-plot(time,C(:,2:2:end));
+
+subplot(3,1,2); hold on
+
+time = x.dt*(1:length(g))*1e-3;
+plot(time,g);
 set(gca,'XScale','log','YScale','log','YTick',[1e-2 1e0 1e2 1e4])
 xlabel('Time (s)')
 ylabel('g (uS/mm^2)')
 
-subplot(2,1,2); hold on
+
+
+x.output_type = 0;
+
+subplot(3,1,3); hold on
 x.dt = .1;
 x.t_end = 1e3;
 V = x.integrate;
