@@ -31,15 +31,12 @@
 
 
 
-function show(self,obj, custom_name, Ca_in, Ca_out)
+function show(self,obj, custom_name)
 
-if ~exist('Ca_in','var')
-	Ca_in = .05;
-end
 
-if ~exist('Ca_out','var')
-	Ca_out = 3000;
-end
+Ca_in = self.(self.child).Ca;
+Ca_out = self.(self.child).Ca_out;
+
 
 if isa(obj,'cpplab')
 	% we have been given a cpplab object

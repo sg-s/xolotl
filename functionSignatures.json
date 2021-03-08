@@ -4,7 +4,8 @@
         "inputs":
         [
             {"name":"x","kind":"required","type":"xolotl"},
-            {"name":"obj", "kind":"required", "type":"choices=cpplab.search('conductances')"}
+            {"name":"obj", "kind":"required", "type":"choices=cpplab.search('conductances')"},
+            {"name": "custom_name", "kind": "ordered", "type": "choices={'custom name'}"}
         ]
     },
 
