@@ -56,10 +56,11 @@ for i = 1:length(fn)
 	else
 		if ~isempty(strfind(fn{i},wkey)) | strcmp(fn{i},key)
 			% key match
+
 			if isempty(data)
 				data = temp;
 			else
-				data = [data new_data];
+				data = [data temp];
 			end
 		end
 	end

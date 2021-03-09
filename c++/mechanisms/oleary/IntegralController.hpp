@@ -93,7 +93,11 @@ void IntegralController::init() {
 
     RHS_terms.insert(RHS_terms.end(), temp.begin(), temp.end());
 
-    // mexPrintf("Number of RHS terms = %i \n",RHS_terms.size());
+
+    if (verbosity == 0) {
+        mexPrintf("Number of additional RHS terms = %i \n",RHS_terms.size());
+    }
+    
 }
 
 
