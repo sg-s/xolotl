@@ -1052,11 +1052,18 @@ void compartment::integrateV_clamp(double V_clamp) {
 
     // calculate I_clamp, and set voltage to the clamped
     // voltage
-    double E = exp(-dt/(Cm/(sigma_g)));
-    V_inf = (V_clamp - V*E)/(1 - E);
-    I_clamp =  A*(V_inf*sigma_g - sigma_gE);
+    // double E = exp(-dt/(Cm/(sigma_g)));
+    //V_inf = (V_clamp - V*E)/(1 - E);
+    //I_clamp =  A*(V_inf*sigma_g - sigma_gE);
 
     V = V_clamp;
+    I_clamp = 0;
+    for (int i =0; i < n_cond; i++){
+        I_clamp += (cond.at(i))->getCurrent(V);
+    }
+
+    I_clamp = I_clamp*A;
+
 
 }
 

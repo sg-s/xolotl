@@ -26,7 +26,7 @@ a = adaptive('MaxIter',20);
 % create the sampling function
 % here, we are sampling the burst period
 % and varying the H current and CaS maximal conductances
-a.SampleFcn = @(params) xtools.sampleMetrics(x,[],parameters_to_vary,params);
+a.SampleFcn = @(params) xtools.sampleMetrics(x,parameters_to_vary,params);
 
 % set up lower and upper bounds for params
 a.Lower = [0 0];
