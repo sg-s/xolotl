@@ -55,7 +55,7 @@ header_files{2} = fullfile(cpp_folder,'synapse.hpp');
 header_files{3} = fullfile(cpp_folder,'mechanism.hpp');
 header_files{4} = fullfile(cpp_folder,'compartment.hpp');
 header_files{5} = fullfile(cpp_folder,'network.hpp');
-header_files{6} = fullfile(cpp_folder,'conductance2.hpp');
+header_files{6} = fullfile(cpp_folder,'extra_methods.hpp');
 
 
 

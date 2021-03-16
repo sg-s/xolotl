@@ -14,7 +14,7 @@ want to pull these values out, this is what you have to do.
 
 If the channel you want to inspect follows the standard Hodgkin-Huxley
 formalism (most channels in xolotl do), and its integration routines
-use the built in [conductance::integrate](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/conductance2.hpp) methods, then you can use the 
+use the built in [conductance::integrate](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/extra_methods.hpp) methods, then you can use the 
 `channelProbe` mechanism to read out values. Like so:
 
 ```matlab

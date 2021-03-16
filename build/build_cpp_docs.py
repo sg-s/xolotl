@@ -115,6 +115,12 @@ for file in sorted(glob.glob("c++/*.hpp")):
 			if desc:
 				for i in range(desc, line_no):
 					write_this = lines[i]
+
+					if write_this.find('#') > 0:
+						a = write_this.find('#')
+						replace_me = write_this[a:].lower()
+						write_this = write_this[0:a-1] + replace_me
+
 					write_this = write_this.replace('/*','')
 					write_this = write_this.replace('*/','')
 					outfile.write(write_this)

@@ -33,7 +33,7 @@
 
 function show(self,obj, custom_name)
 
-
+assert(~isempty(self.Children),'xolotl object should contain at least 1 compartment for x.show() to work. This is so that we are explicit about calcium levels, etc.')
 Ca_in = self.(self.child).Ca;
 Ca_out = self.(self.child).Ca_out;
 
