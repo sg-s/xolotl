@@ -32,6 +32,7 @@ public:
         name = "ACurrent";
 
 
+        perm.K = 1;
     }
 
     double m_inf(double, double);

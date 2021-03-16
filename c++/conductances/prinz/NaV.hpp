@@ -31,6 +31,9 @@ public:
 
         name = "NaV";
 
+
+        perm.Na = 1;
+
     }
 
     double m_inf(double, double);

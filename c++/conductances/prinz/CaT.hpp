@@ -34,6 +34,8 @@ public:
         name = "CaT";
 
         is_calcium = true;
+        perm.Ca = 1;
+
     }
 
 

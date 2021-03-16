@@ -120,6 +120,10 @@ public:
         AllowHInfApproximation = true;
 
         name = "NewCond";
+
+        // define permeabilities to different ions
+        perm.K = .1;
+        perm.Na = .9; 
     }
 
     double m_inf(double, double);
@@ -162,7 +166,7 @@ there isn't anything else that overrides it. If you specify your own
 
 ## Creating new mechanisms
 
-Because mechanisms are so generic, the only way to make new
+Because mechanisms can be just about anything, the only way to make new
 mechanisms is to write new C++ files. As with conductances,
 new mechanisms inherit from the abstract C++ class called 
 "mechanism" and it is typically straightforward to write a new mechanism.
@@ -188,24 +192,18 @@ public:
     double B = 1;
 
     // constructor
-    NewMech(double A_, B_) {
+    NewMech(double A_, double B_) {
         A = A_;
         B = B_;
         controlling_class = "unset";
         name = "NewMech";
+        mechanism_type = "foo";
     }
 
     void integrate(void);
     void integrateMS(int, double, double);
 
     double NewMechCustomMethod(double);
-
-    // these connector methods are needed so that
-    // we know how the mechanism interacts with other
-    // components
-    void connect(compartment*);
-    void connect(conductance*);
-    void connect(synapse*);
 
     // these methods allow reading out of the mechanism
     // state
@@ -220,14 +218,6 @@ public:
 // fill in values in the mech_state array
 int NewMech::getFullState(double *mech_state, int idx) {
     return idx;
-}
-
-// connection methods
-// we allow the mechanism to connect to a compartment
-// all other connection attempts will lead to a runtime error
-void NewMech::connect(compartment* comp_) {
-    comp = comp_;
-    comp->addMechanism(this);
 }
 
 

@@ -33,6 +33,8 @@ public:
         is_calcium = true;
         name = "CaS";
 
+        perm.Ca = 1;
+
     }
 
     double m_inf(double, double);

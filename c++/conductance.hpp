@@ -93,6 +93,14 @@ broadcast to all components from `xolotl.verbosity`.
 using std::string;
 class compartment;
 
+
+struct Permeability {
+    double K = 0;
+    double Ca = 0;
+    double Na = 0;
+    double Cl = 0;
+};
+
 class conductance {
 protected:
     int V_idx = 0;
@@ -194,7 +202,13 @@ public:
     double taum = 1;
     double tauh = 1;
 
+    Permeability perm; 
+
 };
+
+
+
+
 
 
 /*

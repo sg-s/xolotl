@@ -27,6 +27,7 @@ public:
 
         name = "HCurrent";
 
+
     }
     double m_inf(double, double);
     double tau_m(double, double);

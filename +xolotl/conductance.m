@@ -1,3 +1,10 @@
+% conductance.m
+%
+% This class allows you to generate C++ files for new 
+% conductances without writing any actual C++ code
+%
+% For an example on how to use this, see "demo_conductance"
+
 classdef conductance 
 
 properties
@@ -19,6 +26,7 @@ properties
 	q (1,1) double
 
 
+	perm (1,1) struct 
 
 
 end

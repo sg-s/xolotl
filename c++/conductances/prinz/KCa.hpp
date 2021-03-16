@@ -32,6 +32,8 @@ public:
         p = 4;
 
         name = "KCa";
+
+        perm.K = 1;
         
     }
 
