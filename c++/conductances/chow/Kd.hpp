@@ -21,7 +21,6 @@ public:
         m = m_;
 
         // defaults 
-        if (isnan(gbar)) { gbar = 0; }
         if (isnan (E)) { E = -77; }
 
         unitary_conductance = 20e-6; // uS
