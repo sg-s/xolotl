@@ -36,7 +36,7 @@ synapse type.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/synapse.hpp#L73)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/synapse.hpp#L73)
 
 -------
 
@@ -64,7 +64,7 @@ synapse type.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/synapse.hpp#L85)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/synapse.hpp#L85)
 
 -------
 
@@ -89,7 +89,7 @@ should throw an error.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/synapse.hpp#L95)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/synapse.hpp#L95)
 
 -------
 
@@ -115,7 +115,7 @@ good place to put code that you need to run once before the simulation.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/synapse.hpp#L114)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/synapse.hpp#L114)
 
 -------
 
@@ -139,7 +139,7 @@ of this synapse.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c%2B%2B/synapse.hpp#L121)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/synapse.hpp#L121)
 
 -------
 

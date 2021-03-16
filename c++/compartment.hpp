@@ -189,7 +189,7 @@ public:
 
     // this vector mech_states stores the full
     // states for every mechanism so that other 
-    // mechanisms can use it via the mechanism::getPrevState()
+    // mechanisms can use it via the getPrevState()
     // method, so that all computations happen synchronously 
     vector <double> mech_states;
 

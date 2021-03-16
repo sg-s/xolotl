@@ -199,7 +199,6 @@ void conductance::integrateLangevin(double V, double Ca) {
     } // switch AllowMInfApproximation
 
     // stay within bounds!
-    // mexPrintf("m = %f\n", m);
     if (isnan(m)) {
         mexPrintf("m is NaN, N = %i\n", N);
         mexPrintf("m is NaN, taum = %f\n", taum);
@@ -343,7 +342,14 @@ void conductance::integrateMS(int k, double V, double Ca) {
 /*
 This method returns the previous state of the value stored in this 
 mechanism by pulling it out of the mech_states array stored in the compartment that this mechanism belongs to 
+
+**See Also**
+
+* [getState](./mechanism.md#getState)
+* [getFullState](./mechanism.md#getFullState)
+
 */
+
 double mechanism::getPrevState(int i) {
     return comp->mech_states.at(mech_state_offset + i);
 }
@@ -360,7 +366,16 @@ This method is used in two scenarios:
 
 1. In reading out mechanism state to output to the user
 2. In reading out mechanism state and storing it in the compartment's mech_state property to allow for synchronous updates. 
+
+
+**See Also**
+
+* [getState](./mechanism.md#getState)
+* [getPrevState](./mechanism.md#getPrevState)
+
+
 */
+
 int mechanism::getFullState(double* A, int idx) {
     for (int i = 0; i < fullStateSize; i++) {
         A[idx] = getState(i);
@@ -376,6 +391,13 @@ int mechanism::getFullState(double* A, int idx) {
 This helper function find ONE mechanism with a certain name, 
 that also control a certain thing, in
 the current compartment and returns a pointer to it.
+
+
+**See Also**
+
+* [findMechanismsOfTypeControlling](./mechanism.md#findMechanismsOfTypeControlling)
+* [findMechanismsOfType](./mechanism.md#findMechanismsOfType)
+
 */
 
 mechanism* mechanism::findMechanismNamedControlling(std::string get_this_name, std::string should_control) {
@@ -428,6 +450,12 @@ that also control a requested class of mechanism, in
 the current compartment and returns a vector of pointers to them.
 You are free to do whatever you like with that vector. A typical
 use case would be to find mechanisms of a required type, then connect to them from another mechanism. 
+
+**See Also**
+
+* [findMechanismNamedControlling](./mechanism.md#findMechanismNamedControlling)
+* [findMechanismsOfType](./mechanism.md#findMechanismsOfType)
+
 */
 
 std::vector<mechanism*> mechanism::findMechanismsOfTypeControlling(std::string get_this_type, std::string should_control) {
@@ -479,6 +507,13 @@ This helper function find all mechanisms of a requested type in
 the current compartment and returns a vector of pointers to them.
 You are free to do whatever you like with that vector. A typical
 use case would be to find mechanisms of a required type, then connect to them from another mechanism. 
+
+**See Also**
+
+* [findMechanismNamedControlling](./mechanism.md#findMechanismNamedControlling)
+* [findMechanismsOfTypeControlling](./mechanism.md#findMechanismsOfTypeControlling)
+
+
 */
 
 std::vector<mechanism*> mechanism::findMechanismsOfType(std::string get_this_type) {
@@ -582,6 +617,13 @@ mechanism (via addMechanism).
 If you want to prevent your mechanism from connecting to a 
 compartment, override this method with something that 
 throws a runtime error. 
+
+**See Also**
+
+* [connectConductance](./mechanism.md#connectConductance)
+* [connectSynapse](./mechanism.md#connectSynapse)
+
+
 */
 void mechanism::connectCompartment(compartment* comp_) {
 
@@ -601,6 +643,15 @@ mechanism (via addMechanism).
 If you want to prevent your mechanism from connecting to a 
 conductance, override this method with something that 
 throws a runtime error. 
+
+
+**See Also**
+
+* [connectCompartment](./mechanism.md#connectCompartment)
+* [connectSynapse](./mechanism.md#connectSynapse)
+
+
+
 */
 void mechanism::connectConductance(conductance* channel_) {
 
@@ -622,7 +673,15 @@ mechanism (via addMechanism).
 If you want to prevent your mechanism from connecting to a 
 conductance, override this method with something that 
 throws a runtime error. 
+
+**See Also**
+
+* [connectCompartment](./mechanism.md#connectCompartment)
+* [connectConductance](./mechanism.md#connectConductance)
+
+
 */
+
 void mechanism::connectSynapse(synapse* syn_) {
 
     // connect to a channel

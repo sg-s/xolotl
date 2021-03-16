@@ -114,10 +114,12 @@ public:
 
 /*
 This virtual method is a placeholder method of mechanism that does
-nothing except throw an error. If your mechanism is properly 
-written, this will not be run (and therefore the error will
-not be thrown) because your mechanism will define a "integrate"
+nothing. If your mechanism is properly 
+written, this will not be run because your mechanism will define a "integrate"
 method, which will be used instead of this.
+
+It's perfectly OK to have a mechanism that does nothing. For example, such a mechanism would essentially be a struct storing some value. There is no performance penalty for such mechanisms.
+
 */
 void mechanism::integrate() {
     // do nothing
@@ -127,9 +129,8 @@ void mechanism::integrate() {
 
 /*
 This virtual method is a placeholder method of mechanism that does
-nothing except throw an error. If your mechanism is properly 
-written, this will not be run (and therefore the error will
-not be thrown) because your mechanism will define a "integrateMS"
+nothing. If your mechanism is properly 
+written, this will not be run because your mechanism will define a "integrateMS"
 method, which will be used instead of this.
 */
 void mechanism::integrateMS(int k, double V, double Ca) {
@@ -150,8 +151,22 @@ void mechanism::init() {
 }
 
 
-/* This virtual method is a placeholder. If you want to read values
-out of your mechanism, make sure this returns something sensible. 
+/* The getState method is a very important method of mechanism
+and is used for two primary purposes:
+
+1. To pass information from one mechanism to another
+2. To read out mechanism states and output time-series 
+
+Every mechanism can define as many "states" as it wants. Make sure 
+that the number of states (defined in the "fullStateSize" property)
+matches the actual number of states. xolotl at some point will 
+call your mechanism with various integers up to fullStateSize-1
+so make sure you return something sensible. 
+
+The typical way to write a getState method is to use a switch 
+statement, because the argument is an integer, and because 
+switches are fast. 
+
 */
 double mechanism::getState(int i) {
     return 0;

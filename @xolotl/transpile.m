@@ -58,7 +58,7 @@ header_files{2} = fullfile(self.cpp_folder,'synapse.hpp');
 header_files{3} = fullfile(self.cpp_folder,'mechanism.hpp');
 header_files{4} = fullfile(self.cpp_folder,'compartment.hpp');
 header_files{5} = fullfile(self.cpp_folder,'network.hpp');
-header_files{6} = fullfile(self.cpp_folder,'conductance2.hpp');
+header_files{6} = fullfile(self.cpp_folder,'extra_methods.hpp');
 
 temp = self.generateHeaders; temp = temp(:);
 temp(cellfun(@isempty,temp)) = [];
