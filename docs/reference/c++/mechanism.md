@@ -32,8 +32,8 @@ mechanism by pulling it out of the mech_states array stored in the compartment t
 
 **See Also**
 
-* [getState](./mechanism.md#getstate)
-* [getFullState](./mechanism.md#getfullstate)
+* [getState](#getstate)
+* [getFullState](#getfullstate)
 
 
 
@@ -70,8 +70,8 @@ This method is used in two scenarios:
 
 **See Also**
 
-* [getState](./mechanism.md#getstate)
-* [getPrevState](./mechanism.md#getprevstate)
+* [getState](#getstate)
+* [getPrevState](#getprevstate)
 
 
 
@@ -104,8 +104,8 @@ the current compartment and returns a pointer to it.
 
 **See Also**
 
-* [findMechanismsOfTypeControlling](./mechanism.md#findmechanismsoftypecontrolling)
-* [findMechanismsOfType](./mechanism.md#findmechanismsoftype)
+* [findMechanismsOfTypeControlling](#findmechanismsoftypecontrolling)
+* [findMechanismsOfType](#findmechanismsoftype)
 
 
 
@@ -138,8 +138,8 @@ use case would be to find mechanisms of a required type, then connect to them fr
 
 **See Also**
 
-* [findMechanismNamedControlling](./mechanism.md#findmechanismnamedcontrolling)
-* [findMechanismsOfType](./mechanism.md#findmechanismsoftype)
+* [findMechanismNamedControlling](#findmechanismnamedcontrolling)
+* [findMechanismsOfType](#findmechanismsoftype)
 
 
 
@@ -171,8 +171,8 @@ use case would be to find mechanisms of a required type, then connect to them fr
 
 **See Also**
 
-* [findMechanismNamedControlling](./mechanism.md#findmechanismnamedcontrolling)
-* [findMechanismsOfTypeControlling](./mechanism.md#findmechanismsoftypecontrolling)
+* [findMechanismNamedControlling](#findmechanismnamedcontrolling)
+* [findMechanismsOfTypeControlling](#findmechanismsoftypecontrolling)
 
 
 
@@ -237,8 +237,8 @@ throws a runtime error.
 
 **See Also**
 
-* [connectConductance](./mechanism.md#connectconductance)
-* [connectSynapse](./mechanism.md#connectsynapse)
+* [connectConductance](#connectconductance)
+* [connectSynapse](#connectsynapse)
 
 
 
@@ -275,8 +275,8 @@ throws a runtime error.
 
 **See Also**
 
-* [connectCompartment](./mechanism.md#connectcompartment)
-* [connectSynapse](./mechanism.md#connectsynapse)
+* [connectCompartment](#connectcompartment)
+* [connectSynapse](#connectsynapse)
 
 
 
@@ -313,8 +313,8 @@ throws a runtime error.
 
 **See Also**
 
-* [connectCompartment](./mechanism.md#connectcompartment)
-* [connectConductance](./mechanism.md#connectconductance)
+* [connectCompartment](#connectcompartment)
+* [connectConductance](#connectconductance)
 
 
 
