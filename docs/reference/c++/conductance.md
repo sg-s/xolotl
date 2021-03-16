@@ -410,45 +410,16 @@ double getState(int i)
 **Description**
 
 
-This method implements a very fast Gaussian random
-number generator. This is much faster than the 
-built-in generators in the C++ `<random>` header, and
-is copied from Knuth and Marsaglia.
-
-For the original source, see
-"A Convenient Method for Generating Normal Variables"
-SIAM Rev., 6(3), 260–264.
-
-double conductance::gaussrand() {
-    static double V1, V2, S;
-    static int phase = 0;
-    double X;
-
-    if(phase == 0) {
-        do {
-            double U1 = (double)rand() / RAND_MAX;
-            double U2 = (double)rand() / RAND_MAX;
-
-            V1 = 2 * U1 - 1;
-            V2 = 2 * U2 - 1;
-            S = V1 * V1 + V2 * V2;
-            } while(S >= 1 || S == 0);
-
-        X = V1 * sqrt(-2 * log(S) / S);
-    } else
-        X = V2 * sqrt(-2 * log(S) / S);
-
-    phase = 1 - phase;
-
-    return X;
-}
+The virtual method returns the "state" of a conductance.
+You can use this to read out whatever you want from
+this conductance. 
 
 
 
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/conductance.hpp#L450)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/conductance.hpp#L456)
 
 -------
 

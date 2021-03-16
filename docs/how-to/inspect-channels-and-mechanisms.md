@@ -38,7 +38,7 @@ Plotting M and comparing to the voltage shows us the activation and inactivation
 
 Custom conductances may not use the Hodgkin-Huxley formalism, may have
 their own integration routines, and may contain their own internal variables. To read out internal variables from these channels, you have
-to do two things. First, your custom conductance must respond to `getState` requests and return every variable of interest. Add something like this to your condutance:
+to do two things. First, your custom conductance must respond to `getState` requests and return every variable of interest. Add something like this to your conductance:
 
 ```C++
 
@@ -53,11 +53,11 @@ double customChannel::getState(int idx) {
 and modify a copy of `ChannelProbe` to read out these variables:
 
 ```C++
-int ChannelProbe::getFullState(double *cont_state, int idx) {
+int ChannelProbe::getState(double *mech_states, int idx) {
     // read out custom variables
-    cont_state[idx] = channel->getState(1);
+    mech_states[idx] = channel->getState(1);
     idx++;
-    cont_state[idx] = channel->getState(2);
+    mech_states[idx] = channel->getState(2);
     idx++;
     return idx;
 }

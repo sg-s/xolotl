@@ -447,6 +447,12 @@ double conductance::gaussrand() {
 }
 
 
+/*
+The virtual method returns the "state" of a conductance.
+You can use this to read out whatever you want from
+this conductance. 
+*/
+
 double conductance::getState(int i) {
     return 0;
 }
