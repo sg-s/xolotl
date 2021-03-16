@@ -73,9 +73,9 @@ axial synapses are connected to it.
 
 **See Also**
 
-* [addSynapse](./compartment.m#addsynapse)
-* [addMechanism](./compartment.m#addmechanism)
-* [addConductance](./compartment.m#addconductance)
+* [addSynapse](./compartment.md#addsynapse)
+* [addMechanism](./compartment.md#addmechanism)
+* [addConductance](./compartment.md#addconductance)
 
 
 
@@ -108,9 +108,9 @@ It does the following things:
 
 **See Also**
 
-* [addAxial](./compartment.m#addaxial)
-* [addMechanism](./compartment.m#addmechanism)
-* [addConductance](./compartment.m#addconductance)
+* [addAxial](./compartment.md#addaxial)
+* [addMechanism](./compartment.md#addmechanism)
+* [addConductance](./compartment.md#addconductance)
 
 
 
@@ -170,8 +170,8 @@ It does the following things:
 
 **See Also**
 
-* [addSynapse](./compartment.m#addsynapse)
-* [addConductance](./compartment.m#addconductance)
+* [addSynapse](./compartment.md#addsynapse)
+* [addConductance](./compartment.md#addconductance)
 
 
 
@@ -201,9 +201,9 @@ pointer to this synapse is stored in the vector `syn`
 
 **See Also**
 
-* [addSynapse](./compartment.m#addaxial)
-* [addMechanism](./compartment.m#addmechanism)
-* [addConductance](./compartment.m#addconductance)
+* [addSynapse](./compartment.md#addaxial)
+* [addMechanism](./compartment.md#addmechanism)
+* [addConductance](./compartment.md#addconductance)
 
 
 
@@ -376,7 +376,7 @@ specifying where it should write values to
 
 **See Also**
 
-* [getFullSynapseState](./compartment.m#getfullsynapsestate)
+* [getFullSynapseState](./compartment.md#getfullsynapsestate)
 
 
 
@@ -407,7 +407,7 @@ what their data dimension is, and adding up all those numbers.
 
 **See Also**
 
-* [getFullSynapseSize](./compartment.m#getfullsynapsesize)
+* [getFullSynapseSize](./compartment.md#getfullsynapsesize)
 
 
 
@@ -443,8 +443,8 @@ specifying where it should write values to
 
 **See Also**
 
-* [getFullSynapseState](./compartment.m#getfullsynapsestate)
-* [getFullCurrentState](./compartment.m#getfullcurrentstate)
+* [getFullSynapseState](./compartment.md#getfullsynapsestate)
+* [getFullCurrentState](./compartment.md#getfullcurrentstate)
 
 
 
@@ -475,7 +475,7 @@ what their data dimension is, and adding up all those numbers.
 
 **See Also**
 
-* [getFullMechanismSize](./compartment.m#getfullmechanismsize)
+* [getFullMechanismSize](./compartment.md#getfullmechanismsize)
 
 
 
@@ -511,7 +511,7 @@ specifying where it should write values to
 
 **See Also**
 
-* [getFullCurrentState](./compartment.m#getfullcurrentstate)
+* [getFullCurrentState](./compartment.md#getfullcurrentstate)
 
 
 
@@ -646,7 +646,7 @@ integrateCNSecondPass.
 
 **See Also**
 
-* [integrateCNSecondPass](./compartment.m#integratecnsecondpass)
+* [integrateCNSecondPass](./compartment.md#integratecnsecondpass)
 * [The Crank-Nicolson Method](../../explanation/integration.md)
 
 
@@ -678,7 +678,7 @@ integrateCNFirstPass.
 
 **See Also**
 
-* [integrateCNFirstPass](./compartment.m#integratecnfirstpass)
+* [integrateCNFirstPass](./compartment.md#integratecnfirstpass)
 * [The Crank-Nicolson Method](../../explanation/integration.md)
 
 
