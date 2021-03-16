@@ -691,33 +691,6 @@ integrateCNFirstPass.
 
 
 
-### mech_states so that all mechanism
-
-**Function Signature**
-
-```C++
-mechanism into mech_states so that all mechanisms 
-
-```
-
-**Description**
-
-
-This method integrates all mechanisms in this compartment. It
-simply calls the integrate method on every mechanism in the
-compartment.
-
-Before integration, it copies over the full state of every
-
-
- **Code**
-
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/compartment.hpp#L923)
-
--------
-
-
-
 ### integrateMechanisms
 
 **Function Signature**
@@ -734,7 +707,7 @@ simply calls the integrate method on every mechanism in the
 compartment.
 
 Before integration, it copies over the full state of every
-mechanism into compartment::mech_states so that all mechanisms 
+mechanism into mech_states member so that all mechanisms 
 "see" the same thing when they interact with each other, solving
 ordering inconsistencies 
 
