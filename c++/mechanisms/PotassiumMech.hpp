@@ -41,8 +41,8 @@ public:
 
     // pump params
     double i_max = 1e5;
-    double K_D = 5.5e-6;
-    double Delta = -1.1e-6;
+    double K_D = 1.4450e-04;
+    double Delta = 1e-4;
 
 
     double i_pump = 0;
@@ -136,7 +136,7 @@ void PotassiumMech::integrate(void) {
 
 
     // compute pump current
-    i_pump = i_max/(1 + exp((K_out - K_D)/(Delta)));
+    i_pump = i_max/(1 + exp(((K_in/K_out) - K_D)/(Delta)));
 
 
 
