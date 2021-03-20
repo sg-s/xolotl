@@ -39,3 +39,8 @@ use_I_ext = true;
 % make figures, where the same simulation is expected to 
 % be run more than once
 cache = false;
+
+
+
+%% path to github CLI
+gh_path = '/usr/local/bin/gh';

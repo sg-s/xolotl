@@ -37,7 +37,7 @@ try
 
 	self.integrate;
 
-	[e,o] = system(['/usr/local/bin/gh release upload bin ' binary_loc ' --repo sg-s/xolotl']);
+	[e,o] = system([self.pref.gh_path ' release upload bin ' binary_loc ' --repo sg-s/xolotl']);
 
 	if any(strfind(o,'Successfully uploaded'))
 		disp(['Uploaded binary with hash: ' self.hash])
