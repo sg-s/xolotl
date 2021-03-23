@@ -8,8 +8,7 @@
   "github_user_name": "sg-s",
   "github_repo": "xolotl",
   "github_binary": ["xolotl.mltbx"],
-  "github_token": ".github_token.json",
-  "github_release_path": "/usr/local/bin/",
+  "gh_path": "/usr/local/bin/gh",
   "external_code": [
     "/Users/srinivas/GoogleDrive/code/cpplab/@cpplab",
     "/Users/srinivas/GoogleDrive/code/puppeteer/@puppeteer",

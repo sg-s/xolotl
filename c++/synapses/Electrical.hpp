@@ -19,19 +19,12 @@ public:
 
     void integrate(void);
     void connect(compartment *pcomp1_, compartment *pcomp2_);
-    void checkSolvers(int);
 };
 
 void Electrical::integrate() {
     // set E to V_pre
     E = (pre_syn->V);
     g = gmax;
-}
-
-
-// always works
-void mechanism::checkSolvers(int k) {
-    return;
 }
 
 
