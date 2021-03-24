@@ -77,6 +77,10 @@ end
 corelib.assert(strcmp(obj.cpp_class_name,'compartment'),'xolotl:add:not_compartment' ,'You can only add objects of type "compartment" to a xolotl object')
 
 
+% check that the object doesn't have synapses on it, because they can't be added
+assert(isempty(obj.find('synapse')),'The compartment you want to add contains synapses, which is forbidden. If you want to add a compartment with synapses, first add the compartment, then add the synapses using "connect"')
+
+
 add@cpplab(self,obj, obj_name);
 
 % reset I_ext and V_clamp
