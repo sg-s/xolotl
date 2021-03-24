@@ -57,7 +57,15 @@ c = lines(100);
 output_type = self.output_type;
 self.output_type = 0;
 
-if isempty(self.handles) || ~isfield(self.handles,'fig') || ~isvalid(self.handles.fig)
+
+fig_ok = false;
+try
+	fig_ok = isvalid(self.handles.fig);
+catch
+end
+
+
+if ~fig_ok
 	if N == 1
 		y = 500;
 	else
@@ -96,7 +104,9 @@ if isempty(self.handles) || ~isfield(self.handles,'fig') || ~isvalid(self.handle
 			self.handles.plots(i).ph = plot(self.handles.ax(i),NaN,NaN, 'Color', 'k','LineWidth',1.5);
 		end
 
-		xlabel(self.handles.ax(i),'Time (s)')
+		if i == N
+			xlabel(self.handles.ax(i),'Time (s)')
+		end
 		if isnan(sum(self.V_clamp(:,i)))
 			ylabel(self.handles.ax(i),['V_{ ' comp_names{i} '} (mV)'])
 		else
