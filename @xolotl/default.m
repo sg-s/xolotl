@@ -8,7 +8,7 @@
 
 % color voltage traces by the dominant 
 % current? 
-plot_color = true;
+plot_color = false;
 
 % show Calcium traces together
 % with the voltage traces? 

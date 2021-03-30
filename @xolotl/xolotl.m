@@ -138,8 +138,6 @@ methods (Access = protected)
                 fprintf([' ' char(881) ' ' url_str info_str '\n'])
             end
 
-            % 1244 881 1154
-
             fprintf('\n')
         end
 
