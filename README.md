@@ -4,8 +4,8 @@
 
 [![Documentation Status](https://readthedocs.org/projects/xolotl/badge/?version=master)](https://xolotl.readthedocs.io/en/master/?badge=master)
 ![](https://img.shields.io/github/last-commit/sg-s/xolotl.svg)
-[![View xolotl on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/79894-xolotl)
 ![](https://github.com/sg-s/xolotl/releases/download/bin/test-result.svg)
+[![View xolotl on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/79894-xolotl)
 
 ![](https://user-images.githubusercontent.com/6005346/99264565-9fb3ea00-27ee-11eb-8800-64dea9f563e4.gif)
 
