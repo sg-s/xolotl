@@ -61,8 +61,8 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     plhs[3] = mxCreateDoubleMatrix(N, 1, mxREAL);
     tauh = mxGetPr(plhs[3]);
 
-    // V  Ca  Cm  A  vol   Ca_target  Ca_average  tree_idx  neuron_idx  radius  len  shell_thickness  Ca_out_)
-    compartment comp(0, Ca_in, 10, 1, 1,  std::numeric_limits<double>::quiet_NaN(), .05, 0, 0, 1, 1, 1, Ca_out);
+    // V  Ca  Cm  A  vol    Ca_average  tree_idx  neuron_idx  radius  len  shell_thickness  Ca_out_)
+    compartment comp(0, Ca_in, 10, 1, 1, .05, 0, 0, 1, 1, 1, Ca_out);
 
     //xolotl:construct_channel_here
 

@@ -341,7 +341,7 @@ inline double conductance::fast_exp(double x) {
 
 /*
 
-The method returns the current that flows through
+This method returns the current that flows through
 this channel at this moment. 
 
 */

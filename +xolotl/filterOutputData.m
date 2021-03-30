@@ -11,8 +11,8 @@
 % **Syntax**
 %
 % ```matlab
-% matrix = xolotl.filterOutputData(*keyword)
-% matrix = xolotl.filterOutputData(exact_name)
+% matrix = xolotl.filterOutputData(data,*keyword)
+% matrix = xolotl.filterOutputData(data,exact_name)
 % ```
 %
 % **Description**

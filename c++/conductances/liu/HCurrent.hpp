@@ -7,7 +7,7 @@
 //
 #ifndef HCURRENT
 #define HCURRENT
-#include "conductance.hpp"
+class conductance;
 
 //inherit conductance class spec
 class HCurrent: public conductance {

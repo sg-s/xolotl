@@ -15,6 +15,56 @@ activity of another neuron.
 
 
 
+### connect
+
+**Function Signature**
+
+```C++
+void connect(compartment *pcomp1_, compartment *pcomp2_) 
+```
+
+**Description**
+
+
+This method connects two compartments using this synapse. 
+It also triggers the post-synaptic compartment to "add"
+this synapse to the post-synaptic compartment, so that its
+integration can be handled there.
+
+
+
+ **Code**
+
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L20)
+
+-------
+
+
+
+### getFullState
+
+**Function Signature**
+
+```C++
+int getFullState(double* syn_state, int idx) 
+```
+
+**Description**
+
+
+This virtual method can be overridden to return the full state
+of this synapse.
+
+
+
+ **Code**
+
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L33)
+
+-------
+
+
+
 ### integrate
 
 **Function Signature**
@@ -36,7 +86,33 @@ synapse type.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/synapse.hpp#L73)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/synapse.hpp#L80)
+
+-------
+
+
+
+### getCurrent
+
+**Function Signature**
+
+```C++
+double getCurrent(double V_post) 
+```
+
+**Description**
+
+
+
+This method returns the current that flows through
+this synapse at this moment. 
+
+
+
+
+ **Code**
+
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/synapse.hpp#L93)
 
 -------
 
@@ -64,7 +140,7 @@ synapse type.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/synapse.hpp#L85)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/synapse.hpp#L104)
 
 -------
 
@@ -89,7 +165,7 @@ should throw an error.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/synapse.hpp#L95)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/synapse.hpp#L114)
 
 -------
 
@@ -115,31 +191,7 @@ good place to put code that you need to run once before the simulation.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/synapse.hpp#L114)
-
--------
-
-
-
-### getFullState
-
-**Function Signature**
-
-```C++
-int getFullState(double* syn_state, int i) 
-```
-
-**Description**
-
-
-This virtual method can be overridden to return the full state
-of this synapse.
-
-
-
- **Code**
-
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/synapse.hpp#L121)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/synapse.hpp#L133)
 
 -------
 

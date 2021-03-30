@@ -521,7 +521,7 @@ norm_currents = x.currentscape()
 
 **Description**
 
-This method creates a "currentscape", or a visualization of the fractional
+This method creates a [currentscape](https://elifesciences.org/articles/42722), or a visualization of the fractional
 contribution of each current at each point in time 
 
 When called with one output, no plot is created, but the raw normalized
@@ -529,7 +529,7 @@ inward and outward currents are returned.
 
 This method only works with single-compartment models. 
 
-You can use manipulate to vary parameeters and see this update in real time
+You can use manipulate to vary parameters and see this update in real time
 
 ```matlab
 x.manipulate_plot_func = {@x.currentscape};
@@ -542,7 +542,7 @@ x.manipulate('*gbar');
 !!! info "See Also"
     * [xolotl.plot](../xolotl/#plot)
     * [xolotl.manipulate](../xolotl/#manipulate)
-    * [[Visualization of currents in neural models with similar behavior and different conductance densities](https://elifesciences.org/articles/42722)](../[Visualization of currents in neural models with similar behavior and different conductance densities](https://elifesciences/#org/articles/42722))
+
 
 
 

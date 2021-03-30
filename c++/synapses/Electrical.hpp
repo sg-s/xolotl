@@ -1,6 +1,6 @@
 // One-way electrical Synapse
 // For symmetric electrical synapses, connect two copies
-// of this in opposite polarities
+// of this with opposite polarities
 #ifndef ELECTRICAL
 #define ELECTRICAL
 #include "synapse.hpp"

@@ -7,7 +7,7 @@
 //
 #ifndef CAT
 #define CAT
-#include "conductance.hpp"
+class conductance;
 
 //inherit conductance class spec
 class CaT: public conductance {

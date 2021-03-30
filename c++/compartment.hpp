@@ -18,7 +18,6 @@ view the source code of this class.
 | --------  | ------ | -------  | 
 | V |  double | membrane potential  |
 | Ca | double | calcium concentration | 
-| Ca_target | double | Do not use. Will be removed in a future release |
 
 ### Variables that help with integration 
 
@@ -160,7 +159,6 @@ public:
     double Cm = 10; // specific capacitance
 
 
-    double Ca_target; // for homeostatic control
     double Ca_out = 3000;
 
 
@@ -197,7 +195,7 @@ public:
 
 
     // constructor with all parameters
-    compartment(double V_, double Ca_, double Cm_, double A_, double vol_,  double Ca_target_, double Ca_average_, double tree_idx_, double neuron_idx_, double radius_, double len_, double shell_thickness_, double Ca_out_)
+    compartment(double V_, double Ca_, double Cm_, double A_, double vol_, double Ca_average_, double tree_idx_, double neuron_idx_, double radius_, double len_, double shell_thickness_, double Ca_out_)
     {
 
         // core dynamic variables
@@ -223,7 +221,6 @@ public:
 
 
         // calcium
-        Ca_target = Ca_target_;
         Ca_average = Ca_average_;
         Ca_average = 0; // reset it every time
 
@@ -239,9 +236,6 @@ public:
         if (isnan (V)) { V = -60; } // mV
         if (isnan (Ca)) { Ca = .05; }
 
-        if (!isnan(Ca_target)) { 
-            mexPrintf("\n-----------------------------\n[WARNING] Ca_target will be\n removed in a future release. \nDo not use. Use the \nCalciumTarget mechanism instead\n------------------------------\n");
-        }
 
         if (!isnan(len) && !isnan(radius)) {
             // radius and length

@@ -7,7 +7,7 @@
 %
 % ### structureOutput
 %
-% integrates a `xolotl` model.
+% converts matrices of output to a structure 
 %
 % **Syntax**
 %

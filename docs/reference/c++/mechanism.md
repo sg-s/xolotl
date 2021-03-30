@@ -41,7 +41,7 @@ mechanism by pulling it out of the mech_states array stored in the compartment t
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L353)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L386)
 
 -------
 
@@ -80,7 +80,7 @@ This method is used in two scenarios:
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L379)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L412)
 
 -------
 
@@ -113,7 +113,7 @@ the current compartment and returns a pointer to it.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L403)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L436)
 
 -------
 
@@ -147,7 +147,7 @@ use case would be to find mechanisms of a required type, then connect to them fr
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L461)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L494)
 
 -------
 
@@ -181,7 +181,7 @@ use case would be to find mechanisms of a required type, then connect to them fr
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L519)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L552)
 
 -------
 
@@ -209,7 +209,7 @@ use case would be to find mechanisms of a required type, then connect to them fr
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L568)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L601)
 
 -------
 
@@ -246,7 +246,7 @@ throws a runtime error.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L628)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L661)
 
 -------
 
@@ -285,7 +285,7 @@ throws a runtime error.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L656)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L689)
 
 -------
 
@@ -323,7 +323,7 @@ throws a runtime error.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L685)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L718)
 
 -------
 

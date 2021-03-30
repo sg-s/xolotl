@@ -40,13 +40,16 @@ public:
     double temperature_ref = 11;
     double temperature = 11;
 
-    int fullStateSize = 0;
+    int fullStateSize = 2;
+    // by default, synapses have an internal variable "s"
+    // and also return the current flowing through them
+
     string name = "unset";
 
     synapse()
     {
-        pre_syn = 0; //null pointer for safety
-        post_syn = 0;
+        pre_syn = nullptr; //null pointer for safety
+        post_syn = nullptr;
     }
     ~synapse() {}
 
@@ -55,11 +58,15 @@ public:
 
     virtual void checkSolvers(int);
 
-    virtual void connect(compartment*, compartment*) = 0;// tells compiler they will be overridden by derived class
+    void connect(compartment*, compartment*);
     virtual int getFullState(double*, int);
 
 
     virtual void init(void);
+    double s_inf(double);
+    double tau_s(double);
+
+    virtual double getCurrent(double);
 
 };
 
@@ -73,6 +80,18 @@ synapse type.
 void synapse::integrate() {
     mexErrMsgTxt("[synapse] Unimplemented integration method\n");
 }
+
+
+
+
+/*
+
+This method returns the current that flows through
+this synapse at this moment. 
+
+*/
+double synapse::getCurrent(double V_post) { return g * (V_post - E); }
+
 
 /*
 This method is used to integrate the synapse and update 
@@ -113,14 +132,6 @@ good place to put code that you need to run once before the simulation.
 */
 void synapse::init() {}
 
-
-/*
-This virtual method can be overridden to return the full state
-of this synapse.
-*/
-int synapse::getFullState(double* syn_state, int i) {
-    return i;
-}
 
 
 

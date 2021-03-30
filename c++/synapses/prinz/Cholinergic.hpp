@@ -4,7 +4,7 @@
 //
 #ifndef CHOLINERGIC
 #define CHOLINERGIC
-#include "synapse.hpp"
+class synapse;
 
 class Cholinergic: public synapse {
 
@@ -34,9 +34,6 @@ public:
         if (isnan (gmax)) { gmax = 0; }
         if (isnan (Vth)) { Vth = -35.0; }
 
-
-        fullStateSize = 2;
-
     }
 
     void integrate(void);
@@ -49,9 +46,6 @@ public:
 
     void init(void);
 
-    void connect(compartment *pcomp1_, compartment *pcomp2_);
-    double getCurrent(double V_post);
-    int getFullState(double*, int);
 };
 
 
@@ -62,7 +56,7 @@ void Cholinergic::init() {
     for (int V_int = -999; V_int < 1001; V_int++) {
         V = ((double) V_int)/10;
         s_inf_cache[V_int+999] = s_inf(V);
-        tau_s_cache[V_int+999] = tau_s(s_inf(V));
+        tau_s_cache[V_int+999] = tau_s(V);
     }
 
 }
@@ -70,11 +64,13 @@ void Cholinergic::init() {
 
 double Cholinergic::s_inf(double V_pre) {return 1.0/(1.0+exp((Vth - V_pre)/Delta));}
 
-double Cholinergic::tau_s(double sinf_) {return (1 - sinf_)/k_;}
+double Cholinergic::tau_s(double V_pre) {
+    return (1 - s_inf(V_pre))/k_;
+}
 
 double Cholinergic::sdot(double V_pre, double s_) {
     double sinf = s_inf(V_pre);
-    return (sinf - s_)/tau_s(sinf);
+    return (sinf - s_)/tau_s(V_pre);
 }
 
 void Cholinergic::integrate(void) {
@@ -136,27 +132,6 @@ void Cholinergic::checkSolvers(int k){
     }
     mexErrMsgTxt("[Cholinergic] Unsupported solver order\n");
 }
-
-int Cholinergic::getFullState(double *syn_state, int idx) {
-    // give it the current synapse variable
-    syn_state[idx] = s;
-
-    idx++;
-
-    // also return the current from this synapse
-    syn_state[idx] = gmax*s*(post_syn->V - E);
-    idx++;
-    return idx;
-}
-
-void Cholinergic::connect(compartment *pcomp1_, compartment *pcomp2_) {
-    pre_syn = pcomp1_;
-    post_syn = pcomp2_;
-
-    // tell the post-synaptic cell that we're connecting to it
-    post_syn->addSynapse(this);
-}
-
 
 
 

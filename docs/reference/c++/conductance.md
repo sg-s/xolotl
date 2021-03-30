@@ -183,7 +183,7 @@ double getCurrent(double V)
 
 
 
-The method returns the current that flows through
+This method returns the current that flows through
 this channel at this moment. 
 
 
@@ -470,7 +470,7 @@ good place to put code that you need to run once before the simulation.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L20)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L53)
 
 -------
 
@@ -510,7 +510,7 @@ conductance.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L66)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L99)
 
 -------
 
@@ -548,7 +548,7 @@ and the area of the compartment.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L168)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L201)
 
 -------
 
@@ -586,7 +586,7 @@ are calculated and stored. At each step, the derivative functions
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L268)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/extra_methods.hpp#L301)
 
 -------
 

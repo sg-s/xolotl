@@ -7,7 +7,7 @@
 //
 #ifndef KD
 #define KD
-#include "conductance.hpp"
+class conductance;
 
 //inherit conductance class spec
 class Kd: public conductance {

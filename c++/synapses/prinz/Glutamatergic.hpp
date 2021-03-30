@@ -4,7 +4,7 @@
 
 #ifndef GLUTAMATERGIC
 #define GLUTAMATERGIC
-#include "synapse.hpp"
+class synapse;
 
 class Glutamatergic: public synapse {
 
@@ -31,8 +31,6 @@ public:
         if (isnan (s)) { s = 0; }
         if (isnan (gmax)) { gmax = 0; }
 
-        fullStateSize = 2;
-
     }
     
     void integrate(void);
@@ -43,9 +41,7 @@ public:
     double s_inf(double);
     double tau_s(double);
     double sdot(double, double);
-    
-    void connect(compartment *pcomp1_, compartment *pcomp2_);
-    int getFullState(double*, int);
+
 
 };
 
@@ -55,13 +51,13 @@ double Glutamatergic::s_inf(double V_pre) {
     return 1.0/(1.0+exp((Vth - V_pre)/Delta));
 }
 
-double Glutamatergic::tau_s(double sinf_) {
-    return (1 - sinf_)/k_;
+double Glutamatergic::tau_s(double V_pre) {
+    return (1 - s_inf(V_pre))/k_;
 }
 
 double Glutamatergic::sdot(double V_pre, double s_) {
     double sinf = s_inf(V_pre);
-    return (sinf - s_)/tau_s(sinf);
+    return (sinf - s_)/tau_s(V_pre);
 }
 
 
@@ -72,7 +68,7 @@ void Glutamatergic::init() {
     for (int V_int = -999; V_int < 1001; V_int++) {
         V = ((double) V_int)/10;
         s_inf_cache[V_int+999] = s_inf(V);
-        tau_s_cache[V_int+999] = tau_s(s_inf(V));
+        tau_s_cache[V_int+999] = tau_s(V);
     }
 
 }
@@ -132,27 +128,6 @@ void Glutamatergic::checkSolvers(int k){
     }
     mexErrMsgTxt("[Glutamatergic] Unsupported solver order\n");
 }
-
-int Glutamatergic::getFullState(double *syn_state, int idx) {
-    // give it the current synapse variable
-    syn_state[idx] = s;
-
-    idx++;
-
-    // also return the current from this synapse
-    syn_state[idx] = gmax*s*(post_syn->V - E);
-    idx++;
-    return idx;
-}
-
-void Glutamatergic::connect(compartment *pcomp1_, compartment *pcomp2_) {
-    pre_syn = pcomp1_; 
-    post_syn = pcomp2_; 
-
-    // tell the post-synaptic cell that we're connecting to it
-    post_syn->addSynapse(this);
-}
-
 
 
 

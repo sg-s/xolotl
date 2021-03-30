@@ -12,6 +12,39 @@ void conductance::connect(compartment *pcomp_) {
 
 
 /*
+This method connects two compartments using this synapse. 
+It also triggers the post-synaptic compartment to "add"
+this synapse to the post-synaptic compartment, so that its
+integration can be handled there.
+*/
+void synapse::connect(compartment *pcomp1_, compartment *pcomp2_) {
+    pre_syn = pcomp1_; 
+    post_syn = pcomp2_; 
+
+    // tell the post-synaptic cell that we're connecting to it
+    post_syn->addSynapse(this);
+}
+
+
+/*
+This virtual method can be overridden to return the full state
+of this synapse.
+*/
+int synapse::getFullState(double* syn_state, int idx) {
+    // give it the current synapse variable
+    syn_state[idx] = s;
+    idx++;
+
+    // also return the current from this synapse
+    syn_state[idx] = getCurrent(post_syn->V);
+    idx++;
+    return idx;
+}
+
+
+
+
+/*
 This virtual method is a placeholder initialization method. Initialization 
 methods are called after the model has been constructed, and all components
 have been connected, but before the model starts the simulation. This is a

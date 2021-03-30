@@ -6,7 +6,7 @@
 // component source [Liu et al. 98](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)
 #ifndef NAV
 #define NAV
-#include "conductance.hpp"
+class conductance;
 
 //inherit conductance class spec
 class NaV: public conductance {

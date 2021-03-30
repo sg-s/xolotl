@@ -74,7 +74,7 @@ end
 
 
 % specify range of V
-V = linspace(-200,200,1e3);
+V = linspace(-100,100,1e3);
 
 % build a mex-able binary using the class path
 if strcmp(obj.cpp_class_parent,'synapse')
@@ -101,12 +101,6 @@ end
 if strcmp(obj.cpp_class_parent,'synapse')
 
 
-	V_base = -80;
-	V_step = -80:1:50;
-
-
-
-
 	figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600],'Color','w'); hold on
 	ax.sinf = subplot(1,2,1); hold on
 	xlabel('V (mV)')
@@ -116,28 +110,17 @@ if strcmp(obj.cpp_class_parent,'synapse')
 	xlabel('V (mV)')
 	ylabel('Approximate \tau_{s} (ms)')
 
-	sinf = NaN*V_step;
-	taus = NaN*V_step;
+	sinf = NaN*V;
+	taus = NaN*V;
 
-	for i = 1:length(V_step)
-		V = zeros(1e4,1) + V_step(i);
-		V(1:2e3) = V_base;
+	[data.sinf, data.taus] = binary_name(V, params, [self.temperature_ref; self.temperature; Ca_in; Ca_out]);
 
-		V = V(:);
 
-		s = binary_name(V,params);
 
-		sinf(i) = s(end);
-
-		taus(i) = find(s>s(end)/exp(1),1,'first')/10; % ms
-
-	end
-
-	l = plot(ax.sinf,V_step,sinf,'k','DisplayName',obj.cpp_class_name);
-	plot(ax.taus,V_step,taus,'k')
+	l = plot(ax.sinf,V,data.sinf,'k','DisplayName',obj.cpp_class_name);
+	plot(ax.taus,V,data.taus,'k')
 
 	legend(l);
-
 
 	return
 
