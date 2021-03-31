@@ -47,3 +47,9 @@ for i = 1:length(allfiles)
 	delete([this_dir filesep allfiles(i).name]);
 end
 
+% also delete all synapse function binaries
+allfiles = dir([this_dir filesep '*S_*']);
+for i = 1:length(allfiles)
+	delete([this_dir filesep allfiles(i).name]);
+end
+

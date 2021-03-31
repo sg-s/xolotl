@@ -7,7 +7,6 @@
 
 #ifndef INSTCALCIUMERROR
 #define INSTCALCIUMERROR
-#include "mechanism.hpp"
 #include <limits>
 
 //inherit mechanism class spec

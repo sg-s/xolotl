@@ -8,7 +8,6 @@
 
 #ifndef CALCIUMMECH
 #define CALCIUMMECH
-#include "mechanism.hpp"
 #include <limits>
 
 

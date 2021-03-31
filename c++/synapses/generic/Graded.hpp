@@ -21,7 +21,7 @@ public:
         E = -80.0;
         Vth = Vth_;
         tau = tau_;
-
+        Delta = Delta_;
 
         // dynamic variables
         s = s_;
@@ -34,6 +34,7 @@ public:
         is_electrical = false;
 
         fullStateSize = 2;
+        name = "Graded";
     }
 
     void integrate(void);
@@ -44,21 +45,22 @@ public:
     double tau_s(double);
     double sdot(double, double);
 
-    int getFullStateSize(void);
-    void connect(compartment *pcomp1_, compartment *pcomp2_);
-    double getCurrent(double V_post);
     int getFullState(double*, int);
 };
 
 
 
-double Graded::s_inf(double V_pre) {return 1.0/(1.0+exp((Vth - V_pre)/Delta));}
+double Graded::s_inf(double V_pre) {
+    return 1.0/(1.0+exp((Vth - V_pre)/Delta));
+}
 
-double Graded::tau_s(double sinf_) {return tau*(1 - sinf_);}
+double Graded::tau_s(double V_pre) {
+    return tau*(1 - s_inf(V_pre));
+}
 
 double Graded::sdot(double V_pre, double s_) {
     double sinf = s_inf(V_pre);
-    return (sinf - s_)/tau_s(sinf);
+    return (sinf - s_)/tau_s(V_pre);
 }
 
 void Graded::integrate(void) {
@@ -67,7 +69,7 @@ void Graded::integrate(void) {
     double sinf = s_inf(V_pre);
 
     // integrate using exponential Euler
-    s = sinf + (s - sinf)*exp(-dt/tau_s(sinf));
+    s = sinf + (s - sinf)*exp(-dt/tau_s(V_pre));
 
     g = gmax*s;
 
@@ -127,19 +129,10 @@ int Graded::getFullState(double *syn_state, int idx) {
     idx++;
 
     // also return the current from this synapse
-    syn_state[idx] = gmax*s*(post_syn->V - E);
+    syn_state[idx] = getCurrent(post_syn->V);
     idx++;
     return idx;
 }
-
-void Graded::connect(compartment *pcomp1_, compartment *pcomp2_) {
-    pre_syn = pcomp1_;
-    post_syn = pcomp2_;
-
-    // tell the post-synaptic cell that we're connecting to it
-    post_syn->addSynapse(this);
-}
-
 
 
 

@@ -2,11 +2,10 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// transient Sodium CONDUCTANCE
+// transient Sodium conductance
 // http://www.jneurosci.org/content/32/21/7267
 #ifndef NAT
 #define NAT
-#include "conductance.hpp"
 
 //inherit conductance class spec
 class NaT: public conductance {

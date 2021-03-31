@@ -7,7 +7,6 @@
 
 #ifndef INTEGRALCONTROLLER
 #define INTEGRALCONTROLLER
-#include "mechanism.hpp"
 #include <limits>
 
 //inherit controller class spec
