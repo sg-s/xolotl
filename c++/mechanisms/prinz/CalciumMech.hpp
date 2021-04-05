@@ -47,22 +47,10 @@ public:
 
     double Cadot(double);
 
-    void connectCompartment(compartment*);
-
-    
-
     void init(void);
 
 };
 
-
-
-
-// connection methods
-void CalciumMech::connectCompartment(compartment* comp_) {
-    comp = comp_;
-    comp->addMechanism(this);
-}
 
 
 void CalciumMech::init() {

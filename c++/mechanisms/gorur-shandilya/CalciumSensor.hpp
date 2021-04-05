@@ -7,7 +7,6 @@
 
 #ifndef CALCIUMSENSOR
 #define CALCIUMSENSOR
-#include "mechanism.hpp"
 #include <limits>
 
 //inherit mechanism class spec
@@ -37,9 +36,7 @@ public:
 
 
     void integrate(void);
-
-
-    void connectCompartment(compartment*);
+    void init(void);
 
 
     int getFullState(double * cont_state, int idx);
@@ -48,6 +45,11 @@ public:
 };
 
 
+void CalciumSensor::init(void) {
+    if (isnan(Ca_average)) {
+        Ca_average = comp->Ca;
+    }
+}
 
 
 int CalciumSensor::getFullState(double *cont_state, int idx) {
@@ -55,13 +57,6 @@ int CalciumSensor::getFullState(double *cont_state, int idx) {
     cont_state[idx] = Ca_average;
     idx++;
     return idx;
-}
-
-
-void CalciumSensor::connectCompartment(compartment* comp_) {
-    comp = comp_;
-    if (isnan(Ca_average)) {Ca_average = comp->Ca;}
-    comp->addMechanism(this);
 }
 
 

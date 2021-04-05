@@ -8,7 +8,6 @@
 
 #ifndef CALCIUMMECH
 #define CALCIUMMECH
-#include "mechanism.hpp"
 #include <limits>
 
 
@@ -47,19 +46,10 @@ public:
     void integrate(void);
     void init(void);
 
-    void connectCompartment(compartment*);
-
     
 
 };
 
-
-
-// connection methods
-void CalciumMech::connectCompartment(compartment* comp_) {
-    comp = comp_;
-    comp->addMechanism(this);
-}
 
 
 void CalciumMech::init() {

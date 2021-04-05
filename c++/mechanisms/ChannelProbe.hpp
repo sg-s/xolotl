@@ -6,7 +6,6 @@
 
 #ifndef CHANNELPROBE
 #define CHANNELPROBE
-#include "mechanism.hpp"
 
 //inherit controller class spec
 class ChannelProbe: public mechanism {

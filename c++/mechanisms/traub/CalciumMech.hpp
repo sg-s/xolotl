@@ -2,13 +2,12 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// CalciumMech mechanism
-// as in Traub et al 1991
-// https://www.physiology.org/doi/pdf/10.1152/jn.1991.66.2.635
+// 
+// component info: Calcium mechanism
+// component source: [Traub et al. 1991](https://www.physiology.org/doi/pdf/10.1152/jn.1991.66.2.635)
 
 #ifndef CALCIUMMECH
 #define CALCIUMMECH
-#include "mechanism.hpp"
 #include <limits>
 
 
@@ -44,21 +43,7 @@ public:
 
     double Cadot(double);
 
-    void connectCompartment(compartment*);
-
-    
-
-
 };
-
-
-
-
-// connection methods
-void CalciumMech::connectCompartment(compartment* comp_) {
-    comp = comp_;
-    comp->addMechanism(this);
-}
 
 
 
@@ -76,9 +61,7 @@ void CalciumMech::integrate(void) {
 // Runge-Kutta 4 integrator
 void CalciumMech::integrateMS(int k, double V, double Ca_) {
     if (k == 4){return;}
-
     comp->k_Ca[k] = dt*(Cadot(Ca_));
-    // mexPrintf("k_Ca[k] = %f\n", comp->k_Ca[k]);
 }
 
 void CalciumMech::checkSolvers(int k) {

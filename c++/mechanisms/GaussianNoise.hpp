@@ -7,7 +7,6 @@
 
 #ifndef GAUSSIANNOISE
 #define GAUSSIANNOISE
-#include "mechanism.hpp"
 #include <limits>
 
 //inherit controller class spec
@@ -47,8 +46,6 @@ public:
 
     // method declarations
     void integrate(void);
-    void connectConductance(conductance*);
-    void connectCompartment(compartment*);
     double getState(int);
     
 
@@ -59,26 +56,6 @@ double GaussianNoise::getState(int i) {
     return noise;
 }
 
-
-void GaussianNoise::connectCompartment(compartment * comp_) {
-    comp = comp_;
-    comp->addMechanism(this);
-}
-
-
-
-void GaussianNoise::connectConductance(conductance * channel_) {
-
-    // connect to a channel
-    channel = channel_;
-
-    // make sure the compartment that we are in knows about us
-    (channel->container)->addMechanism(this);
-
-    controlling_class = (channel_->name).c_str();
-
-
-}
 
 
 void GaussianNoise::integrate(void) {

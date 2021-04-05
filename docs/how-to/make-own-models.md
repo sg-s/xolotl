@@ -92,7 +92,6 @@ This is what a skeleton of a new conductance file would look like:
 
 #ifndef NEWCOND
 #define NEWCOND
-#include "conductance.hpp"
 
 //inherit conductance class spec
 class NewCond: public conductance {
@@ -177,7 +176,6 @@ Here's what a skeleton for a new mechanism would look like:
 
 #ifndef NEWMECH
 #define NEWMECH
-#include "mechanism.hpp"
 #include <limits>
 
 
@@ -253,7 +251,6 @@ can fill out for yourself.
 // we define the header file and include the synapse class
 #ifndef NEWSYNAPSE
 #define NEWSYNAPSE
-#include "synapse.hpp"
 
 // define the class for the specific synapse here
 class NewSynapse: public synapse {

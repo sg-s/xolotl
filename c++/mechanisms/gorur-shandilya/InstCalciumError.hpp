@@ -21,8 +21,6 @@ public:
     // specify parameters + initial conditions for
     // mechanism that controls a conductance
     InstCalciumError(double Target_) {
-
-        controlling_class = "unset";
         Target = Target_;
 
         fullStateSize = 1;
@@ -31,8 +29,6 @@ public:
         mechanism_type = "CalciumError";
     }
 
-
-    void connectCompartment(compartment*);
     double getState(int);
 };
 
@@ -44,12 +40,6 @@ double InstCalciumError::getState(int i_) {
     return  Target - (comp->Ca_prev);
 }
 
-
-
-void InstCalciumError::connectCompartment(compartment* comp_) {
-    comp = comp_;
-    comp->addMechanism(this);
-}
 
 
 

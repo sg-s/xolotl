@@ -9,7 +9,6 @@
 
 #ifndef UPPERCASENAME
 #define UPPERCASENAME
-#include "conductance.hpp"
 
 //inherit conductance class spec
 class CondName: public conductance {

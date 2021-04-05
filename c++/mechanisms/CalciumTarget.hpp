@@ -7,7 +7,6 @@
 
 #ifndef CALCIUMTARGET
 #define CALCIUMTARGET
-#include "mechanism.hpp"
 
 //inherit mechanism class spec
 class CalciumTarget: public mechanism {
@@ -28,26 +27,18 @@ public:
     }
 
     void checkSolvers(int);
-
-    void connectCompartment(compartment*);
-
     double getState(int);
     
 
 };
 
 
-// we are abusing getState to read out value of the target 
+// we are using getState to read out value of the target 
 // from other mechanisms 
-double CalciumTarget::getState(int idx){return Target;}
-
-
-
-// connection methods
-void CalciumTarget::connectCompartment(compartment* comp_) {
-    comp = comp_;
-    comp->addMechanism(this);
+double CalciumTarget::getState(int idx){
+    return Target;
 }
+
 
 
 

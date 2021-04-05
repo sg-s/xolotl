@@ -46,18 +46,10 @@ public:
     void integrate(void);
     void integrateMS(int, double, double);
     void checkSolvers(int);
-    void connectCompartment(compartment*);
     double Cadot(double);
     void init(void);
 
 };
-
-
-// connection methods
-void CalciumMech::connectCompartment(compartment* comp_) {
-    comp = comp_;
-    comp->addMechanism(this);
-}
 
 
 void CalciumMech::init() {
