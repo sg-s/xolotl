@@ -4,7 +4,6 @@
 
 #ifndef GLUTAMATERGIC
 #define GLUTAMATERGIC
-class synapse;
 
 class Glutamatergic: public synapse {
 

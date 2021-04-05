@@ -4,7 +4,6 @@
 //
 #ifndef CHOLINERGIC
 #define CHOLINERGIC
-class synapse;
 
 class Cholinergic: public synapse {
 

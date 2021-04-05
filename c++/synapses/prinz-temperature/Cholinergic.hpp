@@ -3,7 +3,6 @@
 //
 #ifndef CHOLINERGIC
 #define CHOLINERGIC
-#include "synapse.hpp"
 
 class Cholinergic: public synapse {
 

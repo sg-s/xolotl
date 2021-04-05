@@ -2,7 +2,6 @@
 // meant to be used for multi-compartment models
 #ifndef AXIAL
 #define AXIAL
-#include "synapse.hpp"
 
 class Axial: public synapse {
 
@@ -35,10 +34,6 @@ void Axial::integrate(void) {
 }
 
 
-
-
-
-
 void Axial::connect(compartment *pcomp1_, compartment *pcomp2_) {
     pre_syn = pcomp1_; 
     post_syn = pcomp2_; 
@@ -57,6 +52,10 @@ void Axial::connect(compartment *pcomp1_, compartment *pcomp2_) {
     double Lmu = pre_syn->len;
 
     gmax = (amu*amu_*amu_)/((resistivity*Lmu)*(Lmu*amu_*amu_ + Lmu_*amu*amu));
+
+    if (isnan(gmax)) {
+        mexPrintf("[WARNING] the maximal conductance of this axial synapse could not be computed. This is probably because you have not specified the geometrical parameters of all compartments.")
+    }
 }
 
 #endif

@@ -3,7 +3,6 @@
 //
 #ifndef GLUTAMATERGIC
 #define GLUTAMATERGIC
-#include "synapse.hpp"
 
 class Glutamatergic: public synapse {
 
