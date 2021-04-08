@@ -2,7 +2,10 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// Delayed rectifier like potassium current in the model of leech heartbeat HCO neurons (Hill et al., 2001)
+// component info: Delayed rectifier like potassium current in the leech
+// component source [Hill et al., 2001](https://link.springer.com/article/10.1023/A:1011216131638)
+// 
+
 
 #ifndef KCURRENT1
 #define KCURRENT1

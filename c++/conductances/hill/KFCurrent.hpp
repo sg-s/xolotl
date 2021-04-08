@@ -2,8 +2,9 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// FMRFamide (Phe-Met-Arg-Phe-NH2) activated potassium current in the model of leech heartbeat HCO neurons (Hill et al., 2001)
-// in a canonical model set to 0
+// component info: FMRFamide (Phe-Met-Arg-Phe-NH2) activated potassium current  in the leech
+// component source [Hill et al., 2001](https://link.springer.com/article/10.1023/A:1011216131638)
+// 
 
 #ifndef KFCURRENT
 #define KFCURRENT
