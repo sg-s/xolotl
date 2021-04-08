@@ -1,5 +1,5 @@
 %% demo_hco
-% this example generates a half-center oscillators
+% this example generates a half-center oscillator
 % with release and escape mechanisms
 %based on the model of leech heartbeat interneurons
 % and plots voltage traces
@@ -8,7 +8,7 @@ x = xolotl.examples.networks.LeechHeartbeat;
 
 % ---------- release mechanism -----------
 
-Vth = -40; % synaptic threhold (mV)
+Vth = -40; % synaptic threshold (mV)
 
 x.set('*.Vth',Vth);
 
@@ -20,21 +20,19 @@ data = x.integrate;
 figure('outerposition',[300 300 1200 600],'PaperUnits','points','PaperSize',[1200 600]); hold on
 subplot(2,2,1), plot(x.time,data.HN3L.V,'k','linewidth',1)
 line([0 x.t_end/10^3],[Vth Vth],'color','k','linestyle','--')
-ylabel('Membrane potential, mV'); title('Release')
+ylabel('V_m (mV)'); title('Release')
 ylim([-65 5]);
-set(gca, 'Fontsize', 14)
 
 subplot(2,2,3), plot(x.time,data.HN3R.V,'k','linewidth',1)
 line([0 x.t_end/10^3],[Vth Vth],'color','k','linestyle','--')
-xlabel('Time, sec'); ylabel('Membrane potential, mV')
+xlabel('Time (s)'); ylabel('V_m (mV)')
 ylim([-65 5]);
-set(gca, 'Fontsize', 14)
 
 
 
 % --------- escape mechanism -------------
 
-Vth = -55; % synaptic threhold (mV)
+Vth = -55; % synaptic threshold (mV)
 
 x.set('*.Vth',Vth);
 
@@ -42,13 +40,12 @@ data = x.integrate;
 
 subplot(2,2,2), plot(x.time,data.HN3L.V,'k','linewidth',1)
 line([0 x.t_end/10^3],[Vth Vth],'color','k','linestyle','--')
-ylabel('Membrane potential, mV'); title('Escape')
+ylabel('V_m (mV)'); title('Escape')
 ylim([-65 5]);
-set(gca, 'Fontsize', 14)
 
 subplot(2,2,4), plot(x.time,data.HN3R.V,'k','linewidth',1)
 line([0 x.t_end/10^3],[Vth Vth],'color','k','linestyle','--')
-xlabel('Time, sec'); ylabel('Membrane potential, mV')
+xlabel('Time (s)'); ylabel('V_m (mV)')
 ylim([-65 5]);
-set(gca, 'Fontsize', 14)
 
+figlib.pretty()

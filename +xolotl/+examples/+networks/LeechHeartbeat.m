@@ -26,7 +26,7 @@ Synapse is a graded synapse as in Sharp et al. 1996
 between the model elemental oscillator neurons:
 graded transmission, which is dependent on the influx
 of presynaptic Ca2+ through low-threshold Ca2+
-channels (Angstadt and Calabrese, 1991); and spikemediated
+channels (Angstadt and Calabrese, 1991); and spike mediated
 transmission, which is dependent on influx
 of presynaptic Ca2+ through high-threshold Ca2+ channels
 during a spike (Lu et al., 1997). Spike-mediated
@@ -41,7 +41,7 @@ channels = {'hill/CaF','hill/CaS','hill/HCurrent','hill/KACurrent','hill/KCurren
 
 x = xolotl;
 
-A=1; % unknown, set to 1 for simplicity
+A = 1; % unknown, set to 1 for simplicity
 x.add('compartment','HN3R','A',A,'Cm',0.5) % right heart interneuron
 x.add('compartment','HN3L','A',A,'Cm',0.5) % left heart interneuron
 
@@ -67,16 +67,16 @@ x.HN3L.set('*E',E);
 
 % add reciprocal inhibitory synapses
 
-%Vth=-40; % synaptic threhold (mV) for release mechanism
-Vth=-55; % synaptic threhold (mV) for escape mechanim
-
-gsyn=5; %nS
-
-x.connect('HN3R','HN3L','Graded','gmax',gsyn,'Vth',Vth,'Delta',2); 
-x.connect('HN3L','HN3R','Graded','gmax',gsyn,'Vth',Vth,'Delta',2); 
+% Vth=-40; % synaptic threshold (mV) for release mechanism
+Vth=-55; % synaptic threshold (mV) for escape mechanism
 
 
-x.HN3R.V = -50.1; x.HN3L.V = -50; % set initial conditions to be slightly different for two cells
+x.connect('HN3R','HN3L','Graded','gmax',5,'Vth',Vth,'Delta',2); 
+x.connect('HN3L','HN3R','Graded','gmax',5,'Vth',Vth,'Delta',2); 
+
+
+x.HN3R.V = -50.1; 
+x.HN3L.V = -50; % set initial conditions to be slightly different for two cells
 
 
 
