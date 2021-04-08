@@ -12,7 +12,7 @@
 **Syntax**
 
 ```matlab
-x = xolotl.examples.networks.hco();
+x = xolotl.examples.networks.LeechHeartbeat();
 ```
 
 **Description**
@@ -35,7 +35,7 @@ that is triggered by presynaptic spikes.)
 
 %}
 
-function x = hco_leech_heartbeat()
+function x = LeechHeartbeat()
 
 channels = {'hill/CaF','hill/CaS','hill/HCurrent','hill/KACurrent','hill/KCurrent1','hill/KCurrent2','Leak','hill/NaP','hill/NaV'};
 
@@ -45,11 +45,11 @@ A=1; % unknown, set to 1 for simplicity
 x.add('compartment','HN3R','A',A,'Cm',0.5) % right heart interneuron
 x.add('compartment','HN3L','A',A,'Cm',0.5) % left heart interneuron
 
-    for j = 1:length(channels)
-        x.HN3R.add([channels{j}]);
-        x.HN3L.add([channels{j}]);        
-    end
-        
+for j = 1:length(channels)
+    x.HN3R.add(channels{j});
+    x.HN3L.add(channels{j});        
+end
+    
 % configure gbars
 gCaF=5; gCaS=3.2; gH=4; gKA=80; gK1=100; gK2=80; gNaP=5; gNaV=200; gL=8; % nS
 gbar=[gCaF, gCaS, gH, gKA, gK1, gK2, gL, gNaP, gNaV];
