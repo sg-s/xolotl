@@ -7,7 +7,7 @@
 // component info: H current fit directly to I-V curve in Golowasch and Marder 1992
 #ifndef HCURRENT
 #define HCURRENT
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class HCurrent: public conductance {

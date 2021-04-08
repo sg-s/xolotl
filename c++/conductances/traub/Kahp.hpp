@@ -8,7 +8,7 @@
 
 #ifndef KAHP
 #define KAHP
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class Kahp: public conductance {
@@ -29,6 +29,9 @@ public:
         if (isnan (E)) { E = -80; }
 
         name = "Kahp";
+
+        bool AllowMInfApproximation = false;
+        bool AllowHInfApproximation = false;
     }
     
     double m_inf(double V, double Ca);

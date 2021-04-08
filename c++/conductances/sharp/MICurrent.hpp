@@ -7,7 +7,7 @@
 // based on dynamic clamp in Sharp et al 1993, Buchholtz et al 1993, Golowasch et al 1992
 #ifndef MICURRENT
 #define MICURRENT
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class MICurrent: public conductance {

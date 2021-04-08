@@ -8,7 +8,7 @@
 
 #ifndef CA2
 #define CA2
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class Ca2: public conductance {

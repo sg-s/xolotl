@@ -8,7 +8,7 @@
 
 #ifndef MICURRENT
 #define MICURRENT
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class MICurrent: public conductance {

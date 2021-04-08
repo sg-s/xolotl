@@ -7,7 +7,7 @@
 //
 #ifndef EAGWT
 #define EAGWT
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class EAGwt: public conductance {

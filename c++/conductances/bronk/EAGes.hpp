@@ -5,7 +5,7 @@
 
 #ifndef EAGES
 #define EAGES
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class EAGes: public conductance {

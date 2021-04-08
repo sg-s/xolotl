@@ -7,7 +7,7 @@
 // Kispersky, Caplan, Marder 2012
 #ifndef ACURRENT
 #define ACURRENT
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class ACurrent: public conductance {

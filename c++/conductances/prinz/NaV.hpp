@@ -8,8 +8,6 @@
 #ifndef NAV
 #define NAV
 
-class conductance;
-
 //inherit conductance class spec
 class NaV: public conductance {
 

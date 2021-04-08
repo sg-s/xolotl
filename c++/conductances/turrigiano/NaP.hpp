@@ -7,7 +7,7 @@
 // http://www.jneurosci.org/content/jneuro/15/5/3640.full.pdf
 #ifndef NAP
 #define NAP
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class NaP: public conductance {

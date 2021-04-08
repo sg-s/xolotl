@@ -6,7 +6,7 @@
 // http://jn.physiology.org/content/94/1/590.short
 #ifndef KCAAB
 #define KCAAB
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class KCaAB: public conductance {

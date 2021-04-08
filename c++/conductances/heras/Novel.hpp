@@ -9,7 +9,7 @@
 // Francisco J. H. Heras, Mikko Vahasoyrinki, and Jeremy E. Niven 2018
 #ifndef NOVEL
 #define NOVEL
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class Novel: public conductance {

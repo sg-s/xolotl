@@ -7,7 +7,7 @@
 //
 #ifndef KCA
 #define KCA
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class KCa: public conductance {

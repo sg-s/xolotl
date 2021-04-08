@@ -7,7 +7,7 @@
 // https://journals.physiology.org/doi/pdf/10.1152/jn.1996.76.2.867
 #ifndef HCURRENT
 #define HCURRENT
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class HCurrent: public conductance {

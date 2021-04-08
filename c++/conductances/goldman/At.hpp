@@ -7,7 +7,7 @@
 // Goldman, Golowasch, Marder, Abbott 2012
 #ifndef AT
 #define AT
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class At: public conductance {

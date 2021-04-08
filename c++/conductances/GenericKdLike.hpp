@@ -7,7 +7,7 @@
 // http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
 #ifndef GENERICKDLIKE
 #define GENERICKDLIKE
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class GenericKdLike: public conductance {

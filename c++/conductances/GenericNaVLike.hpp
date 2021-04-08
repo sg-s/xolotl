@@ -7,7 +7,7 @@
 // http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
 #ifndef GENERICNAVLIKE
 #define GENERICNAVLIKE
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class GenericNaVLike: public conductance {

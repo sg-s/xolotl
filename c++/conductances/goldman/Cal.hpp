@@ -7,7 +7,7 @@
 // Goldman, Golowasch, Marder, Abbott 2012
 #ifndef CAL
 #define CAL
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class Cal: public conductance {

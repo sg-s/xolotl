@@ -9,7 +9,7 @@
 
 #ifndef GENERICCHANNEL
 #define GENERICCHANNEL
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class GenericChannel: public conductance {

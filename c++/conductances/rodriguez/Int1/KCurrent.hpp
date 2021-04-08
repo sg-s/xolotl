@@ -8,7 +8,7 @@
 
 #ifndef KCURRENT
 #define KCURRENT
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class KCurrent: public conductance {

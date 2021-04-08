@@ -7,7 +7,6 @@
 //
 #ifndef ACURRENT
 #define ACURRENT
-class conductance;
 
 //inherit conductance class spec
 class ACurrent: public conductance {

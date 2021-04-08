@@ -7,7 +7,7 @@
 // component info: HCurrent with customizable Vhalf and tau
 #ifndef HCURRENT
 #define HCURRENT
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class HCurrent: public conductance {

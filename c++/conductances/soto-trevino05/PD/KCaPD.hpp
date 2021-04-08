@@ -6,7 +6,7 @@
 // http://jn.physiology.org/content/94/1/590.short
 #ifndef KCAPD
 #define KCAPD
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class KCaPD: public conductance {
@@ -27,6 +27,9 @@ public:
          // defaults
         if (isnan(gbar)) { gbar = 0; }
         if (isnan (E)) { E = -80; }
+
+        bool AllowMInfApproximation = false;
+        bool AllowHInfApproximation = false;
     }
 
 

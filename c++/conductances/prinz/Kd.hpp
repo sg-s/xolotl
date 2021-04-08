@@ -7,7 +7,6 @@
 //
 #ifndef KD
 #define KD
-class conductance;
 
 //inherit conductance class spec
 class Kd: public conductance {

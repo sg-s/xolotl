@@ -6,7 +6,7 @@
 // http://jn.physiology.org/content/94/1/590.short
 #ifndef CAS
 #define CAS
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class CaS: public conductance {

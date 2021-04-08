@@ -7,7 +7,6 @@
 //
 #ifndef CAT
 #define CAT
-class conductance;
 
 //inherit conductance class spec
 class CaT: public conductance {

@@ -9,7 +9,7 @@
 
 #ifndef KCA
 #define KCA
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class KCa: public conductance {
@@ -34,6 +34,9 @@ public:
         if (isnan (E)) { E = -80; }
 
         name = "KCa";
+
+        bool AllowMInfApproximation = false;
+        bool AllowHInfApproximation = false;
     }
 
     void integrate(double, double);

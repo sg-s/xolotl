@@ -7,7 +7,7 @@
 
 #ifndef CACURRENT
 #define CACURRENT
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class CaCurrent: public conductance {

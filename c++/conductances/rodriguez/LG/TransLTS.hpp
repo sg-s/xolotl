@@ -8,7 +8,7 @@
 
 #ifndef TRANSLTS
 #define TRANSLTS
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class TransLTS: public conductance {

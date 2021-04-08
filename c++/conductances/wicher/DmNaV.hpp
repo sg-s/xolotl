@@ -6,7 +6,7 @@
 // http://www.sciencedirect.com/science/article/pii/S0301008200000666
 #ifndef DMNAV
 #define DMNAV
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class DmNaV: public conductance {

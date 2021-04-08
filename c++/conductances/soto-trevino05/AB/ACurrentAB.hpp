@@ -6,7 +6,7 @@
 // http://jn.physiology.org/content/94/1/590.short
 #ifndef ACURRENTAB
 #define ACURRENTAB
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class ACurrentAB: public conductance {

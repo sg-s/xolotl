@@ -23,10 +23,9 @@ public:
 
         // defaults 
         if (isnan(gbar)) { gbar = 0; }
-        
         if (isnan (E)) { E = 45; }
-		
-	name = "NaP";
+
+        name = "NaP";
     }
 	
     double m_inf(double, double);

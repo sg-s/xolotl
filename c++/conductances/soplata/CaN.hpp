@@ -8,7 +8,7 @@
 
 #ifndef CAN
 #define CAN
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class CaN: public conductance {

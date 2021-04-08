@@ -8,7 +8,7 @@
 
 #ifndef CAL
 #define CAL
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class Cal: public conductance {

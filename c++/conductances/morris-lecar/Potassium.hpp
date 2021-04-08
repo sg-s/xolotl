@@ -9,7 +9,7 @@
 
 #ifndef POTASSIUM
 #define POTASSIUM
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class Potassium: public conductance {

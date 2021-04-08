@@ -9,7 +9,7 @@
 
 #ifndef MCURRENT
 #define MCURRENT
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class MCurrent: public conductance {

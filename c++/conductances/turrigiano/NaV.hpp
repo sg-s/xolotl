@@ -7,7 +7,7 @@
 // http://www.jneurosci.org/content/jneuro/15/5/3640.full.pdf
 #ifndef NAV
 #define NAV
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class NaV: public conductance {

@@ -7,7 +7,6 @@
 //
 #ifndef HCURRENT
 #define HCURRENT
-class conductance;
 
 //inherit conductance class spec
 class HCurrent: public conductance {

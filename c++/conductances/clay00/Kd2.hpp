@@ -6,7 +6,7 @@
 // http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
 #ifndef KD2
 #define KD2
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class Kd2: public conductance {

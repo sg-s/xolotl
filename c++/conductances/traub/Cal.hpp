@@ -7,7 +7,7 @@
 // http://jn.physiology.org/content/jn/90/6/3998.full.pdf
 #ifndef CAL
 #define CAL
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class Cal: public conductance {

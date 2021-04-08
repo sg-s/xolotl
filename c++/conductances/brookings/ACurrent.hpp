@@ -7,7 +7,7 @@
 // https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4274917/?report=printable#app1
 #ifndef ACURRENT
 #define ACURRENT
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class ACurrent: public conductance {

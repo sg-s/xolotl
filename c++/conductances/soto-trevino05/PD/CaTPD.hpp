@@ -2,7 +2,7 @@
 // http://jn.physiology.org/content/94/1/590.short
 #ifndef CATPD
 #define CATPD
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class CaTPD: public conductance {

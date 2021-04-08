@@ -7,7 +7,7 @@
 // Goldman, Golowasch, Marder, Abbott 2012
 #ifndef AP
 #define AP
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class Ap: public conductance {

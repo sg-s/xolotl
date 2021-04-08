@@ -7,7 +7,7 @@
 //
 #ifndef CAS
 #define CAS
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class CaS: public conductance {

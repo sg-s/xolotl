@@ -7,7 +7,7 @@
 // Kispersky, Caplan, Marder 2012
 #ifndef KCA
 #define KCA
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class KCa: public conductance {
@@ -29,6 +29,8 @@ public:
         p = 4;
 
         name = "KCa";
+
+        bool AllowMInfApproximation = false;
 
     }
 

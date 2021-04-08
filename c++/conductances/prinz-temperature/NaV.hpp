@@ -7,7 +7,7 @@
 //
 #ifndef NAV
 #define NAV
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class NaV: public conductance {

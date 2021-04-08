@@ -7,7 +7,7 @@
 // Jochems & Yoshida 2015
 #ifndef CAN
 #define CAN
-#include "conductance.hpp"
+
 
 //inherit conductance class spec
 class CaN: public conductance {

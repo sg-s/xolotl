@@ -7,7 +7,6 @@
 //
 #ifndef CAS
 #define CAS
-class conductance;
 
 //inherit conductance class spec
 class CaS: public conductance {
