@@ -37,8 +37,8 @@ x = xolotl;
 x.add('compartment','AB');
 x.AB.add('prinz/CalciumMech');
 
-for i = 1:length(channels)
-	x.AB.add(channels{i});
+for channel = List(channels)
+	x.AB.add(channel);
 end
 
 x.add(copy(x.AB),'LP')
