@@ -121,7 +121,7 @@ if ~fig_ok
 			ylabel(self.handles.ax(i),['[Ca^2^+]_{' comp_names{i} '} (uM)'] )
 		end
 
-		if self.pref.show_Ca & self.pref.plot_color
+		if self.pref.show_Ca && self.pref.plot_color
 			lh = legend([self.handles.plots(i).ph self.handles.Ca_trace(i)],[cond_names; '[Ca]']);
 			lh.Location = 'eastoutside';
 
@@ -152,13 +152,13 @@ max_Ca = max(max(Ca(:,1:N)));
 
 % process the voltage
 
-time = 1e-3 * self.dt * (1:size(V,1));
+time = self.time;
 
 
 a = 1;
 for i = 1:N
 	cond_names = self.(comp_names{i}).find('conductance');
-	this_V = V(:,find(strcmp(comp_names{i},self.Children)));
+	this_V = V(:,(strcmp(comp_names{i},self.Children)));
 	z = a + length(cond_names) - 1;
 	this_I = currents(:,a:z);
 	a = z + 1;

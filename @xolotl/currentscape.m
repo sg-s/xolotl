@@ -40,7 +40,7 @@ corelib.assert(length(self.Children)==1,'The currentscapes method only works for
 [V,~,~,I] = self.integrate;
 
 
-time = (1:length(V))*self.dt*1e-3;
+time = self.time;
 
 I_out = I;
 I_in = I;
@@ -66,7 +66,7 @@ I_in(:,1) = I_in(:,1) - 1;
 [~,idx]=sort(sum(I_out));
 I_out = I_out(:,idx);
 
-C = colormaps.dcol(size(I_in,2));
+C = colormaps.linspecer(size(I_in,2));
 
 make_axes = true;
 
@@ -133,7 +133,7 @@ if isempty(self.handles) || ~isfield(self.handles,'currentscape') || ~isvalid(se
 
 	if make_axes
 		% fake plots for legend
-		for i = 1:length(a)
+		for i = length(a):-1:1
 			lh(i) = plot(NaN,NaN,'.','Color',C(i,:),'MarkerSize',33);
 		end
 
@@ -152,10 +152,6 @@ if isempty(self.handles) || ~isfield(self.handles,'currentscape') || ~isvalid(se
 	end
 
 	self.handles.currentscape_out = a;
-
-
-
-
 
 
 
