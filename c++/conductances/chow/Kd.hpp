@@ -2,7 +2,7 @@
 //  \/  |  | |    |  |  |  |
 // _/\_ |__| |___ |__|  |  |___
 //
-// inward rectifying potassium conductance
+// delayed rectifying potassium conductance
 // 
 #ifndef KD
 #define KD
