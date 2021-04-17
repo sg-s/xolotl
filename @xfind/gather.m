@@ -1,6 +1,6 @@
 % collects all data logs into one giant matrix
 
-function data = gather(self)
+function [parameters, data] = gather(self)
 
 % figure out how many rows we expect
 n_rows = length(self.SimFcn) + length(self.ParameterNames);
@@ -35,3 +35,5 @@ for i = 1:length(allfiles)
 end
 
 data = reshape(data,n_rows,length(data)/n_rows);
+parameters = data(1:length(self.ParameterNames),:);
+data = data(length(self.ParameterNames)+1:end,:);

@@ -11,22 +11,16 @@ properties
 
 	x (1,1) xolotl
 
-
+	% names of parameters
 	ParameterNames (:,1) cell
 
 	% bounds
 	Upper (:,1) double
 	Lower (:,1) double 
 
-	workers (:,1) parallel.FevalFuture
-	CurrentPool (:,1) parallel.Pool
 
-
-	% with what probability should I drop channels?
-	% only applies when SampleFcn is not set
-	DeletionProbability (:,1) double = .05
-
-	
+	% stores futures of executing parallel tasks
+	workers (:,1) parallel.FevalFuture	
 
 	% allow user-defined custom sample function
 	SampleFcn function_handle
@@ -50,8 +44,6 @@ methods
 	function self = xfind()
 		self.SampleFcn = @self.uniformRandom;
 		self.SimFcn = @self.measureFiringRate;
-
-		self.CurrentPool = gcp;
 	end % constructor
 
 

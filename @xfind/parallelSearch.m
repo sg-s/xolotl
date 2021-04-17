@@ -28,13 +28,13 @@
 
 function parallelSearch(self)
 
-self.CurrentPool = gcp;
+pool = gcp;
 H = self.hash;
 
 disp('Starting workers...')
 
 
-for j = self.CurrentPool.NumWorkers:-1:1
+for j = pool.NumWorkers:-1:1
 	disp(['Starting worker #' mat2str(j)])
 
 	self.workers(j) = parfeval(@self.simulate,0,[H mat2str(j) '.xfind']);	
