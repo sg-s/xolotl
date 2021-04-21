@@ -25,14 +25,15 @@ public:
 
         // defaults 
         if (isnan(gbar)) { gbar = 0; }
-        
         if (isnan (E)) { E = 135; }
 		
-    // exponents of m and h
+        // exponents of m and h
         p = 2;
         q = 1;
 
-name = "CaS";		
+        name = "CaS";		
+
+        is_calcium = true;
     }
 	
     double m_inf(double, double);
