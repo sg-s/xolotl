@@ -7,7 +7,7 @@ function simulate(self, data_dump_loc)
 
 if ~exist('data_dump_loc','var')
 	H = self.x.hash(1:5);
-	data_dump_loc = [ H '.bin'];
+	data_dump_loc = [ H '.xfind'];
 end
 
 
