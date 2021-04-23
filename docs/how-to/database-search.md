@@ -112,3 +112,14 @@ To look at the solutions that `xfind` found, use:
 ### Under the hood
 
 `xfind` streams data to disk using binary files with extension `.xfind`. The name of the file is the hash of the `xolotl` model, so make sure you wipe these files (or move them) if you are changing your `SimFcn`
+
+
+### What if you don't have the parallel computing toolbox?
+
+The real power of this comes from finding models efficiently in parallel. However, if you don't have it, you can still use this with
+
+```
+p.simulate
+```
+
+instead of `p.parallelSearch` but remember that you will have to manually crash it to stop (`Ctrl+C`).
