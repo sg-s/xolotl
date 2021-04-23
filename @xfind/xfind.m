@@ -74,14 +74,6 @@ methods
 	end % uniformRandom
 
 
-	% this example function simulates the model and
-	% measures the firing rate in the first compartment
-	function data = measureFiringRate(self)
-		V = self.x.integrate;
-		data = xtools.findNSpikes(V(:,1))/(self.x.t_end*1e-3);
-	end
-
-
 
 
 

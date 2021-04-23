@@ -33,7 +33,7 @@ p.SampleFcn = @p.uniformRandom;
 % of well, data
 % Every element of data should contain a scalar double
 % and will be logged to disk
-p.SimFcn = @p.measureFiringRate;
+p.SimFcn = @xolotl.firingRate;
 
 
 % say we only we want to keep neurons that are not silent
