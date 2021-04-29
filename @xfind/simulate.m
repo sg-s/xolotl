@@ -23,7 +23,7 @@ while true
 	self.SampleFcn();
 
 
-	data = self.SimFcn();
+	data = self.SimFcn(self.x);
 
 	if self.DiscardFcn(data)
 		continue
