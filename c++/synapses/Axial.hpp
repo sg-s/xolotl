@@ -54,7 +54,7 @@ void Axial::connect(compartment *pcomp1_, compartment *pcomp2_) {
     gmax = (amu*amu_*amu_)/((resistivity*Lmu)*(Lmu*amu_*amu_ + Lmu_*amu*amu));
 
     if (isnan(gmax)) {
-        mexPrintf("[WARNING] the maximal conductance of this axial synapse could not be computed. This is probably because you have not specified the geometrical parameters of all compartments.")
+        mexPrintf("[WARNING] the maximal conductance of this axial synapse could not be computed. This is probably because you have not specified the geometrical parameters of all compartments.");
     }
 }
 

@@ -66,7 +66,7 @@ never spike (you may want to, but for this example, we don't).
 So we need to define a `DiscardFcn` that tells `xfind` when to save parameters and outputs from `SimFcn`, and when to
 skip them.
 
-```
+```matlab
 % we are using an anonymous function for this simple example
 p.DiscardFcn = @(data) data <= 0;
 ```
@@ -81,10 +81,12 @@ using all cores using
 
 ```matlab
 p.parallelSearch;
+```
+
+```
 Starting workers...
 Starting worker #8
 Starting worker #7
-Warning: Objects of class 'parallel.FevalFuture' cannot be saved to MAT files. 
 Starting worker #6
 Starting worker #5
 Starting worker #4
