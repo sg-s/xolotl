@@ -178,7 +178,7 @@ methods
         end
 
         % add the cache path to the path so that we can run the binaries
-         addpath(filelib.cachePath('xolotl'))
+        addpath(filelib.cachePath('xolotl'))
 	end
 
 

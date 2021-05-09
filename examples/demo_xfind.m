@@ -38,3 +38,21 @@ p.SimFcn = @xolotl.firingRate;
 
 % say we only we want to keep neurons that are not silent
 p.DiscardFcn = @(data) data <= 0;
+
+
+% start the search
+p.parallelSearch
+
+
+% wait for a bit
+pause(10)
+
+
+cancel(p.workers)
+
+
+% get the data
+[params,data]=p.gather;
+
+% show the parameters we found
+plotmatrix(params')
