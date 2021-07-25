@@ -5,8 +5,7 @@
 // component info: Slow Calcium current  
 // component source [Prinz et al. 2003](http://jn.physiology.org/content/jn/90/6/3998.full.pdf)
 //
-#ifndef CAS
-#define CAS
+#pragma once
 
 //inherit conductance class spec
 class CaS: public conductance {
@@ -52,4 +51,3 @@ double CaS::tau_m(double V, double Ca) {return 2.8 + 14.0/(exp((V+27.0)/10.0) + 
 double CaS::tau_h(double V, double Ca) {return 120.0 + 300.0/(exp((V+55.0)/9.0) + exp((V+65.0)/-16.0));}
 
 
-#endif

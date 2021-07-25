@@ -5,8 +5,7 @@
 // component info: A Current (K+)
 // component source [Prinz et al. 2003](http://jn.physiology.org/content/jn/90/6/3998.full.pdf)
 //
-#ifndef ACURRENT
-#define ACURRENT
+#pragma once
 
 //inherit conductance class spec
 class ACurrent: public conductance {
@@ -48,4 +47,3 @@ double ACurrent::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+56.9)/4.9));
 double ACurrent::tau_m(double V, double Ca) {return 23.2 - 20.8/(1.0+exp((V+32.9)/-15.2));}
 double ACurrent::tau_h(double V, double Ca) {return 77.2 - 58.4/(1.0+exp((V+38.9)/-26.5));}
 
-#endif

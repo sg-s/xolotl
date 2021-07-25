@@ -5,8 +5,7 @@
 // component info: Sodium conductance
 // component source [Prinz et al. 2003](http://jn.physiology.org/content/jn/90/6/3998.full.pdf)
 //
-#ifndef NAV
-#define NAV
+#pragma once
 
 //inherit conductance class spec
 class NaV: public conductance {
@@ -51,4 +50,3 @@ double NaV::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+48.9)/5.18));}
 double NaV::tau_m(double V, double Ca) {return 2.64 - 2.52/(1+exp((V+120.0)/-25.0));}
 double NaV::tau_h(double V, double Ca) {return (1.34/(1.0+exp((V+62.9)/-10.0)))*(1.5+1.0/(1.0+exp((V+34.9)/3.6)));}
 
-#endif

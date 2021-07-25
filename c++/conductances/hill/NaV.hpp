@@ -6,8 +6,7 @@
 // component source [Hill et al., 2001](https://link.springer.com/article/10.1023/A:1011216131638)
 // 
 
-#ifndef NAV
-#define NAV
+#pragma once
 
 //inherit conductance class spec
 class NaV: public conductance {
@@ -47,4 +46,3 @@ double NaV::tau_m(double V, double Ca) {return 0.1;}
 double NaV::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+30.0)*0.5));}
 double NaV::tau_h(double V, double Ca) {return (4.0 + 6.0/(1+exp((V+28.0)*0.5)) + 10.0/(cosh(0.3*(V+27.0))));}
 
-#endif

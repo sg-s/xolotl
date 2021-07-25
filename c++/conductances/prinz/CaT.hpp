@@ -5,8 +5,7 @@
 // component info: Transient calcium current 
 // component source [Prinz et al. 2003](http://jn.physiology.org/content/jn/90/6/3998.full.pdf)
 //
-#ifndef CAT
-#define CAT
+#pragma once
 
 //inherit conductance class spec
 class CaT: public conductance {
@@ -53,4 +52,4 @@ double CaT::tau_m(double V, double Ca) {return 43.4 - 42.6/(1.0 + exp((V+68.1)/-
 double CaT::tau_h(double V, double Ca) {return 210.0 - 179.6/(1.0 + exp((V+55.0)/-16.9));}
 
 
-#endif
+

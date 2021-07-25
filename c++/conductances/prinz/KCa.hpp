@@ -5,8 +5,7 @@
 // component info: Calcium activated Potassium current 
 // component source [Prinz et al. 2003](http://jn.physiology.org/content/jn/90/6/3998.full.pdf)
 //
-#ifndef KCA
-#define KCA
+#pragma once
 
 //inherit conductance class spec
 class KCa: public conductance {
@@ -48,4 +47,3 @@ public:
 double KCa::m_inf(double V, double Ca) {return (Ca/(Ca+3.0))/(1.0+exp((V+28.3)/-12.6)); }
 double KCa::tau_m(double V, double Ca) {return 180.6 - 150.2/(1.0+exp((V+46.0)/-22.7));}
 
-#endif
