@@ -5,8 +5,7 @@
 // component info: temperature-sensitive slow Calcium
 // component source [Prinz et al. 2003](http://jn.physiology.org/content/jn/90/6/3998.full.pdf)
 //
-#ifndef KCA
-#define KCA
+#pragma once
 
 
 //inherit conductance class spec
@@ -86,4 +85,3 @@ double KCa::m_inf(double V, double Ca) { return (Ca/(Ca+3.0))/(1.0+exp((V+28.3)/
 double KCa::tau_m(double V, double Ca) {return pow_Q_tau_m_delta_temp*(180.6 - 150.2/(1.0+exp((V+46.0)/-22.7)));}
 
 
-#endif

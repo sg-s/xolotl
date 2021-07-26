@@ -5,8 +5,7 @@
 // Transient Calcium Conductance
 // http://www.jneurosci.org/content/32/32/10995
 // Kispersky, Caplan, Marder 2012
-#ifndef CAT
-#define CAT
+#pragma once
 
 
 //inherit conductance class spec
@@ -55,4 +54,3 @@ double CaT::h_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+32.1)/5.5)));}
 double CaT::tau_h(double V, double Ca) {return 105.0-((89.8)/(1.0+exp(((V)+55.0)/-16.9)));}
 
 
-#endif

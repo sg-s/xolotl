@@ -5,8 +5,7 @@
 // component info: instantaneous difference from calcium target of  intracellular calcium
 // component source: [Gorur-Shandilya et al. 2020](https://www.nature.com/articles/s41598-020-72977-6)
 
-#ifndef INSTCALCIUMERROR
-#define INSTCALCIUMERROR
+#pragma once
 #include <limits>
 
 //inherit mechanism class spec
@@ -43,4 +42,3 @@ double InstCalciumError::getState(int i_) {
 
 
 
-#endif

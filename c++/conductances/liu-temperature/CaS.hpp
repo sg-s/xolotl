@@ -4,8 +4,7 @@
 //
 // Slow Calcium conductance
 // http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
-#ifndef CAS
-#define CAS
+#pragma once
 
 
 
@@ -92,4 +91,3 @@ double CaS::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+60.0)/6.2));}
 double CaS::tau_m(double V, double Ca) {return pow_Q_tau_m_delta_temp*(1.4 + 7.0/(exp((V+27.0)/10.0) + exp((V+70.0)/-13.0)));}
 double CaS::tau_h(double V, double Ca) {return pow_Q_tau_h_delta_temp*(60.0 + 150.0/(exp((V+55.0)/9.0) + exp((V+65.0)/-16.0)));}
 
-#endif

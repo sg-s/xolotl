@@ -5,8 +5,7 @@
 // Hyperpolarization-Activated Mixed Cation Conductance
 // http://www.jneurosci.org/content/32/32/10995
 // Kispersky, Caplan, Marder 2012
-#ifndef HCURRENT
-#define HCURRENT
+#pragma once
 
 
 //inherit conductance class spec
@@ -45,4 +44,3 @@ double HCurrent::m_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+70.0)/-6.
 double HCurrent::tau_m(double V, double Ca) {return 272.0-(1499.0/(1.0+exp(((V)+42.2)/-8.75)));}
 
 
-#endif

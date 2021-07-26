@@ -5,8 +5,7 @@
 // component source [Morris & Lecar]()
 // component info: Morris & Lecar Calcium conductance 
 
-#ifndef CACURRENT
-#define CACURRENT
+#pragma once
 
 
 //inherit conductance class spec
@@ -67,5 +66,4 @@ double CaCurrent::m_inf(double V, double Ca) {return  0.5*(1.0 + tanh((V-V1)/(V2
 
 
 
-#endif
 

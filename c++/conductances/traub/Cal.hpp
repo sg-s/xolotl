@@ -5,8 +5,7 @@
 // Fast Calcium CONDUCTANCE
 // this version does not support temperature dependence
 // http://jn.physiology.org/content/jn/90/6/3998.full.pdf
-#ifndef CAL
-#define CAL
+#pragma once
 
 
 //inherit conductance class spec
@@ -80,4 +79,3 @@ double Cal::tau_m(double V, double Ca) {return 1.0 / (m_alpha(V, Ca) + m_beta(V,
 double Cal::tau_h(double V, double Ca) {return 1.0 / (h_alpha(V, Ca) + h_beta(V, Ca));}
 
 
-#endif

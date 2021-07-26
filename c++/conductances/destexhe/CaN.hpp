@@ -6,8 +6,7 @@
 // Destexhe, Contreras, Sejnowski, & Steriade 1994
 // https://www.ncbi.nlm.nih.gov/pubmed/7527077
 
-#ifndef CAN
-#define CAN
+#pragma once
 
 
 //inherit conductance class spec
@@ -52,4 +51,3 @@ double CaN::m_inf(double V, double Ca) {return alpha * fast_pow(Ca, 2) / (alpha 
 double CaN::tau_m(double V, double Ca) {return 1 / (alpha * fast_pow(Ca, 2) + beta);}
 
 
-#endif

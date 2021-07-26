@@ -10,8 +10,7 @@
 // assuming Q10 values of 5 and 3
 // and an extracellular Ca++ concentration of 2 mM
 
-#ifndef CAT
-#define CAT
+#pragma once
 
 
 //inherit conductance class spec
@@ -56,4 +55,3 @@ double CaT::tau_m(double V, double Ca) {return 0.44 + 0.15 / (exp((V + 27)/10) +
 double CaT::tau_h(double V, double Ca) {return 22.7 + 0.27 / (exp((V + 48)/4) + exp((-(V + 407)/50)));}
 
 
-#endif

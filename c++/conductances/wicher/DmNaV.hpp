@@ -4,8 +4,7 @@
 //
 // DmNaV (para) in Drosophila
 // http://www.sciencedirect.com/science/article/pii/S0301008200000666
-#ifndef DMNAV
-#define DMNAV
+#pragma once
 
 
 //inherit conductance class spec
@@ -45,4 +44,3 @@ double DmNaV::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+48.9)/5.18));}
 double DmNaV::tau_m(double V, double Ca) {return 1.32 - 1.26/(1+exp((V+120.0)/-25.0));}
 double DmNaV::tau_h(double V, double Ca) {return (0.67/(1.0+exp((V+62.9)/-10.0)))*(1.5+1.0/(1.0+exp((V+34.9)/3.6)));}
 
-#endif

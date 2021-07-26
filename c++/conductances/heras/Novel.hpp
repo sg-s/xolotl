@@ -7,8 +7,7 @@
 // double shaker, shab mutants
 // equations in: https://www.biorxiv.org/content/biorxiv/early/2018/06/13/344325.full.pdf
 // Francisco J. H. Heras, Mikko Vahasoyrinki, and Jeremy E. Niven 2018
-#ifndef NOVEL
-#define NOVEL
+#pragma once
 
 
 //inherit conductance class spec
@@ -45,4 +44,3 @@ public:
 double Novel::m_inf(double V, double Ca) {return (1.0/(1.0+exp(sqrt((1.0+V)/-9.1))));}
 double Novel::tau_m(double V, double Ca) {return 13.0+165.0*exp(-2.0*((V+19.4)/30.0)*((V+19.4)/30.0));}
 
-#endif

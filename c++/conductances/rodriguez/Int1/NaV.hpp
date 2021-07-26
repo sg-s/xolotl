@@ -6,8 +6,7 @@
 // Rodriguez et al. 2013
 // http://www.jneurosci.org/content/jneuro/33/46/18047.full.pdf
 
-#ifndef NAV
-#define NAV
+#pragma once
 
 
 //inherit conductance class spec
@@ -53,4 +52,3 @@ double NaV::tau_h(double V, double Ca) {return 10.0;}
 // reported time constants are in the range (1.5, 0.45) and (10, 2.4) ms respectively.
 
 
-#endif

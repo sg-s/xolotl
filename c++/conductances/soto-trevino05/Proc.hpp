@@ -5,8 +5,7 @@
 // Persistent Sodium
 // http://jn.physiology.org/content/94/1/590.short
 
-#ifndef PROC
-#define PROC
+#pragma once
 
 
 //inherit conductance class spec
@@ -42,4 +41,3 @@ double Proc::m_inf(double V, double Ca) {return 1.0/(1.0+exp(-(V+12.0)/3.05));}
 
 
 
-#endif

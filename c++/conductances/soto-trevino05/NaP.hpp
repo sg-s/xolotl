@@ -4,8 +4,7 @@
 //
 // Persistent Sodium
 // http://jn.physiology.org/content/94/1/590.short
-#ifndef NAP
-#define NAP
+#pragma once
 
 
 //inherit conductance class spec
@@ -44,4 +43,3 @@ double NaP::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+48.5)/4.8));}
 double NaP::tau_m(double V, double Ca) {return 19.8 - 10.7/(1+exp(-(V+26.5)/8.6));}
 double NaP::tau_h(double V, double Ca) {return 666 - 379/(1+exp(-(V+33.6)/11.7));}
 
-#endif

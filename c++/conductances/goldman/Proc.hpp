@@ -5,8 +5,7 @@
 // Dynamic-Clamp-Added Proctolin-Activated Conductance
 // http://www.jneurosci.org/content/21/14/5229.long
 // Goldman, Golowasch, Marder, Abbott 2012
-#ifndef PROC
-#define PROC
+#pragma once
 
 
 //inherit conductance class spec
@@ -45,4 +44,3 @@ double Proc::m_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+57.0)/-5.0)))
 double Proc::tau_m(double V, double Ca) {return 6.0;}
 
 
-#endif

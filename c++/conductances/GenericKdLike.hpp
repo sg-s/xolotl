@@ -5,8 +5,7 @@
 // Generic non-inactivating conductance
 // defaults reproduce a Kd channel from here:
 // http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
-#ifndef GENERICKDLIKE
-#define GENERICKDLIKE
+#pragma once
 
 
 //inherit conductance class spec
@@ -68,4 +67,3 @@ double GenericKdLike::tau_m(double V, double Ca) {return m_tau_A + m_tau_B/(1+ex
 
 
 
-#endif

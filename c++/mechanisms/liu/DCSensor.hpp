@@ -6,8 +6,7 @@
 // component source [Liu et al. 98](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)
 //
 
-#ifndef DCSENSOR
-#define DCSENSOR
+#pragma once
 #include "mechanism.hpp"
 #include <limits>
 
@@ -116,4 +115,3 @@ double DCSensor::boltzmann(double x) {
 
 
 
-#endif

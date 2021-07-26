@@ -4,8 +4,7 @@
 //
 // component info: Fast sodium conductance 
 // component source [Liu et al. 98](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)
-#ifndef NAV
-#define NAV
+#pragma once
 class conductance;
 
 //inherit conductance class spec
@@ -45,4 +44,3 @@ double NaV::tau_m(double V, double Ca) {return 1.32 - 1.26/(1+exp((V+120.0)/-25.
 double NaV::tau_h(double V, double Ca) {return (0.67/(1.0+exp((V+62.9)/-10.0)))*(1.5+1.0/(1.0+exp((V+34.9)/3.6)));}
 
 
-#endif

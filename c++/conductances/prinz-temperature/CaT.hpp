@@ -5,8 +5,7 @@
 // component info: temperature-sensitive transient calcium
 // component source [Prinz et al. 2003](http://jn.physiology.org/content/jn/90/6/3998.full.pdf)
 //
-#ifndef CAT
-#define CAT
+#pragma once
 
 
 //inherit conductance class spec
@@ -98,4 +97,3 @@ double CaT::h_inf(double V, double Ca) {return 1.0/(1.0 + exp((V+32.1)/5.5));}
 double CaT::tau_m(double V, double Ca) {return (pow_Q_tau_m_delta_temp)*(43.4 - 42.6/(1.0 + exp((V+68.1)/-20.5)));}
 double CaT::tau_h(double V, double Ca) {return (pow_Q_tau_h_delta_temp)*(210.0 - 179.6/(1.0 + exp((V+55.0)/-16.9)));}
 
-#endif

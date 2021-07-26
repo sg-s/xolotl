@@ -5,8 +5,7 @@
 // component info: WT EAG channels that are inactivated by Calcium.
 // component source [Bronk et al. 2017](https://www.physiology.org/doi/10.1152/jn.00820.2017)
 //
-#ifndef EAGWT
-#define EAGWT
+#pragma once
 
 
 //inherit conductance class spec
@@ -41,4 +40,3 @@ public:
 double EAGwt::m_inf(double V, double Ca) { return (9.29e-2/(Ca+9.29e-2))/(1.0+exp((V+23.12)/-16.94)); }
 double EAGwt::tau_m(double V, double Ca) {return 5497 - 5500/(1.0+exp((V+251.5 )/-51.5));}
 
-#endif

@@ -6,8 +6,7 @@
 // Rodriguez et al. 2013
 // http://www.jneurosci.org/content/jneuro/33/46/18047.full.pdf
 
-#ifndef TRANSLTS
-#define TRANSLTS
+#pragma once
 
 
 //inherit conductance class spec
@@ -52,4 +51,3 @@ double TransLTS::tau_h(double V, double Ca) {return 3500.0;}
 // reported time constants are in the range (500, 500) and (3500, 1500) ms respectively.
 
 
-#endif

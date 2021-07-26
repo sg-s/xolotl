@@ -5,8 +5,7 @@
 // component info: sensor of intracellular calcium
 // component source: [Gorur-Shandilya et al. 2019](https://www.biorxiv.org/content/10.1101/753608v1.abstract)
 
-#ifndef CALCIUMSENSOR
-#define CALCIUMSENSOR
+#pragma once
 #include <limits>
 
 //inherit mechanism class spec
@@ -66,4 +65,3 @@ void CalciumSensor::integrate(void) {
 
 
 
-#endif

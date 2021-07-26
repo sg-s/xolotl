@@ -4,8 +4,7 @@
 //
 // Cell MCN1 Fast Sodium Conductance
 // http://www.jneurosci.org/content/18/13/5053
-#ifndef NAV
-#define NAV
+#pragma once
 
 
 //inherit conductance class spec
@@ -49,4 +48,3 @@ double NaV::h_inf(double V, double Ca) {return (1.0/(1.0+exp(0.13*((V)+38.0))));
 double NaV::tau_h(double V, double Ca) {return (5.0/(1.0+exp(-0.12*((V)+67.0))));}
 
 
-#endif

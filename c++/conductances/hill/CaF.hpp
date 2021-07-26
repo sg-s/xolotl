@@ -6,8 +6,7 @@
 // component source [Hill et al., 2001](https://link.springer.com/article/10.1023/A:1011216131638)
 // 
 
-#ifndef CAF
-#define CAF
+#pragma once
 
 //inherit conductance class spec
 class CaF: public conductance {
@@ -50,4 +49,3 @@ double CaF::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+55.5)*0.35));}
 double CaF::tau_m(double V, double Ca) {return 11.0 + 24.0/(cosh(-0.33*(V+46.7)));}
 double CaF::tau_h(double V, double Ca) {return 60.0 + 310.0/(1.0+exp((V+55.0)*0.27));}
 
-#endif

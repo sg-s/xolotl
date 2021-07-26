@@ -5,8 +5,7 @@
 // M-current (potassium)
 // https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4406621/
 // Jochems & Yoshida 2015
-#ifndef MCURRENT
-#define MCURRENT
+#pragma once
 
 
 // inherit conductance class spec
@@ -41,4 +40,3 @@ public:
 double MCurrent::m_inf(double V, double Ca) {return 1 / (1 + exp((-(V + 35)/10)));}
 double MCurrent::tau_m(double V, double Ca) {return 4 / (3.3 * exp((V + 35)/20) + exp(-(V + 35)/20));}
 
-#endif

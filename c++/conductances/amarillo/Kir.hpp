@@ -5,8 +5,7 @@
 // component info: inward rectifying (K+) current
 // component source [Amarillo et al. 98](https://journals.physiology.org/doi/pdf/10.1152/jn.00867.2017)
 //
-#ifndef KIR
-#define KIR
+#pragma once
 
 
 //inherit conductance class spec
@@ -44,4 +43,3 @@ double Kir::m_inf(double V, double Ca) {
 }
 
 
-#endif

@@ -4,8 +4,7 @@
 //
 // Sodium CONDUCTANCE
 // 
-#ifndef NAV
-#define NAV
+#pragma once
 
 
 //inherit conductance class spec
@@ -79,4 +78,3 @@ double NaV::tau_h(double V, double Ca) {return 1.0/(AlphaH(V)+BetaH(V));}
 
 
 
-#endif

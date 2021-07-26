@@ -6,8 +6,7 @@
 // Dethier, Drion, Franci, Sepulchre 2015
 // https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4620135/
 
-#ifndef NAV
-#define NAV
+#pragma once
 
 
 //inherit conductance class spec
@@ -53,4 +52,3 @@ double NaV::tau_m(double V, double Ca) {return 1.32- (1.26/(1.0+exp(((V)+120.0)/
 double NaV::tau_h(double V, double Ca) {return ((0.67)/(1.0+exp(((V)+62.9)/(-10.0))))*(1.5+(1.0/(1.0+exp(((V)+34.9)/3.6))));}
 
 
-#endif

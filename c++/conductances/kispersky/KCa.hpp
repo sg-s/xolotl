@@ -5,8 +5,7 @@
 // Calcium-Gated Potassium Conductance
 // http://www.jneurosci.org/content/32/32/10995
 // Kispersky, Caplan, Marder 2012
-#ifndef KCA
-#define KCA
+#pragma once
 
 
 //inherit conductance class spec
@@ -47,4 +46,3 @@ double KCa::m_inf(double V, double Ca) {return (Ca/(Ca+3))*(1.0/(1.0+exp(((V)+27
 double KCa::tau_m(double V, double Ca) {return 90.3-(75.1/(1.0+exp(((V)+46.0)/-22.7)));}
 
 
-#endif

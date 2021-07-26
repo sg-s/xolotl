@@ -4,8 +4,7 @@
 //
 // delayed rectifying potassium conductance
 // 
-#ifndef KD
-#define KD
+#pragma once
 
 
 //inherit conductance class spec
@@ -54,4 +53,3 @@ double Kd::m_inf(double V, double Ca) {return Alpha(V)/(Alpha(V)+Beta(V));}
 double Kd::tau_m(double V, double Ca) {return 1.0/(Alpha(V)+Beta(V));}
 
 
-#endif

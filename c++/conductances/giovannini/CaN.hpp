@@ -6,8 +6,7 @@
 // Giovannini et al. 2015
 // https://hal.archives-ouvertes.fr/hal-01426362/file/Giovannini-ICAN-Hippocampus_submittedRev.pdf
 
-#ifndef CAN
-#define CAN
+#pragma once
 
 
 //inherit conductance class spec
@@ -76,4 +75,3 @@ double CaN::m_inf(double V, double Ca) {return a_m(V, Ca) / (a_m(V, Ca) + b_m(V,
 double CaN::tau_m(double V, double Ca) {return 1 / (a_m(V, Ca) + b_m(V, Ca));}
 
 
-#endif

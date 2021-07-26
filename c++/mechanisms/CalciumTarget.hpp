@@ -5,8 +5,7 @@
 // component info: component storing a single calcium target
 //
 
-#ifndef CALCIUMTARGET
-#define CALCIUMTARGET
+#pragma once
 
 //inherit mechanism class spec
 class CalciumTarget: public mechanism {
@@ -49,4 +48,3 @@ void CalciumTarget::checkSolvers(int k) {
 
 
 
-#endif

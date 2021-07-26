@@ -21,8 +21,7 @@
 // Academy of Sciences, 107(52), 22665–22670.
 // http://doi.org/10.1073/pnas.1017069108
 
-#ifndef NAV
-#define NAV
+#pragma once
 
 
 //inherit conductance class spec
@@ -74,4 +73,3 @@ double NaV::h_inf(double V, double Ca) {return h_alpha(V, Ca) / (h_alpha(V, Ca) 
 double NaV::tau_m(double V, double Ca) {return 1 / (m_alpha(V, Ca) + m_beta(V, Ca));}
 double NaV::tau_h(double V, double Ca) {return 1 / (h_alpha(V, Ca) + h_beta(V, Ca));}
 
-#endif

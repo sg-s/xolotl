@@ -6,8 +6,7 @@
 // mutant, less sensitive to Ca
 // component source [Bronk et al. 2017](https://www.physiology.org/doi/10.1152/jn.00820.2017)
 
-#ifndef EAGMUT
-#define EAGMUT
+#pragma once
 
 
 //inherit conductance class spec
@@ -42,4 +41,3 @@ public:
 double EAGmut::m_inf(double V, double Ca) { return (.92*(1-.05)/(Ca+.92) + .05)/(1.0+exp((V+23.12)/-16.94)); }
 double EAGmut::tau_m(double V, double Ca) {return 5497 - 5500/(1.0+exp((V+251.5 )/-51.5));}
 
-#endif

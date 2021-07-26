@@ -6,8 +6,7 @@
 // component source [Prinz et al. 2003](https://journals.physiology.org/doi/full/10.1152/jn.00641.2003)
 
 
-#ifndef CALCIUMMECH
-#define CALCIUMMECH
+#pragma once
 #include <limits>
 
 
@@ -91,4 +90,3 @@ void CalciumMech::checkSolvers(int k) {
 
 
 
-#endif

@@ -7,8 +7,7 @@
 // or use the conductance class within MATLAB
 // to auto-generate C++ code 
 
-#ifndef POTASSIUM
-#define POTASSIUM
+#pragma once
 
 
 //inherit conductance class spec
@@ -57,5 +56,4 @@ double Potassium::m_inf(double V, double Ca) {return  (.5)*(1 + tanh((V-V3)/(V4)
 double Potassium::tau_m(double V, double Ca) {return  1/(phi*cosh((V-V3)/(2*V4)));}
 
 
-#endif
 

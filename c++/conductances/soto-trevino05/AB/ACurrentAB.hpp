@@ -4,8 +4,7 @@
 //
 // ACurrent in AB
 // http://jn.physiology.org/content/94/1/590.short
-#ifndef ACURRENTAB
-#define ACURRENTAB
+#pragma once
 
 
 //inherit conductance class spec
@@ -47,4 +46,3 @@ double ACurrentAB::tau_m(double V, double Ca) {return 11.6 - 10.4/(1.0+exp(-(V+3
 double ACurrentAB::tau_h(double V, double Ca) {return 38.6 - 29.2/(1.0+exp(-(V+38.9)/26.5));}
 
 
-#endif

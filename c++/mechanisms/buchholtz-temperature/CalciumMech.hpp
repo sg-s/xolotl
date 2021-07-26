@@ -7,8 +7,7 @@
 // and in "Methods in neuronal modelling"
 // and others.
 
-#ifndef CALCIUMMECH
-#define CALCIUMMECH
+#pragma once
 #include "mechanism.hpp"
 #include <limits>
 
@@ -110,4 +109,3 @@ void CalciumMech::checkSolvers(int k) {
 
 
 
-#endif

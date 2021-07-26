@@ -4,8 +4,7 @@
 //
 // Slow Calcium conductance
 // http://jn.physiology.org/content/94/1/590.short
-#ifndef CAS
-#define CAS
+#pragma once
 
 
 //inherit conductance class spec
@@ -47,4 +46,3 @@ double CaS::m_inf(double V, double Ca) {return 1.0/(1.0+exp(-(V+22.0)/8.5));}
 double CaS::tau_m(double V, double Ca) {return 16 - 13.1/(1 + exp(-(V+25.1)/-26.4));}
 
 
-#endif

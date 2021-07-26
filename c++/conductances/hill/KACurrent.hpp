@@ -6,8 +6,7 @@
 // component source [Hill et al., 2001](https://link.springer.com/article/10.1023/A:1011216131638)
 // 
 
-#ifndef KACURRENT
-#define KACURRENT
+#pragma once
 
 //inherit conductance class spec
 class KACurrent: public conductance {
@@ -48,4 +47,3 @@ double KACurrent::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+63.0)*0.16)
 double KACurrent::tau_m(double V, double Ca) {return 5.0 + 11.0/(1.0+exp((V+30.0)*0.2));}
 double KACurrent::tau_h(double V, double Ca) {return 26.0 + 8.5/(1.0+exp((V+55.0)*-0.3));}
 
-#endif

@@ -7,8 +7,7 @@
 // component source: [Soto-Trevino et al 2001](https://www.nature.com/articles/nn0301_297)
 // 
 //
-#ifndef PROPORTIONALCONTROLLER
-#define PROPORTIONALCONTROLLER
+#pragma once
 #include "mechanism.hpp"
 #include <limits>
 
@@ -208,4 +207,3 @@ void ProportionalController::integrate(void) {
 
 
 
-#endif

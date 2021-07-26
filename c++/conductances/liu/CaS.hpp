@@ -5,8 +5,7 @@
 // component info: Slow Ca conductance
 // component source [Liu et al. 98](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)
 //
-#ifndef CAS
-#define CAS
+#pragma once
 class conductance;
 
 //inherit conductance class spec
@@ -49,4 +48,3 @@ double CaS::tau_m(double V, double Ca) {return 1.4 + 7.0/(exp((V+27.0)/10.0) + e
 double CaS::tau_h(double V, double Ca) {return 60.0 + 150.0/(exp((V+55.0)/9.0) + exp((V+65.0)/-16.0));}
 
 
-#endif

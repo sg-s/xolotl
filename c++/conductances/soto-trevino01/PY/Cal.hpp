@@ -6,8 +6,7 @@
 // https://www.nature.com/articles/nn0301_297#methods
 // Soto-Trevino et al. 2001
 
-#ifndef CAL
-#define CAL
+#pragma once
 
 
 //inherit conductance class spec
@@ -43,4 +42,3 @@ public:
 
 double Cal::m_inf(double V, double Ca) {return (0.5)*(1.0+tanh((V))/15.0);}
 
-#endif

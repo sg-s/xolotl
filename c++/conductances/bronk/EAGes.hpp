@@ -3,8 +3,7 @@
 // that is 2 orders more sensitive
 // component source [Bronk et al. 2017](https://journals.physiology.org/doi/full/10.1152/jn.00820.2017)
 
-#ifndef EAGES
-#define EAGES
+#pragma once
 
 
 //inherit conductance class spec
@@ -39,4 +38,3 @@ public:
 double EAGes::m_inf(double V, double Ca) { return (9.29e-4/(Ca+9.29e-4))/(1.0+exp((V+23.12)/-16.94)); }
 double EAGes::tau_m(double V, double Ca) {return 5497 - 5500/(1.0+exp((V+251.5 )/-51.5));}
 
-#endif

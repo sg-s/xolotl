@@ -5,8 +5,7 @@
 // component source [O'Leary et al. 2014](https://www.sciencedirect.com/science/article/pii/S089662731400292X)
 // component info: Integral controller of conductances and synapses
 
-#ifndef POTASSIUMMECH
-#define POTASSIUMMECH
+#pragma once
 #include "mechanism.hpp"
 #include <limits>
 
@@ -162,4 +161,3 @@ void PotassiumMech::integrate(void) {
 
 
 
-#endif

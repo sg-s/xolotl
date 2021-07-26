@@ -7,8 +7,7 @@
 // Thalamocortical control of propofol phase-amplitude coupling. PLOS
 // Computational Biology. 2017;13: e1005879. doi:10.1371/journal.pcbi.1005879
 
-#ifndef NAV
-#define NAV
+#pragma once
 
 
 //inherit conductance class spec
@@ -60,4 +59,3 @@ double NaV::tau_m(double V, double Ca) {return 1.0 / (a_m(V,Ca) + b_m(V,Ca)); }
 double NaV::tau_h(double V, double Ca) {return 1.0 / (a_h(V,Ca) + b_h(V,Ca)); }
 
 
-#endif

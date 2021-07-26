@@ -4,8 +4,7 @@
 //
 // transient Sodium conductance
 // http://www.jneurosci.org/content/32/21/7267
-#ifndef NAT
-#define NAT
+#pragma once
 
 //inherit conductance class spec
 class NaT: public conductance {
@@ -45,4 +44,3 @@ double NaT::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+40.0)/6.04));}
 double NaT::tau_m(double V, double Ca) {return 3.86 - 3.43/(1+exp((V+51.350)/-5.98));}
 double NaT::tau_h(double V, double Ca) {return 2.83 - 2.37/(1+exp((V+21.9)/-2.64));}
 
-#endif

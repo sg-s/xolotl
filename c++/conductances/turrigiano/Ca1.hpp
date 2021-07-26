@@ -6,8 +6,7 @@
 // from Turrigiano ... Marder 1995
 // http://www.jneurosci.org/content/jneuro/15/5/3640.full.pdf
 
-#ifndef CA1
-#define CA1
+#pragma once
 
 
 //inherit conductance class spec
@@ -48,4 +47,3 @@ double Ca1::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+30.1)/5.5));}
 double Ca1::tau_m(double V, double Ca) {return 21.7 - 21.3/(exp((V+68.1)/20.5));}
 double Ca1::tau_h(double V, double Ca) {return 105 - 89.8/(exp((V+55.0)/16.9));}
 
-#endif

@@ -21,8 +21,7 @@
 // Academy of Sciences, 107(52), 22665–22670.
 // http://doi.org/10.1073/pnas.1017069108
 
-#ifndef CAT
-#define CAT
+#pragma once
 
 
 //inherit conductance class spec
@@ -69,4 +68,3 @@ double CaT::tau_h(double V, double Ca) {return (30.8 + (211.4 * exp(((V + 2) + 1
 
 
 
-#endif

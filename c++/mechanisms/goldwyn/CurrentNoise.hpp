@@ -7,8 +7,7 @@
 // 
 //
 
-#ifndef CURRENTNOISE
-#define CURRENTNOISE
+#pragma once
 #include "mechanism.hpp"
 #include <limits>
 #include <random>
@@ -62,4 +61,3 @@ void CurrentNoise::integrate(void) {
 
 
 
-#endif

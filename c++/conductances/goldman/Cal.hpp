@@ -5,8 +5,7 @@
 // Combined Fast and SLow Calcium Conductance
 // http://www.jneurosci.org/content/21/14/5229.long
 // Goldman, Golowasch, Marder, Abbott 2012
-#ifndef CAL
-#define CAL
+#pragma once
 
 
 //inherit conductance class spec
@@ -51,4 +50,3 @@ double Cal::h_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+40.0)/30.0)));
 double Cal::tau_h(double V, double Ca) {return 90.0;}
 
 
-#endif

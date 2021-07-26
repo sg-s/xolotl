@@ -7,8 +7,7 @@
 // "Frequency Regulation of a Slow Rhythm by a Fast Periodic Input"
 // 
 
-#ifndef GENERICCHANNEL
-#define GENERICCHANNEL
+#pragma once
 
 
 //inherit conductance class spec
@@ -102,4 +101,3 @@ double GenericChannel::tau_h(double V, double Ca) {
 }
 
 
-#endif

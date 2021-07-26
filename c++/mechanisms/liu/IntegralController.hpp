@@ -6,8 +6,7 @@
 // component source [Liu et al. 98](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)
 //
 
-#ifndef INTEGRALCONTROLLER
-#define INTEGRALCONTROLLER
+#pragma once
 #include "mechanism.hpp"
 #include <limits>
 
@@ -142,4 +141,3 @@ void IntegralController::integrate(void) {
 
 
 
-#endif

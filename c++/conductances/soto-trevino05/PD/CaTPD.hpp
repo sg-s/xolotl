@@ -1,7 +1,6 @@
 // Fast Calcium CONDUCTANCE
 // http://jn.physiology.org/content/94/1/590.short
-#ifndef CATPD
-#define CATPD
+#pragma once
 
 
 //inherit conductance class spec
@@ -43,4 +42,3 @@ double CaTPD::h_inf(double V, double Ca) {return 1.0/(1.0 + exp((V+36)/7));}
 double CaTPD::tau_m(double V, double Ca) {return 55 - 49.5/(1.0 + exp(-(V+58)/17));}
 double CaTPD::tau_h(double V, double Ca) {return 350 - 300/(1.0 + exp(-(V+50.0)/16.9));}
 
-#endif

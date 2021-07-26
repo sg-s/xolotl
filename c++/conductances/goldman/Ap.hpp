@@ -5,8 +5,7 @@
 // Persistent Potassium Conductance
 // http://www.jneurosci.org/content/21/14/5229.long
 // Goldman, Golowasch, Marder, Abbott 2012
-#ifndef AP
-#define AP
+#pragma once
 
 
 //inherit conductance class spec
@@ -44,4 +43,3 @@ double Ap::m_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)-12.0)/-11.0)));
 double Ap::tau_m(double V, double Ca) {return 6.0;}
 
 
-#endif

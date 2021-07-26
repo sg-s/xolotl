@@ -6,8 +6,7 @@
 // from Turrigiano ... Marder 1995
 // http://www.jneurosci.org/content/jneuro/15/5/3640.full.pdf
 
-#ifndef CA2
-#define CA2
+#pragma once
 
 
 //inherit conductance class spec
@@ -44,4 +43,3 @@ public:
 double Ca2::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+21.6)/-8.5));}
 double Ca2::tau_m(double V, double Ca) {return 16 - 13.1/(exp((V+25.1)/-26.4));}
 
-#endif

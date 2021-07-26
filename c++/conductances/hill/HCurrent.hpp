@@ -6,8 +6,7 @@
 // component source [Hill et al., 2001](https://link.springer.com/article/10.1023/A:1011216131638)
 // 
 
-#ifndef HCURRENT
-#define HCURRENT
+#pragma once
 
 //inherit conductance class spec
 class HCurrent: public conductance {
@@ -43,4 +42,3 @@ public:
 double HCurrent::m_inf(double V, double Ca) {return 1.0/(1.0 + 2.0*exp((V+47.0)*0.18) + exp((V+47.0)*0.5));}
 double HCurrent::tau_m(double V, double Ca) {return 700.0 + 1700.0/(1.0+exp((V+73.0)*-0.1));}
 
-#endif

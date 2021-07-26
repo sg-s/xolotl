@@ -6,8 +6,7 @@
 // component source [Hill et al., 2001](https://link.springer.com/article/10.1023/A:1011216131638)
 // 
 
-#ifndef NAP
-#define NAP
+#pragma once
 
 //inherit conductance class spec
 class NaP: public conductance {
@@ -38,4 +37,3 @@ double NaP::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+39.0)*-0.12));}
 double NaP::tau_m(double V, double Ca) {return 10.0 + 200.0/(1.0+exp(0.4*(V+57.0)));}
 
 
-#endif

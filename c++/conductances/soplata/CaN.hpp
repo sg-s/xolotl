@@ -6,8 +6,7 @@
 // https://github.com/asoplata/propofol-coupling-2017-full/blob/master/dynasim/models/iCan.mech
 // Soplata et al. 2017
 
-#ifndef CAN
-#define CAN
+#pragma once
 
 
 //inherit conductance class spec
@@ -48,4 +47,3 @@ public:
 double CaN::m_inf(double V, double Ca) { return alpha * Ca / (alpha * Ca + beta); }
 double CaN::tau_m(double V, double Ca) { return 1.0 / (alpha * Ca + beta); }
 
-#endif

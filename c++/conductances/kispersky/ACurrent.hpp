@@ -5,8 +5,7 @@
 // Potassium Conductance
 // http://www.jneurosci.org/content/32/32/10995
 // Kispersky, Caplan, Marder 2012
-#ifndef ACURRENT
-#define ACURRENT
+#pragma once
 
 
 //inherit conductance class spec
@@ -51,4 +50,3 @@ double ACurrent::h_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+56.9)/4.9
 double ACurrent::tau_h(double V, double Ca) {return 38.6-((29.2)/(exp(((V)+38.9)/-26.5)));}
 
 
-#endif

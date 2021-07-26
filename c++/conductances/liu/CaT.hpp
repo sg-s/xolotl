@@ -5,8 +5,7 @@
 // component info: Transient Ca current
 // component source [Liu et al. 98](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)
 //
-#ifndef CAT
-#define CAT
+#pragma once
 class conductance;
 
 //inherit conductance class spec
@@ -50,4 +49,3 @@ double CaT::tau_m(double V, double Ca) {return 21.7 - 21.3/(1.0 + exp((V+68.1)/-
 double CaT::tau_h(double V, double Ca) {return 105.0 - 89.8/(1.0 + exp((V+55.0)/-16.9));}
 
 
-#endif

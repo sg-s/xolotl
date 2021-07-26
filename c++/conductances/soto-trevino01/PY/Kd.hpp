@@ -6,8 +6,7 @@
 // https://www.nature.com/articles/nn0301_297#methods
 // Soto-Trevino et al. 2001
 
-#ifndef KD
-#define KD
+#pragma once
 
 
 //inherit conductance class spec
@@ -45,4 +44,3 @@ double Kd::m_inf(double V, double Ca) {return (0.5)*(1.0+tanh((V)+4.0)/25.0);}
 double Kd::tau_m(double V, double Ca) {return 1.0 / ( 0.0025*cosh((V)/30.0) );}
 
 
-#endif

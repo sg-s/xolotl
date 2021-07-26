@@ -7,8 +7,7 @@
 // 
 
 
-#ifndef KCURRENT1
-#define KCURRENT1
+#pragma once
 
 //inherit conductance class spec
 class KCurrent1: public conductance {
@@ -49,4 +48,3 @@ double KCurrent1::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+28.0)*0.111
 double KCurrent1::tau_m(double V, double Ca) {return 1.0 + 11.0/(1+exp((V+16.0)*0.15));}
 double KCurrent1::tau_h(double V, double Ca) {return 500.0 + 200.0/(1+exp((V+13.0)*-0.143));}
 
-#endif

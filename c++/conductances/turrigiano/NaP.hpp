@@ -5,8 +5,7 @@
 // persistent Sodium conductance
 // from Turrigiano ... Marder 1995
 // http://www.jneurosci.org/content/jneuro/15/5/3640.full.pdf
-#ifndef NAP
-#define NAP
+#pragma once
 
 
 //inherit conductance class spec
@@ -45,4 +44,3 @@ double NaP::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+48.5)/4.8));}
 double NaP::tau_m(double V, double Ca) {return 19.8 - 10.7/(1+exp((V+26.5)/-8.6));}
 double NaP::tau_h(double V, double Ca)  {return 666 - 379/(1+exp((V+33.6)/-11.7));}
 
-#endif

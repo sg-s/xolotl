@@ -5,8 +5,7 @@
 // Ca++ dependent nonspecific cation current
 // https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4406621/
 // Jochems & Yoshida 2015
-#ifndef CAN
-#define CAN
+#pragma once
 
 
 //inherit conductance class spec
@@ -61,4 +60,3 @@ double CaN::alpha(double Ca) { return beta + fast_pow(Ca / Ca_c, 2); }
 double CaN::m_inf(double V, double Ca) {return alpha(Ca) / (alpha(Ca) + beta);}
 double CaN::tau_m(double V, double Ca) {return tau_adj / (alpha(Ca) + beta);}
 
-#endif

@@ -6,8 +6,7 @@
 // Dethier, Drion, Franci, Sepulchre 2015
 // https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4620135/
 
-#ifndef KD
-#define KD
+#pragma once
 
 
 //inherit conductance class spec
@@ -42,4 +41,3 @@ public:
 double Kd::m_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+12.3)/-11.8)));}
 double Kd::tau_m(double V, double Ca) {return 7.2- (6.4/(1.0+exp(((V)+28.3)/-19.2)));}
 
-#endif

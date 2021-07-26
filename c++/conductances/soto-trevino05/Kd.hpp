@@ -4,8 +4,7 @@
 //
 // Delayed Potassium
 // http://jn.physiology.org/content/94/1/590.short
-#ifndef KD
-#define KD
+#pragma once
 
 
 //inherit conductance class spec
@@ -43,4 +42,3 @@ double Kd::m_inf(double V, double Ca) {return 1.0/(1.0+exp(-(V+14.2)/11.8));}
 double Kd::tau_m(double V, double Ca) {return 7.2 - 6.4/(1.0+exp(-(V+28.3)/19.2));}
 
 
-#endif

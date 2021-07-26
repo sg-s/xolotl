@@ -6,8 +6,7 @@
 // Nadim, Manor, Kopell, Marder 1999
 // Hyperlink:http://www.pnas.org/content/96/14/8206.full
 
-#ifndef CAL
-#define CAL
+#pragma once
 
 
 //inherit conductance class spec
@@ -52,4 +51,3 @@ double Cal::m_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+61.0)/-4.2)));
 double Cal::h_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+88.0)/8.5)));}
 double Cal::tau_h(double V, double Ca) {return 350.0;}
 
-#endif

@@ -5,8 +5,7 @@
 // H Current from Sharp et al. 1996
 // J Neurophys
 // https://journals.physiology.org/doi/pdf/10.1152/jn.1996.76.2.867
-#ifndef HCURRENT
-#define HCURRENT
+#pragma once
 
 
 //inherit conductance class spec
@@ -46,4 +45,3 @@ double HCurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V-Vhalf)/7));}
 double HCurrent::tau_m(double V, double Ca) {return (1./(0.0005*(1+exp((V+110)/-13))));}
 
 
-#endif

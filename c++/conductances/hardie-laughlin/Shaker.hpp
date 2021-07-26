@@ -6,8 +6,7 @@
 // an inactivating K current in Drosophila
 // first characterized here: http://www.sciencedirect.com/science/article/pii/089662739190255X
 
-#ifndef SHAKER
-#define SHAKER
+#pragma once
 
 
 //inherit conductance class spec
@@ -48,4 +47,3 @@ double Shaker::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+80.0)/5.23)); 
 double Shaker::tau_m(double V, double Ca) {return 50.0 - 47.88/(1.0+exp((V+92.24)/-8.0));}
 double Shaker::tau_h(double V, double Ca) {return 50;}
 
-#endif

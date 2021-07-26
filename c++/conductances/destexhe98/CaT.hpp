@@ -9,8 +9,7 @@
 // https://www.jneurosci.org/content/18/10/3574.short
 
 
-#ifndef CAT
-#define CAT
+#pragma once
 
 
 //inherit conductance class spec
@@ -151,4 +150,3 @@ double CaT::tau_h(double V, double Ca)  {
 
 
 
-#endif

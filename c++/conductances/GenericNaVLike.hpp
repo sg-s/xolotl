@@ -5,8 +5,7 @@
 // GenericMH inactivating conductance
 // defaults reproduce a Sodium channel from here:
 // http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
-#ifndef GENERICNAVLIKE
-#define GENERICNAVLIKE
+#pragma once
 
 
 //inherit conductance class spec
@@ -93,4 +92,3 @@ double GenericNaVLike::tau_m(double V, double Ca) {return m_tau_A + m_tau_B/(1+e
 double GenericNaVLike::tau_h(double V, double Ca) {return (h_tau_A1 + h_tau_B1/(1.0+exp((V - h_tau_V_half1)/h_tau_V_slope1)))*(h_tau_A2+h_tau_B2/(1.0+exp((V-h_tau_V_half2)/h_tau_V_slope2)));}
 
 
-#endif

@@ -6,8 +6,7 @@
 // Dethier, Drion, Franci, Sepulchre 2015
 // https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4620135/
 
-#ifndef CAT
-#define CAT
+#pragma once
 
 
 //inherit conductance class spec
@@ -55,4 +54,3 @@ double CaT::h_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+82.1)/5.5)));}
 double CaT::tau_m(double V, double Ca) {return 43.4- (42.6/(1.0+exp(((V)+68.1)/-20.5)));}
 double CaT::tau_h(double V, double Ca) {return 840.0- (718.4/(1.0+exp(((V)+55.0)/-16.9)));}
 
-#endif

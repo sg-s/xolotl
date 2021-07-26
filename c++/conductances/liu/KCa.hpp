@@ -5,8 +5,7 @@
 // component info: Ca-activated potassium conductance 
 // component source [Liu et al. 98](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)
 //
-#ifndef KCA
-#define KCA
+#pragma once
 class conductance;
 
 //inherit conductance class spec
@@ -45,4 +44,3 @@ double KCa::tau_m(double V, double Ca) {return 90.3 - 75.1/(1.0+exp((V+46.0)/-22
 
 
 
-#endif

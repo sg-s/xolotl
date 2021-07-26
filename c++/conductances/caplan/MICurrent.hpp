@@ -5,8 +5,7 @@
 // Modulatory Input Conductance
 // http://www.jneurosci.org/content/34/14/4963/tab-figures-data
 // based on RPCH/proctolin recordings
-#ifndef MICURRENT
-#define MICURRENT
+#pragma once
 
 
 //inherit conductance class spec
@@ -45,4 +44,3 @@ double MICurrent::tau_m(double V, double Ca) {return 0.5;}
 double MICurrent::h_inf(double V, double Ca) {return   0;}
 double MICurrent::tau_h(double V, double Ca) {return   0;}
 
-#endif

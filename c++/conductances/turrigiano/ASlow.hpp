@@ -7,8 +7,7 @@
 // errors when I name this "A" or "Ka"
 // so we'll have to live with this awkward name
 // http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
-#ifndef ASLOW
-#define ASLOW
+#pragma once
 
 
 //inherit conductance class spec
@@ -49,4 +48,3 @@ double ASlow::tau_m(double V, double Ca) {return 13.3 - 9/(1.0+exp((V+50.3)/-11.
 double ASlow::tau_h(double V, double Ca) {return 9821 - 9269/(1.0+exp((V+69.9)/-4.6));}
 
 
-#endif

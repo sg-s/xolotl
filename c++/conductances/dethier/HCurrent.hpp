@@ -6,8 +6,7 @@
 // Dethier, Drion, Franci, Sepulchre 2015
 // https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4620135/
 
-#ifndef HCURRENT
-#define HCURRENT
+#pragma once
 
 
 //inherit conductance class spec
@@ -41,4 +40,3 @@ public:
 double HCurrent::m_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+80.0)/6.0)));}
 double HCurrent::tau_m(double V, double Ca) {return 272.0- (1499.0/(1.0+exp(((V)+42.2)/-8.73)));}
 
-#endif

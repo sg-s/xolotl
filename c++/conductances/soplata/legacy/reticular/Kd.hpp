@@ -7,8 +7,7 @@
 // Thalamocortical control of propofol phase-amplitude coupling. PLOS
 // Computational Biology. 2017;13: e1005879. doi:10.1371/journal.pcbi.1005879
 
-#ifndef KD
-#define KD
+#pragma once
 
 
 //inherit conductance class spec
@@ -49,4 +48,3 @@ double Kd::b_m(double V, double Ca) {return 0.5*exp((10-(V+55.0))/40.0); }
 double Kd::m_inf(double V, double Ca) {return a_m(V,Ca) / (a_m(V,Ca)+b_m(V,Ca)); }
 double Kd::tau_m(double V, double Ca) {return 1.0 / (a_m(V,Ca) + b_m(V,Ca)); }
 
-#endif

@@ -4,8 +4,7 @@
 //
 // component info: Probe that reads out activation and inactivation variables of a channel
 
-#ifndef CHANNELPROBE
-#define CHANNELPROBE
+#pragma once
 
 //inherit controller class spec
 class ChannelProbe: public mechanism {
@@ -61,4 +60,3 @@ void ChannelProbe::connectConductance(conductance * channel_) {
 
 
 
-#endif

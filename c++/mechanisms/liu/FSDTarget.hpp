@@ -6,8 +6,7 @@
 // component source [Liu et al. 98](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)
 //
 
-#ifndef FSDTARGET
-#define FSDTARGET
+#pragma once
 #include "mechanism.hpp"
 #include <limits>
 
@@ -87,4 +86,3 @@ void FSDTarget::checkSolvers(int k) {
 
 
 
-#endif

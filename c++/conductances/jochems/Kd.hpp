@@ -5,8 +5,7 @@
 // Delayed rectifier potassium
 // https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4406621/
 // Jochems & Yoshida 2015
-#ifndef KD
-#define KD
+#pragma once
 
 
 // inherit conductance class spec
@@ -45,4 +44,3 @@ double Kd::b_m(double V, double Ca) {return 0.5 * exp((10 - V)/40);}
 double Kd::m_inf(double V, double Ca) {return a_m(V, Ca) / (a_m(V, Ca) + b_m(V, Ca));}
 double Kd::tau_m(double V, double Ca) {return 1 / (a_m(V, Ca) + b_m(V, Ca));}
 
-#endif

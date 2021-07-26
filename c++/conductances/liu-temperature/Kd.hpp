@@ -4,8 +4,7 @@
 //
 // inward rectifying potassium conductance
 // http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
-#ifndef KD
-#define KD
+#pragma once
 
 
 //inherit conductance class spec
@@ -84,4 +83,3 @@ void Kd::integrateLangevin(double V, double Ca) {
 double Kd::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+12.3)/-11.8));}
 double Kd::tau_m(double V, double Ca) {return pow_Q_tau_m_delta_temp*(7.2 - 6.4/(1.0+exp((V+28.3)/-19.2)));}
 
-#endif

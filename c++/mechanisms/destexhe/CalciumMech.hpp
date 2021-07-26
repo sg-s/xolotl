@@ -18,8 +18,7 @@
 // Biophysical journal, 65(4):1538–52
 // 
 
-#ifndef CALCIUMMECH
-#define CALCIUMMECH
+#pragma once
 #include "mechanism.hpp"
 #include <limits>
 
@@ -129,4 +128,3 @@ void CalciumMech::checkSolvers(int k) {
 
 
 
-#endif

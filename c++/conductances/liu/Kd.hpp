@@ -5,8 +5,7 @@
 // component info: inward rectifying Potassium current
 // component source [Liu et al. 98](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)
 //
-#ifndef KD
-#define KD
+#pragma once
 class conductance;
 
 //inherit conductance class spec
@@ -40,4 +39,3 @@ double Kd::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+12.3)/-11.8));}
 double Kd::tau_m(double V, double Ca) {return 7.2 - 6.4/(1.0+exp((V+28.3)/-19.2));}
 
 
-#endif

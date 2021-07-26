@@ -6,8 +6,7 @@
 // Traub et al. 1991
 // https://www.researchgate.net/publication/21491281_A_Model_of_CA3_Hippocampal_Pyramidal_Neuron_Incorporating_Voltage-Clamp_Data_on_Intrinsic_Conductances
 
-#ifndef ACURRENT
-#define ACURRENT
+#pragma once
 
 
 //inherit conductance class spec
@@ -47,4 +46,3 @@ double ACurrent::h_inf(double V, double Ca) {return (0.128*exp((17.0-V)/18.0))/(
 double ACurrent::tau_m(double V, double Ca) {return (0.0016*exp((-13.0-V)/18.0))/((0.0016*exp((-13.0-V)/18.0))+(0.05/(1.0+exp((10.1-V)/5.0))));}
 double ACurrent::tau_h(double V, double Ca) {return 1.0/((0.0016*exp((-13.0-V)/18.0))+(0.05/(1.0+exp((10.1-V)/5.0))));}
 
-#endif

@@ -7,8 +7,7 @@
 // as described in Traub et al. 1991
 // https://www.researchgate.net/publication/21491281_A_Model_of_CA3_Hippocampal_Pyramidal_Neuron_Incorporating_Voltage-Clamp_Data_on_Intrinsic_Conductances
 
-#ifndef KCA
-#define KCA
+#pragma once
 
 
 //inherit conductance class spec
@@ -71,4 +70,3 @@ double KCa::tau_m(double V, double Ca) {
     return alpha + beta;
 }
 
-#endif

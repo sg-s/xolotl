@@ -5,8 +5,7 @@
 // the A current, a potassium current
 // Brookings, Goeritz, Marder 2014
 // https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4274917/?report=printable#app1
-#ifndef ACURRENT
-#define ACURRENT
+#pragma once
 
 
 //inherit conductance class spec
@@ -50,4 +49,3 @@ double ACurrent::tau_m(double V, double Ca) {return 7.2- (6.4/(1.0+exp(((V)+28.3
 double ACurrent::h_inf(double V, double Ca) {return   0;}
 double ACurrent::tau_h(double V, double Ca) {return   0;}
 
-#endif

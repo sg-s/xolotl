@@ -7,8 +7,7 @@
 // or use the conductance class within MATLAB
 // to auto-generate C++ code 
 
-#ifndef UPPERCASENAME
-#define UPPERCASENAME
+#pragma once
 
 //inherit conductance class spec
 class CondName: public conductance {
@@ -47,4 +46,3 @@ double CondName::h_inf(double V, double Ca) {return $h_inf;}
 double CondName::tau_m(double V, double Ca) {return $tau_m;}
 double CondName::tau_h(double V, double Ca) {return $tau_h;}
 
-#endif

@@ -5,8 +5,7 @@
 // H current. again, for mysterious reasons, the compiler
 // won't let me call this class "H"
 // http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
-#ifndef HCURRENT
-#define HCURRENT
+#pragma once
 
 
 //inherit conductance class spec
@@ -41,4 +40,3 @@ double HCurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+78.3)/6.5));
 double HCurrent::tau_m(double V, double Ca) {return (272.0 + 1499.0/(1.0+exp((V+42.2)/-8.73)));}
 
 
-#endif

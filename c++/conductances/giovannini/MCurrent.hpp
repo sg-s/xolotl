@@ -4,8 +4,7 @@
 // Giovannini et al. 2015
 // https://hal.archives-ouvertes.fr/hal-01426362/file/Giovannini-ICAN-Hippocampus_submittedRev.pdf
 
-#ifndef MCURRENT
-#define MCURRENT
+#pragma once
 
 
 // inherit conductance class spec
@@ -50,4 +49,3 @@ double MCurrent::b_m(double V, double Ca) {return (1 / tau) * (3.3 * exp((V + 35
 double MCurrent::m_inf(double V, double Ca) {return a_m(V, Ca) / (a_m(V, Ca) + b_m(V, Ca));}
 double MCurrent::tau_m(double V, double Ca) {return 1 / (a_m(V, Ca) + b_m(V, Ca));}
 
-#endif

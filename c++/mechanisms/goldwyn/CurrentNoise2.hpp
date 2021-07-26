@@ -7,8 +7,7 @@
 // 
 // uses a faster RNG
 
-#ifndef CURRENTNOISE2
-#define CURRENTNOISE2
+#pragma once
 #include "mechanism.hpp"
 #include <limits>
 #include <random>
@@ -87,4 +86,3 @@ double CurrentNoise2::gaussrand() {
 }
 
 
-#endif

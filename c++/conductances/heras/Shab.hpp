@@ -5,8 +5,7 @@
 // Potassium Conductance
 // https://www.biorxiv.org/content/biorxiv/early/2018/06/13/344325.full.pdf
 // Francisco J. H. Heras, Mikko Vahasoyrinki, and Jeremy E. Niven 2018
-#ifndef SHAB
-#define SHAB
+#pragma once
 
 
 //inherit conductance class spec
@@ -50,4 +49,3 @@ double Shab::h_inf(double V, double Ca) {return 1.0/(1.0+exp((25.7+V)/6.4));}
 double Shab::tau_h(double V, double Ca) {return 335.0*exp(V/71.3)+73.2;}
 
 
-#endif

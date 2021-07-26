@@ -11,8 +11,7 @@
 // % Kramer, M. A., Roopun, A. K., Carracedo, L. M., Traub, R. D., Whittington, M. A., & Kopell, N. J. (2008). Rhythm generation through period concatenation in rat somatosensory cortex. PLoS computational biology, 4(9), e1000169. (http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1000169)
 // % Traub RD, Buhl EH, Gloveli T, Whittington MA (2003) Fast rhythmic bursting can be induced in layer 2/3 cortical neurons by enhancing persistent Na+ conductance or by blocking BK channels. J Neurophysiol 89:909–921.
 
-#ifndef MCURRENT
-#define MCURRENT
+#pragma once
 
 
 //inherit conductance class spec
@@ -54,4 +53,3 @@ double MCurrent::beta(double V, double Ca) { return .01*exp((-43-V)/18); }
 double MCurrent::m_inf(double V, double Ca) {return alpha(V, Ca) / (alpha(V, Ca) + beta(V, Ca));}
 double MCurrent::tau_m(double V, double Ca) {return 1.0 / (alpha(V, Ca) + beta(V, Ca));}
 
-#endif

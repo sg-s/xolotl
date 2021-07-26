@@ -6,8 +6,7 @@
 // Destexhe, Contreras, Sejnowski, & Steriade 1994
 // https://www.ncbi.nlm.nih.gov/pubmed/7527077
 
-#ifndef KCA
-#define KCA
+#pragma once
 
 
 //inherit conductance class spec
@@ -56,4 +55,3 @@ double KCa::m_inf(double V, double Ca) {return alpha * fast_pow(Ca, 2) / (alpha 
 double KCa::tau_m(double V, double Ca) {return 1 / (alpha * fast_pow(Ca, 2) + beta);}
 
 
-#endif

@@ -5,8 +5,7 @@
 // component info: temperature-sensitive A current (K+)
 // component source [Prinz et al. 2003](http://jn.physiology.org/content/jn/90/6/3998.full.pdf)
 //
-#ifndef ACURRENT
-#define ACURRENT
+#pragma once
 
 //inherit conductance class spec
 class ACurrent: public conductance {
@@ -91,4 +90,3 @@ double ACurrent::tau_m(double V, double Ca) {return pow_Q_tau_m_delta_temp*(23.2
 double ACurrent::tau_h(double V, double Ca) {return pow_Q_tau_h_delta_temp*(77.2 - 58.4/(1.0+exp((V+38.9)/-26.5)));}
 
 
-#endif

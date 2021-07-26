@@ -6,8 +6,7 @@
 // Traub et al. 1991
 // https://www.researchgate.net/publication/21491281_A_Model_of_CA3_Hippocampal_Pyramidal_Neuron_Incorporating_Voltage-Clamp_Data_on_Intrinsic_Conductances
 
-#ifndef NAV
-#define NAV
+#pragma once
 
 
 //inherit conductance class spec
@@ -48,4 +47,3 @@ double NaV::h_inf(double V, double Ca) {return (0.128*exp((17.0-V)/18.0))/((0.12
 double NaV::tau_m(double V, double Ca) {return (1.0)/((0.32*(13.1-V)/(exp((13.1-V)/4.0)-1.0))+(0.28*(V-40.1)/(exp((V-40.1)/5)-1.0)));}
 double NaV::tau_h(double V, double Ca) {return (1.0)/((0.128*exp((17.0-V)/18.0))+(4.0/(1.0+exp((40.0-V)/5.0))));}
 
-#endif

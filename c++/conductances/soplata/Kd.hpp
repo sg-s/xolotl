@@ -21,8 +21,7 @@
 // Academy of Sciences, 107(52), 22665–22670.
 // http://doi.org/10.1073/pnas.1017069108
 
-#ifndef KD
-#define KD
+#pragma once
 
 
 //inherit conductance class spec
@@ -64,4 +63,3 @@ double Kd::m_beta(double V, double Ca) {return 0.5 * exp((10 - (V + 25))/40);}
 double Kd::m_inf(double V, double Ca) {return m_alpha(V, Ca) / (m_alpha(V, Ca) + m_beta(V, Ca));}
 double Kd::tau_m(double V, double Ca) {return 1 / (m_alpha(V, Ca) + m_beta(V, Ca));}
 
-#endif

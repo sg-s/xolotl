@@ -5,8 +5,7 @@
 // Fast Sodium Conductance
 // http://www.jneurosci.org/content/32/32/10995
 // Kispersky, Caplan, Marder 2012
-#ifndef NAV
-#define NAV
+#pragma once
 
 
 //inherit conductance class spec
@@ -52,4 +51,3 @@ double NaV::h_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+48.9)/5.18)));
 double NaV::tau_h(double V, double Ca) {return ((0.67)/(1.0+exp(((V)+38.9)/-26.5)))*(1.5+(1.0/(1.0+exp(((V)+34.9)/3.6))));}
 
 
-#endif

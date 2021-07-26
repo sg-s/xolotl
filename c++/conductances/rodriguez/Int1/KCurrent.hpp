@@ -6,8 +6,7 @@
 // Rodriguez et al. 2013
 // http://www.jneurosci.org/content/jneuro/33/46/18047.full.pdf
 
-#ifndef KCURRENT
-#define KCURRENT
+#pragma once
 
 
 //inherit conductance class spec
@@ -51,4 +50,3 @@ double KCurrent::tau_h(double V, double Ca) {return 20.0;}
 // reported time constants are in the range (27, 3) and (20, 200) ms respectively.
 
 
-#endif

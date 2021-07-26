@@ -5,8 +5,7 @@
 // Fast Transient Potassium Conductance
 // http://www.jneurosci.org/content/21/14/5229.long
 // Goldman, Golowasch, Marder, Abbott 2012
-#ifndef AT
-#define AT
+#pragma once
 
 
 //inherit conductance class spec
@@ -52,4 +51,3 @@ double At::h_inf(double V, double Ca) {return (1.0/(1.0+exp(((V)+62.0)/7.0)));}
 double At::tau_h(double V, double Ca) {return 6.0+(40.0/(1.0+exp(((V)-55.0)/-18.0)));}
 
 
-#endif

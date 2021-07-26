@@ -6,8 +6,7 @@
 // Rodriguez et al. 2013
 // http://www.jneurosci.org/content/jneuro/33/46/18047.full.pdf
 
-#ifndef MICURRENT
-#define MICURRENT
+#pragma once
 
 
 //inherit conductance class spec
@@ -48,4 +47,3 @@ double MICurrent::tau_m(double V, double Ca) {return 5.0;}
 double MICurrent::h_inf(double V, double Ca) {return   0;}
 double MICurrent::tau_h(double V, double Ca) {return   0;}
 
-#endif

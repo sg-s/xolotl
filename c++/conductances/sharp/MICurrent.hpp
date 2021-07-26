@@ -5,8 +5,7 @@
 // Modulatory Input Conductance
 // https://www.ncbi.nlm.nih.gov/pubmed/8463821
 // based on dynamic clamp in Sharp et al 1993, Buchholtz et al 1993, Golowasch et al 1992
-#ifndef MICURRENT
-#define MICURRENT
+#pragma once
 
 
 //inherit conductance class spec
@@ -46,4 +45,3 @@ double MICurrent::tau_m(double V, double Ca) {return 6.0;}
 double MICurrent::h_inf(double V, double Ca) {return   0;}
 double MICurrent::tau_h(double V, double Ca) {return   0;}
 
-#endif

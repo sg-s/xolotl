@@ -7,8 +7,7 @@
 // component source: [Goldwyn and Shea-Brown](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002247)
 // this affect a single conductance type
 
-#ifndef SUBUNITNOISE
-#define SUBUNITNOISE
+#pragma once
 #include "mechanism.hpp"
 #include <limits>
 #include <random>
@@ -73,4 +72,3 @@ void SubunitNoise::integrate(void) {
 }
 
 
-#endif

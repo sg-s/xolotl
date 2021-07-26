@@ -4,8 +4,7 @@
 //
 // Calcium-dep potassium
 // http://jn.physiology.org/content/94/1/590.short
-#ifndef KCAAB
-#define KCAAB
+#pragma once
 
 
 //inherit conductance class spec
@@ -43,4 +42,3 @@ double KCaAB::m_inf(double V, double Ca) { return (Ca/(Ca+30))/(1.0+exp(-(V+51.0
 double KCaAB::tau_m(double V, double Ca) {return 90.3 - 75.09/(1.0+exp(-(V+46.0)/22.7));}
 
 
-#endif

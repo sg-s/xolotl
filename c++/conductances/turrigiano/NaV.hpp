@@ -5,8 +5,7 @@
 // Sodium CONDUCTANCE
 // from Turrigiano ... Marder 1995
 // http://www.jneurosci.org/content/jneuro/15/5/3640.full.pdf
-#ifndef NAV
-#define NAV
+#pragma once
 
 
 //inherit conductance class spec
@@ -47,4 +46,3 @@ double NaV::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+48.9)/5.18));}
 double NaV::tau_m(double V, double Ca) {return 1.32 - 1.26/(1+exp((V+120)/-25));}
 double NaV::tau_h(double V, double Ca) {return (0.67/(1.0+exp((V+62.9)/-10.0)))*(1.5+1.0/(1.0+exp((V+34.9)/3.6)));}
 
-#endif

@@ -5,8 +5,7 @@
 // generic hyper-polarization activated current 
 // with customizable activation and timescale 
 // component info: HCurrent with customizable Vhalf and tau
-#ifndef HCURRENT
-#define HCURRENT
+#pragma once
 
 
 //inherit conductance class spec
@@ -48,4 +47,3 @@ public:
 double HCurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V-Vhalf)/5.5));}
 double HCurrent::tau_m(double V, double Ca) {return tau;}
 
-#endif

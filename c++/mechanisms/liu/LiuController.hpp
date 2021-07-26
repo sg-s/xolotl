@@ -6,8 +6,7 @@
 // component source [Liu et al. 98](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)
 //
 
-#ifndef LIUCONTROLLER
-#define LIUCONTROLLER
+#pragma once
 #include "mechanism.hpp"
 #include <limits>
 
@@ -162,4 +161,3 @@ void LiuController::integrate(void) {
 
 
 
-#endif

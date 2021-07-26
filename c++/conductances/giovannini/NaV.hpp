@@ -4,8 +4,7 @@
 // Giovannini et al. 2015
 // https://hal.archives-ouvertes.fr/hal-01426362/file/Giovannini-ICAN-Hippocampus_submittedRev.pdf
 
-#ifndef NAV
-#define NAV
+#pragma once
 
 
 // inherit conductance class spec
@@ -53,4 +52,3 @@ double NaV::h_inf(double V, double Ca) {return a_h(V, Ca) / (a_h(V, Ca) + b_h(V,
 double NaV::tau_m(double V, double Ca) {return 1 / (a_m(V, Ca) + b_m(V, Ca));}
 double NaV::tau_h(double V, double Ca) {return 1 / (a_h(V, Ca) + b_h(V, Ca));}
 
-#endif

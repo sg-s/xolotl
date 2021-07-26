@@ -4,8 +4,7 @@
 //
 // inward rectifying potassium conductance
 // http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
-#ifndef KD2
-#define KD2
+#pragma once
 
 
 //inherit conductance class spec
@@ -67,6 +66,5 @@ void Kd2::integrate(double V_, double Ca_){
 
 
 
-#endif
 
 

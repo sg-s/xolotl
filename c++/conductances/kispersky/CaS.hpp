@@ -5,8 +5,7 @@
 // Slow Calcium Conductance
 // http://www.jneurosci.org/content/32/32/10995
 // Kispersky, Caplan, Marder 2012
-#ifndef CAS
-#define CAS
+#pragma once
 
 
 //inherit conductance class spec
@@ -53,4 +52,3 @@ double CaS::tau_m(double V, double Ca) {return 1.4 + 7.0 / (exp((V + 27.0)/10) +
 double CaS::tau_h(double V, double Ca) {return 60.0 + 150.0 / (exp((V + 55.0)/9.0) + exp((V + 65.0)/-16.0));}
 
 
-#endif

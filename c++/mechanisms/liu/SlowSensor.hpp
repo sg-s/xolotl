@@ -6,8 +6,7 @@
 // component source [Liu et al. 98](http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf)
 //
 
-#ifndef SLOWSENSOR
-#define SLOWSENSOR
+#pragma once
 #include "mechanism.hpp"
 #include <limits>
 
@@ -120,4 +119,3 @@ double SlowSensor::boltzmann(double x) {
 
 
 
-#endif

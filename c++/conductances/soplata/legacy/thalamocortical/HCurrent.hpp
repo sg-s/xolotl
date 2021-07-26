@@ -9,8 +9,7 @@
 // associated with loss of consciousness. Proceedings of the National Academy of
 // Sciences, 107(52), 22665-22670. doi:10.1073/pnas.1017069108"
 
-#ifndef HCURRENT
-#define HCURRENT
+#pragma once
 
 
 //inherit conductance class spec
@@ -142,4 +141,3 @@ double HCurrent::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+75.0)/5.5));
 double HCurrent::tau_m(double V, double Ca) {return 20.0 + 1000.0/(exp((V+71.5)/14.2)+exp((-(V+89.0))/11.6));}
 
 
-#endif

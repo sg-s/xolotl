@@ -5,8 +5,7 @@
 // component source [Gorur-Shandilya et al.](https://www.frontiersin.org/articles/10.3389/fninf.2018.00087/full)
 // component info: a gaussian noise generator that can be connected to other mechanisms 
 
-#ifndef GAUSSIANNOISE
-#define GAUSSIANNOISE
+#pragma once
 #include <limits>
 
 //inherit controller class spec
@@ -64,4 +63,3 @@ void GaussianNoise::integrate(void) {
 
 
 
-#endif

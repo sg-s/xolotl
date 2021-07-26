@@ -5,8 +5,7 @@
 // Cell Int1 Potassium Conductance
 // http://www.jneurosci.org/content/18/13/5053
 // Nadim 1998
-#ifndef KD
-#define KD
+#pragma once
 
 
 //inherit conductance class spec
@@ -44,4 +43,3 @@ double Kd::m_inf(double V, double Ca) {return (1.0/(1.0+exp(-0.045*((V)+25.0))))
 double Kd::tau_m(double V, double Ca) {return (154.0/(1.0+exp(0.065*((V)+30.0))));}
 
 
-#endif

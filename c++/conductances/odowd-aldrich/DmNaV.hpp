@@ -7,8 +7,7 @@
 // https://www.ncbi.nlm.nih.gov/pubmed/2848103
 // assumes a reversal potential of +47mV
 
-#ifndef DMNAV
-#define DMNAV
+#pragma once
 
 
 //inherit conductance class spec
@@ -50,4 +49,3 @@ double DmNaV::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+48)/6));}
 double DmNaV::tau_m(double V, double Ca) {return (3 - 2.4/(1+exp((V+33.6)/-9.0)))/5;}
 double DmNaV::tau_h(double V, double Ca) {return 3 - 2.53/(1+exp((V+22.8)/-3.5));}
 
-#endif

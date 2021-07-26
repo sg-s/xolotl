@@ -6,8 +6,7 @@
 // component info: Calcium mechanism
 // component source: [Traub et al. 1991](https://www.physiology.org/doi/pdf/10.1152/jn.1991.66.2.635)
 
-#ifndef CALCIUMMECH
-#define CALCIUMMECH
+#pragma once
 #include <limits>
 
 
@@ -76,4 +75,3 @@ void CalciumMech::checkSolvers(int k) {
 
 
 
-#endif

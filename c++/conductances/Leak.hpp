@@ -4,8 +4,7 @@
 //
 // component info: generic Leak conductance
 
-#ifndef LEAK
-#define LEAK
+#pragma once
 
 //inherit conductance class spec
 class Leak: public conductance {
@@ -56,4 +55,3 @@ void Leak::integrateLangevin(double V, double Ca) {
 
 
 
-#endif

@@ -7,8 +7,7 @@
 // errors when I name this "A" or "Ka"
 // so we'll have to live with this awkward name
 // http://www.jneurosci.org/content/jneuro/18/7/2309.full.pdf
-#ifndef ACURRENT
-#define ACURRENT
+#pragma once
 
 //inherit conductance class spec
 class ACurrent: public conductance {
@@ -92,4 +91,3 @@ double ACurrent::h_inf(double V, double Ca) {return 1.0/(1.0+exp((V+56.9)/4.9));
 double ACurrent::tau_m(double V, double Ca) {return pow_Q_tau_m_delta_temp*(11.6 - 10.4/(1.0+exp((V+32.9)/-15.2)));}
 double ACurrent::tau_h(double V, double Ca) {return pow_Q_tau_h_delta_temp*(38.6 - 29.2/(1.0+exp((V+38.9)/-26.5)));}
 
-#endif
