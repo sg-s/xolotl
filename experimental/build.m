@@ -32,13 +32,3 @@ build(libdef)
 
 addpath("./xolotl")
 
-% now test it
-
-AB = clib.xolotl.compartment("AB");
-NaV = clib.xolotl.NaV(1e3);
-Kd = clib.xolotl.Kd(300);
-Leak = clib.xolotl.Leak(1);
-AB.add(NaV)
-AB.add(Kd)
-AB.add(Leak)
-

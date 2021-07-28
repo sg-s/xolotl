@@ -29,7 +29,7 @@ public:
 
     double V = -60;
     double V_prev = -60;
-    int n_steps = 1e3;
+    int n_steps = 1e4;
 
     double Ca = .01;
     double Ca_prev = .01;
