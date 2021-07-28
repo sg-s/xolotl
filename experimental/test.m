@@ -24,15 +24,7 @@ libdef = definexolotl;
 
 
 
-addProperty(libdef.Classes(2), "arr", "clib.array.xolotl.Int", "n_steps", "Description", "clib.array.xolotl.Int    Data member of C++ class compartment."); 
-
-
-% getMatDefinition = addMethod(libdef.Classes(2), "int const * const compartment::getMat(size_t len2) const","MATLABName", "getMat");
-% defineArgument(getMatDefinition, "len2", "uint64");
-% defineOutput(getMatDefinition, "RetVal", "int32", "len2"); 
-% validate(getMatDefinition);
-
-
+addProperty(libdef.Classes(2), "V_data", "double", "n_steps", "Description", "clib.array.xolotl.double    Data member of C++ class compartment."); 
 
 
 validate(libdef);
@@ -41,9 +33,12 @@ build(libdef)
 addpath("./xolotl")
 
 % now test it
-x = clib.xolotl.xolotl;
+
 AB = clib.xolotl.compartment("AB");
-LP = clib.xolotl.compartment("LP");
-x.add(AB)
-x.add(LP)
-x.init()
+NaV = clib.xolotl.NaV(1e3);
+Kd = clib.xolotl.Kd(300);
+Leak = clib.xolotl.Leak(1);
+AB.add(NaV)
+AB.add(Kd)
+AB.add(Leak)
+

@@ -14,20 +14,26 @@ class Leak: public conductance {
 public:
 
     // specify parameters + initial conditions
-    Leak()
-    {
+    Leak() {
         name = "Leak";
+        E = -50;
     }
 
 
-    void integrate(double, double);
+    Leak(double gbar_) {
+        gbar = gbar_;
+        name = "Leak";
+        E = -50;
+    }
+
+    void integrate(double);
 
     
 
 };
 
 
-void Leak::integrate(double V, double Ca) {
+void Leak::integrate(double V) {
     // do nothing
     // because there is nothing to integrate
     g = gbar;

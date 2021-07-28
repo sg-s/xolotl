@@ -15,16 +15,21 @@ class Kd: public conductance {
 public:
 
     //specify both gbar and erev and initial conditions
-    Kd()
-    {
+    Kd() {
         E = -80;
         p = 4;
         name = "Kd";
-
     }
 
-    double m_inf(double, double);
-    double tau_m(double, double);
+    Kd(double gbar_) {
+        gbar = gbar_;
+        E = -80;
+        p = 4;
+        name = "Kd";
+    }
+
+    double m_inf(double);
+    double tau_m(double);
     
 
 };
@@ -32,6 +37,6 @@ public:
 
 
 
-double Kd::m_inf(double V, double Ca) {return 1.0/(1.0+exp((V+12.3)/-11.8));}
-double Kd::tau_m(double V, double Ca) {return 14.4 - 12.8/(1.0+exp((V+28.3)/-19.2));}
+double Kd::m_inf(double V) {return 1.0/(1.0+exp((V+12.3)/-11.8));}
+double Kd::tau_m(double V) {return 14.4 - 12.8/(1.0+exp((V+28.3)/-19.2));}
 

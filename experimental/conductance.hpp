@@ -16,7 +16,7 @@ class conductance
 protected:
     int p;
     int q;
-    string name = "unset";
+
 
     double V;
     double Ca;
@@ -30,9 +30,11 @@ public:
     conductance(){};
 
 
+    string name = "unset";
+
     double dt = -1;  
     double E = -50;
-    double g = 1;
+    double g = 0;
     double gbar = 0;
 
     compartment* container = nullptr;
@@ -41,12 +43,13 @@ public:
     double m = 1;
     double h = 1;
     
-
-    virtual void integrate();
-    virtual double m_inf(double, double) = 0;
-    virtual double h_inf(double, double) = 0;
-    virtual double tau_m(double, double) = 0;
-    virtual double tau_h(double, double) = 0; 
+    virtual void init();
+    virtual void step();
+    
+    virtual double m_inf(double);
+    virtual double h_inf(double);
+    virtual double tau_m(double);
+    virtual double tau_h(double); 
 
 
 
