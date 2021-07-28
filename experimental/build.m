@@ -32,3 +32,8 @@ build(libdef)
 
 addpath("./xolotl")
 
+
+
+% clean up
+! rm definexolotl.m
+! rm *.mlx
