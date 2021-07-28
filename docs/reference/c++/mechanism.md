@@ -352,7 +352,7 @@ It's perfectly OK to have a mechanism that does nothing. For example, such a mec
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/mechanism.hpp#L124)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/mechanism.hpp#L123)
 
 -------
 
@@ -378,7 +378,7 @@ method, which will be used instead of this.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/mechanism.hpp#L136)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/mechanism.hpp#L135)
 
 -------
 
@@ -405,7 +405,7 @@ good place to put code that you need to run once before the simulation.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/mechanism.hpp#L149)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/mechanism.hpp#L148)
 
 -------
 
@@ -442,7 +442,7 @@ switches are fast.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/mechanism.hpp#L171)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/mechanism.hpp#L170)
 
 -------
 
@@ -467,7 +467,7 @@ to override this.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/mechanism.hpp#L182)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/mechanism.hpp#L181)
 
 -------
 

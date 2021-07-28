@@ -12,8 +12,8 @@ activity of another neuron.
 
 
 */
-#ifndef SYNAPSE
-#define SYNAPSE
+#pragma once
+
 #include <cmath>
 class compartment;
 
@@ -134,7 +134,3 @@ void synapse::init() {}
 
 
 
-
-
-
-#endif

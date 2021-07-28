@@ -13,8 +13,8 @@ as an entry point for all other objects.
 */
 
 
-#ifndef NETWORK
-#define NETWORK
+#pragma once
+
 #include <cmath>
 #include <vector>
 
@@ -490,4 +490,3 @@ void network::integrateClamp(double *V_clamp) {
 } // integrateClamp
 
 
-#endif

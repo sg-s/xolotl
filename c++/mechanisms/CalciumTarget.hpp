@@ -34,7 +34,7 @@ public:
 
 // we are using getState to read out value of the target 
 // from other mechanisms 
-double CalciumTarget::getState(int idx){
+double CalciumTarget::getState(int idx) {
     return Target;
 }
 

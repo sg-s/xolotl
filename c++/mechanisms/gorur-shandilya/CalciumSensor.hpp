@@ -36,8 +36,6 @@ public:
 
     void integrate(void);
     void init(void);
-
-
     int getFullState(double * cont_state, int idx);
     
 

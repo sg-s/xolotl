@@ -25,3 +25,8 @@ site/
 *.xfit
 *.xfind
 *.bin
+experimental/xolotl/*
+*.xml
+*.mlx
+*.dylib
+experimental/proof-of-concept/ctest/*

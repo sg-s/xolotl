@@ -54,10 +54,6 @@ public:
     
     void integrate(void);
     void connectConductance(conductance*);
-
-
-    
-
     void connectToLiuSensor(void);
 
 };

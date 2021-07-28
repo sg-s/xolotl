@@ -14,9 +14,8 @@ or even other mechanisms.
 
 */
 
+#pragma once
 
-#ifndef MECHANISM
-#define MECHANISM
 #include <cmath>
 #include <string>
 #include <vector>
@@ -189,8 +188,3 @@ void mechanism::checkSolvers(int k) {
         mexErrMsgTxt(txt.c_str());
     }
 }
-
-#endif
-
-
-

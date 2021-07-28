@@ -85,8 +85,8 @@ This is not be exposed to the user, since it it
 broadcast to all components from `xolotl.verbosity`.
 
 */
-#ifndef CONDUCTANCE
-#define CONDUCTANCE
+#pragma once
+
 #include <cmath>
 #include <string>
 #include <random>
@@ -457,4 +457,3 @@ double conductance::getState(int i) {
     return 0;
 }
 
-#endif
