@@ -22,7 +22,6 @@ Now let's test it
 import clib.xolotl.*
 
 AB = compartment("AB");
-AB = compartment("AB");
 nav = NaV(1e3);
 kd = Kd(300);
 leak = Leak(1);

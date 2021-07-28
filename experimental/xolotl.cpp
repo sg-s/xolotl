@@ -9,6 +9,8 @@
 #include "compartment.hpp"
 #include "conductance.hpp"
 
+using namespace std;
+
 compartment::compartment(string name_) {
   this->name = name_;
   this->init();
