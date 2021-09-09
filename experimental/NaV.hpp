@@ -30,10 +30,10 @@ public:
         name = "NaV";
     }
 
-    double m_inf(double);
-    double h_inf(double);
-    double tau_m(double);
-    double tau_h(double);
+    double m_inf(double) override;
+    double h_inf(double) override;
+    double tau_m(double) override;
+    double tau_h(double) override;
 };
 
 
