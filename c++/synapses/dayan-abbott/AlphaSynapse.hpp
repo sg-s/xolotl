@@ -47,7 +47,6 @@ public:
 
     int getFullStateSize(void);
     void connect(compartment *pcomp1_, compartment *pcomp2_);
-    double getCurrent(double V_post);
     int getFullState(double*, int);
 };
 
