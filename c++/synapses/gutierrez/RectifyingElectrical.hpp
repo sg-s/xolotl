@@ -27,7 +27,7 @@ public:
     void integrate(void);
     void checkSolvers(int);
 
-    double G_rec_inf(double, double);
+    double G_rec_inf(double);
 
     int getFullStateSize(void);
     int getFullState(double*, int);
