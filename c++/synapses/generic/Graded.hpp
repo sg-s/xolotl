@@ -1,8 +1,7 @@
 // genric graded synapse
 // with a user-controllable half-maximum for activation
 // and timescale 
-#ifndef GRADED
-#define GRADED
+#pragma once
 #include "synapse.hpp"
 
 class Graded: public synapse {
@@ -135,5 +134,3 @@ int Graded::getFullState(double *syn_state, int idx) {
 }
 
 
-
-#endif

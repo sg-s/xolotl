@@ -167,5 +167,3 @@ void NMDAergic::checkSolvers(int k){
     mexErrMsgTxt("[NMDAergic] Unsupported solver order\n");
 }
 
-
-#endif

@@ -8,8 +8,8 @@
 //   associated with loss of consciousness. Proceedings of the National Academy of
 //   Sciences, 107(52), 22665-22670. doi:10.1073/pnas.1017069108"
 
-#ifndef GABA
-#define GABA
+#pragma once
+
 #include "synapse.hpp"
 
 class GABAergic: public synapse {

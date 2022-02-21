@@ -4,8 +4,7 @@
 // http://www.jneurosci.org/content/22/24/10580.short
 
 
-#ifndef INHIBITORY
-#define INHIBITORY
+#pragma once
 #include "synapse.hpp"
 
 class Inhibitory: public synapse {
@@ -100,4 +99,3 @@ double Inhibitory::m_inf(double Vpre) {return 1.0 / (1.0 + exp(-Vpre-0.01));}
 double Inhibitory::x_inf(double Vpre) {return 0.1 + 0.9 / (1.0 + exp(-Vpre-0.04));}
 
 
-#endif

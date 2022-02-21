@@ -3,8 +3,7 @@
 // component source [Gutierrez & Marder et al. 2013](https://www.jneurosci.org/content/jneuro/33/32/13238.full.pdf)
 //
 
-#ifndef RECTIFYINGELECTRICAL
-#define RECTIFYINGELECTRICAL
+#pragma once
 #include "synapse.hpp"
 
 class RectifyingElectrical: public synapse {
@@ -77,5 +76,3 @@ int RectifyingElectrical::getFullState(double *syn_state, int idx) {
 
 
 
-
-#endif
