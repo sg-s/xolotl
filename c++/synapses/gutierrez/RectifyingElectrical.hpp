@@ -11,17 +11,16 @@ class RectifyingElectrical: public synapse {
 public:
 
 
+    double V_alpha;
+
     // specify parameters + initial conditions
-    RectifyingElectrical(double gmax_, double s_, double E_, double V_alpha)
+    RectifyingElectrical(double gmax_, double V_alpha_)
     {
         gmax = gmax_;
-        E = E_;
-        s = s_;
+        V_alpha = V_alpha_;
 
         // defaults
-        if (isnan (s)) { s = 0; }
         if (isnan (gmax)) { gmax = 0; }
-        if (isnan (E)) { E = 0; }
         is_electrical = false;
     }
 
@@ -52,7 +51,7 @@ void RectifyingElectrical::integrate(void) {
     // figure out the voltage of the pre-synaptic neuron
     double V_pre = pre_syn->V_prev;
 
-    g = gmax*G_rec_inf();
+    g = gmax*G_rec_inf(V_pre, V_alpha);
 
 
 }
@@ -68,7 +67,7 @@ void RectifyingElectrical::checkSolvers(int k) {
 
 int RectifyingElectrical::getFullState(double *syn_state, int idx) {
     // also return the current from this synapse
-    syn_state[idx] = gmax*s*(post_syn->V - E);
+    syn_state[idx] = gmax*G_rec_inf(V_pre, V_alpha)*(post_syn->V - pre_syn->V);
     idx++;
     return idx;
 }
