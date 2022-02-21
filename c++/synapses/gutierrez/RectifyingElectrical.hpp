@@ -38,7 +38,7 @@ int RectifyingElectrical::getFullStateSize() {
 }
 
 
-double RectifyingElectrical::G_rec_inf(double V_pre, double V_alpha) {
+double RectifyingElectrical::G_rec_inf(double V_pre) {
 
     double V_post = post_syn->V_prev;
 
@@ -51,7 +51,7 @@ void RectifyingElectrical::integrate(void) {
     // figure out the voltage of the pre-synaptic neuron
     double V_pre = pre_syn->V_prev;
 
-    g = gmax*G_rec_inf(V_pre, V_alpha);
+    g = gmax*G_rec_inf(V_pre);
 
 
 }
@@ -67,7 +67,7 @@ void RectifyingElectrical::checkSolvers(int k) {
 
 int RectifyingElectrical::getFullState(double *syn_state, int idx) {
     // also return the current from this synapse
-    syn_state[idx] = gmax*G_rec_inf(V_pre, V_alpha)*(post_syn->V - pre_syn->V);
+    syn_state[idx] = gmax*G_rec_inf(V_pre)*(post_syn->V - pre_syn->V);
     idx++;
     return idx;
 }
