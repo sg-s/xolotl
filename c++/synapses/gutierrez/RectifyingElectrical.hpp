@@ -19,6 +19,10 @@ public:
         gmax = gmax_;
         V_alpha = V_alpha_;
 
+        if (isnan(V_alpha)) {
+            V_alpha = 8; //mV
+        }
+
         // defaults
         if (isnan (gmax)) { gmax = 0; }
         is_electrical = false;
@@ -67,7 +71,7 @@ void RectifyingElectrical::checkSolvers(int k) {
 
 int RectifyingElectrical::getFullState(double *syn_state, int idx) {
     // also return the current from this synapse
-    syn_state[idx] = gmax*G_rec_inf(V_pre)*(post_syn->V - pre_syn->V);
+    syn_state[idx] = gmax*G_rec_inf(pre_syn->V_prev)*(post_syn->V - pre_syn->V);
     idx++;
     return idx;
 }
