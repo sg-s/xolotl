@@ -65,7 +65,7 @@ public:
     network() {}
 
     // function declarations
-    void integrate(double *);
+    void integrate(double *, double *);
     void integrateMS(double *);
     void integrateClamp(double *);
     void integrateMSClamp(double *);
@@ -308,7 +308,7 @@ integrated using the Crank-Nicholson scheme.
 
 This method assumes that no compartment anywhere is being voltage clamped.
 */
-void network::integrate(double * I_ext_now) {
+void network::integrate(double * I_ext_now, double * GPData_now) {
 
     // we will use Exponential Euler for single-compartment
     // models and networks, and Crank-Nicholson for
@@ -329,6 +329,7 @@ void network::integrate(double * I_ext_now) {
 
         comp[i]->i_Ca = 0;
         comp[i]->I_ext = I_ext_now[i];
+        comp[i]->GPData = GPData_now[i];
 
         comp[i]->integrateMechanisms();
 

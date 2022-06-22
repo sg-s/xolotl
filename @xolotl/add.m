@@ -87,3 +87,4 @@ add@cpplab(self,obj, obj_name);
 N = length(self.Children);
 self.I_ext = zeros(1,N);
 self.V_clamp = NaN(1,N);
+self.GPData = NaN(1,N);

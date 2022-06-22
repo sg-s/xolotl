@@ -38,6 +38,7 @@ properties
 
     I_ext double;
     V_clamp double;
+    GPData double;
 
 	% output delta t
 	dt (1,1) double {mustBeGreaterThan(dt,0)} = .1; % ms
@@ -167,7 +168,7 @@ methods
         hpp_files = unique(hpp_files);
         self.illegal_names = [self.illegal_names(:); hpp_files];
 
-        self.setHiddenProps({'manipulate_plot_func','I_ext','V_clamp','snapshots'});
+        self.setHiddenProps({'manipulate_plot_func','I_ext','V_clamp','GPData','snapshots'});
 
         self.snapshots = struct('name','','V',[],'hash','');
 
@@ -261,6 +262,41 @@ methods
             self.V_clamp = NaN(1,n_comp);
         end
     end
+
+
+    function self = set.GPData(self,GPData)
+
+        d = dbstack;
+        if strcmp(d(end).name,'copy')
+            self.GPData = GPData;
+            return
+        end
+
+
+
+        n_comp = length(self.find('compartment'));
+        n_steps = floor(self.t_end/self.sim_dt);
+
+        if n_comp == 0
+            % probably loading from a file
+            self.GPData = GPData;
+            return
+        end
+
+        if isvector(GPData) && length(GPData) == n_comp
+            GPData = GPData(:)';
+        end
+
+        % make sure that it's the right size
+        corelib.assert(size(GPData,2) == n_comp,['Size of GPData is incorrect::2nd dimension size should be ' mat2str(n_comp)])
+        if size(GPData,1) ~= 1
+            corelib.assert(size(GPData,1) == n_steps,['Size of GPData is incorrect::1st dimension size should be ' mat2str(n_steps)])
+        end
+
+        self.GPData = GPData;
+
+    end
+
 
 
 

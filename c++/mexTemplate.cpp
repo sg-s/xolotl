@@ -55,10 +55,14 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     network xolotl_network;
 
+
+    // inputs to model
     int I_ext_size_1;
     int I_ext_size_2;
     int V_clamp_size_1;
     int V_clamp_size_2;
+    int GPData_size_1;
+    int GPData_size_2;
 
 
     bool is_voltage_clamped;
@@ -284,8 +288,11 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     // link up I_ext and V_clamp
     double * I_ext = new double[n_comp];
     double * V_clamp = new double[n_comp];
+    double * GPData = new double[n_comp];
+
     double * I_ext_in = mxGetPr(prhs[1]);
     double * V_clamp_in = mxGetPr(prhs[2]);
+    double * GPData_in = mxGetPr(prhs[3]);
 
 
     // create arrays to help us find spikes
@@ -303,14 +310,17 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     // figure out the sizes of the arrays
     // for V_clamp and I_ext
-    const mwSize *I_ext_dim, *V_clamp_dim;
+    const mwSize *I_ext_dim, *V_clamp_dim, *GPData_dim;
     I_ext_dim = mxGetDimensions(prhs[1]);
     V_clamp_dim = mxGetDimensions(prhs[2]);
+    GPData_dim = mxGetDimensions(prhs[3]);
 
     I_ext_size_1 = I_ext_dim[0];
     I_ext_size_2 = I_ext_dim[1];
     V_clamp_size_1 = V_clamp_dim[0];
     V_clamp_size_2 = V_clamp_dim[1];
+    GPData_size_1 = GPData_dim[0];
+    GPData_size_2 = GPData_dim[1];
 
 
 
@@ -323,6 +333,10 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         mexPrintf("\n[V_CLAMP] ");
         if (V_clamp_size_2 == nsteps) {mexPrintf(" dynamically changing\n\n");}
         else { mexPrintf("fixed \n\n");}
+
+        mexPrintf("\n[GPDATA] ");
+        if (GPData_size_2 == nsteps) {mexPrintf(" dynamically changing\n\n");}
+        else { mexPrintf("fixed \n\n");}
     }
 
 
@@ -331,6 +345,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
     for(int q = 0; q < n_comp; q++) {
         I_ext[q] = I_ext_in[q];
         V_clamp[q] = V_clamp_in[q];
+        GPData[q] = GPData_in[q];
         // mexPrintf("I_ext =  %f ", I_ext_in[q]);
     }
 
@@ -396,14 +411,22 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
 
         for (int i = 0; i < nsteps; i++) {
+
             if (I_ext_size_2 == nsteps) {
                 // I_ext is dynamically changing
-                for(int q = 0; q < n_comp; q++) {
+                for (int q = 0; q < n_comp; q++) {
                     I_ext[q] = I_ext_in[i*n_comp + q];
                 }
             }
 
-            xolotl_network.integrate(I_ext);
+            if (GPData_size_2 == nsteps) {
+                // GPData is dynamically changing
+                for (int q = 0; q < n_comp; q++) {
+                    GPData[q] = GPData_in[i*n_comp + q];
+                }
+            }
+
+            xolotl_network.integrate(I_ext, GPData);
 
 
             if (i%progress_report == 0 & v%5 == 0) {

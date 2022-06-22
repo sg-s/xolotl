@@ -183,7 +183,7 @@ one compartment is being voltage-clamped.
 **Function Signature**
 
 ```C++
-void integrate(double * I_ext_now) 
+void integrate(double * I_ext_now, double * GPData_now) 
 ```
 
 **Description**
@@ -233,7 +233,7 @@ and also assumes that no current is being injected into any compartment.
 
  **Code**
 
-[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/network.hpp#L408)
+[Click here to view this method's code](https://github.com/sg-s/xolotl/blob/master/c++/network.hpp#L409)
 
 -------
 

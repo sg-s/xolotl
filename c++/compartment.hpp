@@ -172,6 +172,9 @@ public:
     double E_Ca = 100;
     double i_Ca = 0; // specific calcium current (current/area. nA/mm^2)
     double I_ext = 0; // all external currents are summed here
+    double GPData = 0; // general purpose data vector
+
+
     double I_clamp = 0; // this is the current required to clamp it
     int n_cond = 0; // this keep tracks of the # channels
     int n_mech = 0; // # of mechanisms

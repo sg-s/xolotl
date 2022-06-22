@@ -191,11 +191,11 @@ if self.pref.cache
 		% cache exists, load that and don't do anything
 		load(cachename,'results','-mat')
 	else
-		[results{1:n_outputs+1}] = f(args,self.I_ext',self.V_clamp');
+		[results{1:n_outputs+1}] = f(args,self.I_ext',self.V_clamp', self.GPData');
 	end
 
 else
-	[results{1:n_outputs+1}] = f(args,self.I_ext',self.V_clamp');
+	[results{1:n_outputs+1}] = f(args,self.I_ext',self.V_clamp', self.GPData');
 end
 
 
