@@ -20,4 +20,7 @@ end
 
 x.t_end = 1e3;
 x.integrate;
+
+x.pref.plot_color = true;
+
 x.plot;
