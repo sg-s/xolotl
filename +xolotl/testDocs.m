@@ -6,12 +6,10 @@ if nargin == 0
 end
 
 
-if ~iscell(allfiles)
-	allfiles  = {allfiles};
-end
-
 for i = 1:length(allfiles)
-	[~,~,ext] = fileparts(allfiles{i});
+
+
+	[~,~,ext] = fileparts(allfiles(i));
 	if ~strcmp(ext,'.md')
 		continue
 	end
