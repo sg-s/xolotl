@@ -48,9 +48,11 @@ for i = 1:length(allfiles)
 
 	catch err
 
-		
-
-		error(['Error while running ' allfiles{i}])
+		if any(strfind(err.message,"Global Optimization"))
+			warning("Error with Global Optimization toolbox, ignoring...")
+		else
+			error(['Error while running ' allfiles{i}])
+		end
 	end
 
 end
