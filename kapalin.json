@@ -10,11 +10,11 @@
   "github_binary": ["xolotl.mltbx"],
   "gh_path": "/usr/local/bin/gh",
   "external_code": [
-    "/Users/srinivas/GoogleDrive/code/cpplab/@cpplab",
-    "/Users/srinivas/GoogleDrive/code/puppeteer/@puppeteer",
-    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/+*",
-    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/@*",
-    "/Users/srinivas/GoogleDrive/code/srinivas.gs_mtools/*.m"
+    "/Users/srinivas/code/cpplab/@cpplab",
+    "/Users/srinivas/code/puppeteer/@puppeteer",
+    "/Users/srinivas/code/srinivas.gs_mtools/+*",
+    "/Users/srinivas/code/srinivas.gs_mtools/@*",
+    "/Users/srinivas/code/srinivas.gs_mtools/*.m"
   ]
 }
 
