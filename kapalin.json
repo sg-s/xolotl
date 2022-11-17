@@ -12,9 +12,9 @@
   "external_code": [
     "/Users/srinivas/code/cpplab/@cpplab",
     "/Users/srinivas/code/puppeteer/@puppeteer",
-    "/Users/srinivas/code/srinivas.gs_mtools/+*",
-    "/Users/srinivas/code/srinivas.gs_mtools/@*",
-    "/Users/srinivas/code/srinivas.gs_mtools/*.m"
+    "/Users/srinivas/code/srinivas.gs_mtools/src/+*",
+    "/Users/srinivas/code/srinivas.gs_mtools/src/@*",
+    "/Users/srinivas/code/srinivas.gs_mtools/src/*.m"
   ]
 }
 

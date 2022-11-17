@@ -2,6 +2,11 @@
 % and optimize its maximal conductances so that it has a
 % desired period
 
+if license('test', 'global_optimization_toolbox') == 0
+	% can't do anything, we don't have the toolbox
+	return
+end
+
 % first, we create our xolotl object
 x = xolotl.examples.neurons.BurstingNeuron('prefix','prinz');
 
