@@ -110,3 +110,4 @@ ISSN={1662-5196},
 2. [Homeostatic plasticity rules that compensate for cell size are susceptible to channel deletion](https://www.biorxiv.org/cgi/content/short/753608v1)
 3. [NBIO140 Lab 5](https://github.com/sg-s/nbio140-lab5) Lab for NBIO140 taught by Steven van Hooser
 4. [BlackBoxNeuron](https://github.com/sg-s/black-box-neuron-public) Neuron simulator designed for teaching and undergraduate research. Used for the [Brandeis QBREC](https://www.brandeis.edu/qbrec/) program 
+5. [Core Course in Integrative Biosciences (BIMS 6000)](https://www.beenhakkerlab.org/bims-6000)
